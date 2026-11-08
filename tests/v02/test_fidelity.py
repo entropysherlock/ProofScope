@@ -58,6 +58,15 @@ class LeanFidelityTests(unittest.TestCase):
                 if s.expected:
                     self.assertEqual(r["classification"], s.expected, r["interpretation"])
 
+    def test_relative_workdir_replays_certificates(self):
+        # CLI defaults to a relative --out; ensure Lean receives absolute paths.
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as folder:
+            relative = Path(folder).relative_to(Path.cwd()) / "work" / "C1"
+            spec = PairSpec.load(PAIRS / "C1_equivalent_rewritten.json")
+            result = run_pair(spec, Toolchain.find(), relative)
+            self.assertEqual(result["classification"], EQUIVALENT, result.get("probe"))
+            self.assertTrue(result["certificates"])
+
     def test_sorry_route_rejected(self):
         r = run_pair(PairSpec.load(PAIRS / "C8_sorry_route_rejected.json"), Toolchain.find(), Path(tempfile.mkdtemp()))
         self.assertEqual(r["rejected"].get("equal_all"), "depends on sorryAx")
