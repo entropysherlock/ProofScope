@@ -42,6 +42,10 @@ on:
         description: "Also audit the first N catalog main results as targets (0 = none)"
         required: false
         default: "0"
+      worksheets:
+        description: "Build scope-fidelity review worksheets from the project's docs/ (no project code executed)"
+        type: boolean
+        default: true
       build:
         description: "Build, #print axioms and leanchecker replay (slow; runs the project's code in this sandbox)"
         type: boolean
@@ -87,6 +91,7 @@ jobs:
           PS_DECLS: ${{ inputs.decls }}
           PS_CATALOG: ${{ inputs.catalog }}
           PS_CATALOG_TARGETS: ${{ inputs.catalog_targets }}
+          PS_WORKSHEETS: ${{ inputs.worksheets }}
           PS_BUILD: ${{ inputs.build }}
         run: |
           set -uo pipefail
@@ -96,6 +101,7 @@ jobs:
           [ -n "$PS_DECLS" ] && args+=(--decls "$PS_DECLS")
           [ "$PS_CATALOG" = "true" ] && args+=(--catalog)
           if [[ "$PS_CATALOG_TARGETS" =~ ^[0-9]{1,3}$ ]]; then args+=(--catalog-targets "$PS_CATALOG_TARGETS"); fi
+          [ "$PS_WORKSHEETS" = "true" ] && args+=(--worksheets --ledger reviews/openai_math_4eaee875.json)
           [ "$PS_BUILD" = "true" ] && args+=(--build)
           python -m proofscope.project "${args[@]}"
       - name: Job summary
