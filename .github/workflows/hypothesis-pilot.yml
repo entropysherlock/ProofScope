@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Test exact finite-model engine
-        run: python3 -m unittest discover -s experiments/hypothesis_sensitivity -p 'test_pilot.py' -v
+        run: python3 -m unittest discover -s experiments/hypothesis_sensitivity -p 'test_*.py' -v
       - name: Generate counterexample/hitting-set duality evidence
         run: python3 experiments/hypothesis_sensitivity/hypothesis_duality.py --output hypothesis-evidence/duality
       - name: Generate independently checkable enumerated evidence
