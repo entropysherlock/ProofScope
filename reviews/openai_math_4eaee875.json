@@ -1,0 +1,87 @@
+{
+  "corpus": "https://github.com/openai/math",
+  "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+  "comparison": "Lean comparator statement vs the scope document in lean/docs (not yet vs the full paper)",
+  "reviews": [
+    {
+      "challenge": "BalancedRyser",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "(q+1)-partite (q+1)-uniform via edges Fin (q+1) -> Fin (q+1); Intersecting includes nonemptiness; Nonisolated gives exactly q+1 nonisolated vertices per part; HasCoverNumber (q+1); all sufficiently large primes. Matches docs/162.md."
+    },
+    {
+      "challenge": "NoiselessRegression",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "SubquadraticMemory: universal c, o(d^2) memory, 0<eps<=1/10, success >= 2/3 uniformly or for every signal. FixedQuadraticMemory: for every A>0 a constant c_A. Matches docs/140.md."
+    },
+    {
+      "challenge": "SKHighTemperature",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "0<beta<1; Poincare event and discrete gap >= 1/(Cn) each with probability tending to 1. discreteGap is an sInf of a set bounded below by 0. Matches docs/227.md."
+    },
+    {
+      "challenge": "SKRatio",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "0<=beta<1/2, 0<eps<1/2, eta>0; probability of ratio > 1+eta tends to 0; denominator eventually positive is stated, which guards the sInf/division junk values. Matches docs/227.md."
+    },
+    {
+      "challenge": "HoneycombBridgeFiniteness",
+      "verdict": "FAITHFUL_WITH_NOTE",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "Matches docs/237.md up to wording: the corridor is |x| <= h(log h)^2, a full width of 2h(log h)^2, and degenerates to |x| <= 0 at h = 1. Logically, the five other clauses follow from Summable firstLengthWeight (weights are nonnegative and length >= 1; subtypes and constant multiples of summable families are summable), so the corridor clauses add no content. Not an error; not yet kernel-certified (needs Mathlib)."
+    },
+    {
+      "challenge": "HoneycombFreeEnergy",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "freeEnergy is limUnder; the theorem asserts Tendsto to it, i.e. the limit exists, for every vertex, direction and real force parameter. rho = (sqrt(2+sqrt 2))^-1 is the critical honeycomb activity. Matches docs/237.md."
+    },
+    {
+      "challenge": "Brennan",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "Integrability of |phi'|^s for 4/3<s<4 over simply connected domains with nontrivial spherical boundary; |f'|^t for -2<t<2/3; B_S(-2)=1 via an EReal limsup (no junk value). Matches docs/072.md. Note: this is a statement of Brennan's conjecture; the result's correctness is outside this review."
+    },
+    {
+      "challenge": "EgyptianFractions",
+      "verdict": "FAITHFUL",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "Real liminf/limsup of the prescribed slope are protected by the explicit upper bound v k <= 1 + k^(2^(k-1)) and the stated chain liminf <= limsup. Matches docs/025.md."
+    },
+    {
+      "challenge": "CoulombIonization",
+      "verdict": "NEEDS_EXPERT",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "Matches docs/263.md as written. IteratedLimits uses real-valued limsup/liminf over Z; in Lean these take a junk value (0) when the sequence is unbounded, so the proved statement (limit a > 0) implies that for all large m the ionization energy I_m(Z) is bounded in Z. An expert should confirm this consequence is intended and matches the paper's convention."
+    },
+    {
+      "challenge": "TotientCompanionZero",
+      "verdict": "NEEDS_EXPERT",
+      "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
+      "reviewer_type": "AI_PRELIMINARY",
+      "date": "2026-11-08",
+      "notes": "Matches docs/024.md. The zero case assumes no totient d with k*d < ell(d). If that hypothesis fails for every k >= 1 the theorem is vacuous; whether it ever holds was not determined. A is a limUnder; the conclusion A = 0 is meaningful only if the approximants converge, which holds trivially if they vanish."
+    }
+  ]
+}
