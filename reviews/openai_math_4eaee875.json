@@ -73,7 +73,7 @@
       "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
       "reviewer_type": "AI_PRELIMINARY",
       "date": "2026-11-08",
-      "notes": "Matches docs/263.md as written. IteratedLimits uses real-valued limsup/liminf over Z; in Lean these take a junk value (0) when the sequence is unbounded, so the proved statement (limit a > 0) implies that for all large m the ionization energy I_m(Z) is bounded in Z. An expert should confirm this consequence is intended and matches the paper's convention."
+      "notes": "Matches docs/263.md as written. IteratedLimits uses real-valued limsup/liminf over Z; in Lean these take a junk value (0) when the sequence is unbounded, so the proved statement (limit a > 0) implies that for all large m the ionization energy I_m(Z) is bounded in Z. An expert should confirm this consequence is intended and matches the paper's convention. PAPER CROSS-CHECK 2026-11-08: preprints/Generalized-ionization-energies-for-full-Coulomb-atoms-September-24-2026/paper.pdf, Theorem 1.1 eqs (1.3)-(1.5), Section 6.3. Paper explicitly discusses potentially infinite inner limits and derives their eventual behavior from the joint limit; it does not assume fixed-m convergence. Thus the real-limsup issue alone is NOT a certified discrepancy; precise formal handling of exceptional m still needs a Mathlib-specific proof and expert review."
     },
     {
       "challenge": "TotientCompanionZero",
@@ -81,7 +81,7 @@
       "reviewer": "Claude (Anthropic), directed by Caleb J. Westfall",
       "reviewer_type": "AI_PRELIMINARY",
       "date": "2026-11-08",
-      "notes": "Matches docs/024.md. The zero case assumes no totient d with k*d < ell(d). If that hypothesis fails for every k >= 1 the theorem is vacuous; whether it ever holds was not determined. A is a limUnder; the conclusion A = 0 is meaningful only if the approximants converge, which holds trivially if they vanish."
+      "notes": "Matches docs/024.md. The zero case assumes no totient d with k*d < ell(d). If that hypothesis fails for every k >= 1 the theorem is vacuous; whether it ever holds was not determined. A is a limUnder; the conclusion A = 0 is meaningful only if the approximants converge, which holds trivially if they vanish. PAPER CROSS-CHECK 2026-11-08: preprints/An-asymptotic-formula-for-the-number-of-totients-September-25-2026/An-asymptotic-formula-for-the-number-of-totients-September-25-2026.pdf, Theorem 2.2 (thm:companion), alternative (ii). The paper explicitly states the exact same no-seed implication N_k(x)=0 for every x>0 and A(f_k;s)=0 for 0<=s<1; alternative (i) is asserted for k=1,2. Whether alternative (ii) holds for any k>2 remains unresolved in this review; no mismatch certified."
     }
   ]
 }
