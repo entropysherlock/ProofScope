@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 (unreleased)
+
+- `python3 -m proofscope.review` and Project Audit stage S7 (`--worksheets`, workflow input `worksheets`, default on):
+  scope-fidelity worksheets pairing each scope document with Lean comparator sources, junk-value exposure flags,
+  and a typed review ledger (`HUMAN` vs `AI_PRELIMINARY`) that applies only to the commit it names.
+- `reviews/openai_math_4eaee875.json`: 10 AI-preliminary statement reviews.
+- `tests/v02/test_review.py`.
+
+
 ## 0.2.0 (unreleased)
 
 Added, without changing any v0.1 file:
