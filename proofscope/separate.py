@@ -231,7 +231,7 @@ INTERPRETATION = {
 def run_pair(spec: PairSpec, tc: Toolchain, workdir: Path | None = None, mathlib: bool | None = None,
              replay: bool = True, timeout: float | None = 900) -> dict:
     mathlib = any(i.startswith("Mathlib") for i in spec.imports) if mathlib is None else mathlib
-    root = Path(workdir or tempfile.mkdtemp(prefix="proofscope_sep_"))
+    root = Path(workdir or tempfile.mkdtemp(prefix="proofscope_sep_")).resolve()
     src_root = root / "src"
     build = root / "build"
     mod_dir = src_root / "ProofScopeCert"
