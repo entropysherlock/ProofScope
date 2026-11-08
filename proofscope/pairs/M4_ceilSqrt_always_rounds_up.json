@@ -1,0 +1,19 @@
+{
+  "id": "M4_ceilSqrt_always_rounds_up",
+  "group": "mutant",
+  "description": "Mutant: always add one (wrong on perfect squares).",
+  "preamble": "def ceilSqrt (n : Nat) : Nat := Nat.sqrt n + if (Nat.sqrt n) ^ 2 = n then 0 else 1\ndef ceilDiv (n t : Nat) : Nat := (n + t - 1) / t",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "Nat.sqrt n + 1",
+  "reference": "ceilSqrt n",
+  "domain": "2 ≤ n",
+  "bounds": {
+    "n": 60
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}

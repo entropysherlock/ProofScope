@@ -1,0 +1,32 @@
+{
+  "id": "R1_ceilDiv_vs_textbook",
+  "group": "real",
+  "description": "Mathlib-free reconstruction of V0.9-R case R1b. OAI.Problem335.ceilDiv from the OpenAI comparator corpus (commit 4eaee875, DepthFive challenge) against the textbook ceiling formula, on the domain where the challenge uses it (t = ceilSqrt n, n >= 2, hence t > 0).",
+  "preamble": "def ceilSqrt (n : Nat) : Nat := Nat.sqrt n + if (Nat.sqrt n) ^ 2 = n then 0 else 1\ndef ceilDiv (n t : Nat) : Nat := (n + t - 1) / t",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "t",
+      "Nat"
+    ]
+  ],
+  "custom": "ceilDiv n t",
+  "reference": "n / t + (if n % t = 0 then 0 else 1)",
+  "reference_source": "textbook: ceil(n/t) = floor(n/t) + [t does not divide n], meaningful for t > 0",
+  "domain": "2 ≤ n ∧ t = ceilSqrt n",
+  "relation": "eq",
+  "bounds": {
+    "n": 60,
+    "t": 10
+  },
+  "tactics": {
+    "agree_domain": [
+      "intro n t h; exact ceilDiv_formula n t (by rw [h.2]; exact ceilSqrt_pos n h.1)"
+    ]
+  },
+  "expected": "DISCREPANCY_OUTSIDE_DOMAIN_ONLY_CERTIFIED",
+  "lemmas": "theorem ceilSqrt_pos (n : Nat) (hn : 2 ≤ n) : 0 < ceilSqrt n := by\n  unfold ceilSqrt\n  split\n  · rename_i h\n    rcases Nat.eq_zero_or_pos (Nat.sqrt n) with h0 | h0\n    · rw [h0] at h; simp at h; omega\n    · omega\n  · omega\n\ntheorem ceilDiv_formula (n t : Nat) (tpos : 0 < t) :\n    ceilDiv n t = n / t + (if n % t = 0 then 0 else 1) := by\n  unfold ceilDiv\n  have hdm := Nat.div_add_mod n t\n  have hlt := Nat.mod_lt n tpos\n  split\n  · have e : n + t - 1 = (t - 1) + t * (n / t) := by omega\n    rw [e, Nat.add_mul_div_left _ _ tpos, Nat.div_eq_of_lt (by omega)]; omega\n  · have e : n + t - 1 = (n % t - 1) + t * (n / t + 1) := by rw [Nat.mul_add]; omega\n    rw [e, Nat.add_mul_div_left _ _ tpos, Nat.div_eq_of_lt (by omega)]; omega"
+}

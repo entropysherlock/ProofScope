@@ -1,0 +1,20 @@
+{
+  "id": "R2_ceilSqrt_vs_least_k",
+  "group": "real",
+  "description": "Real definition OAI.Problem335.ceilSqrt (DepthFive challenge) against the specification 'least k with n ≤ k²'. Checked as: ceilSqrt n is that least k.",
+  "preamble": "def ceilSqrt (n : Nat) : Nat := Nat.sqrt n + if (Nat.sqrt n) ^ 2 = n then 0 else 1\ndef ceilDiv (n t : Nat) : Nat := (n + t - 1) / t",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "True",
+  "reference": "n ≤ (ceilSqrt n) ^ 2 ∧ ∀ j, j < ceilSqrt n → j ^ 2 < n",
+  "relation": "iff",
+  "domain": "2 ≤ n",
+  "bounds": {
+    "n": 200
+  },
+  "reference_source": "textbook: ceil(sqrt n) is the least k with n ≤ k^2"
+}

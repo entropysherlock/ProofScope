@@ -1,0 +1,19 @@
+{
+  "id": "C2_off_by_one_boundary",
+  "group": "control",
+  "description": "Strict vs non-strict boundary.",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "n < 10",
+  "reference": "n ≤ 10",
+  "relation": "iff",
+  "domain": "n ≤ 20",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}

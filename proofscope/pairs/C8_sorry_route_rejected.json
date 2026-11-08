@@ -1,0 +1,28 @@
+{
+  "id": "C8_sorry_route_rejected",
+  "group": "control",
+  "description": "A sorried lemma 'proves' a false equivalence; the certificate must be rejected and the true witness found.",
+  "preamble": "theorem bad_equiv : ∀ n : Nat, n < 10 ↔ n ≤ 10 := sorry",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "n < 10",
+  "reference": "n ≤ 10",
+  "relation": "iff",
+  "domain": "n ≤ 20",
+  "bounds": {
+    "n": 30
+  },
+  "tactics": {
+    "equal_all": [
+      "exact bad_equiv"
+    ],
+    "agree_domain": [
+      "exact fun n _ => bad_equiv n"
+    ]
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}

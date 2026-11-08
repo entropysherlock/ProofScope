@@ -1,0 +1,19 @@
+{
+  "id": "C6_genuine_inside_domain",
+  "group": "control",
+  "description": "2n ≤ n² is not the same as 2 ≤ n (differs at n = 0).",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "2 * n ≤ n * n",
+  "reference": "2 ≤ n",
+  "relation": "iff",
+  "domain": "n ≤ 10",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}

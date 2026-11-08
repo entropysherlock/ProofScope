@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.lake/
+proofscope-evidence/
+proofscope-fidelity-evidence/
+proofscope-project-evidence/
+proofscope-project-src/

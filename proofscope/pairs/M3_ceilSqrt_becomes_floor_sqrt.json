@@ -1,0 +1,19 @@
+{
+  "id": "M3_ceilSqrt_becomes_floor_sqrt",
+  "group": "mutant",
+  "description": "Mutant: floor square root instead of ceiling.",
+  "preamble": "def ceilSqrt (n : Nat) : Nat := Nat.sqrt n + if (Nat.sqrt n) ^ 2 = n then 0 else 1\ndef ceilDiv (n t : Nat) : Nat := (n + t - 1) / t",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "Nat.sqrt n",
+  "reference": "ceilSqrt n",
+  "domain": "2 ≤ n",
+  "bounds": {
+    "n": 60
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}

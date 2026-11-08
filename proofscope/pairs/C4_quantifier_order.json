@@ -1,0 +1,24 @@
+{
+  "id": "C4_quantifier_order",
+  "group": "control",
+  "description": "forall-exists swapped to exists-forall.",
+  "binders": [
+    [
+      "f",
+      "Nat → Nat"
+    ]
+  ],
+  "custom": "∀ x, ∃ y, f x < y",
+  "reference": "∃ y, ∀ x, f x < y",
+  "relation": "iff",
+  "domain": "True",
+  "tactics": {
+    "witness_all": [
+      "exact ⟨id, fun h => by obtain ⟨y, hy⟩ := h.mp (fun x => ⟨x + 1, Nat.lt_succ_self x⟩); exact absurd (hy y) (Nat.lt_irrefl y)⟩"
+    ],
+    "witness_domain": [
+      "exact ⟨id, trivial, fun h => by obtain ⟨y, hy⟩ := h.mp (fun x => ⟨x + 1, Nat.lt_succ_self x⟩); exact absurd (hy y) (Nat.lt_irrefl y)⟩"
+    ]
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}

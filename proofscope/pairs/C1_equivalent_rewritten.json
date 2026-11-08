@@ -1,0 +1,19 @@
+{
+  "id": "C1_equivalent_rewritten",
+  "group": "control",
+  "description": "Same notion written two ways.",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "2 ∣ n",
+  "reference": "n % 2 = 0",
+  "relation": "iff",
+  "domain": "n ≤ 20",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "EQUIVALENT_CERTIFIED"
+}

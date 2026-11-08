@@ -1,0 +1,19 @@
+{
+  "id": "C3_missing_hypothesis",
+  "group": "control",
+  "description": "Hypothesis 0 < n silently dropped.",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "custom": "0 < n → n - 1 < n",
+  "reference": "n - 1 < n",
+  "relation": "iff",
+  "domain": "n ≤ 5",
+  "bounds": {
+    "n": 10
+  },
+  "expected": "DISCREPANCY_IN_DOMAIN_CERTIFIED"
+}
