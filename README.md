@@ -54,6 +54,18 @@ only. Format of a case: [`docs/pair_spec.md`](docs/pair_spec.md).
 - Fidelity benchmark: 12/12 labelled cases correct, 39 certificates replayed. No theorem-relevant discrepancy has
   been found in a real formalization.
 
+## v0.3: scope-fidelity review worksheets
+
+The Project Audit now also builds a **review worksheet for every scope document** in a project that has them
+(stage S7, on by default). For openai/math at `4eaee875`, Claude's local run reported 245 worksheets covering all 418 comparator
+challenges through 433 links, none broken. Each worksheet shows the scope document's claims beside Lean
+comparator source text, flags junk-value-prone operators used without a detected guard (141 of 433 links
+in that run; triage, not errors), and merges attributed review verdicts from [`reviews/`](reviews/).
+
+Ten statements have **AI-preliminary** reviews so far (7 faithful, 1 faithful with a note, 2 needing an expert); none
+has a human review yet, and no discrepancy has been found. Details: [`docs/review_worksheets.md`](docs/review_worksheets.md).
+These are reported local results pending a GitHub Actions rerun.
+
 ## Local use
 
 Install Lean 4.34.1, then run:
@@ -64,6 +76,7 @@ python3 -m proofscope.audit --output proofscope-evidence  # v0.1 kernel controls
 python3 -m unittest discover -s tests/v02 -v             # v0.2 tests (pip install pyyaml for catalog tests)
 python3 -m proofscope.fidelity benchmark                 # v0.2 definition-fidelity benchmark
 python3 -m proofscope.project --help                     # v0.2 pinned-project audit
+python3 -m proofscope.review --help                      # v0.3 review worksheets
 ```
 
 The GitHub workflow handles Lean installation automatically, and publishes reports even when an audit fails.
