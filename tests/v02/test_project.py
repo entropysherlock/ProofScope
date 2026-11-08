@@ -64,6 +64,17 @@ class StoppedAuditTests(unittest.TestCase):
         self.assertIn("Nothing was scanned", (out / "REPORT.md").read_text())
 
 
+class VerdictScopeTests(unittest.TestCase):
+    def test_no_hazard_claim_without_a_scan(self):
+        """Regression: catalog-only audit must not claim a trust-hazard scan."""
+        A = P.Audit(Path(tempfile.mkdtemp()))
+        A.add("S5", "catalog entries mechanically consistent", "1 checked", P.VERIFIED, "1 consistent")
+        args = type("Args", (), {"commit": OAI_COMMIT, "repo": "https://github.com/openai/math", "build": False})()
+        lines = P.verdict(A, args, "PASS", {})
+        self.assertFalse(any("No trust hazards" in l for l in lines))
+        self.assertTrue(any("no import closure was hashed" in l for l in lines))
+
+
 class ParserRegressionTests(unittest.TestCase):
     """Each case below was a false alarm on the real openai/math catalog before it was fixed."""
 
