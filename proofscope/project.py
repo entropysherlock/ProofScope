@@ -478,9 +478,12 @@ def verdict(A: Audit, args, overall: str, tally: dict) -> list[str]:
     cl = A.meta.get("closure")
     if cl:
         v.append(f"{cl['local_files']} project files in the targets' import closure were hashed.")
-    haz = [f for f in A.findings if f.stage == "S4" and f.status in (FAIL, WARNING)]
-    v.append("No trust hazards were found in that closure by text scan." if not haz else
-             f"{len(haz)} trust-hazard type(s) were found in that closure; see S4.")
+    if any(f.stage == "S4" for f in A.findings):
+        haz = [f for f in A.findings if f.stage == "S4" and f.status in (FAIL, WARNING)]
+        v.append("No trust hazards were found in that closure by text scan." if not haz else
+                 f"{len(haz)} trust-hazard type(s) were found in that closure; see S4.")
+    else:
+        v.append("No target modules were given, so no import closure was hashed or scanned for trust hazards.")
     cat = A.meta.get("catalog")
     if cat:
         row = next((f for f in A.findings if f.check == "catalog entries mechanically consistent"), None)
