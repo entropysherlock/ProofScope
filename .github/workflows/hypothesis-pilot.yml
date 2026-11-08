@@ -1,0 +1,25 @@
+name: ProofScope Hypothesis Sensitivity Pilot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-model-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test exact finite-model engine
+        run: python3 -m unittest discover -s experiments/hypothesis_sensitivity -p 'test_pilot.py' -v
+      - name: Generate independently checkable enumerated evidence
+        run: python3 experiments/hypothesis_sensitivity/hypothesis_pilot.py --output hypothesis-evidence
+      - name: Publish evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-hypothesis-pilot-evidence
+          path: hypothesis-evidence/
+          if-no-files-found: warn
