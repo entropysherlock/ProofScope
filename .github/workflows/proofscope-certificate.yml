@@ -1,0 +1,71 @@
+name: ProofScope Certificate Controls
+
+# v0.4 certification gate. Controls only: NOT a paper-to-Lean fidelity result.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-certificate.yml"
+      - "certificates/**"
+
+permissions:
+  contents: read
+
+jobs:
+  certificate-controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install pinned Lean 4.34.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Compile controls, check axioms, replay honest proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p certificate-evidence
+          lean --version | tee certificate-evidence/lean-version.log
+          export LEAN_PATH="$GITHUB_WORKSPACE/certificates"
+          lean -o certificates/Positive.olean certificates/Positive.lean 2>&1 | tee certificate-evidence/positive.log
+          if grep -q "sorryAx" certificate-evidence/positive.log || grep -q "depends on axioms:" certificate-evidence/positive.log; then
+            echo "FAIL: positive control has axioms" | tee certificate-evidence/result.txt
+            exit 1
+          fi
+          if ! grep -q "does not depend on any axioms" certificate-evidence/positive.log; then
+            echo "FAIL: positive axiom audit missing" | tee certificate-evidence/result.txt
+            exit 1
+          fi
+          leanchecker --fresh Positive 2>&1 | tee certificate-evidence/replay.log
+          lean -o certificates/Negative.olean certificates/Negative.lean 2>&1 | tee certificate-evidence/negative.log
+          if ! grep -q "sorryAx" certificate-evidence/negative.log; then
+            echo "FAIL: sorry-based negative control escaped axiom audit" | tee certificate-evidence/result.txt
+            exit 1
+          fi
+          {
+            echo "PASS: honest proof has no axioms and passes fresh Lean kernel replay."
+            echo "PASS: sorry-based negative control is rejected by the axiom policy (sorryAx detected)."
+            echo "LIMIT: no external paper theorem or mathematical discrepancy was certified."
+          } | tee certificate-evidence/result.txt
+      - name: Publish gate summary
+        if: always()
+        run: |
+          if [ -f certificate-evidence/result.txt ]; then
+            cat certificate-evidence/result.txt >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "INCONCLUSIVE: certificate controls did not complete." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload certification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-certificate-controls
+          path: certificate-evidence/
+          if-no-files-found: warn
