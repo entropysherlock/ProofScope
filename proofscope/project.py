@@ -11,6 +11,7 @@ Stages (each produces findings labelled VERIFIED / WARNING / INCONCLUSIVE / HUMA
   S4  hazards   sorry/admit/axiom/native_decide/kernel-check bypass/... inside the closure
   S5  catalog   formalization.yaml main results vs files, declarations and comparator configs
   S6  build     (opt-in) lake build, `#print axioms` per declaration, leanchecker replay
+  S7  review    (opt-in) scope-fidelity worksheets: scope documents beside Lean comparator files
 
 S1-S5 never execute code from the audited project. S6 does (Lake configuration and Lean
 elaboration are programs): run it only in a sandbox without credentials, such as the
@@ -410,6 +411,22 @@ def s6_build(A: Audit, root: Path, modules: list[str], decls: list[str], timeout
                   "module declarations re-checked by the kernel" if rp["exit_code"] == 0 else (rp["stderr"] or rp["stdout"])[-300:])
 
 
+def s7_worksheets(A: Audit, root: Path, commit: str, ledger: Path | None) -> None:
+    from .review import build
+    if not (root / "docs").is_dir():
+        A.add("S7", "scope-fidelity worksheets", "docs/", INFO, "the project has no scope documents")
+        return
+    s = build(root, A.out / "review", ledger, commit)
+    A.meta["worksheets"] = s
+    A.add("S7", "scope-fidelity worksheets", f"{s['scope_documents']} documents, {s['linked_challenges']} links",
+          VERIFIED if not s["missing_links"] else FAIL,
+          f"{s['missing_links']} broken links; {s.get('challenges_without_scope_document', [])!s} without a scope document")
+    A.add("S7", "statements with junk-value exposure flags", f"{s['with_junk_exposure_flags']} of {s['linked_challenges']}",
+          INFO, "triage for reviewers, not errors")
+    A.add("S7", "statement-vs-scope reviews recorded", f"{s['reviewed']} of {s['linked_challenges']}", HUMAN_REVIEW,
+          f"verdicts {s['verdicts']}; {s['human_reviewed']} by a named human reviewer; AI_PRELIMINARY verdicts need confirmation")
+
+
 # ----------------------------------------------------------------------------- report
 
 def write(A: Audit, args) -> int:
@@ -489,6 +506,10 @@ def verdict(A: Audit, args, overall: str, tally: dict) -> list[str]:
         row = next((f for f in A.findings if f.check == "catalog entries mechanically consistent"), None)
         if row:
             v.append(f"Catalog: {row.detail}.")
+    ws = A.meta.get("worksheets")
+    if ws:
+        v.append(f"{ws['scope_documents']} scope-fidelity worksheets were built covering {ws['linked_challenges']} statement links; "
+                 f"{ws['reviewed']} have recorded reviews ({ws['human_reviewed']} by a named human). Worksheets certify nothing.")
     if args.build:
         ax = [f for f in A.findings if f.check == "axioms of declaration"]
         ok = [f for f in ax if f.status == VERIFIED]
@@ -511,6 +532,9 @@ def main(argv=None) -> int:
     ap.add_argument("--catalog-limit", type=int, default=0)
     ap.add_argument("--catalog-targets", type=int, default=0,
                     help="also add the first N catalog main results as module/declaration targets")
+    ap.add_argument("--worksheets", action="store_true",
+                    help="build scope-fidelity review worksheets from the project's docs/ (no code executed)")
+    ap.add_argument("--ledger", default=None, help="review ledger JSON; merged only if its commit matches")
     ap.add_argument("--build", action="store_true", help="run lake build, axiom audit and replay (executes project code)")
     ap.add_argument("--build-timeout", type=int, default=3600)
     ap.add_argument("--workdir", default=None)
@@ -548,6 +572,8 @@ def main(argv=None) -> int:
                 a.modules.append(mod)
             if r["declaration"] not in a.decls:
                 a.decls.append(r["declaration"])
+    if a.worksheets:
+        s7_worksheets(A, root, a.commit, Path(a.ledger).resolve() if a.ledger else None)
     if a.modules:
         local = s3_closure(A, root, a.modules)
         s4_hazards(A, root, local)
