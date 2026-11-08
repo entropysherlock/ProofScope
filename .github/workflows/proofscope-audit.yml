@@ -1,0 +1,44 @@
+name: ProofScope Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-audit.yml"
+      - "proofscope/**"
+      - "examples/**"
+      - "tests/**"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Lean kernel integrity and proof-scope demo
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout pinned repository revision
+        uses: actions/checkout@v4
+      - name: Install Lean 4.34.1 via elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Python unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Run ProofScope audit
+        env:
+          ELAN_TOOLCHAIN: leanprover/lean4:v4.34.1
+        run: python3 -m proofscope.audit --output proofscope-evidence
+      - name: Upload evidence (even if audit fails)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-audit-evidence
+          path: proofscope-evidence/
+          if-no-files-found: warn
+          retention-days: 30
