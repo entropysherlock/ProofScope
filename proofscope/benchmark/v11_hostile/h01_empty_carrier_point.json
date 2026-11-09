@@ -1,0 +1,17 @@
+{
+ "id": "h01_empty_carrier_point",
+ "domain": "Types",
+ "family": "empty carrier",
+ "reference": "∀ (α : Type) (f : α → α) (a : α), f a = f a",
+ "lean": "∀ (α : Type) [Nonempty α] (f : α → α) (a : α), f a = f a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "ASSUMPTION_INCOMPARABLE"
+ ],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

@@ -1,0 +1,11 @@
+{
+ "id": "l4_redundant_class",
+ "domain": "Algebra",
+ "family": "redundant Prop class",
+ "reference": "∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a b : α), a * b = b * a",
+ "lean": "∀ (α : Type) [Mul α] [Std.Commutative (fun (x y : α) => x * y)], (∀ (x y : α), x * y = y * x) → ∀ (a b : α), a * b = b * a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [],
+ "split": "v11_dev",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

@@ -1,0 +1,10 @@
+{
+ "id": "mn2_bounds",
+ "domain": "Nat",
+ "family": "minimality",
+ "statement": "∀ (n : Nat), 1 ≤ n → n ≤ 3 → n * n ≤ 9 ∧ 1 ≤ n * n",
+ "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+ "must_not_be": [],
+ "split": "v11_dev",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

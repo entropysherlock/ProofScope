@@ -1,0 +1,11 @@
+{
+ "id": "l2_add_reference_needs",
+ "domain": "Algebra",
+ "family": "instance linking",
+ "reference": "∀ (α : Type) [Add α] (a b : α), a + b = b + a",
+ "lean": "∀ (α : Type) [Add α], (∀ (x y : α), x + y = y + x) → ∀ (a b : α), a + b = b + a",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [],
+ "split": "v11_dev",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

@@ -1,0 +1,18 @@
+{
+ "id": "h05_polarity",
+ "domain": "Logic",
+ "family": "negative position",
+ "reference": "(∀ (α : Type) [Mul α] (a b : α), a * b = b * a) → False",
+ "lean": "(∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a b : α), a * b = b * a) → False",
+ "expected": "INCONCLUSIVE",
+ "must_not_be": [
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "ASSUMPTION_INCOMPARABLE",
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

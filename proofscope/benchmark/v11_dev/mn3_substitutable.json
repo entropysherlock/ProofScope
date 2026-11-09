@@ -1,0 +1,10 @@
+{
+ "id": "mn3_substitutable",
+ "domain": "Nat",
+ "family": "minimality",
+ "statement": "∀ (n : Nat), n ≠ 0 → 0 < n → 1 ≤ n",
+ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+ "must_not_be": [],
+ "split": "v11_dev",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

@@ -84,6 +84,18 @@ documented in [`docs/engine.md`](docs/engine.md):
 Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
 resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
 
+## v1.1: dependent-structure linking, compositional soundness, assumption minimality
+
+Details: [`docs/v1.1_foundations.md`](docs/v1.1_foundations.md).
+
+- **Linking** of statements with shared instance binders (`[Group G]`, `[Mul α]`): the cause of the Mathlib
+  m04/m05 abstentions, reproduced and fixed. Soundness rests on a kernel-checked `R ↔ canonical` link.
+- **Composition theorems** (Lean): sign rule for contexts; strictness survives a monotone context *iff*
+  `k True ∧ ¬ k False`; `∃` and empty binders absorb differences (counterexamples).
+- **Assumption minimality**: NECESSARY / REDUNDANT / UNNEEDED / jointly necessary, with removal-witness
+  models; inclusion-minimality certified (`inclusion_minimal`), never minimum cardinality.
+- Mathlib track v1.1 **pending**; competitor protocol pre-registered.
+
 ## v1.0: Assumption Delta, boundary synthesis, Mathlib track
 
 Details: [`docs/v1.0_assumption_delta.md`](docs/v1.0_assumption_delta.md).

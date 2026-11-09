@@ -1,0 +1,10 @@
+{
+ "id": "mn1_unneeded_assoc",
+ "domain": "Algebra",
+ "family": "minimality",
+ "statement": "∀ (α : Type) (op : α → α → α), (∀ (a b c : α), op (op a b) c = op a (op b c)) → (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
+ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+ "must_not_be": [],
+ "split": "v11_dev",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

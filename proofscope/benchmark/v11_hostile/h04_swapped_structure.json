@@ -1,0 +1,13 @@
+{
+ "id": "h04_swapped_structure",
+ "domain": "Algebra",
+ "family": "multiple structures",
+ "reference": "∀ (α : Type) [Mul α] [Add α], (∀ (x y : α), x * y = y * x) → ∀ (a : α), a = a",
+ "lean": "∀ (α : Type) [Mul α] [Add α], (∀ (x y : α), x + y = y + x) → ∀ (a : α), a = a",
+ "expected": "ASSUMPTION_INCOMPARABLE",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

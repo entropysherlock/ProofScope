@@ -1,0 +1,10 @@
+{
+ "id": "h10_min_vacuous",
+ "domain": "Nat",
+ "family": "minimality: vacuous premise",
+ "statement": "∀ (n : Nat), n < 0 → n = 5",
+ "expected": "INCLUSION_MINIMAL",
+ "must_not_be": [],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

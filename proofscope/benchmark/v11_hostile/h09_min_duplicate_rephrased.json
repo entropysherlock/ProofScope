@@ -1,0 +1,12 @@
+{
+ "id": "h09_min_duplicate_rephrased",
+ "domain": "Nat",
+ "family": "minimality: substitutable",
+ "statement": "∀ (n : Nat), n ≠ 0 → 1 ≤ n → 0 < n",
+ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+ "must_not_be": [
+  "INCLUSION_MINIMAL"
+ ],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

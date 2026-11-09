@@ -1,0 +1,13 @@
+{
+ "id": "h07_false_reference",
+ "domain": "Algebra",
+ "family": "false reference",
+ "reference": "∀ (α : Type) [Mul α] (a b : α), a * b = b * a",
+ "lean": "∀ (α : Type) [Mul α] [Std.Commutative (fun (x y : α) => x * y)] (a b : α), a * b = b * a",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

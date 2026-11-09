@@ -1,0 +1,11 @@
+{
+ "id": "m09_partial_order_total",
+ "domain": "Order",
+ "family": "reference needs totality",
+ "reference": "∀ (α : Type) [PartialOrder α] (a b : α), a ≤ b ∨ b ≤ a",
+ "lean": "∀ (α : Type) [PartialOrder α], (∀ (x y : α), x ≤ y ∨ y ≤ x) → ∀ (a b : α), a ≤ b ∨ b ≤ a",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [],
+ "split": "mathlib_v11",
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
+}

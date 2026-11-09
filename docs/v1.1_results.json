@@ -1,0 +1,1270 @@
+{
+ "local": true,
+ "block1_frozen_run": [
+  {
+   "id": "h01_empty_carrier_point",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty α",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h02_redundant_data_class",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty (Inhabited α)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h03_inconsistent_hypothesis",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "n < (0 : Nat)",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "0"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h04_swapped_structure",
+   "expected": "ASSUMPTION_INCOMPARABLE",
+   "verdict": "ASSUMPTION_INCOMPARABLE",
+   "reason": null,
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x + y = y + x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "{ add := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    },
+    {
+     "side": "dropped",
+     "assumption": "∀ (x y : α), x * y = y * x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "{ add := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h05_polarity",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "reason": "canonical telescope not linked to the elaborated statements",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE",
+    "ASSUMPTION_EQUIVALENT"
+   ]
+  },
+  {
+   "id": "h06_unrelated_true",
+   "expected": "INCONCLUSIVE",
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": null,
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ]
+  },
+  {
+   "id": "h07_false_reference",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative fun (x y : α) => x * y",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h08_instance_implies_nonempty",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "INCONCLUSIVE",
+   "reason": "canonical telescope not linked to the elaborated statements",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ]
+  },
+  {
+   "id": "h09_min_duplicate_rephrased",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "reason": null,
+   "theorem": "redundant_drop",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [
+    [
+     0,
+     1
+    ]
+   ],
+   "must_not_be": [
+    "INCLUSION_MINIMAL"
+   ],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "n ≠ (0 : Nat)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    },
+    {
+     "side": null,
+     "assumption": "(1 : Nat) ≤ n",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h10_min_vacuous",
+   "expected": "INCLUSION_MINIMAL",
+   "verdict": "INCLUSION_MINIMAL",
+   "reason": null,
+   "theorem": "inclusion_minimal",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "n < (0 : Nat)",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "0"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "l1_mul_hidden_comm",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x * y = y * x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "l2_add_reference_needs",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x + y = y + x",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "{ add := fun (a x : Bool) => a }",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "l3_two_structures",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x + y = x * y",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "{ add := fun (x b : Bool) => b }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "l4_redundant_class",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative fun (x y : α) => x * y",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "mn1_unneeded_assoc",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "reason": null,
+   "theorem": "redundant_drop",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "∀ (a b c : α), op (op a b) c = op a (op b c)",
+     "class": "UNNEEDED",
+     "witness_model": null,
+     "removal_witness": null
+    },
+    {
+     "side": null,
+     "assumption": "∀ (a b : α), op a b = op b a",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "Bool",
+      "fun (a x : Bool) => a",
+      "true",
+      "false"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mn2_bounds",
+   "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+   "verdict": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+   "reason": null,
+   "theorem": "inclusion_minimal",
+   "sufficiency": "NOT_CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "(1 : Nat) ≤ n",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "0"
+     ]
+    },
+    {
+     "side": null,
+     "assumption": "n ≤ (3 : Nat)",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mn3_substitutable",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "reason": null,
+   "theorem": "redundant_drop",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [
+    [
+     0,
+     1
+    ]
+   ],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "n ≠ (0 : Nat)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    },
+    {
+     "side": null,
+     "assumption": "(0 : Nat) < n",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "mn4_single_needed",
+   "expected": "INCLUSION_MINIMAL",
+   "verdict": "INCLUSION_MINIMAL",
+   "reason": null,
+   "theorem": "inclusion_minimal",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "∀ (a b : α), op a b = op b a",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "Bool",
+      "fun (a x : Bool) => a",
+      "true",
+      "false"
+     ]
+    }
+   ]
+  }
+ ],
+ "block2_development": [
+  {
+   "id": "ad01_hidden_comm",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative op",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "fun (a x : Bool) => a",
+      "true",
+      "true",
+      "true",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad02_nonempty",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty α",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad03_dependent_instance",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": []
+  },
+  {
+   "id": "ad04_redundant_comm",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative op",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad05_needed_comm",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative op",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "fun (a x : Bool) => a",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad06_order_antisymm",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (a b : α), r a b → r b a → a = b",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "fun (x x_1 : Bool) => True",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad07_dropped_injectivity",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "dropped",
+     "assumption": "∀ (a b : α), f a = f b → a = b",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "fun (x : Bool) => true",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad08_decidable_redundant",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty (DecidableEq α)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad09_domain_int",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "(0 : Int) ≤ a",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "-1"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad10_redundant_nat",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "(0 : Nat) ≤ n",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "ad11_negative_position",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "reason": "canonical telescope not linked to the elaborated statements",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": []
+  },
+  {
+   "id": "h01_empty_carrier_point",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty α",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h02_redundant_data_class",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty (Inhabited α)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h03_inconsistent_hypothesis",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "n < (0 : Nat)",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "0"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h04_swapped_structure",
+   "expected": "ASSUMPTION_INCOMPARABLE",
+   "verdict": "ASSUMPTION_INCOMPARABLE",
+   "reason": null,
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x + y = y + x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "{ add := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    },
+    {
+     "side": "dropped",
+     "assumption": "∀ (x y : α), x * y = y * x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "{ add := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h05_polarity",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "reason": "canonical telescope not linked to the elaborated statements",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE",
+    "ASSUMPTION_EQUIVALENT"
+   ]
+  },
+  {
+   "id": "h06_unrelated_true",
+   "expected": "INCONCLUSIVE",
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ]
+  },
+  {
+   "id": "h07_false_reference",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative fun (x y : α) => x * y",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h08_instance_implies_nonempty",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty α",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h09_min_duplicate_rephrased",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "reason": null,
+   "theorem": "redundant_drop",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [
+    [
+     0,
+     1
+    ]
+   ],
+   "must_not_be": [
+    "INCLUSION_MINIMAL"
+   ],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "n ≠ (0 : Nat)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    },
+    {
+     "side": null,
+     "assumption": "(1 : Nat) ≤ n",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "h10_min_vacuous",
+   "expected": "INCLUSION_MINIMAL",
+   "verdict": "INCLUSION_MINIMAL",
+   "reason": null,
+   "theorem": "inclusion_minimal",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "n < (0 : Nat)",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "0"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "l1_mul_hidden_comm",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x * y = y * x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "l2_add_reference_needs",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x + y = y + x",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "{ add := fun (a x : Bool) => a }",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "l3_two_structures",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x + y = x * y",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "{ add := fun (x b : Bool) => b }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "l4_redundant_class",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Std.Commutative fun (x y : α) => x * y",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "mn1_unneeded_assoc",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "reason": null,
+   "theorem": "redundant_drop",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "∀ (a b c : α), op (op a b) c = op a (op b c)",
+     "class": "UNNEEDED",
+     "witness_model": null,
+     "removal_witness": null
+    },
+    {
+     "side": null,
+     "assumption": "∀ (a b : α), op a b = op b a",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "Bool",
+      "fun (a x : Bool) => a",
+      "true",
+      "false"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mn2_bounds",
+   "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+   "verdict": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+   "reason": null,
+   "theorem": "inclusion_minimal",
+   "sufficiency": "NOT_CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "(1 : Nat) ≤ n",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "0"
+     ]
+    },
+    {
+     "side": null,
+     "assumption": "n ≤ (3 : Nat)",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mn3_substitutable",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "reason": null,
+   "theorem": "redundant_drop",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [
+    [
+     0,
+     1
+    ]
+   ],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "n ≠ (0 : Nat)",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    },
+    {
+     "side": null,
+     "assumption": "(0 : Nat) < n",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "mn4_single_needed",
+   "expected": "INCLUSION_MINIMAL",
+   "verdict": "INCLUSION_MINIMAL",
+   "reason": null,
+   "theorem": "inclusion_minimal",
+   "sufficiency": "CERTIFIED",
+   "jointly_necessary_pairs": [],
+   "must_not_be": [],
+   "assumptions": [
+    {
+     "side": null,
+     "assumption": "∀ (a b : α), op a b = op b a",
+     "class": "NECESSARY",
+     "witness_model": null,
+     "removal_witness": [
+      "Bool",
+      "fun (a x : Bool) => a",
+      "true",
+      "false"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rp_mul_inst",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": null,
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (x y : α), x * y = y * x",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "Bool",
+      "{ mul := fun (a x : Bool) => a }",
+      "true"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "x01_point_makes_nonempty_redundant",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "Nonempty α",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "x02_dup_hypothesis",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "∀ (a b : α), op b a = op a b",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "x03_dropped_redundant",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": null,
+   "theorem": "redundant_schema_equiv",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE"
+   ],
+   "assumptions": [
+    {
+     "side": "dropped",
+     "assumption": "(0 : Nat) ≤ n",
+     "class": "REDUNDANT",
+     "witness_model": null,
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "x04_weaker_but_true_both",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": null,
+   "theorem": "restrictive_iff_strictly_weaker",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "added",
+     "assumption": "(1 : Int) ≤ a",
+     "class": "RESTRICTIVE",
+     "witness_model": [
+      "-1"
+     ],
+     "removal_witness": null
+    }
+   ]
+  },
+  {
+   "id": "x05_conclusion_also_changed",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "theorem": null,
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ]
+  },
+  {
+   "id": "x06_lean_drops_needed",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
+   "theorem": "necessary_refutes_reference",
+   "sufficiency": null,
+   "jointly_necessary_pairs": null,
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "assumptions": [
+    {
+     "side": "dropped",
+     "assumption": "∀ (a b : α), r a b → r b a",
+     "class": "NECESSARY",
+     "witness_model": [
+      "Bool",
+      "fun (a b : Bool) => a = true ∨ b = false",
+      "true",
+      "false"
+     ],
+     "removal_witness": null
+    }
+   ]
+  }
+ ]
+}

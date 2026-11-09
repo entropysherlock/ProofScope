@@ -1,0 +1,11 @@
+{
+ "id": "l1_mul_hidden_comm",
+ "domain": "Algebra",
+ "family": "instance linking",
+ "reference": "∀ (α : Type) [Mul α] (a : α), a * a = a * a",
+ "lean": "∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a : α), a * a = a * a",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "split": "v11_dev",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 (unreleased)
+
+- `lean/ProofScope/Composition.lean` (15 theorems: linking, polarity composition, strictness lifting,
+  absorption counterexamples, inclusion-minimality).
+- `lean/ProofScope/AssumptionExtract11.lean` and `proofscope/adelta11.py`: dependent-structure linking (clean
+  binder names, instance binders, instance witnesses, `pp.analyze`), minimality mode, `CONCLUSION_ONLY_CHANGE`.
+- Suites `v11_dev` (8), `v11_hostile` (10), `mathlib_v11` (7, pending); `V11_FREEZE.txt` (blocks 1 and 2).
+- `proofscope/competitors/v11_protocol.py` (pre-registered scoring, SemantEq exporter).
+- Workflows **ProofScope v1.1 Linking, Composition and Minimality**, **ProofScope v1.1 Mathlib Track**; `tests/v02/test_v11.py`.
+
 ## 1.0.0 (unreleased)
 
 - Assumption Delta: `lean/ProofScope/AssumptionDelta.lean` (9 theorems), `lean/ProofScope/AssumptionExtract.lean`

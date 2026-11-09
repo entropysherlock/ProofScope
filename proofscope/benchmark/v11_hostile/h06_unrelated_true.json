@@ -1,0 +1,13 @@
+{
+ "id": "h06_unrelated_true",
+ "domain": "Nat",
+ "family": "unrelated true theorems",
+ "reference": "∀ (n : Nat), n < 2 ^ n",
+ "lean": "∀ (n : Nat), n ≤ n * n + n",
+ "expected": "INCONCLUSIVE",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "split": "v11_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
+}

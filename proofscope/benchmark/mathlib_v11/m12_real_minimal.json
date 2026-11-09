@@ -1,0 +1,10 @@
+{
+ "id": "m12_real_minimal",
+ "domain": "Real analysis",
+ "family": "minimality",
+ "statement": "∀ (x : ℝ), 0 ≤ x → x ≤ 1 → x ^ 2 ≤ 1",
+ "expected": "INCLUSION_MINIMAL",
+ "must_not_be": [],
+ "split": "mathlib_v11",
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
+}

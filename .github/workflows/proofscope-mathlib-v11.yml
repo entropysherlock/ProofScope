@@ -1,0 +1,58 @@
+name: ProofScope v1.1 Mathlib Track
+
+# Assumption Delta v1.1 (dependent-structure linking, minimality) on Mathlib: the v1.1 cases and the v1.0 cases m01-m07 as regression. Mathlib is pinned to the research-corpus revision
+# (same Lean 4.34.1). These cases were written without a local Mathlib: a first-run failure is expected to
+# be possible and must be reported exactly, not patched around.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+
+jobs:
+  mathlib:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
+        uses: ./.github/actions/setup-lean
+      - name: Mathlib project at the pinned revision (binary cache)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ml"
+          cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
+          for i in 1 2 3; do lake update && break || sleep 30; done
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Mathlib import smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ml-evidence
+          printf 'import Mathlib\nexample : (2 : ℝ) + 2 = 4 := by norm_num\n#check Equiv.Perm (Fin 3)\n' > /tmp/smoke.lean
+          lean /tmp/smoke.lean | tee ml-evidence/smoke.log
+      - name: Assumption Delta v1.1 on Mathlib cases
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        run: |
+          python -m proofscope.adelta11 proofscope/benchmark/mathlib_v11/*.json proofscope/benchmark/mathlib_v10/m0[12367]*.json --out ml-evidence/adelta11 --jobs 2 | tee ml-evidence/adelta11.log
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-mathlib-v11-evidence
+          path: ml-evidence/
+          if-no-files-found: warn

@@ -1,0 +1,11 @@
+{
+ "id": "m11_commmonoid_redundant",
+ "domain": "Algebra",
+ "family": "redundant hypothesis",
+ "reference": "∀ (M : Type) [CommMonoid M] (a b : M), a * b = b * a",
+ "lean": "∀ (M : Type) [CommMonoid M], (∀ (x y : M), x * y = y * x) → ∀ (a b : M), a * b = b * a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [],
+ "split": "mathlib_v11",
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
+}

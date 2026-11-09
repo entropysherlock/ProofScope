@@ -1,0 +1,17 @@
+# ProofScope v1.1 freeze (Mon Nov  9 16:50:41 UTC 2026). Engine adelta11 (new; frozen adelta v1.0 untouched).
+c491e246a4a8712f63ced5e50d826a6d015739391a1f14b0032534f339c2c94e  proofscope/adelta11.py
+0e72d4de4bd4820a17d8620fe14cf2df77eab0384560a975c9045ae513036d00  lean/ProofScope/AssumptionExtract11.lean
+7c35f3b4f439f9e9df00b01593cc1c231dbc267eeb36c5fd1f6f2085051f4351  lean/ProofScope/Composition.lean
+a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+5d41c11f1127722040a8cf04f01a5d5904a93d1eb8b3d5e7364c38f86078b060  v11_dev suite
+07f4e1ad050910597a70cb56a27eb37dcc6f9c7a78b41fa51169ea90b507dd8a  v11_hostile suite
+ff601df3b77033e5abbede612bd6ccba6bfd41349cdb4c2fc70c05488c28fa5a  mathlib_v11 suite
+
+# Block 2 (v1.1.1) after the block-1 run (v11_dev + v11_hostile: 16/18, 0 must-not-be violations; misses h06 reporting, h08 round-trip).
+# Fixes: pp.analyze in printing, CONCLUSION_ONLY_CHANGE. v11_dev and v11_hostile are now development data. (Mon Nov  9 16:55:35 UTC 2026)
+4478234fdb83f1f958445b53b4d9b5b9e5c430f3dd1aff655a32e8c582b55f32  proofscope/adelta11.py
+f616fe54837d07f50d6e88b2ce45fdb8ed6841798aaccbb9391d8fd98246ffc0  lean/ProofScope/AssumptionExtract11.lean
+7c35f3b4f439f9e9df00b01593cc1c231dbc267eeb36c5fd1f6f2085051f4351  lean/ProofScope/Composition.lean
+a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py

@@ -1,0 +1,10 @@
+{
+ "id": "m13_real_unneeded",
+ "domain": "Real analysis",
+ "family": "minimality",
+ "statement": "∀ (x : ℝ), 0 ≤ x → 0 ≤ x ^ 2",
+ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+ "must_not_be": [],
+ "split": "mathlib_v11",
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
+}

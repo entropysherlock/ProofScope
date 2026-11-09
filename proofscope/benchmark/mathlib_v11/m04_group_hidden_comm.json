@@ -1,0 +1,11 @@
+{
+ "id": "m04_group_hidden_comm",
+ "domain": "Algebra",
+ "family": "hidden commutativity",
+ "reference": "∀ (G : Type) [Group G] (a : G), a * a⁻¹ = 1",
+ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a : G), a * a⁻¹ = 1",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "split": "mathlib_v11",
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
+}
