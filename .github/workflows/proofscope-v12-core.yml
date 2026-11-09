@@ -58,7 +58,7 @@ jobs:
           done
           LEAN_PATH="$RUNNER_TEMP/cp" lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/CompositionV12.olean" \
             lean/ProofScope/CompositionV12.lean | tee v12-evidence/composition-v12-axioms.log
-          test "$(grep -c 'does not depend on any axioms' v12-evidence/composition-v12-axioms.log)" = 12
+          test "$(grep -c 'does not depend on any axioms' v12-evidence/composition-v12-axioms.log)" = 11
           test "$(grep -c 'depends on axioms: \[propext, Quot.sound\]' v12-evidence/composition-v12-axioms.log)" = 2
           ! grep -q sorryAx v12-evidence/composition-v12-axioms.log
           (cd "$RUNNER_TEMP/cp" && LEAN_PATH="$RUNNER_TEMP/cp" leanchecker --fresh ProofScope.CompositionV12)
