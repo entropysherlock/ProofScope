@@ -3,7 +3,7 @@ name: ProofScope v1.2 Core (composition theory, interacting changes, regression)
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, v1.2-review]
     paths:
       - ".github/workflows/proofscope-v12-core.yml"
       - "proofscope/adelta12.py"
