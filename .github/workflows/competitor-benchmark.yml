@@ -226,20 +226,50 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: LeanInteract at the pinned commit (BEq+ source) and its REPL project (Lean v4.8.0 + Mathlib, as upstream's driver)
+      # INFRASTRUCTURE. LeanInteract's `check_lake` runs a bare `lake --version` outside any project, so elan
+      # needs a default toolchain (run 42687906199: "error: no default toolchain configured"). Project
+      # commands are unaffected: LeanInteract calls `lake +v4.8.0 init` and the REPL/project directories
+      # carry their own lean-toolchain files. The default is pinned to the version upstream's driver uses.
+      - name: elan with pinned default toolchain leanprover/lean4:v4.8.0 (BEq+ upstream driver version)
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p beq-evidence
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
           sh /tmp/elan-init.sh -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           export PATH="$HOME/.elan/bin:$PATH"
+          for i in 1 2 3; do elan toolchain install leanprover/lean4:v4.8.0 && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: toolchain install failed"; exit 1; }; sleep 20; done
+          elan default leanprover/lean4:v4.8.0
+          { elan --version; elan show; lean --version; lake --version; } 2>&1 | tee beq-evidence/toolchain-${{ matrix.shard }}.txt
+          lean --version | grep -q "version 4.8.0" || { echo "INFRASTRUCTURE_ERROR: lean is not 4.8.0"; exit 1; }
+      - name: LeanInteract at the pinned commit (BEq+ source) and its REPL project (Lean v4.8.0 + Mathlib, as upstream's driver)
+        shell: bash
+        run: |
+          set -euo pipefail
           git init -q "$RUNNER_TEMP/li" && cd "$RUNNER_TEMP/li"
           git remote add origin "$LEANINTERACT_REPO" && git fetch -q --depth 1 origin "$LEANINTERACT_REV" && git checkout -q FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$LEANINTERACT_REV"
-          pip install -q . rich tqdm scikit-learn datasets
-          # warm the REPL project once (counted as setup, reported separately)
-          python -c "from lean_interact import LeanREPLConfig, TempRequireProject; LeanREPLConfig(project=TempRequireProject(lean_version='v4.8.0', require='mathlib'))"
+          pip install -q . rich tqdm scikit-learn datasets 2>&1 | tee "$GITHUB_WORKSPACE/beq-evidence/pip-${{ matrix.shard }}.log"
+          pip freeze > "$GITHUB_WORKSPACE/beq-evidence/pip-freeze-${{ matrix.shard }}.txt"
+          # warm the REPL project once (setup cost, reported separately from per-pair budgets)
+          python -c "from lean_interact import LeanREPLConfig, TempRequireProject; LeanREPLConfig(project=TempRequireProject(lean_version='v4.8.0', require='mathlib'), verbose=True)" \
+            2>&1 | tail -n 200 | tee "$GITHUB_WORKSPACE/beq-evidence/repl-setup-${{ matrix.shard }}.log"
+      - name: Native BEq+ initialization check (REPL starts, Mathlib imports, one trivial command elaborates)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/li"
+          python - <<'PY' 2>&1 | tee "$GITHUB_WORKSPACE/beq-evidence/init-check-${{ matrix.shard }}.log"
+          import time
+          from lean_interact import AutoLeanServer, Command, LeanREPLConfig, TempRequireProject
+          t = time.time()
+          s = AutoLeanServer(config=LeanREPLConfig(project=TempRequireProject(lean_version="v4.8.0", require="mathlib")))
+          r = s.run(Command(cmd="import Mathlib\ntheorem init_check (x : ℝ) : x + 0 = x := by simp"), timeout=600)
+          print("response:", r)
+          assert r.lean_code_is_valid(allow_sorry=False), "INIT_CHECK_FAILED: Mathlib command did not elaborate"
+          print(f"BEQPLUS_INIT_OK {time.time() - t:.1f}s")
+          PY
       - name: Run (shard ${{ matrix.shard }}/4)
         shell: bash
         run: |
@@ -256,6 +286,7 @@ jobs:
           path: |
             runs/
             runs-beqplus-*.log
+            beq-evidence/
           if-no-files-found: warn
 
   collect:
@@ -285,16 +316,35 @@ jobs:
           cases = [c["case_id"] for c in read_jsonl(pathlib.Path("${{ inputs.cases }}"))]
           root = pathlib.Path("shards")
           print(f"## SOTA-1 phase `${{ inputs.phase }}`, tier ${{ inputs.tier }} CPU-s, {len(cases)} cases")
+          bad = []
           for system in ("proofscope", "semanteq", "beqplus"):
               recs = {}
               for p in root.glob(f"**/{system}/t${{ inputs.tier }}/*.r0.json"):
                   r = json.loads(p.read_text()); recs[r["case_id"]] = r
               missing = sorted(set(cases) - set(recs))
+              if missing:
+                  bad.append(f"{system}: missing records {missing}")
               st = collections.Counter(r["status"] for r in recs.values())
-              nat = collections.Counter(str(r.get("native_verdict")) for r in recs.values())
-              print(f"- **{system}**: records {len(recs)}/{len(cases)}, missing {len(missing)}; status {dict(st)}; native {dict(nat)}")
+              print(f"### {system}: records {len(recs)}/{len(cases)}, status {dict(st)}")
+              print("| case | status | native verdict | certified A / B | CPU s | peak RSS MB | wall s | note |")
+              print("|---|---|---|---|---|---|---|---|")
+              for cid in cases:
+                  r = recs.get(cid)
+                  if r is None:
+                      print(f"| {cid} | MISSING | | | | | | |"); continue
+                  run = r.get("run") or {}
+                  note = (r.get("adapter", {}).get("error") or r.get("error") or "")[:160].replace("|", "/").replace("\n", " ")
+                  if r["status"] != "OK" and not note:
+                      note = (r.get("log_tail") or "")[-160:].replace("|", "/").replace("\n", " ")
+                  print(f"| {cid} | {r['status']} | {r.get('native_verdict')} | {r['track_A']['certified']} / {r['track_B']['certified']} "
+                        f"| {run.get('cpu_s')} | {run.get('max_rss_mb')} | {run.get('wall_s')} | {note} |")
+          if bad:
+              print("**INCOMPLETE:** " + "; ".join(bad))
+          pathlib.Path("audit_incomplete.txt").write_text("\n".join(bad))
           print("Outcome counts only; no accuracy is computed without released gold labels.")
           PY
+          # a run with a missing record is not a complete availability run
+          test ! -s audit_incomplete.txt
       - name: Score (only when the custodian has released gold)
         if: inputs.gold != ''
         run: |
