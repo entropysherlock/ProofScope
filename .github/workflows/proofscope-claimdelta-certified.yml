@@ -50,8 +50,7 @@ jobs:
         run: python -m unittest tests.v02.test_v08_identity tests.v02.test_v08_claimdelta -v
       - name: ClaimDelta on the development suite (25 cases, labels written before the first freeze)
         run: python -m proofscope.claimdelta proofscope/benchmark/claimdelta_v08/*.json --out claimdelta-evidence/suite --jobs 4 | tee claimdelta-evidence/suite.log
-      - name: ClaimDelta on the v0.6 benchmark (dev + heldout_oracle, 208 cases)
-        run: python -m proofscope.claimdelta proofscope/benchmark/dev/*.json proofscope/benchmark/heldout_oracle/*.json --out claimdelta-evidence/v06 --jobs 4 | tee claimdelta-evidence/v06.log
+      # The unfinished 208-case evaluation now runs in ProofScope ClaimDelta 208 Sharded.
       - name: Summary
         if: always()
         shell: bash
@@ -59,7 +58,7 @@ jobs:
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json, collections, pathlib
           print("## ProofScope ClaimDelta (certified)")
-          for name in ("suite", "v06"):
+          for name in ("suite",):
               p = pathlib.Path(f"claimdelta-evidence/{name}/claimdelta_results.json")
               if not p.exists():
                   print(f"- {name}: INCONCLUSIVE (no results file)"); continue
@@ -69,7 +68,7 @@ jobs:
               ok = sum(r["verdict"] == r["expected_claimdelta"] for r in lab)
               wrong = [r["id"] for r in lab if r["verdict"] != r["expected_claimdelta"] and r["verdict"] != "INCONCLUSIVE"]
               print(f"- {name}: {len(rows)} cases, verdicts {dict(c)}" + (f"; expected-label agreement {ok}/{len(lab)}; wrong {wrong}" if lab else ""))
-          print("Verdicts are relative to policy LINEAR_CORE_SHARED. Development data only; no external benchmark.")
+          print("15 Lean theorems and 25-case development suite only. See ClaimDelta 208 Sharded for independent CI completion of the 208-case internal evaluation. No external benchmark.")
           PY
       - name: Upload evidence
         if: always()
