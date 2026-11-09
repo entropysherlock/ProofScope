@@ -1,0 +1,27 @@
+{
+  "id": "missing_hyp_sub",
+  "family": "missing hypothesis",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "n - m + m ≥ n",
+  "ref_hyp": "m ≤ n",
+  "ref_concl": "n - m + m ≥ n",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

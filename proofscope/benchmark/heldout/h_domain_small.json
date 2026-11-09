@@ -1,0 +1,22 @@
+{
+  "id": "h_domain_small",
+  "family": "domain restriction",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n ≤ 20",
+  "lean_concl": "n % 2 < 2",
+  "ref_hyp": "True",
+  "ref_concl": "n % 2 < 2",
+  "bounds": {
+    "n": 40
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}

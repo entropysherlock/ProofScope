@@ -1,0 +1,22 @@
+{
+  "id": "reversed_ineq_strict",
+  "family": "reversed inequality",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "0 < n",
+  "lean_concl": "n - 1 < n",
+  "ref_hyp": "0 < n",
+  "ref_concl": "n < n - 1",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "CONCLUSION_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

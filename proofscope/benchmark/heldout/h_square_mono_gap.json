@@ -1,0 +1,27 @@
+{
+  "id": "h_square_mono_gap",
+  "family": "extra hypothesis",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "m ≤ n ∧ 1 ≤ m",
+  "lean_concl": "m * m ≤ n * n",
+  "ref_hyp": "m ≤ n",
+  "ref_concl": "m * m ≤ n * n",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}

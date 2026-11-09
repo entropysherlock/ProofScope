@@ -1,0 +1,22 @@
+{
+  "id": "vacuous_range",
+  "family": "vacuous hypotheses",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n < 3 ∧ 5 < n",
+  "lean_concl": "False",
+  "ref_hyp": "3 ≤ n",
+  "ref_concl": "True",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "VACUOUS",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

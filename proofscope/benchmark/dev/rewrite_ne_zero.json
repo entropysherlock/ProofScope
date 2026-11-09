@@ -1,0 +1,22 @@
+{
+  "id": "rewrite_ne_zero",
+  "family": "harmless rewrite",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n ≠ 0",
+  "lean_concl": "0 < n",
+  "ref_hyp": "0 < n",
+  "ref_concl": "1 ≤ n",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

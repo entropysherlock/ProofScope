@@ -1,0 +1,27 @@
+{
+  "id": "rewrite_ceil_div",
+  "family": "harmless rewrite",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "0 < m",
+  "lean_concl": "(n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1)",
+  "ref_hyp": "0 < m",
+  "ref_concl": "(n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "concl_const_weak",
+  "family": "incorrect constant",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "1 ≤ n",
+  "lean_concl": "n ≤ 2 * n * n",
+  "ref_hyp": "1 ≤ n",
+  "ref_concl": "2 * n ≤ n * n",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "CONCLUSION_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

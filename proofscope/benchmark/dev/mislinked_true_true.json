@@ -1,0 +1,22 @@
+{
+  "id": "mislinked_true_true",
+  "family": "incorrectly linked theorem",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "n + 0 = n",
+  "ref_hyp": "True",
+  "ref_concl": "n * 1 = n",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

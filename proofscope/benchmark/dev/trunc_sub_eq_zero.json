@@ -1,0 +1,27 @@
+{
+  "id": "trunc_sub_eq_zero",
+  "family": "unintended default value",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n - m = 0",
+  "lean_concl": "n ≤ m",
+  "ref_hyp": "n ≤ m",
+  "ref_concl": "n - m = 0",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

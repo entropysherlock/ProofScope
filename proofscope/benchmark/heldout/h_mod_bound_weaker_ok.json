@@ -1,0 +1,27 @@
+{
+  "id": "h_mod_bound_weaker_ok",
+  "family": "incorrect constant",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "0 < m",
+  "lean_concl": "n % m < m",
+  "ref_hyp": "0 < m",
+  "ref_concl": "n % m ≤ m",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}

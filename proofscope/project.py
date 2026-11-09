@@ -427,6 +427,25 @@ def s7_worksheets(A: Audit, root: Path, commit: str, ledger: Path | None) -> Non
           f"verdicts {s['verdicts']}; {s['human_reviewed']} by a named human reviewer; AI_PRELIMINARY verdicts need confirmation")
 
 
+def s8_dossiers(A: Audit, root: Path, modules: list[str], decls: list[str], commit: str) -> None:
+    from .dossier import run as dossier_run
+    try:
+        s = dossier_run(modules, decls, [] if decls else modules, A.out / "dossiers", str(root), commit,
+                        module_limit=None if decls else 200)
+    except Exception as e:  # noqa: BLE001 - reported, never hidden
+        A.add("S8", "theorem dossiers", "metaprogram", INCONCLUSIVE, f"INFRASTRUCTURE_ERROR: {e!r}"[:300])
+        return
+    A.meta["dossiers"] = s
+    if not s["metaprogram_built"] or not s["dossiers"]:
+        A.add("S8", "theorem dossiers", "metaprogram", INCONCLUSIVE, "; ".join(s["errors"])[:300] or "no dossiers")
+        return
+    A.add("S8", "theorem dossiers", f"{s['dossiers']} declarations", VERIFIED,
+          f"axioms {s['by_axiom_status']}; kernel {s['by_kernel_status']}")
+    if s["by_axiom_status"].get("SORRY") or s["by_axiom_status"].get("NONSTANDARD"):
+        A.add("S8", "dossier axiom status", "SORRY/NONSTANDARD present", FAIL if s["by_axiom_status"].get("SORRY") else WARNING,
+              json.dumps(s["by_axiom_status"]))
+
+
 # ----------------------------------------------------------------------------- report
 
 def write(A: Audit, args) -> int:
@@ -536,6 +555,8 @@ def main(argv=None) -> int:
                     help="build scope-fidelity review worksheets from the project's docs/ (no code executed)")
     ap.add_argument("--ledger", default=None, help="review ledger JSON; merged only if its commit matches")
     ap.add_argument("--build", action="store_true", help="run lake build, axiom audit and replay (executes project code)")
+    ap.add_argument("--dossiers", action="store_true",
+                    help="with --build: elaborator-based theorem dossiers for the target modules (stage S8)")
     ap.add_argument("--build-timeout", type=int, default=3600)
     ap.add_argument("--workdir", default=None)
     ap.add_argument("--output", default="proofscope-project-evidence")
@@ -580,6 +601,9 @@ def main(argv=None) -> int:
     if a.build:
         if a.modules:
             s6_build(A, root, a.modules, a.decls, a.build_timeout)
+            if a.dossiers and not any(f.stage == "S6" and f.check == "lake build" and f.status != VERIFIED
+                                      for f in A.findings):
+                s8_dossiers(A, root, a.modules, a.decls, a.commit)
         else:
             A.add("S6", "build", "no targets", INCONCLUSIVE, "give --modules or --catalog-targets")
     return write(A, a)

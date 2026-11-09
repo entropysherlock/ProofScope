@@ -66,6 +66,24 @@ Ten statements have **AI-preliminary** reviews so far (7 faithful, 1 faithful wi
 has a human review yet, and no discrepancy has been found. Details: [`docs/review_worksheets.md`](docs/review_worksheets.md).
 These are reported local results pending a GitHub Actions rerun.
 
+## v0.5: theorem intelligence, comparison certificates, benchmark, viewer
+
+**[Open ProofScope Engine](../../actions/workflows/proofscope-engine.yml)** → **Run workflow**. One coherent engine,
+documented in [`docs/engine.md`](docs/engine.md):
+
+- **Theorem dossiers** computed inside Lean from the elaborated declaration: binders split into parameters,
+  hypotheses and typeclass machinery; statement vs proof dependencies; definitions a reviewer must check; transitive
+  axioms; kernel replay status.
+- **Theorem comparison** of a formal statement against a typed reference, with Lean-checked certificates for
+  applicability gaps, conclusion gaps, vacuity, equivalence, coverage and strict strengthening.
+- **Certificate gate**: only declarations that compile cleanly, use standard axioms and pass `leanchecker` replay count.
+- **Benchmark** (project-authored): held-out 18/20 exact labels, detection precision 1.0, recall 0.83, 0 false
+  positives; 20/20 adversarial certificates handled, 0 false acceptances. No competitor comparison was run.
+- **Viewer**: one offline HTML report.
+
+Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
+resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
+
 ## Local use
 
 Install Lean 4.34.1, then run:
@@ -77,6 +95,8 @@ python3 -m unittest discover -s tests/v02 -v             # v0.2 tests (pip insta
 python3 -m proofscope.fidelity benchmark                 # v0.2 definition-fidelity benchmark
 python3 -m proofscope.project --help                     # v0.2 pinned-project audit
 python3 -m proofscope.review --help                      # v0.3 review worksheets
+python3 -m proofscope.bench --split all                  # v0.5 comparison benchmark
+python3 -m proofscope.dossier --help                     # v0.5 theorem dossiers
 ```
 
 The GitHub workflow handles Lean installation automatically, and publishes reports even when an audit fails.

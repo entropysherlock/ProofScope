@@ -1,0 +1,24 @@
+{
+  "id": "quantifier_swap",
+  "family": "quantifier swap",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "∀ k : Nat, ∃ m : Nat, k < m",
+  "ref_hyp": "True",
+  "ref_concl": "∃ m : Nat, ∀ k : Nat, k < m",
+  "bounds": {},
+  "expected": "CONCLUSION_GAP",
+  "fidelity_failure": true,
+  "tactics": {
+    "concl_gap": [
+      "exact ⟨0, trivial, trivial, fun k => ⟨k + 1, Nat.lt_succ_self k⟩, fun ⟨m, h⟩ => Nat.lt_irrefl m (h m)⟩"
+    ]
+  },
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

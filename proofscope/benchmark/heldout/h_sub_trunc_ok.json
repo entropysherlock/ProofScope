@@ -1,0 +1,27 @@
+{
+  "id": "h_sub_trunc_ok",
+  "family": "unintended default value",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "m ≤ n",
+  "lean_concl": "n - m + m = n",
+  "ref_hyp": "m ≤ n",
+  "ref_concl": "n = n - m + m",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}

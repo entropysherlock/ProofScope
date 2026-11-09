@@ -1,0 +1,27 @@
+{
+  "id": "h_reversed_div",
+  "family": "reversed inequality",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "0 < m",
+  "lean_concl": "n / m ≤ n",
+  "ref_hyp": "0 < m",
+  "ref_concl": "n ≤ n / m",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "CONCLUSION_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}

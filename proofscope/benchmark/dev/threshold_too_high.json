@@ -1,0 +1,22 @@
+{
+  "id": "threshold_too_high",
+  "family": "incorrect constant",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "5 ≤ n",
+  "lean_concl": "2 * n + 1 ≤ n * n",
+  "ref_hyp": "3 ≤ n",
+  "ref_concl": "2 * n + 1 ≤ n * n",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

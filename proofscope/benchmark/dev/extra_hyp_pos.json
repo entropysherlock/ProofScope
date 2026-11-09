@@ -1,0 +1,27 @@
+{
+  "id": "extra_hyp_pos",
+  "family": "extra hypothesis",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "0 < m",
+  "lean_concl": "n ≤ n + m",
+  "ref_hyp": "True",
+  "ref_concl": "n ≤ n + m",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

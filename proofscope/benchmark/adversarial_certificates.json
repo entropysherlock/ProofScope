@@ -1,0 +1,194 @@
+[
+ {
+  "ident": "AdvSorry",
+  "attack": "sorry proof",
+  "statement": "∀ n : Nat, n < n",
+  "tactics": [
+   "intro n; sorry"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvSorryTrue",
+  "attack": "sorry proof of a true statement",
+  "statement": "1 + 1 = 2",
+  "tactics": [
+   "sorry"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvAdmit",
+  "attack": "admit",
+  "statement": "∀ n : Nat, n = n + 1",
+  "tactics": [
+   "intro n; admit"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvCustomAxiom",
+  "attack": "custom axiom",
+  "header": "axiom bogus : ∀ n : Nat, n < n",
+  "statement": "(0 : Nat) < 0",
+  "tactics": [
+   "exact bogus 0"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvAxiomFalse",
+  "attack": "axiom False",
+  "header": "axiom oops : False",
+  "statement": "1 = 2",
+  "tactics": [
+   "exact oops.elim"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvNativeDecide",
+  "attack": "native_decide (trusts compiler)",
+  "statement": "10 * 10 = 100",
+  "tactics": [
+   "native_decide"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvSorriedLemma",
+  "attack": "sorried helper lemma",
+  "header": "theorem helper : ∀ n : Nat, n + 1 = n := sorry",
+  "statement": "(5 : Nat) + 1 = 5",
+  "tactics": [
+   "exact helper 5"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvSorriedDef",
+  "attack": "sorried definition",
+  "header": "def f (n : Nat) : Nat := sorry",
+  "statement": "f 0 = f 0",
+  "tactics": [
+   "rfl"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvDecideFalse",
+  "attack": "decide on a false statement",
+  "statement": "2 + 2 = 5",
+  "tactics": [
+   "decide",
+   "omega",
+   "simp"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvOmegaFalse",
+  "attack": "omega on a false statement",
+  "statement": "∀ n : Nat, n - 1 + 1 = n",
+  "tactics": [
+   "intro n; omega"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvPartialProgress",
+  "attack": "tactic that makes progress but leaves goals",
+  "statement": "∀ n : Nat, 0 < n → n * n < n",
+  "tactics": [
+   "intro n h",
+   "intros; simp_all"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvSkipKernel",
+  "attack": "forged declaration added with kernel checking off (only replay can catch it)",
+  "header": "import Lean\nopen Lean Elab Command in\nset_option debug.skipKernelTC true in\nrun_cmd liftCoreM <| addDecl (.thmDecl { name := `forgedFact, levelParams := [], type := mkConst ``False, value := mkConst ``True.intro })",
+  "statement": "(1 : Nat) = 2",
+  "tactics": [
+   "exact forgedFact.elim"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvOfReduceBool",
+  "attack": "decide +native (trusts the compiler via Lean.ofReduceBool)",
+  "statement": "(3 : Nat) ∣ 9",
+  "tactics": [
+   "decide +native"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvImplementedBy",
+  "attack": "implemented_by on a definition",
+  "header": "def realF (n : Nat) : Nat := n\n@[implemented_by realF] def g (n : Nat) : Nat := n + 1",
+  "statement": "g 0 = 1",
+  "tactics": [
+   "rfl",
+   "decide"
+  ],
+  "expected": "ACCEPTED"
+ },
+ {
+  "ident": "AdvHonestControl",
+  "attack": "honest positive control",
+  "statement": "∀ n : Nat, n + 0 = n",
+  "tactics": [
+   "intro n; rfl"
+  ],
+  "expected": "ACCEPTED"
+ },
+ {
+  "ident": "AdvHonestClassical",
+  "attack": "honest proof using Classical.choice",
+  "statement": "∀ p : Prop, p ∨ ¬ p",
+  "tactics": [
+   "intro p; exact Classical.em p"
+  ],
+  "expected": "ACCEPTED"
+ },
+ {
+  "ident": "AdvShadowNat",
+  "attack": "local shadowing of a standard name",
+  "header": "def Nat.succ_ne_zero' : Prop := True",
+  "statement": "Nat.succ_ne_zero'",
+  "tactics": [
+   "trivial"
+  ],
+  "expected": "ACCEPTED"
+ },
+ {
+  "ident": "AdvOpaqueAxiomish",
+  "attack": "opaque constant used as an unproved fact",
+  "header": "opaque secret : Nat",
+  "statement": "secret = secret",
+  "tactics": [
+   "rfl"
+  ],
+  "expected": "ACCEPTED"
+ },
+ {
+  "ident": "AdvUnsafeCast",
+  "attack": "unsafeCast-based proof term",
+  "statement": "(1 : Nat) = 2",
+  "tactics": [
+   "exact unsafeCast ()"
+  ],
+  "expected": "REJECTED"
+ },
+ {
+  "ident": "AdvStatementSwap",
+  "attack": "proof of a different statement via a type ascription",
+  "statement": "(0 : Nat) < 1",
+  "tactics": [
+   "exact (Nat.le_refl 0 : 0 ≤ 0)"
+  ],
+  "expected": "REJECTED"
+ }
+]

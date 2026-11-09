@@ -1,0 +1,22 @@
+{
+  "id": "concl_bound_weaker",
+  "family": "incorrect constant",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "n ≤ 3 * n",
+  "ref_hyp": "True",
+  "ref_concl": "n ≤ 2 * n",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

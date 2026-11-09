@@ -1,0 +1,27 @@
+{
+  "id": "nat_vs_int_sub",
+  "family": "type coercion",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "n - m ≥ 0",
+  "ref_hyp": "True",
+  "ref_concl": "((n : Int) - m) ≥ 0",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "CONCLUSION_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

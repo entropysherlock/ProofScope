@@ -50,6 +50,10 @@ on:
         description: "Build, #print axioms and leanchecker replay (slow; runs the project's code in this sandbox)"
         type: boolean
         default: false
+      dossiers:
+        description: "With build: elaborator-based theorem dossiers for the target modules"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -93,6 +97,7 @@ jobs:
           PS_CATALOG_TARGETS: ${{ inputs.catalog_targets }}
           PS_WORKSHEETS: ${{ inputs.worksheets }}
           PS_BUILD: ${{ inputs.build }}
+          PS_DOSSIERS: ${{ inputs.dossiers }}
         run: |
           set -uo pipefail
           args=(--repo "$PS_REPO" --commit "$PS_COMMIT" --subdir "$PS_SUBDIR"
@@ -103,6 +108,7 @@ jobs:
           if [[ "$PS_CATALOG_TARGETS" =~ ^[0-9]{1,3}$ ]]; then args+=(--catalog-targets "$PS_CATALOG_TARGETS"); fi
           [ "$PS_WORKSHEETS" = "true" ] && args+=(--worksheets --ledger reviews/openai_math_4eaee875.json)
           [ "$PS_BUILD" = "true" ] && args+=(--build)
+          [ "$PS_BUILD" = "true" ] && [ "$PS_DOSSIERS" = "true" ] && args+=(--dossiers)
           python -m proofscope.project "${args[@]}"
       - name: Job summary
         if: always()

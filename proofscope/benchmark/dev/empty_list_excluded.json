@@ -1,0 +1,20 @@
+{
+  "id": "empty_list_excluded",
+  "family": "empty-set edge case",
+  "split": "dev",
+  "binders": [
+    [
+      "l",
+      "List Nat"
+    ]
+  ],
+  "lean_hyp": "l ≠ []",
+  "lean_concl": "l.length ≥ 0",
+  "ref_hyp": "True",
+  "ref_concl": "l.length ≥ 0",
+  "bounds": {},
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

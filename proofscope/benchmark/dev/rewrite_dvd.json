@@ -1,0 +1,22 @@
+{
+  "id": "rewrite_dvd",
+  "family": "harmless rewrite",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "2 ∣ n",
+  "lean_concl": "(n / 2) * 2 = n",
+  "ref_hyp": "n % 2 = 0",
+  "ref_concl": "n / 2 + n / 2 = n",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

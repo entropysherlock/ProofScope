@@ -1,0 +1,22 @@
+{
+  "id": "domain_bounded",
+  "family": "domain restriction",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n < 10",
+  "lean_concl": "n < n + 1",
+  "ref_hyp": "True",
+  "ref_concl": "n < n + 1",
+  "bounds": {
+    "n": 30
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

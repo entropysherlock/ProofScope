@@ -1,0 +1,93 @@
+name: ProofScope Engine
+
+# v0.5-v1.0 engine slice: theorem dossiers (Lean elaborator), theorem comparison with certificates,
+# adversarial certificate gate, benchmark (dev + held-out) and the HTML viewer. Core Lean only; no Mathlib.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-engine.yml"
+      - "lean/**"
+      - "proofscope/**"
+      - "tests/v02/**"
+
+permissions:
+  contents: read
+
+jobs:
+  engine:
+    name: Dossiers, comparison benchmark, certificate gate, viewer
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PyYAML
+        run: python -m pip install --quiet "pyyaml==6.0.2"
+      - name: Install Lean 4.34.1 via elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Engine freeze check (held-out benchmark integrity)
+        run: sha256sum -c proofscope/benchmark/ENGINE_FREEZE.txt
+      - name: All v0.2-v1.0 tests
+        run: python -m unittest discover -s tests/v02 -v
+      - name: Benchmark (dev, held-out, adversarial certificates)
+        run: python -m proofscope.bench --split all --out engine-evidence/bench
+      - name: Theorem dossiers from Lean core and Std (at least 100)
+        run: |
+          python -m proofscope.dossier --imports Std.Data.HashMap.Lemmas \
+            --modules Init.Data.Nat.Lemmas Init.Data.List.Lemmas Std.Data.HashMap.Lemmas \
+            --module-limit 60 --out engine-evidence/dossiers-core
+      - name: Theorem dossiers from the fixture Lake project, with kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -r tests/fixtures/demo_project "$RUNNER_TEMP/demo" && (cd "$RUNNER_TEMP/demo" && lake build)
+          python -m proofscope.dossier --project "$RUNNER_TEMP/demo" --imports Demo \
+            --modules Demo.Basic Demo.Flawed --out engine-evidence/dossiers-fixture || true
+          test -f engine-evidence/dossiers-fixture/dossier_index.json
+      - name: HTML viewer
+        shell: bash
+        run: |
+          mkdir -p engine-evidence/all
+          cp engine-evidence/dossiers-core/dossiers/*.json engine-evidence/dossiers-fixture/dossiers/*.json engine-evidence/all/
+          python -m proofscope.viewer --dossiers engine-evidence/all --bench engine-evidence/bench/bench_results.json \
+            --title "ProofScope engine run" --out engine-evidence/proofscope_report.html
+      - name: Job summary
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY" || echo "INCONCLUSIVE: no benchmark report" >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("engine-evidence/bench/bench_results.json"))["report"]
+          print("## ProofScope engine")
+          for sp, s in r["splits"].items():
+              e = s["engine_detection"]
+              print(f"- {sp}: exact {s['exact_label_accuracy']}, precision {e['precision']}, recall {e['recall']} {e['recall_ci95']}, FPR {e['false_positive_rate']}, coverage {e['coverage']}, inconsistent {s['inconsistent_runs']}")
+          a = r.get("adversarial_certificates", {})
+          print(f"- adversarial certificates: {a.get('correct')}/{a.get('cases')}, false acceptances {len(a.get('false_acceptances', []))}")
+          print("- Cases are project-authored; held-out cases were written after the engine freeze by the same author.")
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-engine-evidence
+          path: |
+            engine-evidence/bench/bench_results.json
+            engine-evidence/dossiers-core/dossier_index.json
+            engine-evidence/dossiers-core/dossiers/
+            engine-evidence/dossiers-fixture/
+            engine-evidence/proofscope_report.html
+          if-no-files-found: warn
+          retention-days: 30

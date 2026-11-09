@@ -1,0 +1,27 @@
+{
+  "id": "junk_div_hyp",
+  "family": "unintended default value",
+  "split": "dev",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n / m = 0",
+  "lean_concl": "n < m ∨ m = 0",
+  "ref_hyp": "0 < m ∧ n / m = 0",
+  "ref_concl": "n < m",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
+}

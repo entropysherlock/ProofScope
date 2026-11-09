@@ -1,0 +1,27 @@
+{
+  "id": "h_vacuous_lt",
+  "family": "vacuous hypotheses",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n < m ∧ m < n",
+  "lean_concl": "n = m",
+  "ref_hyp": "n ≤ m",
+  "ref_concl": "n ≤ m",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "VACUOUS",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}

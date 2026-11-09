@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 (unreleased): engine slice of the v1.0 roadmap
+
+- `lean/ProofScope/Dossier.lean` + `proofscope/dossier.py`: elaborator-based theorem dossiers (Project Audit S8).
+- `proofscope/certify.py`: generic certificate gate (clean module, axiom policy, leanchecker replay).
+- `proofscope/compare.py`: theorem-level comparison with certified gap / vacuity / equivalence / coverage labels.
+- `proofscope/bench.py` + `proofscope/benchmark/`: 33 dev, 20 held-out (post-freeze) cases, 20 adversarial
+  certificate cases; metrics with Wilson 95% intervals; naive baseline.
+- `proofscope/viewer.py`: offline HTML report.
+- Workflow **ProofScope Engine**; Project Audit input `dossiers`.
+- `tests/v02/test_engine.py`; `docs/engine.md`.
+
 ## 0.3.0 (unreleased)
 
 - `python3 -m proofscope.review` and Project Audit stage S7 (`--worksheets`, workflow input `worksheets`, default on):

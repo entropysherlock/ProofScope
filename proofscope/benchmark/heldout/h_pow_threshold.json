@@ -1,0 +1,22 @@
+{
+  "id": "h_pow_threshold",
+  "family": "incorrect constant",
+  "split": "heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "5 ≤ n",
+  "lean_concl": "n * n < 2 ^ n",
+  "ref_hyp": "4 ≤ n",
+  "ref_concl": "n * n ≤ 2 ^ n",
+  "bounds": {
+    "n": 40
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
+}
