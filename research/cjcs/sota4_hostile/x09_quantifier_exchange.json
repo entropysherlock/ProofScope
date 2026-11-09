@@ -1,0 +1,1 @@
+{"id": "x09_quantifier_exchange", "reference": "∀ (x : Nat), ∃ (y : Nat), y > x", "lean": "∃ (y : Nat), ∀ (x : Nat), y > x", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "sota4_hostile", "purpose": "∀∃ vs ∃∀", "author": "engine developer (Claude), SOTA-4; not independently reviewed"}

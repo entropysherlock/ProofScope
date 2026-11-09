@@ -1,0 +1,1320 @@
+{
+ "by_dir": {
+  "/tmp/ce/sota3/core_heldout": {
+   "cases": 14,
+   "exact": 11,
+   "must_not_violations": 0,
+   "certificate_problems": 0
+  },
+  "/tmp/ce/sota4/core_heldout": {
+   "cases": 14,
+   "exact": 11,
+   "must_not_violations": 0,
+   "certificate_problems": 0
+  },
+  "/tmp/ce/sota3/core_dev": {
+   "cases": 10,
+   "exact": 10,
+   "must_not_violations": 0,
+   "certificate_problems": 0
+  },
+  "/tmp/ce/sota4/core_dev": {
+   "cases": 10,
+   "exact": 10,
+   "must_not_violations": 0,
+   "certificate_problems": 0
+  }
+ },
+ "rows": [
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h01_int_abs_sq",
+   "engine": "cjcs-experimental",
+   "verdict": "ABSTAIN",
+   "direction": null,
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": false,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {},
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h02_nat_div_mul",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_ref_excluded": [],
+    "link_R": [],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_R": [],
+    "wit_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h03_bool_and_comm",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "link_R": [],
+    "true_L": [],
+    "true_R": [],
+    "equiv_both_true": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h04_list_length_append",
+   "engine": "cjcs-experimental",
+   "verdict": "ABSTAIN",
+   "direction": null,
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": false,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {},
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h05_exists_bound_swap",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ],
+    "link_R": [],
+    "wit_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_L": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h06_off_by_one",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "diff_LR": [],
+    "region_conclusion_lean_stronger": [],
+    "link_R": [],
+    "wit_L": [],
+    "true_R": [],
+    "false_L": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_lean_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h07_vacuous_ref",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ],
+    "link_R": [],
+    "wit_L": [],
+    "false_L": [],
+    "region_lean_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h08_both_false_different",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_false",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "region_conclusion_lean_stronger": [],
+    "link_R": [],
+    "wit_L": [],
+    "false_R": [],
+    "equiv_both_false": [],
+    "false_L": [],
+    "wit_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_lean_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h09_int_sub_order",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_ref_excluded": [],
+    "link_R": [],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_R": [],
+    "wit_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h10_joint_harmless_parts",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "diff_LR": [],
+    "link_R": [],
+    "wit_L": [],
+    "true_R": [],
+    "region_joint": [],
+    "region_lean_excluded": [],
+    "false_L": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_joint",
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h11_disjoint_regions",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "link_R": [],
+    "true_L": [],
+    "true_R": [],
+    "equiv_both_true": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h12_open_problem_like",
+   "engine": "cjcs-experimental",
+   "verdict": "ABSTAIN",
+   "direction": null,
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": false,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {},
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h13_identical_unprovable_here",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "definitional",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_L": [
+     "propext"
+    ],
+    "true_R": [
+     "propext"
+    ],
+    "equiv_both_true": [
+     "propext"
+    ],
+    "equiv_defeq": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_heldout",
+   "case": "h14_mixed_strict",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_L": [],
+    "diff_LR": [],
+    "link_R": [],
+    "wit_L": [],
+    "true_R": [],
+    "region_lean_excluded": [],
+    "false_L": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h01_int_abs_sq",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "ABSTAIN",
+   "direction": null,
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": false,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_L": [
+     "propext"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h02_nat_div_mul",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "wit_R": [],
+    "false_R": [],
+    "link_L": [],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_ref_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h03_bool_and_comm",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_R": [],
+    "true_L": [],
+    "equiv_both_true": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h04_list_length_append",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "ABSTAIN",
+   "direction": null,
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": false,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_R": [
+     "propext"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h05_exists_bound_swap",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h06_off_by_one",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [],
+    "diff_LR": [],
+    "region_conclusion_lean_stronger": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_lean_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h07_vacuous_ref",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_lean_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h08_both_false_different",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_false",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "wit_R": [],
+    "false_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "equiv_both_false": [],
+    "region_conclusion_lean_stronger": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_lean_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h09_int_sub_order",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "wit_R": [],
+    "false_R": [],
+    "link_L": [],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_ref_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h10_joint_harmless_parts",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [],
+    "diff_LR": [],
+    "region_lean_excluded": [],
+    "region_joint": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_joint",
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h11_disjoint_regions",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_R": [],
+    "true_L": [],
+    "equiv_both_true": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h12_open_problem_like",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "ABSTAIN",
+   "direction": null,
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": false,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "false_L": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "region_lean_excluded": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h13_identical_unprovable_here",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "definitional",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "equiv_defeq": [],
+    "true_R": [
+     "propext"
+    ],
+    "true_L": [
+     "propext"
+    ],
+    "equiv_both_true": [
+     "propext"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_heldout",
+   "case": "h14_mixed_strict",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [],
+    "diff_LR": [],
+    "region_lean_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c01_natsub_needs_hyp",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "wit_R": [],
+    "region_ref_excluded": [],
+    "link_L": [],
+    "link_R": [],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c02_natabs_analogue",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "wit_R": [],
+    "region_ref_excluded": [],
+    "link_L": [],
+    "link_R": [],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c03_identical_true",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "definitional",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "equiv_both_true": [
+     "propext",
+     "Quot.sound"
+    ],
+    "link_L": [],
+    "equiv_defeq": [],
+    "link_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c04_both_false",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_false",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "equiv_both_false": [],
+    "wit_R": [],
+    "wit_L": [],
+    "link_L": [],
+    "link_R": [],
+    "false_L": [],
+    "region_conclusion_ref_stronger": [],
+    "false_R": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_ref_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c05_quantifier_swap",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ],
+    "wit_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "link_L": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "link_R": [],
+    "false_L": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c06_strengthened_conclusion",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ],
+    "wit_L": [],
+    "link_L": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "link_R": [],
+    "false_L": [],
+    "region_conclusion_lean_stronger": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_lean_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c07_vacuous_both_true",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "true_L": [],
+    "link_L": [],
+    "true_R": [],
+    "link_R": [],
+    "equiv_both_true": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c08_joint_drift",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "diff_LR": [],
+    "wit_L": [],
+    "link_L": [],
+    "true_R": [],
+    "link_R": [],
+    "region_joint": [],
+    "false_L": [],
+    "region_lean_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_joint",
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c09_bool_dropped",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "diff_LR": [],
+    "wit_L": [],
+    "link_L": [],
+    "link_R": [],
+    "true_R": [],
+    "false_L": [],
+    "region_lean_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota3/core_dev",
+   "case": "c10_list_open",
+   "engine": "cjcs-experimental",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "true_L": [
+     "propext"
+    ],
+    "link_L": [],
+    "true_R": [
+     "propext"
+    ],
+    "link_R": [],
+    "equiv_both_true": [
+     "propext"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c01_natsub_needs_hyp",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "wit_R": [],
+    "false_R": [],
+    "link_L": [],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_ref_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c02_natabs_analogue",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_false_formalization_true",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "wit_R": [],
+    "false_R": [],
+    "link_L": [],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_RL": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_ref_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_ref_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c03_identical_true",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "definitional",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "equiv_defeq": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "true_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "equiv_both_true": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c04_both_false",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_false",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "wit_R": [],
+    "false_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "equiv_both_false": [],
+    "region_conclusion_ref_stronger": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_ref_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c05_quantifier_swap",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "false_L": [
+     "propext",
+     "Quot.sound"
+    ],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c06_strengthened_conclusion",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [
+     "propext",
+     "Quot.sound"
+    ],
+    "diff_LR": [
+     "propext",
+     "Quot.sound"
+    ],
+    "region_conclusion_lean_stronger": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_conclusion_lean_stronger"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c07_vacuous_both_true",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_R": [],
+    "true_L": [],
+    "equiv_both_true": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c08_joint_drift",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [],
+    "diff_LR": [],
+    "region_lean_excluded": [],
+    "region_joint": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_joint",
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c09_bool_dropped",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "direction": "reference_true_formalization_false",
+   "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "wit_L": [],
+    "false_L": [],
+    "true_R": [],
+    "diff_LR": [],
+    "region_lean_excluded": []
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": [
+    "region_lean_excluded"
+   ]
+  },
+  {
+   "dir": "/tmp/ce/sota4/core_dev",
+   "case": "c10_list_open",
+   "engine": "cjcs-sota4-oneprocess",
+   "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "direction": "both_true",
+   "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+   "exact": true,
+   "must_not_violation": false,
+   "certificate_problems": [],
+   "certificates": {
+    "link_R": [],
+    "link_L": [],
+    "true_R": [
+     "propext"
+    ],
+    "true_L": [
+     "propext"
+    ],
+    "equiv_both_true": [
+     "propext"
+    ]
+   },
+   "certify_status": "OK",
+   "failure_class": null,
+   "regions": []
+  }
+ ]
+}

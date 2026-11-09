@@ -1,0 +1,15 @@
+{
+ "pilot_size": 50,
+ "status": "plan only: no case selected, no label written",
+ "strata": [
+  {"stratum": "mathematical_equivalence", "target": 9, "source": "restatements of the same Mathlib or paper theorem by different authors"},
+  {"stratum": "logical_non_equivalence", "target": 9, "source": "published formalization errata, review comments, autoformalization failures with a recorded correction"},
+  {"stratum": "assumption_change", "target": 8, "source": "pairs differing in a hypothesis (added, dropped, weakened)"},
+  {"stratum": "definition_change", "target": 6, "source": "pairs whose statements use different but related definitions"},
+  {"stratum": "quantifier_or_domain_change", "target": 6, "source": "order of quantifiers, carrier type, coercions"},
+  {"stratum": "joint_interacting_changes", "target": 6, "source": "two or more simultaneous changes"},
+  {"stratum": "real_paper_pairs", "target": 6, "source": "paper statement with a provenance record (arXiv id, version, theorem number, page) and an existing Lean formalization"}
+ ],
+ "sampling": "custodian draws from a pool assembled from public sources before any tool is run on it; group-disjoint (bench/seal.py); near-duplicates grouped at token Jaccard >= 0.9 (bench/canonical.py)",
+ "excluded_sources": ["any case written by a ProofScope developer or by an AI system used to build ProofScope", "bench/dev_sota3", "research/cjcs/*", "proofscope/benchmark/*"]
+}

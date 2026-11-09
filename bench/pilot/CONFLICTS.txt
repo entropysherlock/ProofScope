@@ -1,0 +1,5 @@
+# Participants who may not review or adjudicate pilot labels (tool developers and case authors).
+Caleb J. Westfall
+Claude
+ChatGPT
+Grok

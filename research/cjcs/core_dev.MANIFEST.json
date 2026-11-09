@@ -1,0 +1,54 @@
+{
+ "scheme": "proofscope-canonical-json-v1",
+ "directory": "research/cjcs/core_dev",
+ "pattern": "*.json",
+ "files": [
+  {
+   "name": "c01_natsub_needs_hyp.json",
+   "canonical_sha256": "d523be2c126595e3d42f8936c9bb649593753dcb94f28d239677d4bd5d42d1a7"
+  },
+  {
+   "name": "c02_natabs_analogue.json",
+   "canonical_sha256": "1704f51e2510cab1585032f3d34bcbc31b01480cf9fb1b5e0dd426a1ab7bd1d5"
+  },
+  {
+   "name": "c03_identical_true.json",
+   "canonical_sha256": "f9578ec479f3c9751191a75973645889d24120c2ed392cd0f2d6d3cc3c149ecf"
+  },
+  {
+   "name": "c04_both_false.json",
+   "canonical_sha256": "a8b8491039606ee5892fe58dfcd671a8ac6ee9e1c4727dc35d27b35c1ea98d80"
+  },
+  {
+   "name": "c05_quantifier_swap.json",
+   "canonical_sha256": "41e8d893bfe8d6abb24ccdb5f37862f1b4909b4b5ca3ca10a208a56d7a46a162"
+  },
+  {
+   "name": "c06_strengthened_conclusion.json",
+   "canonical_sha256": "b6f39bee4a2ae0640a9f888f8fba0036106d01f885be523bf355d2eaf5323c16"
+  },
+  {
+   "name": "c07_vacuous_both_true.json",
+   "canonical_sha256": "acb74b375afc080724817b1375ad264fe651e35b7b62ea8a4257aad5f3855ac0"
+  },
+  {
+   "name": "c08_joint_drift.json",
+   "canonical_sha256": "27e66e39c9678884993b331dc9a280ea2fac7b76d0d2baba50b27d82a0f61266"
+  },
+  {
+   "name": "c09_bool_dropped.json",
+   "canonical_sha256": "da8971ba2c1be7baa567631a061c4c301dde079d6eba60f57372e20acc84ccd9"
+  },
+  {
+   "name": "c10_list_open.json",
+   "canonical_sha256": "1aaaf87c265651c59030d1b8593147020918cdb39fd485a617f6bec214297959"
+  }
+ ],
+ "set_digest": "9a66abe8a2fe14b51f01bc90b2e630aa6f12b6c512c361affd02a12921fdb92a",
+ "provenance": {
+  "computed_from": "authenticated original bytes: proofscope-sota3-cjcs.patch (sha256 f0f1c74a5db0053571d310bb1ff8bd7b6f9543c2416385fbbe8d6ca7b6bd96e8) applied to 5769208, i.e. the bytes the SOTA-3 digest was recorded from; not the current checkout",
+  "repository_commit": "379151101d81bdc0ac48064f2cf76fdb7612e0e6",
+  "finding": "in the repository each file equals the original plus exactly one trailing LF; JSON values identical (docs/sota4/INTEGRITY.md)"
+ },
+ "status": "development set; no digest was recorded in SOTA-3; manifest computed from the authenticated patch bytes"
+}

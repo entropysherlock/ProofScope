@@ -97,7 +97,7 @@ def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str, engi
     rec["log_tail"] = (r.stdout + r.stderr)[-3000:]
     rec["status"] = r.status
     from . import outcomes
-    rec.update(A.parse_engine(case["case_id"], work, outcomes.cjcs if engine.endswith("cjcs") else None))
+    rec.update(A.parse_engine(case["case_id"], work, outcomes.cjcs if engine.endswith(("cjcs", "cjcs4")) else None))
     return rec
 
 
@@ -166,6 +166,8 @@ def measure_startup(system: str, case: dict, n: int, a) -> dict:
 RUNNERS = {
     "proofscope": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean),
     "cjcs": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean, "proofscope.experimental.cjcs"),
+    # SOTA-4 one-process engine: same adapter, same budget, same outcome mapping as "cjcs"
+    "cjcs4": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean, "proofscope.experimental.cjcs4"),
     "semanteq": lambda c, w, b, a: run_semanteq(c, w, b, a.tier, a.mem_mb, a.tool_dir),
     "beqplus": lambda c, w, b, a: run_beqplus(c, w, b, a.tier, a.mem_mb, a.tool_dir, a.beq_lean_version),
 }
@@ -173,7 +175,7 @@ RUNNERS = {
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="python -m bench.runner")
-    ap.add_argument("--system", required=True, choices=["proofscope", "cjcs", "semanteq", "beqplus"])
+    ap.add_argument("--system", required=True, choices=["proofscope", "cjcs", "cjcs4", "semanteq", "beqplus"])
     ap.add_argument("--cases", type=Path, required=True)
     ap.add_argument("--tier", type=int, required=True, choices=[20, 180])
     ap.add_argument("--startup-allowance", default="0",

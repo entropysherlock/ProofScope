@@ -1,0 +1,17 @@
+{
+ "cjcs4": {
+  "cases": 24,
+  "ok_runs": 24,
+  "exact": 21,
+  "must_not_violations": 0,
+  "certified_difference": 13,
+  "certified_equivalence": 8,
+  "abstain": 3,
+  "inconclusive_or_none": 0,
+  "median_cpu_tree_s": 6.622999999999999,
+  "max_cpu_tree_s": 11.578,
+  "median_wall_s": 6.604,
+  "max_rss_mb": 1890.7,
+  "median_environment_loads": 5.0
+ }
+}

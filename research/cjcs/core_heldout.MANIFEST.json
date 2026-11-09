@@ -1,0 +1,75 @@
+{
+ "scheme": "proofscope-canonical-json-v1",
+ "directory": "research/cjcs/core_heldout",
+ "pattern": "*.json",
+ "files": [
+  {
+   "name": "h01_int_abs_sq.json",
+   "canonical_sha256": "70c7ead5aefaa250f10d992ced24dd9ed1132e905273544e03b0dbf931dcfabb"
+  },
+  {
+   "name": "h02_nat_div_mul.json",
+   "canonical_sha256": "90129ba3e31a76313f6281dc9fa95668946fbe1dfbc921c3e1e3893dc1130afb"
+  },
+  {
+   "name": "h03_bool_and_comm.json",
+   "canonical_sha256": "6d8f65d353f480b0b3d4446804c34fa319020ba169170d37ef0211597faf7f41"
+  },
+  {
+   "name": "h04_list_length_append.json",
+   "canonical_sha256": "cbae3780f5f4b0d578895477644de25d88e990293174c3a1bf949e6df26c8d68"
+  },
+  {
+   "name": "h05_exists_bound_swap.json",
+   "canonical_sha256": "c99cc51b86c39c8e528bd6a363fff31af6da7a68368615091e29e4118955e8a3"
+  },
+  {
+   "name": "h06_off_by_one.json",
+   "canonical_sha256": "89b7aaf87c2c55e81ea6a3581193e750069ec42be911b2cd153becb7f4a8dba6"
+  },
+  {
+   "name": "h07_vacuous_ref.json",
+   "canonical_sha256": "ef02edecc84d2f988820f7c6af2fb4ab4758fa6421dfe7bdeb78680d2f25e847"
+  },
+  {
+   "name": "h08_both_false_different.json",
+   "canonical_sha256": "f8a4c2e8a2f28f33c3c03f9df75dd6d49fce1c07437db57b7ec9ac9c537d0d48"
+  },
+  {
+   "name": "h09_int_sub_order.json",
+   "canonical_sha256": "b181a284feda7509b94c80aad50c847eba67f07febdde25b640ae60cf82bb877"
+  },
+  {
+   "name": "h10_joint_harmless_parts.json",
+   "canonical_sha256": "2393b99187f4def4200325f0bfb61d3eec2e9f2f0cf22ec072f868d4c6729425"
+  },
+  {
+   "name": "h11_disjoint_regions.json",
+   "canonical_sha256": "2467c60990220a371c7acbb3cafb425c1588f913c7f2388492aa66c7ef2fbb68"
+  },
+  {
+   "name": "h12_open_problem_like.json",
+   "canonical_sha256": "5824b1deee8411db39e0d22f8ded767c027dbca87bcc4f1729383019263507f9"
+  },
+  {
+   "name": "h13_identical_unprovable_here.json",
+   "canonical_sha256": "d6b51e773a98eed019b6bdc207c72bfba5625f2dfa19d6786270bd248f532674"
+  },
+  {
+   "name": "h14_mixed_strict.json",
+   "canonical_sha256": "7dffc7eef5b9400075a790411f8d2298093cb518da38389282b2622df8a582fe"
+  }
+ ],
+ "set_digest": "8392b99a8af8df83d74233142680b3d365533044d7882fd9687e963ea7438172",
+ "provenance": {
+  "computed_from": "authenticated original bytes: proofscope-sota3-cjcs.patch (sha256 f0f1c74a5db0053571d310bb1ff8bd7b6f9543c2416385fbbe8d6ca7b6bd96e8) applied to 5769208, i.e. the bytes the SOTA-3 digest was recorded from; not the current checkout",
+  "repository_commit": "379151101d81bdc0ac48064f2cf76fdb7612e0e6",
+  "finding": "in the repository each file equals the original plus exactly one trailing LF; JSON values identical (docs/sota4/INTEGRITY.md)"
+ },
+ "legacy": {
+  "raw_sha256": "bb8628b61ff16efd674dc6380a94bc64f301f37ae273ae26f7768027b8a29495",
+  "recorded_in": ".github/workflows/sota3-research.yml at 3791511 (before the first run)",
+  "rule": "concatenation in sorted order of each file with at most one trailing LF removed"
+ },
+ "status": "authenticated; developer-authored held-out set (not independent): regression/development evidence only"
+}

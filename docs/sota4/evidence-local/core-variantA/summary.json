@@ -1,0 +1,32 @@
+{
+ "cjcs": {
+  "cases": 24,
+  "ok_runs": 24,
+  "exact": 21,
+  "must_not_violations": 0,
+  "certified_difference": 13,
+  "certified_equivalence": 8,
+  "abstain": 3,
+  "inconclusive_or_none": 0,
+  "median_cpu_tree_s": 5.3165,
+  "max_cpu_tree_s": 9.634,
+  "median_wall_s": 5.0184999999999995,
+  "max_rss_mb": 1618.9,
+  "median_environment_loads": 7.0
+ },
+ "cjcs4": {
+  "cases": 24,
+  "ok_runs": 24,
+  "exact": 21,
+  "must_not_violations": 0,
+  "certified_difference": 13,
+  "certified_equivalence": 8,
+  "abstain": 3,
+  "inconclusive_or_none": 0,
+  "median_cpu_tree_s": 5.307,
+  "max_cpu_tree_s": 8.734,
+  "median_wall_s": 5.3285,
+  "max_rss_mb": 1893.4,
+  "median_environment_loads": 4.0
+ }
+}

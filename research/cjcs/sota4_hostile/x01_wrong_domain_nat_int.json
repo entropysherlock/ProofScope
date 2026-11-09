@@ -1,0 +1,1 @@
+{"id": "x01_wrong_domain_nat_int", "reference": "∀ (n : Nat), n ≥ 0", "lean": "∀ (n : Int), n ≥ 0", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "sota4_hostile", "purpose": "witness domain: the Int side fails at -1; a Nat witness must not be used", "author": "engine developer (Claude), SOTA-4; not independently reviewed"}

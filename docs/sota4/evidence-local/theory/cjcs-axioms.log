@@ -1,0 +1,15 @@
+'ProofScope.CJCS.cjcs_sound' does not depend on any axioms
+'ProofScope.CJCS.cjcs_sound'' does not depend on any axioms
+'ProofScope.CJCS.difference_needs_a_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProofScope.CJCS.nonequiv_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProofScope.CJCS.both_false_equiv' does not depend on any axioms
+'ProofScope.CJCS.both_true_equiv' does not depend on any axioms
+'ProofScope.CJCS.refuted_unprovable' does not depend on any axioms
+'ProofScope.CJCS.vacuous_logical_equiv' does not depend on any axioms
+'ProofScope.CJCS.disagreement_partition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProofScope.CJCS.regions_disjoint' does not depend on any axioms
+'ProofScope.CJCS.region_refutes_lean' does not depend on any axioms
+'ProofScope.CJCS.ref_excluded_refutes_ref' does not depend on any axioms
+'ProofScope.CJCS.joint_failure_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProofScope.CJCS.joint_disjoint_harmless' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ProofScope.CJCS.joint_example' depends on axioms: [propext, Quot.sound]

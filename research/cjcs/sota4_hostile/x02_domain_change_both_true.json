@@ -1,0 +1,1 @@
+{"id": "x02_domain_change_both_true", "reference": "∀ (n : Nat), n + 1 > n", "lean": "∀ (n : Int), n + 1 > n", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "sota4_hostile", "purpose": "both true: logical equivalence only (never fidelity)", "author": "engine developer (Claude), SOTA-4; not independently reviewed"}

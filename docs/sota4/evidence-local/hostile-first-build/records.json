@@ -1,0 +1,994 @@
+[
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x01_wrong_domain_nat_int",
+  "status": "OK",
+  "cpu_tree_s": 3.546,
+  "wall_s": 3.497,
+  "max_rss_mb": 1605.4,
+  "processes_seen": 9,
+  "launches": {
+   "lean_elab": 5,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 6,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_true_formalization_false",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_LR",
+   "false_L",
+   "link_L",
+   "link_R",
+   "true_R",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x02_domain_change_both_true",
+  "status": "OK",
+  "cpu_tree_s": 2.646,
+  "wall_s": 2.477,
+  "max_rss_mb": 1612.9,
+  "processes_seen": 8,
+  "launches": {
+   "lean_elab": 4,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 5,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "both_true",
+  "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_true",
+   "link_L",
+   "link_R",
+   "true_L",
+   "true_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x03_dependent_binder_dropped",
+  "status": "OK",
+  "cpu_tree_s": 4.203,
+  "wall_s": 4.113,
+  "max_rss_mb": 1612.7,
+  "processes_seen": 9,
+  "launches": {
+   "lean_elab": 5,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 6,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_true_formalization_false",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_LR",
+   "false_L",
+   "link_L",
+   "link_R",
+   "region_lean_excluded",
+   "true_R",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x04_shared_operator_order",
+  "status": "OK",
+  "cpu_tree_s": 6.185,
+  "wall_s": 5.674,
+  "max_rss_mb": 1612.7,
+  "processes_seen": 9,
+  "launches": {
+   "lean_elab": 5,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 6,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_false_formalization_true",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_RL",
+   "false_R",
+   "link_L",
+   "link_R",
+   "region_conclusion_ref_stronger",
+   "true_L",
+   "wit_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x05_missing_instance",
+  "status": "OK",
+  "cpu_tree_s": 0.988,
+  "wall_s": 1.014,
+  "max_rss_mb": 1608.1,
+  "processes_seen": 3,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 0,
+   "repl": 0,
+   "queries": 0,
+   "environment_loads": 1,
+   "search_loads": null
+  },
+  "verdict": "INCONCLUSIVE",
+  "direction": null,
+  "expected": "INCONCLUSIVE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE",
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [],
+  "certify_status": null,
+  "failure_class": null,
+  "reason": "extraction failed",
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x06_vacuous_both",
+  "status": "OK",
+  "cpu_tree_s": 3.169,
+  "wall_s": 2.991,
+  "max_rss_mb": 1612.8,
+  "processes_seen": 8,
+  "launches": {
+   "lean_elab": 4,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 5,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "both_true",
+  "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_true",
+   "link_L",
+   "link_R",
+   "true_L",
+   "true_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x07_witness_outside_pool",
+  "status": "OK",
+  "cpu_tree_s": 2.675,
+  "wall_s": 2.434,
+  "max_rss_mb": 1615.1,
+  "processes_seen": 6,
+  "launches": {
+   "lean_elab": 4,
+   "leanchecker": 0,
+   "repl": 0,
+   "queries": 0,
+   "environment_loads": 4,
+   "search_loads": null
+  },
+  "verdict": "ABSTAIN",
+  "direction": null,
+  "expected": null,
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": "no certified countermodel for one side together with a certified proof of the other",
+  "stats": null,
+  "stderr_tail": "",
+  "exact": null,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x08_both_false_distinct",
+  "status": "OK",
+  "cpu_tree_s": 3.762,
+  "wall_s": 3.684,
+  "max_rss_mb": 1605.7,
+  "processes_seen": 9,
+  "launches": {
+   "lean_elab": 5,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 6,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "both_false",
+  "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_false",
+   "false_L",
+   "false_R",
+   "link_L",
+   "link_R",
+   "region_conclusion_lean_stronger",
+   "region_conclusion_ref_stronger",
+   "wit_L",
+   "wit_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x09_quantifier_exchange",
+  "status": "OK",
+  "cpu_tree_s": 3.71,
+  "wall_s": 3.572,
+  "max_rss_mb": 1605.2,
+  "processes_seen": 9,
+  "launches": {
+   "lean_elab": 5,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 6,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_true_formalization_false",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_LR",
+   "false_L",
+   "link_L",
+   "link_R",
+   "true_R",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x10_mixed_assumption_and_conclusion",
+  "status": "OK",
+  "cpu_tree_s": 5.121,
+  "wall_s": 3.821,
+  "max_rss_mb": 1608.6,
+  "processes_seen": 6,
+  "launches": {
+   "lean_elab": 4,
+   "leanchecker": 0,
+   "repl": 0,
+   "queries": 0,
+   "environment_loads": 4,
+   "search_loads": null
+  },
+  "verdict": "ABSTAIN",
+  "direction": null,
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": "no certified countermodel for one side together with a certified proof of the other",
+  "stats": null,
+  "stderr_tail": "",
+  "exact": false,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x11_auto_bound_free_variable",
+  "status": "OK",
+  "cpu_tree_s": 2.527,
+  "wall_s": 2.387,
+  "max_rss_mb": 1611.7,
+  "processes_seen": 8,
+  "launches": {
+   "lean_elab": 4,
+   "leanchecker": 1,
+   "repl": 0,
+   "queries": 1,
+   "environment_loads": 5,
+   "search_loads": null
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "definitional",
+  "expected": null,
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_true",
+   "equiv_defeq",
+   "true_L",
+   "true_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": null,
+  "stderr_tail": "",
+  "exact": null,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs",
+  "variant": "B_prebuilt",
+  "case": "x12_open_both_unknown",
+  "status": "OK",
+  "cpu_tree_s": 5.857,
+  "wall_s": 4.304,
+  "max_rss_mb": 1614.9,
+  "processes_seen": 6,
+  "launches": {
+   "lean_elab": 4,
+   "leanchecker": 0,
+   "repl": 0,
+   "queries": 0,
+   "environment_loads": 4,
+   "search_loads": null
+  },
+  "verdict": "ABSTAIN",
+  "direction": null,
+  "expected": "ABSTAIN",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE",
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": "no certified countermodel for one side together with a certified proof of the other",
+  "stats": null,
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x01_wrong_domain_nat_int",
+  "status": "OK",
+  "cpu_tree_s": 2.287,
+  "wall_s": 2.359,
+  "max_rss_mb": 1731.3,
+  "processes_seen": 12,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 7,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_true_formalization_false",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_LR",
+   "false_L",
+   "link_L",
+   "link_R",
+   "true_R",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 5,
+   "env_load_s": 0.93,
+   "search_s": 0.4,
+   "verify_s": 0.69
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x02_domain_change_both_true",
+  "status": "OK",
+  "cpu_tree_s": 2.663,
+  "wall_s": 2.726,
+  "max_rss_mb": 1724.3,
+  "processes_seen": 11,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 6,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "both_true",
+  "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_true",
+   "link_L",
+   "link_R",
+   "true_L",
+   "true_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 4,
+   "env_load_s": 1.14,
+   "search_s": 0.62,
+   "verify_s": 0.67
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x03_dependent_binder_dropped",
+  "status": "OK",
+  "cpu_tree_s": 2.215,
+  "wall_s": 2.246,
+  "max_rss_mb": 1725.1,
+  "processes_seen": 12,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 7,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_true_formalization_false",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_LR",
+   "false_L",
+   "link_L",
+   "link_R",
+   "region_lean_excluded",
+   "true_R",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 5,
+   "env_load_s": 0.84,
+   "search_s": 0.46,
+   "verify_s": 0.61
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x04_shared_operator_order",
+  "status": "OK",
+  "cpu_tree_s": 3.556,
+  "wall_s": 3.568,
+  "max_rss_mb": 1771.0,
+  "processes_seen": 12,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 7,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_false_formalization_true",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_RL",
+   "false_R",
+   "link_L",
+   "link_R",
+   "region_conclusion_ref_stronger",
+   "true_L",
+   "wit_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 5,
+   "env_load_s": 0.85,
+   "search_s": 1.81,
+   "verify_s": 0.6
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x05_missing_instance",
+  "status": "OK",
+  "cpu_tree_s": 1.037,
+  "wall_s": 1.077,
+  "max_rss_mb": 1706.0,
+  "processes_seen": 6,
+  "launches": {
+   "lean_elab": 0,
+   "leanchecker": 0,
+   "repl": 1,
+   "queries": 3,
+   "environment_loads": 1,
+   "search_loads": 1
+  },
+  "verdict": "INCONCLUSIVE",
+  "direction": null,
+  "expected": "INCONCLUSIVE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE",
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [],
+  "certify_status": null,
+  "failure_class": "EXTRACTION",
+  "reason": "extraction failed",
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 0,
+   "repl_requests": 2,
+   "env_load_s": 0.83
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x06_vacuous_both",
+  "status": "OK",
+  "cpu_tree_s": 2.765,
+  "wall_s": 2.81,
+  "max_rss_mb": 1704.5,
+  "processes_seen": 11,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 6,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "both_true",
+  "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_true",
+   "link_L",
+   "link_R",
+   "true_L",
+   "true_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 4,
+   "env_load_s": 0.87,
+   "search_s": 1.09,
+   "verify_s": 0.6
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x07_witness_outside_pool",
+  "status": "OK",
+  "cpu_tree_s": 2.54,
+  "wall_s": 2.646,
+  "max_rss_mb": 1719.7,
+  "processes_seen": 11,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 6,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "ABSTAIN",
+  "direction": null,
+  "expected": null,
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "link_L",
+   "link_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": "no certified countermodel for one side together with a certified proof of the other",
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 4,
+   "env_load_s": 0.95,
+   "search_s": 0.88,
+   "verify_s": 0.54
+  },
+  "stderr_tail": "",
+  "exact": null,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x08_both_false_distinct",
+  "status": "OK",
+  "cpu_tree_s": 2.315,
+  "wall_s": 2.326,
+  "max_rss_mb": 1722.5,
+  "processes_seen": 12,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 7,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "both_false",
+  "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_false",
+   "false_L",
+   "false_R",
+   "link_L",
+   "link_R",
+   "region_conclusion_lean_stronger",
+   "region_conclusion_ref_stronger",
+   "wit_L",
+   "wit_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 5,
+   "env_load_s": 0.89,
+   "search_s": 0.44,
+   "verify_s": 0.66
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x09_quantifier_exchange",
+  "status": "OK",
+  "cpu_tree_s": 2.593,
+  "wall_s": 2.66,
+  "max_rss_mb": 1703.9,
+  "processes_seen": 12,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 7,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "direction": "reference_true_formalization_false",
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "diff_LR",
+   "false_L",
+   "link_L",
+   "link_R",
+   "true_R",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 5,
+   "env_load_s": 1.07,
+   "search_s": 0.47,
+   "verify_s": 0.77
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x10_mixed_assumption_and_conclusion",
+  "status": "OK",
+  "cpu_tree_s": 7.015,
+  "wall_s": 5.993,
+  "max_rss_mb": 1893.7,
+  "processes_seen": 12,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 7,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "ABSTAIN",
+  "direction": null,
+  "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "false_L",
+   "link_L",
+   "link_R",
+   "region_lean_excluded",
+   "wit_L"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": "no certified countermodel for one side together with a certified proof of the other",
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 5,
+   "env_load_s": 1.03,
+   "search_s": 3.9,
+   "verify_s": 0.65
+  },
+  "stderr_tail": "",
+  "exact": false,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x11_auto_bound_free_variable",
+  "status": "OK",
+  "cpu_tree_s": 2.421,
+  "wall_s": 2.469,
+  "max_rss_mb": 1700.2,
+  "processes_seen": 11,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 6,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+  "direction": "definitional",
+  "expected": null,
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE"
+  ],
+  "certificates": [
+   "equiv_both_true",
+   "equiv_defeq",
+   "true_L",
+   "true_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": null,
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 4,
+   "env_load_s": 1.0,
+   "search_s": 0.58,
+   "verify_s": 0.61
+  },
+  "stderr_tail": "",
+  "exact": null,
+  "must_not_violation": false
+ },
+ {
+  "engine": "cjcs4",
+  "variant": "B_prebuilt",
+  "case": "x12_open_both_unknown",
+  "status": "OK",
+  "cpu_tree_s": 6.962,
+  "wall_s": 5.943,
+  "max_rss_mb": 1831.2,
+  "processes_seen": 11,
+  "launches": {
+   "lean_elab": 1,
+   "leanchecker": 1,
+   "repl": 1,
+   "queries": 6,
+   "environment_loads": 3,
+   "search_loads": 1
+  },
+  "verdict": "ABSTAIN",
+  "direction": null,
+  "expected": "ABSTAIN",
+  "must_not_be": [
+   "CERTIFIED_LOGICAL_DIFFERENCE",
+   "CERTIFIED_LOGICAL_EQUIVALENCE"
+  ],
+  "certificates": [
+   "link_L",
+   "link_R"
+  ],
+  "certify_status": "OK",
+  "failure_class": null,
+  "reason": "no certified countermodel for one side together with a certified proof of the other",
+  "stats": {
+   "search_processes": 1,
+   "search_env_loads": 1,
+   "verify_processes": 2,
+   "repl_requests": 4,
+   "env_load_s": 1.15,
+   "search_s": 3.85,
+   "verify_s": 0.62
+  },
+  "stderr_tail": "",
+  "exact": true,
+  "must_not_violation": false
+ }
+]
