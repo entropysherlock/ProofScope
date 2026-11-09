@@ -1,0 +1,13 @@
+{
+ "id": "li03_reverse_weak",
+ "domain": "List",
+ "family": "eq to le",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (l : List Nat), List.length (List.reverse l) = List.length l",
+ "lean": "∀ (l : List Nat), List.length (List.reverse l) ≤ List.length l",
+ "expected": "CLAIM_LEAN_WEAKER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

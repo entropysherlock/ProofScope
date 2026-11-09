@@ -1,0 +1,13 @@
+{
+ "id": "l05_forall_to_exists",
+ "domain": "Logic",
+ "family": "quantifier change",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (n : Nat), n < 2 ^ n",
+ "lean": "∃ (n : Nat), n < 2 ^ n",
+ "expected": "CLAIM_LEAN_WEAKER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

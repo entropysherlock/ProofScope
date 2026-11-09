@@ -1,0 +1,17 @@
+# CMCD v0.9 engine + development suite freeze (Mon Nov  9 13:01:46 UTC 2026)
+cce96bd8754eb7281695fa8cbc39cac6d15d6228b3672b4e439281b2ba6b33b1  proofscope/cmcd.py
+8cf4fdba10f3dfaaaf8534f29c677aef1b322cc47fe98251b254b4ce1f52d95a  lean/ProofScope/DriftExtract.lean
+a8f590f6881729f6982bcecdded5f7904bfdb07f9cf1c76cecfb3c4ce7d3417a  lean/ProofScope/DriftSoundness.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+a4c54f2f7e4278c54ad4052a03ce8c2f1c23c7fa72b82b43c7e6e4ac1763385e  proofscope/claimdelta.py
+664cc9c62b5fc487855d53ebbafc44f37f329c3b5663c183299f7e23b42f5f93  cmcd_v09_dev suite (concatenated, sorted)
+
+# Block 2: engine after dev fixes (v0.9.1: one edit per multi-argument change, typed instance values,
+# constant witnesses, quantifier closers, global law check). cmcd_v09_dev is now DEVELOPMENT data (run 1: 16/21, 1 wrong).
+# Frozen before the adversarial run and before any independently authored blind suite (Mon Nov  9 13:11:37 UTC 2026)
+49cc8d0646197aaaad24ddda5681900f9db2e24c9b70efee1cf66de879221e33  proofscope/cmcd.py
+1629ed72e7c9debd19db5c74b1c594e92e2b7a961c9f3f1468868639e1fb7bf4  lean/ProofScope/DriftExtract.lean
+a8f590f6881729f6982bcecdded5f7904bfdb07f9cf1c76cecfb3c4ce7d3417a  lean/ProofScope/DriftSoundness.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+a4c54f2f7e4278c54ad4052a03ce8c2f1c23c7fa72b82b43c7e6e4ac1763385e  proofscope/claimdelta.py
+076e8d2e49006136e9d96d3381e22a7b3280541556784337c600f1d2cd71d6af  cmcd_v09_adversarial suite

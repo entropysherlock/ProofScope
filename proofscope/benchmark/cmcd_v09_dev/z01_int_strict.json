@@ -1,0 +1,13 @@
+{
+ "id": "z01_int_strict",
+ "domain": "Int",
+ "family": "strict to weak",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (a : Int), 0 < a → a < a * a + 1",
+ "lean": "∀ (a : Int), 0 < a → a ≤ a * a + 1",
+ "expected": "CLAIM_LEAN_WEAKER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

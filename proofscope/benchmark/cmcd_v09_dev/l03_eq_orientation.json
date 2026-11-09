@@ -1,0 +1,11 @@
+{
+ "id": "l03_eq_orientation",
+ "domain": "Logic",
+ "family": "harmless",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (x : Nat), ∃ (y : Nat), Nat.gcd x y = 1",
+ "lean": "∀ (x : Nat), ∃ (y : Nat), 1 = Nat.gcd x y",
+ "expected": "SCHEMA_EQUIVALENT",
+ "expected_localized_at": null,
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

@@ -1,0 +1,11 @@
+{
+ "id": "n09_mul_interpreted",
+ "domain": "Nat",
+ "family": "harmless (occurrence policy)",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (n : Nat), 2 * (n * n) = n * n + n * n",
+ "lean": "∀ (n : Nat), n * n + n * n = 2 * (n * n)",
+ "expected": "SCHEMA_EQUIVALENT",
+ "expected_localized_at": null,
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

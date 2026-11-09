@@ -1,0 +1,66 @@
+name: Setup pinned Lean (verified)
+description: >-
+  Install exactly Lean 4.34.1 from the official GitHub release, verified by SHA-256, with bounded retries
+  and a cache. Fails closed with INFRASTRUCTURE_ERROR (exit 75) if that exact archive cannot be obtained;
+  never substitutes another release.
+inputs:
+  version:
+    description: Lean release (without the v)
+    default: "4.34.1"
+  sha256:
+    description: SHA-256 of lean-<version>-linux.tar.zst
+    default: "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4"
+runs:
+  using: composite
+  steps:
+    - name: Restore Lean archive cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/proofscope-lean
+        key: lean-${{ inputs.version }}-${{ inputs.sha256 }}
+    - name: Download, verify and install Lean
+      shell: bash
+      env:
+        LEAN_VERSION: ${{ inputs.version }}
+        LEAN_SHA256: ${{ inputs.sha256 }}
+      run: |
+        set -uo pipefail
+        dir="$HOME/.cache/proofscope-lean"; mkdir -p "$dir"
+        archive="$dir/lean-${LEAN_VERSION}-linux.tar.zst"
+        url="https://github.com/leanprover/lean4/releases/download/v${LEAN_VERSION}/lean-${LEAN_VERSION}-linux.tar.zst"
+        verify() { echo "${LEAN_SHA256}  $archive" | sha256sum -c --status; }
+        if [ -f "$archive" ] && verify; then
+          echo "Lean archive restored from cache (hash verified)"
+        else
+          rm -f "$archive"
+          ok=0
+          for attempt in 1 2 3 4; do
+            echo "Download attempt $attempt: $url"
+            if curl -fSL --retry 4 --retry-all-errors --retry-delay 15 --connect-timeout 30 --max-time 900 \
+                 -o "$archive.part" "$url"; then
+              mv "$archive.part" "$archive"
+              if verify; then ok=1; break; fi
+              echo "::error title=INFRASTRUCTURE_ERROR::Lean archive SHA-256 mismatch (expected ${LEAN_SHA256}); refusing to use it"
+              rm -f "$archive"; exit 75
+            fi
+            sleep $((attempt * 30))
+          done
+          if [ "$ok" != 1 ]; then
+            echo "::error title=INFRASTRUCTURE_ERROR::Could not download Lean ${LEAN_VERSION} after 4 attempts (network/GitHub). This is not a mathematical failure."
+            exit 75
+          fi
+        fi
+        command -v unzstd >/dev/null || sudo apt-get install -y -q zstd >/dev/null || {
+          echo "::error title=INFRASTRUCTURE_ERROR::zstd is not available to unpack Lean"; exit 75; }
+        dest="$RUNNER_TEMP/lean-${LEAN_VERSION}"
+        rm -rf "$dest"; mkdir -p "$dest"
+        tar --use-compress-program=unzstd -xf "$archive" -C "$dest" --strip-components=1 || {
+          echo "::error title=INFRASTRUCTURE_ERROR::Lean archive could not be extracted"; exit 75; }
+        echo "$dest/bin" >> "$GITHUB_PATH"
+        v="$("$dest/bin/lean" --version)"
+        echo "$v"
+        case "$v" in
+          *"version ${LEAN_VERSION}"*) ;;
+          *) echo "::error title=INFRASTRUCTURE_ERROR::installed Lean reports '$v', expected ${LEAN_VERSION}"; exit 75 ;;
+        esac
+        echo "lean ${LEAN_VERSION} sha256 ${LEAN_SHA256}" > "$RUNNER_TEMP/lean-infra.txt"

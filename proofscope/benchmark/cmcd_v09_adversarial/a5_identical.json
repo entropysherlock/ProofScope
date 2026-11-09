@@ -1,0 +1,11 @@
+{
+ "id": "a5_identical",
+ "split": "cmcd_v09_adversarial",
+ "domain": "Nat",
+ "family": "adversarial: must never be certified equivalent",
+ "reference": "∀ (n : Nat), n < 2 ^ n",
+ "lean": "∀ (n : Nat), n < 2 ^ n",
+ "expected": "IDENTICAL",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written before the block-2 run"
+}

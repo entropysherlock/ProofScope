@@ -1,0 +1,1207 @@
+{
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "local": true,
+ "dev_run1_block1": [
+  {
+   "id": "l01_quant_swap_false",
+   "domain": "Logic",
+   "family": "quantifier order",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "∀ (x : Nat), ∃ (y : Nat), x ≤ y * y",
+     "to": "∃ (y : Nat), ∀ (x : Nat), x ≤ y * y"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x ≤ x1 y y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x ≤ x1 y y)"
+   ]
+  },
+  {
+   "id": "l02_unique_to_exists",
+   "domain": "Logic",
+   "family": "uniqueness dropped",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "INCONCLUSIVE",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": null,
+   "global_relation": "INCONCLUSIVE",
+   "edits": [
+    {
+     "from": "y * y = (4 : Nat) ∧ ∀ (z : Nat), z * z = (4 : Nat) → z = y",
+     "to": "y * y = (4 : Nat)"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCONCLUSIVE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "l03_eq_orientation",
+   "domain": "Logic",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "INCONCLUSIVE",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "INCONCLUSIVE",
+   "edits": [
+    {
+     "from": "Nat.gcd x y",
+     "to": "(1 : Nat)"
+    },
+    {
+     "from": "(1 : Nat)",
+     "to": "Nat.gcd x y"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "LEAN_WEAKER",
+    "LEAN_STRONGER"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "l04_conjunct_order",
+   "domain": "Logic",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "n",
+     "to": "(0 : Nat)"
+    },
+    {
+     "from": "(0 : Nat)",
+     "to": "n"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "LEAN_WEAKER",
+    "LEAN_STRONGER"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "l05_forall_to_exists",
+   "domain": "Logic",
+   "family": "quantifier change",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "∀ (n : Nat), n < (2 : Nat) ^ n",
+     "to": "∃ (n : Nat), n < (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∃ (n : Nat), n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "li01_append_strict",
+   "domain": "List",
+   "family": "weak to strict",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "List.length l ≤ List.length (l ++ m)",
+     "to": "List.length l < List.length (l ++ m)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat → List Nat), (∀ (l m : List Nat), x1 l ≤ x1 (x2 l m)) ∧ ¬ (∀ (l m : List Nat), x1 l < x1 (x2 l m))"
+   ]
+  },
+  {
+   "id": "li02_append_comm",
+   "domain": "List",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "l",
+     "to": "m"
+    },
+    {
+     "from": "m",
+     "to": "l"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "INCONCLUSIVE",
+    "INCONCLUSIVE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "li03_reverse_weak",
+   "domain": "List",
+   "family": "eq to le",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "INCONCLUSIVE",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": null,
+   "global_relation": "INCONCLUSIVE",
+   "edits": [
+    {
+     "from": "List.length (List.reverse l) = List.length l",
+     "to": "List.length (List.reverse l) ≤ List.length l"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCONCLUSIVE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n01_two_edits_one_weak",
+   "domain": "Nat",
+   "family": "multi-edit localization",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    2
+   ],
+   "localized_at": [
+    2
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "(3 : Nat) * n",
+     "to": "n + n + n"
+    },
+    {
+     "from": "n + (1 : Nat) < (2 : Nat) ^ n",
+     "to": "n + (1 : Nat) ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT",
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) < x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "n02_changed_base",
+   "domain": "Nat",
+   "family": "changed constant",
+   "expected": "CLAIM_INCOMPARABLE",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "INCOMPARABLE",
+   "edits": [
+    {
+     "from": "(2 : Nat)",
+     "to": "(3 : Nat)"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCOMPARABLE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n03_harmless_succ",
+   "domain": "Nat",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "n + (1 : Nat) ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n04_added_restriction",
+   "domain": "Nat",
+   "family": "hidden assumption",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "(1 : Nat) ≤ n → n < (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "n05_mixed_directions",
+   "domain": "Nat",
+   "family": "mixed (no localization)",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "(1 : Nat)",
+     "to": "(0 : Nat)"
+    },
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "n ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "LEAN_STRONGER",
+    "LEAN_WEAKER"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n06_gcd_comm",
+   "domain": "Nat",
+   "family": "harmless (law)",
+   "expected": "EQUIVALENT_BY_LAWS",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "INCOMPARABLE",
+   "edits": [
+    {
+     "from": "a",
+     "to": "b"
+    },
+    {
+     "from": "b",
+     "to": "a"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "LEAN_WEAKER",
+    "LEAN_STRONGER"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n07_unrelated_true",
+   "domain": "Nat",
+   "family": "unrelated provable",
+   "expected": "NO_SHARED_SYMBOLS",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": null,
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "n ≤ n * n + n"
+    }
+   ],
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "step_relations": [],
+   "countermodels": []
+  },
+  {
+   "id": "n08_vacuous_hyp",
+   "domain": "Nat",
+   "family": "vacuous",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "(1 : Nat) ≤ n",
+     "to": "(1 : Nat) ≤ n ∧ n < (1 : Nat)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (1 : Nat) → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "n09_mul_interpreted",
+   "domain": "Nat",
+   "family": "harmless (occurrence policy)",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "(2 : Nat) * (n * n)",
+     "to": "n * n + n * n"
+    },
+    {
+     "from": "n * n + n * n",
+     "to": "(2 : Nat) * (n * n)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT",
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "z01_int_strict",
+   "domain": "Int",
+   "family": "strict to weak",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "a < a * a + (1 : Int)",
+     "to": "a ≤ a * a + (1 : Int)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) < a → a ≤ x1 a a + (1 : Int)) ∧ ¬ (∀ (a : Int), (0 : Int) < a → a < x1 a a + (1 : Int))"
+   ]
+  },
+  {
+   "id": "z02_int_symm",
+   "domain": "Int",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "a",
+     "to": "b"
+    },
+    {
+     "from": "b",
+     "to": "a"
+    },
+    {
+     "from": "b",
+     "to": "a"
+    },
+    {
+     "from": "a",
+     "to": "b"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "INCOMPARABLE",
+    "LEAN_WEAKER",
+    "LEAN_STRONGER",
+    "INCOMPARABLE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "z03_int_dropped_sign",
+   "domain": "Int",
+   "family": "dropped hypothesis",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "INCONCLUSIVE",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": null,
+   "global_relation": "INCONCLUSIVE",
+   "edits": [
+    {
+     "from": "(0 : Int) ≤ a → a ≤ a * a",
+     "to": "a ≤ a * a"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCONCLUSIVE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "z04_int_constant",
+   "domain": "Int",
+   "family": "changed constant",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "(0 : Int)",
+     "to": "(1 : Int)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≥ (0 : Int)) ∧ ¬ (∀ (a : Int), x1 a a ≥ (1 : Int))"
+   ]
+  }
+ ],
+ "dev_after_fixes_block2": [
+  {
+   "id": "l01_quant_swap_false",
+   "domain": "Logic",
+   "family": "quantifier order",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "∀ (x : Nat), ∃ (y : Nat), x ≤ y * y",
+     "to": "∃ (y : Nat), ∀ (x : Nat), x ≤ y * y"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x ≤ x1 y y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x ≤ x1 y y)"
+   ]
+  },
+  {
+   "id": "l02_unique_to_exists",
+   "domain": "Logic",
+   "family": "uniqueness dropped",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "y * y = (4 : Nat) ∧ ∀ (z : Nat), z * z = (4 : Nat) → z = y",
+     "to": "y * y = (4 : Nat)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∃ (y : Nat), x1 y y = (4 : Nat)) ∧ ¬ (∃ (y : Nat), x1 y y = (4 : Nat) ∧ ∀ (z : Nat), x1 z z = (4 : Nat) → z = y)"
+   ]
+  },
+  {
+   "id": "l03_eq_orientation",
+   "domain": "Logic",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "Nat.gcd x y = (1 : Nat)",
+     "to": "(1 : Nat) = Nat.gcd x y"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "l04_conjunct_order",
+   "domain": "Logic",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n ∧ (0 : Nat) < (2 : Nat) ^ n",
+     "to": "(0 : Nat) < (2 : Nat) ^ n ∧ n < (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "l05_forall_to_exists",
+   "domain": "Logic",
+   "family": "quantifier change",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "∀ (n : Nat), n < (2 : Nat) ^ n",
+     "to": "∃ (n : Nat), n < (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∃ (n : Nat), n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "li01_append_strict",
+   "domain": "List",
+   "family": "weak to strict",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "List.length l ≤ List.length (l ++ m)",
+     "to": "List.length l < List.length (l ++ m)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat → List Nat), (∀ (l m : List Nat), x1 l ≤ x1 (x2 l m)) ∧ ¬ (∀ (l m : List Nat), x1 l < x1 (x2 l m))"
+   ]
+  },
+  {
+   "id": "li02_append_comm",
+   "domain": "List",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "List.length l + List.length m",
+     "to": "List.length m + List.length l"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "li03_reverse_weak",
+   "domain": "List",
+   "family": "eq to le",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "List.length (List.reverse l) = List.length l",
+     "to": "List.length (List.reverse l) ≤ List.length l"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 (x2 l) ≤ x1 l) ∧ ¬ (∀ (l : List Nat), x1 (x2 l) = x1 l)"
+   ]
+  },
+  {
+   "id": "n01_two_edits_one_weak",
+   "domain": "Nat",
+   "family": "multi-edit localization",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    2
+   ],
+   "localized_at": [
+    2
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "(3 : Nat) * n",
+     "to": "n + n + n"
+    },
+    {
+     "from": "n + (1 : Nat) < (2 : Nat) ^ n",
+     "to": "n + (1 : Nat) ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT",
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) < x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "n02_changed_base",
+   "domain": "Nat",
+   "family": "changed constant",
+   "expected": "CLAIM_INCOMPARABLE",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "INCOMPARABLE",
+   "edits": [
+    {
+     "from": "(2 : Nat)",
+     "to": "(3 : Nat)"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCOMPARABLE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n03_harmless_succ",
+   "domain": "Nat",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "n + (1 : Nat) ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n04_added_restriction",
+   "domain": "Nat",
+   "family": "hidden assumption",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "(1 : Nat) ≤ n → n < (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "n05_mixed_directions",
+   "domain": "Nat",
+   "family": "mixed (no localization)",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "(1 : Nat)",
+     "to": "(0 : Nat)"
+    },
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "n ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "step_relations": [
+    "LEAN_STRONGER",
+    "LEAN_WEAKER"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n06_gcd_comm",
+   "domain": "Nat",
+   "family": "harmless (law)",
+   "expected": "EQUIVALENT_BY_LAWS",
+   "verdict": "EQUIVALENT_BY_LAWS",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "INCOMPARABLE",
+   "edits": [
+    {
+     "from": "Nat.gcd a b",
+     "to": "Nat.gcd b a"
+    }
+   ],
+   "reason": "the two statements are rewritings of each other by the listed equational laws; the proof of each direction uses the other statement",
+   "step_relations": [
+    "EQUIVALENT_BY_LAWS"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "n07_unrelated_true",
+   "domain": "Nat",
+   "family": "unrelated provable",
+   "expected": "NO_SHARED_SYMBOLS",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": null,
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "n ≤ n * n + n"
+    }
+   ],
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "step_relations": [],
+   "countermodels": []
+  },
+  {
+   "id": "n08_vacuous_hyp",
+   "domain": "Nat",
+   "family": "vacuous",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "(1 : Nat) ≤ n",
+     "to": "(1 : Nat) ≤ n ∧ n < (1 : Nat)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (1 : Nat) → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "n09_mul_interpreted",
+   "domain": "Nat",
+   "family": "harmless (occurrence policy)",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "(2 : Nat) * (n * n) = n * n + n * n",
+     "to": "n * n + n * n = (2 : Nat) * (n * n)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "z01_int_strict",
+   "domain": "Int",
+   "family": "strict to weak",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "a < a * a + (1 : Int)",
+     "to": "a ≤ a * a + (1 : Int)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) < a → a ≤ x1 a a + (1 : Int)) ∧ ¬ (∀ (a : Int), (0 : Int) < a → a < x1 a a + (1 : Int))"
+   ]
+  },
+  {
+   "id": "z02_int_symm",
+   "domain": "Int",
+   "family": "harmless",
+   "expected": "SCHEMA_EQUIVALENT",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "SCHEMA_EQUIVALENT",
+   "edits": [
+    {
+     "from": "a * b = b * a",
+     "to": "b * a = a * b"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "SCHEMA_EQUIVALENT"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "z03_int_dropped_sign",
+   "domain": "Int",
+   "family": "dropped hypothesis",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "(0 : Int) ≤ a → a ≤ a * a",
+     "to": "a ≤ a * a"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) ≤ a → a ≤ x1 a a) ∧ ¬ (∀ (a : Int), a ≤ x1 a a)"
+   ]
+  },
+  {
+   "id": "z04_int_constant",
+   "domain": "Int",
+   "family": "changed constant",
+   "expected": "CLAIM_LEAN_STRONGER",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "expected_localized_at": [
+    1
+   ],
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_STRONGER",
+   "edits": [
+    {
+     "from": "(0 : Int)",
+     "to": "(1 : Int)"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_STRONGER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≥ (0 : Int)) ∧ ¬ (∀ (a : Int), x1 a a ≥ (1 : Int))"
+   ]
+  }
+ ],
+ "adversarial_block2": [
+  {
+   "id": "a1_unrelated_true_shared",
+   "domain": "Nat",
+   "family": "adversarial: must never be certified equivalent",
+   "expected": "CLAIM_INCOMPARABLE",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": null,
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "(1 : Nat) ≤ (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "a2_unrelated_gcd_true",
+   "domain": "Nat",
+   "family": "adversarial: must never be certified equivalent",
+   "expected": "CLAIM_INCOMPARABLE",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "expected_localized_at": null,
+   "localized_at": [
+    1
+   ],
+   "global_relation": "INCOMPARABLE",
+   "edits": [
+    {
+     "from": "Nat.gcd a (0 : Nat) = a",
+     "to": "Nat.gcd a (1 : Nat) = (1 : Nat)"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCOMPARABLE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "a3_tautological_lean",
+   "domain": "Nat",
+   "family": "adversarial: must never be certified equivalent",
+   "expected": "CLAIM_LEAN_WEAKER",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "expected_localized_at": null,
+   "localized_at": [
+    1
+   ],
+   "global_relation": "LEAN_WEAKER",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "(2 : Nat) ^ n = (2 : Nat) ^ n"
+    }
+   ],
+   "reason": null,
+   "step_relations": [
+    "LEAN_WEAKER"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 (2 : Nat) n = x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "a4_law_trap",
+   "domain": "Nat",
+   "family": "adversarial: must never be certified equivalent",
+   "expected": "CLAIM_INCOMPARABLE",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "expected_localized_at": null,
+   "localized_at": [
+    1
+   ],
+   "global_relation": "INCOMPARABLE",
+   "edits": [
+    {
+     "from": "Nat.gcd a b = Nat.gcd b a",
+     "to": "Nat.gcd a b ∣ a"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCOMPARABLE"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "a5_identical",
+   "domain": "Nat",
+   "family": "adversarial: must never be certified equivalent",
+   "expected": "IDENTICAL",
+   "verdict": "IDENTICAL",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": null,
+   "edits": [],
+   "reason": null,
+   "step_relations": [],
+   "countermodels": []
+  },
+  {
+   "id": "a6_reversed_false",
+   "domain": "Nat",
+   "family": "adversarial: must never be certified equivalent",
+   "expected": "CLAIM_INCOMPARABLE",
+   "verdict": "INCONCLUSIVE",
+   "expected_localized_at": null,
+   "localized_at": null,
+   "global_relation": "INCONCLUSIVE",
+   "edits": [
+    {
+     "from": "n < (2 : Nat) ^ n",
+     "to": "(2 : Nat) ^ n < n"
+    }
+   ],
+   "reason": "single edit",
+   "step_relations": [
+    "INCONCLUSIVE"
+   ],
+   "countermodels": []
+  }
+ ]
+}

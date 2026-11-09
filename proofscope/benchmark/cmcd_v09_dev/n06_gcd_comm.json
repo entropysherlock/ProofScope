@@ -1,0 +1,11 @@
+{
+ "id": "n06_gcd_comm",
+ "domain": "Nat",
+ "family": "harmless (law)",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (a b : Nat), Nat.gcd a b ∣ b",
+ "lean": "∀ (a b : Nat), Nat.gcd b a ∣ b",
+ "expected": "EQUIVALENT_BY_LAWS",
+ "expected_localized_at": null,
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

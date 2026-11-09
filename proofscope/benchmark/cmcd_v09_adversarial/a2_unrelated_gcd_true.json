@@ -1,0 +1,14 @@
+{
+ "id": "a2_unrelated_gcd_true",
+ "split": "cmcd_v09_adversarial",
+ "domain": "Nat",
+ "family": "adversarial: must never be certified equivalent",
+ "reference": "∀ (a : Nat), Nat.gcd a 0 = a",
+ "lean": "∀ (a : Nat), Nat.gcd a 1 = 1",
+ "expected": "CLAIM_INCOMPARABLE",
+ "must_not_be": [
+  "SCHEMA_EQUIVALENT",
+  "EQUIVALENT_BY_LAWS"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written before the block-2 run"
+}

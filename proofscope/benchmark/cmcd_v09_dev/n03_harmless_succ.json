@@ -1,0 +1,11 @@
+{
+ "id": "n03_harmless_succ",
+ "domain": "Nat",
+ "family": "harmless",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (n : Nat), n < 2 ^ n",
+ "lean": "∀ (n : Nat), n + 1 ≤ 2 ^ n",
+ "expected": "SCHEMA_EQUIVALENT",
+ "expected_localized_at": null,
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

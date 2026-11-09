@@ -1,0 +1,95 @@
+name: ProofScope CMCD Drift Localization
+
+# v0.9: certified drift localization (which edit changed the claim, with Lean-checked countermodels).
+# Core Lean only. Development + adversarial suites; an independently authored blind suite is run if present.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-cmcd.yml"
+      - ".github/actions/setup-lean/**"
+      - "proofscope/cmcd.py"
+      - "lean/ProofScope/DriftExtract.lean"
+      - "lean/ProofScope/DriftSoundness.lean"
+      - "proofscope/benchmark/cmcd_*/**"
+      - "proofscope/benchmark/CMCD_FREEZE.txt"
+      - "tests/v02/test_v09_cmcd.py"
+
+permissions:
+  contents: read
+
+jobs:
+  cmcd:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
+        uses: ./.github/actions/setup-lean
+      - name: Engine freeze check (block 2 of CMCD_FREEZE.txt)
+        shell: bash
+        run: |
+          set -euo pipefail
+          awk '/^# Block 2:/{f=1;next} f && /^[0-9a-f]{64}  [a-z]+\//' proofscope/benchmark/CMCD_FREEZE.txt > /tmp/freeze.sha
+          test "$(wc -l < /tmp/freeze.sha)" = 5
+          sha256sum -c /tmp/freeze.sha
+      - name: Lean drift soundness (7 axiom-free + 1 standard-axiom theorem, fresh kernel replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ds/ProofScope" cmcd-evidence
+          lean -R lean -o "$RUNNER_TEMP/ds/ProofScope/ClaimDelta.olean" lean/ProofScope/ClaimDelta.lean > /dev/null
+          LEAN_PATH="$RUNNER_TEMP/ds" lean -R lean -o "$RUNNER_TEMP/ds/ProofScope/DriftSoundness.olean" \
+            lean/ProofScope/DriftSoundness.lean | tee cmcd-evidence/drift-axioms.log
+          test "$(grep -c 'does not depend on any axioms' cmcd-evidence/drift-axioms.log)" = 7
+          grep -q "cancellation' depends on axioms: \[propext, Classical.choice, Quot.sound\]" cmcd-evidence/drift-axioms.log
+          (cd "$RUNNER_TEMP/ds" && LEAN_PATH="$RUNNER_TEMP/ds" leanchecker --fresh ProofScope.DriftSoundness)
+      - name: Tests
+        run: python -m unittest tests.v02.test_v09_cmcd -v
+      - name: Development suite (21) and adversarial suite (6)
+        run: |
+          python -m proofscope.cmcd proofscope/benchmark/cmcd_v09_dev/*.json --out cmcd-evidence/dev --jobs 4 | tee cmcd-evidence/dev.log
+          python -m proofscope.cmcd proofscope/benchmark/cmcd_v09_adversarial/*.json --out cmcd-evidence/adversarial --jobs 4 | tee cmcd-evidence/adversarial.log
+      - name: Independently authored blind suite (only if present)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if compgen -G "proofscope/benchmark/cmcd_blind/*.json" > /dev/null; then
+            sha256sum -c proofscope/benchmark/cmcd_blind/SUITE_HASH.txt
+            python -m proofscope.cmcd proofscope/benchmark/cmcd_blind/*.json --out cmcd-evidence/blind --jobs 4 | tee cmcd-evidence/blind.log
+          else
+            echo "No blind suite committed: blind evaluation PENDING" | tee cmcd-evidence/blind.log
+          fi
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, pathlib, collections
+          print("## ProofScope CMCD drift localization")
+          for name in ("dev", "adversarial", "blind"):
+              p = pathlib.Path(f"cmcd-evidence/{name}/cmcd_results.json")
+              if not p.exists():
+                  print(f"- {name}: no results"); continue
+              rows = json.loads(p.read_text())["rows"]
+              exact = sum(r["verdict"] == r.get("expected") for r in rows)
+              loc = sum(r.get("expected_localized_at") is None or r.get("localized_at") == r.get("expected_localized_at") for r in rows)
+              bad = [r["id"] for r in rows if r["verdict"] in (r.get("must_not_be") or [])]
+              c = collections.Counter(r["verdict"] for r in rows)
+              print(f"- {name}: {len(rows)} cases, verdict match {exact}, localization match {loc}, "
+                    f"must-not-be violations {bad}, counts {dict(c)}")
+          print("Policy LINEAR_CORE_SHARED_OCC. Core Lean only; no external benchmark.")
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-cmcd-evidence
+          path: cmcd-evidence/
+          if-no-files-found: warn

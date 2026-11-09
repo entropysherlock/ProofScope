@@ -1,0 +1,13 @@
+{
+ "id": "z03_int_dropped_sign",
+ "domain": "Int",
+ "family": "dropped hypothesis",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (a : Int), 0 ≤ a → a ≤ a * a",
+ "lean": "∀ (a : Int), a ≤ a * a",
+ "expected": "CLAIM_LEAN_STRONGER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

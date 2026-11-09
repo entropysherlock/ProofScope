@@ -1,0 +1,13 @@
+{
+ "id": "l02_unique_to_exists",
+ "domain": "Logic",
+ "family": "uniqueness dropped",
+ "split": "cmcd_v09_dev",
+ "reference": "∃ (y : Nat), y * y = 4 ∧ ∀ (z : Nat), z * z = 4 → z = y",
+ "lean": "∃ (y : Nat), y * y = 4",
+ "expected": "CLAIM_LEAN_WEAKER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

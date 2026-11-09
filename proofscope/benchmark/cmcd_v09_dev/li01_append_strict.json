@@ -1,0 +1,13 @@
+{
+ "id": "li01_append_strict",
+ "domain": "List",
+ "family": "weak to strict",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (l m : List Nat), List.length l ≤ List.length (l ++ m)",
+ "lean": "∀ (l m : List Nat), List.length l < List.length (l ++ m)",
+ "expected": "CLAIM_LEAN_STRONGER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

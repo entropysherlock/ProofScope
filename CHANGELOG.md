@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.0 (unreleased)
+
+- CMCD drift localization: `lean/ProofScope/DriftExtract.lean` (edit sites, chain, per-occurrence
+  abstraction), `lean/ProofScope/DriftSoundness.lean` (localization and composition theorems, cancellation
+  counterexample), `proofscope/cmcd.py`, suites `cmcd_v09_dev` (21) and `cmcd_v09_adversarial` (6),
+  `CMCD_FREEZE.txt`, blind-suite protocol, workflow **ProofScope CMCD Drift Localization**, `tests/v02/test_v09_cmcd.py`.
+- Infrastructure: `.github/actions/setup-lean` (pinned SHA-256, retries, cache, fail-closed) used by the Engine,
+  ClaimDelta and CMCD workflows.
+- Removed the stray `proofscope-v0.8-claimdelta.patch` committed to the repository root.
+
 ## 0.8.0 (unreleased)
 
 - ClaimDelta: `lean/ProofScope/Abstract.lean` (shared-operator abstraction, elaborator side),

@@ -1,0 +1,13 @@
+{
+ "id": "l01_quant_swap_false",
+ "domain": "Logic",
+ "family": "quantifier order",
+ "split": "cmcd_v09_dev",
+ "reference": "∀ (x : Nat), ∃ (y : Nat), x ≤ y * y",
+ "lean": "∃ (y : Nat), ∀ (x : Nat), x ≤ y * y",
+ "expected": "CLAIM_LEAN_STRONGER",
+ "expected_localized_at": [
+  1
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the CMCD engine freeze; synthetic, same author as the engine (not independent)"
+}

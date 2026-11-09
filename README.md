@@ -84,6 +84,19 @@ documented in [`docs/engine.md`](docs/engine.md):
 Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
 resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
 
+## v0.9: certified drift localization (CMCD)
+
+Details: [`docs/v0.9_cmcd.md`](docs/v0.9_cmcd.md).
+
+- **Question answered:** *which* edit between a reference and a formal statement changed the claim, in which
+  direction, and with what Lean-checked countermodel, even when both statements are true theorems.
+- **Localization theorem** (`lean/ProofScope/DriftSoundness.lean`): in a one-direction chain of edits, a
+  strictly weakening edit's countermodel is a countermodel for the whole pair; with mixed directions,
+  per-edit verdicts provably do not compose (`cancellation`), and ProofScope does not claim localization.
+- Four domains in core Lean (ℕ, ℤ, lists, quantifier logic); verified Lean installation (pinned SHA-256,
+  retries, fail-closed `INFRASTRUCTURE_ERROR`).
+- Development evidence only. An independently authored blind suite and ProofNetVerif are **pending**.
+
 ## v0.8: ClaimDelta, certified statement strength beyond logical equivalence
 
 Details: [`docs/v0.8_claimdelta.md`](docs/v0.8_claimdelta.md).
