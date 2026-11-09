@@ -85,10 +85,10 @@ jobs:
       - name: Build and extract dossiers in isolation (no network, empty environment, non-root)
         shell: bash
         run: |
-          set -uo pipefail
+          set -euo pipefail
           PYDIR="$(dirname "$(command -v python)")"
           cat > "$RUNNER_TEMP/isolated.sh" <<'SH'
-          set -uo pipefail
+          set -euo pipefail
           cd "$RESEARCH"
           if ! lake build $(cat modules.txt) > build.log 2>&1; then
             : > built.txt; : > failed.txt
@@ -99,10 +99,18 @@ jobs:
             tr ' ' '\n' < modules.txt | sed '/^$/d' > built.txt; : > failed.txt
           fi
           cd "$WS" && mkdir -p research-evidence
+          if ! test -s "$RESEARCH/built.txt"; then
+            echo "ERROR: no research modules built; cannot claim a research audit" >&2
+            exit 4
+          fi
           python -m proofscope.dossier --project "$RESEARCH" --imports $(cat "$RESEARCH/built.txt") \
             --modules $(cat "$RESEARCH/built.txt") --commit "$CORPUS_COMMIT" --replay-limit "$REPLAY_LIMIT" \
-            --out research-evidence/dossiers-raw > research-evidence/dossier-run.log 2>&1
-          echo "dossier exit $?" >> research-evidence/dossier-run.log
+            --out research-evidence/dossiers-raw > research-evidence/dossier-run.log 2>&1 || {
+              rc=$?
+              echo "ERROR: dossier extraction failed (exit $rc)" | tee -a research-evidence/dossier-run.log >&2
+              exit "$rc"
+            }
+          python -c 'from pathlib import Path; import sys; p=Path("research-evidence/dossiers-raw/dossiers"); n=len(list(p.glob("*.json"))); print(f"Research dossier JSON count: {n}"); sys.exit(0 if n>0 else 5)'
           SH
           sudo unshare --net -- sudo -u "$USER" env -i HOME="$HOME" LANG=C.UTF-8 \
             PATH="$HOME/.elan/bin:$PYDIR:/usr/bin:/bin" RESEARCH="$RUNNER_TEMP/research" WS="$GITHUB_WORKSPACE" \
