@@ -50,7 +50,8 @@ jobs:
           python proofscope/benchmark/gen_oracle.py
           git diff --exit-code -- proofscope/benchmark/heldout_oracle
       - name: Benchmark (all splits, adversarial certificates)
-        run: python -m proofscope.bench --split all --jobs 4 --out engine-evidence/bench
+        # Keep the original fidelity benchmark separate from ClaimDelta and CMCD schema.
+        run: python -m proofscope.bench --split dev dev_v05_heldout heldout_oracle --jobs 4 --out engine-evidence/bench
       - name: Theorem dossiers from Lean core and Std (at least 100)
         run: |
           python -m proofscope.dossier --imports Std.Data.HashMap.Lemmas \
