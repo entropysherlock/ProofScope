@@ -131,11 +131,20 @@ jobs:
           git rev-parse HEAD > "$GITHUB_WORKSPACE/competitor-smoke/commit.txt"
           sha256sum pyproject.toml LICENSE > "$GITHUB_WORKSPACE/competitor-smoke/sha256.txt"
           uv run --python 3.11 --with . machinechecked --help 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/help.log"
+      - name: Install required Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Native toy-paper audit smoke
         shell: bash
         run: |
           set -o pipefail
-          cd "$RUNNER_TEMP/mc/examples/toy-paper"
+          cd "$RUNNER_TEMP/mc/examples/toy-paper/lean"
+          "$HOME/.elan/bin/lake" exe cache get 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/cache.log"
+          cd ..
           uv run --project "$RUNNER_TEMP/mc" --python 3.11 --with "$RUNNER_TEMP/mc" machinechecked check --json 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log"
       - name: Always upload raw evidence
         if: always()
