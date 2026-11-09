@@ -72,7 +72,7 @@ def to_markdown(d: dict) -> str:
 
 def run(imports: list[str], decls: list[str], modules: list[str], out: Path, project: str | None = None,
         commit: str | None = None, module_limit: int | None = None, replay: bool = True,
-        replay_limit: int | None = None) -> dict:
+        replay_limit: int | None = None, isolated_modules: bool = False) -> dict:
     for n in imports + decls + modules:
         if not NAME_RE.match(n):
             raise ValueError(f"invalid Lean name {n!r}")
@@ -89,17 +89,42 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
         return summary
     driver = build / "ProofScopeDriver.lean"
     lim = f" {module_limit}" if module_limit else ""
-    driver.write_text("".join(f"import {m}\n" for m in dict.fromkeys(imports + modules)) + "import ProofScope.Dossier\n\n"
-                      + (f"#proofscope_dossier {' '.join(decls)}\n" if decls else "")
-                      + "".join(f"#proofscope_dossier_module {m}{lim}\n" for m in modules))
-    r = tc.run([tc.lean, str(driver)], cwd=project or build, extra_path=build, timeout=3600)
-    (out / "elaboration.log").write_text(r.output)
+    outputs: list[str] = []
+    failures: list[str] = []
+    if isolated_modules:
+        # Some individually valid research modules declare identically named
+        # constants and CANNOT be imported into one Lean environment.
+        # One Lean process per module preserves each elaborated declaration.
+        if decls:
+            raise ValueError("--isolated-modules is incompatible with --decls")
+        if not modules:
+            raise ValueError("--isolated-modules requires --modules")
+        for number, module in enumerate(dict.fromkeys(modules), 1):
+            driver.write_text(f"import {module}\nimport ProofScope.Dossier\n\n"
+                              f"#proofscope_dossier_module {module}{lim}\n")
+            result = tc.run([tc.lean, str(driver)], cwd=project or build,
+                            extra_path=build, timeout=3600)
+            outputs.append(f"### ISOLATED MODULE {number}/{len(set(modules))}: {module}\n" + result.output)
+            if result.returncode != 0:
+                failures.append(f"MODULE_ELABORATION_FAILED: {module} (exit {result.returncode})")
+    else:
+        driver.write_text("".join(f"import {m}\n" for m in dict.fromkeys(imports + modules)) + "import ProofScope.Dossier\n\n"
+                          + (f"#proofscope_dossier {' '.join(decls)}\n" if decls else "")
+                          + "".join(f"#proofscope_dossier_module {m}{lim}\n" for m in modules))
+        result = tc.run([tc.lean, str(driver)], cwd=project or build,
+                        extra_path=build, timeout=3600)
+        outputs.append(result.output)
+        if result.returncode != 0:
+            failures.append(f"ELABORATION_PROCESS_FAILED: exit {result.returncode}")
+    output_text = "\n".join(outputs)
+    (out / "elaboration.log").write_text(output_text)
     rows = []
-    for line in r.output.splitlines():
+    for line in output_text.splitlines():
         i = line.find("PROOFSCOPE_DOSSIER ")
         if i >= 0:
             rows.append(json.loads(line[i + len("PROOFSCOPE_DOSSIER "):]))
-    errs = [l for l in r.output.splitlines() if ": error" in l]
+    errs = [l for l in output_text.splitlines() if ": error" in l]
+    summary["errors"] += failures
     summary["errors"] += [f"ELABORATION_ERROR: {e}" for e in errs[:20]]
 
     replayed: dict[str, str] = {}
@@ -159,6 +184,8 @@ def main(argv=None) -> int:
     ap.add_argument("--decls", nargs="*", default=[])
     ap.add_argument("--modules", nargs="*", default=[], help="dossier every theorem declared in these modules")
     ap.add_argument("--module-limit", type=int, default=None)
+    ap.add_argument("--isolated-modules", action="store_true",
+                    help="elaborate each module in its own Lean environment to avoid collisions")
     ap.add_argument("--project", default=None, help="Lake project directory (already built)")
     ap.add_argument("--commit", default=None)
     ap.add_argument("--no-replay", action="store_true")
@@ -166,7 +193,7 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default="proofscope-dossiers")
     a = ap.parse_args(argv)
     s = run(a.imports, a.decls, a.modules, Path(a.out), a.project, a.commit, a.module_limit, not a.no_replay,
-            a.replay_limit)
+            a.replay_limit, a.isolated_modules)
     print(json.dumps(s, indent=2, ensure_ascii=False))
     ok = s["metaprogram_built"] and s["dossiers"] > 0
     print("\nVERDICT\n - " + (f"{s['dossiers']} theorem dossiers were extracted from Lean's elaborated declarations. "

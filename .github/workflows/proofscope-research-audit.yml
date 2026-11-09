@@ -107,7 +107,7 @@ jobs:
             exit 4
           fi
           python -m proofscope.dossier --project "$RESEARCH" --imports $(cat "$RESEARCH/built.txt") \
-            --modules $(cat "$RESEARCH/built.txt") --commit "$CORPUS_COMMIT" --replay-limit "$REPLAY_LIMIT" \
+            --modules $(cat "$RESEARCH/built.txt") --isolated-modules --commit "$CORPUS_COMMIT" --replay-limit "$REPLAY_LIMIT" \
             --out research-evidence/dossiers-raw > research-evidence/dossier-run.log 2>&1 || {
               rc=$?
               echo "ERROR: dossier extraction failed (exit $rc)" | tee -a research-evidence/dossier-run.log >&2
