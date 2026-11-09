@@ -1,0 +1,20 @@
+name: Launch ProofScope SOTA-1 Availability
+
+# Default-branch entry point only. All experimental code and jobs live on
+# competitor-benchmark-audit. No changes to ProofScope engines, benchmarks, or main release.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  availability:
+    name: Run SOTA-1 availability (unlabeled, no scoring)
+    uses: entropysherlock/ProofScope/.github/workflows/competitor-benchmark.yml@competitor-benchmark-audit
+    with:
+      phase: availability
+      tier: "20"
+      cases: bench/fixtures/availability.cases.jsonl
+      startup_allowance: '{"proofscope": 0, "semanteq": 0, "beqplus": 0}'
+      gold: ""
