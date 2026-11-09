@@ -1,0 +1,3580 @@
+From 6c600913ffd4644f7c1a4ee85295081caa35377e Mon Sep 17 00:00:00 2001
+From: "Caleb J. Westfall" <calebwestfall1989@gmail.com>
+Date: Sun, 8 Nov 2026 17:34:38 -0700
+Subject: [PATCH] ProofScope v0.5: theorem intelligence, comparison
+ certificates, benchmark, viewer
+
+Engine slice of the v1.0 roadmap:
+- Lean metaprogram + driver for elaborator-based theorem dossiers (Project Audit S8)
+- generic certificate gate: clean module, standard-axiom policy, leanchecker replay
+- theorem-level comparison with certified applicability/conclusion gaps, vacuity,
+  equivalence, coverage and strict strengthening
+- benchmark: 33 dev + 20 held-out (post-freeze) cases, 20 adversarial certificates
+- offline HTML viewer; ProofScope Engine workflow
+v0.1-v0.4 workflows unchanged.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D6eL9tvFdmWVfTWBctgXnC
+---
+ .github/workflows/proofscope-engine.yml       |  93 ++++++++
+ .../workflows/proofscope-project-audit.yml    |   6 +
+ CHANGELOG.md                                  |  11 +
+ README.md                                     |  20 ++
+ docs/engine.md                                | 110 +++++++++
+ lean/ProofScope/Dossier.lean                  | 158 +++++++++++++
+ proofscope/__init__.py                        |   2 +-
+ proofscope/bench.py                           | 142 +++++++++++
+ proofscope/benchmark/ENGINE_FREEZE.txt        |   3 +
+ .../benchmark/adversarial_certificates.json   | 194 +++++++++++++++
+ proofscope/benchmark/build_dev.py             |  74 ++++++
+ proofscope/benchmark/build_heldout.py         |  41 ++++
+ .../benchmark/dev/concl_bound_weaker.json     |  22 ++
+ .../benchmark/dev/concl_bound_wrong.json      |  22 ++
+ .../benchmark/dev/concl_const_weak.json       |  22 ++
+ proofscope/benchmark/dev/domain_bounded.json  |  22 ++
+ proofscope/benchmark/dev/domain_odd_only.json |  22 ++
+ .../benchmark/dev/empty_list_excluded.json    |  20 ++
+ .../benchmark/dev/empty_list_harmless.json    |  20 ++
+ proofscope/benchmark/dev/extra_hyp_big.json   |  22 ++
+ proofscope/benchmark/dev/extra_hyp_even.json  |  22 ++
+ proofscope/benchmark/dev/extra_hyp_pos.json   |  27 +++
+ .../benchmark/dev/int_coercion_harmless.json  |  27 +++
+ proofscope/benchmark/dev/junk_div_concl.json  |  27 +++
+ proofscope/benchmark/dev/junk_div_hyp.json    |  27 +++
+ proofscope/benchmark/dev/junk_sub_concl.json  |  27 +++
+ .../benchmark/dev/mislinked_true_true.json    |  22 ++
+ proofscope/benchmark/dev/missing_hyp_div.json |  27 +++
+ .../benchmark/dev/missing_hyp_pred.json       |  22 ++
+ proofscope/benchmark/dev/missing_hyp_sub.json |  27 +++
+ proofscope/benchmark/dev/nat_vs_int_sub.json  |  27 +++
+ .../benchmark/dev/nonvacuous_tight.json       |  22 ++
+ proofscope/benchmark/dev/quantifier_swap.json |  24 ++
+ proofscope/benchmark/dev/reversed_ineq.json   |  27 +++
+ .../benchmark/dev/reversed_ineq_strict.json   |  22 ++
+ .../benchmark/dev/rewrite_ceil_div.json       |  27 +++
+ proofscope/benchmark/dev/rewrite_dvd.json     |  22 ++
+ proofscope/benchmark/dev/rewrite_ge.json      |  27 +++
+ proofscope/benchmark/dev/rewrite_ne_zero.json |  22 ++
+ proofscope/benchmark/dev/rewrite_not_le.json  |  22 ++
+ .../benchmark/dev/threshold_lower_ok.json     |  22 ++
+ .../benchmark/dev/threshold_too_high.json     |  22 ++
+ .../benchmark/dev/trunc_sub_eq_zero.json      |  27 +++
+ proofscope/benchmark/dev/vacuous_parity.json  |  22 ++
+ proofscope/benchmark/dev/vacuous_range.json   |  22 ++
+ .../benchmark/heldout/h_div_zero_junk.json    |  27 +++
+ .../benchmark/heldout/h_domain_small.json     |  22 ++
+ .../benchmark/heldout/h_int_abs_gap.json      |  20 ++
+ .../benchmark/heldout/h_int_sq_equiv.json     |  20 ++
+ .../benchmark/heldout/h_list_append_len.json  |  24 ++
+ .../heldout/h_list_nonempty_gap.json          |  20 ++
+ .../benchmark/heldout/h_mislinked2.json       |  22 ++
+ .../benchmark/heldout/h_missing_pos_mod.json  |  27 +++
+ .../benchmark/heldout/h_mod3_equiv.json       |  22 ++
+ .../heldout/h_mod_bound_weaker_ok.json        |  27 +++
+ .../benchmark/heldout/h_mod_bound_wrong.json  |  27 +++
+ .../benchmark/heldout/h_nonvac_two.json       |  27 +++
+ .../benchmark/heldout/h_pow_threshold.json    |  22 ++
+ .../heldout/h_quant_exists_weak.json          |  22 ++
+ .../benchmark/heldout/h_reversed_div.json     |  27 +++
+ .../benchmark/heldout/h_square_mono_gap.json  |  27 +++
+ .../benchmark/heldout/h_sub_trunc_gap.json    |  27 +++
+ .../benchmark/heldout/h_sub_trunc_ok.json     |  27 +++
+ .../benchmark/heldout/h_vacuous_lt.json       |  27 +++
+ .../benchmark/heldout/h_vacuous_mod.json      |  22 ++
+ proofscope/certify.py                         | 113 +++++++++
+ proofscope/compare.py                         | 222 ++++++++++++++++++
+ proofscope/dossier.py                         | 174 ++++++++++++++
+ proofscope/project.py                         |  24 ++
+ proofscope/viewer.py                          | 100 ++++++++
+ tests/v02/test_engine.py                      | 129 ++++++++++
+ 71 files changed, 2885 insertions(+), 1 deletion(-)
+ create mode 100644 .github/workflows/proofscope-engine.yml
+ create mode 100644 docs/engine.md
+ create mode 100644 lean/ProofScope/Dossier.lean
+ create mode 100644 proofscope/bench.py
+ create mode 100644 proofscope/benchmark/ENGINE_FREEZE.txt
+ create mode 100644 proofscope/benchmark/adversarial_certificates.json
+ create mode 100644 proofscope/benchmark/build_dev.py
+ create mode 100644 proofscope/benchmark/build_heldout.py
+ create mode 100644 proofscope/benchmark/dev/concl_bound_weaker.json
+ create mode 100644 proofscope/benchmark/dev/concl_bound_wrong.json
+ create mode 100644 proofscope/benchmark/dev/concl_const_weak.json
+ create mode 100644 proofscope/benchmark/dev/domain_bounded.json
+ create mode 100644 proofscope/benchmark/dev/domain_odd_only.json
+ create mode 100644 proofscope/benchmark/dev/empty_list_excluded.json
+ create mode 100644 proofscope/benchmark/dev/empty_list_harmless.json
+ create mode 100644 proofscope/benchmark/dev/extra_hyp_big.json
+ create mode 100644 proofscope/benchmark/dev/extra_hyp_even.json
+ create mode 100644 proofscope/benchmark/dev/extra_hyp_pos.json
+ create mode 100644 proofscope/benchmark/dev/int_coercion_harmless.json
+ create mode 100644 proofscope/benchmark/dev/junk_div_concl.json
+ create mode 100644 proofscope/benchmark/dev/junk_div_hyp.json
+ create mode 100644 proofscope/benchmark/dev/junk_sub_concl.json
+ create mode 100644 proofscope/benchmark/dev/mislinked_true_true.json
+ create mode 100644 proofscope/benchmark/dev/missing_hyp_div.json
+ create mode 100644 proofscope/benchmark/dev/missing_hyp_pred.json
+ create mode 100644 proofscope/benchmark/dev/missing_hyp_sub.json
+ create mode 100644 proofscope/benchmark/dev/nat_vs_int_sub.json
+ create mode 100644 proofscope/benchmark/dev/nonvacuous_tight.json
+ create mode 100644 proofscope/benchmark/dev/quantifier_swap.json
+ create mode 100644 proofscope/benchmark/dev/reversed_ineq.json
+ create mode 100644 proofscope/benchmark/dev/reversed_ineq_strict.json
+ create mode 100644 proofscope/benchmark/dev/rewrite_ceil_div.json
+ create mode 100644 proofscope/benchmark/dev/rewrite_dvd.json
+ create mode 100644 proofscope/benchmark/dev/rewrite_ge.json
+ create mode 100644 proofscope/benchmark/dev/rewrite_ne_zero.json
+ create mode 100644 proofscope/benchmark/dev/rewrite_not_le.json
+ create mode 100644 proofscope/benchmark/dev/threshold_lower_ok.json
+ create mode 100644 proofscope/benchmark/dev/threshold_too_high.json
+ create mode 100644 proofscope/benchmark/dev/trunc_sub_eq_zero.json
+ create mode 100644 proofscope/benchmark/dev/vacuous_parity.json
+ create mode 100644 proofscope/benchmark/dev/vacuous_range.json
+ create mode 100644 proofscope/benchmark/heldout/h_div_zero_junk.json
+ create mode 100644 proofscope/benchmark/heldout/h_domain_small.json
+ create mode 100644 proofscope/benchmark/heldout/h_int_abs_gap.json
+ create mode 100644 proofscope/benchmark/heldout/h_int_sq_equiv.json
+ create mode 100644 proofscope/benchmark/heldout/h_list_append_len.json
+ create mode 100644 proofscope/benchmark/heldout/h_list_nonempty_gap.json
+ create mode 100644 proofscope/benchmark/heldout/h_mislinked2.json
+ create mode 100644 proofscope/benchmark/heldout/h_missing_pos_mod.json
+ create mode 100644 proofscope/benchmark/heldout/h_mod3_equiv.json
+ create mode 100644 proofscope/benchmark/heldout/h_mod_bound_weaker_ok.json
+ create mode 100644 proofscope/benchmark/heldout/h_mod_bound_wrong.json
+ create mode 100644 proofscope/benchmark/heldout/h_nonvac_two.json
+ create mode 100644 proofscope/benchmark/heldout/h_pow_threshold.json
+ create mode 100644 proofscope/benchmark/heldout/h_quant_exists_weak.json
+ create mode 100644 proofscope/benchmark/heldout/h_reversed_div.json
+ create mode 100644 proofscope/benchmark/heldout/h_square_mono_gap.json
+ create mode 100644 proofscope/benchmark/heldout/h_sub_trunc_gap.json
+ create mode 100644 proofscope/benchmark/heldout/h_sub_trunc_ok.json
+ create mode 100644 proofscope/benchmark/heldout/h_vacuous_lt.json
+ create mode 100644 proofscope/benchmark/heldout/h_vacuous_mod.json
+ create mode 100644 proofscope/certify.py
+ create mode 100644 proofscope/compare.py
+ create mode 100644 proofscope/dossier.py
+ create mode 100644 proofscope/viewer.py
+ create mode 100644 tests/v02/test_engine.py
+
+diff --git a/.github/workflows/proofscope-engine.yml b/.github/workflows/proofscope-engine.yml
+new file mode 100644
+index 0000000..ccc928a
+--- /dev/null
++++ b/.github/workflows/proofscope-engine.yml
+@@ -0,0 +1,93 @@
++name: ProofScope Engine
++
++# v0.5-v1.0 engine slice: theorem dossiers (Lean elaborator), theorem comparison with certificates,
++# adversarial certificate gate, benchmark (dev + held-out) and the HTML viewer. Core Lean only; no Mathlib.
++
++on:
++  workflow_dispatch:
++  push:
++    branches: [main]
++    paths:
++      - ".github/workflows/proofscope-engine.yml"
++      - "lean/**"
++      - "proofscope/**"
++      - "tests/v02/**"
++
++permissions:
++  contents: read
++
++jobs:
++  engine:
++    name: Dossiers, comparison benchmark, certificate gate, viewer
++    runs-on: ubuntu-24.04
++    timeout-minutes: 45
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install PyYAML
++        run: python -m pip install --quiet "pyyaml==6.0.2"
++      - name: Install Lean 4.34.1 via elan
++        shell: bash
++        run: |
++          set -euo pipefail
++          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
++          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
++          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
++      - name: Engine freeze check (held-out benchmark integrity)
++        run: sha256sum -c proofscope/benchmark/ENGINE_FREEZE.txt
++      - name: All v0.2-v1.0 tests
++        run: python -m unittest discover -s tests/v02 -v
++      - name: Benchmark (dev, held-out, adversarial certificates)
++        run: python -m proofscope.bench --split all --out engine-evidence/bench
++      - name: Theorem dossiers from Lean core and Std (at least 100)
++        run: |
++          python -m proofscope.dossier --imports Std.Data.HashMap.Lemmas \
++            --modules Init.Data.Nat.Lemmas Init.Data.List.Lemmas Std.Data.HashMap.Lemmas \
++            --module-limit 60 --out engine-evidence/dossiers-core
++      - name: Theorem dossiers from the fixture Lake project, with kernel replay
++        shell: bash
++        run: |
++          set -euo pipefail
++          cp -r tests/fixtures/demo_project "$RUNNER_TEMP/demo" && (cd "$RUNNER_TEMP/demo" && lake build)
++          python -m proofscope.dossier --project "$RUNNER_TEMP/demo" --imports Demo \
++            --modules Demo.Basic Demo.Flawed --out engine-evidence/dossiers-fixture || true
++          test -f engine-evidence/dossiers-fixture/dossier_index.json
++      - name: HTML viewer
++        shell: bash
++        run: |
++          mkdir -p engine-evidence/all
++          cp engine-evidence/dossiers-core/dossiers/*.json engine-evidence/dossiers-fixture/dossiers/*.json engine-evidence/all/
++          python -m proofscope.viewer --dossiers engine-evidence/all --bench engine-evidence/bench/bench_results.json \
++            --title "ProofScope engine run" --out engine-evidence/proofscope_report.html
++      - name: Job summary
++        if: always()
++        shell: bash
++        run: |
++          python - <<'PY' >> "$GITHUB_STEP_SUMMARY" || echo "INCONCLUSIVE: no benchmark report" >> "$GITHUB_STEP_SUMMARY"
++          import json
++          r = json.load(open("engine-evidence/bench/bench_results.json"))["report"]
++          print("## ProofScope engine")
++          for sp, s in r["splits"].items():
++              e = s["engine_detection"]
++              print(f"- {sp}: exact {s['exact_label_accuracy']}, precision {e['precision']}, recall {e['recall']} {e['recall_ci95']}, FPR {e['false_positive_rate']}, coverage {e['coverage']}, inconsistent {s['inconsistent_runs']}")
++          a = r.get("adversarial_certificates", {})
++          print(f"- adversarial certificates: {a.get('correct')}/{a.get('cases')}, false acceptances {len(a.get('false_acceptances', []))}")
++          print("- Cases are project-authored; held-out cases were written after the engine freeze by the same author.")
++          PY
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: proofscope-engine-evidence
++          path: |
++            engine-evidence/bench/bench_results.json
++            engine-evidence/dossiers-core/dossier_index.json
++            engine-evidence/dossiers-core/dossiers/
++            engine-evidence/dossiers-fixture/
++            engine-evidence/proofscope_report.html
++          if-no-files-found: warn
++          retention-days: 30
+diff --git a/.github/workflows/proofscope-project-audit.yml b/.github/workflows/proofscope-project-audit.yml
+index a3de6c8..bb77d4c 100644
+--- a/.github/workflows/proofscope-project-audit.yml
++++ b/.github/workflows/proofscope-project-audit.yml
+@@ -50,6 +50,10 @@ on:
+         description: "Build, #print axioms and leanchecker replay (slow; runs the project's code in this sandbox)"
+         type: boolean
+         default: false
++      dossiers:
++        description: "With build: elaborator-based theorem dossiers for the target modules"
++        type: boolean
++        default: false
+ 
+ permissions:
+   contents: read
+@@ -93,6 +97,7 @@ jobs:
+           PS_CATALOG_TARGETS: ${{ inputs.catalog_targets }}
+           PS_WORKSHEETS: ${{ inputs.worksheets }}
+           PS_BUILD: ${{ inputs.build }}
++          PS_DOSSIERS: ${{ inputs.dossiers }}
+         run: |
+           set -uo pipefail
+           args=(--repo "$PS_REPO" --commit "$PS_COMMIT" --subdir "$PS_SUBDIR"
+@@ -103,6 +108,7 @@ jobs:
+           if [[ "$PS_CATALOG_TARGETS" =~ ^[0-9]{1,3}$ ]]; then args+=(--catalog-targets "$PS_CATALOG_TARGETS"); fi
+           [ "$PS_WORKSHEETS" = "true" ] && args+=(--worksheets --ledger reviews/openai_math_4eaee875.json)
+           [ "$PS_BUILD" = "true" ] && args+=(--build)
++          [ "$PS_BUILD" = "true" ] && [ "$PS_DOSSIERS" = "true" ] && args+=(--dossiers)
+           python -m proofscope.project "${args[@]}"
+       - name: Job summary
+         if: always()
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 5164df7..8533661 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,5 +1,16 @@
+ # Changelog
+ 
++## 0.5.0 (unreleased): engine slice of the v1.0 roadmap
++
++- `lean/ProofScope/Dossier.lean` + `proofscope/dossier.py`: elaborator-based theorem dossiers (Project Audit S8).
++- `proofscope/certify.py`: generic certificate gate (clean module, axiom policy, leanchecker replay).
++- `proofscope/compare.py`: theorem-level comparison with certified gap / vacuity / equivalence / coverage labels.
++- `proofscope/bench.py` + `proofscope/benchmark/`: 33 dev, 20 held-out (post-freeze) cases, 20 adversarial
++  certificate cases; metrics with Wilson 95% intervals; naive baseline.
++- `proofscope/viewer.py`: offline HTML report.
++- Workflow **ProofScope Engine**; Project Audit input `dossiers`.
++- `tests/v02/test_engine.py`; `docs/engine.md`.
++
+ ## 0.3.0 (unreleased)
+ 
+ - `python3 -m proofscope.review` and Project Audit stage S7 (`--worksheets`, workflow input `worksheets`, default on):
+diff --git a/README.md b/README.md
+index fdd21d2..e602af0 100644
+--- a/README.md
++++ b/README.md
+@@ -66,6 +66,24 @@ Ten statements have **AI-preliminary** reviews so far (7 faithful, 1 faithful wi
+ has a human review yet, and no discrepancy has been found. Details: [`docs/review_worksheets.md`](docs/review_worksheets.md).
+ These are reported local results pending a GitHub Actions rerun.
+ 
++## v0.5: theorem intelligence, comparison certificates, benchmark, viewer
++
++**[Open ProofScope Engine](../../actions/workflows/proofscope-engine.yml)** → **Run workflow**. One coherent engine,
++documented in [`docs/engine.md`](docs/engine.md):
++
++- **Theorem dossiers** computed inside Lean from the elaborated declaration: binders split into parameters,
++  hypotheses and typeclass machinery; statement vs proof dependencies; definitions a reviewer must check; transitive
++  axioms; kernel replay status.
++- **Theorem comparison** of a formal statement against a typed reference, with Lean-checked certificates for
++  applicability gaps, conclusion gaps, vacuity, equivalence, coverage and strict strengthening.
++- **Certificate gate**: only declarations that compile cleanly, use standard axioms and pass `leanchecker` replay count.
++- **Benchmark** (project-authored): held-out 18/20 exact labels, detection precision 1.0, recall 0.83, 0 false
++  positives; 20/20 adversarial certificates handled, 0 false acceptances. No competitor comparison was run.
++- **Viewer**: one offline HTML report.
++
++Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
++resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
++
+ ## Local use
+ 
+ Install Lean 4.34.1, then run:
+@@ -77,6 +95,8 @@ python3 -m unittest discover -s tests/v02 -v             # v0.2 tests (pip insta
+ python3 -m proofscope.fidelity benchmark                 # v0.2 definition-fidelity benchmark
+ python3 -m proofscope.project --help                     # v0.2 pinned-project audit
+ python3 -m proofscope.review --help                      # v0.3 review worksheets
++python3 -m proofscope.bench --split all                  # v0.5 comparison benchmark
++python3 -m proofscope.dossier --help                     # v0.5 theorem dossiers
+ ```
+ 
+ The GitHub workflow handles Lean installation automatically, and publishes reports even when an audit fails.
+diff --git a/docs/engine.md b/docs/engine.md
+new file mode 100644
+index 0000000..0e7fe7b
+--- /dev/null
++++ b/docs/engine.md
+@@ -0,0 +1,110 @@
++# ProofScope engine (v0.5 slice of the v1.0 roadmap)
++
++Status as of November 8, 2026. This page says what is implemented and tested, what each output means, and what is
++not done. Nothing here claims state-of-the-art performance or a mathematical discovery.
++
++## Architecture as implemented
++
++```
++Lean project @ pinned commit ──► [1] Theorem intelligence      proofscope/dossier.py + lean/ProofScope/Dossier.lean
++                                      │  JSON + Markdown dossiers from the elaborated environment
++reference statement (typed) ───► [2] Theorem comparison        proofscope/compare.py
++                                      │  obligations: covers, back, gaps, strictness, vacuity
++                                 [3] Certificate gate          proofscope/certify.py
++                                      │  elaborate → clean module → #print axioms → leanchecker replay
++                                 [4] Audit engine              proofscope/project.py (stages S0–S8)
++                                      │  provenance, closure, hazards, catalog, worksheets, build, dossiers
++                                 [5] Benchmark                 proofscope/bench.py + proofscope/benchmark/
++                                      │  dev / held-out / adversarial certificates, metrics with 95% CIs
++                                 [6] Viewer                    proofscope/viewer.py → one offline HTML file
++```
++
++Workflows: **ProofScope Engine** (subsystems 1, 2, 3, 5, 6, core Lean only) and **ProofScope Project Audit**
++(subsystem 4, now with `dossiers` when `build` is on). The v0.1–v0.4 workflows are unchanged.
++
++## 1. Theorem intelligence (`#proofscope_dossier`, `#proofscope_dossier_module`)
++
++Computed inside Lean from the elaborated declaration, not from source text:
++
++| Field | Source |
++|---|---|
++| `elaborated_type`, `conclusion` | `ppExpr` of the declaration type and of its body under `forallTelescope` |
++| `binders[].role` | `instance` (instance-implicit or a class), `hypothesis` (`isProp`), `parameter` (data) |
++| `conclusion_shape` | head symbols after `whnfR` (∀ → ∃ ∧ ∨ ↔ ¬ = ≤ < …), depth-limited |
++| `statement_dependencies[].role` | `logic`, `machinery` (instances, class projections, Lean's reducible notation such as `GE.ge`), `definition`, `type`, `theorem`, `axiom` |
++| `proof_dependencies` | constants in the value that are not in the type (**direct only**) |
++| `axioms` | `Lean.collectAxioms` (transitive) → `axiom_status` NONE / STANDARD / NONSTANDARD / SORRY |
++| `kernel_status` | driver: `leanchecker` replay of the declaring module → REPLAYED / REPLAY_FAILED; Lean's own library → TOOLCHAIN_LIBRARY; else NOT_RUN |
++| `source_locations` | `findDeclarationRanges?` |
++
++A `sorry` theorem **passes** kernel replay (the kernel accepts `sorryAx` as an axiom); `axiom_status = SORRY` is what
++catches it. Both are reported.
++
++**Measured:** 180 dossiers from Lean core (`Init.Data.Nat.Lemmas`, `Init.Data.List.Lemmas`) and `Std`
++(`Std.Data.HashMap.Lemmas`) in 2.6 s, 0 incomplete extractions; 4 dossiers from the fixture Lake project, all four
++kernel-replayed, axiom statuses NONE / STANDARD / NONSTANDARD / SORRY as planted.
++
++## 2–3. Theorem comparison and certificates
++
++Formal `∀ x, H_L x → C_L x` against reference `∀ x, H_R x → C_R x`. Each label is issued only when the listed
++propositions are **certificates** (elaborated, recompiled cleanly, only propext / Classical.choice / Quot.sound,
++replayed by `leanchecker`):
++
++| Label | Certified propositions | What it establishes | What it does not |
++|---|---|---|---|
++| VACUOUS | `¬ ∃ x, H_L x` | the formal theorem has no instances | anything about the reference |
++| APPLICABILITY_GAP | `∃ x, H_R x ∧ ¬ H_L x` | the formal theorem cannot be applied to an object the reference covers | that the reference claim is false |
++| CONCLUSION_GAP | `∃ x, H_R x ∧ H_L x ∧ C_L x ∧ ¬ C_R x` | at that object the formal conclusion does not give the reference's | that the reference claim is false |
++| EQUIVALENT | `∀x, H_R→H_L`, `∀x, H_R→C_L→C_R`, `∀x, H_L→H_R`, `∀x, H_L→C_R→C_L`, and the transfer implication | each theorem implies the other uniformly in x | that both match a paper |
++| LEAN_STRONGER | transfer + `∃x, H_L ∧ ¬H_R` or `∃x, H_L ∧ H_R ∧ C_R ∧ ¬C_L` | the formal theorem implies the reference and covers strictly more | — |
++| COVERS | transfer `(∀x, H_L→C_L) → (∀x, H_R→C_R)` | the formal theorem implies the reference | strictness |
++| INCONCLUSIVE | none | nothing | — |
++
++Pairs that cannot both hold (e.g. `hyp_cover` and `app_gap`) are checked; if both were certified the run is labelled
++INCONSISTENT. This has not happened in any run.
++
++Witness search: tactic portfolio, small concrete witnesses for `Nat`, `Int` and `List Nat` binders, and, for
++natural-number binders with bounds, `decide +kernel` on the boxed existential (a boxed witness is a full certificate
++of the unbounded existential). Bounded *agreement* is never reported as a general proof.
++
++**Known limitation (measured):** uniform comparison cannot distinguish two unrelated statements that are both always
++true (cases `mislinked_true_true`, `h_mislinked2` are labelled EQUIVALENT and counted as misses). Universal statements
++over infinite domains in a conclusion gap are not decidable by finite search (`h_quant_exists_weak` → INCONCLUSIVE).
++
++## 5. Benchmark (project-authored)
++
++| Split | Cases | Exact labels | Detection precision | Recall (95% CI) | FPR | Coverage | Naive baseline precision / FPR |
++|---|---|---|---|---|---|---|---|
++| dev | 33 | 33/33 | 1.0 | 0.941 [0.73, 0.99] | 0.0 | 1.0 | 0.531 / 0.938 |
++| held-out | 20 | 18/20 [0.70, 0.97] | 1.0 | 0.833 [0.55, 0.95] | 0.0 | 0.95 | 0.60 / 1.0 |
++
++Adversarial certificate cases: 20/20 handled correctly, 0 false acceptances (sorry, admit, custom axioms, `False`
++axiom, `native_decide`, `decide +native`, sorried lemma and definition, a forged declaration added with kernel checking
++off, which only replay caught, false statements, partial progress, `unsafeCast`, statement swap, plus 5 honest
++controls that must be accepted).
++
++Held-out cases were written after the engine files were frozen (hashes in `proofscope/benchmark/ENGINE_FREEZE.txt`,
++checked by the workflow) and run once. They were written by the same author as the engine, so they are held out from
++tuning, not independent. **Competitors were not run:** SemantEq, FormalRx and FormalRx-CC address statement
++equivalence or natural-language-to-Lean diagnosis on their own datasets with models not available here; LeanTrail was
++not located. No competitor numbers are reported.
++
++## Not done (exact continuation point)
++
++1. **Dossiers on Mathlib projects** have not been executed: the sandbox cannot reach the Mathlib cache. Next: run
++   Project Audit with `build` and `dossiers` on a small Mathlib-dependent repository, then on openai/math targets.
++2. **Transitive proof dependencies** are not enumerated (direct only).
++3. **Comparison specs from real papers**: the engine compares formal statements; turning a paper theorem into a typed
++   reference is AI_PRELIMINARY and needs human confirmation. No real-paper comparison has been certified.
++4. **Benchmark size**: 53 comparison cases + 20 adversarial certificate cases (target was 100+ with independent
++   annotation and multiple mathematical domains beyond ℕ/ℤ/lists).
++5. **Resumable checkpointed audits** and a **hosted** interface: not implemented. The viewer is a static offline file.
++6. **Three independent research repositories audited with build**: not done (only openai/math without build, plus
++   Lean core, Std and the fixture project for dossiers).
++
++## Honest classification
++
++Engineering: solid Level 2 moving toward Level 3. The subsystems are connected, tested, reproducible and fail safely
++(no false acceptance in any adversarial case, no contradictory certificates). Research novelty: not established. The
++certificate shapes are classical specification refinement; the contribution is a sound, tested, integrated
++implementation on Lean 4, not a new method.
+diff --git a/lean/ProofScope/Dossier.lean b/lean/ProofScope/Dossier.lean
+new file mode 100644
+index 0000000..37379f7
+--- /dev/null
++++ b/lean/ProofScope/Dossier.lean
+@@ -0,0 +1,158 @@
++import Lean
++
++/-!
++# ProofScope theorem intelligence
++
++`#proofscope_dossier n₁ n₂ …` and `#proofscope_dossier_module M` emit one JSON object per declaration,
++computed from the *elaborated* declaration in the environment (not from source text):
++
++* kind, universe parameters, pretty-printed type and conclusion;
++* every leading ∀-binder with its binder info, and a role: `hypothesis` (a proposition),
++  `instance` (typeclass machinery) or `parameter` (data);
++* the quantifier prefix of the conclusion (∀/∃/∧/∨/→/¬/↔ head symbols, depth-limited);
++* statement dependencies (constants in the type) and direct proof dependencies (constants in the value
++  that are not in the type), each with the module that declares it;
++* the axioms the declaration transitively depends on (`Lean.collectAxioms`);
++* declaration ranges and module.
++
++Lines are logged as `PROOFSCOPE_DOSSIER <json>`. Nothing here is a proof; `kernel_status` is filled in by
++the driver after `leanchecker` replay.
++-/
++
++open Lean Elab Command Meta
++
++namespace ProofScope
++
++def modOf (env : Environment) (n : Name) : String :=
++  match env.getModuleIdxFor? n with
++  | some i => toString (env.header.moduleNames[i.toNat]!)
++  | none => "(this file)"
++
++def binderInfoStr : BinderInfo → String
++  | .default => "explicit" | .implicit => "implicit"
++  | .strictImplicit => "strict_implicit" | .instImplicit => "instance_implicit"
++
++/-- Head-symbol skeleton of a proposition, e.g. `∀ → ∃ ∧`. -/
++partial def shape (e : Expr) (depth : Nat := 6) : MetaM (List String) := do
++  if depth == 0 then return ["…"]
++  let e ← whnfR e
++  match e with
++  | .forallE _ d b _ =>
++    if (← isProp d) && !b.hasLooseBVars then
++      return "→" :: (← shape b (depth - 1))
++    else
++      return "∀" :: (← withLocalDeclD `x d fun x => shape (b.instantiate1 x) (depth - 1))
++  | _ =>
++    match e.getAppFnArgs with
++    | (``Exists, #[_, p]) =>
++      match p with
++      | .lam n d b bi => return "∃" :: (← withLocalDecl n bi d fun x => shape (b.instantiate1 x) (depth - 1))
++      | _ => return ["∃"]
++    | (``And, #[a, b]) => return ["∧(" ++ " ".intercalate (← shape a (depth - 1)) ++ " | "
++                                   ++ " ".intercalate (← shape b (depth - 1)) ++ ")"]
++    | (``Or, #[_, _]) => return ["∨"]
++    | (``Iff, #[_, _]) => return ["↔"]
++    | (``Not, #[_]) => return ["¬"]
++    | (``Eq, _) => return ["="]
++    | (``LE.le, _) => return ["≤"]
++    | (``LT.lt, _) => return ["<"]
++    | (``Ne, _) => return ["≠"]
++    | (``False, _) => return ["False"]
++    | (``True, _) => return ["True"]
++    | (f, _) => return [if f.isAnonymous then "atom" else toString f]
++
++/-- `machinery`: instances, class projections (notation such as `+`, `≤`, `OfNat.ofNat`) and the logical
++connectives; `definition`: a definition whose meaning a reviewer may need to check; `type`/`theorem`/... otherwise. -/
++def depRole (env : Environment) (n : Name) : String :=
++  let logical := [``Eq, ``Ne, ``Not, ``And, ``Or, ``Iff, ``Exists, ``True, ``False]
++  if logical.contains n then "logic"
++  else if isInstanceCore env n then "machinery"
++  else if (env.getProjectionFnInfo? n).any (·.fromClass) then "machinery"
++  -- reducible notation definitions shipped with Lean itself, such as `GE.ge` and `GT.gt`
++  else if getReducibilityStatusCore env n == .reducible
++      && ["Init", "Lean", "Std"].contains ((modOf env n).splitOn ".").head! then "machinery"
++  else match env.find? n with
++    | some (.defnInfo _) => "definition"
++    | some (.opaqueInfo _) => "definition"
++    | some (.inductInfo _) => "type"
++    | some (.ctorInfo _) => "constructor"
++    | some (.thmInfo _) => "theorem"
++    | some (.axiomInfo _) => "axiom"
++    | _ => "other"
++
++def constList (env : Environment) (ns : Array Name) : Json :=
++  Json.arr <| (ns.qsort Name.lt).map fun n =>
++    Json.mkObj [("name", toString n), ("module", modOf env n), ("role", depRole env n)]
++
++def isInteresting (env : Environment) (n : Name) : Bool :=
++  !n.isInternal && !isAuxRecursor env n && !isNoConfusion env n && !(n.isStr && n.getString!.startsWith "proof_")
++
++def dossier (n : Name) : CommandElabM Json := do
++  let env ← getEnv
++  let some ci := env.find? n | return Json.mkObj [("theorem_id", toString n), ("error", "unknown constant")]
++  let kind := match ci with
++    | .thmInfo _ => "theorem" | .defnInfo _ => "definition" | .axiomInfo _ => "axiom"
++    | .opaqueInfo _ => "opaque" | .inductInfo _ => "inductive" | .ctorInfo _ => "constructor"
++    | .recInfo _ => "recursor" | .quotInfo _ => "quotient"
++  let tyConsts := ci.type.getUsedConstants
++  let valConsts := match ci.value? (allowOpaque := true) with
++    | some v => v.getUsedConstants.filter (fun c => !tyConsts.contains c)
++    | none => #[]
++  let axioms ← liftCoreM <| collectAxioms n
++  let ranges ← liftCoreM <| findDeclarationRanges? n
++  let (typeStr, binders, conclStr, shp) ← liftTermElabM <| do
++    let tyS := toString (← ppExpr ci.type)
++    forallTelescope ci.type fun xs body => do
++      let mut bs : Array Json := #[]
++      for x in xs do
++        let d ← x.fvarId!.getDecl
++        let isP ← isProp d.type
++        let isCls := (← isClass? d.type).isSome
++        let role := if d.binderInfo == .instImplicit || isCls then "instance"
++                    else if isP then "hypothesis" else "parameter"
++        let nm := if d.userName.hasMacroScopes then "_inst" else toString d.userName
++        bs := bs.push <| Json.mkObj [("name", nm), ("binder", binderInfoStr d.binderInfo),
++                                     ("role", role), ("type", toString (← ppExpr d.type))]
++      let cS := toString (← ppExpr body)
++      let sh ← if (← isProp body) then shape body else pure ["(not a proposition)"]
++      return (tyS, bs, cS, sh)
++  let unresolved : List String :=
++    ["transitive proof dependencies are not enumerated (only direct ones); axioms are transitive"]
++      ++ (if ranges.isNone then ["no declaration ranges stored for this declaration"] else [])
++  return Json.mkObj [
++    ("theorem_id", toString n), ("kind", kind), ("module", modOf env n),
++    ("universe_params", Json.arr (ci.levelParams.toArray.map (fun l => Json.str (toString l)))),
++    ("elaborated_type", typeStr), ("binders", Json.arr binders),
++    ("hypotheses", Json.arr (binders.filter (fun b => b.getObjValD "role" == Json.str "hypothesis"))),
++    ("conclusion", conclStr), ("conclusion_shape", " ".intercalate shp),
++    ("statement_dependencies", constList env tyConsts),
++    ("proof_dependencies", constList env valConsts),
++    ("axioms", Json.arr ((axioms.qsort Name.lt).map (fun a => Json.str (toString a)))),
++    ("source_locations", match ranges with
++      | some r => Json.mkObj [("start_line", r.range.pos.line), ("end_line", r.range.endPos.line)]
++      | none => Json.null),
++    ("unresolved_items", Json.arr (unresolved.toArray.map Json.str))]
++
++def emit (n : Name) : CommandElabM Unit := do
++  logInfo m!"PROOFSCOPE_DOSSIER {(← dossier n).compress}"
++
++syntax (name := dossierCmd) "#proofscope_dossier" (ppSpace ident)+ : command
++syntax (name := dossierModCmd) "#proofscope_dossier_module" ident (num)? : command
++
++@[command_elab dossierCmd] def elabDossier : CommandElab := fun stx => do
++  for id in stx[1].getArgs do
++    let n ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
++    emit n
++
++/-- Dossiers for every theorem declared in module `M` (optionally the first `k`, in name order). -/
++@[command_elab dossierModCmd] def elabDossierModule : CommandElab := fun stx => do
++  let env ← getEnv
++  let m := stx[1].getId
++  let some idx := env.getModuleIdx? m | throwError "module {m} is not imported"
++  let limit := if stx[2].isNone then 1000000 else stx[2][0].isNatLit?.getD 1000000
++  let names := (env.header.moduleData[idx.toNat]!.constNames).filter fun n =>
++    isInteresting env n && (env.find? n).any (·.isTheorem)
++  for n in ((names.qsort Name.lt).toList.take limit) do
++    emit n
++
++end ProofScope
+diff --git a/proofscope/__init__.py b/proofscope/__init__.py
+index e2281ee..c40b1a9 100644
+--- a/proofscope/__init__.py
++++ b/proofscope/__init__.py
+@@ -1,2 +1,2 @@
+ """ProofScope by Caleb J. Westfall. Minimal public audit prototype."""
+-__version__ = "0.3.0"
++__version__ = "0.5.0"
+diff --git a/proofscope/bench.py b/proofscope/bench.py
+new file mode 100644
+index 0000000..056fc45
+--- /dev/null
++++ b/proofscope/bench.py
+@@ -0,0 +1,142 @@
++"""Benchmark runner for theorem-level comparison (v0.9) and adversarial certificate cases.
++
++    python3 -m proofscope.bench --split dev|heldout|all --out DIR
++
++Metrics
++  exact      engine label == annotated label
++  detection  "flagged" = APPLICABILITY_GAP, CONCLUSION_GAP or VACUOUS (the formal statement does not establish the
++             reference claim); INCONCLUSIVE is an abstention. Precision, recall, false-positive rate and coverage
++             against the annotated `fidelity_failure`, with Wilson 95% intervals.
++  baseline   a naive syntactic baseline that flags a failure whenever the formal and reference texts differ.
++  adversarial certificate cases (proofscope/benchmark/adversarial_certificates.json): every one must be rejected.
++
++Competitor systems (SemantEq, FormalRx(-CC), LeanTrail) were not run: they solve different tasks or need models
++and data not available here, so no comparison is reported for them.
++"""
++
++from __future__ import annotations
++
++import argparse
++import json
++import math
++import sys
++import time
++from pathlib import Path
++
++from .certify import certify
++from .compare import CompareSpec, run_compare
++from .toolchain import Toolchain
++
++HERE = Path(__file__).resolve().parent / "benchmark"
++FLAG = {"APPLICABILITY_GAP", "CONCLUSION_GAP", "VACUOUS"}
++
++
++def wilson(k: int, n: int) -> list | None:
++    if n == 0:
++        return None
++    z, p = 1.96, k / n
++    d = 1 + z * z / n
++    c = (p + z * z / (2 * n)) / d
++    h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
++    return [round(c - h, 3), round(c + h, 3)]
++
++
++def detection(rows: list[dict], key: str) -> dict:
++    tp = fp = fn = tn = ab = 0
++    for r in rows:
++        truth = r["fidelity_failure"]
++        lab = r[key]
++        if lab == "INCONCLUSIVE":
++            ab += 1
++            fn += truth
++            continue
++        f = lab in FLAG
++        tp += f and truth
++        fp += f and not truth
++        fn += (not f) and truth
++        tn += (not f) and (not truth)
++    return {"tp": tp, "fp": fp, "fn": fn, "tn": tn, "abstain": ab,
++            "precision": round(tp / (tp + fp), 3) if tp + fp else None,
++            "recall": round(tp / (tp + fn), 3) if tp + fn else None, "recall_ci95": wilson(tp, tp + fn),
++            "false_positive_rate": round(fp / (fp + tn), 3) if fp + tn else None,
++            "coverage": round(1 - ab / len(rows), 3) if rows else None}
++
++
++def baseline_label(d: dict) -> str:
++    norm = lambda s: " ".join(s.split())  # noqa: E731
++    same = norm(d["lean_hyp"]) == norm(d["ref_hyp"]) and norm(d["lean_concl"]) == norm(d["ref_concl"])
++    return "EQUIVALENT" if same else "CONCLUSION_GAP"
++
++
++def run_adversarial(tc: Toolchain, work: Path) -> list[dict]:
++    cases = json.loads((HERE / "adversarial_certificates.json").read_text())
++    out = []
++    for c in cases:
++        t0 = time.time()
++        r = certify(c["ident"], c.get("header", ""), {"cert": (c["statement"], c["tactics"])}, tc, work / c["ident"])
++        accepted = "cert" in r["certificates"]
++        out.append({"id": c["ident"], "attack": c["attack"], "expected": c["expected"],
++                    "result": "ACCEPTED" if accepted else "REJECTED",
++                    "reason": r["rejected"].get("cert", r["status"]),
++                    "correct": (accepted and c["expected"] == "ACCEPTED") or (not accepted and c["expected"] == "REJECTED"),
++                    "seconds": round(time.time() - t0, 2)})
++    return out
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python3 -m proofscope.bench")
++    ap.add_argument("--split", default="all", choices=["dev", "heldout", "all"])
++    ap.add_argument("--out", default="proofscope-bench")
++    ap.add_argument("--skip-adversarial", action="store_true")
++    a = ap.parse_args(argv)
++    out = Path(a.out).resolve()
++    out.mkdir(parents=True, exist_ok=True)
++    tc = Toolchain.find()
++    splits = ["dev", "heldout"] if a.split == "all" else [a.split]
++    rows = []
++    for sp in splits:
++        for f in sorted((HERE / sp).glob("*.json")):
++            raw = json.loads(f.read_text())
++            spec = CompareSpec.load(f)
++            t0 = time.time()
++            r = run_compare(spec, tc, out / "work" / sp / spec.ident)
++            r["seconds"] = round(time.time() - t0, 2)
++            r["fidelity_failure"] = raw["fidelity_failure"]
++            r["baseline"] = baseline_label(raw)
++            rows.append(r)
++            mark = "ok" if r.get("correct") else f"expected {spec.expected}"
++            print(f"[{sp}] {spec.id:<26} {r['classification']:<18} {mark}", flush=True)
++    report = {"toolchain": tc.version(), "splits": {}}
++    for sp in splits:
++        rs = [r for r in rows if r["split"] == sp]
++        if not rs:
++            continue
++        ex = sum(1 for r in rs if r.get("correct"))
++        report["splits"][sp] = {
++            "cases": len(rs), "exact_label_accuracy": f"{ex}/{len(rs)}", "exact_ci95": wilson(ex, len(rs)),
++            "engine_detection": detection(rs, "classification"), "baseline_detection": detection(rs, "baseline"),
++            "certificates": sum(len(r["certificates"]) for r in rs),
++            "inconsistent_runs": sum(1 for r in rs if r["classification"] == "INCONSISTENT"),
++            "median_seconds": sorted(r["seconds"] for r in rs)[len(rs) // 2],
++            "misses": [{"id": r["id"], "expected": r["expected"], "got": r["classification"]} for r in rs if not r.get("correct")],
++        }
++    if not a.skip_adversarial:
++        adv = run_adversarial(tc, out / "work" / "adversarial")
++        report["adversarial_certificates"] = {"cases": len(adv), "correct": sum(r["correct"] for r in adv),
++                                              "false_acceptances": [r for r in adv if r["result"] == "ACCEPTED" and r["expected"] == "REJECTED"],
++                                              "rows": adv}
++    report["competitors"] = ("not run: SemantEq, FormalRx and FormalRx-CC address statement equivalence or "
++                             "NL-to-Lean diagnosis on other datasets and require models/data not available here; "
++                             "LeanTrail was not located. No competitor numbers are reported.")
++    (out / "bench_results.json").write_text(json.dumps({"report": report, "rows": rows}, indent=2, ensure_ascii=False))
++    print(json.dumps(report, indent=2, ensure_ascii=False)[:6000])
++    bad = any(s["inconsistent_runs"] for s in report["splits"].values()) or \
++        bool(report.get("adversarial_certificates", {}).get("false_acceptances"))
++    print("\nVERDICT\n - " + ("A soundness problem was observed (inconsistent certificates or a false acceptance)."
++                              if bad else "No soundness violation observed: no contradictory certificates and no "
++                              "adversarial certificate accepted. Accuracy figures are on project-authored cases."))
++    return 1 if bad else 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/proofscope/benchmark/ENGINE_FREEZE.txt b/proofscope/benchmark/ENGINE_FREEZE.txt
+new file mode 100644
+index 0000000..f9fb3f7
+--- /dev/null
++++ b/proofscope/benchmark/ENGINE_FREEZE.txt
+@@ -0,0 +1,3 @@
++1c7469b73318f9d9f62a72103932a292ed42c2d25f690b78bda7c788558fe68b  proofscope/compare.py
++68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
++815fa3bda7418804995b76ba0d4aace027fb6c9203a98318a551c35c8e3f2761  proofscope/bench.py
+diff --git a/proofscope/benchmark/adversarial_certificates.json b/proofscope/benchmark/adversarial_certificates.json
+new file mode 100644
+index 0000000..705f0f1
+--- /dev/null
++++ b/proofscope/benchmark/adversarial_certificates.json
+@@ -0,0 +1,194 @@
++[
++ {
++  "ident": "AdvSorry",
++  "attack": "sorry proof",
++  "statement": "∀ n : Nat, n < n",
++  "tactics": [
++   "intro n; sorry"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvSorryTrue",
++  "attack": "sorry proof of a true statement",
++  "statement": "1 + 1 = 2",
++  "tactics": [
++   "sorry"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvAdmit",
++  "attack": "admit",
++  "statement": "∀ n : Nat, n = n + 1",
++  "tactics": [
++   "intro n; admit"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvCustomAxiom",
++  "attack": "custom axiom",
++  "header": "axiom bogus : ∀ n : Nat, n < n",
++  "statement": "(0 : Nat) < 0",
++  "tactics": [
++   "exact bogus 0"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvAxiomFalse",
++  "attack": "axiom False",
++  "header": "axiom oops : False",
++  "statement": "1 = 2",
++  "tactics": [
++   "exact oops.elim"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvNativeDecide",
++  "attack": "native_decide (trusts compiler)",
++  "statement": "10 * 10 = 100",
++  "tactics": [
++   "native_decide"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvSorriedLemma",
++  "attack": "sorried helper lemma",
++  "header": "theorem helper : ∀ n : Nat, n + 1 = n := sorry",
++  "statement": "(5 : Nat) + 1 = 5",
++  "tactics": [
++   "exact helper 5"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvSorriedDef",
++  "attack": "sorried definition",
++  "header": "def f (n : Nat) : Nat := sorry",
++  "statement": "f 0 = f 0",
++  "tactics": [
++   "rfl"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvDecideFalse",
++  "attack": "decide on a false statement",
++  "statement": "2 + 2 = 5",
++  "tactics": [
++   "decide",
++   "omega",
++   "simp"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvOmegaFalse",
++  "attack": "omega on a false statement",
++  "statement": "∀ n : Nat, n - 1 + 1 = n",
++  "tactics": [
++   "intro n; omega"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvPartialProgress",
++  "attack": "tactic that makes progress but leaves goals",
++  "statement": "∀ n : Nat, 0 < n → n * n < n",
++  "tactics": [
++   "intro n h",
++   "intros; simp_all"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvSkipKernel",
++  "attack": "forged declaration added with kernel checking off (only replay can catch it)",
++  "header": "import Lean\nopen Lean Elab Command in\nset_option debug.skipKernelTC true in\nrun_cmd liftCoreM <| addDecl (.thmDecl { name := `forgedFact, levelParams := [], type := mkConst ``False, value := mkConst ``True.intro })",
++  "statement": "(1 : Nat) = 2",
++  "tactics": [
++   "exact forgedFact.elim"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvOfReduceBool",
++  "attack": "decide +native (trusts the compiler via Lean.ofReduceBool)",
++  "statement": "(3 : Nat) ∣ 9",
++  "tactics": [
++   "decide +native"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvImplementedBy",
++  "attack": "implemented_by on a definition",
++  "header": "def realF (n : Nat) : Nat := n\n@[implemented_by realF] def g (n : Nat) : Nat := n + 1",
++  "statement": "g 0 = 1",
++  "tactics": [
++   "rfl",
++   "decide"
++  ],
++  "expected": "ACCEPTED"
++ },
++ {
++  "ident": "AdvHonestControl",
++  "attack": "honest positive control",
++  "statement": "∀ n : Nat, n + 0 = n",
++  "tactics": [
++   "intro n; rfl"
++  ],
++  "expected": "ACCEPTED"
++ },
++ {
++  "ident": "AdvHonestClassical",
++  "attack": "honest proof using Classical.choice",
++  "statement": "∀ p : Prop, p ∨ ¬ p",
++  "tactics": [
++   "intro p; exact Classical.em p"
++  ],
++  "expected": "ACCEPTED"
++ },
++ {
++  "ident": "AdvShadowNat",
++  "attack": "local shadowing of a standard name",
++  "header": "def Nat.succ_ne_zero' : Prop := True",
++  "statement": "Nat.succ_ne_zero'",
++  "tactics": [
++   "trivial"
++  ],
++  "expected": "ACCEPTED"
++ },
++ {
++  "ident": "AdvOpaqueAxiomish",
++  "attack": "opaque constant used as an unproved fact",
++  "header": "opaque secret : Nat",
++  "statement": "secret = secret",
++  "tactics": [
++   "rfl"
++  ],
++  "expected": "ACCEPTED"
++ },
++ {
++  "ident": "AdvUnsafeCast",
++  "attack": "unsafeCast-based proof term",
++  "statement": "(1 : Nat) = 2",
++  "tactics": [
++   "exact unsafeCast ()"
++  ],
++  "expected": "REJECTED"
++ },
++ {
++  "ident": "AdvStatementSwap",
++  "attack": "proof of a different statement via a type ascription",
++  "statement": "(0 : Nat) < 1",
++  "tactics": [
++   "exact (Nat.le_refl 0 : 0 ≤ 0)"
++  ],
++  "expected": "REJECTED"
++ }
++]
+\ No newline at end of file
+diff --git a/proofscope/benchmark/build_dev.py b/proofscope/benchmark/build_dev.py
+new file mode 100644
+index 0000000..50532e8
+--- /dev/null
++++ b/proofscope/benchmark/build_dev.py
+@@ -0,0 +1,74 @@
++"""Development split of the ProofScope theorem-comparison benchmark (written before the engine was frozen).
++
++Each case: formal statement ∀x, H_L → C_L vs reference ∀x, H_R → C_R. `fidelity_failure` is the ground truth a
++reviewer cares about: True when the formal statement does NOT establish the reference claim (a gap or vacuity).
++`expected` is the precise engine label. Annotation: Claude (Anthropic), Nov 8 2026, from the definitions alone.
++"""
++import json
++from pathlib import Path
++
++N = [["n", "Nat"]]
++NM = [["n", "Nat"], ["m", "Nat"]]
++B1 = {"n": 30}
++B2 = {"n": 12, "m": 12}
++QSWAP_GAP = ("exact ⟨0, trivial, trivial, fun k => ⟨k + 1, Nat.lt_succ_self k⟩, "
++             "fun ⟨m, h⟩ => Nat.lt_irrefl m (h m)⟩")
++
++C = [
++ # ---- missing hypothesis in the formal statement (formal claims more: covers the reference)
++ ("missing_hyp_pred", "missing hypothesis", N, "True", "n - 1 + 1 = n", "0 < n", "n - 1 + 1 = n", B1, "LEAN_STRONGER", False),
++ ("missing_hyp_div", "missing hypothesis", NM, "True", "n / m * m ≤ n", "0 < m", "n / m * m ≤ n", B2, "LEAN_STRONGER", False),
++ ("missing_hyp_sub", "missing hypothesis", NM, "True", "n - m + m ≥ n", "m ≤ n", "n - m + m ≥ n", B2, "LEAN_STRONGER", False),
++ # ---- extra hypothesis: formal theorem misses objects the reference covers
++ ("extra_hyp_even", "extra hypothesis", N, "n % 2 = 0", "n ≤ n * n", "True", "n ≤ n * n", B1, "APPLICABILITY_GAP", True),
++ ("extra_hyp_pos", "extra hypothesis", NM, "0 < m", "n ≤ n + m", "True", "n ≤ n + m", B2, "APPLICABILITY_GAP", True),
++ ("extra_hyp_big", "extra hypothesis", N, "10 ≤ n", "n < 2 ^ n", "True", "n < 2 ^ n", B1, "APPLICABILITY_GAP", True),
++ # ---- threshold constant in the hypothesis
++ ("threshold_too_high", "incorrect constant", N, "5 ≤ n", "2 * n + 1 ≤ n * n", "3 ≤ n", "2 * n + 1 ≤ n * n", B1, "APPLICABILITY_GAP", True),
++ ("threshold_lower_ok", "incorrect constant", N, "3 ≤ n", "2 * n + 1 ≤ n * n", "5 ≤ n", "2 * n + 1 ≤ n * n", B1, "LEAN_STRONGER", False),
++ # ---- constant in the conclusion
++ ("concl_const_weak", "incorrect constant", N, "1 ≤ n", "n ≤ 2 * n * n", "1 ≤ n", "2 * n ≤ n * n", B1, "CONCLUSION_GAP", True),
++ ("concl_bound_weaker", "incorrect constant", N, "True", "n ≤ 3 * n", "True", "n ≤ 2 * n", B1, "EQUIVALENT", False),
++ ("concl_bound_wrong", "incorrect constant", N, "True", "n / 2 ≤ n", "True", "n / 2 < n", B1, "CONCLUSION_GAP", True),
++ # ---- reversed inequality in the conclusion
++ ("reversed_ineq", "reversed inequality", NM, "m ≤ n", "m ≤ n", "m ≤ n", "n ≤ m", B2, "CONCLUSION_GAP", True),
++ ("reversed_ineq_strict", "reversed inequality", N, "0 < n", "n - 1 < n", "0 < n", "n < n - 1", B1, "CONCLUSION_GAP", True),
++ # ---- quantifier swap
++ ("quantifier_swap", "quantifier swap", N, "True", "∀ k : Nat, ∃ m : Nat, k < m", "True", "∃ m : Nat, ∀ k : Nat, k < m", {}, "CONCLUSION_GAP", True),
++ # ---- domain restriction
++ ("domain_odd_only", "domain restriction", N, "n % 2 = 1", "n % 2 = 1", "True", "n % 2 = 1 ∨ n % 2 = 0", B1, "APPLICABILITY_GAP", True),
++ ("domain_bounded", "domain restriction", N, "n < 10", "n < n + 1", "True", "n < n + 1", B1, "APPLICABILITY_GAP", True),
++ # ---- empty edge cases
++ ("empty_list_excluded", "empty-set edge case", [["l", "List Nat"]], "l ≠ []", "l.length ≥ 0", "True", "l.length ≥ 0", {}, "APPLICABILITY_GAP", True),
++ ("empty_list_harmless", "empty-set edge case", [["l", "List Nat"]], "0 < l.length", "l ≠ []", "l ≠ []", "0 < l.length", {}, "EQUIVALENT", False),
++ # ---- junk values: division and truncated subtraction
++ ("junk_div_hyp", "unintended default value", NM, "n / m = 0", "n < m ∨ m = 0", "0 < m ∧ n / m = 0", "n < m", B2, "LEAN_STRONGER", False),
++ ("junk_div_concl", "unintended default value", NM, "True", "n / m ≤ n", "True", "n / m < n + 1", B2, "EQUIVALENT", False),
++ ("junk_sub_concl", "unintended default value", NM, "True", "n - m ≤ n", "True", "n - m < n", B2, "CONCLUSION_GAP", True),
++ ("trunc_sub_eq_zero", "unintended default value", NM, "n - m = 0", "n ≤ m", "n ≤ m", "n - m = 0", B2, "EQUIVALENT", False),
++ # ---- coercion
++ ("int_coercion_harmless", "type coercion", NM, "((n : Int) - m) ≥ 0", "m ≤ n", "m ≤ n", "((n : Int) - m) ≥ 0", B2, "EQUIVALENT", False),
++ ("nat_vs_int_sub", "type coercion", NM, "True", "n - m ≥ 0", "True", "((n : Int) - m) ≥ 0", B2, "CONCLUSION_GAP", True),
++ # ---- vacuous hypotheses
++ ("vacuous_range", "vacuous hypotheses", N, "n < 3 ∧ 5 < n", "False", "3 ≤ n", "True", B1, "VACUOUS", True),
++ ("vacuous_parity", "vacuous hypotheses", N, "n % 2 = 0 ∧ n % 2 = 1", "False", "True", "True", B1, "VACUOUS", True),
++ ("nonvacuous_tight", "vacuous hypotheses", N, "3 ≤ n ∧ n ≤ 3", "n = 3", "n = 3", "3 ≤ n", B1, "EQUIVALENT", False),
++ # ---- harmless rewrites (negative controls: suspicious-looking but equivalent)
++ ("rewrite_dvd", "harmless rewrite", N, "2 ∣ n", "(n / 2) * 2 = n", "n % 2 = 0", "n / 2 + n / 2 = n", B1, "EQUIVALENT", False),
++ ("rewrite_ne_zero", "harmless rewrite", N, "n ≠ 0", "0 < n", "0 < n", "1 ≤ n", B1, "EQUIVALENT", False),
++ ("rewrite_not_le", "harmless rewrite", N, "¬ n ≤ 2", "3 ≤ n", "3 ≤ n", "2 < n", B1, "EQUIVALENT", False),
++ ("rewrite_ge", "harmless rewrite", NM, "m ≤ n", "n ≥ m", "n ≥ m", "m ≤ n", B2, "EQUIVALENT", False),
++ ("rewrite_ceil_div", "harmless rewrite", NM, "0 < m", "(n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1)", "0 < m", "(n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1)", B2, "EQUIVALENT", False),
++ # ---- mislinked: two unrelated true statements (known limitation: uniform comparison cannot see this)
++ ("mislinked_true_true", "incorrectly linked theorem", N, "True", "n + 0 = n", "True", "n * 1 = n", B1, "EQUIVALENT", True),
++]
++
++TACTICS = {"quantifier_swap": {"concl_gap": [QSWAP_GAP]}}
++out = Path(__file__).resolve().parent / "dev"
++out.mkdir(exist_ok=True)
++for (cid, fam, b, hl, cl, hr, cr, bounds, exp, failure) in C:
++    d = {"id": cid, "family": fam, "split": "dev", "binders": b, "lean_hyp": hl, "lean_concl": cl,
++         "ref_hyp": hr, "ref_concl": cr, "bounds": bounds, "expected": exp, "fidelity_failure": failure,
++         "tactics": TACTICS.get(cid, {}), "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"}
++    (out / f"{cid}.json").write_text(json.dumps(d, indent=2, ensure_ascii=False))
++print(len(C), "dev cases")
+diff --git a/proofscope/benchmark/build_heldout.py b/proofscope/benchmark/build_heldout.py
+new file mode 100644
+index 0000000..1dc9469
+--- /dev/null
++++ b/proofscope/benchmark/build_heldout.py
+@@ -0,0 +1,41 @@
++"""Held-out split: written after the engine was frozen (compare.py, certify.py, bench.py hashes recorded in
++benchmark/ENGINE_FREEZE.txt) and run once. Annotation: Claude (Anthropic), 2026-11-08, from the definitions.
++The same author wrote the engine, so this is held out from tuning, not independent of the author."""
++import json
++from pathlib import Path
++
++N = [["n", "Nat"]]
++NM = [["n", "Nat"], ["m", "Nat"]]
++L = [["l", "List Nat"]]
++I = [["z", "Int"]]
++B1, B2 = {"n": 40}, {"n": 15, "m": 15}
++C = [
++ ("h_square_mono_gap", "extra hypothesis", NM, "m ≤ n ∧ 1 ≤ m", "m * m ≤ n * n", "m ≤ n", "m * m ≤ n * n", B2, "APPLICABILITY_GAP", True),
++ ("h_mod3_equiv", "harmless rewrite", N, "n % 3 = 0", "3 ∣ n", "3 ∣ n", "n % 3 = 0", B1, "EQUIVALENT", False),
++ ("h_mod_bound_wrong", "incorrect constant", NM, "0 < m", "n % m ≤ m", "0 < m", "n % m < m - 1", B2, "CONCLUSION_GAP", True),
++ ("h_mod_bound_weaker_ok", "incorrect constant", NM, "0 < m", "n % m < m", "0 < m", "n % m ≤ m", B2, "EQUIVALENT", False),
++ ("h_pow_threshold", "incorrect constant", N, "5 ≤ n", "n * n < 2 ^ n", "4 ≤ n", "n * n ≤ 2 ^ n", B1, "APPLICABILITY_GAP", True),
++ ("h_missing_pos_mod", "missing hypothesis", NM, "True", "n % m ≤ n", "0 < m", "n % m ≤ n", B2, "LEAN_STRONGER", False),
++ ("h_reversed_div", "reversed inequality", NM, "0 < m", "n / m ≤ n", "0 < m", "n ≤ n / m", B2, "CONCLUSION_GAP", True),
++ ("h_vacuous_mod", "vacuous hypotheses", N, "n % 4 = 1 ∧ n % 2 = 0", "False", "True", "True", B1, "VACUOUS", True),
++ ("h_vacuous_lt", "vacuous hypotheses", NM, "n < m ∧ m < n", "n = m", "n ≤ m", "n ≤ m", B2, "VACUOUS", True),
++ ("h_nonvac_two", "vacuous hypotheses", NM, "n < m ∧ m < n + 2", "m = n + 1", "m = n + 1", "n < m ∧ m < n + 2", B2, "EQUIVALENT", False),
++ ("h_domain_small", "domain restriction", N, "n ≤ 20", "n % 2 < 2", "True", "n % 2 < 2", B1, "APPLICABILITY_GAP", True),
++ ("h_sub_trunc_gap", "unintended default value", NM, "True", "n - m + m = max n m", "True", "n - m + m = n", B2, "CONCLUSION_GAP", True),
++ ("h_sub_trunc_ok", "unintended default value", NM, "m ≤ n", "n - m + m = n", "m ≤ n", "n = n - m + m", B2, "EQUIVALENT", False),
++ ("h_div_zero_junk", "unintended default value", NM, "True", "n / m * m + n % m = n", "0 < m", "n / m * m + n % m = n", B2, "LEAN_STRONGER", False),
++ ("h_list_append_len", "harmless rewrite", [["l", "List Nat"], ["k", "List Nat"]], "True", "(l ++ k).length = l.length + k.length", "True", "(l ++ k).length = k.length + l.length", {}, "EQUIVALENT", False),
++ ("h_list_nonempty_gap", "empty-set edge case", L, "l ≠ []", "l.length ≥ 1", "True", "l.length ≥ 1", {}, "APPLICABILITY_GAP", True),
++ ("h_int_abs_gap", "type coercion", I, "0 ≤ z", "z.natAbs = z.toNat", "True", "z.natAbs = z.toNat", {}, "APPLICABILITY_GAP", True),
++ ("h_int_sq_equiv", "harmless rewrite", I, "True", "0 ≤ z * z", "True", "z * z ≥ 0", {}, "EQUIVALENT", False),
++ ("h_quant_exists_weak", "quantifier swap", N, "0 < n", "∃ k, k < n", "0 < n", "∀ k, k < n", B1, "CONCLUSION_GAP", True),
++ ("h_mislinked2", "incorrectly linked theorem", N, "True", "n * 0 = 0", "True", "0 + n = n", B1, "EQUIVALENT", True),
++]
++out = Path(__file__).resolve().parent / "heldout"
++out.mkdir(exist_ok=True)
++for (cid, fam, b, hl, cl, hr, cr, bounds, exp, failure) in C:
++    (out / f"{cid}.json").write_text(json.dumps({"id": cid, "family": fam, "split": "heldout", "binders": b,
++        "lean_hyp": hl, "lean_concl": cl, "ref_hyp": hr, "ref_concl": cr, "bounds": bounds, "expected": exp,
++        "fidelity_failure": failure, "tactics": {}, "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"},
++        indent=2, ensure_ascii=False))
++print(len(C), "held-out cases")
+diff --git a/proofscope/benchmark/dev/concl_bound_weaker.json b/proofscope/benchmark/dev/concl_bound_weaker.json
+new file mode 100644
+index 0000000..21362e6
+--- /dev/null
++++ b/proofscope/benchmark/dev/concl_bound_weaker.json
+@@ -0,0 +1,22 @@
++{
++  "id": "concl_bound_weaker",
++  "family": "incorrect constant",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n ≤ 3 * n",
++  "ref_hyp": "True",
++  "ref_concl": "n ≤ 2 * n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/concl_bound_wrong.json b/proofscope/benchmark/dev/concl_bound_wrong.json
+new file mode 100644
+index 0000000..fd27a5a
+--- /dev/null
++++ b/proofscope/benchmark/dev/concl_bound_wrong.json
+@@ -0,0 +1,22 @@
++{
++  "id": "concl_bound_wrong",
++  "family": "incorrect constant",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n / 2 ≤ n",
++  "ref_hyp": "True",
++  "ref_concl": "n / 2 < n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/concl_const_weak.json b/proofscope/benchmark/dev/concl_const_weak.json
+new file mode 100644
+index 0000000..76d9ecb
+--- /dev/null
++++ b/proofscope/benchmark/dev/concl_const_weak.json
+@@ -0,0 +1,22 @@
++{
++  "id": "concl_const_weak",
++  "family": "incorrect constant",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "1 ≤ n",
++  "lean_concl": "n ≤ 2 * n * n",
++  "ref_hyp": "1 ≤ n",
++  "ref_concl": "2 * n ≤ n * n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/domain_bounded.json b/proofscope/benchmark/dev/domain_bounded.json
+new file mode 100644
+index 0000000..60b705f
+--- /dev/null
++++ b/proofscope/benchmark/dev/domain_bounded.json
+@@ -0,0 +1,22 @@
++{
++  "id": "domain_bounded",
++  "family": "domain restriction",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n < 10",
++  "lean_concl": "n < n + 1",
++  "ref_hyp": "True",
++  "ref_concl": "n < n + 1",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/domain_odd_only.json b/proofscope/benchmark/dev/domain_odd_only.json
+new file mode 100644
+index 0000000..183a443
+--- /dev/null
++++ b/proofscope/benchmark/dev/domain_odd_only.json
+@@ -0,0 +1,22 @@
++{
++  "id": "domain_odd_only",
++  "family": "domain restriction",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n % 2 = 1",
++  "lean_concl": "n % 2 = 1",
++  "ref_hyp": "True",
++  "ref_concl": "n % 2 = 1 ∨ n % 2 = 0",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/empty_list_excluded.json b/proofscope/benchmark/dev/empty_list_excluded.json
+new file mode 100644
+index 0000000..fd220e2
+--- /dev/null
++++ b/proofscope/benchmark/dev/empty_list_excluded.json
+@@ -0,0 +1,20 @@
++{
++  "id": "empty_list_excluded",
++  "family": "empty-set edge case",
++  "split": "dev",
++  "binders": [
++    [
++      "l",
++      "List Nat"
++    ]
++  ],
++  "lean_hyp": "l ≠ []",
++  "lean_concl": "l.length ≥ 0",
++  "ref_hyp": "True",
++  "ref_concl": "l.length ≥ 0",
++  "bounds": {},
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/empty_list_harmless.json b/proofscope/benchmark/dev/empty_list_harmless.json
+new file mode 100644
+index 0000000..32e60df
+--- /dev/null
++++ b/proofscope/benchmark/dev/empty_list_harmless.json
+@@ -0,0 +1,20 @@
++{
++  "id": "empty_list_harmless",
++  "family": "empty-set edge case",
++  "split": "dev",
++  "binders": [
++    [
++      "l",
++      "List Nat"
++    ]
++  ],
++  "lean_hyp": "0 < l.length",
++  "lean_concl": "l ≠ []",
++  "ref_hyp": "l ≠ []",
++  "ref_concl": "0 < l.length",
++  "bounds": {},
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/extra_hyp_big.json b/proofscope/benchmark/dev/extra_hyp_big.json
+new file mode 100644
+index 0000000..214a10c
+--- /dev/null
++++ b/proofscope/benchmark/dev/extra_hyp_big.json
+@@ -0,0 +1,22 @@
++{
++  "id": "extra_hyp_big",
++  "family": "extra hypothesis",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "10 ≤ n",
++  "lean_concl": "n < 2 ^ n",
++  "ref_hyp": "True",
++  "ref_concl": "n < 2 ^ n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/extra_hyp_even.json b/proofscope/benchmark/dev/extra_hyp_even.json
+new file mode 100644
+index 0000000..df7179d
+--- /dev/null
++++ b/proofscope/benchmark/dev/extra_hyp_even.json
+@@ -0,0 +1,22 @@
++{
++  "id": "extra_hyp_even",
++  "family": "extra hypothesis",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n % 2 = 0",
++  "lean_concl": "n ≤ n * n",
++  "ref_hyp": "True",
++  "ref_concl": "n ≤ n * n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/extra_hyp_pos.json b/proofscope/benchmark/dev/extra_hyp_pos.json
+new file mode 100644
+index 0000000..11931ba
+--- /dev/null
++++ b/proofscope/benchmark/dev/extra_hyp_pos.json
+@@ -0,0 +1,27 @@
++{
++  "id": "extra_hyp_pos",
++  "family": "extra hypothesis",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < m",
++  "lean_concl": "n ≤ n + m",
++  "ref_hyp": "True",
++  "ref_concl": "n ≤ n + m",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/int_coercion_harmless.json b/proofscope/benchmark/dev/int_coercion_harmless.json
+new file mode 100644
+index 0000000..ff75354
+--- /dev/null
++++ b/proofscope/benchmark/dev/int_coercion_harmless.json
+@@ -0,0 +1,27 @@
++{
++  "id": "int_coercion_harmless",
++  "family": "type coercion",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "((n : Int) - m) ≥ 0",
++  "lean_concl": "m ≤ n",
++  "ref_hyp": "m ≤ n",
++  "ref_concl": "((n : Int) - m) ≥ 0",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/junk_div_concl.json b/proofscope/benchmark/dev/junk_div_concl.json
+new file mode 100644
+index 0000000..1033086
+--- /dev/null
++++ b/proofscope/benchmark/dev/junk_div_concl.json
+@@ -0,0 +1,27 @@
++{
++  "id": "junk_div_concl",
++  "family": "unintended default value",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n / m ≤ n",
++  "ref_hyp": "True",
++  "ref_concl": "n / m < n + 1",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/junk_div_hyp.json b/proofscope/benchmark/dev/junk_div_hyp.json
+new file mode 100644
+index 0000000..453bf2a
+--- /dev/null
++++ b/proofscope/benchmark/dev/junk_div_hyp.json
+@@ -0,0 +1,27 @@
++{
++  "id": "junk_div_hyp",
++  "family": "unintended default value",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n / m = 0",
++  "lean_concl": "n < m ∨ m = 0",
++  "ref_hyp": "0 < m ∧ n / m = 0",
++  "ref_concl": "n < m",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/junk_sub_concl.json b/proofscope/benchmark/dev/junk_sub_concl.json
+new file mode 100644
+index 0000000..3a9032a
+--- /dev/null
++++ b/proofscope/benchmark/dev/junk_sub_concl.json
+@@ -0,0 +1,27 @@
++{
++  "id": "junk_sub_concl",
++  "family": "unintended default value",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n - m ≤ n",
++  "ref_hyp": "True",
++  "ref_concl": "n - m < n",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/mislinked_true_true.json b/proofscope/benchmark/dev/mislinked_true_true.json
+new file mode 100644
+index 0000000..0460de1
+--- /dev/null
++++ b/proofscope/benchmark/dev/mislinked_true_true.json
+@@ -0,0 +1,22 @@
++{
++  "id": "mislinked_true_true",
++  "family": "incorrectly linked theorem",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n + 0 = n",
++  "ref_hyp": "True",
++  "ref_concl": "n * 1 = n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/missing_hyp_div.json b/proofscope/benchmark/dev/missing_hyp_div.json
+new file mode 100644
+index 0000000..1afec1a
+--- /dev/null
++++ b/proofscope/benchmark/dev/missing_hyp_div.json
+@@ -0,0 +1,27 @@
++{
++  "id": "missing_hyp_div",
++  "family": "missing hypothesis",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n / m * m ≤ n",
++  "ref_hyp": "0 < m",
++  "ref_concl": "n / m * m ≤ n",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/missing_hyp_pred.json b/proofscope/benchmark/dev/missing_hyp_pred.json
+new file mode 100644
+index 0000000..5d2d86c
+--- /dev/null
++++ b/proofscope/benchmark/dev/missing_hyp_pred.json
+@@ -0,0 +1,22 @@
++{
++  "id": "missing_hyp_pred",
++  "family": "missing hypothesis",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n - 1 + 1 = n",
++  "ref_hyp": "0 < n",
++  "ref_concl": "n - 1 + 1 = n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/missing_hyp_sub.json b/proofscope/benchmark/dev/missing_hyp_sub.json
+new file mode 100644
+index 0000000..1595a3e
+--- /dev/null
++++ b/proofscope/benchmark/dev/missing_hyp_sub.json
+@@ -0,0 +1,27 @@
++{
++  "id": "missing_hyp_sub",
++  "family": "missing hypothesis",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n - m + m ≥ n",
++  "ref_hyp": "m ≤ n",
++  "ref_concl": "n - m + m ≥ n",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/nat_vs_int_sub.json b/proofscope/benchmark/dev/nat_vs_int_sub.json
+new file mode 100644
+index 0000000..f2e58c4
+--- /dev/null
++++ b/proofscope/benchmark/dev/nat_vs_int_sub.json
+@@ -0,0 +1,27 @@
++{
++  "id": "nat_vs_int_sub",
++  "family": "type coercion",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n - m ≥ 0",
++  "ref_hyp": "True",
++  "ref_concl": "((n : Int) - m) ≥ 0",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/nonvacuous_tight.json b/proofscope/benchmark/dev/nonvacuous_tight.json
+new file mode 100644
+index 0000000..064f166
+--- /dev/null
++++ b/proofscope/benchmark/dev/nonvacuous_tight.json
+@@ -0,0 +1,22 @@
++{
++  "id": "nonvacuous_tight",
++  "family": "vacuous hypotheses",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "3 ≤ n ∧ n ≤ 3",
++  "lean_concl": "n = 3",
++  "ref_hyp": "n = 3",
++  "ref_concl": "3 ≤ n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/quantifier_swap.json b/proofscope/benchmark/dev/quantifier_swap.json
+new file mode 100644
+index 0000000..39784d0
+--- /dev/null
++++ b/proofscope/benchmark/dev/quantifier_swap.json
+@@ -0,0 +1,24 @@
++{
++  "id": "quantifier_swap",
++  "family": "quantifier swap",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "∀ k : Nat, ∃ m : Nat, k < m",
++  "ref_hyp": "True",
++  "ref_concl": "∃ m : Nat, ∀ k : Nat, k < m",
++  "bounds": {},
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {
++    "concl_gap": [
++      "exact ⟨0, trivial, trivial, fun k => ⟨k + 1, Nat.lt_succ_self k⟩, fun ⟨m, h⟩ => Nat.lt_irrefl m (h m)⟩"
++    ]
++  },
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/reversed_ineq.json b/proofscope/benchmark/dev/reversed_ineq.json
+new file mode 100644
+index 0000000..4fb6a9c
+--- /dev/null
++++ b/proofscope/benchmark/dev/reversed_ineq.json
+@@ -0,0 +1,27 @@
++{
++  "id": "reversed_ineq",
++  "family": "reversed inequality",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "m ≤ n",
++  "lean_concl": "m ≤ n",
++  "ref_hyp": "m ≤ n",
++  "ref_concl": "n ≤ m",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/reversed_ineq_strict.json b/proofscope/benchmark/dev/reversed_ineq_strict.json
+new file mode 100644
+index 0000000..8c53c91
+--- /dev/null
++++ b/proofscope/benchmark/dev/reversed_ineq_strict.json
+@@ -0,0 +1,22 @@
++{
++  "id": "reversed_ineq_strict",
++  "family": "reversed inequality",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < n",
++  "lean_concl": "n - 1 < n",
++  "ref_hyp": "0 < n",
++  "ref_concl": "n < n - 1",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/rewrite_ceil_div.json b/proofscope/benchmark/dev/rewrite_ceil_div.json
+new file mode 100644
+index 0000000..c4bd496
+--- /dev/null
++++ b/proofscope/benchmark/dev/rewrite_ceil_div.json
+@@ -0,0 +1,27 @@
++{
++  "id": "rewrite_ceil_div",
++  "family": "harmless rewrite",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < m",
++  "lean_concl": "(n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1)",
++  "ref_hyp": "0 < m",
++  "ref_concl": "(n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1)",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/rewrite_dvd.json b/proofscope/benchmark/dev/rewrite_dvd.json
+new file mode 100644
+index 0000000..8e3117f
+--- /dev/null
++++ b/proofscope/benchmark/dev/rewrite_dvd.json
+@@ -0,0 +1,22 @@
++{
++  "id": "rewrite_dvd",
++  "family": "harmless rewrite",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "2 ∣ n",
++  "lean_concl": "(n / 2) * 2 = n",
++  "ref_hyp": "n % 2 = 0",
++  "ref_concl": "n / 2 + n / 2 = n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/rewrite_ge.json b/proofscope/benchmark/dev/rewrite_ge.json
+new file mode 100644
+index 0000000..016d680
+--- /dev/null
++++ b/proofscope/benchmark/dev/rewrite_ge.json
+@@ -0,0 +1,27 @@
++{
++  "id": "rewrite_ge",
++  "family": "harmless rewrite",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "m ≤ n",
++  "lean_concl": "n ≥ m",
++  "ref_hyp": "n ≥ m",
++  "ref_concl": "m ≤ n",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/rewrite_ne_zero.json b/proofscope/benchmark/dev/rewrite_ne_zero.json
+new file mode 100644
+index 0000000..fe80eaf
+--- /dev/null
++++ b/proofscope/benchmark/dev/rewrite_ne_zero.json
+@@ -0,0 +1,22 @@
++{
++  "id": "rewrite_ne_zero",
++  "family": "harmless rewrite",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n ≠ 0",
++  "lean_concl": "0 < n",
++  "ref_hyp": "0 < n",
++  "ref_concl": "1 ≤ n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/rewrite_not_le.json b/proofscope/benchmark/dev/rewrite_not_le.json
+new file mode 100644
+index 0000000..b2c4089
+--- /dev/null
++++ b/proofscope/benchmark/dev/rewrite_not_le.json
+@@ -0,0 +1,22 @@
++{
++  "id": "rewrite_not_le",
++  "family": "harmless rewrite",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "¬ n ≤ 2",
++  "lean_concl": "3 ≤ n",
++  "ref_hyp": "3 ≤ n",
++  "ref_concl": "2 < n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/threshold_lower_ok.json b/proofscope/benchmark/dev/threshold_lower_ok.json
+new file mode 100644
+index 0000000..2372e57
+--- /dev/null
++++ b/proofscope/benchmark/dev/threshold_lower_ok.json
+@@ -0,0 +1,22 @@
++{
++  "id": "threshold_lower_ok",
++  "family": "incorrect constant",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "3 ≤ n",
++  "lean_concl": "2 * n + 1 ≤ n * n",
++  "ref_hyp": "5 ≤ n",
++  "ref_concl": "2 * n + 1 ≤ n * n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/threshold_too_high.json b/proofscope/benchmark/dev/threshold_too_high.json
+new file mode 100644
+index 0000000..6c40e3b
+--- /dev/null
++++ b/proofscope/benchmark/dev/threshold_too_high.json
+@@ -0,0 +1,22 @@
++{
++  "id": "threshold_too_high",
++  "family": "incorrect constant",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "5 ≤ n",
++  "lean_concl": "2 * n + 1 ≤ n * n",
++  "ref_hyp": "3 ≤ n",
++  "ref_concl": "2 * n + 1 ≤ n * n",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/trunc_sub_eq_zero.json b/proofscope/benchmark/dev/trunc_sub_eq_zero.json
+new file mode 100644
+index 0000000..494b492
+--- /dev/null
++++ b/proofscope/benchmark/dev/trunc_sub_eq_zero.json
+@@ -0,0 +1,27 @@
++{
++  "id": "trunc_sub_eq_zero",
++  "family": "unintended default value",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n - m = 0",
++  "lean_concl": "n ≤ m",
++  "ref_hyp": "n ≤ m",
++  "ref_concl": "n - m = 0",
++  "bounds": {
++    "n": 12,
++    "m": 12
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/vacuous_parity.json b/proofscope/benchmark/dev/vacuous_parity.json
+new file mode 100644
+index 0000000..d2f1680
+--- /dev/null
++++ b/proofscope/benchmark/dev/vacuous_parity.json
+@@ -0,0 +1,22 @@
++{
++  "id": "vacuous_parity",
++  "family": "vacuous hypotheses",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n % 2 = 0 ∧ n % 2 = 1",
++  "lean_concl": "False",
++  "ref_hyp": "True",
++  "ref_concl": "True",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "VACUOUS",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/dev/vacuous_range.json b/proofscope/benchmark/dev/vacuous_range.json
+new file mode 100644
+index 0000000..b6c03eb
+--- /dev/null
++++ b/proofscope/benchmark/dev/vacuous_range.json
+@@ -0,0 +1,22 @@
++{
++  "id": "vacuous_range",
++  "family": "vacuous hypotheses",
++  "split": "dev",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n < 3 ∧ 5 < n",
++  "lean_concl": "False",
++  "ref_hyp": "3 ≤ n",
++  "ref_concl": "True",
++  "bounds": {
++    "n": 30
++  },
++  "expected": "VACUOUS",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, from the definitions"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_div_zero_junk.json b/proofscope/benchmark/heldout/h_div_zero_junk.json
+new file mode 100644
+index 0000000..0eb0c80
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_div_zero_junk.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_div_zero_junk",
++  "family": "unintended default value",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n / m * m + n % m = n",
++  "ref_hyp": "0 < m",
++  "ref_concl": "n / m * m + n % m = n",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_domain_small.json b/proofscope/benchmark/heldout/h_domain_small.json
+new file mode 100644
+index 0000000..1219fde
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_domain_small.json
+@@ -0,0 +1,22 @@
++{
++  "id": "h_domain_small",
++  "family": "domain restriction",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n ≤ 20",
++  "lean_concl": "n % 2 < 2",
++  "ref_hyp": "True",
++  "ref_concl": "n % 2 < 2",
++  "bounds": {
++    "n": 40
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_int_abs_gap.json b/proofscope/benchmark/heldout/h_int_abs_gap.json
+new file mode 100644
+index 0000000..44a426b
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_int_abs_gap.json
+@@ -0,0 +1,20 @@
++{
++  "id": "h_int_abs_gap",
++  "family": "type coercion",
++  "split": "heldout",
++  "binders": [
++    [
++      "z",
++      "Int"
++    ]
++  ],
++  "lean_hyp": "0 ≤ z",
++  "lean_concl": "z.natAbs = z.toNat",
++  "ref_hyp": "True",
++  "ref_concl": "z.natAbs = z.toNat",
++  "bounds": {},
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_int_sq_equiv.json b/proofscope/benchmark/heldout/h_int_sq_equiv.json
+new file mode 100644
+index 0000000..542e179
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_int_sq_equiv.json
+@@ -0,0 +1,20 @@
++{
++  "id": "h_int_sq_equiv",
++  "family": "harmless rewrite",
++  "split": "heldout",
++  "binders": [
++    [
++      "z",
++      "Int"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "0 ≤ z * z",
++  "ref_hyp": "True",
++  "ref_concl": "z * z ≥ 0",
++  "bounds": {},
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_list_append_len.json b/proofscope/benchmark/heldout/h_list_append_len.json
+new file mode 100644
+index 0000000..34a4931
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_list_append_len.json
+@@ -0,0 +1,24 @@
++{
++  "id": "h_list_append_len",
++  "family": "harmless rewrite",
++  "split": "heldout",
++  "binders": [
++    [
++      "l",
++      "List Nat"
++    ],
++    [
++      "k",
++      "List Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "(l ++ k).length = l.length + k.length",
++  "ref_hyp": "True",
++  "ref_concl": "(l ++ k).length = k.length + l.length",
++  "bounds": {},
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_list_nonempty_gap.json b/proofscope/benchmark/heldout/h_list_nonempty_gap.json
+new file mode 100644
+index 0000000..9b3c405
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_list_nonempty_gap.json
+@@ -0,0 +1,20 @@
++{
++  "id": "h_list_nonempty_gap",
++  "family": "empty-set edge case",
++  "split": "heldout",
++  "binders": [
++    [
++      "l",
++      "List Nat"
++    ]
++  ],
++  "lean_hyp": "l ≠ []",
++  "lean_concl": "l.length ≥ 1",
++  "ref_hyp": "True",
++  "ref_concl": "l.length ≥ 1",
++  "bounds": {},
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_mislinked2.json b/proofscope/benchmark/heldout/h_mislinked2.json
+new file mode 100644
+index 0000000..84df046
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_mislinked2.json
+@@ -0,0 +1,22 @@
++{
++  "id": "h_mislinked2",
++  "family": "incorrectly linked theorem",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n * 0 = 0",
++  "ref_hyp": "True",
++  "ref_concl": "0 + n = n",
++  "bounds": {
++    "n": 40
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_missing_pos_mod.json b/proofscope/benchmark/heldout/h_missing_pos_mod.json
+new file mode 100644
+index 0000000..1ea89f4
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_missing_pos_mod.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_missing_pos_mod",
++  "family": "missing hypothesis",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n % m ≤ n",
++  "ref_hyp": "0 < m",
++  "ref_concl": "n % m ≤ n",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "LEAN_STRONGER",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_mod3_equiv.json b/proofscope/benchmark/heldout/h_mod3_equiv.json
+new file mode 100644
+index 0000000..490a383
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_mod3_equiv.json
+@@ -0,0 +1,22 @@
++{
++  "id": "h_mod3_equiv",
++  "family": "harmless rewrite",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n % 3 = 0",
++  "lean_concl": "3 ∣ n",
++  "ref_hyp": "3 ∣ n",
++  "ref_concl": "n % 3 = 0",
++  "bounds": {
++    "n": 40
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_mod_bound_weaker_ok.json b/proofscope/benchmark/heldout/h_mod_bound_weaker_ok.json
+new file mode 100644
+index 0000000..61435f1
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_mod_bound_weaker_ok.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_mod_bound_weaker_ok",
++  "family": "incorrect constant",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < m",
++  "lean_concl": "n % m < m",
++  "ref_hyp": "0 < m",
++  "ref_concl": "n % m ≤ m",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_mod_bound_wrong.json b/proofscope/benchmark/heldout/h_mod_bound_wrong.json
+new file mode 100644
+index 0000000..c7920e1
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_mod_bound_wrong.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_mod_bound_wrong",
++  "family": "incorrect constant",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < m",
++  "lean_concl": "n % m ≤ m",
++  "ref_hyp": "0 < m",
++  "ref_concl": "n % m < m - 1",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_nonvac_two.json b/proofscope/benchmark/heldout/h_nonvac_two.json
+new file mode 100644
+index 0000000..6ea84bf
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_nonvac_two.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_nonvac_two",
++  "family": "vacuous hypotheses",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n < m ∧ m < n + 2",
++  "lean_concl": "m = n + 1",
++  "ref_hyp": "m = n + 1",
++  "ref_concl": "n < m ∧ m < n + 2",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_pow_threshold.json b/proofscope/benchmark/heldout/h_pow_threshold.json
+new file mode 100644
+index 0000000..a1d31b0
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_pow_threshold.json
+@@ -0,0 +1,22 @@
++{
++  "id": "h_pow_threshold",
++  "family": "incorrect constant",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "5 ≤ n",
++  "lean_concl": "n * n < 2 ^ n",
++  "ref_hyp": "4 ≤ n",
++  "ref_concl": "n * n ≤ 2 ^ n",
++  "bounds": {
++    "n": 40
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_quant_exists_weak.json b/proofscope/benchmark/heldout/h_quant_exists_weak.json
+new file mode 100644
+index 0000000..de8da4e
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_quant_exists_weak.json
+@@ -0,0 +1,22 @@
++{
++  "id": "h_quant_exists_weak",
++  "family": "quantifier swap",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < n",
++  "lean_concl": "∃ k, k < n",
++  "ref_hyp": "0 < n",
++  "ref_concl": "∀ k, k < n",
++  "bounds": {
++    "n": 40
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_reversed_div.json b/proofscope/benchmark/heldout/h_reversed_div.json
+new file mode 100644
+index 0000000..1201f31
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_reversed_div.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_reversed_div",
++  "family": "reversed inequality",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "0 < m",
++  "lean_concl": "n / m ≤ n",
++  "ref_hyp": "0 < m",
++  "ref_concl": "n ≤ n / m",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_square_mono_gap.json b/proofscope/benchmark/heldout/h_square_mono_gap.json
+new file mode 100644
+index 0000000..f6b32a1
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_square_mono_gap.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_square_mono_gap",
++  "family": "extra hypothesis",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "m ≤ n ∧ 1 ≤ m",
++  "lean_concl": "m * m ≤ n * n",
++  "ref_hyp": "m ≤ n",
++  "ref_concl": "m * m ≤ n * n",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "APPLICABILITY_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_sub_trunc_gap.json b/proofscope/benchmark/heldout/h_sub_trunc_gap.json
+new file mode 100644
+index 0000000..657d79e
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_sub_trunc_gap.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_sub_trunc_gap",
++  "family": "unintended default value",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "True",
++  "lean_concl": "n - m + m = max n m",
++  "ref_hyp": "True",
++  "ref_concl": "n - m + m = n",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "CONCLUSION_GAP",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_sub_trunc_ok.json b/proofscope/benchmark/heldout/h_sub_trunc_ok.json
+new file mode 100644
+index 0000000..996cbaf
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_sub_trunc_ok.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_sub_trunc_ok",
++  "family": "unintended default value",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "m ≤ n",
++  "lean_concl": "n - m + m = n",
++  "ref_hyp": "m ≤ n",
++  "ref_concl": "n = n - m + m",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "EQUIVALENT",
++  "fidelity_failure": false,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_vacuous_lt.json b/proofscope/benchmark/heldout/h_vacuous_lt.json
+new file mode 100644
+index 0000000..c52b370
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_vacuous_lt.json
+@@ -0,0 +1,27 @@
++{
++  "id": "h_vacuous_lt",
++  "family": "vacuous hypotheses",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ],
++    [
++      "m",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n < m ∧ m < n",
++  "lean_concl": "n = m",
++  "ref_hyp": "n ≤ m",
++  "ref_concl": "n ≤ m",
++  "bounds": {
++    "n": 15,
++    "m": 15
++  },
++  "expected": "VACUOUS",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/benchmark/heldout/h_vacuous_mod.json b/proofscope/benchmark/heldout/h_vacuous_mod.json
+new file mode 100644
+index 0000000..2a3f66e
+--- /dev/null
++++ b/proofscope/benchmark/heldout/h_vacuous_mod.json
+@@ -0,0 +1,22 @@
++{
++  "id": "h_vacuous_mod",
++  "family": "vacuous hypotheses",
++  "split": "heldout",
++  "binders": [
++    [
++      "n",
++      "Nat"
++    ]
++  ],
++  "lean_hyp": "n % 4 = 1 ∧ n % 2 = 0",
++  "lean_concl": "False",
++  "ref_hyp": "True",
++  "ref_concl": "True",
++  "bounds": {
++    "n": 40
++  },
++  "expected": "VACUOUS",
++  "fidelity_failure": true,
++  "tactics": {},
++  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"
++}
+\ No newline at end of file
+diff --git a/proofscope/certify.py b/proofscope/certify.py
+new file mode 100644
+index 0000000..5b6bf6a
+--- /dev/null
++++ b/proofscope/certify.py
+@@ -0,0 +1,113 @@
++"""Generic certificate engine (v0.7).
++
++`certify(ident, header, obligations, tc, workdir)` takes named Lean propositions, each with a tactic portfolio,
++and returns which of them are **certificates**: a declaration counts only if
++
++  1. it elaborates with one of its tactic alternatives (each alternative must close the goal: `(tac); done`),
++  2. it recompiles in a clean module written to an `.olean`,
++  3. `#print axioms` shows only propext, Classical.choice, Quot.sound (anything with `sorryAx` or another
++     axiom is rejected), and
++  4. `leanchecker` replays the module.
++
++Anything else is reported with the reason it was rejected. A tool failure can only remove certificates,
++never add one.
++"""
++
++from __future__ import annotations
++
++import re
++from pathlib import Path
++
++from .toolchain import Toolchain
++
++STD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
++_ERR = re.compile(r":(\d+):\d+: error", re.M)
++
++
++def _theorem(name: str, stmt: str, tactics: list[str]) -> str:
++    alts = "\n".join(f"    | (({t}); done)" for t in tactics) or "    | done"
++    return f"theorem {name} : {stmt} := by\n  first\n{alts}\n"
++
++
++def _module(ns: str, header: str, obligations: dict, keep: set | None) -> tuple[str, dict]:
++    src = header.rstrip() + "\n\n" + f"namespace {ns}\n\n"
++    spans = {}
++    for k, (stmt, tacs) in obligations.items():
++        if keep is not None and k not in keep:
++            continue
++        a = src.count("\n") + 1
++        src += _theorem(k, stmt, tacs) + "\n"
++        spans[k] = (a, src.count("\n"))
++    src += f"end {ns}\n"
++    if keep:
++        src += "\n" + "".join(f"#print axioms {ns}.{k}\n" for k in spans)
++    return src, spans
++
++
++def _failed(output: str, spans: dict) -> tuple[set, bool]:
++    bad, outside = set(), False
++    for m in _ERR.finditer(output):
++        line = int(m.group(1))
++        hit = [k for k, (a, b) in spans.items() if a <= line <= b]
++        bad.update(hit)
++        outside |= not hit
++    return bad, outside
++
++
++def _axioms(output: str, ns: str) -> dict:
++    res = {}
++    for m in re.finditer(r"'%s\.(\w+)' depends on axioms: \[([^\]]*)\]" % re.escape(ns), output):
++        res[m.group(1)] = [a.strip() for a in m.group(2).split(",") if a.strip()]
++    for m in re.finditer(r"'%s\.(\w+)' does not depend on any axioms" % re.escape(ns), output):
++        res[m.group(1)] = []
++    return res
++
++
++def certify(ident: str, header: str, obligations: dict[str, tuple[str, list[str]]], tc: Toolchain,
++            workdir: Path, replay: bool = True, timeout: float = 900) -> dict:
++    root = Path(workdir).resolve()
++    src_root, build = root / "src", root / "build"
++    mod_dir = src_root / "ProofScopeCert"
++    mod_dir.mkdir(parents=True, exist_ok=True)
++    ns = f"ProofScopeCert.{ident}"
++    res: dict = {"certificates": {}, "rejected": {}, "status": "OK", "statements": {k: v[0] for k, v in obligations.items()}}
++
++    probe_src, spans = _module(ns, header, obligations, None)
++    (mod_dir / f"{ident}Probe.lean").write_text(probe_src)
++    probe = tc.compile(mod_dir / f"{ident}Probe.lean", None, src_root, timeout=timeout)
++    res["probe"] = probe.as_dict()
++    failed, outside = _failed(probe.output, spans)
++    if probe.returncode not in (0, 1) or outside:
++        res["status"] = "INFRASTRUCTURE_ERROR" if probe.returncode not in (0, 1) else "PREAMBLE_ERROR"
++        return res
++    for k in failed:
++        res["rejected"][k] = "no tactic alternative closed the goal"
++    cands = set(spans) - failed
++    if not cands:
++        return res
++    cert_src, _ = _module(ns, header, obligations, cands)
++    cf = mod_dir / f"{ident}.lean"
++    cf.write_text(cert_src)
++    res["certificate_source"] = cert_src
++    cc = tc.compile(cf, build / "ProofScopeCert" / f"{ident}.olean", src_root, timeout=timeout)
++    res["certify_compile"] = cc.as_dict()
++    if cc.returncode != 0:
++        for k in cands:
++            res["rejected"][k] = "certificate module failed to compile"
++        return res
++    ax = _axioms(cc.output, ns)
++    rp = tc.replay(f"ProofScopeCert.{ident}", build, timeout=timeout) if replay else None
++    res["replay"] = rp.as_dict() if rp else {"skipped": True}
++    for k in cands:
++        a = ax.get(k)
++        if a is None:
++            res["rejected"][k] = "axiom report missing"
++        elif "sorryAx" in a:
++            res["rejected"][k] = "depends on sorryAx"
++        elif not set(a) <= STD_AXIOMS:
++            res["rejected"][k] = f"non-standard axioms {a}"
++        elif rp is not None and rp.returncode != 0:
++            res["rejected"][k] = "leanchecker replay failed"
++        else:
++            res["certificates"][k] = {"declaration": f"{ns}.{k}", "statement": obligations[k][0], "axioms": a}
++    return res
+diff --git a/proofscope/compare.py b/proofscope/compare.py
+new file mode 100644
+index 0000000..47586c6
+--- /dev/null
++++ b/proofscope/compare.py
+@@ -0,0 +1,222 @@
++"""Theorem-level semantic comparison (v0.6) with certificates (v0.7).
++
++A comparison spec gives a formal statement and a reference statement over the same binders x:
++
++    Lean:       ∀ x, H_L x → C_L x
++    Reference:  ∀ x, H_R x → C_R x      (the intended claim, e.g. read from a paper: AI_PRELIMINARY
++                                          unless a person has confirmed it)
++
++ProofScope tries to certify each of these propositions (see certify.py for what "certified" means):
++
++  hyp_cover      ∀ x, H_R x → H_L x                 Lean applies wherever the reference does
++  concl_cover    ∀ x, H_R x → C_L x → C_R x         where both apply, Lean's conclusion gives the reference's
++  transfer       (∀ x, H_L x → C_L x) → (∀ x, H_R x → C_R x)     proved from the two above
++  hyp_back       ∀ x, H_L x → H_R x
++  concl_back     ∀ x, H_L x → C_R x → C_L x
++  app_gap        ∃ x, H_R x ∧ ¬ H_L x               an object the reference covers and Lean does not
++  concl_gap      ∃ x, H_R x ∧ H_L x ∧ C_L x ∧ ¬ C_R x   Lean's conclusion holds there, the reference's fails
++  strict_hyp     ∃ x, H_L x ∧ ¬ H_R x               Lean covers an object the reference does not
++  strict_concl   ∃ x, H_L x ∧ H_R x ∧ C_R x ∧ ¬ C_L x
++  vacuous        ¬ ∃ x, H_L x                       Lean's hypotheses can never hold
++  inhabited      ∃ x, H_L x
++
++Classification and exactly what each establishes (soundness):
++
++  VACUOUS               `vacuous` certified: the formal theorem says nothing.
++  APPLICABILITY_GAP     `app_gap` certified: at a concrete object the reference's hypotheses hold and Lean's fail,
++                        so the formal theorem cannot be applied there. It does NOT show the reference claim false.
++  CONCLUSION_GAP        `concl_gap` certified: at a concrete object both hypotheses hold and Lean's conclusion
++                        holds but the reference's does not, so the formal theorem does not yield the reference
++                        claim there. It does NOT show the reference claim false.
++  EQUIVALENT            hyp_cover, concl_cover, hyp_back, concl_back certified: each theorem implies the other
++                        *uniformly in x*. (Not the vacuous "both closed statements are true" equivalence.)
++  LEAN_STRONGER         transfer certified and strict_hyp or strict_concl certified: the formal theorem implies the
++                        reference and covers strictly more.
++  COVERS                transfer certified: the formal theorem implies the reference claim. Possible strengthening
++                        not established.
++  INCONCLUSIVE          none of the above.
++
++Certificates are about the two *formal* statements. Whether the reference statement matches a paper is a human
++judgement and is reported as such.
++"""
++
++from __future__ import annotations
++
++import json
++import re
++from dataclasses import dataclass, field
++from itertools import product
++from pathlib import Path
++
++from .certify import certify
++from .toolchain import Toolchain
++
++FORALL = ["intros; omega", "intros; simp_all", "intros; simp_all <;> omega", "intros; grind", "decide",
++          "intros; constructor <;> intros <;> omega", "intros; exact ‹_›", "intros; trivial"]
++EXISTS = ["decide +kernel", "decide", "grind", "simp"]
++NEG_EXISTS = ["intro h; obtain ⟨{pat}, h⟩ := h; omega", "intro h; obtain ⟨{pat}, h⟩ := h; simp_all",
++              "intro h; obtain ⟨{pat}, h⟩ := h; grind", "decide"]
++LABELS = ["VACUOUS", "APPLICABILITY_GAP", "CONCLUSION_GAP", "EQUIVALENT", "LEAN_STRONGER", "COVERS", "INCONCLUSIVE"]
++
++
++@dataclass
++class CompareSpec:
++    id: str
++    binders: list[list[str]]
++    lean_hyp: str
++    lean_concl: str
++    ref_hyp: str
++    ref_concl: str
++    preamble: str = ""
++    imports: list[str] = field(default_factory=list)
++    bounds: dict[str, int] = field(default_factory=dict)
++    tactics: dict[str, list[str]] = field(default_factory=dict)
++    lemmas: str = ""
++    expected: str | None = None
++    family: str = ""
++    split: str = "dev"
++    description: str = ""
++    reference_source: str = "AI_PRELIMINARY"
++
++    @classmethod
++    def load(cls, path) -> "CompareSpec":
++        d = json.loads(Path(path).read_text())
++        return cls(**{k: v for k, v in d.items() if k in cls.__dataclass_fields__})
++
++    @property
++    def ident(self) -> str:
++        parts = [p for p in re.split(r"[^A-Za-z0-9]+", self.id) if p]
++        name = "".join(p[:1].upper() + p[1:] for p in parts)
++        return name if name and not name[0].isdigit() else "P" + name
++
++    def b(self) -> str:
++        return " ".join(f"({n} : {t})" for n, t in self.binders)
++
++    def nat_box(self) -> bool:
++        return bool(self.bounds) and all(t.strip() == "Nat" and n in self.bounds for n, t in self.binders)
++
++    def ex_box(self, body: str) -> str:
++        return " ".join(f"∃ {n}, {n} < {self.bounds[n]} ∧" for n, _ in self.binders) + f" {body}"
++
++    def obligations(self) -> dict[str, tuple[str, list[str]]]:
++        b, HL, CL, HR, CR = self.b(), f"({self.lean_hyp})", f"({self.lean_concl})", f"({self.ref_hyp})", f"({self.ref_concl})"
++        pat = ", ".join(n for n, _ in self.binders)
++        ex = lambda body: [*EXISTS, *self._witnesses(body)]  # noqa: E731
++        ob = {
++            "hyp_cover": (f"∀ {b}, {HR} → {HL}", list(FORALL)),
++            "concl_cover": (f"∀ {b}, {HR} → {CL} → {CR}", list(FORALL)),
++            "hyp_back": (f"∀ {b}, {HL} → {HR}", list(FORALL)),
++            "concl_back": (f"∀ {b}, {HL} → {CR} → {CL}", list(FORALL)),
++            "app_gap": (f"∃ {b}, {HR} ∧ ¬ {HL}", ex("app")),
++            "concl_gap": (f"∃ {b}, {HR} ∧ {HL} ∧ {CL} ∧ ¬ {CR}", ex("concl")),
++            "strict_hyp": (f"∃ {b}, {HL} ∧ ¬ {HR}", ex("sh")),
++            "strict_concl": (f"∃ {b}, {HL} ∧ {HR} ∧ {CR} ∧ ¬ {CL}", ex("sc")),
++            "vacuous": (f"¬ ∃ {b}, {HL}", [t.format(pat=pat) for t in NEG_EXISTS]),
++            "inhabited": (f"∃ {b}, {HL}", ex("inh")),
++        }
++        if self.nat_box():
++            # A witness found inside a finite box is a full certificate of the unbounded existential.
++            for k, body in (("app_gap", f"{HR} ∧ ¬ {HL}"), ("concl_gap", f"{HR} ∧ {HL} ∧ {CL} ∧ ¬ {CR}"),
++                            ("strict_hyp", f"{HL} ∧ ¬ {HR}"), ("strict_concl", f"{HL} ∧ {HR} ∧ {CR} ∧ ¬ {CL}"),
++                            ("inhabited", HL)):
++                ob[k][1].append(self._box_tactic(body))
++        for k, extra in self.tactics.items():
++            ob[k][1].extend(extra)
++        return ob
++
++    def _box_tactic(self, body: str) -> str:
++        """One-line tactic: decide the boxed existential by kernel computation, then drop the box bounds.
++        (Multi-line tactics inside `first | ...` would be a parse error that disables every alternative.)"""
++        names = [n for n, _ in self.binders]
++        boxed = self.ex_box(body)
++        # (h : ∃ x₁, x₁ < B₁ ∧ ∃ x₂, x₂ < B₂ ∧ … ∧ body)  ↦  ⟨x₁, x₂, …, proof of body⟩
++        inner = f"⟨{', '.join(names)}, h{len(names)}.2⟩"
++        for i in range(len(names), 0, -1):
++            prev = "hb" if i == 1 else f"h{i - 1}.2"
++            inner = f"{prev}.elim (fun {names[i - 1]} h{i} => {inner})"
++        return f"exact (by decide +kernel : {boxed}).elim (fun {names[0]} h1 => " + \
++            (inner.split("(fun", 1)[1].split("=>", 1)[1].strip()[:-1] if len(names) == 1 else
++             inner.split(f"(fun {names[0]} h1 => ", 1)[1][:-1]) + ")"
++
++    def _witnesses(self, _tag: str) -> list[str]:
++        """Small concrete witnesses for existentials over Nat, Int and List Nat binders (at most two)."""
++        pools = {"Nat": [str(i) for i in range(6)], "Int": ["0", "1", "-1", "2", "-2"],
++                 "List Nat": ["[]", "[0]", "[1]", "[1, 0]", "[0, 1]"]}
++        cols = [pools.get(t.strip()) for _, t in self.binders]
++        if any(c is None for c in cols) or len(cols) > 2:
++            return []
++        return [f"exact ⟨{', '.join(v)}, by decide⟩" for v in product(*cols)]
++
++    def header(self) -> str:
++        return ("".join(f"import {m}\n" for m in self.imports)
++                + "set_option maxHeartbeats 400000\nset_option maxRecDepth 20000\n"
++                + "set_option linter.unusedVariables false\n\n"
++                + (self.preamble.strip() + "\n\n" if self.preamble.strip() else "")
++                + (self.lemmas.strip() + "\n" if self.lemmas.strip() else ""))
++
++
++def classify(c: set[str]) -> str:
++    if "vacuous" in c:
++        return "VACUOUS"
++    if "app_gap" in c:
++        return "APPLICABILITY_GAP"
++    if "concl_gap" in c:
++        return "CONCLUSION_GAP"
++    cover = "transfer" in c
++    if cover and {"hyp_back", "concl_back"} <= c:
++        return "EQUIVALENT"
++    if cover and ({"strict_hyp", "strict_concl"} & c):
++        return "LEAN_STRONGER"
++    if cover:
++        return "COVERS"
++    return "INCONCLUSIVE"
++
++
++def contradictions(c: set[str]) -> list[str]:
++    """Pairs that cannot both be true; if both are certified the run is unsound and must be investigated."""
++    pairs = [("hyp_cover", "app_gap"), ("concl_cover", "concl_gap"), ("hyp_back", "strict_hyp"),
++             ("concl_back", "strict_concl"), ("vacuous", "inhabited")]
++    return [f"{a} & {b}" for a, b in pairs if a in c and b in c]
++
++
++SOUNDNESS = {
++    "VACUOUS": "certified: ¬ ∃ x, H_L x. The formal theorem has no instances.",
++    "APPLICABILITY_GAP": "certified: ∃ x, H_R x ∧ ¬ H_L x. The formal theorem does not apply to an object the reference covers.",
++    "CONCLUSION_GAP": "certified: ∃ x, H_R x ∧ H_L x ∧ C_L x ∧ ¬ C_R x. At that object the formal conclusion does not give the reference conclusion.",
++    "EQUIVALENT": "certified: hypotheses and conclusions imply each other uniformly in x, so each theorem implies the other.",
++    "LEAN_STRONGER": "certified: the formal theorem implies the reference claim and covers strictly more.",
++    "COVERS": "certified: the formal theorem implies the reference claim; whether it is strictly stronger was not settled.",
++    "INCONCLUSIVE": "no classifying certificate was found; no claim is made.",
++}
++
++
++def run_compare(spec: CompareSpec, tc: Toolchain, workdir: Path) -> dict:
++    r = certify(spec.ident, spec.header(), spec.obligations(), tc, workdir)
++    got = set(r["certificates"])
++    # transfer: (∀x, H_L → C_L) → (∀x, H_R → C_R), proved from the two cover certificates and itself certified
++    if {"hyp_cover", "concl_cover"} <= got:
++        xs = " ".join(n for n, _ in spec.binders)
++        base = r["certificate_source"].split("\n#print axioms", 1)[0]
++        tr_ob = {"transfer": (f"(∀ {spec.b()}, ({spec.lean_hyp}) → ({spec.lean_concl})) → "
++                              f"(∀ {spec.b()}, ({spec.ref_hyp}) → ({spec.ref_concl}))",
++                              [f"intro hT {xs} hR; exact ProofScopeCert.{spec.ident}.concl_cover {xs} hR "
++                               f"(hT {xs} (ProofScopeCert.{spec.ident}.hyp_cover {xs} hR))"])}
++        t = certify(spec.ident + "Transfer", base, tr_ob, tc, Path(workdir) / "transfer")
++        if "transfer" in t["certificates"]:
++            r["certificates"]["transfer"] = t["certificates"]["transfer"]
++            got.add("transfer")
++        else:
++            r["rejected"]["transfer"] = t["rejected"].get("transfer", t["status"])
++    label = classify(got)
++    bad = contradictions(got)
++    if bad:
++        label = "INCONSISTENT"
++    out = {"id": spec.id, "family": spec.family, "split": spec.split, "description": spec.description,
++           "expected": spec.expected, "classification": label,
++           "soundness": SOUNDNESS.get(label, "contradictory certificates: soundness failure, investigate"),
++           "contradictions": bad, "certificates": r["certificates"], "rejected": r["rejected"],
++           "engine_status": r["status"], "reference_source": spec.reference_source,
++           "pair_specific": sorted(spec.tactics) + (["lemmas"] if spec.lemmas.strip() else [])}
++    if spec.expected:
++        out["correct"] = label == spec.expected
++    return out
+diff --git a/proofscope/dossier.py b/proofscope/dossier.py
+new file mode 100644
+index 0000000..5cd2fc9
+--- /dev/null
++++ b/proofscope/dossier.py
+@@ -0,0 +1,174 @@
++"""Theorem Intelligence (v0.5): elaborator-based theorem dossiers.
++
++    python3 -m proofscope.dossier --imports Mod1 Mod2 [--decls A.b C.d] [--modules Mod1] \
++        [--module-limit N] [--project LAKE_DIR] [--commit SHA] [--replay] --out DIR
++
++Runs the Lean metaprogram `lean/ProofScope/Dossier.lean` inside Lean itself, so every field comes from the
++elaborated declaration in the environment, not from source text. Adds provenance (toolchain, commit) and a
++kernel status per declaration:
++
++  REPLAYED            the declaring project module was re-checked by `leanchecker` in this run
++  REPLAY_FAILED       `leanchecker` rejected the declaring module
++  TOOLCHAIN_LIBRARY   declared in the Lean toolchain's own library; trusted with the toolchain, not replayed
++  NOT_RUN             replay was not requested or not possible
++
++Axiom status: STANDARD (subset of propext, Classical.choice, Quot.sound), NONE, SORRY (depends on sorryAx),
++NONSTANDARD (any other axiom).
++"""
++
++from __future__ import annotations
++
++import argparse
++import json
++import re
++import sys
++from pathlib import Path
++
++from .toolchain import Toolchain
++
++SRC = Path(__file__).resolve().parents[1] / "lean"
++STD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
++REQUIRED = ["theorem_id", "kind", "module", "elaborated_type", "binders", "hypotheses", "conclusion",
++            "conclusion_shape", "statement_dependencies", "proof_dependencies", "axioms",
++            "source_locations", "unresolved_items"]
++TOOLCHAIN_ROOTS = ("Init", "Lean", "Std", "Lake")
++NAME_RE = re.compile(r"^[A-Za-z_«][A-Za-z0-9_'!?«».₀-₉]*$")
++
++
++def build_metaprogram(tc: Toolchain, build: Path) -> dict:
++    out = build / "ProofScope" / "Dossier.olean"
++    r = tc.compile(SRC / "ProofScope" / "Dossier.lean", out, SRC, timeout=900)
++    return {"ok": r.returncode == 0 and out.exists(), "log": r.as_dict()}
++
++
++def axiom_status(axioms: list[str]) -> str:
++    if "sorryAx" in axioms:
++        return "SORRY"
++    if not axioms:
++        return "NONE"
++    return "STANDARD" if set(axioms) <= STD_AXIOMS else "NONSTANDARD"
++
++
++def to_markdown(d: dict) -> str:
++    L = [f"# Theorem dossier: `{d['theorem_id']}`", "",
++         f"- Kind: {d['kind']} · Module: `{d['module']}` · Lines: {d.get('source_locations') or '—'}",
++         f"- Source commit: `{d.get('source_commit') or '—'}` · Toolchain: {d.get('lean_toolchain', '—')}",
++         f"- Kernel status: **{d['kernel_status']}** · Axioms: **{d['axiom_status']}** ({', '.join(d['axioms']) or 'none'})",
++         "", "## Elaborated statement", "", "```lean", d["elaborated_type"], "```", "",
++         f"Conclusion shape: `{d['conclusion_shape']}`", "", "## Binders", "",
++         "| Name | Binder | Role | Type |", "|---|---|---|---|"]
++    for b in d["binders"]:
++        L.append(f"| `{b['name']}` | {b['binder']} | {b['role']} | `{b['type']}` |")
++    L += ["", "## Definitions the statement depends on (review these)", ""]
++    defs = [x for x in d["statement_dependencies"] if x["role"] == "definition"]
++    L += [f"- `{x['name']}` ({x['module']})" for x in defs] or ["- none beyond logic, types and notation"]
++    L += ["", f"Other statement dependencies: {len(d['statement_dependencies']) - len(defs)} "
++          "(logic, types, notation and typeclass machinery).",
++          f"Direct proof dependencies: {len(d['proof_dependencies'])}.", "", "## Unresolved", ""]
++    L += [f"- {u}" for u in d["unresolved_items"]]
++    L += ["", "_A dossier describes what Lean elaborated. It does not say the statement matches any paper._", ""]
++    return "\n".join(L)
++
++
++def run(imports: list[str], decls: list[str], modules: list[str], out: Path, project: str | None = None,
++        commit: str | None = None, module_limit: int | None = None, replay: bool = True) -> dict:
++    for n in imports + decls + modules:
++        if not NAME_RE.match(n):
++            raise ValueError(f"invalid Lean name {n!r}")
++    out = out.resolve()
++    tc = Toolchain.find(project)
++    build = out / "_build"
++    meta = build_metaprogram(tc, build)
++    summary: dict = {"toolchain": tc.version(), "source_commit": commit, "project": project,
++                     "metaprogram_built": meta["ok"], "dossiers": 0, "errors": []}
++    if not meta["ok"]:
++        summary["errors"].append("INFRASTRUCTURE_ERROR: metaprogram failed to compile: "
++                                 + meta["log"]["output_tail"][-600:])
++        (out / "dossier_index.json").write_text(json.dumps(summary, indent=2))
++        return summary
++    driver = build / "ProofScopeDriver.lean"
++    lim = f" {module_limit}" if module_limit else ""
++    driver.write_text("".join(f"import {m}\n" for m in dict.fromkeys(imports + modules)) + "import ProofScope.Dossier\n\n"
++                      + (f"#proofscope_dossier {' '.join(decls)}\n" if decls else "")
++                      + "".join(f"#proofscope_dossier_module {m}{lim}\n" for m in modules))
++    r = tc.run([tc.lean, str(driver)], cwd=project or build, extra_path=build, timeout=3600)
++    (out / "elaboration.log").write_text(r.output)
++    rows = []
++    for line in r.output.splitlines():
++        i = line.find("PROOFSCOPE_DOSSIER ")
++        if i >= 0:
++            rows.append(json.loads(line[i + len("PROOFSCOPE_DOSSIER "):]))
++    errs = [l for l in r.output.splitlines() if ": error" in l]
++    summary["errors"] += [f"ELABORATION_ERROR: {e}" for e in errs[:20]]
++
++    replayed: dict[str, str] = {}
++    if replay and project:
++        for m in sorted({d["module"] for d in rows if "error" not in d}):
++            if m.split(".")[0] in TOOLCHAIN_ROOTS or m.startswith("("):
++                continue
++            rp = tc.run([tc.leanchecker, m] if tc.leanchecker else ["false"], cwd=project, timeout=3600)
++            replayed[m] = "REPLAYED" if rp.returncode == 0 else "REPLAY_FAILED"
++            (out / "replay").mkdir(exist_ok=True)
++            (out / "replay" / f"{m}.log").write_text(rp.output)
++    (out / "dossiers").mkdir(parents=True, exist_ok=True)
++    kept = []
++    for d in rows:
++        if "error" in d:
++            summary["errors"].append(f"UNKNOWN_CONSTANT: {d['theorem_id']}")
++            continue
++        missing = [k for k in REQUIRED if k not in d]
++        if missing:
++            d.setdefault("unresolved_items", []).append(f"fields missing from extraction: {missing}")
++        d["source_commit"] = commit
++        d["lean_toolchain"] = summary["toolchain"]
++        d["axiom_status"] = axiom_status(d["axioms"])
++        root = d["module"].split(".")[0]
++        if d["module"] in replayed:
++            d["kernel_status"] = replayed[d["module"]]
++        elif root in TOOLCHAIN_ROOTS:
++            d["kernel_status"] = "TOOLCHAIN_LIBRARY"
++        else:
++            d["kernel_status"] = "NOT_RUN"
++        d["verification_evidence"] = {"elaboration_log": "elaboration.log",
++                                      "replay_log": f"replay/{d['module']}.log" if d["module"] in replayed else None}
++        safe = re.sub(r"[^A-Za-z0-9_.-]", "_", d["theorem_id"])[:150]
++        (out / "dossiers" / f"{safe}.json").write_text(json.dumps(d, indent=2, ensure_ascii=False))
++        (out / "dossiers" / f"{safe}.md").write_text(to_markdown(d))
++        kept.append(d)
++    summary["dossiers"] = len(kept)
++    summary["by_axiom_status"] = {s: sum(1 for d in kept if d["axiom_status"] == s)
++                                  for s in ("NONE", "STANDARD", "NONSTANDARD", "SORRY")}
++    summary["by_kernel_status"] = {s: sum(1 for d in kept if d["kernel_status"] == s)
++                                   for s in ("REPLAYED", "REPLAY_FAILED", "TOOLCHAIN_LIBRARY", "NOT_RUN")}
++    summary["with_hypotheses"] = sum(1 for d in kept if d["hypotheses"])
++    summary["with_definition_dependencies"] = sum(
++        1 for d in kept if any(x["role"] == "definition" for x in d["statement_dependencies"]))
++    summary["incomplete_extractions"] = sum(1 for d in kept if any("fields missing" in u for u in d["unresolved_items"]))
++    (out / "dossier_index.json").write_text(json.dumps(
++        {"summary": summary, "theorems": [{k: d[k] for k in ("theorem_id", "module", "kernel_status", "axiom_status")}
++                                           for d in kept]}, indent=2, ensure_ascii=False))
++    return summary
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python3 -m proofscope.dossier", description=__doc__.split("\n\n")[0])
++    ap.add_argument("--imports", nargs="*", default=[])
++    ap.add_argument("--decls", nargs="*", default=[])
++    ap.add_argument("--modules", nargs="*", default=[], help="dossier every theorem declared in these modules")
++    ap.add_argument("--module-limit", type=int, default=None)
++    ap.add_argument("--project", default=None, help="Lake project directory (already built)")
++    ap.add_argument("--commit", default=None)
++    ap.add_argument("--no-replay", action="store_true")
++    ap.add_argument("--out", default="proofscope-dossiers")
++    a = ap.parse_args(argv)
++    s = run(a.imports, a.decls, a.modules, Path(a.out), a.project, a.commit, a.module_limit, not a.no_replay)
++    print(json.dumps(s, indent=2, ensure_ascii=False))
++    ok = s["metaprogram_built"] and s["dossiers"] > 0
++    print("\nVERDICT\n - " + (f"{s['dossiers']} theorem dossiers were extracted from Lean's elaborated declarations. "
++                              "They describe what was stated and which axioms it uses; they say nothing about whether "
++                              "a statement matches a paper." if ok else "No dossiers were produced; see errors."))
++    return 0 if ok and not s["errors"] else 1
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/proofscope/project.py b/proofscope/project.py
+index 3b0fdcd..dd727b9 100644
+--- a/proofscope/project.py
++++ b/proofscope/project.py
+@@ -427,6 +427,25 @@ def s7_worksheets(A: Audit, root: Path, commit: str, ledger: Path | None) -> Non
+           f"verdicts {s['verdicts']}; {s['human_reviewed']} by a named human reviewer; AI_PRELIMINARY verdicts need confirmation")
+ 
+ 
++def s8_dossiers(A: Audit, root: Path, modules: list[str], decls: list[str], commit: str) -> None:
++    from .dossier import run as dossier_run
++    try:
++        s = dossier_run(modules, decls, [] if decls else modules, A.out / "dossiers", str(root), commit,
++                        module_limit=None if decls else 200)
++    except Exception as e:  # noqa: BLE001 - reported, never hidden
++        A.add("S8", "theorem dossiers", "metaprogram", INCONCLUSIVE, f"INFRASTRUCTURE_ERROR: {e!r}"[:300])
++        return
++    A.meta["dossiers"] = s
++    if not s["metaprogram_built"] or not s["dossiers"]:
++        A.add("S8", "theorem dossiers", "metaprogram", INCONCLUSIVE, "; ".join(s["errors"])[:300] or "no dossiers")
++        return
++    A.add("S8", "theorem dossiers", f"{s['dossiers']} declarations", VERIFIED,
++          f"axioms {s['by_axiom_status']}; kernel {s['by_kernel_status']}")
++    if s["by_axiom_status"].get("SORRY") or s["by_axiom_status"].get("NONSTANDARD"):
++        A.add("S8", "dossier axiom status", "SORRY/NONSTANDARD present", FAIL if s["by_axiom_status"].get("SORRY") else WARNING,
++              json.dumps(s["by_axiom_status"]))
++
++
+ # ----------------------------------------------------------------------------- report
+ 
+ def write(A: Audit, args) -> int:
+@@ -536,6 +555,8 @@ def main(argv=None) -> int:
+                     help="build scope-fidelity review worksheets from the project's docs/ (no code executed)")
+     ap.add_argument("--ledger", default=None, help="review ledger JSON; merged only if its commit matches")
+     ap.add_argument("--build", action="store_true", help="run lake build, axiom audit and replay (executes project code)")
++    ap.add_argument("--dossiers", action="store_true",
++                    help="with --build: elaborator-based theorem dossiers for the target modules (stage S8)")
+     ap.add_argument("--build-timeout", type=int, default=3600)
+     ap.add_argument("--workdir", default=None)
+     ap.add_argument("--output", default="proofscope-project-evidence")
+@@ -580,6 +601,9 @@ def main(argv=None) -> int:
+     if a.build:
+         if a.modules:
+             s6_build(A, root, a.modules, a.decls, a.build_timeout)
++            if a.dossiers and not any(f.stage == "S6" and f.check == "lake build" and f.status != VERIFIED
++                                      for f in A.findings):
++                s8_dossiers(A, root, a.modules, a.decls, a.commit)
+         else:
+             A.add("S6", "build", "no targets", INCONCLUSIVE, "give --modules or --catalog-targets")
+     return write(A, a)
+diff --git a/proofscope/viewer.py b/proofscope/viewer.py
+new file mode 100644
+index 0000000..b7518ab
+--- /dev/null
++++ b/proofscope/viewer.py
+@@ -0,0 +1,100 @@
++"""Self-contained HTML viewer for ProofScope dossiers and comparison results (v1.0 slice).
++
++    python3 -m proofscope.viewer --dossiers DIR/dossiers [--bench bench_results.json] --out report.html
++
++One offline HTML file: no external scripts, fonts or network requests. It shows exactly what is in the JSON and
++repeats its limits; it adds no claims of its own.
++"""
++
++from __future__ import annotations
++
++import argparse
++import html
++import json
++import sys
++from pathlib import Path
++
++CSS = """
++:root{--bg:#fbfbf9;--fg:#1d1d1b;--mute:#6b6b66;--line:#e2e1dc;--ok:#1f7a4d;--warn:#a86a00;--bad:#b3261e;--info:#3d5a99}
++@media (prefers-color-scheme:dark){:root{--bg:#161615;--fg:#ecebe6;--mute:#9b9a94;--line:#2e2d2a;--ok:#5cc28f;--warn:#e0a84a;--bad:#ef7b72;--info:#8ea8e6}}
++*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
++header{padding:28px 32px 12px;border-bottom:1px solid var(--line)}h1{margin:0;font-size:22px;font-weight:650}
++.sub{color:var(--mute);font-size:13px}main{display:grid;grid-template-columns:300px 1fr;min-height:80vh}
++nav{border-right:1px solid var(--line);padding:16px;overflow:auto;max-height:85vh}nav input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit;margin-bottom:10px}
++nav a{display:block;padding:5px 8px;border-radius:5px;color:inherit;text-decoration:none;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;word-break:break-all}
++nav a:hover,nav a.on{background:var(--line)}section{padding:20px 32px;max-width:980px}
++.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;border:1px solid currentColor;margin-right:6px}
++.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
++pre{background:transparent;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;font-size:13px;white-space:pre-wrap}
++table{border-collapse:collapse;width:100%;font-size:13.5px;margin:6px 0 16px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
++th{color:var(--mute);font-weight:600}code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}h2{font-size:17px;margin:22px 0 8px}h3{font-size:14.5px;margin:18px 0 6px;color:var(--mute)}
++.note{color:var(--mute);font-size:13px;border-left:3px solid var(--line);padding-left:10px}
++.stats{display:flex;gap:28px;flex-wrap:wrap;margin:10px 0 4px}.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
++"""
++
++JS = """
++const data=JSON.parse(document.getElementById('d').textContent);
++const nav=document.getElementById('list'),view=document.getElementById('view'),q=document.getElementById('q');
++const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
++const cls=s=>({REPLAYED:'ok',NONE:'ok',STANDARD:'ok',TOOLCHAIN_LIBRARY:'info',NOT_RUN:'warn',NONSTANDARD:'warn',REPLAY_FAILED:'bad',SORRY:'bad'}[s]||'info');
++function show(i){const d=data[i];[...nav.children].forEach((a,j)=>a.classList.toggle('on',j==i));
++ const defs=d.statement_dependencies.filter(x=>x.role==='definition');
++ view.innerHTML=`<h2><code>${esc(d.theorem_id)}</code></h2>
++ <span class="tag ${cls(d.kernel_status)}">kernel: ${esc(d.kernel_status)}</span><span class="tag ${cls(d.axiom_status)}">axioms: ${esc(d.axiom_status)}</span><span class="tag info">${esc(d.kind)}</span>
++ <p class="sub">Module <code>${esc(d.module)}</code>${d.source_locations?` · lines ${d.source_locations.start_line}–${d.source_locations.end_line}`:''} · commit <code>${esc(d.source_commit||'—')}</code></p>
++ <h3>Elaborated statement</h3><pre>${esc(d.elaborated_type)}</pre><p class="sub">Conclusion shape: <code>${esc(d.conclusion_shape)}</code></p>
++ <h3>Binders</h3><table><tr><th>Name</th><th>Binder</th><th>Role</th><th>Type</th></tr>${d.binders.map(b=>`<tr><td><code>${esc(b.name)}</code></td><td>${esc(b.binder)}</td><td>${esc(b.role)}</td><td><code>${esc(b.type)}</code></td></tr>`).join('')}</table>
++ <h3>Definitions the statement depends on</h3>${defs.length?'<ul>'+defs.map(x=>`<li><code>${esc(x.name)}</code> <span class="sub">${esc(x.module)}</span></li>`).join('')+'</ul>':'<p class="sub">None beyond logic, types and notation.</p>'}
++ <h3>Axioms</h3><p>${d.axioms.length?d.axioms.map(a=>`<code>${esc(a)}</code>`).join(', '):'none'}</p>
++ <h3>Unresolved</h3><ul>${d.unresolved_items.map(u=>`<li>${esc(u)}</li>`).join('')}</ul>
++ <p class="note">This dossier describes what Lean elaborated and which axioms it uses. It does not say the statement matches any paper.</p>`;}
++function render(){const t=q.value.toLowerCase();nav.innerHTML='';data.forEach((d,i)=>{if(t&&!d.theorem_id.toLowerCase().includes(t))return;const a=document.createElement('a');a.href='#';a.textContent=d.theorem_id;a.onclick=e=>{e.preventDefault();show(i)};a.className=cls(d.axiom_status)==='bad'?'bad':'';nav.appendChild(a)});}
++q.oninput=render;render();if(data.length)show(0);
++"""
++
++
++def build(dossier_dir: Path, bench: Path | None, out: Path, title: str) -> Path:
++    ds = [json.loads(p.read_text()) for p in sorted(dossier_dir.glob("*.json"))]
++    stat = lambda k, v: sum(1 for d in ds if d.get(k) == v)  # noqa: E731
++    bench_html = ""
++    if bench and bench.exists():
++        rep = json.loads(bench.read_text())["report"]
++        rows = []
++        for sp, r in rep.get("splits", {}).items():
++            e, b = r["engine_detection"], r["baseline_detection"]
++            rows.append(f"<tr><td>{sp}</td><td>{r['cases']}</td><td>{r['exact_label_accuracy']}</td><td>{e['precision']}</td>"
++                        f"<td>{e['recall']} {e.get('recall_ci95')}</td><td>{e['false_positive_rate']}</td><td>{e['coverage']}</td>"
++                        f"<td>{b['precision']} / {b['false_positive_rate']}</td></tr>")
++        adv = rep.get("adversarial_certificates")
++        bench_html = ("<h2>Theorem-comparison benchmark</h2><table><tr><th>Split</th><th>Cases</th><th>Exact</th><th>Precision</th>"
++                      "<th>Recall (95% CI)</th><th>FPR</th><th>Coverage</th><th>Baseline precision / FPR</th></tr>" + "".join(rows) + "</table>"
++                      + (f"<p>Adversarial certificates: {adv['correct']}/{adv['cases']} handled correctly; "
++                         f"false acceptances: {len(adv['false_acceptances'])}.</p>" if adv else "")
++                      + f"<p class='note'>{html.escape(rep.get('competitors', ''))} Cases were written by the project; "
++                        "held-out cases were written after the engine was frozen but by the same author.</p>")
++    doc = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
++<title>{html.escape(title)}</title><style>{CSS}</style></head><body>
++<header><h1>{html.escape(title)}</h1><div class="sub">ProofScope by Caleb J. Westfall · Verify the proof. Validate the claim.</div>
++<div class="stats"><div class="stat"><b>{len(ds)}</b>dossiers</div><div class="stat"><b>{stat('kernel_status','REPLAYED')}</b>kernel-replayed</div>
++<div class="stat"><b>{stat('axiom_status','SORRY')}</b>depend on sorry</div><div class="stat"><b>{stat('axiom_status','NONSTANDARD')}</b>non-standard axioms</div></div>
++{bench_html}</header>
++<main><nav><input id="q" placeholder="Filter theorems"><div id="list"></div></nav><section id="view"></section></main>
++<script type="application/json" id="d">{json.dumps(ds, ensure_ascii=False).replace('</', '<\\/')}</script><script>{JS}</script></body></html>"""
++    out.write_text(doc)
++    return out
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python3 -m proofscope.viewer")
++    ap.add_argument("--dossiers", required=True)
++    ap.add_argument("--bench", default=None)
++    ap.add_argument("--title", default="ProofScope audit")
++    ap.add_argument("--out", default="proofscope_report.html")
++    a = ap.parse_args(argv)
++    p = build(Path(a.dossiers), Path(a.bench) if a.bench else None, Path(a.out), a.title)
++    print(f"wrote {p}")
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/tests/v02/test_engine.py b/tests/v02/test_engine.py
+new file mode 100644
+index 0000000..cc8d2ca
+--- /dev/null
++++ b/tests/v02/test_engine.py
+@@ -0,0 +1,129 @@
++"""v0.5-v1.0 engine tests: theorem dossiers, theorem comparison, certificate gate, viewer.
++Lean-dependent tests skip when `lean` is not on PATH."""
++
++import json
++import shutil
++import subprocess
++import tempfile
++import unittest
++from pathlib import Path
++
++from proofscope import compare as C
++from proofscope.bench import baseline_label, detection, wilson
++
++HAVE_LEAN = shutil.which("lean") is not None
++ROOT = Path(__file__).resolve().parents[2]
++FIXTURE = ROOT / "tests" / "fixtures" / "demo_project"
++
++
++class ClassifyTests(unittest.TestCase):
++    def test_priority_and_labels(self):
++        self.assertEqual(C.classify({"vacuous", "app_gap"}), "VACUOUS")
++        self.assertEqual(C.classify({"app_gap", "concl_gap"}), "APPLICABILITY_GAP")
++        self.assertEqual(C.classify({"concl_gap"}), "CONCLUSION_GAP")
++        self.assertEqual(C.classify({"transfer", "hyp_cover", "concl_cover", "hyp_back", "concl_back"}), "EQUIVALENT")
++        self.assertEqual(C.classify({"transfer", "strict_hyp"}), "LEAN_STRONGER")
++        self.assertEqual(C.classify({"transfer"}), "COVERS")
++        self.assertEqual(C.classify({"hyp_cover", "concl_cover"}), "INCONCLUSIVE")  # transfer itself must be certified
++        self.assertEqual(C.classify(set()), "INCONCLUSIVE")
++
++    def test_contradictions(self):
++        self.assertEqual(C.contradictions({"hyp_cover", "app_gap"}), ["hyp_cover & app_gap"])
++        self.assertEqual(C.contradictions({"vacuous", "inhabited"}), ["vacuous & inhabited"])
++        self.assertEqual(C.contradictions({"transfer", "concl_gap"}), [])
++
++    def test_box_tactic_is_one_line(self):
++        s = C.CompareSpec(id="x", binders=[["n", "Nat"], ["m", "Nat"]], lean_hyp="True", lean_concl="True",
++                          ref_hyp="True", ref_concl="True", bounds={"n": 3, "m": 4})
++        t = s._box_tactic("P n m")
++        self.assertNotIn("\n", t)
++        self.assertIn("∃ n, n < 3 ∧ ∃ m, m < 4 ∧ P n m", t)
++
++    def test_metrics(self):
++        rows = [{"fidelity_failure": True, "k": "CONCLUSION_GAP"}, {"fidelity_failure": False, "k": "EQUIVALENT"},
++                {"fidelity_failure": True, "k": "INCONCLUSIVE"}]
++        d = detection(rows, "k")
++        self.assertEqual((d["tp"], d["fp"], d["fn"], d["abstain"]), (1, 0, 1, 1))
++        self.assertEqual(wilson(0, 0), None)
++        self.assertEqual(baseline_label({"lean_hyp": "a  b", "ref_hyp": "a b", "lean_concl": "c", "ref_concl": "c"}),
++                         "EQUIVALENT")
++
++    def test_benchmark_files(self):
++        for split in ("dev", "heldout"):
++            files = list((ROOT / "proofscope" / "benchmark" / split).glob("*.json"))
++            self.assertGreaterEqual(len(files), 20)
++            for f in files:
++                d = json.loads(f.read_text())
++                self.assertIn(d["expected"], C.LABELS)
++                self.assertIsInstance(d["fidelity_failure"], bool)
++
++
++@unittest.skipUnless(HAVE_LEAN, "Lean toolchain not installed")
++class LeanEngineTests(unittest.TestCase):
++    def test_dossiers_core(self):
++        from proofscope.dossier import run
++        out = Path(tempfile.mkdtemp())
++        s = run(["Init.Data.Nat.Lemmas"], ["Nat.add_comm", "Nat.lt_irrefl"], ["Init.Data.Nat.Lemmas"], out, module_limit=10)
++        self.assertTrue(s["metaprogram_built"])
++        self.assertEqual(s["errors"], [])
++        self.assertGreaterEqual(s["dossiers"], 12)
++        self.assertEqual(s["incomplete_extractions"], 0)
++        d = json.loads((out / "dossiers" / "Nat.add_comm.json").read_text())
++        self.assertEqual(d["elaborated_type"], "∀ (n m : Nat), n + m = m + n")
++        self.assertEqual(d["axiom_status"], "NONE")
++        self.assertEqual(d["kernel_status"], "TOOLCHAIN_LIBRARY")
++
++    def test_dossiers_project_with_replay(self):
++        from proofscope.dossier import run
++        proj = Path(tempfile.mkdtemp()) / "p"
++        shutil.copytree(FIXTURE, proj, ignore=shutil.ignore_patterns(".lake"))
++        subprocess.run(["lake", "build"], cwd=proj, check=True, capture_output=True)
++        out = Path(tempfile.mkdtemp())
++        s = run(["Demo"], [], ["Demo.Basic", "Demo.Flawed"], out, project=str(proj))
++        self.assertEqual(s["by_kernel_status"]["REPLAYED"], 4)
++        self.assertEqual(s["by_axiom_status"], {"NONE": 1, "STANDARD": 1, "NONSTANDARD": 1, "SORRY": 1})
++        d = json.loads((out / "dossiers" / "Demo.sum_formula.json").read_text())
++        self.assertEqual(sorted(x["name"] for x in d["statement_dependencies"] if x["role"] == "definition"),
++                         ["List.range", "List.sum"])
++
++    def _cmp(self, **kw):
++        from proofscope.toolchain import Toolchain
++        spec = C.CompareSpec(id=kw.pop("id"), binders=[["n", "Nat"]], bounds={"n": 20}, **kw)
++        return C.run_compare(spec, Toolchain.find(), Path(tempfile.mkdtemp()))
++
++    def test_compare_gap_equiv_vacuous(self):
++        self.assertEqual(self._cmp(id="g", lean_hyp="2 ≤ n", lean_concl="n ≤ n * n", ref_hyp="True",
++                                   ref_concl="n ≤ n * n")["classification"], "APPLICABILITY_GAP")
++        self.assertEqual(self._cmp(id="e", lean_hyp="n ≠ 0", lean_concl="True", ref_hyp="0 < n",
++                                   ref_concl="True")["classification"], "EQUIVALENT")
++        self.assertEqual(self._cmp(id="v", lean_hyp="n < 2 ∧ 3 < n", lean_concl="False", ref_hyp="True",
++                                   ref_concl="True")["classification"], "VACUOUS")
++
++    def test_adversarial_certificates_all_handled(self):
++        from proofscope.bench import run_adversarial
++        from proofscope.toolchain import Toolchain
++        rows = run_adversarial(Toolchain.find(), Path(tempfile.mkdtemp()))
++        self.assertGreaterEqual(len(rows), 20)
++        bad = [r for r in rows if not r["correct"]]
++        self.assertEqual(bad, [])
++        forged = next(r for r in rows if r["id"] == "AdvSkipKernel")
++        self.assertEqual(forged["reason"], "leanchecker replay failed")
++
++
++class ViewerTests(unittest.TestCase):
++    def test_viewer_is_self_contained(self):
++        from proofscope.viewer import build
++        d = Path(tempfile.mkdtemp())
++        (d / "x.json").write_text(json.dumps({
++            "theorem_id": "X.y</script><b>", "kind": "theorem", "module": "M", "elaborated_type": "True",
++            "binders": [], "hypotheses": [], "conclusion": "True", "conclusion_shape": "True",
++            "statement_dependencies": [], "proof_dependencies": [], "axioms": [], "source_locations": None,
++            "unresolved_items": [], "kernel_status": "NOT_RUN", "axiom_status": "NONE", "source_commit": None}))
++        out = build(d, None, Path(tempfile.mkdtemp()) / "r.html", "t")
++        s = out.read_text()
++        self.assertNotIn("http://", s.replace("http://www.w3.org", ""))
++        self.assertNotIn("</script><b>", s)  # script-breaking content is escaped
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.43.0
+
