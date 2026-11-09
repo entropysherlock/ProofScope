@@ -79,7 +79,16 @@ jobs:
           python-version: "3.12"
       - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
         uses: ./.github/actions/setup-lean
-      - name: Benchmark infrastructure unit tests
+      - name: Integrity (frozen ProofScope v1.2, unchanged fixtures and research file, pinned competitor revisions)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c | tee evidence/v12-freeze.txt
+          echo "4b0d36de474ea39d9802e6a21e7240397a903ddc886bc25849a178773bc2f971  bench/fixtures/availability.cases.jsonl" | sha256sum -c | tee evidence/fixtures.txt
+          echo "da34fb9dea0fa8a110ed1a8343bf2f269501954b55221102b85856124821ce29  research/joint_drift/JointDrift.lean" | sha256sum -c | tee -a evidence/fixtures.txt
+          printf 'MATHLIB_REV=%s\nSEMANTEQ_REV=%s\nLEANINTERACT_REV=%s\nASSESS_REV=%s\n' "$MATHLIB_REV" "$SEMANTEQ_REV" "$LEANINTERACT_REV" "$ASSESS_REV" | tee evidence/pins.txt
+      - name: Benchmark infrastructure unit tests (incl. process-tree CPU, orphan, wall, OOM, launch-error classification)
         run: python -m unittest tests.bench.test_bench -v
       - name: Research theorems (JointDrift; 6 axiom-free + 1 standard-axiom, fresh kernel replay)
         shell: bash
@@ -147,11 +156,22 @@ jobs:
           for i in 1 2 3; do lake update && break || sleep 30; done
           for i in 1 2 3; do lake exe cache get && break || sleep 60; done
           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: ProofScope native checks (v1.2 unit and end-to-end tests; Mathlib elaboration smoke)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ps-evidence
+          python -m unittest tests.v02.test_v12 -v 2>&1 | tee ps-evidence/test_v12-${{ matrix.shard }}.log
+          printf 'import Mathlib\nexample (x : ℝ) : Real.sqrt (x ^ 2) = |x| := Real.sqrt_sq_eq_abs x\n' > /tmp/ps_smoke.lean
+          lean /tmp/ps_smoke.lean 2>&1 | tee ps-evidence/mathlib-smoke-${{ matrix.shard }}.log
       - name: Run (shard ${{ matrix.shard }}/4)
         shell: bash
         run: |
           set -euo pipefail
-          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['proofscope'])" '${{ inputs.startup_allowance }}')
+          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
+          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
+          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
+            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['proofscope'])" '${{ inputs.startup_allowance }}'); fi
           python -m bench.runner --system proofscope --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
             --startup-allowance "$A" --mem-mb 12000 --repeat 1 --shard ${{ matrix.shard }}/4 --out runs | tee runs-proofscope-${{ matrix.shard }}.log
       - name: Upload runs
@@ -161,6 +181,7 @@ jobs:
           name: sota1-runs-proofscope-${{ matrix.shard }}
           path: |
             runs/
+            ps-evidence/
             !runs/work/**/ps_out/build/**
             runs-proofscope-*.log
           if-no-files-found: warn
@@ -193,11 +214,37 @@ jobs:
           test "$(git rev-parse HEAD)" = "$SEMANTEQ_REV"
           for i in 1 2 3; do lake exe cache get && break || sleep 60; done
           lake build semanteq 2>&1 | tail -5
+      - name: SemantEq upstream check (two pairs of its own recall suite, compared with its own manifest)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p se-evidence
+          cd "$RUNNER_TEMP/se"
+          grep -E '"id": "auto:Compfiles:(Imo1963P5|Imo1983P1)"' test/eval/recall/suite.jsonl > /tmp/se_upstream.jsonl
+          test "$(wc -l < /tmp/se_upstream.jsonl)" = 2
+          lake exe semanteq --raw --timeout 0 /tmp/se_upstream.jsonl /tmp/se_upstream_out.jsonl > "$GITHUB_WORKSPACE/se-evidence/upstream-stdout.log" 2>&1
+          cp /tmp/se_upstream_out.jsonl "$GITHUB_WORKSPACE/se-evidence/"
+          python - <<'PY'
+          import json
+          acc = {"ExactMatch", "DefEq", "EquivalentRestricted"}
+          man = {r["id"]: r for r in map(json.loads, open("test/eval/recall/manifest.jsonl"))}
+          out = [r for r in map(json.loads, open("/tmp/se_upstream_out.jsonl")) if "_meta" not in r]
+          assert len(out) == 2, out
+          for r in out:
+              want = man[r["id"]]["default_search_accepts"]
+              got = r["verdict"] in acc
+              print(r["id"], r["verdict"], "accepts" if got else "rejects", "manifest:", want)
+              assert got == want, f"SemantEq does not reproduce its own manifest on {r['id']}"
+          print("SEMANTEQ_UPSTREAM_OK")
+          PY
       - name: Run (shard ${{ matrix.shard }}/4)
         shell: bash
         run: |
           set -euo pipefail
-          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['semanteq'])" '${{ inputs.startup_allowance }}')
+          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
+          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
+          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
+            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['semanteq'])" '${{ inputs.startup_allowance }}'); fi
           python -m bench.runner --system semanteq --tool-dir "$RUNNER_TEMP/se" --cases '${{ inputs.cases }}' \
             --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 --shard ${{ matrix.shard }}/4 \
             --out runs | tee runs-semanteq-${{ matrix.shard }}.log
@@ -209,6 +256,7 @@ jobs:
           path: |
             runs/
             runs-semanteq-*.log
+            se-evidence/
           if-no-files-found: warn
 
   beqplus:
@@ -274,7 +322,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['beqplus'])" '${{ inputs.startup_allowance }}')
+          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
+          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
+          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
+            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['beqplus'])" '${{ inputs.startup_allowance }}'); fi
           python -m bench.runner --system beqplus --tool-dir "$RUNNER_TEMP/li" --beq-lean-version v4.8.0 \
             --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 \
             --shard ${{ matrix.shard }}/4 --out runs | tee runs-beqplus-${{ matrix.shard }}.log
@@ -306,47 +357,18 @@ jobs:
           pattern: sota1-runs-*
           path: shards
           merge-multiple: true
-      - name: Completeness check (one record per case and system) and outcome table
+      - name: Availability gates (fail closed; every record is kept and uploaded)
         shell: bash
         run: |
-          set -euo pipefail
-          python - <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
-          import json, pathlib, collections
-          from bench.canonical import read_jsonl
-          cases = [c["case_id"] for c in read_jsonl(pathlib.Path("${{ inputs.cases }}"))]
-          root = pathlib.Path("shards")
-          print(f"## SOTA-1 phase `${{ inputs.phase }}`, tier ${{ inputs.tier }} CPU-s, {len(cases)} cases")
-          bad = []
-          for system in ("proofscope", "semanteq", "beqplus"):
-              recs = {}
-              for p in root.glob(f"**/{system}/t${{ inputs.tier }}/*.r0.json"):
-                  r = json.loads(p.read_text()); recs[r["case_id"]] = r
-              missing = sorted(set(cases) - set(recs))
-              if missing:
-                  bad.append(f"{system}: missing records {missing}")
-              st = collections.Counter(r["status"] for r in recs.values())
-              print(f"### {system}: records {len(recs)}/{len(cases)}, status {dict(st)}")
-              print("| case | status | native verdict | certified A / B | CPU s | peak RSS MB | wall s | note |")
-              print("|---|---|---|---|---|---|---|---|")
-              for cid in cases:
-                  r = recs.get(cid)
-                  if r is None:
-                      print(f"| {cid} | MISSING | | | | | | |"); continue
-                  run = r.get("run") or {}
-                  note = (r.get("adapter", {}).get("error") or r.get("error") or "")[:160].replace("|", "/").replace("\n", " ")
-                  if r["status"] != "OK" and not note:
-                      note = (r.get("log_tail") or "")[-160:].replace("|", "/").replace("\n", " ")
-                  print(f"| {cid} | {r['status']} | {r.get('native_verdict')} | {r['track_A']['certified']} / {r['track_B']['certified']} "
-                        f"| {run.get('cpu_s')} | {run.get('max_rss_mb')} | {run.get('wall_s')} | {note} |")
-          if bad:
-              print("**INCOMPLETE:** " + "; ".join(bad))
-          pathlib.Path("audit_incomplete.txt").write_text("\n".join(bad))
-          print("Outcome counts only; no accuracy is computed without released gold labels.")
-          PY
-          # a run with a missing record is not a complete availability run
-          test ! -s audit_incomplete.txt
+          set -uo pipefail
+          mkdir -p scored
+          python -m bench.gate --runs shards --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
+            --out scored/availability.json --markdown scored/availability.md | tee -a "$GITHUB_STEP_SUMMARY"
+          rc=${PIPESTATUS[0]}
+          echo "gate exit code: $rc"
+          exit "$rc"
       - name: Score (only when the custodian has released gold)
-        if: inputs.gold != ''
+        if: always() && inputs.gold != ''
         run: |
           mkdir -p scored
           python -m bench.score --runs shards/runs --gold '${{ inputs.gold }}' --tier ${{ inputs.tier }} \

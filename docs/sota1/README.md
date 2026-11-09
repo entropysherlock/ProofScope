@@ -219,3 +219,57 @@ baseline):
 | No Mathlib in the sandbox | No Mathlib-level adapter test here |
 | ACE/SAE and FormalRx-CC code not released | Not benchmarked |
 | Track C needs three independent papers and human time | Not started |
+
+## 13. SOTA-2 repair (availability run 42689439284)
+
+All three defects reproduced locally before any fix.
+
+| Run 42689439284 result | Root cause | Fix |
+|---|---|---|
+| ProofScope 3/3 NON_ELABORATING | The workflow passes `--out runs`, so every generated file path was relative (`runs/work/...`). The adapter then started Lean with `cwd=` the work directory, and Lean reported `no such file or directory: runs/work/proofscope/t20/<case>/r0/ref_print.lean`. Nothing reached elaboration, so the label NON_ELABORATING was itself a misclassification. | Every path is absolute (`--out`, `--cases` and `--tool-dir` are resolved). A launch-time check returns LAUNCH_ERROR for a missing or relative input. A Lean failure is NON_ELABORATING only when its error lines fall inside the source declaration; otherwise it is ADAPTER_ERROR. |
+| SemantEq 3/3 ERROR | The same relative path, handed to `lake exe semanteq`, which ran with `cwd=` the SemantEq checkout. | Same fix. The adapter also no longer overrides SemantEq's `--timeout`, so its documented default is restored. |
+| BEq+ used 72.1 CPU-s at a 20 CPU-s tier | `prlimit --cpu` sets RLIMIT_CPU **per process**. The Lean REPL and other descendants each had their own 20 s. Reproduced: four busy children under a "2 s" limit used 8.04 CPU-s and were reported OK. Separately, the adapter set BEq+'s per-proof timeout to the tier (20 s) instead of upstream's `DEFAULT_TIMEOUT` (60 s). | See amendment A7 below. The BEq+ driver now uses upstream's `DEFAULT_TIMEOUT`. |
+| CI green with zero usable evaluations | The collect job only counted records. | See amendment A8 below. |
+
+**Amendment A7: budget semantics.** The budget binds the **whole process tree of one tool invocation**,
+measured over a new session plus orphans: the runner is a child subreaper, so orphans return to it and
+are counted.
+- **Enforcement.** Every 20 ms, the runner sums utime + stime + cutime + cstime over the live session
+  processes and kills the session at the limit. This is calibrated, not exact: the overshoot is recorded
+  per record. Locally, the four-child test now stops at 2.074 CPU-s (overshoot 0.074 s).
+- **Accounting.** `cpu_tree_s = max(wait4 of root + reaped orphans, peak polled sum)`, and peak RSS is
+  summed over the tree.
+- **Startup allowance.** In the availability phase it is **measured**: the median tree CPU of the
+  calibration pair over 3 runs, under a 900 CPU-s measurement ceiling. These runs are never scored. For
+  pilot and primary runs, the frozen value from that manifest is passed in.
+- **Per record.** Each record stores `chargeable_cpu_s = cpu_tree_s - allowance` and `compliant`.
+- **Uncharged conversion.** Adapter conversion (ProofScope's printing and round-trip check) runs under its
+  own limit and is not charged.
+- **Wall cap.** A wall cap is reported as TIMEOUT_WALL, never as a CPU limit.
+
+**Amendment A8: fail closed.** Every record has an `evaluation_class`:
+- EVALUATED_POSITIVE_KERNEL
+- EVALUATED_POSITIVE_STRUCTURAL
+- EVALUATED_NEGATIVE_LOGICAL
+- EVALUATED_NEGATIVE_FIDELITY
+- EVALUATED_ABSTAIN
+- RESOURCE_EXHAUSTED
+- INPUT_NOT_EVALUABLE
+- NOT_EVALUATED_INFRA
+
+`bench/gate.py` writes the availability report: infrastructure readiness, native initialization, valid
+evaluations, kernel and structural positives, negatives, abstentions and resource exhaustion. Each
+system's gate requires a valid, budget-compliant evaluation of **both** equivalent calibration fixtures.
+No particular verdict is required. The non-equivalent fixture is reported but does not gate.
+
+The collect job fails when any gate fails, and all evidence is uploaded first. Two upstream checks were
+added:
+- SemantEq reproduces its own manifest on two pairs from its recall suite.
+- ProofScope runs its v1.2 tests and a Mathlib smoke file. (BEq+ already has its native REPL init check.)
+
+**Expected and not fixable in the interoperability layer.** Frozen ProofScope v1.2 answers
+`NO_ASSUMPTION_DELTA` for identical or alpha-renamed statements. That comparison is meta-level (Lean's
+comparison of the elaborated telescopes) and comes with **no kernel certificate**, so it is classified
+EVALUATED_POSITIVE_STRUCTURAL, not EVALUATED_POSITIVE_KERNEL. Producing a kernel certificate for this case
+would be an engine change (v1.3 and a new freeze), not an adapter fix. SemantEq's `ExactMatch`/`DefEq` are
+classified the same way, for symmetry.

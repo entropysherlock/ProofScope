@@ -44,6 +44,7 @@ def check_file(header: str, decl: str, name: str, imports: list[str], printed: s
 
 
 def prepare(case: dict, workdir: Path, lean_cmd: list[str]) -> dict:
+    workdir = workdir.resolve()
     workdir.mkdir(parents=True, exist_ok=True)
     imports = merged_imports(case["ref_header"], case["cand_header"])
     steps = []
@@ -65,19 +66,24 @@ def extract_printed(output: str) -> str | None:
 
 
 def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path) -> list[str]:
+    workdir = workdir.resolve()
     spec = workdir / f"{case_id}.json"
     spec.write_text(json.dumps({"id": case_id, "reference": ref, "lean": cand}, ensure_ascii=False))
     return [sys.executable, "-m", "proofscope.v12", "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
 
 
 def parse_engine(case_id: str, workdir: Path) -> dict:
-    p = workdir / "ps_out" / "rows" / f"{case_id}.json"
+    p = workdir.resolve() / "ps_out" / "rows" / f"{case_id}.json"
     if not p.exists():
         return {"native_verdict": None}
     row = json.loads(p.read_text())
     v = row.get("verdict", "INCONCLUSIVE")
-    out = {"native_verdict": v, "reason": row.get("reason"), "theorem": row.get("theorem"),
-           "certificates": sorted((row.get("certificates") or {}).keys())}
+    certs = sorted((row.get("certificates") or {}).keys())
+    out = {"native_verdict": v, "reason": row.get("reason"), "theorem": row.get("theorem"), "certificates": certs,
+           "certify_status": row.get("certify_status"),
+           # NO_ASSUMPTION_DELTA is decided by meta-level comparison of the elaborated telescopes, with no
+           # kernel certificate; decisive verdicts carry kernel-replayed certificates (certify gate)
+           "certificate_kind": "structural" if v == "NO_ASSUMPTION_DELTA" else ("kernel" if certs and row.get("theorem") else None)}
     for t in ("A", "B"):
         o = outcomes.proofscope(v, t)
         if row.get("reason") == "extraction failed":

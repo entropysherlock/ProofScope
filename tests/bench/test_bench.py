@@ -88,6 +88,40 @@ class Limits(unittest.TestCase):
         r = run_limited(["python3", "-c", "while True: pass"], cpu_s=1, mem_mb=512, wall_s=30)
         self.assertEqual(r.status, "TIMEOUT_CPU")
 
+    def test_budget_binds_the_whole_process_tree(self):
+        # SOTA-1 defect: a per-process rlimit let 4 busy children use 4 budgets and report OK
+        code = ("import multiprocessing as m\ndef f():\n  x=0\n  while True: x+=1\n"
+                "ps=[m.Process(target=f) for _ in range(4)]\n[p.start() for p in ps]\n[p.join() for p in ps]")
+        r = run_limited(["python3", "-c", code], cpu_s=2, mem_mb=2000, wall_s=60)
+        self.assertEqual(r.status, "TIMEOUT_CPU")
+        self.assertLess(r.cpu_tree_s, 2.6)
+        self.assertGreaterEqual(r.processes_seen, 2)
+
+    def test_orphans_are_counted_and_killed(self):
+        code = "import os,time\nif os.fork()==0:\n  if os.fork()==0:\n    x=0\n    while True: x+=1\n  os._exit(0)\ntime.sleep(20)"
+        r = run_limited(["python3", "-c", code], cpu_s=1.5, mem_mb=2000, wall_s=60)
+        self.assertEqual(r.status, "TIMEOUT_CPU")
+
+    def test_finished_tree_is_fully_accounted(self):
+        code = ("import multiprocessing as m\ndef f():\n  x=0\n  for i in range(2*10**6): x+=1\n"
+                "ps=[m.Process(target=f) for _ in range(3)]\n[p.start() for p in ps]\n[p.join() for p in ps]")
+        r = run_limited(["python3", "-c", code], cpu_s=30, mem_mb=2000, wall_s=60)
+        self.assertEqual(r.status, "OK")
+        self.assertGreater(r.cpu_tree_s, r.cpu_peak_polled_s * 0.5)
+        self.assertGreaterEqual(r.cpu_tree_s, r.cpu_root_wait4_s)
+
+    def test_wall_timeout_is_not_a_cpu_timeout(self):
+        self.assertEqual(run_limited(["sleep", "20"], cpu_s=5, mem_mb=200, wall_s=1).status, "TIMEOUT_WALL")
+
+    def test_launch_errors(self):
+        self.assertEqual(run_limited(["no-such-binary-x"], 5, 200, 10).status, "LAUNCH_ERROR")
+        self.assertEqual(run_limited(["python3", "-c", "0"], 5, 200, 10, inputs=("rel/path.jsonl",)).status, "LAUNCH_ERROR")
+        self.assertEqual(run_limited(["python3", "-c", "0"], 5, 200, 10, inputs=("/nonexistent/x.jsonl",)).status, "LAUNCH_ERROR")
+        self.assertEqual(run_limited(["python3", "-c", "0"], 5, 200, 10, cwd="/nonexistent-dir").status, "LAUNCH_ERROR")
+
+    def test_nonzero_exit_is_error(self):
+        self.assertEqual(run_limited(["python3", "-c", "import sys; sys.exit(3)"], 5, 200, 10).status, "ERROR")
+
     def test_memory_watchdog(self):
         r = run_limited(["python3", "-c", "import time;a=bytearray(600*2**20);a[::4096]=b'x'*len(a[::4096]);time.sleep(3)"],
                         cpu_s=10, mem_mb=200, wall_s=30)
@@ -96,3 +130,120 @@ class Limits(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+FAKE_LAKE = """#!/usr/bin/env python3
+import json, os, sys
+args = sys.argv[1:]
+assert args[:3] == ["exe", "semanteq", "--raw"], args
+inp, out = args[-2], args[-1]
+pair = json.loads(open(inp).readline())
+assert "reference" in pair and "candidate" in pair
+v = "MalformedInput" if "MALFORMED" in pair["reference"] else ("ExactMatch" if pair["reference"].split("\\n")[-2:] and
+     pair["reference"].replace("ref", "") == pair["candidate"].replace("cand", "") else "Inconclusive")
+open(out, "w").write(json.dumps({"_meta": {}}) + "\\n" + json.dumps({"id": pair["id"], "verdict": v, "elapsedMs": 1}) + "\\n")
+"""
+
+
+class RunnerPlumbing(unittest.TestCase):
+    """Plumbing only: a stand-in `lake` checks that the runner hands SemantEq absolute, existing paths
+    from inside the tool directory (the SOTA-1 failure) and that outputs are parsed and classified."""
+
+    def test_semanteq_paths_from_relative_out(self):
+        import os
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            tool = t / "se"
+            (t / "bin").mkdir()
+            tool.mkdir()
+            lake = t / "bin" / "lake"
+            lake.write_text(FAKE_LAKE)
+            lake.chmod(0o755)
+            cases = [{"case_id": "avail-calibration-identical", "group": "g", "source": "s", "ref_header": "import Mathlib",
+                      "ref_decl": "theorem ref (x : Nat) : x = x := by sorry", "cand_header": "import Mathlib",
+                      "cand_decl": "theorem cand (x : Nat) : x = x := by sorry"},
+                     {"case_id": "avail-malformed", "group": "g", "source": "s", "ref_header": "MALFORMED",
+                      "ref_decl": "theorem r : True", "cand_header": "", "cand_decl": "theorem c : True"}]
+            C.write_jsonl(t / "cases.jsonl", cases)
+            env = dict(os.environ, PATH=f"{t / 'bin'}:{os.environ['PATH']}")
+            r = subprocess.run([sys.executable, "-m", "bench.runner", "--system", "semanteq", "--tool-dir", str(tool),
+                                "--cases", str(t / "cases.jsonl"), "--tier", "20", "--mem-mb", "2000", "--out", "runs_rel"],
+                               cwd=str(t), env=dict(env, PYTHONPATH=str(Path(__file__).resolve().parents[2])),
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            import json
+            rec = json.loads((t / "runs_rel/semanteq/t20/avail-calibration-identical.r0.json").read_text())
+            self.assertEqual(rec["status"], "OK", rec)
+            self.assertEqual(rec["native_verdict"], "ExactMatch")
+            self.assertEqual(rec["evaluation_class"], "EVALUATED_POSITIVE_STRUCTURAL")
+            bad = json.loads((t / "runs_rel/semanteq/t20/avail-malformed.r0.json").read_text())
+            self.assertEqual(bad["track_A"]["certified"], "UNSUPPORTED_INPUT")
+            self.assertEqual(bad["evaluation_class"], "INPUT_NOT_EVALUABLE")
+            self.assertTrue(rec["budget"]["compliant"])
+
+
+class Classification(unittest.TestCase):
+    def test_classes(self):
+        from bench.runner import evaluation_class as E
+        ok = lambda a, b, kind=None: {"status": "OK", "native_verdict": "v", "certificate_kind": kind,
+                                      "track_A": {"certified": a}, "track_B": {"certified": b}}
+        self.assertEqual(E(ok("EQUIV", "EQUIV", "kernel")), "EVALUATED_POSITIVE_KERNEL")
+        self.assertEqual(E(ok("EQUIV", "EQUIV", "structural")), "EVALUATED_POSITIVE_STRUCTURAL")
+        self.assertEqual(E(ok("ABSTAIN", "NONEQUIV", "kernel")), "EVALUATED_NEGATIVE_FIDELITY")
+        self.assertEqual(E(ok("ABSTAIN", "ABSTAIN")), "EVALUATED_ABSTAIN")
+        self.assertEqual(E({"status": "TIMEOUT_CPU"}), "RESOURCE_EXHAUSTED")
+        self.assertEqual(E({"status": "NON_ELABORATING"}), "INPUT_NOT_EVALUABLE")
+        self.assertEqual(E({"status": "OK", "native_verdict": None}), "NOT_EVALUATED_INFRA")
+        self.assertEqual(E({"status": "LAUNCH_ERROR"}), "NOT_EVALUATED_INFRA")
+        self.assertEqual(E(ok("UNSUPPORTED_INPUT", "UNSUPPORTED_INPUT")), "INPUT_NOT_EVALUABLE")
+        self.assertEqual(E(ok("TIMEOUT_WALL", "TIMEOUT_WALL")), "RESOURCE_EXHAUSTED")
+        self.assertEqual(E(ok("ERROR", "ERROR")), "NOT_EVALUATED_INFRA")
+
+    def test_gate_fails_closed(self):
+        from bench.gate import system_report
+        cases = ["avail-calibration-identical", "avail-equivalent-rename", "avail-nonequivalent-hypothesis"]
+        good = {"status": "OK", "evaluation_class": "EVALUATED_ABSTAIN", "native_verdict": "x",
+                "track_A": {"certified": "ABSTAIN"}, "track_B": {"certified": "ABSTAIN"}, "budget": {"compliant": True}}
+        err = dict(good, status="ERROR", evaluation_class="NOT_EVALUATED_INFRA", budget={"compliant": False})
+        self.assertTrue(system_report({c: good for c in cases[:2]}, cases, [])["gate_pass"])
+        self.assertFalse(system_report({cases[0]: good, cases[1]: err}, cases, [])["gate_pass"])
+        self.assertFalse(system_report({}, cases, [])["gate_pass"])
+        over = dict(good, budget={"compliant": False})
+        self.assertFalse(system_report({cases[0]: good, cases[1]: over}, cases, [])["gate_pass"])
+
+
+class BeqDriverPlumbing(unittest.TestCase):
+    """Plumbing only: stand-in `lean_interact` and `beq_plus.py` check that the driver keeps upstream's
+    DEFAULT_TIMEOUT, passes the declarations and merged header, and that the result is parsed."""
+
+    def test_driver_uses_upstream_default_timeout(self):
+        import json
+        import os
+        import subprocess
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / "li" / "examples").mkdir(parents=True)
+            (t / "li" / "examples" / "beq_plus.py").write_text(
+                "DEFAULT_TIMEOUT = 60\n"
+                "def beq_plus(f1, f2, header, server, timeout_per_proof):\n"
+                "    assert timeout_per_proof == 60 and 'import Mathlib' in header\n"
+                "    return f1.split(':', 1)[1] == f2.split(':', 1)[1]\n")
+            (t / "pkg" / "lean_interact").mkdir(parents=True)
+            (t / "pkg" / "lean_interact" / "__init__.py").write_text(
+                "class TempRequireProject:\n    def __init__(self, **k): pass\n"
+                "class LeanREPLConfig:\n    def __init__(self, **k): pass\n"
+                "class AutoLeanServer:\n    def __init__(self, **k): pass\n")
+            from bench.adapters import beqplus as B
+            case = {"case_id": "x", "ref_header": "import Mathlib", "cand_header": "import Mathlib\nopen Real",
+                    "ref_decl": "theorem a : 1 = 1 := by sorry", "cand_decl": "theorem b : 1 = 1 := by sorry"}
+            prep = B.prepare(case, t / "w", t / "li", "v4.8.0")
+            self.assertNotIn("--timeout", prep["cmd"])
+            r = subprocess.run(prep["cmd"], env=dict(os.environ, PYTHONPATH=str(t / "pkg")), capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            out = B.parse(case, t / "w" / "out.json")
+            self.assertEqual(out["native_verdict"], True)
+            self.assertEqual(out["per_proof_timeout_s"], 60)
+            self.assertEqual(out["certificate_kind"], "kernel")
+            self.assertEqual(json.loads((t / "w" / "out.json").read_text())["beq_plus"], True)
