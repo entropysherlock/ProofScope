@@ -1,0 +1,1954 @@
+From 4fe1a4231936485ab90843e7e2a67f3249ff485c Mon Sep 17 00:00:00 2001
+From: "Caleb J. Westfall" <calebwestfall1989@gmail.com>
+Date: Mon, 9 Nov 2026 14:11:22 -0700
+Subject: [PATCH] SOTA-3: CJCS certified non-equivalence (experimental),
+ ancestry-based CPU budget, timeout diagnosis
+
+- proofscope/experimental/cjcs.py: Certified Joint-drift Countermodel Search. Self-extraction of each side
+  (frozen extractor, one Lean process), refute-first countermodel search, proof of only the unrefuted side,
+  kernel-checked certificates (frozen certify gate) of: logical difference (refutation + proof),
+  logical equivalence (Iff.rfl, both false, both true), and drift-region explanations. Search failure is
+  ABSTAIN. Frozen v1.2 untouched.
+- research/cjcs/CJCS.lean: 15 theorems (9 axiom-free, 5 classical, 1 propext+Quot.sound): cjcs_sound,
+  difference_needs_a_proof (a difference certificate contains a proof of one side), nonequiv_iff,
+  disagreement_partition + regions_disjoint (complete, non-overlapping explanation),
+  joint_failure_iff + joint_disjoint_harmless (individually harmless changes fail jointly exactly on the
+  joint region).
+- bench/limits.py: process tree by ancestry (pid, starttime) instead of session. Root cause of the BEq+
+  3.654 s overshoot: LeanInteract starts its REPL with start_new_session=True, so it escaped the
+  session-based limiter (reproduced: SOTA-2 limiter overshoot 1.019 s on a 1 s budget; now <= 0.09 s).
+  Records polls and mean poll cost; runner records enforcement_ok against a 0.5 s tolerance.
+- bench/diagnose.py: stage-level trace of v1.2 / CJCS (Lean process count, CPU per stage, import baseline).
+- runner/adapters/outcomes/gate: 'cjcs' system (experimental, reported, not gated).
+- bench/dev_sota3: 24 Mathlib development pairs with PROVISIONAL developer labels (+3 fixtures).
+- .github/workflows/sota3-research.yml: theory + core suites, Mathlib diagnosis, 4-system development
+  comparison at 20 CPU-s, provisional dev scoring. Push-triggered on research/sota3-cjcs.
+- Local (core Lean): CJCS core dev 10/10 (tuned), held-out 11/14 on first run (hash recorded before),
+  0 must-not-be violations; 31 unit tests pass. Mathlib results PENDING.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D6eL9tvFdmWVfTWBctgXnC
+---
+ .github/workflows/sota3-research.yml          | 368 ++++++++++++++++++
+ bench/adapters/proofscope.py                  |  12 +-
+ bench/dev_sota3/cases.jsonl                   |  24 ++
+ bench/dev_sota3/combined.cases.jsonl          |  27 ++
+ bench/dev_sota3/gold_provisional.jsonl        |  24 ++
+ bench/diagnose.py                             |  93 +++++
+ bench/gate.py                                 |   6 +-
+ bench/limits.py                               | 118 ++++--
+ bench/outcomes.py                             |  13 +
+ bench/runner.py                               |  19 +-
+ docs/sota3/README.md                          | 173 ++++++++
+ proofscope/experimental/__init__.py           |   1 +
+ proofscope/experimental/cjcs.py               | 278 +++++++++++++
+ research/cjcs/CJCS.lean                       | 151 +++++++
+ .../cjcs/core_dev/c01_natsub_needs_hyp.json   |   1 +
+ .../cjcs/core_dev/c02_natabs_analogue.json    |   1 +
+ .../cjcs/core_dev/c03_identical_true.json     |   1 +
+ research/cjcs/core_dev/c04_both_false.json    |   1 +
+ .../cjcs/core_dev/c05_quantifier_swap.json    |   1 +
+ .../core_dev/c06_strengthened_conclusion.json |   1 +
+ .../cjcs/core_dev/c07_vacuous_both_true.json  |   1 +
+ research/cjcs/core_dev/c08_joint_drift.json   |   1 +
+ research/cjcs/core_dev/c09_bool_dropped.json  |   1 +
+ research/cjcs/core_dev/c10_list_open.json     |   1 +
+ .../cjcs/core_heldout/h01_int_abs_sq.json     |   1 +
+ .../cjcs/core_heldout/h02_nat_div_mul.json    |   1 +
+ .../cjcs/core_heldout/h03_bool_and_comm.json  |   1 +
+ .../core_heldout/h04_list_length_append.json  |   1 +
+ .../core_heldout/h05_exists_bound_swap.json   |   1 +
+ .../cjcs/core_heldout/h06_off_by_one.json     |   1 +
+ .../cjcs/core_heldout/h07_vacuous_ref.json    |   1 +
+ .../h08_both_false_different.json             |   1 +
+ .../cjcs/core_heldout/h09_int_sub_order.json  |   1 +
+ .../h10_joint_harmless_parts.json             |   1 +
+ .../core_heldout/h11_disjoint_regions.json    |   1 +
+ .../core_heldout/h12_open_problem_like.json   |   1 +
+ .../h13_identical_unprovable_here.json        |   1 +
+ .../cjcs/core_heldout/h14_mixed_strict.json   |   1 +
+ tests/bench/test_bench.py                     |  30 ++
+ tests/bench/test_cjcs.py                      |  62 +++
+ 40 files changed, 1379 insertions(+), 44 deletions(-)
+ create mode 100644 .github/workflows/sota3-research.yml
+ create mode 100644 bench/dev_sota3/cases.jsonl
+ create mode 100644 bench/dev_sota3/combined.cases.jsonl
+ create mode 100644 bench/dev_sota3/gold_provisional.jsonl
+ create mode 100644 bench/diagnose.py
+ create mode 100644 docs/sota3/README.md
+ create mode 100644 proofscope/experimental/__init__.py
+ create mode 100644 proofscope/experimental/cjcs.py
+ create mode 100644 research/cjcs/CJCS.lean
+ create mode 100644 research/cjcs/core_dev/c01_natsub_needs_hyp.json
+ create mode 100644 research/cjcs/core_dev/c02_natabs_analogue.json
+ create mode 100644 research/cjcs/core_dev/c03_identical_true.json
+ create mode 100644 research/cjcs/core_dev/c04_both_false.json
+ create mode 100644 research/cjcs/core_dev/c05_quantifier_swap.json
+ create mode 100644 research/cjcs/core_dev/c06_strengthened_conclusion.json
+ create mode 100644 research/cjcs/core_dev/c07_vacuous_both_true.json
+ create mode 100644 research/cjcs/core_dev/c08_joint_drift.json
+ create mode 100644 research/cjcs/core_dev/c09_bool_dropped.json
+ create mode 100644 research/cjcs/core_dev/c10_list_open.json
+ create mode 100644 research/cjcs/core_heldout/h01_int_abs_sq.json
+ create mode 100644 research/cjcs/core_heldout/h02_nat_div_mul.json
+ create mode 100644 research/cjcs/core_heldout/h03_bool_and_comm.json
+ create mode 100644 research/cjcs/core_heldout/h04_list_length_append.json
+ create mode 100644 research/cjcs/core_heldout/h05_exists_bound_swap.json
+ create mode 100644 research/cjcs/core_heldout/h06_off_by_one.json
+ create mode 100644 research/cjcs/core_heldout/h07_vacuous_ref.json
+ create mode 100644 research/cjcs/core_heldout/h08_both_false_different.json
+ create mode 100644 research/cjcs/core_heldout/h09_int_sub_order.json
+ create mode 100644 research/cjcs/core_heldout/h10_joint_harmless_parts.json
+ create mode 100644 research/cjcs/core_heldout/h11_disjoint_regions.json
+ create mode 100644 research/cjcs/core_heldout/h12_open_problem_like.json
+ create mode 100644 research/cjcs/core_heldout/h13_identical_unprovable_here.json
+ create mode 100644 research/cjcs/core_heldout/h14_mixed_strict.json
+ create mode 100644 tests/bench/test_cjcs.py
+
+diff --git a/.github/workflows/sota3-research.yml b/.github/workflows/sota3-research.yml
+new file mode 100644
+index 0000000..4607664
+--- /dev/null
++++ b/.github/workflows/sota3-research.yml
+@@ -0,0 +1,368 @@
++name: ProofScope SOTA-3 CJCS Research (development comparison; not a benchmark)
++
++# Research branch only. Development data: bench/dev_sota3 (24 Mathlib pairs, provisional labels written by the
++# developer) plus the three availability fixtures. Nothing here is blind or independent; no result from this
++# workflow may be reported as a benchmark or state-of-the-art result.
++# Runs on push to the research branch (a workflow_dispatch launcher would have to live on `main`, which this
++# mission must not modify).
++on:
++  workflow_dispatch:
++  push:
++    branches: [research/sota3-cjcs]
++
++permissions:
++  contents: read
++
++env:
++  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
++  SEMANTEQ_REPO: https://github.com/hlxr89/SemantEq.git
++  SEMANTEQ_REV: f92767000e14d11744580946980cf874324f5d19
++  LEANINTERACT_REPO: https://github.com/augustepoiroux/LeanInteract.git
++  LEANINTERACT_REV: 768e18ebcb5c7ec34d308768a785389eeac37798
++  ASSESS_REPO: https://github.com/XiaoyangLiu-sjtu/ASSESS.git
++  ASSESS_REV: bc7933547d8a6d1aaee41ccf56d68bc1f0fc575d
++
++jobs:
++  theory-and-core:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 60
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++          ref: research/sota3-cjcs
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
++        uses: ./.github/actions/setup-lean
++      - name: Integrity (frozen v1.2, unchanged fixtures, JointDrift, held-out core suite hash)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p evidence
++          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c | tee evidence/v12-freeze.txt
++          echo "4b0d36de474ea39d9802e6a21e7240397a903ddc886bc25849a178773bc2f971  bench/fixtures/availability.cases.jsonl" | sha256sum -c
++          echo "da34fb9dea0fa8a110ed1a8343bf2f269501954b55221102b85856124821ce29  research/joint_drift/JointDrift.lean" | sha256sum -c
++          test "$(cat research/cjcs/core_heldout/*.json | sha256sum | cut -d' ' -f1)" = bb8628b61ff16efd674dc6380a94bc64f301f37ae273ae26f7768027b8a29495
++      - name: CJCS theory (9 axiom-free, 5 standard classical, 1 propext+Quot.sound; fresh kernel replay)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/cj" evidence
++          lean -o "$RUNNER_TEMP/cj/CJCS.olean" research/cjcs/CJCS.lean | tee evidence/cjcs-axioms.log
++          test "$(grep -c 'does not depend on any axioms' evidence/cjcs-axioms.log)" = 9
++          test "$(grep -c 'depends on axioms: \[propext, Classical.choice, Quot.sound\]' evidence/cjcs-axioms.log)" = 5
++          test "$(grep -c 'depends on axioms: \[propext, Quot.sound\]' evidence/cjcs-axioms.log)" = 1
++          ! grep -q sorryAx evidence/cjcs-axioms.log
++          (cd "$RUNNER_TEMP/cj" && LEAN_PATH="$RUNNER_TEMP/cj" leanchecker --fresh CJCS)
++      - name: Unit tests (limiter adversarial cases, gates, CJCS controls)
++        run: python -m unittest tests.bench.test_bench tests.bench.test_cjcs -v 2>&1 | tee evidence/unit-tests.log
++      - name: CJCS core suites (development 10; held-out 14 hashed before its first run)
++        shell: bash
++        run: |
++          set -euo pipefail
++          python -m proofscope.experimental.cjcs run research/cjcs/core_dev/*.json --out evidence/core_dev --jobs 2 | tee evidence/core_dev.log
++          python -m proofscope.experimental.cjcs run research/cjcs/core_heldout/*.json --out evidence/core_heldout --jobs 2 | tee evidence/core_heldout.log
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota3-theory-and-core
++          path: evidence/
++
++  diagnose:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 90
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++          ref: research/sota3-cjcs
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
++        uses: ./.github/actions/setup-lean
++      - name: Mathlib at the pinned revision (binary cache)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/ml" && cd "$RUNNER_TEMP/ml"
++          echo "leanprover/lean4:v4.34.1" > lean-toolchain
++          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
++            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
++          for i in 1 2 3; do lake update && break || sleep 30; done
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
++      - name: Stage-level trace of the negative fixture (frozen v1.2 and CJCS; no budget, measurement only)
++        env:
++          PROOFSCOPE_IMPORTS: Mathlib
++        shell: bash
++        run: |
++          set -uo pipefail
++          mkdir -p diag
++          R='∀ (x : ℝ), Real.sqrt (x ^ 2) = x'
++          L='∀ (x : ℝ), 0 ≤ x → Real.sqrt (x ^ 2) = x'
++          for e in v12 cjcs; do
++            for rep in 1 2; do
++              python -m bench.diagnose --engine "$e" --ref "$R" --lean "$L" --out "diag/$e-$rep" --import-baseline | tee "diag/$e-$rep.log"
++            done
++          done
++      - name: Upload diagnosis
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota3-diagnose
++          path: diag/
++
++  proofscope-and-cjcs:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 300
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [0, 1, 2, 3]
++        system: [proofscope, cjcs]
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++          ref: research/sota3-cjcs
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Freeze check (ProofScope v1.2 frozen engine)
++        shell: bash
++        run: |
++          set -euo pipefail
++          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c
++      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
++        uses: ./.github/actions/setup-lean
++      - name: Mathlib at the pinned revision (binary cache)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/ml" && cd "$RUNNER_TEMP/ml"
++          echo "leanprover/lean4:v4.34.1" > lean-toolchain
++          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
++            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
++          for i in 1 2 3; do lake update && break || sleep 30; done
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
++      - name: ProofScope native checks (v1.2 unit and end-to-end tests; Mathlib elaboration smoke)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p ps-evidence
++          python -m unittest tests.v02.test_v12 -v 2>&1 | tee ps-evidence/test_v12-${{ matrix.system }}-${{ matrix.shard }}.log
++          printf 'import Mathlib\nexample (x : ℝ) : Real.sqrt (x ^ 2) = |x| := Real.sqrt_sq_eq_abs x\n' > /tmp/ps_smoke.lean
++          lean /tmp/ps_smoke.lean 2>&1 | tee ps-evidence/mathlib-smoke-${{ matrix.system }}-${{ matrix.shard }}.log
++      - name: Run (shard ${{ matrix.shard }}/4)
++        shell: bash
++        run: |
++          set -euo pipefail
++          A=measure
++          python -m bench.runner --system ${{ matrix.system }} --cases 'bench/dev_sota3/combined.cases.jsonl' --tier 20 \
++            --startup-allowance "$A" --mem-mb 12000 --repeat 1 --shard ${{ matrix.shard }}/4 --out runs | tee runs-${{ matrix.system }}-${{ matrix.shard }}.log
++      - name: Upload runs
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota3-runs-${{ matrix.system }}-${{ matrix.shard }}
++          path: |
++            runs/
++            ps-evidence/
++            !runs/work/**/ps_out/build/**
++            runs-*.log
++          if-no-files-found: warn
++
++  semanteq:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 300
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [0, 1, 2, 3]
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++          ref: research/sota3-cjcs
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: SemantEq at the pinned commit, native toolchain and Mathlib (its own lockfile)
++        shell: bash
++        run: |
++          set -euo pipefail
++          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
++          sh /tmp/elan-init.sh -y --default-toolchain none
++          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
++          export PATH="$HOME/.elan/bin:$PATH"
++          git init -q "$RUNNER_TEMP/se" && cd "$RUNNER_TEMP/se"
++          git remote add origin "$SEMANTEQ_REPO" && git fetch -q --depth 1 origin "$SEMANTEQ_REV" && git checkout -q FETCH_HEAD
++          test "$(git rev-parse HEAD)" = "$SEMANTEQ_REV"
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          lake build semanteq 2>&1 | tail -5
++      - name: SemantEq upstream check (two pairs of its own recall suite, compared with its own manifest)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p se-evidence
++          cd "$RUNNER_TEMP/se"
++          grep -E '"id": "auto:Compfiles:(Imo1963P5|Imo1983P1)"' test/eval/recall/suite.jsonl > /tmp/se_upstream.jsonl
++          test "$(wc -l < /tmp/se_upstream.jsonl)" = 2
++          lake exe semanteq --raw --timeout 0 /tmp/se_upstream.jsonl /tmp/se_upstream_out.jsonl > "$GITHUB_WORKSPACE/se-evidence/upstream-stdout.log" 2>&1
++          cp /tmp/se_upstream_out.jsonl "$GITHUB_WORKSPACE/se-evidence/"
++          python - <<'PY'
++          import json
++          acc = {"ExactMatch", "DefEq", "EquivalentRestricted"}
++          man = {r["id"]: r for r in map(json.loads, open("test/eval/recall/manifest.jsonl"))}
++          out = [r for r in map(json.loads, open("/tmp/se_upstream_out.jsonl")) if "_meta" not in r]
++          assert len(out) == 2, out
++          for r in out:
++              want = man[r["id"]]["default_search_accepts"]
++              got = r["verdict"] in acc
++              print(r["id"], r["verdict"], "accepts" if got else "rejects", "manifest:", want)
++              assert got == want, f"SemantEq does not reproduce its own manifest on {r['id']}"
++          print("SEMANTEQ_UPSTREAM_OK")
++          PY
++      - name: Run (shard ${{ matrix.shard }}/4)
++        shell: bash
++        run: |
++          set -euo pipefail
++          A=measure
++          python -m bench.runner --system semanteq --tool-dir "$RUNNER_TEMP/se" --cases 'bench/dev_sota3/combined.cases.jsonl' \
++            --tier 20 --startup-allowance "$A" --mem-mb 14000 --repeat 1 --shard ${{ matrix.shard }}/4 \
++            --out runs | tee runs-semanteq-${{ matrix.shard }}.log
++      - name: Upload runs
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota3-runs-semanteq-${{ matrix.shard }}
++          path: |
++            runs/
++            runs-semanteq-*.log
++            se-evidence/
++          if-no-files-found: warn
++
++  beqplus:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 300
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [0, 1, 2, 3]
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++          ref: research/sota3-cjcs
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.11"
++      # INFRASTRUCTURE. LeanInteract's `check_lake` runs a bare `lake --version` outside any project, so elan
++      # needs a default toolchain (run 42687906199: "error: no default toolchain configured"). Project
++      # commands are unaffected: LeanInteract calls `lake +v4.8.0 init` and the REPL/project directories
++      # carry their own lean-toolchain files. The default is pinned to the version upstream's driver uses.
++      - name: elan with pinned default toolchain leanprover/lean4:v4.8.0 (BEq+ upstream driver version)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p beq-evidence
++          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
++          sh /tmp/elan-init.sh -y --default-toolchain none
++          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
++          export PATH="$HOME/.elan/bin:$PATH"
++          for i in 1 2 3; do elan toolchain install leanprover/lean4:v4.8.0 && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: toolchain install failed"; exit 1; }; sleep 20; done
++          elan default leanprover/lean4:v4.8.0
++          { elan --version; elan show; lean --version; lake --version; } 2>&1 | tee beq-evidence/toolchain-${{ matrix.shard }}.txt
++          lean --version | grep -q "version 4.8.0" || { echo "INFRASTRUCTURE_ERROR: lean is not 4.8.0"; exit 1; }
++      - name: LeanInteract at the pinned commit (BEq+ source) and its REPL project (Lean v4.8.0 + Mathlib, as upstream's driver)
++        shell: bash
++        run: |
++          set -euo pipefail
++          git init -q "$RUNNER_TEMP/li" && cd "$RUNNER_TEMP/li"
++          git remote add origin "$LEANINTERACT_REPO" && git fetch -q --depth 1 origin "$LEANINTERACT_REV" && git checkout -q FETCH_HEAD
++          test "$(git rev-parse HEAD)" = "$LEANINTERACT_REV"
++          pip install -q . rich tqdm scikit-learn datasets 2>&1 | tee "$GITHUB_WORKSPACE/beq-evidence/pip-${{ matrix.shard }}.log"
++          pip freeze > "$GITHUB_WORKSPACE/beq-evidence/pip-freeze-${{ matrix.shard }}.txt"
++          # warm the REPL project once (setup cost, reported separately from per-pair budgets)
++          python -c "from lean_interact import LeanREPLConfig, TempRequireProject; LeanREPLConfig(project=TempRequireProject(lean_version='v4.8.0', require='mathlib'), verbose=True)" \
++            2>&1 | tail -n 200 | tee "$GITHUB_WORKSPACE/beq-evidence/repl-setup-${{ matrix.shard }}.log"
++      - name: Native BEq+ initialization check (REPL starts, Mathlib imports, one trivial command elaborates)
++        shell: bash
++        run: |
++          set -euo pipefail
++          cd "$RUNNER_TEMP/li"
++          python - <<'PY' 2>&1 | tee "$GITHUB_WORKSPACE/beq-evidence/init-check-${{ matrix.shard }}.log"
++          import time
++          from lean_interact import AutoLeanServer, Command, LeanREPLConfig, TempRequireProject
++          t = time.time()
++          s = AutoLeanServer(config=LeanREPLConfig(project=TempRequireProject(lean_version="v4.8.0", require="mathlib")))
++          r = s.run(Command(cmd="import Mathlib\ntheorem init_check (x : ℝ) : x + 0 = x := by simp"), timeout=600)
++          print("response:", r)
++          assert r.lean_code_is_valid(allow_sorry=False), "INIT_CHECK_FAILED: Mathlib command did not elaborate"
++          print(f"BEQPLUS_INIT_OK {time.time() - t:.1f}s")
++          PY
++      - name: Run (shard ${{ matrix.shard }}/4)
++        shell: bash
++        run: |
++          set -euo pipefail
++          A=measure
++          python -m bench.runner --system beqplus --tool-dir "$RUNNER_TEMP/li" --beq-lean-version v4.8.0 \
++            --cases 'bench/dev_sota3/combined.cases.jsonl' --tier 20 --startup-allowance "$A" --mem-mb 14000 --repeat 1 \
++            --shard ${{ matrix.shard }}/4 --out runs | tee runs-beqplus-${{ matrix.shard }}.log
++      - name: Upload runs
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota3-runs-beqplus-${{ matrix.shard }}
++          path: |
++            runs/
++            runs-beqplus-*.log
++            beq-evidence/
++          if-no-files-found: warn
++
++  collect:
++    needs: [proofscope-and-cjcs, semanteq, beqplus]
++    if: always()
++    runs-on: ubuntu-24.04
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++          ref: research/sota3-cjcs
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - uses: actions/download-artifact@v4
++        with:
++          pattern: sota3-runs-*
++          path: shards
++          merge-multiple: true
++      - name: Availability gates (CJCS reported, not gated)
++        shell: bash
++        run: |
++          set -uo pipefail
++          mkdir -p scored
++          cat bench/fixtures/availability.cases.jsonl > scored/fixtures.jsonl
++          python -m bench.gate --runs shards --cases scored/fixtures.jsonl --tier 20 --out scored/availability.json \
++            --markdown scored/availability.md | tee -a "$GITHUB_STEP_SUMMARY"
++      - name: Development scores against PROVISIONAL developer labels (Track A only; not a benchmark)
++        shell: bash
++        run: |
++          set -uo pipefail
++          echo "## DEVELOPMENT ONLY: provisional, non-independent labels; 24 pairs; no superiority claim" | tee -a "$GITHUB_STEP_SUMMARY"
++          python -m bench.score --runs shards/runs --gold bench/dev_sota3/gold_provisional.jsonl --tier 20 \
++            --out scored/dev_metrics.json --markdown scored/dev_report.md | tee -a "$GITHUB_STEP_SUMMARY"
++      - name: Upload collected evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota3-collected
++          path: |
++            shards/
++            scored/
++          if-no-files-found: warn
+diff --git a/bench/adapters/proofscope.py b/bench/adapters/proofscope.py
+index e6ea53d..c0e2e97 100644
+--- a/bench/adapters/proofscope.py
++++ b/bench/adapters/proofscope.py
+@@ -65,14 +65,14 @@ def extract_printed(output: str) -> str | None:
+     return None
+ 
+ 
+-def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path) -> list[str]:
++def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path, module: str = "proofscope.v12") -> list[str]:
+     workdir = workdir.resolve()
+     spec = workdir / f"{case_id}.json"
+     spec.write_text(json.dumps({"id": case_id, "reference": ref, "lean": cand}, ensure_ascii=False))
+-    return [sys.executable, "-m", "proofscope.v12", "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
++    return [sys.executable, "-m", module, "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
+ 
+ 
+-def parse_engine(case_id: str, workdir: Path) -> dict:
++def parse_engine(case_id: str, workdir: Path, mapper=None) -> dict:
+     p = workdir.resolve() / "ps_out" / "rows" / f"{case_id}.json"
+     if not p.exists():
+         return {"native_verdict": None}
+@@ -84,8 +84,12 @@ def parse_engine(case_id: str, workdir: Path) -> dict:
+            # NO_ASSUMPTION_DELTA is decided by meta-level comparison of the elaborated telescopes, with no
+            # kernel certificate; decisive verdicts carry kernel-replayed certificates (certify gate)
+            "certificate_kind": "structural" if v == "NO_ASSUMPTION_DELTA" else ("kernel" if certs and row.get("theorem") else None)}
++    if mapper is not None:
++        out["certificate_kind"] = "kernel" if v.startswith("CERTIFIED_") else None
++        out["direction"] = row.get("direction")
++        out["regions"] = row.get("regions")
+     for t in ("A", "B"):
+-        o = outcomes.proofscope(v, t)
++        o = (mapper or outcomes.proofscope)(v, t)
+         if row.get("reason") == "extraction failed":
+             o = {"certified": "NON_ELABORATING", "native": "NON_ELABORATING"}
+         out[f"track_{t}"] = o
+diff --git a/bench/dev_sota3/cases.jsonl b/bench/dev_sota3/cases.jsonl
+new file mode 100644
+index 0000000..8b5bfb8
+--- /dev/null
++++ b/bench/dev_sota3/cases.jsonl
+@@ -0,0 +1,24 @@
++{"cand_decl": "theorem cand_d01 : ∀ (x : ℝ), 0 ≤ x → Real.sqrt (x ^ 2) = x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d01_sqrt_sq_fixture", "group": "d01_sqrt_sq_fixture", "ref_decl": "theorem ref_d01 : ∀ (x : ℝ), Real.sqrt (x ^ 2) = x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d02 : ∀ (x : ℝ), x ≠ 0 → x / x = 1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d02_div_self", "group": "d02_div_self", "ref_decl": "theorem ref_d02 : ∀ (x : ℝ), x / x = 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d03 : ∀ (n : ℕ), 1 ≤ n → ((n - 1 : ℕ) : ℤ) = (n : ℤ) - 1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d03_nat_sub_cast", "group": "d03_nat_sub_cast", "ref_decl": "theorem ref_d03 : ∀ (n : ℕ), ((n - 1 : ℕ) : ℤ) = (n : ℤ) - 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d04 : ∀ (a b : ℝ), 0 ≤ a → a ≤ b → a ^ 2 ≤ b ^ 2 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d04_sq_mono", "group": "d04_sq_mono", "ref_decl": "theorem ref_d04 : ∀ (a b : ℝ), a ≤ b → a ^ 2 ≤ b ^ 2 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d05 : ∀ (y : ℝ), 0 ≤ y ^ 2 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d05_rename", "group": "d05_rename", "ref_decl": "theorem ref_d05 : ∀ (x : ℝ), 0 ≤ x ^ 2 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d06 : ∀ (x : ℝ), Real.sqrt x ^ 2 = x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d06_sqrt_sq_drop", "group": "d06_sqrt_sq_drop", "ref_decl": "theorem ref_d06 : ∀ (x : ℝ), 0 ≤ x → Real.sqrt x ^ 2 = x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d07 : ∀ (n : ℕ), Nat.Prime n → 3 ≤ n := by sorry", "cand_header": "import Mathlib\n", "case_id": "d07_prime_bound", "group": "d07_prime_bound", "ref_decl": "theorem ref_d07 : ∀ (n : ℕ), Nat.Prime n → 2 ≤ n := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d08 : ∀ (n : ℕ), Even (n * n) := by sorry", "cand_header": "import Mathlib\n", "case_id": "d08_even_product", "group": "d08_even_product", "ref_decl": "theorem ref_d08 : ∀ (n : ℕ), Even (n * (n + 1)) := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d09 : ∃ (y : ℝ), ∀ (x : ℝ), x < y := by sorry", "cand_header": "import Mathlib\n", "case_id": "d09_quantifier_swap", "group": "d09_quantifier_swap", "ref_decl": "theorem ref_d09 : ∀ (x : ℝ), ∃ (y : ℝ), x < y := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d10 : ∀ (a b : ℕ), 0 < b → a ∣ b → a ≤ b := by sorry", "cand_header": "import Mathlib\n", "case_id": "d10_dvd_le", "group": "d10_dvd_le", "ref_decl": "theorem ref_d10 : ∀ (a b : ℕ), a ∣ b → a ≤ b := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d11 : ∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹ := by sorry", "cand_header": "import Mathlib\n", "case_id": "d11_inv_order", "group": "d11_inv_order", "ref_decl": "theorem ref_d11 : ∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = b⁻¹ * a⁻¹ := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d12 : ∀ (x : ℝ), x < x → x = 1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d12_vacuous", "group": "d12_vacuous", "ref_decl": "theorem ref_d12 : ∀ (x : ℝ), x < x → x = 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d13 : ∀ (m : ℕ), m = m + 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d13_symm_rename", "group": "d13_symm_rename", "ref_decl": "theorem ref_d13 : ∀ (n : ℕ), n + 0 = n := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d14 : ∀ (x : ℝ), x ^ 2 = 1 → x = 1 ∨ x = -1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d14_sq_eq_one", "group": "d14_sq_eq_one", "ref_decl": "theorem ref_d14 : ∀ (x : ℝ), x ^ 2 = 1 → x = 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d15 : ∀ (x : ℕ), x ^ 2 ≥ 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d15_domain_change_true", "group": "d15_domain_change_true", "ref_decl": "theorem ref_d15 : ∀ (x : ℤ), x ^ 2 ≥ 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d16 : ∀ (x : ℕ), x - 1 < x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d16_domain_change_false", "group": "d16_domain_change_false", "ref_decl": "theorem ref_d16 : ∀ (x : ℤ), x - 1 < x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d17 : ∀ (s : Set ℕ), s ∪ {0} ⊆ s := by sorry", "cand_header": "import Mathlib\n", "case_id": "d17_set_union", "group": "d17_set_union", "ref_decl": "theorem ref_d17 : ∀ (s : Set ℕ), s ⊆ s ∪ {0} := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d18 : ∀ (n : ℕ), n ≤ 7 → n ≤ 6 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d18_joint_drift", "group": "d18_joint_drift", "ref_decl": "theorem ref_d18 : ∀ (n : ℕ), n ≤ 5 → n ≤ 10 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d19 : ∀ (x : ℝ), 0 < x → 0 < Real.log x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d19_log_pos", "group": "d19_log_pos", "ref_decl": "theorem ref_d19 : ∀ (x : ℝ), 1 < x → 0 < Real.log x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d20 : ∀ (n : ℕ), 2 ^ n > n := by sorry", "cand_header": "import Mathlib\n", "case_id": "d20_two_pow", "group": "d20_two_pow", "ref_decl": "theorem ref_d20 : ∀ (n : ℕ), 2 ^ n ≥ n + 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d21 : ∀ (x y : ℝ), x * y = 0 → x = 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d21_zero_product", "group": "d21_zero_product", "ref_decl": "theorem ref_d21 : ∀ (x y : ℝ), x * y = 0 → x = 0 ∨ y = 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d22 : ∀ (n : ℕ), n + n = n := by sorry", "cand_header": "import Mathlib\n", "case_id": "d22_both_false", "group": "d22_both_false", "ref_decl": "theorem ref_d22 : ∀ (n : ℕ), n * n = n := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d23 : ∀ (a b : ℝ), a ≤ b → (a + b) / 2 < b := by sorry", "cand_header": "import Mathlib\n", "case_id": "d23_midpoint", "group": "d23_midpoint", "ref_decl": "theorem ref_d23 : ∀ (a b : ℝ), a < b → (a + b) / 2 < b := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d24 : ∀ (f : ℕ → ℕ), f 3 = 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d24_function_hyp", "group": "d24_function_hyp", "ref_decl": "theorem ref_d24 : ∀ (f : ℕ → ℕ), (∀ n, f n = 0) → f 3 = 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
+diff --git a/bench/dev_sota3/combined.cases.jsonl b/bench/dev_sota3/combined.cases.jsonl
+new file mode 100644
+index 0000000..037365f
+--- /dev/null
++++ b/bench/dev_sota3/combined.cases.jsonl
+@@ -0,0 +1,27 @@
++{"case_id": "avail-calibration-identical", "group": "avail", "source": "availability-fixture", "ref_header": "import Mathlib\n", "ref_decl": "theorem cal_ref (x : ℝ) : x + 0 = x := by sorry", "cand_header": "import Mathlib\n", "cand_decl": "theorem cal_cand (x : ℝ) : x + 0 = x := by sorry"}
++{"case_id": "avail-equivalent-rename", "group": "avail", "source": "availability-fixture", "ref_header": "import Mathlib\n", "ref_decl": "theorem eq_ref (a b : ℕ) : a + b = b + a := by sorry", "cand_header": "import Mathlib\n", "cand_decl": "theorem eq_cand (x y : ℕ) : x + y = y + x := by sorry"}
++{"case_id": "avail-nonequivalent-hypothesis", "group": "avail", "source": "availability-fixture", "ref_header": "import Mathlib\n", "ref_decl": "theorem ne_ref (x : ℝ) : Real.sqrt (x ^ 2) = x := by sorry", "cand_header": "import Mathlib\n", "cand_decl": "theorem ne_cand (x : ℝ) (hx : 0 ≤ x) : Real.sqrt (x ^ 2) = x := by sorry"}
++{"cand_decl": "theorem cand_d01 : ∀ (x : ℝ), 0 ≤ x → Real.sqrt (x ^ 2) = x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d01_sqrt_sq_fixture", "group": "d01_sqrt_sq_fixture", "ref_decl": "theorem ref_d01 : ∀ (x : ℝ), Real.sqrt (x ^ 2) = x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d02 : ∀ (x : ℝ), x ≠ 0 → x / x = 1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d02_div_self", "group": "d02_div_self", "ref_decl": "theorem ref_d02 : ∀ (x : ℝ), x / x = 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d03 : ∀ (n : ℕ), 1 ≤ n → ((n - 1 : ℕ) : ℤ) = (n : ℤ) - 1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d03_nat_sub_cast", "group": "d03_nat_sub_cast", "ref_decl": "theorem ref_d03 : ∀ (n : ℕ), ((n - 1 : ℕ) : ℤ) = (n : ℤ) - 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d04 : ∀ (a b : ℝ), 0 ≤ a → a ≤ b → a ^ 2 ≤ b ^ 2 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d04_sq_mono", "group": "d04_sq_mono", "ref_decl": "theorem ref_d04 : ∀ (a b : ℝ), a ≤ b → a ^ 2 ≤ b ^ 2 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d05 : ∀ (y : ℝ), 0 ≤ y ^ 2 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d05_rename", "group": "d05_rename", "ref_decl": "theorem ref_d05 : ∀ (x : ℝ), 0 ≤ x ^ 2 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d06 : ∀ (x : ℝ), Real.sqrt x ^ 2 = x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d06_sqrt_sq_drop", "group": "d06_sqrt_sq_drop", "ref_decl": "theorem ref_d06 : ∀ (x : ℝ), 0 ≤ x → Real.sqrt x ^ 2 = x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d07 : ∀ (n : ℕ), Nat.Prime n → 3 ≤ n := by sorry", "cand_header": "import Mathlib\n", "case_id": "d07_prime_bound", "group": "d07_prime_bound", "ref_decl": "theorem ref_d07 : ∀ (n : ℕ), Nat.Prime n → 2 ≤ n := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d08 : ∀ (n : ℕ), Even (n * n) := by sorry", "cand_header": "import Mathlib\n", "case_id": "d08_even_product", "group": "d08_even_product", "ref_decl": "theorem ref_d08 : ∀ (n : ℕ), Even (n * (n + 1)) := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d09 : ∃ (y : ℝ), ∀ (x : ℝ), x < y := by sorry", "cand_header": "import Mathlib\n", "case_id": "d09_quantifier_swap", "group": "d09_quantifier_swap", "ref_decl": "theorem ref_d09 : ∀ (x : ℝ), ∃ (y : ℝ), x < y := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d10 : ∀ (a b : ℕ), 0 < b → a ∣ b → a ≤ b := by sorry", "cand_header": "import Mathlib\n", "case_id": "d10_dvd_le", "group": "d10_dvd_le", "ref_decl": "theorem ref_d10 : ∀ (a b : ℕ), a ∣ b → a ≤ b := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d11 : ∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹ := by sorry", "cand_header": "import Mathlib\n", "case_id": "d11_inv_order", "group": "d11_inv_order", "ref_decl": "theorem ref_d11 : ∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = b⁻¹ * a⁻¹ := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d12 : ∀ (x : ℝ), x < x → x = 1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d12_vacuous", "group": "d12_vacuous", "ref_decl": "theorem ref_d12 : ∀ (x : ℝ), x < x → x = 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d13 : ∀ (m : ℕ), m = m + 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d13_symm_rename", "group": "d13_symm_rename", "ref_decl": "theorem ref_d13 : ∀ (n : ℕ), n + 0 = n := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d14 : ∀ (x : ℝ), x ^ 2 = 1 → x = 1 ∨ x = -1 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d14_sq_eq_one", "group": "d14_sq_eq_one", "ref_decl": "theorem ref_d14 : ∀ (x : ℝ), x ^ 2 = 1 → x = 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d15 : ∀ (x : ℕ), x ^ 2 ≥ 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d15_domain_change_true", "group": "d15_domain_change_true", "ref_decl": "theorem ref_d15 : ∀ (x : ℤ), x ^ 2 ≥ 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d16 : ∀ (x : ℕ), x - 1 < x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d16_domain_change_false", "group": "d16_domain_change_false", "ref_decl": "theorem ref_d16 : ∀ (x : ℤ), x - 1 < x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d17 : ∀ (s : Set ℕ), s ∪ {0} ⊆ s := by sorry", "cand_header": "import Mathlib\n", "case_id": "d17_set_union", "group": "d17_set_union", "ref_decl": "theorem ref_d17 : ∀ (s : Set ℕ), s ⊆ s ∪ {0} := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d18 : ∀ (n : ℕ), n ≤ 7 → n ≤ 6 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d18_joint_drift", "group": "d18_joint_drift", "ref_decl": "theorem ref_d18 : ∀ (n : ℕ), n ≤ 5 → n ≤ 10 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d19 : ∀ (x : ℝ), 0 < x → 0 < Real.log x := by sorry", "cand_header": "import Mathlib\n", "case_id": "d19_log_pos", "group": "d19_log_pos", "ref_decl": "theorem ref_d19 : ∀ (x : ℝ), 1 < x → 0 < Real.log x := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d20 : ∀ (n : ℕ), 2 ^ n > n := by sorry", "cand_header": "import Mathlib\n", "case_id": "d20_two_pow", "group": "d20_two_pow", "ref_decl": "theorem ref_d20 : ∀ (n : ℕ), 2 ^ n ≥ n + 1 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d21 : ∀ (x y : ℝ), x * y = 0 → x = 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d21_zero_product", "group": "d21_zero_product", "ref_decl": "theorem ref_d21 : ∀ (x y : ℝ), x * y = 0 → x = 0 ∨ y = 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d22 : ∀ (n : ℕ), n + n = n := by sorry", "cand_header": "import Mathlib\n", "case_id": "d22_both_false", "group": "d22_both_false", "ref_decl": "theorem ref_d22 : ∀ (n : ℕ), n * n = n := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d23 : ∀ (a b : ℝ), a ≤ b → (a + b) / 2 < b := by sorry", "cand_header": "import Mathlib\n", "case_id": "d23_midpoint", "group": "d23_midpoint", "ref_decl": "theorem ref_d23 : ∀ (a b : ℝ), a < b → (a + b) / 2 < b := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
++{"cand_decl": "theorem cand_d24 : ∀ (f : ℕ → ℕ), f 3 = 0 := by sorry", "cand_header": "import Mathlib\n", "case_id": "d24_function_hyp", "group": "d24_function_hyp", "ref_decl": "theorem ref_d24 : ∀ (f : ℕ → ℕ), (∀ n, f n = 0) → f 3 = 0 := by sorry", "ref_header": "import Mathlib\n", "source": "sota3-dev-claude"}
+diff --git a/bench/dev_sota3/gold_provisional.jsonl b/bench/dev_sota3/gold_provisional.jsonl
+new file mode 100644
+index 0000000..e699363
+--- /dev/null
++++ b/bench/dev_sota3/gold_provisional.jsonl
+@@ -0,0 +1,24 @@
++{"case_id": "d01_sqrt_sq_fixture", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d01_sqrt_sq_fixture", "label_basis": "ref false at x = -1; cand is Real.sqrt_sq", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d02_div_self", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d02_div_self", "label_basis": "ref false at 0 (0/0 = 0); cand div_self", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d03_nat_sub_cast", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d03_nat_sub_cast", "label_basis": "ref false at 0", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d04_sq_mono", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d04_sq_mono", "label_basis": "ref false a=-2,b=1", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d05_rename", "gold_A": "equivalent", "gold_B": "unassessable", "group": "d05_rename", "label_basis": "alpha-renaming", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d06_sqrt_sq_drop", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d06_sqrt_sq_drop", "label_basis": "cand false at -1", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d07_prime_bound", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d07_prime_bound", "label_basis": "cand false at 2", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d08_even_product", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d08_even_product", "label_basis": "cand false at 1", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d09_quantifier_swap", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d09_quantifier_swap", "label_basis": "cand false (take x = y)", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d10_dvd_le", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d10_dvd_le", "label_basis": "ref false a=1,b=0", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d11_inv_order", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d11_inv_order", "label_basis": "cand false in a nonabelian group", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d12_vacuous", "gold_A": "equivalent", "gold_B": "unassessable", "group": "d12_vacuous", "label_basis": "both vacuously true", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d13_symm_rename", "gold_A": "equivalent", "gold_B": "unassessable", "group": "d13_symm_rename", "label_basis": "both true", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d14_sq_eq_one", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d14_sq_eq_one", "label_basis": "ref false at -1", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d15_domain_change_true", "gold_A": "equivalent", "gold_B": "unassessable", "group": "d15_domain_change_true", "label_basis": "both true (logically equivalent, not a faithful translation)", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d16_domain_change_false", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d16_domain_change_false", "label_basis": "cand false at 0", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d17_set_union", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d17_set_union", "label_basis": "cand false at s = ∅", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d18_joint_drift", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d18_joint_drift", "label_basis": "cand false at 7", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d19_log_pos", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d19_log_pos", "label_basis": "cand false at 1", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d20_two_pow", "gold_A": "equivalent", "gold_B": "unassessable", "group": "d20_two_pow", "label_basis": "both true", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d21_zero_product", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d21_zero_product", "label_basis": "cand false x=1,y=0", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d22_both_false", "gold_A": "equivalent", "gold_B": "unassessable", "group": "d22_both_false", "label_basis": "both false", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d23_midpoint", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d23_midpoint", "label_basis": "cand false at a = b", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
++{"case_id": "d24_function_hyp", "gold_A": "non_equivalent", "gold_B": "unassessable", "group": "d24_function_hyp", "label_basis": "cand false for f = id", "labeler": "Claude (Anthropic); PROVISIONAL_NON_INDEPENDENT; development data", "source": "sota3-dev-claude"}
+diff --git a/bench/diagnose.py b/bench/diagnose.py
+new file mode 100644
+index 0000000..978faad
+--- /dev/null
++++ b/bench/diagnose.py
+@@ -0,0 +1,93 @@
++"""Stage-level trace of the frozen ProofScope v1.2 engine (or experimental CJCS) on one pair (SOTA-3).
++
++    python -m bench.diagnose --ref '<closed prop>' --lean '<closed prop>' --out DIR [--import-baseline]
++
++Every Lean/leanchecker process the engine starts is recorded (which stage, which file, CPU incl. its
++children, wall, exit code) by wrapping `Toolchain.run` in this process only; the engine files are not
++modified. `--import-baseline` also times a file that only imports the configured modules, to separate
++the fixed cost of loading Mathlib from search and checking. No budget is applied: this is a measurement.
++"""
++from __future__ import annotations
++
++import argparse
++import json
++import resource
++import time
++from pathlib import Path
++
++from proofscope import adelta12 as A
++from proofscope import toolchain as T
++
++CALLS: list[dict] = []
++_orig = T.Toolchain.run
++
++
++def _traced(self, cmd, *args, **kw):
++    r0 = resource.getrusage(resource.RUSAGE_CHILDREN)
++    t0 = time.monotonic()
++    res = _orig(self, cmd, *args, **kw)
++    r1 = resource.getrusage(resource.RUSAGE_CHILDREN)
++    target = next((c for c in reversed(cmd) if c.endswith(".lean")), cmd[-1])
++    name = Path(target).name
++    stage = ("extract" if "Assumptions_input" in name else "cjcs_stage1_search" if name.endswith("Search.lean") else "witness_read" if "Witness_read" in name else
++             "certify_probe" if name.endswith("Probe.lean") else "replay" if "leanchecker" in cmd[0] else
++             "certify_compile" if "ProofScopeCert" in str(cmd) or name.startswith(("AD_", "MIN_", "CJ_")) else
++             "build_extractor" if "AssumptionExtract11" in name else "other")
++    CALLS.append({"stage": stage, "file": name, "cpu_s": round((r1.ru_utime + r1.ru_stime) - (r0.ru_utime + r0.ru_stime), 3),
++                  "wall_s": round(time.monotonic() - t0, 3), "returncode": getattr(res, "returncode", None),
++                  "max_rss_mb_cumulative": round(r1.ru_maxrss / 1024, 1)})
++    return res
++
++
++def import_baseline(tc, work: Path) -> dict:
++    f = work / "ImportOnly.lean"
++    f.write_text(A.import_lines() + "\n")
++    r0 = resource.getrusage(resource.RUSAGE_CHILDREN)
++    t0 = time.monotonic()
++    res = _orig(tc, [tc.lean, str(f)], cwd=work, timeout=600)
++    r1 = resource.getrusage(resource.RUSAGE_CHILDREN)
++    return {"imports": A.IMPORTS, "cpu_s": round((r1.ru_utime + r1.ru_stime) - (r0.ru_utime + r0.ru_stime), 3),
++            "wall_s": round(time.monotonic() - t0, 3), "returncode": res.returncode}
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m bench.diagnose")
++    ap.add_argument("--ref", required=True)
++    ap.add_argument("--lean", required=True)
++    ap.add_argument("--out", type=Path, required=True)
++    ap.add_argument("--import-baseline", action="store_true")
++    ap.add_argument("--engine", choices=["v12", "cjcs"], default="v12")
++    a = ap.parse_args(argv)
++    out = a.out.resolve()
++    out.mkdir(parents=True, exist_ok=True)
++    tc = T.Toolchain.find()
++    T.Toolchain.run = _traced
++    try:
++        t0 = time.monotonic()
++        b = A.build(tc, out / "build")
++        if a.engine == "cjcs":
++            from proofscope.experimental import cjcs
++            row = cjcs.run_case({"id": "diag", "reference": a.ref, "lean": a.lean}, tc, out / "build", out / "work")
++        else:
++            row = A.run_case({"id": "diag", "reference": a.ref, "lean": a.lean}, tc, out / "build", out / "work")
++        total_wall = time.monotonic() - t0
++    finally:
++        T.Toolchain.run = _orig
++    rep = {"engine": a.engine, "verdict": row.get("verdict"), "direction": row.get("direction"), "regions": row.get("regions"), "certificates": sorted((row.get("certificates") or {}).keys()),
++           "rejected": row.get("rejected"), "build_ok": b.get("ok"), "calls": CALLS,
++           "lean_processes": len(CALLS), "total_cpu_s": round(sum(c["cpu_s"] for c in CALLS), 3),
++           "total_wall_s": round(total_wall, 3),
++           "obligations": {k: v for k, v in (row.get("extraction") or {}).items() if k in ("added", "dropped", "hyps")}}
++    if a.import_baseline:
++        rep["import_baseline"] = import_baseline(tc, out)
++        rep["import_cost_share"] = round(rep["import_baseline"]["cpu_s"] * sum(c["stage"] != "build_extractor" for c in CALLS)
++                                         / max(rep["total_cpu_s"], 1e-9), 3)
++    (out / "diagnosis.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False))
++    print(json.dumps({k: v for k, v in rep.items() if k != "calls"}, indent=1, ensure_ascii=False))
++    for c in CALLS:
++        print(f"  {c['stage']:16s} cpu {c['cpu_s']:7.3f}  wall {c['wall_s']:7.3f}  rc {c['returncode']}  {c['file']}")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/bench/gate.py b/bench/gate.py
+index 0702fa8..11392f5 100644
+--- a/bench/gate.py
++++ b/bench/gate.py
+@@ -19,6 +19,7 @@ GATE_CASES = ("avail-calibration-identical", "avail-equivalent-rename")
+ EVALUATED = ("EVALUATED_POSITIVE_KERNEL", "EVALUATED_POSITIVE_STRUCTURAL", "EVALUATED_NEGATIVE_LOGICAL",
+              "EVALUATED_NEGATIVE_FIDELITY", "EVALUATED_ABSTAIN")
+ SYSTEMS = ("proofscope", "semanteq", "beqplus")
++EXPERIMENTAL = ("cjcs",)
+ 
+ 
+ def system_report(recs: dict[str, dict], cases: list[str], manifests: list[dict]) -> dict:
+@@ -70,7 +71,8 @@ def main(argv=None) -> int:
+     a = ap.parse_args(argv)
+     cases = [c["case_id"] for c in read_jsonl(a.cases)]
+     rep = {"tier_cpu_s": a.tier, "systems": {}}
+-    for s in SYSTEMS:
++    present = {p.parent.parent.name for p in a.runs.glob(f"**/t{a.tier}/*.json")}
++    for s in SYSTEMS + tuple(x for x in EXPERIMENTAL if x in present):
+         recs, mans = {}, []
+         for p in a.runs.glob(f"**/{s}/t{a.tier}/*.json"):
+             d = json.loads(p.read_text())
+@@ -79,7 +81,7 @@ def main(argv=None) -> int:
+             elif p.name.endswith(".r0.json"):
+                 recs[d["case_id"]] = d
+         rep["systems"][s] = system_report(recs, cases, mans)
+-    rep["all_gates_pass"] = all(v["gate_pass"] for v in rep["systems"].values())
++    rep["all_gates_pass"] = all(v["gate_pass"] for k, v in rep["systems"].items() if k in SYSTEMS)
+     a.out.write_text(json.dumps(rep, indent=1, ensure_ascii=False))
+     md = [f"## SOTA-1 availability gates (tier {a.tier} CPU-s, whole process tree)", ""]
+     for s, v in rep["systems"].items():
+diff --git a/bench/limits.py b/bench/limits.py
+index faa1c1e..dbf1a6e 100644
+--- a/bench/limits.py
++++ b/bench/limits.py
+@@ -6,10 +6,15 @@ Accounting semantics (SOTA-2; protocol amendment A7):
+   runner starts and every descendant (Lean, Lake, REPL servers, worker pools). It is not a per-process
+   limit. (SOTA-1 used `prlimit --cpu`, which is per process: a tool with four busy children could use four
+   budgets and still be reported OK; tests/bench/test_bench.py reproduces this.)
+-* The tree is the new session the runner creates (`start_new_session=True`), plus orphans, which return
+-  to the runner because it is a child subreaper (`PR_SET_CHILD_SUBREAPER`) and are reaped and counted here.
++* The tree is every **descendant by ancestry** of the process the runner starts (parent links in /proc),
++  tracked from the first poll on, so a descendant that leaves the session (`setsid`, as LeanInteract
++  does for its Lean REPL: `start_new_session=True` in lean_interact/server.py) is still charged and killed.
++  (SOTA-2 tracked the session only; the BEq+ REPL escaped it, its CPU arrived in one step when it was
++  reaped, which is the 3.654 s overshoot of run 42694874449.) Orphans return to the runner because it is a
++  child subreaper (`PR_SET_CHILD_SUBREAPER`); a previously tracked pid keeps being tracked after
++  re-parenting, and is reaped and counted here.
+ * Enforcement: every 20 ms the runner sums `utime + stime + cutime + cstime` (from /proc/<pid>/stat) over
+-  the live processes of the session, plus the CPU of reaped orphans. A dead descendant's time reaches
++  the live tracked processes, plus the CPU of reaped orphans. A dead descendant's time reaches
+   exactly one live ancestor's cutime/cstime when its parent reaps it, so the sum counts each process once.
+   When the sum exceeds the limit, the whole session is killed and the status is TIMEOUT_CPU.
+   Enforcement is calibrated, not exact: overshoot is bounded by the polling interval times the number of
+@@ -53,6 +58,8 @@ class Run:
+     processes_seen: int
+     stdout: str
+     stderr: str
++    polls: int = 0
++    mean_poll_ms: float = 0.0
+ 
+     def as_dict(self) -> dict:
+         d = asdict(self)
+@@ -71,30 +78,71 @@ def _set_subreaper() -> bool:
+ SUBREAPER = _set_subreaper()
+ 
+ 
+-def _session_stats(sid: int) -> tuple[float, float, set[int]]:
+-    """(CPU seconds incl. reaped descendants, RSS MB, pids) over the live processes of session `sid`."""
+-    cpu_ticks, rss_kb, pids = 0, 0, set()
++def _proc_table() -> dict[int, tuple[int, int, int, float]]:
++    """pid -> (ppid, session, starttime ticks, cpu seconds incl. reaped descendants) for all processes."""
++    tab = {}
+     for d in os.listdir("/proc"):
+         if not d.isdigit():
+             continue
+         try:
+             with open(f"/proc/{d}/stat") as f:
+                 st = f.read()
+-            fields = st[st.rindex(")") + 2:].split()
+-            # after the comm field: index 0 = state (field 3), 3 = session (field 6),
+-            # 11..14 = utime, stime, cutime, cstime (fields 14..17)
+-            if int(fields[3]) != sid:
+-                continue
+-            cpu_ticks += int(fields[11]) + int(fields[12]) + int(fields[13]) + int(fields[14])
+-            pids.add(int(d))
+-            with open(f"/proc/{d}/status") as f:
+-                for line in f:
+-                    if line.startswith("VmRSS:"):
+-                        rss_kb += int(line.split()[1])
+-                        break
++            f_ = st[st.rindex(")") + 2:].split()
++            # after comm: 0 state, 1 ppid, 3 session, 11..14 utime stime cutime cstime, 19 starttime
++            tab[int(d)] = (int(f_[1]), int(f_[3]), int(f_[19]),
++                           (int(f_[11]) + int(f_[12]) + int(f_[13]) + int(f_[14])) / CLK)
+         except (OSError, ValueError, IndexError):
+             continue
+-    return cpu_ticks / CLK, rss_kb / 1024, pids
++    return tab
++
++
++def _rss_mb(pid: int) -> float:
++    try:
++        with open(f"/proc/{pid}/status") as f:
++            for line in f:
++                if line.startswith("VmRSS:"):
++                    return int(line.split()[1]) / 1024
++    except OSError:
++        pass
++    return 0.0
++
++
++class Tree:
++    """Descendants of `root` by ancestry. A tracked process is identified by (pid, starttime) so pid reuse
++    cannot attach an unrelated process."""
++
++    def __init__(self, root: int):
++        self.root = root
++        self.members: dict[int, int] = {}     # pid -> starttime
++        self.seen = 0
++
++    def update(self) -> tuple[float, float, list[int]]:
++        tab = _proc_table()
++        if self.root in tab and self.root not in self.members:
++            self.members[self.root] = tab[self.root][2]
++        changed = True
++        while changed:
++            changed = False
++            me = os.getpid()
++            for pid, (ppid, _sid, start, _cpu) in tab.items():
++                orphan = ppid == me and pid != self.root     # re-parented to the subreaper before we saw it
++                if pid not in self.members and (orphan or (ppid in self.members and tab.get(ppid, (0, 0, -1))[2] == self.members[ppid])):
++                    self.members[pid] = start
++                    self.seen += 1
++                    changed = True
++        live = [p for p, st in self.members.items() if p in tab and tab[p][2] == st]
++        # forget dead members (their CPU is in an ancestor's cutime or was reaped by the runner)
++        self.members = {p: self.members[p] for p in live}
++        cpu = sum(tab[p][3] for p in live)
++        rss = sum(_rss_mb(p) for p in live)
++        return cpu, rss, live
++
++    def kill(self) -> None:
++        for p in list(self.members):
++            try:
++                os.kill(p, signal.SIGKILL)
++            except (ProcessLookupError, PermissionError):
++                pass
+ 
+ 
+ def _reap_orphans(root: int) -> float:
+@@ -158,16 +206,18 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
+           threading.Thread(target=pump, args=(p.stderr, "err"), daemon=True)]
+     for t in ts:
+         t.start()
+-    sid = p.pid
+-    cause, peak_cpu, peak_rss, seen, orphan_cpu = None, 0.0, 0.0, set(), 0.0
+-    status_word, ru = 0, None
++    tree = Tree(p.pid)
++    cause, peak_cpu, peak_rss, orphan_cpu = None, 0.0, 0.0, 0.0
++    status_word, ru, polls, poll_cost = 0, None, 0, 0.0
+     while True:
+         pid, status_word, ru = os.wait4(p.pid, os.WNOHANG)
+         if pid == p.pid:
+             break
++        t_poll = time.perf_counter()
+         orphan_cpu += _reap_orphans(p.pid)
+-        cpu, rss, pids = _session_stats(sid)
+-        seen |= pids
++        cpu, rss, _live = tree.update()
++        poll_cost += time.perf_counter() - t_poll
++        polls += 1
+         peak_cpu = max(peak_cpu, cpu + orphan_cpu)
+         peak_rss = max(peak_rss, rss)
+         if cause is None:
+@@ -178,17 +228,19 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
+             elif time.monotonic() - t0 > wall_s:
+                 cause = "TIMEOUT_WALL"
+             if cause:
++                tree.kill()
+                 try:
+-                    os.killpg(sid, signal.SIGKILL)
++                    os.killpg(p.pid, signal.SIGKILL)
+                 except ProcessLookupError:
+                     pass
+         time.sleep(POLL_S)
+-    # the root is gone: kill whatever is left of its session (no descendant may outlive the pair) and count it
+-    left_cpu, _, left = _session_stats(sid)
++    # the root is gone: account for and kill every remaining tracked descendant (nothing may outlive the pair)
++    left_cpu, _, left = tree.update()
+     if left:
+         peak_cpu = max(peak_cpu, left_cpu + orphan_cpu + ru.ru_utime + ru.ru_stime)
++        tree.kill()
+         try:
+-            os.killpg(sid, signal.SIGKILL)
++            os.killpg(p.pid, signal.SIGKILL)
+         except ProcessLookupError:
+             pass
+         time.sleep(0.2)
+@@ -202,12 +254,12 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
+     rc = p.returncode
+     sig = signal.Signals(-rc).name if rc is not None and rc < 0 else None
+     root_cpu = ru.ru_utime + ru.ru_stime
+-    tree = max(root_cpu + orphan_cpu, peak_cpu)
++    tree_cpu = max(root_cpu + orphan_cpu, peak_cpu)
+     dec = lambda b: b"".join(b).decode("utf-8", "replace")
+     err_text = dec(bufs["err"])
+     if cause:
+         status = cause
+-    elif tree > cpu_s:
++    elif tree_cpu > cpu_s:
+         status = "TIMEOUT_CPU"  # finished, but the tree used more than the budget between two polls
+     elif sig:
+         status = "TIMEOUT_CPU" if sig == "SIGXCPU" else "KILLED"
+@@ -217,6 +269,6 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
+         status = "OOM"
+     else:
+         status = "ERROR"
+-    return Run(rc, sig, status, round(tree, 3), round(root_cpu, 3), round(peak_cpu, 3), cpu_s,
+-               round(max(0.0, tree - cpu_s), 3), round(wall, 3), round(max(ru.ru_maxrss / 1024, peak_rss), 1),
+-               len(seen), dec(bufs["out"]), err_text)
++    return Run(rc, sig, status, round(tree_cpu, 3), round(root_cpu, 3), round(peak_cpu, 3), cpu_s,
++               round(max(0.0, tree_cpu - cpu_s), 3), round(wall, 3), round(max(ru.ru_maxrss / 1024, peak_rss), 1),
++               tree.seen + 1, dec(bufs["out"]), err_text, polls, round(poll_cost / max(1, polls) * 1000, 3))
+diff --git a/bench/outcomes.py b/bench/outcomes.py
+index ee7fb43..330e536 100644
+--- a/bench/outcomes.py
++++ b/bench/outcomes.py
+@@ -63,3 +63,16 @@ def beqplus(result: bool | None, track: str) -> dict:
+     if result is None:
+         return {"certified": "ERROR", "native": "ERROR"}
+     return {"certified": "EQUIV" if result else "ABSTAIN", "native": "EQUIV" if result else "NONEQUIV"}
++
++
++def cjcs(verdict: str, track: str) -> dict:
++    """Experimental CJCS (proofscope/experimental/cjcs.py). A certified logical difference is a difference
++    in both tracks (a faithful formalization is in particular logically equivalent); a certified logical
++    equivalence is EQUIV in Track A only (`CJCS.vacuous_logical_equiv`: it never certifies fidelity)."""
++    if verdict == "CERTIFIED_LOGICAL_DIFFERENCE":
++        c = "NONEQUIV"
++    elif verdict == "CERTIFIED_LOGICAL_EQUIVALENCE":
++        c = "EQUIV" if track == "A" else "ABSTAIN"
++    else:
++        c = "ABSTAIN"
++    return {"certified": c, "native": "EQUIV" if c == "EQUIV" else "NONEQUIV"}
+diff --git a/bench/runner.py b/bench/runner.py
+index e0fdc32..68d4fd7 100644
+--- a/bench/runner.py
++++ b/bench/runner.py
+@@ -26,6 +26,7 @@ ADAPTER_CPU_S, ADAPTER_WALL_S = 300, 600
+ WALL_FACTOR = 4                 # wall cap = WALL_FACTOR x CPU limit + slack; reported as TIMEOUT_WALL, never as CPU
+ MEASURE_CEILING_S = 900          # calibration measurement ceiling (availability only; never a scored budget)
+ CALIBRATION_ID = "avail-calibration-identical"
++ENFORCEMENT_TOLERANCE_S = 0.5    # preregistered limiter precision (SOTA-3 amendment A9)
+ REPO = Path(__file__).resolve().parents[1]
+ 
+ 
+@@ -52,7 +53,7 @@ def _error_lines(log: str, path: Path) -> list[int]:
+     return [int(m.group(1)) for m in re.finditer(re.escape(path.name) + r":(\d+):\d+: error", log)]
+ 
+ 
+-def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> dict:
++def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str, engine: str = "proofscope.v12") -> dict:
+     from .adapters import proofscope as A
+     prep = A.prepare(case, work, [lean])
+     rec = {"adapter": {}}
+@@ -90,12 +91,13 @@ def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> d
+             rec["adapter"]["error"] = f"printed {side} statement does not round-trip: " + (c.stdout + c.stderr)[-1500:]
+             return rec
+     rec["printed"] = printed
+-    cmd = A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work)
++    cmd = A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work, engine)
+     r = run_limited(cmd, budget, mem_mb, WALL_FACTOR * budget + 120, cwd=str(REPO), env=env, inputs=(cmd[4],))
+     rec["run"] = _strip(r)
+     rec["log_tail"] = (r.stdout + r.stderr)[-3000:]
+     rec["status"] = r.status
+-    rec.update(A.parse_engine(case["case_id"], work))
++    from . import outcomes
++    rec.update(A.parse_engine(case["case_id"], work, outcomes.cjcs if engine.endswith("cjcs") else None))
+     return rec
+ 
+ 
+@@ -163,6 +165,7 @@ def measure_startup(system: str, case: dict, n: int, a) -> dict:
+ 
+ RUNNERS = {
+     "proofscope": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean),
++    "cjcs": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean, "proofscope.experimental.cjcs"),
+     "semanteq": lambda c, w, b, a: run_semanteq(c, w, b, a.tier, a.mem_mb, a.tool_dir),
+     "beqplus": lambda c, w, b, a: run_beqplus(c, w, b, a.tier, a.mem_mb, a.tool_dir, a.beq_lean_version),
+ }
+@@ -170,7 +173,7 @@ RUNNERS = {
+ 
+ def main(argv=None) -> int:
+     ap = argparse.ArgumentParser(prog="python -m bench.runner")
+-    ap.add_argument("--system", required=True, choices=["proofscope", "semanteq", "beqplus"])
++    ap.add_argument("--system", required=True, choices=["proofscope", "cjcs", "semanteq", "beqplus"])
+     ap.add_argument("--cases", type=Path, required=True)
+     ap.add_argument("--tier", type=int, required=True, choices=[20, 180])
+     ap.add_argument("--startup-allowance", default="0",
+@@ -238,7 +241,13 @@ def main(argv=None) -> int:
+                              "cpu_tree_s": run.get("cpu_tree_s"),
+                              "chargeable_cpu_s": None if run.get("cpu_tree_s") is None else round(run["cpu_tree_s"] - allowance, 3),
+                              "compliant": rec["status"] == "OK" and run.get("cpu_tree_s") is not None
+-                                          and run["cpu_tree_s"] <= budget}
++                                          and run["cpu_tree_s"] <= budget,
++                             # SOTA-3: a TIMEOUT is never compliant (the budget was exhausted); separately, the
++                             # limiter's own precision: overshoot beyond the preregistered tolerance is an
++                             # infrastructure defect, flagged here and never attributed to the tool
++                             "enforcement_overshoot_s": run.get("cpu_overshoot_s"),
++                             "enforcement_tolerance_s": ENFORCEMENT_TOLERANCE_S,
++                             "enforcement_ok": (run.get("cpu_overshoot_s") or 0.0) <= ENFORCEMENT_TOLERANCE_S}
+             rec["evaluation_class"] = evaluation_class(rec)
+             (base / f"{case['case_id']}.r{rep}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1))
+             print(case["case_id"], a.system, rec["status"], rec.get("native_verdict"), rec["evaluation_class"],
+diff --git a/docs/sota3/README.md b/docs/sota3/README.md
+new file mode 100644
+index 0000000..eee97cc
+--- /dev/null
++++ b/docs/sota3/README.md
+@@ -0,0 +1,173 @@
++# SOTA-3: certified non-equivalence (CJCS), process-tree budgets, and a timeout audit
++
++ProofScope by Caleb J. Westfall. Prepared with Claude (Anthropic), 2026-11-09.
++Branch: `research/sota3-cjcs`, created from `competitor-benchmark-audit` @ `5769208`.
++
++**Status.** Everything in this document was run locally in core Lean 4.34.1 unless it is marked PENDING.
++Mathlib runs need the workflow `sota3-research.yml`, because Mathlib cannot be loaded in this sandbox.
++No benchmark claim is made: all suites here are developer-written development data.
++
++## 1. Why the negative fixture timed out (Challenge A)
++
++The fixture is `∀ x : ℝ, √(x²) = x` against `∀ x : ℝ, 0 ≤ x → √(x²) = x`. The reference is false (x = −1)
++and the formalization is true (`Real.sqrt_sq`). The two statements are therefore logically different, and
++a certificate of that must contain a **proof of the formalization** (`CJCS.difference_needs_a_proof`).
++
++| System | Cause | Classification | Evidence |
++|---|---|---|---|
++| BEq+ (3.654 s overshoot) | LeanInteract starts its Lean REPL with `start_new_session=True` (`lean_interact/server.py`). SOTA-2's limiter tracked the session only, so the REPL escaped. Its CPU was counted only when the driver reaped it, all in one step, and it was not killed at the limit. | (5)/(6): an accounting and subprocess interaction, **in our harness** | Reproduced. With the SOTA-2 limiter, a session-escaping child doing 2 s of work under a 1 s limit ran to completion (overshoot 1.019 s). Fixed (§4). |
++| BEq+ (TIMEOUT itself) | BEq+ certifies only equivalence. A non-equivalent pair ends in `False` only after its proof search (`exact?`, `apply`, `convert` up to depth 4, per-proof timeout 60 s) is exhausted. | (1): intrinsic to the method | Its upstream code; 72 CPU-s for a native `False` in run 42689439284 |
++| SemantEq | It searches for audited proofs of both directions. For a non-equivalent pair it can only finish with a "Likely…" verdict or its own 20 s wall `Timeout`, and statement compilation is not interrupted by that timer (README). | (1): intrinsic, since it has no certified negatives | README at the pin |
++| ProofScope v1.2 | **Hypothesis**, measured in core Lean, not yet with Mathlib. The pipeline for an assumption pair starts 6 Lean processes, and 5 of them load the full import environment: extract, certify probe, certify compile, `leanchecker` replay, witness read. The calibration pair, which only extracts, pays for one load. The failing redundancy obligation (`∀ x, 0 ≤ x`) also runs the whole Mathlib portfolio (`nlinarith`, `aesop`, …) at `maxHeartbeats 4000000` before the countermodel is used. | (2) avoidable initialization, plus (4) search order | Core trace (`bench/diagnose.py`): 6 processes, 4.89 CPU-s, import baseline 0.27 s. **PENDING:** the Mathlib trace (`diagnose` job, 2 repeats, v1.2 and CJCS) |
++
++**One fixture does not show an algorithmic weakness.** The v1.2 diagnosis is a hypothesis until the
++Mathlib trace confirms it.
++
++## 2. CJCS: definition
++
++For closed statements R (reference) and L (formalization):
++
++1. **Telescopes (1 Lean process).** The frozen v1.1 extractor runs on (R, R), (L, L) and (R, L) in one
++   file. Each side gets a canonical form `∀ m, H m → C m` and a certified link `X ↔ canonical`.
++2. **Refute first (1 process, search only).** For each side, CJCS searches for `∃ m, ¬C m ∧ H m` over the
++   frozen v1.2 carrier registry and point pools. It adds the statements' numerals and their successors,
++   plus quantifier-exchange refutations (`∃y ∀x` is instantiated at its own witness or its successor).
++   A witness gives `false_X : ¬ X`.
++3. **Prove only what was not refuted (final certification, with the frozen `certify` gate).**
++   - `true_Y` for each unrefuted side: the v1.2 sufficiency portfolio, existential introduction from
++     in-scope terms, then `exact?`.
++   - Also attempted: `equiv_defeq` (`Iff.rfl`), the `diff`/`equiv` combinations, and the drift-region
++     witnesses.
++   - Every alternative runs under `maxHeartbeats 200000`.
++4. **Verdict:**
++   - `CERTIFIED_LOGICAL_DIFFERENCE` (`diff_RL` or `diff_LR`), with a direction;
++   - `CERTIFIED_LOGICAL_EQUIVALENCE` (definitional, both false, or both true);
++   - `ABSTAIN` otherwise. A failed search is never a negative.
++5. **Explanation.** Certified region witnesses over the aligned telescope:
++   - `ref_excluded`: the reference fails at a point the formalization's own assumption excludes;
++   - `lean_excluded`;
++   - `conclusion_lean_stronger` and `conclusion_ref_stronger`;
++   - `joint`.
++
++   Witness values are read back from the kernel-checked proof terms.
++
++Every certificate passes the unchanged gate: clean recompile, standard axioms only, and a `leanchecker`
++replay.
++
++## 3. Theory (`research/cjcs/CJCS.lean`)
++
++The file has 15 theorems: 9 use no axioms, 5 use only the standard classical axioms (propext,
++Classical.choice, Quot.sound), and 1 uses propext and Quot.sound. A fresh replay exits 0.
++
++| Theorem | Statement |
++|---|---|
++| `cjcs_sound`, `cjcs_sound'` | A refutation of one side plus a proof of the other gives `¬ (X ↔ Y)`. |
++| `difference_needs_a_proof` | `¬ (X ↔ Y) → X ∨ Y`. **Certifying a logical difference is at least as hard as proving one of the statements.** A pure countermodel search or a pure equivalence prover cannot certify a difference on its own. This explains why all three systems timed out on the negative fixture, and why CJCS needs two halves. |
++| `nonequiv_iff` | `¬ (X ↔ Y) ↔ (X ∧ ¬Y) ∨ (Y ∧ ¬X)`: the certificate forms are complete. |
++| `both_false_equiv`, `both_true_equiv`, `vacuous_logical_equiv` | These equivalences are logical only. A vacuous reference is logically equivalent to every true formalization. |
++| `disagreement_partition`, `regions_disjoint` | A point where the reference's instance holds and the formalization's fails lies in **exactly one** of `lean_excluded` and `conclusion_lean_stronger`. The region explanation is complete and does not overlap. |
++| `region_refutes_lean`, `ref_excluded_refutes_ref` | Each region witness refutes the corresponding statement. |
++| `joint_failure_iff`, `joint_disjoint_harmless` | If each single change is harmless on its own, the combined statement fails **exactly** on the joint region `H ∧ A ∧ ¬D ∧ P ∧ ¬Q`, and is harmless when that region is empty. This is the precise form of "individually harmless changes that are jointly consequential". |
++| `joint_example` | Instance: `n ≤ 5 → n ≤ 10` changed to `n ≤ 7 → n ≤ 6` (each single change is harmless; the pair is not). |
++
++**Honest assessment.** These are elementary logic. Their value is that they **specify** a sound and
++complete explanation scheme and justify the algorithm's design. They are not a deep mathematical result.
++
++## 4. Budget audit (Challenge D)
++
++| Mechanism | SOTA-2 | SOTA-3 |
++|---|---|---|
++| Tree membership | Session (`getsid`) | Ancestry: parent links from the first poll, identity (pid, starttime); orphans adopted through the subreaper |
++| Session escape (`setsid`) | CPU counted only at reaping; not killed | Counted live and killed |
++| Kill | `killpg` | SIGKILL to every tracked pid, plus `killpg` |
++| Overshoot field | Recorded | Recorded, plus `enforcement_ok` against a preregistered tolerance of 0.5 s (amendment A9) |
++| Mean poll cost | not recorded | Recorded per run (`mean_poll_ms`; ≈2.5–3.3 ms locally, 2 cores) |
++
++Adversarial measurements with a 2 s limit (1.5 s where marked):
++
++| Case | Status | Tree CPU | Overshoot |
++|---|---|---|---|
++| child in a new session | TIMEOUT_CPU | 2.036 | 0.036 |
++| setsid + double fork grandchild | TIMEOUT_CPU | 2.037 | 0.037 |
++| 8 busy children (2 cores) | TIMEOUT_CPU | 2.089 | 0.089 |
++| session child that finishes, parent waits | TIMEOUT_CPU | 2.043 | 0.043 |
++| SOTA-2 limiter, session child doing 2 s of work, 1 s limit | TIMEOUT_CPU | 2.019 | **1.019** |
++
++After the tests, no test process was still running.
++
++**"Compliant = false" on the three negative cases is correct by definition.** A run that exhausts the
++budget is not a compliant completion. What was wrong was the size of BEq+'s overshoot, which was our
++limiter's fault, not BEq+'s.
++
++**Residual uncertainty:**
++- **CPU charged between two polls:** at most about the number of busy cores × 20 ms.
++- **CPU of a child born and reaped within one poll interval:** it reaches its tracked parent's cutime, so
++  it is counted, but late. This is bounded by that child's lifetime.
++- **Startup allowance:** measured from the calibration pair, so it only covers the processes that pair
++  starts. A tool that starts more processes for other pairs pays for them. That is intended (it is the
++  tool's design), and the trace makes it visible.
++
++## 5. Results
++
++| Suite | System | Result |
++|---|---|---|
++| CJCS core development (10 pairs; used during development) | CJCS | 10/10 after two fixes (§6) |
++| CJCS core held-out (14 pairs; hash `bb8628b6…` recorded before the first run) | CJCS | **11/14 exact, 0 must-not-be violations, 3 ABSTAIN** |
++| Core analogue of the 3 availability fixtures | CJCS | kernel-certified equivalence ×2 (definitional); certified logical difference ×1 (`ref_excluded`), 6.2 CPU-s, 10 processes |
++| Core analogue of the 3 availability fixtures | frozen v1.2 | structural positive ×2; fidelity negative ×1 |
++| Mathlib development comparison (27 cases: 3 fixtures + 24 pairs; provisional developer labels) | v1.2, CJCS, SemantEq, BEq+ | **PENDING** (`sota3-research.yml`) |
++| Mathlib negative fixture | CJCS | **PENDING** |
++
++**Held-out abstentions, recorded and not tuned on (the set is now exposed):**
++
++| Case | Cause |
++|---|---|
++| h01 | No core proof of `∀ x : ℤ, x * x ≥ 0` within the heartbeat bound |
++| h04 | No List carrier in the registry |
++| h12 | Refuting `∃ k, n = 2 * k` under a binder needs the quantifier refuter inside the witness search |
++
++**The negative fixture itself is PENDING.** CJCS will certify it if `exact?` (or the portfolio) proves
++`Real.sqrt_sq` within the bound and the extra environment loads fit the 20 s tier. If either fails, the
++answer is ABSTAIN or TIMEOUT, never an unsupported negative.
++
++## 6. Failed attempts and corrections (preserved)
++
++| Issue | What happened | Outcome |
++|---|---|---|
++| Dependency bug (fixed) | `false_X` was kept when `wit_X` had failed: Lean adds an erroring declaration with a `sorry` body, so a dependent lemma still elaborates. Dependencies are now explicit. | Fixed |
++| Missing boundary points (fixed) | c08 needed n = 7. Literal-derived point pools were added, as the frozen engine already does. | Fixed |
++| Quantifier exchange (fixed) | c05 needed refutation of `∃y ∀x` and proof of `∀x ∃y`. Generic diagonal and successor patterns were added. | Fixed |
++| A claim I retracted | I first attributed a miss to a "closer defect" in frozen v1.2 (error recovery inside `first`). Isolated tests showed that every one of those forms fails cleanly. The real cause was the missing pool points. | **No v1.2 defect exists** |
++
++## 7. Novelty
++
++| Prior work | What it does | Overlap with CJCS |
++|---|---|---|
++| FormalRx-CC (ICML 2026) | LLM-produced, Lean-checkable witnesses that separate a candidate from the intended formalization | The closest prior art |
++| Faults in Our Formal Benchmarking (2026); MechGeo (2026) | Counterexample and vacuity checkers for formal statements | Automated counterexamples |
++| Lean's Plausible (formerly slim_check) | Property-based testing that finds counterexamples automatically | Finds counterexamples, but does not certify `¬ (R ↔ L)` and does not prove the other side |
++| SemantEq, BEq/BEq+, ASSESS | Equivalence side only | None on certified negatives |
++
++Not novel:
++- countermodels for formal statements;
++- the logic in `CJCS.lean`, which is elementary and folklore-level.
++
++Possibly distinctive (**not established**, since there is no comparison and no independent data):
++- LLM-free synthesis of kernel-checked `¬ (R ↔ L)` certificates that pair a refutation with a proof of the
++  other side;
++- refute-first pruning, justified by `difference_needs_a_proof`;
++- a complete, non-overlapping drift-region explanation with certified witnesses (`disagreement_partition`,
++  `joint_failure_iff`).
++
++**Level reached:** Level 2 **on core Lean only**: certified non-equivalence in a restricted class
++(decidable or omega-closable domains, registry carriers). Level 2 with Mathlib is PENDING. Levels 3 and 4
++are not reached.
++
++## 8. Recommendation: **continue, revised**
++
++1. Measure first (the `diagnose` job). If the extra environment loads dominate, move CJCS stages 1–3 into
++   one Lean process with a meta-program driver, keeping a separate `leanchecker` replay.
++2. Extend the refuters before any blind run: a List carrier, and quantifier refutation inside witness
++   search. Develop these on **new** development data, not the exposed held-out set.
++3. Only then freeze CJCS v0.1 and evaluate it on the sealed SOTA-1 holdout with independent labels.
++   Nothing in this document is evidence of superiority.
+diff --git a/proofscope/experimental/__init__.py b/proofscope/experimental/__init__.py
+new file mode 100644
+index 0000000..322aafb
+--- /dev/null
++++ b/proofscope/experimental/__init__.py
+@@ -0,0 +1 @@
++"""Experimental ProofScope modules (not frozen; never used by the frozen v1.2 baseline)."""
+diff --git a/proofscope/experimental/cjcs.py b/proofscope/experimental/cjcs.py
+new file mode 100644
+index 0000000..93d0674
+--- /dev/null
++++ b/proofscope/experimental/cjcs.py
+@@ -0,0 +1,278 @@
++"""CJCS — Certified Joint-drift Countermodel Search (experimental; SOTA-3).
++
++Decides **logical** (Track A) relations between two closed statements R (reference) and L
++(formalization), with a kernel-checked certificate for every decisive answer, and explains a difference by
++certified drift regions. Theory: research/cjcs/CJCS.lean.
++
++Certificates (each a declaration accepted by the unchanged certify gate: recompile, standard axioms,
++leanchecker replay):
++
++    CERTIFIED_LOGICAL_DIFFERENCE   ¬ (R ↔ L), from a proof of one side and a refutation of the other
++                                   (`CJCS.cjcs_sound`). Every certificate of a logical difference must
++                                   contain a proof of one side (`CJCS.difference_needs_a_proof`); a refuter
++                                   alone or a prover alone cannot produce one.
++    CERTIFIED_LOGICAL_EQUIVALENCE  R ↔ L because they are definitionally equal (`Iff.rfl`), or both are
++                                   refuted, or both are proved. Logical equivalence only; the latter two
++                                   never certify a faithful formalization.
++    ABSTAIN                        anything else, with whatever one-sided certificates were found.
++
++Refutations are synthesized without an LLM: each side is put in its own telescope normal form by the frozen
++v1.1 extractor, linked to it by a certified `X ↔ canonical` lemma, and a countermodel is searched with the
++frozen v1.2 carrier registry and closers (`∃ m, H m ∧ ¬ C m`), then turned into `¬ X`.
++
++Algorithmic principles:
++* **Refute first.** Stage 1 searches countermodels only. A side with a certified countermodel is never sent
++  to the prover (proving it is impossible, `CJCS.refuted_unprovable`), which removes the most expensive
++  failing searches.
++* **Bounded search.** Every alternative runs under `maxHeartbeats 200000`.
++* **Drift regions.** When the two telescopes align (same binders), a separating point is classified by
++  certified region obligations over shared hypotheses H, reference-only assumptions D, formalization-only
++  assumptions A and conclusions P, Q: `ref_excluded` (H ∧ D ∧ ¬A ∧ ¬P), `lean_excluded` (H ∧ A ∧ ¬D ∧ ¬Q),
++  `conclusion_lean_stronger` (H ∧ D ∧ A ∧ P ∧ ¬Q), `conclusion_ref_stronger` (H ∧ D ∧ A ∧ Q ∧ ¬P) and
++  `joint` (H ∧ A ∧ ¬D ∧ P ∧ ¬Q). `CJCS.joint_failure_iff` proves that when each single change is harmless
++  on its own, the combined statement fails exactly at points of the `joint` region.
++
++Search failure is never evidence: no countermodel or no proof gives ABSTAIN.
++"""
++from __future__ import annotations
++
++import argparse
++import json
++import re
++from pathlib import Path
++
++from .. import adelta12 as A
++from ..certify import _failed, _module, certify
++from ..toolchain import Toolchain
++
++HEADER = "set_option maxHeartbeats 200000\nset_option linter.unusedVariables false\n"
++# identical to the link tactic of the frozen adelta12.run_case
++LINK_TAC = [
++    "constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | "
++    "exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))"]
++
++
++# Quantifier-exchange patterns (generic, not case-specific): an existential is introduced with a witness
++# built from the variables in scope (x, x + 1, 0, 1); an `∃ y, ∀ x, …` is refuted by instantiating the
++# universal at the existential's own witness or its successor (the diagonal certificates of ∀∃ vs ∃∀).
++EX_TERMS = ["{v}", "{v} + 1", "0", "1"]
++
++
++def exists_intro_tactics() -> list[str]:
++    out = []
++    for vs in (["x0"], ["x0", "x1"]):
++        for t in EX_TERMS:
++            w = t.format(v=vs[-1])
++            for fin in ("omega", "decide", "simp_all", "trivial"):
++                out.append(f"(intro {' '.join(vs)}; refine ⟨{w}, ?_⟩; {fin})")
++    for t in ("0", "1"):
++        for fin in ("omega", "decide", "simp_all", "trivial"):
++            out.append(f"(refine ⟨{t}, ?_⟩; {fin})")
++    return out
++
++
++def exists_refute_tactics() -> list[str]:
++    out = []
++    for inst in ("y0", "y0 + 1", "0", "1"):
++        for fin in ("omega", "simp_all", "(revert this; decide)"):
++            out.append(f"(intro hx; obtain ⟨y0, hy⟩ := hx; have := hy ({inst}); {fin})")
++            out.append(f"(intro hx; obtain ⟨y0, hy⟩ := hx; have := hy ({inst}) ({inst}); {fin})")
++    return out
++
++
++def prove_tactics() -> list[str]:
++    return list(A.SUFFICIENT) + exists_intro_tactics() + ["(intros; exact?)"]
++
++
++def with_literal_points(*texts: str) -> None:
++    """Numerals of the statements and their successors join the ℕ point pool (as the frozen engine does)."""
++    lits = sorted({int(x) for t in texts for x in re.findall(r"\b(\d+)\b", t) if int(x) <= 20})
++    for t in ("Nat", "ℕ"):
++        if t in A.POINT_POOLS or t == "Nat":
++            A.POINT_POOLS[t] = sorted(set(A.POINT_POOLS.get(t, [])) | {str(c) for c in lits} |
++                                      {str(c + 1) for c in lits}, key=int)
++    for t in ("Int", "ℤ"):
++        if t in A.POINT_POOLS:
++            A.POINT_POOLS[t] = list(dict.fromkeys(A.POINT_POOLS[t] + [str(c) for c in lits] + [str(c + 1) for c in lits]))
++
++
++def extract_many(pairs: list[tuple[str, str]], tc: Toolchain, buildp: Path, work: Path) -> list[dict]:
++    """The frozen extractor on several pairs in ONE Lean process (one environment load)."""
++    work.mkdir(parents=True, exist_ok=True)
++    f = work / "Assumptions_input.lean"
++    f.write_text(f"{A.import_lines()}import ProofScope.AssumptionExtract11\n\n" +
++                 "".join(f"#proofscope_assumptions11 ({r}) ({l})\n" for r, l in pairs))
++    r = tc.run([tc.lean, str(f)], cwd=work, extra_path=buildp, timeout=600)
++    got = []
++    for line in r.output.splitlines():
++        i = line.find("PROOFSCOPE_ASSUMPTIONS11 ")
++        if i >= 0:
++            got.append(json.loads(line[i + len("PROOFSCOPE_ASSUMPTIONS11 "):]))
++    if len(got) != len(pairs):
++        return [{"error": r.output[-3000:]}] * len(pairs)
++    return got
++
++
++def _conj(xs: list[str]) -> str:
++    return " ∧ ".join(f"({x})" for x in xs) if xs else "True"
++
++
++def side_obligations(tag: str, stmt: str, d: dict) -> dict:
++    """link_X, wit_X, false_X for one statement X from its self-extraction `d`."""
++    model, hyps, concl = d["model"], d["hyps"], d["conclusion_ref"]
++    allb, ex = A.binders(model), A.binders(model, True)
++    canon = (f"∀ {allb}, " if model else "") + "".join(f"({h}) → " for h in hyps) + concl
++    H = _conj(hyps)
++    ob = {f"link_{tag}": (f"({stmt}) ↔ ({canon})", LINK_TAC)}
++    if model:
++        ob[f"wit_{tag}"] = (f"∃ {ex}, ¬ ({concl}) ∧ {H}", A.sep_tactics(model, len(hyps)))
++    else:
++        ob[f"wit_{tag}"] = (f"¬ ({concl}) ∧ {H}",
++                            [f"and_intros <;> first | {A.closers(A.ALL_VALS)} | " + " | ".join(f"({t}; done)" for t in exists_refute_tactics())])
++    ws = [f"w{i}" for i in range(len(model))]
++    hs = [f"hh{i}" for i in range(len(hyps))]
++    pat = ", ".join(ws + ["hn"] + (hs if hs else ["-"]))
++    app = f"@hc {' '.join(ws + hs)}" if (ws or hs) else "hc"
++    ob[f"false_{tag}"] = (f"¬ ({stmt})", [f"intro h; have hc := (link_{tag}).mp h; obtain ⟨{pat}⟩ := wit_{tag}; exact hn ({app})"])
++    return ob
++
++
++def region_obligations(e: dict) -> dict:
++    """Certified drift-region witnesses over the aligned telescope `e` = extract(R, L)."""
++    if "error" in e or not e.get("model"):
++        return {}
++    model = e["model"]
++    ex = A.binders(model, True)
++    H = _conj(e["hyps"])
++    D = _conj([a["prop"] for a in e["dropped"]])
++    Aa = _conj([a["prop"] for a in e["added"]])
++    P, Q = e["conclusion_ref"], e["conclusion_lean"]
++    reg = {}
++    tac = A.sep_tactics(model, 0)
++    if e["added"]:
++        reg["region_ref_excluded"] = f"∃ {ex}, {H} ∧ {D} ∧ ¬ ({Aa}) ∧ ¬ ({P})"
++    if e["dropped"]:
++        reg["region_lean_excluded"] = f"∃ {ex}, {H} ∧ {Aa} ∧ ¬ ({D}) ∧ ¬ ({Q})"
++    if not e.get("conclusion_same"):
++        reg["region_conclusion_lean_stronger"] = f"∃ {ex}, {H} ∧ {D} ∧ {Aa} ∧ ({P}) ∧ ¬ ({Q})"
++        reg["region_conclusion_ref_stronger"] = f"∃ {ex}, {H} ∧ {D} ∧ {Aa} ∧ ({Q}) ∧ ¬ ({P})"
++        if e["dropped"]:
++            reg["region_joint"] = f"∃ {ex}, {H} ∧ {Aa} ∧ ¬ ({D}) ∧ ({P}) ∧ ¬ ({Q})"
++    return {k: (v, tac) for k, v in reg.items()}
++
++
++def probe(ident: str, obligations: dict, tc: Toolchain, work: Path) -> set[str]:
++    """Search only (no certificate): which obligations elaborate. One Lean process."""
++    src_root = (work / "src").resolve()
++    mod = src_root / "ProofScopeCert"
++    mod.mkdir(parents=True, exist_ok=True)
++    src, spans = _module(f"ProofScopeCert.{ident}", A.import_lines() + HEADER, obligations, None)
++    (mod / f"{ident}Search.lean").write_text(src)
++    r = tc.compile(mod / f"{ident}Search.lean", None, src_root, timeout=900)
++    failed, outside = _failed(r.output, spans)
++    if r.returncode not in (0, 1) or outside:
++        return set()
++    return set(spans) - failed
++
++
++def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    R, L = spec["reference"], spec["lean"]
++    out = {"id": spec["id"], "reference": R, "lean": L, "engine": "cjcs-experimental"}
++    dR, dL, e = extract_many([(R, R), (L, L), (R, L)], tc, buildp, work / "extract")
++    if "error" in dR or "error" in dL:
++        out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=(dR.get("error") or dL.get("error"))[-600:])
++        return out
++    ident = "CJ_" + re.sub(r"[^A-Za-z0-9_]", "_", spec["id"])
++    with_literal_points(R, L)
++    sides = {**side_obligations("R", R, dR), **side_obligations("L", L, dL)}
++    # stage 1: countermodels only (refute first)
++    ok1 = probe(ident + "_s1", sides, tc, work / "stage1")
++    refuted = {t for t in ("R", "L") if {f"link_{t}", f"wit_{t}", f"false_{t}"} <= ok1}
++    out["stage1_refuted"] = sorted(refuted)
++    # stage 2 (final, certified): keep successful stage-1 obligations, prove only unrefuted sides
++    # a lemma that elaborated on top of a failed dependency is not kept (dependencies are explicit)
++    # definitional equality is checked first: `Iff.rfl` is accepted by the kernel exactly when R and L are
++    # definitionally equal (alpha-renaming, notation), independently of whether either is true
++    ob = {"equiv_defeq": (f"({R}) ↔ ({L})", ["exact Iff.rfl"])}
++    for t in ("R", "L"):
++        for k in (f"link_{t}", f"wit_{t}"):
++            if k in ok1:
++                ob[k] = sides[k]
++        if t in refuted:
++            ob[f"false_{t}"] = sides[f"false_{t}"]
++    stmts = {"R": R, "L": L}
++    for t in ("R", "L"):
++        if t not in refuted:
++            ob[f"true_{t}"] = (stmts[t], prove_tactics())
++    if "R" in refuted and "L" not in refuted:
++        ob["diff_RL"] = (f"¬ (({R}) ↔ ({L}))", ["exact fun h => false_R (h.mpr true_L)"])
++    if "L" in refuted and "R" not in refuted:
++        ob["diff_LR"] = (f"¬ (({R}) ↔ ({L}))", ["exact fun h => false_L (h.mp true_R)"])
++    if refuted == {"R", "L"}:
++        ob["equiv_both_false"] = (f"({R}) ↔ ({L})", ["exact ⟨fun h => absurd h false_R, fun h => absurd h false_L⟩"])
++    if not refuted:
++        ob["equiv_both_true"] = (f"({R}) ↔ ({L})", ["exact ⟨fun _ => true_L, fun _ => true_R⟩"])
++    ob.update(region_obligations(e))
++    r = certify(ident, A.import_lines() + HEADER, ob, tc, work / "certify")
++    certs = set(r["certificates"])
++    out["certify_status"] = r["status"]
++    out["certificates"] = r["certificates"]
++    wit_names = [k for k in certs if k.startswith(("wit_", "region_"))]
++    out["witnesses"] = A.read_witnesses(ident, wit_names, tc, buildp, work / "certify")
++    out["regions"] = sorted(k for k in certs if k.startswith("region_"))
++    if "equiv_defeq" in certs and ({"diff_RL", "diff_LR"} & certs):
++        out.update(verdict="INCONSISTENT", reason="definitional equality and a logical difference were both certified")
++    elif "equiv_defeq" in certs:
++        out.update(verdict="CERTIFIED_LOGICAL_EQUIVALENCE", direction="definitional", theorem="Iff.rfl")
++    elif "diff_RL" in certs:
++        out.update(verdict="CERTIFIED_LOGICAL_DIFFERENCE", direction="reference_false_formalization_true",
++                   theorem="CJCS.cjcs_sound")
++    elif "diff_LR" in certs:
++        out.update(verdict="CERTIFIED_LOGICAL_DIFFERENCE", direction="reference_true_formalization_false",
++                   theorem="CJCS.cjcs_sound")
++    elif "equiv_both_false" in certs:
++        out.update(verdict="CERTIFIED_LOGICAL_EQUIVALENCE", direction="both_false", theorem="CJCS.both_false_equiv")
++    elif "equiv_both_true" in certs:
++        out.update(verdict="CERTIFIED_LOGICAL_EQUIVALENCE", direction="both_true", theorem="CJCS.both_true_equiv")
++    else:
++        one = sorted(k for k in certs if k.startswith(("false_", "true_")))
++        out.update(verdict="ABSTAIN", partial=one,
++                   reason="no certified countermodel for one side together with a certified proof of the other")
++    return out
++
++
++def _one(a):
++    p, buildp, out = a
++    spec = json.loads(Path(p).read_text())
++    row = run_case(spec, Toolchain.find(), buildp, out / "work" / Path(p).stem)
++    for k in ("expected", "domain", "family", "split", "must_not_be"):
++        row[k] = spec.get(k)
++    (out / "rows").mkdir(parents=True, exist_ok=True)
++    (out / "rows" / (Path(p).stem + ".json")).write_text(json.dumps(row, ensure_ascii=False, indent=1))
++    return row
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m proofscope.experimental.cjcs")
++    sub = ap.add_subparsers(dest="cmd", required=True)
++    r = sub.add_parser("run")
++    r.add_argument("specs", nargs="+")
++    r.add_argument("--out", type=Path, required=True)
++    r.add_argument("--jobs", type=int, default=1)
++    a = ap.parse_args(argv)
++    out = a.out.resolve()
++    b = A.build(Toolchain.find(), out / "build")
++    if not b["ok"]:
++        print(json.dumps(b, indent=2)[:3000])
++        return 2
++    from concurrent.futures import ProcessPoolExecutor
++    with ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
++        rows = list(ex.map(_one, [(p, out / "build", out) for p in a.specs]))
++    for row in rows:
++        ok = "" if not row.get("expected") else ("OK" if row["verdict"] == row["expected"] else f"MISS(expected {row['expected']})")
++        print(row["id"], row["verdict"], row.get("direction"), row.get("regions"), ok, flush=True)
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/research/cjcs/CJCS.lean b/research/cjcs/CJCS.lean
+new file mode 100644
+index 0000000..9894079
+--- /dev/null
++++ b/research/cjcs/CJCS.lean
+@@ -0,0 +1,151 @@
++/-!
++# CJCS: Certified Joint-drift Countermodel Search — soundness theory (core Lean, no imports)
++
++Track A (logical) certificates for two closed statements `X` (reference) and `Y` (formalization), and the
++drift-region theory used to explain a difference. Every decisive answer of
++`proofscope/experimental/cjcs.py` is an instance of one theorem below.
++
++1. `cjcs_sound`: a refutation of one side and a proof of the other give `¬ (X ↔ Y)`.
++2. `difference_needs_a_proof`: conversely, every certificate of `¬ (X ↔ Y)` yields `X ∨ Y`. Certifying a
++   logical difference is therefore at least as hard as proving one of the two statements, so a pure
++   refuter (countermodel search) and a pure prover (equivalence search) cannot certify differences on their
++   own. This is the reason for CJCS's two-stage design.
++3. `both_false_equiv`, `both_true_equiv`: the decisive equivalences are logical only (two refuted, or two
++   proved, statements), never fidelity (`vacuous_logical_equiv` makes this explicit).
++4. Drift regions. Write `R m := H m → D m → P m` and `L m := H m → A m → Q m` pointwise.
++   `disagreement_partition`: a point where the reference's instance holds and the formalization's fails
++   lies in exactly one of two regions: `lean_excluded` (H ∧ A ∧ ¬D ∧ ¬Q) or `conclusion_lean_stronger`
++   (H ∧ D ∧ A ∧ P ∧ ¬Q). The region witnesses CJCS certifies are therefore a complete, non-overlapping
++   explanation of every pointwise disagreement in that direction (symmetric statement for the other).
++5. `joint_failure_iff`: if each single change is harmless on its own (`Stmt H A P` and `Stmt H D Q` hold),
++   the combined statement `Stmt H A Q` fails exactly at points of the joint region
++   (H ∧ A ∧ ¬D ∧ P ∧ ¬Q). `joint_disjoint_harmless`: if that region is empty, the combination is harmless.
++-/
++
++namespace ProofScope.CJCS
++
++universe u
++
++/-- A statement in telescope normal form. -/
++def Stmt {M : Sort u} (H C P : M → Prop) : Prop := ∀ m, H m → C m → P m
++
++section Logical
++variable {X Y : Prop}
++
++theorem cjcs_sound (hY : Y) (hX : ¬ X) : ¬ (X ↔ Y) := fun h => hX (h.mpr hY)
++
++theorem cjcs_sound' (hX : X) (hY : ¬ Y) : ¬ (X ↔ Y) := fun h => hY (h.mp hX)
++
++theorem difference_needs_a_proof (h : ¬ (X ↔ Y)) : X ∨ Y :=
++  Classical.byCases (fun hx : X => Or.inl hx)
++    (fun hx => Classical.byCases (fun hy : Y => Or.inr hy)
++      (fun hy => absurd ⟨fun x => absurd x hx, fun y => absurd y hy⟩ h))
++
++theorem nonequiv_iff : ¬ (X ↔ Y) ↔ (X ∧ ¬ Y) ∨ (Y ∧ ¬ X) := by
++  constructor
++  · intro h
++    rcases difference_needs_a_proof h with hx | hy
++    · exact Or.inl ⟨hx, fun hy => h ⟨fun _ => hy, fun _ => hx⟩⟩
++    · exact Or.inr ⟨hy, fun hx => h ⟨fun _ => hy, fun _ => hx⟩⟩
++  · rintro (⟨hx, hy⟩ | ⟨hy, hx⟩)
++    · exact cjcs_sound' hx hy
++    · exact cjcs_sound hy hx
++
++theorem both_false_equiv (hX : ¬ X) (hY : ¬ Y) : X ↔ Y := ⟨fun x => absurd x hX, fun y => absurd y hY⟩
++
++theorem both_true_equiv (hX : X) (hY : Y) : X ↔ Y := ⟨fun _ => hY, fun _ => hX⟩
++
++/-- A refuted statement is unprovable: refute-first pruning never discards a provable obligation. -/
++theorem refuted_unprovable (hX : ¬ X) : ¬ Nonempty X := fun ⟨x⟩ => hX x
++
++end Logical
++
++/-- Logical equivalence is not fidelity: a vacuous reference is logically equivalent to every true
++formalization, whatever it says. -/
++theorem vacuous_logical_equiv {M : Sort u} {H D P A Q : M → Prop}
++    (hv : ∀ m, H m → ¬ D m) (hL : Stmt H A Q) : Stmt H D P ↔ Stmt H A Q :=
++  ⟨fun _ => hL, fun _ m hh hd => absurd hd (hv m hh)⟩
++
++section Regions
++variable {M : Sort u} {H D P A Q : M → Prop}
++
++/-- Pointwise partition of the disagreement points (reference instance holds, formalization's fails). -/
++theorem disagreement_partition (m : M) :
++    ((H m → D m → P m) ∧ ¬ (H m → A m → Q m)) ↔
++      ((H m ∧ A m ∧ ¬ D m ∧ ¬ Q m) ∨ (H m ∧ D m ∧ A m ∧ P m ∧ ¬ Q m)) := by
++  constructor
++  · rintro ⟨hr, hl⟩
++    have hh : H m := Classical.byContradiction fun hh => hl fun h _ => absurd h hh
++    have ha : A m := Classical.byContradiction fun ha => hl fun _ a => absurd a ha
++    have hq : ¬ Q m := fun q => hl fun _ _ => q
++    by_cases hd : D m
++    · exact Or.inr ⟨hh, hd, ha, hr hh hd, hq⟩
++    · exact Or.inl ⟨hh, ha, hd, hq⟩
++  · rintro (⟨hh, ha, hd, hq⟩ | ⟨hh, hd, ha, _, hq⟩)
++    · exact ⟨fun _ d => absurd d hd, fun hl => hq (hl hh ha)⟩
++    · exact ⟨fun _ _ => ‹P m›, fun hl => hq (hl hh ha)⟩
++
++/-- The two regions are disjoint. -/
++theorem regions_disjoint (m : M) : ¬ ((H m ∧ A m ∧ ¬ D m ∧ ¬ Q m) ∧ (H m ∧ D m ∧ A m ∧ P m ∧ ¬ Q m)) :=
++  fun ⟨⟨_, _, hd, _⟩, ⟨_, d, _⟩⟩ => hd d
++
++/-- Each region witness refutes the formalization. -/
++theorem region_refutes_lean {m : M} (h : (H m ∧ A m ∧ ¬ D m ∧ ¬ Q m) ∨ (H m ∧ D m ∧ A m ∧ P m ∧ ¬ Q m)) :
++    ¬ Stmt H A Q := by
++  intro hl
++  rcases h with ⟨hh, ha, _, hq⟩ | ⟨hh, _, ha, _, hq⟩
++  · exact hq (hl m hh ha)
++  · exact hq (hl m hh ha)
++
++/-- A `ref_excluded` witness refutes the reference at a point the formalization's assumption excludes. -/
++theorem ref_excluded_refutes_ref {m : M} (h : H m ∧ D m ∧ ¬ A m ∧ ¬ P m) : ¬ Stmt H D P :=
++  fun hr => h.2.2.2 (hr m h.1 h.2.1)
++
++/-- Joint drift: when each single change is harmless, the combination fails exactly on the joint region. -/
++theorem joint_failure_iff (hA : Stmt H A P) (hQ : Stmt H D Q) :
++    ¬ Stmt H A Q ↔ ∃ m, H m ∧ A m ∧ ¬ D m ∧ P m ∧ ¬ Q m := by
++  constructor
++  · intro hl
++    apply Classical.byContradiction
++    intro hno
++    apply hl
++    intro m hh ha
++    by_cases hd : D m
++    · exact hQ m hh hd
++    · exact Classical.byContradiction fun hq => hno ⟨m, hh, ha, hd, hA m hh ha, hq⟩
++  · rintro ⟨m, hh, ha, _, _, hq⟩ hl
++    exact hq (hl m hh ha)
++
++theorem joint_disjoint_harmless (hA : Stmt H A P) (hQ : Stmt H D Q)
++    (hdisj : ∀ m, H m → A m → ¬ D m → P m → Q m) : Stmt H A Q := by
++  intro m hh ha
++  by_cases hd : D m
++  · exact hQ m hh hd
++  · exact hdisj m hh ha hd (hA m hh ha)
++
++end Regions
++
++/-- The SOTA-3 development example: both single changes are harmless, the joint change is not. -/
++theorem joint_example :
++    Stmt (fun _ : Nat => True) (fun n => n ≤ 7) (fun n => n ≤ 10) ∧
++    Stmt (fun _ : Nat => True) (fun n => n ≤ 5) (fun n => n ≤ 6) ∧
++    ¬ Stmt (fun _ : Nat => True) (fun n => n ≤ 7) (fun n => n ≤ 6) :=
++  ⟨fun n _ h => by omega, fun n _ h => by omega, fun h => absurd (h 7 trivial (by decide)) (by decide)⟩
++
++end ProofScope.CJCS
++
++#print axioms ProofScope.CJCS.cjcs_sound
++#print axioms ProofScope.CJCS.cjcs_sound'
++#print axioms ProofScope.CJCS.difference_needs_a_proof
++#print axioms ProofScope.CJCS.nonequiv_iff
++#print axioms ProofScope.CJCS.both_false_equiv
++#print axioms ProofScope.CJCS.both_true_equiv
++#print axioms ProofScope.CJCS.refuted_unprovable
++#print axioms ProofScope.CJCS.vacuous_logical_equiv
++#print axioms ProofScope.CJCS.disagreement_partition
++#print axioms ProofScope.CJCS.regions_disjoint
++#print axioms ProofScope.CJCS.region_refutes_lean
++#print axioms ProofScope.CJCS.ref_excluded_refutes_ref
++#print axioms ProofScope.CJCS.joint_failure_iff
++#print axioms ProofScope.CJCS.joint_disjoint_harmless
++#print axioms ProofScope.CJCS.joint_example
+diff --git a/research/cjcs/core_dev/c01_natsub_needs_hyp.json b/research/cjcs/core_dev/c01_natsub_needs_hyp.json
+new file mode 100644
+index 0000000..db08aa0
+--- /dev/null
++++ b/research/cjcs/core_dev/c01_natsub_needs_hyp.json
+@@ -0,0 +1 @@
++{"id": "c01_natsub_needs_hyp", "reference": "∀ (n : Nat), n - 1 + 1 = n", "lean": "∀ (n : Nat), 1 ≤ n → n - 1 + 1 = n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c02_natabs_analogue.json b/research/cjcs/core_dev/c02_natabs_analogue.json
+new file mode 100644
+index 0000000..59f53d2
+--- /dev/null
++++ b/research/cjcs/core_dev/c02_natabs_analogue.json
+@@ -0,0 +1 @@
++{"id": "c02_natabs_analogue", "reference": "∀ (x : Int), (x.natAbs : Int) = x", "lean": "∀ (x : Int), 0 ≤ x → (x.natAbs : Int) = x", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c03_identical_true.json b/research/cjcs/core_dev/c03_identical_true.json
+new file mode 100644
+index 0000000..133fa38
+--- /dev/null
++++ b/research/cjcs/core_dev/c03_identical_true.json
+@@ -0,0 +1 @@
++{"id": "c03_identical_true", "reference": "∀ (a b : Nat), a + b = b + a", "lean": "∀ (x y : Nat), x + y = y + x", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c04_both_false.json b/research/cjcs/core_dev/c04_both_false.json
+new file mode 100644
+index 0000000..ac66b69
+--- /dev/null
++++ b/research/cjcs/core_dev/c04_both_false.json
+@@ -0,0 +1 @@
++{"id": "c04_both_false", "reference": "∀ (n : Nat), n + 1 = n", "lean": "∀ (n : Nat), n * 2 = n + 3", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c05_quantifier_swap.json b/research/cjcs/core_dev/c05_quantifier_swap.json
+new file mode 100644
+index 0000000..a6f0d14
+--- /dev/null
++++ b/research/cjcs/core_dev/c05_quantifier_swap.json
+@@ -0,0 +1 @@
++{"id": "c05_quantifier_swap", "reference": "∀ (x : Nat), ∃ (y : Nat), x < y", "lean": "∃ (y : Nat), ∀ (x : Nat), x < y", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c06_strengthened_conclusion.json b/research/cjcs/core_dev/c06_strengthened_conclusion.json
+new file mode 100644
+index 0000000..c19ec2f
+--- /dev/null
++++ b/research/cjcs/core_dev/c06_strengthened_conclusion.json
+@@ -0,0 +1 @@
++{"id": "c06_strengthened_conclusion", "reference": "∀ (n : Nat), 3 ≤ n → 2 ≤ n", "lean": "∀ (n : Nat), 3 ≤ n → 4 ≤ n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c07_vacuous_both_true.json b/research/cjcs/core_dev/c07_vacuous_both_true.json
+new file mode 100644
+index 0000000..276bdb5
+--- /dev/null
++++ b/research/cjcs/core_dev/c07_vacuous_both_true.json
+@@ -0,0 +1 @@
++{"id": "c07_vacuous_both_true", "reference": "∀ (n : Nat), n < 0 → n = 7", "lean": "∀ (n : Nat), n < 0 → n = 8", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c08_joint_drift.json b/research/cjcs/core_dev/c08_joint_drift.json
+new file mode 100644
+index 0000000..6c75eeb
+--- /dev/null
++++ b/research/cjcs/core_dev/c08_joint_drift.json
+@@ -0,0 +1 @@
++{"id": "c08_joint_drift", "reference": "∀ (n : Nat), n ≤ 5 → n ≤ 10", "lean": "∀ (n : Nat), n ≤ 7 → n ≤ 6", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c09_bool_dropped.json b/research/cjcs/core_dev/c09_bool_dropped.json
+new file mode 100644
+index 0000000..471d236
+--- /dev/null
++++ b/research/cjcs/core_dev/c09_bool_dropped.json
+@@ -0,0 +1 @@
++{"id": "c09_bool_dropped", "reference": "∀ (a b : Bool), a = true → (a || b) = true", "lean": "∀ (a b : Bool), (a || b) = true", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_dev/c10_list_open.json b/research/cjcs/core_dev/c10_list_open.json
+new file mode 100644
+index 0000000..802c256
+--- /dev/null
++++ b/research/cjcs/core_dev/c10_list_open.json
+@@ -0,0 +1 @@
++{"id": "c10_list_open", "reference": "∀ (l : List Nat), l.reverse.reverse = l", "lean": "∀ (l : List Nat), l ≠ [] → l.reverse.reverse = l", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h01_int_abs_sq.json b/research/cjcs/core_heldout/h01_int_abs_sq.json
+new file mode 100644
+index 0000000..d8b6fd7
+--- /dev/null
++++ b/research/cjcs/core_heldout/h01_int_abs_sq.json
+@@ -0,0 +1 @@
++{"id": "h01_int_abs_sq", "reference": "∀ (x : Int), x * x ≥ 0", "lean": "∀ (x : Int), x ≥ 0 → x * x ≥ 0", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h02_nat_div_mul.json b/research/cjcs/core_heldout/h02_nat_div_mul.json
+new file mode 100644
+index 0000000..966ffe3
+--- /dev/null
++++ b/research/cjcs/core_heldout/h02_nat_div_mul.json
+@@ -0,0 +1 @@
++{"id": "h02_nat_div_mul", "reference": "∀ (n : Nat), n / 2 * 2 = n", "lean": "∀ (n : Nat), n % 2 = 0 → n / 2 * 2 = n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h03_bool_and_comm.json b/research/cjcs/core_heldout/h03_bool_and_comm.json
+new file mode 100644
+index 0000000..cfe96e9
+--- /dev/null
++++ b/research/cjcs/core_heldout/h03_bool_and_comm.json
+@@ -0,0 +1 @@
++{"id": "h03_bool_and_comm", "reference": "∀ (a b : Bool), (a && b) = (b && a)", "lean": "∀ (p q : Bool), (q && p) = (p && q)", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h04_list_length_append.json b/research/cjcs/core_heldout/h04_list_length_append.json
+new file mode 100644
+index 0000000..bc17ff2
+--- /dev/null
++++ b/research/cjcs/core_heldout/h04_list_length_append.json
+@@ -0,0 +1 @@
++{"id": "h04_list_length_append", "reference": "∀ (l m : List Nat), (l ++ m).length = l.length + m.length", "lean": "∀ (l m : List Nat), (l ++ m).length = l.length", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h05_exists_bound_swap.json b/research/cjcs/core_heldout/h05_exists_bound_swap.json
+new file mode 100644
+index 0000000..6d3ae6b
+--- /dev/null
++++ b/research/cjcs/core_heldout/h05_exists_bound_swap.json
+@@ -0,0 +1 @@
++{"id": "h05_exists_bound_swap", "reference": "∀ (n : Nat), ∃ (m : Nat), n ≤ m", "lean": "∃ (m : Nat), ∀ (n : Nat), n ≤ m", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h06_off_by_one.json b/research/cjcs/core_heldout/h06_off_by_one.json
+new file mode 100644
+index 0000000..e07edd3
+--- /dev/null
++++ b/research/cjcs/core_heldout/h06_off_by_one.json
+@@ -0,0 +1 @@
++{"id": "h06_off_by_one", "reference": "∀ (n : Nat), n < 10 → n ≤ 9", "lean": "∀ (n : Nat), n < 10 → n ≤ 8", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h07_vacuous_ref.json b/research/cjcs/core_heldout/h07_vacuous_ref.json
+new file mode 100644
+index 0000000..3f3f3dc
+--- /dev/null
++++ b/research/cjcs/core_heldout/h07_vacuous_ref.json
+@@ -0,0 +1 @@
++{"id": "h07_vacuous_ref", "reference": "∀ (n : Nat), n + 1 = 0 → n = 5", "lean": "∀ (n : Nat), n = 5", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h08_both_false_different.json b/research/cjcs/core_heldout/h08_both_false_different.json
+new file mode 100644
+index 0000000..35dea20
+--- /dev/null
++++ b/research/cjcs/core_heldout/h08_both_false_different.json
+@@ -0,0 +1 @@
++{"id": "h08_both_false_different", "reference": "∀ (n : Nat), n * n = n", "lean": "∀ (n : Nat), n + n = n", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h09_int_sub_order.json b/research/cjcs/core_heldout/h09_int_sub_order.json
+new file mode 100644
+index 0000000..fb65446
+--- /dev/null
++++ b/research/cjcs/core_heldout/h09_int_sub_order.json
+@@ -0,0 +1 @@
++{"id": "h09_int_sub_order", "reference": "∀ (a b : Int), a - b = b - a", "lean": "∀ (a b : Int), a = b → a - b = b - a", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h10_joint_harmless_parts.json b/research/cjcs/core_heldout/h10_joint_harmless_parts.json
+new file mode 100644
+index 0000000..d905711
+--- /dev/null
++++ b/research/cjcs/core_heldout/h10_joint_harmless_parts.json
+@@ -0,0 +1 @@
++{"id": "h10_joint_harmless_parts", "reference": "∀ (n : Nat), n ≤ 3 → n ≤ 20", "lean": "∀ (n : Nat), n ≤ 12 → n ≤ 11", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h11_disjoint_regions.json b/research/cjcs/core_heldout/h11_disjoint_regions.json
+new file mode 100644
+index 0000000..6715901
+--- /dev/null
++++ b/research/cjcs/core_heldout/h11_disjoint_regions.json
+@@ -0,0 +1 @@
++{"id": "h11_disjoint_regions", "reference": "∀ (n : Nat), n ≤ 3 → n ≤ 20", "lean": "∀ (n : Nat), n ≤ 12 → n ≤ 15", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h12_open_problem_like.json b/research/cjcs/core_heldout/h12_open_problem_like.json
+new file mode 100644
+index 0000000..46999a8
+--- /dev/null
++++ b/research/cjcs/core_heldout/h12_open_problem_like.json
+@@ -0,0 +1 @@
++{"id": "h12_open_problem_like", "reference": "∀ (n : Nat), n % 2 = 0 → ∃ (k : Nat), n = 2 * k", "lean": "∀ (n : Nat), ∃ (k : Nat), n = 2 * k", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h13_identical_unprovable_here.json b/research/cjcs/core_heldout/h13_identical_unprovable_here.json
+new file mode 100644
+index 0000000..5b18032
+--- /dev/null
++++ b/research/cjcs/core_heldout/h13_identical_unprovable_here.json
+@@ -0,0 +1 @@
++{"id": "h13_identical_unprovable_here", "reference": "∀ (l : List Nat), l.reverse.length = l.length", "lean": "∀ (l : List Nat), l.reverse.length = l.length", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/research/cjcs/core_heldout/h14_mixed_strict.json b/research/cjcs/core_heldout/h14_mixed_strict.json
+new file mode 100644
+index 0000000..a96c2c2
+--- /dev/null
++++ b/research/cjcs/core_heldout/h14_mixed_strict.json
+@@ -0,0 +1 @@
++{"id": "h14_mixed_strict", "reference": "∀ (n : Nat), 2 ≤ n → n * n ≥ 2 * n", "lean": "∀ (n : Nat), 1 ≤ n → n * n ≥ 2 * n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}
+\ No newline at end of file
+diff --git a/tests/bench/test_bench.py b/tests/bench/test_bench.py
+index 0576364..74e9542 100644
+--- a/tests/bench/test_bench.py
++++ b/tests/bench/test_bench.py
+@@ -110,6 +110,36 @@ class Limits(unittest.TestCase):
+         self.assertGreater(r.cpu_tree_s, r.cpu_peak_polled_s * 0.5)
+         self.assertGreaterEqual(r.cpu_tree_s, r.cpu_root_wait4_s)
+ 
++    def test_session_escape_is_still_charged(self):
++        # SOTA-3: LeanInteract starts its REPL with start_new_session=True; SOTA-2 tracked the session only, so
++        # the REPL's CPU arrived in one step when it was reaped (BEq+ overshoot 3.654 s in run 42694874449)
++        code = "import subprocess\np=subprocess.Popen(['python3','-c','x=0\\nwhile True: x+=1'],start_new_session=True)\np.wait()"
++        r = run_limited(["python3", "-c", code], cpu_s=1.5, mem_mb=2000, wall_s=60)
++        self.assertEqual(r.status, "TIMEOUT_CPU")
++        self.assertLess(r.cpu_overshoot_s, 0.5)
++
++    def test_setsid_double_fork_is_charged_and_killed(self):
++        code = ("import os,time\nif os.fork()==0:\n  os.setsid()\n  if os.fork()==0:\n    x=0\n    while True: x+=1\n"
++                "  os._exit(0)\ntime.sleep(30)")
++        r = run_limited(["python3", "-c", code], cpu_s=1.5, mem_mb=2000, wall_s=60)
++        self.assertEqual(r.status, "TIMEOUT_CPU")
++        self.assertLess(r.cpu_overshoot_s, 0.5)
++
++    def test_many_busy_children_overshoot_is_bounded(self):
++        code = ("import multiprocessing as m\ndef f():\n  x=0\n  while True: x+=1\n"
++                "ps=[m.Process(target=f) for _ in range(8)]\n[p.start() for p in ps]\n[p.join() for p in ps]")
++        r = run_limited(["python3", "-c", code], cpu_s=2, mem_mb=4000, wall_s=60)
++        self.assertEqual(r.status, "TIMEOUT_CPU")
++        self.assertLess(r.cpu_overshoot_s, 0.5)
++
++    def test_no_process_outlives_its_run(self):
++        import subprocess as sp
++        code = "import subprocess,time\nsubprocess.Popen(['sleep','300'],start_new_session=True)\ntime.sleep(0.5)"
++        r = run_limited(["python3", "-c", code], cpu_s=5, mem_mb=2000, wall_s=30)
++        self.assertEqual(r.status, "OK")
++        left = sp.run(["pgrep", "-f", "^sleep 300$"], capture_output=True, text=True).stdout.split()
++        self.assertEqual(left, [])
++
+     def test_wall_timeout_is_not_a_cpu_timeout(self):
+         self.assertEqual(run_limited(["sleep", "20"], cpu_s=5, mem_mb=200, wall_s=1).status, "TIMEOUT_WALL")
+ 
+diff --git a/tests/bench/test_cjcs.py b/tests/bench/test_cjcs.py
+new file mode 100644
+index 0000000..e139b0f
+--- /dev/null
++++ b/tests/bench/test_cjcs.py
+@@ -0,0 +1,62 @@
++"""CJCS (experimental) end-to-end on core Lean: positive and negative controls, every verdict kernel-checked.
++Development data only; see docs/sota3/README.md for the held-out run."""
++import json
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++
++from proofscope import adelta12 as A
++from proofscope.experimental import cjcs as C
++
++
++@unittest.skipUnless(shutil.which("lean"), "Lean not on PATH")
++class EndToEnd(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        from proofscope.toolchain import Toolchain
++        cls.tc = Toolchain.find()
++        cls.out = Path(tempfile.mkdtemp())
++        assert A.build(cls.tc, cls.out / "build")["ok"]
++
++    def run_pair(self, i, r, l):
++        return C.run_case({"id": i, "reference": r, "lean": l}, self.tc, self.out / "build", self.out / i)
++
++    def test_difference_needs_both_halves(self):
++        r = self.run_pair("t1", "∀ (n : Nat), n - 1 + 1 = n", "∀ (n : Nat), 1 ≤ n → n - 1 + 1 = n")
++        self.assertEqual(r["verdict"], "CERTIFIED_LOGICAL_DIFFERENCE")
++        self.assertIn("diff_RL", r["certificates"])
++        self.assertIn("true_L", r["certificates"])
++        self.assertIn("false_R", r["certificates"])
++        self.assertEqual(r["regions"], ["region_ref_excluded"])
++
++    def test_two_false_statements_are_not_reported_different(self):
++        r = self.run_pair("t2", "∀ (n : Nat), n + 1 = n", "∀ (n : Nat), n * 2 = n + 3")
++        self.assertEqual(r["verdict"], "CERTIFIED_LOGICAL_EQUIVALENCE")
++        self.assertEqual(r["direction"], "both_false")
++
++    def test_definitional_equivalence(self):
++        r = self.run_pair("t3", "∀ (a b : Nat), a + b = b + a", "∀ (x y : Nat), x + y = y + x")
++        self.assertEqual(r["direction"], "definitional")
++
++    def test_joint_drift_region(self):
++        r = self.run_pair("t4", "∀ (n : Nat), n ≤ 5 → n ≤ 10", "∀ (n : Nat), n ≤ 7 → n ≤ 6")
++        self.assertEqual(r["verdict"], "CERTIFIED_LOGICAL_DIFFERENCE")
++        self.assertIn("region_joint", r["regions"])
++
++    def test_no_countermodel_means_abstain(self):
++        # neither side is refutable with the registry and the truth of the statement is not decided here
++        r = self.run_pair("t5", "∀ (l m : List Nat), (l ++ m).length = l.length + m.length",
++                          "∀ (l m : List Nat), (l ++ m).length = l.length")
++        self.assertNotEqual(r["verdict"], "CERTIFIED_LOGICAL_EQUIVALENCE")
++        self.assertIn(r["verdict"], ("ABSTAIN", "CERTIFIED_LOGICAL_DIFFERENCE"))
++
++    def test_every_certificate_used_standard_axioms(self):
++        r = self.run_pair("t6", "∀ (n : Nat), n < 10 → n ≤ 9", "∀ (n : Nat), n < 10 → n ≤ 8")
++        for k, c in r["certificates"].items():
++            self.assertTrue(set(c["axioms"]) <= {"propext", "Classical.choice", "Quot.sound"}, (k, c))
++        json.dumps(r)
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.43.0
+
