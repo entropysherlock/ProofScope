@@ -1,0 +1,3607 @@
+From e42b2c246eef22eeb772bb20fc23ac4dbb4bdb06 Mon Sep 17 00:00:00 2001
+From: "Caleb J. Westfall" <calebwestfall1989@gmail.com>
+Date: Mon, 9 Nov 2026 09:21:52 -0700
+Subject: [PATCH] ProofScope v1.0: Assumption Delta, boundary witness
+ synthesis, Mathlib track
+
+- AssumptionDelta.lean: an added assumption changes the claim iff a model of
+  the reference conditions violates it (restrictive_iff_strictly_weaker);
+  redundancy, necessity, dichotomy, polarity and domain theorems
+- AssumptionExtract.lean + adelta.py: telescope alignment, certified
+  redundant/restrictive/necessary obligations, witness models read from
+  kernel-checked proof terms
+- BoundarySynth.lean + cmcd_v10.py: boundary interpretations for comparison
+  changes (wraps the frozen v0.9 engine); blind b13/b14 now certified
+- Block-1 frozen run found an Assumption Delta soundness bug (model scope;
+  x01 wrong, ad02 unsound); fixed in block 2 (v1.0.2), documented
+- Mathlib track workflow (pinned d13f23b) with 8 cases: PENDING first run
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D6eL9tvFdmWVfTWBctgXnC
+---
+ .github/workflows/proofscope-mathlib-v10.yml  |   63 +
+ .github/workflows/proofscope-v10.yml          |   89 +
+ CHANGELOG.md                                  |    9 +
+ README.md                                     |   12 +
+ docs/v1.0_assumption_delta.md                 |  151 ++
+ docs/v1.0_results.json                        | 1706 +++++++++++++++++
+ lean/ProofScope/AssumptionDelta.lean          |  118 ++
+ lean/ProofScope/AssumptionExtract.lean        |  134 ++
+ lean/ProofScope/BoundarySynth.lean            |   69 +
+ proofscope/__init__.py                        |    2 +-
+ proofscope/adelta.py                          |  305 +++
+ proofscope/benchmark/V10_FREEZE.txt           |   25 +
+ .../adelta_v10_dev/ad01_hidden_comm.json      |   11 +
+ .../adelta_v10_dev/ad02_nonempty.json         |   11 +
+ .../ad03_dependent_instance.json              |   11 +
+ .../adelta_v10_dev/ad04_redundant_comm.json   |   11 +
+ .../adelta_v10_dev/ad05_needed_comm.json      |   11 +
+ .../adelta_v10_dev/ad06_order_antisymm.json   |   11 +
+ .../ad07_dropped_injectivity.json             |   11 +
+ .../ad08_decidable_redundant.json             |   11 +
+ .../adelta_v10_dev/ad09_domain_int.json       |   11 +
+ .../adelta_v10_dev/ad10_redundant_nat.json    |   11 +
+ .../ad11_negative_position.json               |   11 +
+ .../mathlib_v10/m01_real_restriction.json     |   11 +
+ .../mathlib_v10/m02_real_dropped_needed.json  |   11 +
+ .../mathlib_v10/m03_real_redundant.json       |   11 +
+ .../mathlib_v10/m04_group_hidden_comm.json    |   11 +
+ .../mathlib_v10/m05_group_needed_comm.json    |   11 +
+ .../mathlib_v10/m06_set_nonempty.json         |   11 +
+ .../mathlib_v10/m07_set_dropped_needed.json   |   11 +
+ .../mathlib_v10/m08_real_strict_cmcd.json     |   11 +
+ .../x01_point_makes_nonempty_redundant.json   |   16 +
+ .../v10_adversarial/x02_dup_hypothesis.json   |   16 +
+ .../x03_dropped_redundant.json                |   16 +
+ .../x04_weaker_but_true_both.json             |   13 +
+ .../x05_conclusion_also_changed.json          |   13 +
+ .../x06_lean_drops_needed.json                |   13 +
+ .../y01_boundary_equivalent.json              |   15 +
+ .../v10_adversarial/y02_boundary_shifted.json |   15 +
+ .../v10_adversarial/y03_eq_to_le.json         |   15 +
+ .../v10_adversarial/y04_real_change.json      |   13 +
+ proofscope/cmcd_v10.py                        |  146 ++
+ tests/v02/test_v10.py                         |   47 +
+ 43 files changed, 3229 insertions(+), 1 deletion(-)
+ create mode 100644 .github/workflows/proofscope-mathlib-v10.yml
+ create mode 100644 .github/workflows/proofscope-v10.yml
+ create mode 100644 docs/v1.0_assumption_delta.md
+ create mode 100644 docs/v1.0_results.json
+ create mode 100644 lean/ProofScope/AssumptionDelta.lean
+ create mode 100644 lean/ProofScope/AssumptionExtract.lean
+ create mode 100644 lean/ProofScope/BoundarySynth.lean
+ create mode 100644 proofscope/adelta.py
+ create mode 100644 proofscope/benchmark/V10_FREEZE.txt
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad01_hidden_comm.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad02_nonempty.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad03_dependent_instance.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad04_redundant_comm.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad05_needed_comm.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad06_order_antisymm.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad07_dropped_injectivity.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad08_decidable_redundant.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad09_domain_int.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad10_redundant_nat.json
+ create mode 100644 proofscope/benchmark/adelta_v10_dev/ad11_negative_position.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m01_real_restriction.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m02_real_dropped_needed.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m03_real_redundant.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m04_group_hidden_comm.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m05_group_needed_comm.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m06_set_nonempty.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m07_set_dropped_needed.json
+ create mode 100644 proofscope/benchmark/mathlib_v10/m08_real_strict_cmcd.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/x01_point_makes_nonempty_redundant.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/x02_dup_hypothesis.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/x03_dropped_redundant.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/x04_weaker_but_true_both.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/x05_conclusion_also_changed.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/x06_lean_drops_needed.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/y01_boundary_equivalent.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/y02_boundary_shifted.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/y03_eq_to_le.json
+ create mode 100644 proofscope/benchmark/v10_adversarial/y04_real_change.json
+ create mode 100644 proofscope/cmcd_v10.py
+ create mode 100644 tests/v02/test_v10.py
+
+diff --git a/.github/workflows/proofscope-mathlib-v10.yml b/.github/workflows/proofscope-mathlib-v10.yml
+new file mode 100644
+index 0000000..c41f955
+--- /dev/null
++++ b/.github/workflows/proofscope-mathlib-v10.yml
+@@ -0,0 +1,63 @@
++name: ProofScope v1.0 Mathlib Track
++
++# First Mathlib run of Assumption Delta and CMCD v1.0. Mathlib is pinned to the research-corpus revision
++# (same Lean 4.34.1). These cases were written without a local Mathlib: a first-run failure is expected to
++# be possible and must be reported exactly, not patched around.
++on:
++  workflow_dispatch:
++
++permissions:
++  contents: read
++
++env:
++  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
++
++jobs:
++  mathlib:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 180
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
++        uses: ./.github/actions/setup-lean
++      - name: Mathlib project at the pinned revision (binary cache)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/ml"
++          cd "$RUNNER_TEMP/ml"
++          echo "leanprover/lean4:v4.34.1" > lean-toolchain
++          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
++            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
++          for i in 1 2 3; do lake update && break || sleep 30; done
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
++      - name: Mathlib import smoke test
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p ml-evidence
++          printf 'import Mathlib\nexample : (2 : ℝ) + 2 = 4 := by norm_num\n#check Equiv.Perm (Fin 3)\n' > /tmp/smoke.lean
++          lean /tmp/smoke.lean | tee ml-evidence/smoke.log
++      - name: Assumption Delta on Mathlib cases
++        env:
++          PROOFSCOPE_IMPORTS: Mathlib
++        run: |
++          python -m proofscope.adelta proofscope/benchmark/mathlib_v10/m0[1-7]*.json --out ml-evidence/adelta --jobs 2 | tee ml-evidence/adelta.log
++      - name: CMCD v1.0 on Mathlib case
++        env:
++          PROOFSCOPE_IMPORTS: Mathlib
++        run: |
++          python -m proofscope.cmcd_v10 proofscope/benchmark/mathlib_v10/m08*.json --out ml-evidence/cmcd --jobs 1 | tee ml-evidence/cmcd.log
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: proofscope-mathlib-v10-evidence
++          path: ml-evidence/
++          if-no-files-found: warn
+diff --git a/.github/workflows/proofscope-v10.yml b/.github/workflows/proofscope-v10.yml
+new file mode 100644
+index 0000000..626c6eb
+--- /dev/null
++++ b/.github/workflows/proofscope-v10.yml
+@@ -0,0 +1,89 @@
++name: ProofScope v1.0 Assumption Delta and Boundary
++
++# Core Lean: Assumption Delta theory (fresh replay), Assumption Delta engine, CMCD v1.0 (boundary synthesis).
++on:
++  workflow_dispatch:
++  push:
++    branches: [main]
++    paths:
++      - ".github/workflows/proofscope-v10.yml"
++      - "proofscope/adelta.py"
++      - "proofscope/cmcd_v10.py"
++      - "lean/ProofScope/AssumptionDelta.lean"
++      - "lean/ProofScope/AssumptionExtract.lean"
++      - "lean/ProofScope/BoundarySynth.lean"
++      - "proofscope/benchmark/adelta_v10_dev/**"
++      - "proofscope/benchmark/v10_adversarial/**"
++      - "proofscope/benchmark/V10_FREEZE.txt"
++      - "tests/v02/test_v10.py"
++
++permissions:
++  contents: read
++
++jobs:
++  v10:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 150
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
++        uses: ./.github/actions/setup-lean
++      - name: Freeze check (V10_FREEZE.txt block 2)
++        shell: bash
++        run: |
++          set -euo pipefail
++          awk '/^# Block 2 \(v1.0.2\)/{f=1;next} f && /^[0-9a-f]{64}  [a-z]+\//' proofscope/benchmark/V10_FREEZE.txt > /tmp/f.sha
++          test "$(wc -l < /tmp/f.sha)" = 8
++          sha256sum -c /tmp/f.sha
++      - name: Assumption Delta theory (7 axiom-free + 2 standard-axiom theorems, fresh replay)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/ad/ProofScope" v10-evidence
++          lean -R lean -o "$RUNNER_TEMP/ad/ProofScope/ClaimDelta.olean" lean/ProofScope/ClaimDelta.lean > /dev/null
++          LEAN_PATH="$RUNNER_TEMP/ad" lean -R lean -o "$RUNNER_TEMP/ad/ProofScope/AssumptionDelta.olean" \
++            lean/ProofScope/AssumptionDelta.lean | tee v10-evidence/assumption-delta-axioms.log
++          test "$(grep -c 'does not depend on any axioms' v10-evidence/assumption-delta-axioms.log)" = 7
++          test "$(grep -c 'depends on axioms: \[propext, Classical.choice, Quot.sound\]' v10-evidence/assumption-delta-axioms.log)" = 2
++          ! grep -q sorryAx v10-evidence/assumption-delta-axioms.log
++          (cd "$RUNNER_TEMP/ad" && LEAN_PATH="$RUNNER_TEMP/ad" leanchecker --fresh ProofScope.AssumptionDelta)
++      - name: Tests
++        run: python -m unittest tests.v02.test_v10 -v
++      - name: Assumption Delta suites
++        run: |
++          python -m proofscope.adelta proofscope/benchmark/adelta_v10_dev/*.json proofscope/benchmark/v10_adversarial/x*.json \
++            --out v10-evidence/adelta --jobs 4 | tee v10-evidence/adelta.log
++      - name: CMCD v1.0 (boundary synthesis) suites and regression
++        run: |
++          python -m proofscope.cmcd_v10 proofscope/benchmark/v10_adversarial/y*.json proofscope/benchmark/cmcd_v09_dev/*.json \
++            proofscope/benchmark/cmcd_v09_adversarial/*.json proofscope/benchmark/cmcd_blind/b*.json \
++            --out v10-evidence/cmcd --jobs 4 | tee v10-evidence/cmcd.log
++      - name: Summary
++        if: always()
++        shell: bash
++        run: |
++          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
++          import json, pathlib
++          print("## ProofScope v1.0 (core Lean)")
++          for name, f in (("Assumption Delta", "adelta/adelta_results.json"), ("CMCD v1.0", "cmcd/cmcd_results.json")):
++              p = pathlib.Path("v10-evidence") / f
++              if not p.exists():
++                  print(f"- {name}: no results"); continue
++              rows = json.loads(p.read_text())["rows"]
++              ok = sum(r["verdict"] == r.get("expected") for r in rows)
++              bad = [r["id"] for r in rows if r["verdict"] in (r.get("must_not_be") or [])]
++              print(f"- {name}: {len(rows)} cases, label match {ok}, must-not-be violations {bad}")
++          print("Development data only (author-written). Known author label errors: ad02, a1, a6. b21/b22 do not parse in core Lean.")
++          PY
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: proofscope-v10-evidence
++          path: v10-evidence/
++          if-no-files-found: warn
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 1c7cbd5..ac9cb8c 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,5 +1,14 @@
+ # Changelog
+ 
++## 1.0.0 (unreleased)
++
++- Assumption Delta: `lean/ProofScope/AssumptionDelta.lean` (9 theorems), `lean/ProofScope/AssumptionExtract.lean`
++  (telescope alignment, witness readout), `proofscope/adelta.py`.
++- Boundary witness synthesis: `lean/ProofScope/BoundarySynth.lean`, `proofscope/cmcd_v10.py` (wraps frozen v0.9 CMCD).
++- Suites `adelta_v10_dev` (11), `v10_adversarial` (10), `mathlib_v10` (8, pending); `V10_FREEZE.txt` (blocks 1 and 2).
++- Workflows **ProofScope v1.0 Assumption Delta and Boundary**, **ProofScope v1.0 Mathlib Track**; `tests/v02/test_v10.py`.
++- Fixed (block 2): Assumption Delta model scope (soundness; adversarial x01, ad02, ad04).
++
+ ## 0.9.0 (unreleased)
+ 
+ - CMCD drift localization: `lean/ProofScope/DriftExtract.lean` (edit sites, chain, per-occurrence
+diff --git a/README.md b/README.md
+index 0ead3e2..886895c 100644
+--- a/README.md
++++ b/README.md
+@@ -84,6 +84,18 @@ documented in [`docs/engine.md`](docs/engine.md):
+ Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
+ resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
+ 
++## v1.0: Assumption Delta, boundary synthesis, Mathlib track
++
++Details: [`docs/v1.0_assumption_delta.md`](docs/v1.0_assumption_delta.md).
++
++- **Assumption Delta:** an added assumption changes the claim exactly when a model of the reference's
++  conditions violates it (`restrictive_iff_strictly_weaker`, Lean). ProofScope certifies such models, reads
++  them out of the kernel-checked proof term (e.g. `Bool` with `op a b := a` for a hidden commutativity
++  assumption), and certifies when a reference is false without an assumption.
++- **Boundary witness synthesis** closes the blind-suite strict/non-strict gap (blind suite now development data).
++- **Mathlib track** (ℝ, groups, sets): workflow ready, **pending its first run**.
++- A soundness bug found by the adversarial suite (model scope) is documented and fixed (v1.0.2).
++
+ ## v0.9: certified drift localization (CMCD)
+ 
+ Details: [`docs/v0.9_cmcd.md`](docs/v0.9_cmcd.md).
+diff --git a/docs/v1.0_assumption_delta.md b/docs/v1.0_assumption_delta.md
+new file mode 100644
+index 0000000..15d5bc2
+--- /dev/null
++++ b/docs/v1.0_assumption_delta.md
+@@ -0,0 +1,151 @@
++# ProofScope v1.0: Assumption Delta, boundary synthesis, Mathlib track
++
++Base: `entropysherlock/ProofScope` @ `3ba1c2ce455a316aa174e4bf1d2de85951815bc4`. Lean 4.34.1.
++**LOCAL** marks results from the author's 2-core sandbox (core Lean only). **PENDING** marks anything
++that still needs a GitHub run. Mathlib cannot be obtained in the sandbox (its binary cache returns HTTP
++403, and a source build does not fit), so **every Mathlib result is PENDING**.
++
++## 1. The question and the answer
++
++Can ProofScope certify what an added or dropped assumption does to a theorem's claim (hidden typeclass
++assumptions, nonemptiness, decidability, a restricted domain), using the same principle as before?
++
++**Yes, as one theorem.** Write the reference as `R = ∀ m, C m → P m` over models `m` (all binders: types,
++operations, instances, points) and the formalization as `L = ∀ m, C m → A m → P m`. Then:
++
++> **`restrictive_iff_strictly_weaker`:** `(∃ m, C m ∧ ¬ A m)` ⇔ `L` is strictly weaker than `R`, as a schema over the conclusion `P`.
++
++So a hidden assumption is a ClaimDelta *with the conclusion as the abstracted symbol*. The certificate
++is a **model**: a structure the reference covers and the formal statement excludes. This works even when
++both theorems are true, where `R ↔ L` is trivially provable.
++
++| Theorem (`lean/ProofScope/AssumptionDelta.lean`) | Content | Axioms |
++|---|---|---|
++| `redundant_equiv`, `redundant_schema_equiv` | `∀ m, C m → A m` ⇒ the assumption changes nothing, for every conclusion | none |
++| `restrictive_iff_strictly_weaker` | the characterization above | standard (classical, for the ⇐ direction) |
++| `restrictive_witness_vacuous` | at the witness model, the reference gives `P m` and the formal statement gives nothing | none |
++| `necessary_refutes_reference` | a model with `C ∧ ¬A ∧ ¬P` ⇒ the reference claim is **false** without `A` | none |
++| `dichotomy` | exactly one of redundant and restrictive holds | standard |
++| `negative_position_strengthens` | under an implication, the comparison flips | none |
++| `variance_counterexample` | an assumption added in negative position strengthens the claim (concrete instance) | none |
++| `domain_restriction` | quantifying over a smaller domain `e : D → M` *is* the assumption "in the range of `e`" | none |
++
++Fresh kernel replay exit 0 (**LOCAL**; CI step added).
++
++**Limit: dependent binders.** If the rest of the statement uses the binder (an instance used in the
++conclusion), there is no well-typed statement without it, so the comparison is not defined and the
++verdict is INCONCLUSIVE. Polarity is also not inferred: assumptions are compared only in the top-level
++positive telescope, and anything else is INCONCLUSIVE (case `ad11`).
++
++## 2. Engine (`AssumptionExtract.lean`, `adelta.py`)
++
++The engine works in four steps:
++
++1. **Align.** The elaborated binder telescopes are aligned by definitional equality. One-sided Prop
++   binders (including Prop-valued typeclasses) are the assumptions; one-sided instance-implicit data
++   binders become `Nonempty (Cls)`. Dependent binders are marked.
++2. **Certify.** Every certificate goes through the unchanged gate: clean recompile, standard axioms,
++   kernel replay. The obligations are:
++   - `link_R` / `link_L`: the canonical telescopes are equivalent to the originals;
++   - `redundant`, `restrictive` and `necessary`, as in §1.
++3. **Search for models.** Carriers are `Bool`, `Fin 3`, `Unit`, `Empty` and `Nat`. Operation, relation
++   and point pools are indexed by the carrier. Mathlib mode adds the noncommutative group
++   `Equiv.Perm (Fin 3)`, ℝ points and sets of naturals.
++4. **Read the witness back.** `#proofscope_witness` reads the model out of the **kernel-checked proof
++   term**, so the explanation names the actual structure, e.g. `Bool` with `op a b := a`.
++
++## 3. Boundary witness synthesis (`BoundarySynth.lean`, `cmcd_v10.py`)
++
++**Blind-suite diagnosis (ChatGPT's 28 cases; the recorded 24/28 is kept and the labels are unchanged).**
++- **`b13`, `b14` (ℤ, `a*a < a+2` vs `≤`).** Forward entailment was certified, but there was no
++  separating interpretation: a fixed pool cannot contain the boundary interpretation `x a _ := a + 2`.
++  *Missing principle:* separate a comparison change by interpreting the operator **on the boundary**.
++  `BoundarySynth` reads every atom `x ts ⋈ e` in the elaborated chain and proposes `fun ts => e` (±1).
++  The proposals only enter Lean-checked certificates.
++- **`b21`, `b22` (`∃!`).** **Defect in the blind suite.** `∃!` is Mathlib notation and does not parse in
++  the core Lean 4.34.1 environment the protocol specified, so the engine correctly returned INCONCLUSIVE
++  ("extraction failed"). This is not an engine gap.
++
++CMCD v1.0 wraps the frozen v0.9 engine and does not modify it.
++
++## 4. Results
++
++### Block 1 (frozen before any run; single run; LOCAL)
++
++| Suite | Engine | Label match | Wrong decisive verdicts |
++|---|---|---|---|
++| `adelta_v10_dev` (11) | adelta v1.0 | 11/11 | **1 unsound (`ad02`)**, see below |
++| `v10_adversarial` x01–x06 | adelta v1.0 | 5/6 | **1 (`x01`, false restriction)** |
++| `v10_adversarial` y01–y04 | cmcd_v10 | 4/4 | 0 |
++| Regression: v0.9 dev 21, v0.9 adversarial 6, blind 28 | cmcd_v10 | 51/55 | 0 new |
++
++**Regression detail.** v0.9 dev stays 21/21. The blind suite goes from 24/28 to **26/28**; it is now
++development data, because b13 and b14 informed the design. The 4 non-matches are the two documented author
++label errors (`a1`, `a6`) and the two `∃!` cases that do not parse in core Lean.
++
++### Soundness bug found by the adversarial suite (fixed in block 2)
++
++**v1.0 bug.** v1.0 limited the model to the binders an assumption *mentions*. In `x01`,
++`∀ α (x : α) [Nonempty α], …`, the point `x` already proves `Nonempty α`, but the engine certified the
++true but irrelevant statement `∃ α, ¬ Nonempty α` and reported a restriction.
++- **`ad02` (same bug, hidden).** It agreed with its label, but **the label was wrong**: the conclusion
++  quantifies over `a : α`, so on empty types neither statement says anything, and the added `Nonempty α`
++  is redundant.
++
++**Block-1 summary: 2 unsound adelta verdicts.**
++
++**Fixes.**
++- v1.0.1 (prefix scope) still failed (`ad04`): a hypothesis *after* the assumption can imply it.
++- **v1.0.2 uses exactly the model of the theorem: all binders and all shared hypotheses.**
++
++### Block 2 (v1.0.2; development data; LOCAL)
++
++Assumption Delta dev + adversarial: **16/17 label matches**. The one mismatch is the wrong author label
++`ad02`; the verdict ASSUMPTION_EQUIVALENT is correct. 0 known wrong verdicts. A regression test for
++`x01` was added.
++
++**Example certified explanations** (witness read from the checked proof term):
++
++| Pair | Verdict | Certified model |
++|---|---|---|
++| reference without, Lean with `[Std.Commutative op]` (associativity lemma) | LEAN_WEAKER_BY_ASSUMPTION | `Bool`, `op a b := a` |
++| reference claims `op a b = op b a` from associativity alone; Lean adds the instance | REFERENCE_NEEDS_ASSUMPTION (reference false) | `Bool`, `op a b := a`, `a = true`, `b = false` |
++| reference over ℤ; Lean adds `0 ≤ a` | LEAN_WEAKER_BY_ASSUMPTION | `a = −1` |
++| Lean drops injectivity | LEAN_CLAIM_FALSE | `Bool`, constant function |
++| added antisymmetry | LEAN_WEAKER_BY_ASSUMPTION | `Bool`, the total relation |
++
++### Mathlib track (PENDING)
++
++8 cases in `benchmark/mathlib_v10`:
++- real analysis (restriction, dropped needed hypothesis, redundancy);
++- groups (hidden commutativity, a reference that needs commutativity, witness `Equiv.Perm (Fin 3)`);
++- sets (nonemptiness, dropped subset hypothesis).
++
++They run in the workflow **ProofScope v1.0 Mathlib Track** against Mathlib pinned at `d13f23b`. **They were
++written without a local Mathlib, and no result exists yet.** Real-analysis countermodels rely on
++`norm_num`/`linarith` closers.
++
++## 5. Competitors
++
++No competitor was re-run in v1.0. As published, SemantEq, ACE, BEq+ and BPF all compare whole statements
++and give no certified model explaining a hidden assumption (`docs/v0.9_cmcd.md` §1). The closest
++concept is ACE's role alignment, which rejects unmatched hypotheses structurally; that is a "not
++equivalent" verdict, with no model and no direction. **A same-input comparison is still required** before
++any superiority claim. The task definitions differ (binary vs graded), and the comparison must say so.
++
++## 6. Real research challenge (V1.0-D): not attempted
++
++No real paper-to-Lean discrepancy was found or claimed. The method is now able to certify
++assumption-level findings, and applying it to the 150-module research corpus needs Mathlib in the loop
++(PENDING).
++
++## 7. Candidate paper result
++
++> **Theorem (Assumption Delta, `restrictive_iff_strictly_weaker` + `necessary_refutes_reference`).** For
++> elaborated statements whose telescopes differ by a non-dependent assumption in positive position, the
++> assumption changes the claim if and only if there is a model of the reference's conditions violating it.
++> Such a model, read from a kernel-checked proof term, explains the change. If it also falsifies the
++> conclusion, the reference itself is false without the assumption.
++>
++> The scope condition (the model = all binders and hypotheses) is necessary: smaller scopes give false
++> certificates, as the counterexamples `x01` and `ad04` show.
+diff --git a/docs/v1.0_results.json b/docs/v1.0_results.json
+new file mode 100644
+index 0000000..7354688
+--- /dev/null
++++ b/docs/v1.0_results.json
+@@ -0,0 +1,1706 @@
++{
++ "local": true,
++ "block1_frozen_run": {
++  "adelta_v10_dev": [
++   {
++    "id": "ad01_hidden_comm",
++    "domain": "Algebra",
++    "family": "hidden typeclass assumption",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Std.Commutative op",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "Bool",
++       "fun (a x : Bool) => a"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad02_nonempty",
++    "domain": "Types",
++    "family": "nonemptiness assumption",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Nonempty α",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "Empty",
++       "fun (a : Empty) => a"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad03_dependent_instance",
++    "domain": "Types",
++    "family": "dependent instance",
++    "expected": "INCONCLUSIVE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
++    "engine": "adelta v1.0"
++   },
++   {
++    "id": "ad04_redundant_comm",
++    "domain": "Algebra",
++    "family": "redundant assumption",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Std.Commutative op",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad05_needed_comm",
++    "domain": "Algebra",
++    "family": "reference needs assumption",
++    "expected": "REFERENCE_NEEDS_ASSUMPTION",
++    "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "necessary_refutes_reference",
++    "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Std.Commutative op",
++      "class": "NECESSARY",
++      "witness_model": [
++       "Bool",
++       "fun (a x : Bool) => a",
++       "true",
++       "false"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad06_order_antisymm",
++    "domain": "Order",
++    "family": "added antisymmetry",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "∀ (a b : α), r a b → r b a → a = b",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "Bool",
++       "fun (x x_1 : Bool) => True"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad07_dropped_injectivity",
++    "domain": "Functions",
++    "family": "dropped needed hypothesis",
++    "expected": "LEAN_CLAIM_FALSE",
++    "verdict": "LEAN_CLAIM_FALSE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "necessary_refutes_reference",
++    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "dropped",
++      "assumption": "∀ (a b : α), f a = f b → a = b",
++      "class": "NECESSARY",
++      "witness_model": [
++       "Bool",
++       "fun (x : Bool) => true",
++       "true",
++       "false"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad08_decidable_redundant",
++    "domain": "Types",
++    "family": "decidability assumption",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Nonempty (DecidableEq α)",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad09_domain_int",
++    "domain": "Int",
++    "family": "domain restriction",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "(0 : Int) ≤ a",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "-1"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad10_redundant_nat",
++    "domain": "Nat",
++    "family": "redundant assumption",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "(0 : Nat) ≤ n",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad11_negative_position",
++    "domain": "Logic",
++    "family": "assumption under negation",
++    "expected": "INCONCLUSIVE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "canonical telescope not linked to the elaborated statements",
++    "engine": "adelta v1.0"
++   }
++  ],
++  "v10_adversarial_adelta": [
++   {
++    "id": "x01_point_makes_nonempty_redundant",
++    "domain": "Types",
++    "family": "redundancy trap",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Nonempty α",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "Empty"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "x02_dup_hypothesis",
++    "domain": "Algebra",
++    "family": "redundancy trap",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "∀ (a b : α), op b a = op a b",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "x03_dropped_redundant",
++    "domain": "Nat",
++    "family": "redundancy trap",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "dropped",
++      "assumption": "(0 : Nat) ≤ n",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "x04_weaker_but_true_both",
++    "domain": "Int",
++    "family": "restriction, both true",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "(1 : Int) ≤ a",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "-1"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "x05_conclusion_also_changed",
++    "domain": "Int",
++    "family": "mixed change",
++    "expected": "INCONCLUSIVE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
++    "engine": "adelta v1.0"
++   },
++   {
++    "id": "x06_lean_drops_needed",
++    "domain": "Order",
++    "family": "dropped needed assumption",
++    "expected": "LEAN_CLAIM_FALSE",
++    "verdict": "LEAN_CLAIM_FALSE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "necessary_refutes_reference",
++    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
++    "engine": "adelta v1.0",
++    "assumptions": [
++     {
++      "side": "dropped",
++      "assumption": "∀ (a b : α), r a b → r b a",
++      "class": "NECESSARY",
++      "witness_model": [
++       "Bool",
++       "fun (a b : Bool) => a = true ∨ b = false",
++       "true",
++       "false"
++      ]
++     }
++    ]
++   }
++  ],
++  "v10_adversarial_cmcd": [
++   {
++    "id": "y01_boundary_equivalent",
++    "domain": "Int",
++    "family": "boundary trap (CMCD)",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => b0 + (2 : Int)",
++      "fun (b0 b1 : Int) => (b0 + (2 : Int)) + 1",
++      "fun (b0 b1 : Int) => (b0 + (2 : Int)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "y02_boundary_shifted",
++    "domain": "Nat",
++    "family": "boundary (CMCD)",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "y03_eq_to_le",
++    "domain": "Nat",
++    "family": "boundary (CMCD)",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "boundary_candidates": {
++     "Nat → Nat → Nat": [
++      "fun (b0 b1 : Nat) => b0 + b1",
++      "fun (b0 b1 : Nat) => (b0 + b1) + 1",
++      "fun (b0 b1 : Nat) => (b0 + b1) - 1",
++      "fun (b0 b1 : Nat) => b0 + b1 + (1 : Nat)",
++      "fun (b0 b1 : Nat) => (b0 + b1 + (1 : Nat)) + 1",
++      "fun (b0 b1 : Nat) => (b0 + b1 + (1 : Nat)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "y04_real_change",
++    "domain": "Int",
++    "family": "boundary (CMCD)",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≥ a) ∧ ¬ (∀ (a : Int), x1 a a > a)"
++    ],
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => b0",
++      "fun (b0 b1 : Int) => (b0) + 1",
++      "fun (b0 b1 : Int) => (b0) - 1"
++     ]
++    }
++   }
++  ],
++  "regression_cmcd_v10": [
++   {
++    "id": "a1_unrelated_true_shared",
++    "domain": "Nat",
++    "family": "adversarial: must never be certified equivalent",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "a2_unrelated_gcd_true",
++    "domain": "Nat",
++    "family": "adversarial: must never be certified equivalent",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "CLAIM_INCOMPARABLE",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "single edit",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "a3_tautological_lean",
++    "domain": "Nat",
++    "family": "adversarial: must never be certified equivalent",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 (2 : Nat) n = x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "a4_law_trap",
++    "domain": "Nat",
++    "family": "adversarial: must never be certified equivalent",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "CLAIM_INCOMPARABLE",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "single edit",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "a5_identical",
++    "domain": "Nat",
++    "family": "adversarial: must never be certified equivalent",
++    "expected": "IDENTICAL",
++    "verdict": "IDENTICAL",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "a6_reversed_false",
++    "domain": "Nat",
++    "family": "adversarial: must never be certified equivalent",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "single edit",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b01_nat_identical",
++    "domain": "Nat",
++    "family": "harmless identical",
++    "expected": "IDENTICAL",
++    "verdict": "IDENTICAL",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b02_int_identical",
++    "domain": "Int",
++    "family": "harmless identical",
++    "expected": "IDENTICAL",
++    "verdict": "IDENTICAL",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b03_list_identical",
++    "domain": "List",
++    "family": "harmless identical",
++    "expected": "IDENTICAL",
++    "verdict": "IDENTICAL",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b04_nat_alpha_rename",
++    "domain": "Nat",
++    "family": "harmless alpha equivalence",
++    "expected": "IDENTICAL",
++    "verdict": "IDENTICAL",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b05_int_alpha_rename",
++    "domain": "Int",
++    "family": "harmless alpha equivalence",
++    "expected": "IDENTICAL",
++    "verdict": "IDENTICAL",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b06_nat_conj_swap",
++    "domain": "Logic",
++    "family": "harmless conjunction permutation",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b07_nat_eq_swap",
++    "domain": "Nat",
++    "family": "harmless equation symmetry",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "boundary_candidates": {
++     "Nat → Nat → Nat": [
++      "fun (b0 b1 : Nat) => b0",
++      "fun (b0 b1 : Nat) => (b0) + 1",
++      "fun (b0 b1 : Nat) => (b0) - 1"
++     ]
++    }
++   },
++   {
++    "id": "b08_int_eq_swap",
++    "domain": "Int",
++    "family": "harmless equation symmetry",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => b0 + (1 : Int)",
++      "fun (b0 b1 : Int) => (b0 + (1 : Int)) + 1",
++      "fun (b0 b1 : Int) => (b0 + (1 : Int)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "b09_list_eq_swap",
++    "domain": "List",
++    "family": "harmless equation symmetry",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b10_logic_conj_swap",
++    "domain": "Logic",
++    "family": "harmless propositional reorder",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b11_nat_weak_strict",
++    "domain": "Nat",
++    "family": "strict to nonstrict",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "b12_nat_strong_strict",
++    "domain": "Nat",
++    "family": "nonstrict to strict",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "b13_int_weak",
++    "domain": "Int",
++    "family": "strict to nonstrict",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≤ a + (2 : Int)) ∧ ¬ (∀ (a : Int), x1 a a < a + (2 : Int))"
++    ],
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => b0 + (2 : Int)",
++      "fun (b0 b1 : Int) => (b0 + (2 : Int)) + 1",
++      "fun (b0 b1 : Int) => (b0 + (2 : Int)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "b14_int_strong",
++    "domain": "Int",
++    "family": "nonstrict to strict",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≤ a + (2 : Int)) ∧ ¬ (∀ (a : Int), x1 a a < a + (2 : Int))"
++    ],
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => b0 + (2 : Int)",
++      "fun (b0 b1 : Int) => (b0 + (2 : Int)) + 1",
++      "fun (b0 b1 : Int) => (b0 + (2 : Int)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "b15_list_weak",
++    "domain": "List",
++    "family": "list length strict to weak",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 l ≤ x1 (x2 l)) ∧ ¬ (∀ (l : List Nat), x1 l < x1 (x2 l))"
++    ]
++   },
++   {
++    "id": "b16_list_strong",
++    "domain": "List",
++    "family": "list length weak to strict",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 l ≤ x1 (x2 l)) ∧ ¬ (∀ (l : List Nat), x1 l < x1 (x2 l))"
++    ]
++   },
++   {
++    "id": "b17_gcd_weak",
++    "domain": "Nat",
++    "family": "gcd strictness",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (a b : Nat), x1 a b ≤ a + (2 : Nat)) ∧ ¬ (∀ (a b : Nat), x1 a b < a + (2 : Nat))"
++    ],
++    "boundary_candidates": {
++     "Nat → Nat → Nat": [
++      "fun (b0 b1 : Nat) => b0 + (2 : Nat)",
++      "fun (b0 b1 : Nat) => (b0 + (2 : Nat)) + 1",
++      "fun (b0 b1 : Nat) => (b0 + (2 : Nat)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "b18_lcm_strong",
++    "domain": "Nat",
++    "family": "lcm strictness",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (a b : Nat), x1 a b ≤ a + b) ∧ ¬ (∀ (a b : Nat), x1 a b < a + b)"
++    ],
++    "boundary_candidates": {
++     "Nat → Nat → Nat": [
++      "fun (b0 b1 : Nat) => b0 + b1",
++      "fun (b0 b1 : Nat) => (b0 + b1) + 1",
++      "fun (b0 b1 : Nat) => (b0 + b1) - 1"
++     ]
++    }
++   },
++   {
++    "id": "b19_nat_hyp_strengthen",
++    "domain": "Nat",
++    "family": "stronger hypothesis weakens theorem",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) < n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (0 : Nat) < n → n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "b20_nat_hyp_weaken",
++    "domain": "Nat",
++    "family": "weaker hypothesis strengthens theorem",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) < n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (0 : Nat) < n → n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "b21_existential_relax",
++    "domain": "Logic",
++    "family": "existence versus uniqueness",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": null,
++    "reason": "extraction failed",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b22_existential_tighten",
++    "domain": "Logic",
++    "family": "existence versus uniqueness",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": null,
++    "reason": "extraction failed",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b23_quantifier_swap",
++    "domain": "Logic",
++    "family": "quantifier-order tightening",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x < x1 (2 : Nat) y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x < x1 (2 : Nat) y)"
++    ]
++   },
++   {
++    "id": "b24_quantifier_reverse",
++    "domain": "Logic",
++    "family": "quantifier-order relaxation",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x < x1 (2 : Nat) y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x < x1 (2 : Nat) y)"
++    ]
++   },
++   {
++    "id": "b25_changed_base",
++    "domain": "Nat",
++    "family": "different operator inputs",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "CLAIM_INCOMPARABLE",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "single edit",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b26_changed_gcd_arg",
++    "domain": "Nat",
++    "family": "different operator inputs",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "CLAIM_INCOMPARABLE",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "single edit",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b27_no_shared_arith",
++    "domain": "Nat",
++    "family": "no shared opaque operator",
++    "expected": "NO_SHARED_SYMBOLS",
++    "verdict": "NO_SHARED_SYMBOLS",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "b28_no_shared_logic",
++    "domain": "Logic",
++    "family": "no shared opaque operator",
++    "expected": "NO_SHARED_SYMBOLS",
++    "verdict": "NO_SHARED_SYMBOLS",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "l01_quant_swap_false",
++    "domain": "Logic",
++    "family": "quantifier order",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x ≤ x1 y y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x ≤ x1 y y)"
++    ]
++   },
++   {
++    "id": "l02_unique_to_exists",
++    "domain": "Logic",
++    "family": "uniqueness dropped",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∃ (y : Nat), x1 y y = (4 : Nat)) ∧ ¬ (∃ (y : Nat), x1 y y = (4 : Nat) ∧ ∀ (z : Nat), x1 z z = (4 : Nat) → z = y)"
++    ],
++    "boundary_candidates": {
++     "Nat → Nat → Nat": [
++      "fun (b0 b1 : Nat) => (4 : Nat)",
++      "fun (b0 b1 : Nat) => ((4 : Nat)) + 1",
++      "fun (b0 b1 : Nat) => ((4 : Nat)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "l03_eq_orientation",
++    "domain": "Logic",
++    "family": "harmless",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "boundary_candidates": {
++     "Nat → Nat → Nat": [
++      "fun (b0 b1 : Nat) => (1 : Nat)",
++      "fun (b0 b1 : Nat) => ((1 : Nat)) + 1",
++      "fun (b0 b1 : Nat) => ((1 : Nat)) - 1"
++     ]
++    }
++   },
++   {
++    "id": "l04_conjunct_order",
++    "domain": "Logic",
++    "family": "harmless",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "l05_forall_to_exists",
++    "domain": "Logic",
++    "family": "quantifier change",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∃ (n : Nat), n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "li01_append_strict",
++    "domain": "List",
++    "family": "weak to strict",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat → List Nat), (∀ (l m : List Nat), x1 l ≤ x1 (x2 l m)) ∧ ¬ (∀ (l m : List Nat), x1 l < x1 (x2 l m))"
++    ]
++   },
++   {
++    "id": "li02_append_comm",
++    "domain": "List",
++    "family": "harmless",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "li03_reverse_weak",
++    "domain": "List",
++    "family": "eq to le",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 (x2 l) ≤ x1 l) ∧ ¬ (∀ (l : List Nat), x1 (x2 l) = x1 l)"
++    ]
++   },
++   {
++    "id": "n01_two_edits_one_weak",
++    "domain": "Nat",
++    "family": "multi-edit localization",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     2
++    ],
++    "expected_localized_at": [
++     2
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) < x2 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "n02_changed_base",
++    "domain": "Nat",
++    "family": "changed constant",
++    "expected": "CLAIM_INCOMPARABLE",
++    "verdict": "CLAIM_INCOMPARABLE",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": null,
++    "reason": "single edit",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "n03_harmless_succ",
++    "domain": "Nat",
++    "family": "harmless",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "n04_added_restriction",
++    "domain": "Nat",
++    "family": "hidden assumption",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "n05_mixed_directions",
++    "domain": "Nat",
++    "family": "mixed (no localization)",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "n06_gcd_comm",
++    "domain": "Nat",
++    "family": "harmless (law)",
++    "expected": "EQUIVALENT_BY_LAWS",
++    "verdict": "EQUIVALENT_BY_LAWS",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "the two statements are rewritings of each other by the listed equational laws; the proof of each direction uses the other statement",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "n07_unrelated_true",
++    "domain": "Nat",
++    "family": "unrelated provable",
++    "expected": "NO_SHARED_SYMBOLS",
++    "verdict": "NO_SHARED_SYMBOLS",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "n08_vacuous_hyp",
++    "domain": "Nat",
++    "family": "vacuous",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (1 : Nat) → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
++    ]
++   },
++   {
++    "id": "n09_mul_interpreted",
++    "domain": "Nat",
++    "family": "harmless (occurrence policy)",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "z01_int_strict",
++    "domain": "Int",
++    "family": "strict to weak",
++    "expected": "CLAIM_LEAN_WEAKER",
++    "verdict": "CLAIM_LEAN_WEAKER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) < a → a ≤ x1 a a + (1 : Int)) ∧ ¬ (∀ (a : Int), (0 : Int) < a → a < x1 a a + (1 : Int))"
++    ]
++   },
++   {
++    "id": "z02_int_symm",
++    "domain": "Int",
++    "family": "harmless",
++    "expected": "SCHEMA_EQUIVALENT",
++    "verdict": "SCHEMA_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "equiv_trans",
++    "reason": null,
++    "engine": "cmcd_v10"
++   },
++   {
++    "id": "z03_int_dropped_sign",
++    "domain": "Int",
++    "family": "dropped hypothesis",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) ≤ a → a ≤ x1 a a) ∧ ¬ (∀ (a : Int), a ≤ x1 a a)"
++    ],
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => b0",
++      "fun (b0 b1 : Int) => (b0) + 1",
++      "fun (b0 b1 : Int) => (b0) - 1"
++     ]
++    }
++   },
++   {
++    "id": "z04_int_constant",
++    "domain": "Int",
++    "family": "changed constant",
++    "expected": "CLAIM_LEAN_STRONGER",
++    "verdict": "CLAIM_LEAN_STRONGER",
++    "localized_at": [
++     1
++    ],
++    "expected_localized_at": [
++     1
++    ],
++    "theorem": "localize_stronger/monotone_strict",
++    "reason": null,
++    "engine": "cmcd_v10",
++    "countermodels": [
++     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≥ (0 : Int)) ∧ ¬ (∀ (a : Int), x1 a a ≥ (1 : Int))"
++    ],
++    "boundary_candidates": {
++     "Int → Int → Int": [
++      "fun (b0 b1 : Int) => (0 : Int)",
++      "fun (b0 b1 : Int) => ((0 : Int)) + 1",
++      "fun (b0 b1 : Int) => ((0 : Int)) - 1",
++      "fun (b0 b1 : Int) => (1 : Int)",
++      "fun (b0 b1 : Int) => ((1 : Int)) + 1",
++      "fun (b0 b1 : Int) => ((1 : Int)) - 1"
++     ]
++    }
++   }
++  ]
++ },
++ "block2_development": {
++  "adelta_dev_and_adversarial": [
++   {
++    "id": "ad01_hidden_comm",
++    "domain": "Algebra",
++    "family": "hidden typeclass assumption",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Std.Commutative op",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "Bool",
++       "fun (a x : Bool) => a",
++       "true",
++       "true",
++       "true",
++       "true"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad02_nonempty",
++    "domain": "Types",
++    "family": "nonemptiness assumption",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Nonempty α",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad03_dependent_instance",
++    "domain": "Types",
++    "family": "dependent instance",
++    "expected": "INCONCLUSIVE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
++    "engine": "adelta v1.0.2"
++   },
++   {
++    "id": "ad04_redundant_comm",
++    "domain": "Algebra",
++    "family": "redundant assumption",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Std.Commutative op",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad05_needed_comm",
++    "domain": "Algebra",
++    "family": "reference needs assumption",
++    "expected": "REFERENCE_NEEDS_ASSUMPTION",
++    "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "necessary_refutes_reference",
++    "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Std.Commutative op",
++      "class": "NECESSARY",
++      "witness_model": [
++       "Bool",
++       "fun (a x : Bool) => a",
++       "true",
++       "false"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad06_order_antisymm",
++    "domain": "Order",
++    "family": "added antisymmetry",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "∀ (a b : α), r a b → r b a → a = b",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "Bool",
++       "fun (x x_1 : Bool) => True",
++       "true"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad07_dropped_injectivity",
++    "domain": "Functions",
++    "family": "dropped needed hypothesis",
++    "expected": "LEAN_CLAIM_FALSE",
++    "verdict": "LEAN_CLAIM_FALSE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "necessary_refutes_reference",
++    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "dropped",
++      "assumption": "∀ (a b : α), f a = f b → a = b",
++      "class": "NECESSARY",
++      "witness_model": [
++       "Bool",
++       "fun (x : Bool) => true",
++       "true",
++       "false"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad08_decidable_redundant",
++    "domain": "Types",
++    "family": "decidability assumption",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Nonempty (DecidableEq α)",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad09_domain_int",
++    "domain": "Int",
++    "family": "domain restriction",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "(0 : Int) ≤ a",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "-1"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "ad10_redundant_nat",
++    "domain": "Nat",
++    "family": "redundant assumption",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "(0 : Nat) ≤ n",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "ad11_negative_position",
++    "domain": "Logic",
++    "family": "assumption under negation",
++    "expected": "INCONCLUSIVE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "canonical telescope not linked to the elaborated statements",
++    "engine": "adelta v1.0.2"
++   },
++   {
++    "id": "x01_point_makes_nonempty_redundant",
++    "domain": "Types",
++    "family": "redundancy trap",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "Nonempty α",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "x02_dup_hypothesis",
++    "domain": "Algebra",
++    "family": "redundancy trap",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "∀ (a b : α), op b a = op a b",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "x03_dropped_redundant",
++    "domain": "Nat",
++    "family": "redundancy trap",
++    "expected": "ASSUMPTION_EQUIVALENT",
++    "verdict": "ASSUMPTION_EQUIVALENT",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "redundant_schema_equiv",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "dropped",
++      "assumption": "(0 : Nat) ≤ n",
++      "class": "REDUNDANT",
++      "witness_model": null
++     }
++    ]
++   },
++   {
++    "id": "x04_weaker_but_true_both",
++    "domain": "Int",
++    "family": "restriction, both true",
++    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "restrictive_iff_strictly_weaker",
++    "reason": null,
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "added",
++      "assumption": "(1 : Int) ≤ a",
++      "class": "RESTRICTIVE",
++      "witness_model": [
++       "-1"
++      ]
++     }
++    ]
++   },
++   {
++    "id": "x05_conclusion_also_changed",
++    "domain": "Int",
++    "family": "mixed change",
++    "expected": "INCONCLUSIVE",
++    "verdict": "INCONCLUSIVE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": null,
++    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
++    "engine": "adelta v1.0.2"
++   },
++   {
++    "id": "x06_lean_drops_needed",
++    "domain": "Order",
++    "family": "dropped needed assumption",
++    "expected": "LEAN_CLAIM_FALSE",
++    "verdict": "LEAN_CLAIM_FALSE",
++    "localized_at": null,
++    "expected_localized_at": null,
++    "theorem": "necessary_refutes_reference",
++    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
++    "engine": "adelta v1.0.2",
++    "assumptions": [
++     {
++      "side": "dropped",
++      "assumption": "∀ (a b : α), r a b → r b a",
++      "class": "NECESSARY",
++      "witness_model": [
++       "Bool",
++       "fun (a b : Bool) => a = true ∨ b = false",
++       "true",
++       "false"
++      ]
++     }
++    ]
++   }
++  ]
++ }
++}
+\ No newline at end of file
+diff --git a/lean/ProofScope/AssumptionDelta.lean b/lean/ProofScope/AssumptionDelta.lean
+new file mode 100644
+index 0000000..45686be
+--- /dev/null
++++ b/lean/ProofScope/AssumptionDelta.lean
+@@ -0,0 +1,118 @@
++import ProofScope.ClaimDelta
++/-!
++# Assumption Delta: certified meaning of an added (or dropped) assumption
++
++Setting. A reference quantifies over *models* `m : M` (a type with operations, a structure, a point)
++satisfying shared conditions `C m` and claims `P m`. A formal statement adds an assumption `A m`
++(a hypothesis, a Prop-valued typeclass such as `Std.Commutative op`, `Nonempty α`, a decidability or
++nonemptiness side condition, a domain restriction):
++
++    R := ∀ m, C m → P m          L := ∀ m, C m → A m → P m
++
++Three certified outcomes, each about the statements, not about a textual difference:
++
++* `Redundant C A` (a proof `∀ m, C m → A m`): the assumption changes nothing (`redundant_equiv`).
++* `Restrictive C A` (a model `m` with `C m ∧ ¬ A m`): the formal theorem says nothing about a model
++  the reference covers. As claims *about the conclusion*, L is strictly weaker than R
++  (`restrictive_iff_strictly_weaker`, with the conclusion `P` as the abstracted symbol). This holds
++  even when both theorems are true, where `R ↔ L` is trivially provable.
++* `Necessary C A P` (a model with `C m ∧ ¬ A m ∧ ¬ P m`): without the assumption the reference
++  claim is **false**; the formalization added a needed hypothesis the reference omitted
++  (`necessary_refutes_reference`).
++
++Exactly one of `Redundant` / `Restrictive` holds (`dichotomy`, classical).
++
++Polarity. Adding an assumption weakens the claim only in **positive** position. Under an implication
++(negative position) it strengthens it (`negative_position_strengthens`); a compositional checker
++must track polarity (`variance_counterexample`).
++
++Domain change. Quantifying over a smaller domain `e : D → M` is the assumption
++`A m := ∃ d, e d = m` (`domain_restriction`), so a changed domain is an assumption delta with a
++certified outside point.
++
++Dependency limit. If later parts of the statement *use* the assumption (an instance referenced in the
++conclusion), there is no well-typed statement "without it", so no separation is defined; the engine
++reports INCONCLUSIVE (`docs/v1.0_assumption_delta.md`, test `dependent_instance`).
++-/
++
++namespace ProofScope.ClaimDelta
++
++universe u
++variable {M : Sort u}
++
++def Redundant (C A : M → Prop) : Prop := ∀ m, C m → A m
++def Restrictive (C A : M → Prop) : Prop := ∃ m, C m ∧ ¬ A m
++def Necessary (C A P : M → Prop) : Prop := ∃ m, C m ∧ ¬ A m ∧ ¬ P m
++
++/-- The reference and the formal statement as schemas over the conclusion predicate `P`. -/
++def RefS (C : M → Prop) (P : M → Prop) : Prop := ∀ m, C m → P m
++def FormS (C A : M → Prop) (P : M → Prop) : Prop := ∀ m, C m → A m → P m
++
++theorem redundant_equiv {C A : M → Prop} (h : Redundant C A) (P : M → Prop) :
++    FormS C A P ↔ RefS C P :=
++  ⟨fun f m c => f m c (h m c), fun r m c _ => r m c⟩
++
++/-- Redundancy makes the schemas equivalent for every conclusion. -/
++theorem redundant_schema_equiv {C A : M → Prop} (h : Redundant C A) :
++    SchemaEquiv (RefS C) (FormS C A) :=
++  ⟨fun P r => (redundant_equiv h P).2 r, fun P f => (redundant_equiv h P).1 f⟩
++
++/-- A restrictive assumption is exactly a strict weakening of the claim, as a schema over the
++conclusion; the witness model gives the separating conclusion `P := A`. -/
++theorem restrictive_iff_strictly_weaker {C A : M → Prop} :
++    Restrictive C A ↔ StrictlyWeaker (FormS C A) (RefS C) := by
++  constructor
++  · intro ⟨m, hc, ha⟩
++    exact ⟨fun P r m c _ => r m c, A, fun _ _ a => a, fun r => ha (r m hc)⟩
++  · intro ⟨_, P, hf, hr⟩
++    apply Classical.byContradiction
++    intro hno
++    exact hr fun m c => hf m c (Classical.byContradiction fun ha => hno ⟨m, c, ha⟩)
++
++/-- The witness of a restrictive assumption is a model the reference applies to and the formal
++statement does not: the formal statement's instance there is vacuous. -/
++theorem restrictive_witness_vacuous {C A P : M → Prop} {m : M} (hc : C m) (ha : ¬ A m) :
++    RefS C P → P m ∧ (FormS C A P → True) :=
++  fun r => ⟨r m hc, fun _ => trivial⟩
++
++theorem necessary_refutes_reference {C A P : M → Prop} (h : Necessary C A P) : ¬ RefS C P :=
++  fun r => let ⟨m, c, _, hp⟩ := h; hp (r m c)
++
++theorem dichotomy (C A : M → Prop) : (Redundant C A ∨ Restrictive C A) ∧ ¬ (Redundant C A ∧ Restrictive C A) := by
++  refine ⟨?_, fun ⟨hr, m, c, ha⟩ => ha (hr m c)⟩
++  apply Classical.byCases (p := Restrictive C A) (fun h => Or.inr h)
++  intro hn
++  exact Or.inl fun m c => Classical.byContradiction fun ha => hn ⟨m, c, ha⟩
++
++/-- Polarity: under an implication the comparison flips. If `L` is strictly weaker than `R`, then
++`L → Q` is strictly *stronger* than `R → Q` as a schema (for the separating `Q := False`). -/
++theorem negative_position_strengthens {T : Sort u} {R L : T → Prop} (h : StrictlyWeaker L R) :
++    StrictlyWeaker (fun x => R x → False) (fun x => L x → False) :=
++  let ⟨e, x, hl, hr⟩ := h
++  ⟨fun y k r => k (e y r), x, hr, fun k => k hl⟩
++
++/-- Counterexample to "adding an assumption always weakens": adding `A n` inside the antecedent of
++`(∀ n, n = 0) → False` gives a statement that implies the original for every `A`, but not conversely
++(at `A n := n = 0` the original holds and the new one is `False`). So it *strengthens* the claim. -/
++theorem variance_counterexample :
++    (∀ A : Nat → Prop, ((∀ n, A n → n = 0) → False) → ((∀ n : Nat, n = 0) → False)) ∧
++      ¬ (∀ A : Nat → Prop, ((∀ n : Nat, n = 0) → False) → ((∀ n, A n → n = 0) → False)) :=
++  ⟨fun _ l h => l fun n _ => h n,
++   fun h => h (fun n => n = 0) (fun k => absurd (k 1) (by decide)) (fun _ e => e)⟩
++
++/-- A changed domain `e : D → M` is an added assumption "in the range of `e`". -/
++theorem domain_restriction {D : Sort u} (e : D → M) (P : M → Prop) :
++    (∀ d, P (e d)) ↔ FormS (fun _ => True) (fun m => ∃ d, e d = m) P :=
++  ⟨fun h m _ ⟨d, hd⟩ => hd ▸ h d, fun h d => h (e d) trivial ⟨d, rfl⟩⟩
++
++end ProofScope.ClaimDelta
++
++#print axioms ProofScope.ClaimDelta.redundant_equiv
++#print axioms ProofScope.ClaimDelta.redundant_schema_equiv
++#print axioms ProofScope.ClaimDelta.restrictive_iff_strictly_weaker
++#print axioms ProofScope.ClaimDelta.restrictive_witness_vacuous
++#print axioms ProofScope.ClaimDelta.necessary_refutes_reference
++#print axioms ProofScope.ClaimDelta.dichotomy
++#print axioms ProofScope.ClaimDelta.negative_position_strengthens
++#print axioms ProofScope.ClaimDelta.variance_counterexample
++#print axioms ProofScope.ClaimDelta.domain_restriction
+diff --git a/lean/ProofScope/AssumptionExtract.lean b/lean/ProofScope/AssumptionExtract.lean
+new file mode 100644
+index 0000000..66ccdde
+--- /dev/null
++++ b/lean/ProofScope/AssumptionExtract.lean
+@@ -0,0 +1,134 @@
++import Lean
++/-!
++# Assumption extraction (elaborator side)
++
++`#proofscope_assumptions (R) (L)` telescopes both elaborated statements in step:
++
++* binders with definitionally equal types are **shared**: model binders (types, operations, points)
++  or shared hypotheses (Prop-typed, including Prop-valued typeclass instances);
++* a Prop-typed binder present only in `L` is an **added assumption**, only in `R` a **dropped** one;
++* an instance-implicit *data* binder present on one side only (`[Inhabited α]`, `[DecidableEq α]`) is
++  the assumption `Nonempty (Cls)`;
++* an added or dropped binder that later parts of the statement depend on is marked `dependent`; there is
++  no well-typed statement without it, so downstream it is INCONCLUSIVE, never compared;
++* the remaining conclusions are compared by definitional equality.
++
++Output `PROOFSCOPE_ASSUMPTIONS <json>` with everything printed in the context of the shared binders.
++-/
++
++open Lean Meta Elab Command Term
++
++namespace ProofScope.Assumptions
++
++def ppS (e : Expr) : MetaM String := do
++  let fmt ← withOptions (fun o => (o.setBool `pp.funBinderTypes true).setBool `pp.numericTypes true
++      |>.setBool `pp.fieldNotation false) (ppExpr e)
++  return toString fmt
++
++structure Acc where
++  model : Array (Name × Expr) := #[]
++  hyps : Array Expr := #[]
++  added : Array (Expr × Bool) := #[]
++  dropped : Array (Expr × Bool) := #[]
++  -- v1.0.1: how many model binders and shared hypotheses precede each added/dropped assumption.
++  -- A witness must instantiate *all* of them (a point `x : α` already proves `Nonempty α`).
++  addedPrefix : Array (Nat × Nat) := #[]
++  droppedPrefix : Array (Nat × Nat) := #[]
++  fvars : Array Expr := #[]
++
++def asAssumption (t : Expr) (bi : BinderInfo) : MetaM (Option Expr) := do
++  if ← isProp t then return some t
++  if bi.isInstImplicit then return some (← mkAppM ``Nonempty #[t])
++  return none
++
++partial def go (r l : Expr) (acc : Acc) (k : Acc → Expr → Expr → MetaM Json) : MetaM Json := do
++  let r ← whnfCore r
++  let l ← whnfCore l
++  match r, l with
++  | .forallE n t b bi, .forallE _ t' b' _ =>
++    if ← isDefEq t t' then
++      return ← withLocalDecl n bi t fun fv => do
++        let acc := if ← isProp t then { acc with hyps := acc.hyps.push t, fvars := acc.fvars.push fv }
++                   else { acc with model := acc.model.push (n, t), fvars := acc.fvars.push fv }
++        go (b.instantiate1 fv) (b'.instantiate1 fv) acc k
++    -- an assumption only in L?
++    if let some a ← asAssumption t' (l.bindingInfo!) then
++      return ← withLocalDecl `h bi t' fun fv => go r (b'.instantiate1 fv)
++        { acc with added := acc.added.push (a, b'.hasLooseBVar 0), addedPrefix := acc.addedPrefix.push (acc.model.size, acc.hyps.size) } k
++    if let some a ← asAssumption t bi then
++      return ← withLocalDecl `h bi t fun fv => go (b.instantiate1 fv) l
++        { acc with dropped := acc.dropped.push (a, b.hasLooseBVar 0), droppedPrefix := acc.droppedPrefix.push (acc.model.size, acc.hyps.size) } k
++    k acc r l
++  | .forallE n t b bi, _ =>
++    if let some a ← asAssumption t bi then
++      withLocalDecl n bi t fun fv => go (b.instantiate1 fv) l { acc with dropped := acc.dropped.push (a, b.hasLooseBVar 0), droppedPrefix := acc.droppedPrefix.push (acc.model.size, acc.hyps.size) } k
++    else k acc r l
++  | _, .forallE n t b bi =>
++    if let some a ← asAssumption t bi then
++      withLocalDecl n bi t fun fv => go r (b.instantiate1 fv) { acc with added := acc.added.push (a, b.hasLooseBVar 0), addedPrefix := acc.addedPrefix.push (acc.model.size, acc.hyps.size) } k
++    else k acc r l
++  | _, _ => k acc r l
++
++elab "#proofscope_assumptions " r:term:max l:term:max : command => liftTermElabM do
++  let R ← elabTerm r (some (mkSort .zero))
++  let L ← elabTerm l (some (mkSort .zero))
++  synthesizeSyntheticMVarsNoPostponing
++  let R ← instantiateMVars R
++  let L ← instantiateMVars L
++  if R.hasMVar || L.hasMVar then throwError "statement has unresolved metavariables"
++  let out ← go R L {} fun acc cr cl => do
++    let same ← isDefEq cr cl
++    -- binders in the scope of the assumptions: those occurring in a hypothesis or an added/dropped
++    -- assumption, closed under "occurs in the type of a binder in scope"
++    let props := acc.hyps ++ acc.added.map (·.1) ++ acc.dropped.map (·.1)
++    let modelFvs := acc.fvars.filter fun fv => !(props.any (· == fv))
++    let mut scope : Array Expr := #[]
++    for fv in acc.fvars.reverse do
++      let used := props.any (·.containsFVar fv.fvarId!) ||
++        (← scope.anyM fun s => return (← inferType s).containsFVar fv.fvarId!)
++      if used && !(← isProp (← inferType fv)) then scope := scope.push fv
++    let _ := modelFvs
++    let modelVars ← acc.fvars.filterM (fun fv => do return !(← isProp (← inferType fv)))
++    let pair (x : Expr × Bool) : MetaM Json := do
++      return Json.mkObj [("prop", ← ppS x.1), ("dependent", toJson x.2)]
++    return Json.mkObj [
++      ("model", Json.arr (← modelVars.mapM fun fv => do
++          return Json.mkObj [("name", toJson (← fv.fvarId!.getUserName).toString), ("type", ← ppS (← inferType fv)),
++                             ("in_scope", toJson (scope.contains fv))])),
++      ("hyps", Json.arr (← acc.hyps.mapM fun h => return Json.str (← ppS h))),
++      ("added", Json.arr (← acc.added.mapM pair)),
++      ("dropped", Json.arr (← acc.dropped.mapM pair)),
++      ("added_prefix", toJson (acc.addedPrefix.map fun (m, h) => [m, h])),
++      ("dropped_prefix", toJson (acc.droppedPrefix.map fun (m, h) => [m, h])),
++      ("conclusion_same", toJson same),
++      ("conclusion_ref", ← ppS cr), ("conclusion_lean", ← ppS cl)]
++  logInfo m!"PROOFSCOPE_ASSUMPTIONS {out.compress}"
++
++end ProofScope.Assumptions
++
++namespace ProofScope.Assumptions
++open Lean Meta Elab Command
++
++/-- Read the witnesses out of a checked existential proof term (`Exists.intro w h`, nested). The
++witness is taken from the kernel-checked declaration, not from the search that produced it. -/
++partial def witnessesOf (e : Expr) : MetaM (Array Expr) := do
++  let e ← instantiateMVars e
++  let e := e.consumeMData
++  if e.isAppOfArity ``Exists.intro 4 then
++    let w := e.getArg! 2
++    return #[w] ++ (← witnessesOf (e.getArg! 3))
++  let e' ← whnfCore e
++  if e' != e then witnessesOf e' else return #[]
++
++elab "#proofscope_witness " id:ident : command => liftTermElabM do
++  let n ← realizeGlobalConstNoOverloadWithInfo id
++  let some ci := (← getEnv).find? n | throwError "unknown declaration"
++  let v ← match ci with
++    | .thmInfo t => pure t.value
++    | .defnInfo d => pure d.value
++    | _ => throwError "no value"
++  let ws ← witnessesOf v
++  let strs ← ws.mapM fun w => do return toString (← withOptions (·.setBool `pp.funBinderTypes true) (ppExpr w))
++  logInfo m!"PROOFSCOPE_WITNESS {(Json.arr (strs.map Json.str)).compress}"
++
++end ProofScope.Assumptions
+diff --git a/lean/ProofScope/BoundarySynth.lean b/lean/ProofScope/BoundarySynth.lean
+new file mode 100644
+index 0000000..72daeff
+--- /dev/null
++++ b/lean/ProofScope/BoundarySynth.lean
+@@ -0,0 +1,69 @@
++import Lean
++/-!
++# Boundary witness synthesis (v1.0)
++
++A strict/non-strict or equality change around an abstracted operator (`x a a < a + 2` against
++`x a a ≤ a + 2`) is separated by an interpretation that puts the operator *exactly on the boundary*:
++`x := fun a _ => a + 2`. A fixed witness pool cannot contain such terms in general.
++
++`#proofscope_boundary (fun (x₁ : T₁) … => S)` elaborates an abstracted statement and, for every
++comparison atom `x_i t₁ … tₖ ⋈ e` (or `e ⋈ x_i …`) where the `tⱼ` are bound variables and `e`
++mentions only those variables, prints the candidate interpretation `fun t₁ … tₖ => e` for `x_i`.
++Candidates are only *proposals*: each is used inside a separation certificate that Lean checks.
++-/
++
++open Lean Meta Elab Command Term
++
++namespace ProofScope.Boundary
++
++def relHeads : List Name := [``Eq, ``LT.lt, ``LE.le, ``Ne, ``GT.gt, ``GE.ge]
++
++partial def atoms (xs : Array Expr) (e : Expr) (acc : Array (Nat × Expr)) : MetaM (Array (Nat × Expr)) := do
++  match e with
++  | .forallE n t b bi => withLocalDecl n bi t fun fv => atoms xs (b.instantiate1 fv) acc
++  | .lam n t b bi => withLocalDecl n bi t fun fv => atoms xs (b.instantiate1 fv) acc
++  | .mdata _ b => atoms xs b acc
++  | .app .. =>
++    let mut acc := acc
++    let f := e.getAppFn
++    let args := e.getAppArgs
++    if f.isConst && relHeads.contains f.constName! && args.size ≥ 2 then
++      let lhs := args[args.size - 2]!
++      let rhs := args[args.size - 1]!
++      for (s, o) in [(lhs, rhs), (rhs, lhs)] do
++        if let some i := xs.findIdx? (· == s.getAppFn) then
++          let sargs := s.getAppArgs
++          if sargs.size > 0 && sargs.all (·.isFVar) && !sargs.any (xs.contains ·) then
++            let allowed := sargs.map (·.fvarId!)
++            unless o.hasAnyFVar (fun fv => !allowed.contains fv) do
++              let lam ← withLocalDeclsDND (← sargs.mapIdxM fun j a => do
++                  return (Name.mkSimple s!"b{j}", ← inferType a)) fun news => do
++                -- the first occurrence of each argument variable becomes the lambda variable
++                let mut body := o
++                let mut seen : Array FVarId := #[]
++                for j in [:sargs.size] do
++                  let a := sargs[j]!.fvarId!
++                  unless seen.contains a do
++                    body := body.replaceFVarId a news[j]!
++                    seen := seen.push a
++                mkLambdaFVars news body
++              acc := acc.push (i, lam)
++    for a in args do acc ← atoms xs a acc
++    return acc
++  | _ => return acc
++
++elab "#proofscope_boundary " t:term:max : command => liftTermElabM do
++  let e ← elabTerm t none
++  synthesizeSyntheticMVarsNoPostponing
++  let e ← instantiateMVars e
++  let out ← lambdaTelescope e fun xs body => do
++    let found ← atoms xs body #[]
++    let mut per : Array (Array String) := xs.map fun _ => #[]
++    for (i, lam) in found do
++      let s := toString (← withOptions (fun o => (o.setBool `pp.funBinderTypes true).setBool `pp.numericTypes true)
++        (ppExpr lam))
++      unless per[i]!.contains s do per := per.set! i (per[i]!.push s)
++    return Json.arr (per.map fun a => Json.arr (a.map Json.str))
++  logInfo m!"PROOFSCOPE_BOUNDARY {out.compress}"
++
++end ProofScope.Boundary
+diff --git a/proofscope/__init__.py b/proofscope/__init__.py
+index c951e37..3b05f7b 100644
+--- a/proofscope/__init__.py
++++ b/proofscope/__init__.py
+@@ -1,2 +1,2 @@
+ """ProofScope by Caleb J. Westfall. Minimal public audit prototype."""
+-__version__ = "0.9.0"
++__version__ = "1.0.0"
+diff --git a/proofscope/adelta.py b/proofscope/adelta.py
+new file mode 100644
+index 0000000..655e888
+--- /dev/null
++++ b/proofscope/adelta.py
+@@ -0,0 +1,305 @@
++"""Assumption Delta (v1.0): certified meaning of assumptions added or dropped by a formalization.
++
++For a reference R and a formal statement L, `lean/ProofScope/AssumptionExtract.lean` aligns the
++elaborated binder telescopes and returns the shared model binders, the shared hypotheses, the added
++and dropped assumptions (Prop binders, Prop-valued typeclasses, and data instances as `Nonempty (Cls)`),
++and whether the conclusions agree. For each added assumption `A`, with shared conditions `C`:
++
++    link_R / link_L   R and L are equivalent to the canonical telescopes the certificates talk about
++    redundant         ∀ scope, C → A                        (theorem `redundant_schema_equiv`)
++    restrictive       ∃ scope, C ∧ ¬ A        a model witness (theorem `restrictive_iff_strictly_weaker`)
++    necessary         ∃ all,   C ∧ ¬ A ∧ ¬ P  the reference is false without A (`necessary_refutes_reference`)
++
++Dropped assumptions are the mirror image (the Lean statement covers more; a `necessary` certificate
++then shows the Lean claim is false). Each is checked by `certify` (clean recompile, standard axioms,
++kernel replay). An assumption the rest of the statement depends on is DEPENDENT: no comparison is
++defined, so it stays INCONCLUSIVE. Witness models are drawn from finite carriers (Bool, Fin 3, Unit,
++Empty) and Nat/Int with small operation pools; failure to find one is reported, never read as redundancy.
++"""
++
++from __future__ import annotations
++
++import argparse
++import os
++import json
++import re
++from itertools import product
++from pathlib import Path
++
++from .certify import certify
++from .toolchain import Toolchain
++
++SRC = Path(__file__).resolve().parents[1] / "lean"
++# Mathlib mode: PROOFSCOPE_IMPORTS=Mathlib with LEAN_PATH pointing at a built Mathlib (GitHub workflow)
++IMPORTS = [m for m in os.environ.get("PROOFSCOPE_IMPORTS", "").split(",") if m.strip()]
++MATHLIB = "Mathlib" in IMPORTS
++
++
++def import_lines() -> str:
++    return "".join(f"import {m.strip()}\n" for m in IMPORTS)
++
++CARRIERS = {
++    "Bool": {"vals": ["true", "false"],
++             "op2": ["fun a _ => a", "fun _ b => b", "fun a b => a && b", "fun a b => a || b", "fun a b => Bool.xor a b",
++                     "fun a b => !a || b", "fun _ _ => true"],
++             "op1": ["fun a => a", "fun a => !a", "fun _ => true"],
++             "rel": ["fun _ _ => True", "fun a b => a = b", "fun a b => a ≠ b", "fun _ _ => False",
++                     "fun a b => a = true ∨ b = false"]},
++    "Fin 3": {"vals": ["(0 : Fin 3)", "(1 : Fin 3)", "(2 : Fin 3)"],
++              "op2": ["fun a _ => a", "fun a b => a + b", "fun a b => a * b", "fun a b => max a b", "fun a b => a - b"],
++              "op1": ["fun a => a", "fun a => a + 1", "fun _ => 0"],
++              "rel": ["fun a b => a ≤ b", "fun a b => a < b", "fun a b => a = b", "fun _ _ => True"]},
++    "Unit": {"vals": ["()"], "op2": ["fun _ _ => ()"], "op1": ["fun a => a"], "rel": ["fun _ _ => True", "fun _ _ => False"]},
++    "Empty": {"vals": [], "op2": ["fun a _ => a"], "op1": ["fun a => a"], "rel": ["fun _ _ => True"]},
++    "Nat": {"vals": ["0", "1", "2"],
++            "op2": ["fun a b => a + b", "fun a b => a * b", "fun a _ => a", "fun a b => a - b", "fun _ _ => 0", "fun a b => max a b"],
++            "op1": ["fun a => a", "fun a => a + 1", "fun _ => 0", "fun a => a / 2"],
++            "rel": ["fun a b => a ≤ b", "fun a b => a < b", "fun a b => a = b", "fun _ _ => True"]},
++}
++POINT_POOLS = {"Nat": ["0", "1", "2", "3"], "Int": ["(-1 : Int)", "0", "1", "2"], "Bool": ["true", "false"]}
++if MATHLIB:
++    CARRIERS["Equiv.Perm (Fin 3)"] = {
++        "vals": ["(1 : Equiv.Perm (Fin 3))", "(Equiv.swap 0 1 : Equiv.Perm (Fin 3))", "(Equiv.swap 1 2 : Equiv.Perm (Fin 3))"],
++        "op2": ["fun a b => a * b"], "op1": ["fun a => a⁻¹", "fun a => a"], "rel": ["fun a b => a = b"]}
++    POINT_POOLS.update({"ℝ": ["(-1 : ℝ)", "(0 : ℝ)", "(1 / 2 : ℝ)", "(1 : ℝ)", "(2 : ℝ)"],
++                        "Set ℕ": ["(∅ : Set ℕ)", "(Set.univ : Set ℕ)", "({0} : Set ℕ)", "({1} : Set ℕ)"],
++                        "ℕ": ["0", "1", "2", "3"], "ℤ": ["(-1 : ℤ)", "0", "1", "2"]})
++
++
++def build(tc: Toolchain, out: Path) -> dict:
++    o = out / "ProofScope" / "AssumptionExtract.olean"
++    if o.exists():
++        return {"ok": True}
++    r = tc.compile(SRC / "ProofScope" / "AssumptionExtract.lean", o, SRC, timeout=900)
++    return {"ok": r.returncode == 0 and o.exists(), "log": r.as_dict()}
++
++
++def extract(ref: str, lean: str, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    work.mkdir(parents=True, exist_ok=True)
++    f = work / "Assumptions_input.lean"
++    f.write_text(f"{import_lines()}import ProofScope.AssumptionExtract\n\n#proofscope_assumptions ({ref}) ({lean})\n")
++    r = tc.run([tc.lean, str(f)], cwd=work, extra_path=buildp, timeout=600)
++    for line in r.output.splitlines():
++        i = line.find("PROOFSCOPE_ASSUMPTIONS ")
++        if i >= 0:
++            return json.loads(line[i + len("PROOFSCOPE_ASSUMPTIONS "):])
++    return {"error": r.output[-3000:]}
++
++
++def _subst(typ: str, carrier_names: dict[str, str]) -> str:
++    for n, c in carrier_names.items():
++        typ = re.sub(rf"(?<![\w.]){re.escape(n)}(?![\w.])", f"({c})" if " " in c else c, typ)
++    return re.sub(r"\s+", " ", typ.strip())
++
++
++def _pool_for(typ: str, carrier: str | None) -> list[str]:
++    if carrier is not None:
++        c = CARRIERS[carrier]
++        cc = f"({carrier})" if " " in carrier else carrier
++        if typ == f"{cc} → {cc} → {cc}":
++            return c["op2"]
++        if typ == f"{cc} → {cc}":
++            return c["op1"]
++        if typ == f"{cc} → {cc} → Prop":
++            return c["rel"]
++        if typ == cc:
++            return c["vals"]
++        # an instance binder over the carrier (e.g. `Group (Equiv.Perm (Fin 3))`): use the instance
++        if typ.endswith(cc) and re.match(r"^[A-Z][\w.]*\s", typ):
++            return ["inferInstance"]
++    return POINT_POOLS.get(typ, [])
++
++
++def witnesses(scope: list[dict]) -> list[list[str]]:
++    """Witness tuples for the in-scope binders: choose a carrier for each `Type` binder first, then
++    operations and points from that carrier's pools (types printed by Lean, carriers substituted)."""
++    types = [b for b in scope if b["type"] == "Type"]
++    out = []
++    for carriers in product(list(CARRIERS), repeat=len(types)):
++        names = {b["name"]: c for b, c in zip(types, carriers)}
++        cols = []
++        for b in scope:
++            if b["type"] == "Type":
++                cols.append([names[b["name"]]])
++                continue
++            t = _subst(b["type"], names)
++            car = next((c for c in carriers if t.startswith(f"({c})" if " " in c else c)), carriers[0] if carriers else None)
++            cols.append(_pool_for(t, car))
++        if all(cols):
++            out += [list(t) for t in product(*cols)][:60]
++    return out[:150]
++
++
++def closers(vals: list[str]) -> str:
++    base = ["decide", "trivial", "(intros; decide)", "(intro a; cases a)", "(intros; simp_all)", "(intros; omega)",
++            "(intro h; obtain ⟨e⟩ := h; cases e)", "(intros; trivial)", "(constructor; decide)", "simp", "omega"]
++    if MATHLIB:
++        base += ["norm_num", "(intros; norm_num)", "(intros; linarith)", "(intros; positivity)", "(intros; nlinarith)",
++                 "(intro h; have := h 1 (by norm_num); norm_num at this)", "(simp [Set.Nonempty])",
++                 "(intro h; have := h (1 / 2) (by norm_num); norm_num at this)", "(intro h; obtain ⟨x, hx⟩ := h; simp at hx)"]
++    pts = vals[:3] or ["true", "false"]
++    for a in pts:
++        for b in pts:
++            base.append(f"(intro h; obtain ⟨h⟩ := h; have := h {a} {b}; revert this; decide)")
++            base.append(f"(intro h; have := h {a} {b}; revert this; decide)")
++            for c in pts[:2]:
++                base.append(f"(intro h; have := h {a} {b} {c}; revert this; decide)")
++        base.append(f"(intro h; have := h {a}; revert this; decide)")
++        base.append(f"(intro h; have := h {a}; omega)")
++    return " | ".join(f"({c}; done)" for c in base)
++
++
++ALL_VALS = ["true", "false", "(0 : Fin 3)", "(1 : Fin 3)", "(2 : Fin 3)", "0", "1", "2", "(-1 : Int)", "()"]
++
++
++def sep_tactics(scope: list[dict], body_count: int) -> list[str]:
++    tac = []
++    for w in witnesses(scope):
++        vals = [v for v in ALL_VALS]
++        tac.append(f"refine ⟨{', '.join(w)}, ?_⟩; and_intros <;> first | {closers(vals)}")
++    return tac
++
++
++REDUNDANT = (["(intros; positivity)", "(intros; norm_num)", "(intros; linarith)"] if MATHLIB else []) + ["(intros; infer_instance)", "(intros; exact ⟨inferInstance⟩)", "(intros; exact ⟨Classical.decEq _⟩)",
++             "(intros; exact ⟨fun _ => Classical.propDecidable _⟩)", "(intros; constructor; assumption)",
++             "(intros; constructor; intros; simp_all)", "(intros; exact ⟨‹_›⟩)", "(intros; omega)", "(intros; simp_all)",
++             "(intros; grind)", "(intros; trivial)"]
++
++
++def read_witnesses(ident: str, names: list[str], tc: Toolchain, buildp: Path, certdir: Path) -> dict:
++    """Witness models, read from the kernel-checked declarations of the certified module."""
++    if not names:
++        return {}
++    f = certdir / "Witness_read.lean"
++    f.write_text(f"{import_lines()}import ProofScope.AssumptionExtract\nimport ProofScopeCert.{ident}\n\n"
++                 + "".join(f"#proofscope_witness ProofScopeCert.{ident}.{n}\n" for n in names))
++    r = tc.run([tc.lean, str(f)], cwd=certdir, extra_path=os.pathsep.join([str(buildp), str(certdir / "build")]), timeout=300)
++    got = [json.loads(l[l.index("PROOFSCOPE_WITNESS ") + 19:]) for l in r.output.splitlines() if "PROOFSCOPE_WITNESS " in l]
++    return dict(zip(names, got)) if len(got) == len(names) else {}
++
++
++def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    ref, lean = spec["reference"], spec["lean"]
++    out = {"id": spec["id"], "reference": ref, "lean": lean}
++    d = extract(ref, lean, tc, buildp, work / "extract")
++    if "error" in d:
++        out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=d["error"][-600:])
++        return out
++    out["extraction"] = d
++    if not d["added"] and not d["dropped"]:
++        out.update(verdict="NO_ASSUMPTION_DELTA")
++        return out
++    if not d["conclusion_same"]:
++        out.update(verdict="INCONCLUSIVE", reason="the conclusion also changed: assumption and conclusion deltas are not "
++                                                   "composed here (use CMCD on the conclusion)")
++        return out
++    if any(a["dependent"] for a in d["added"] + d["dropped"]):
++        out.update(verdict="INCONCLUSIVE_DEPENDENT",
++                   reason="the rest of the statement depends on an added/dropped binder; no well-typed statement "
++                          "without it exists, so no comparison is defined")
++        return out
++    model = d["model"]
++    allb = " ".join(f"({b['name']} : {b['type']})" for b in model)
++    hyps = d["hyps"]
++    H = " ∧ ".join(f"({h})" for h in hyps) if hyps else "True"
++    Himp = "".join(f"({h}) → " for h in hyps)
++    P = d["conclusion_ref"]
++    ob = {}
++    link_tac = ["constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩)"
++                " | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))"]
++    ob["link_R"] = (f"({ref}) ↔ (∀ {allb}, {Himp}{''.join(f'({a['prop']}) → ' for a in d['dropped'])}{P})", link_tac)
++    ob["link_L"] = (f"({lean}) ↔ (∀ {allb}, {Himp}{''.join(f'({a['prop']}) → ' for a in d['added'])}{P})", link_tac)
++    for side, items, prefixes in (("add", d["added"], d["added_prefix"]), ("drop", d["dropped"], d["dropped_prefix"])):
++        for j, a in enumerate(items):
++            A = a["prop"]
++            # v1.0.2: the model is ALL binders and ALL shared hypotheses of the reference telescope, exactly
++            # as in `restrictive_iff_strictly_weaker` (R = ∀ m, C m → P m). Order does not matter (non-dependent
++            # hypotheses commute). Minimizing to "mentioned" binders (v1.0) or to the prefix (v1.0.1) is unsound:
++            # adversarial cases x01 (a point x : α proves Nonempty α) and ad04 (a later hypothesis implies A).
++            pre = model
++            preb = allb
++            pH, pHimp, ph = H, Himp, len(hyps)
++            scope_q = f"∀ {preb}, " if pre else ""
++            ob[f"{side}{j}_redundant"] = (f"{scope_q}{pHimp}{A}", REDUNDANT)
++            if pre:
++                ob[f"{side}{j}_restrictive"] = (f"∃ {preb}, ¬ ({A}) ∧ {pH}", sep_tactics(pre, ph))
++            ob[f"{side}{j}_necessary"] = (f"∃ {allb}, ¬ ({A}) ∧ ¬ ({P}) ∧ {H}", sep_tactics(model, len(hyps)))
++    ident = "AD_" + re.sub(r"[^A-Za-z0-9_]", "_", spec["id"])
++    r = certify(ident, import_lines() + "set_option maxHeartbeats 4000000\nset_option linter.unusedVariables false\n",
++                ob, tc, work / "certify")
++    certs = set(r["certificates"])
++    out["certify_status"] = r["status"]
++    out["certificates"] = r["certificates"]
++    if not {"link_R", "link_L"} <= certs:
++        out.update(verdict="INCONCLUSIVE", reason="canonical telescope not linked to the elaborated statements")
++        return out
++    witness_text = read_witnesses(ident, [k for k in certs if k.endswith(("_restrictive", "_necessary"))],
++                                  tc, buildp, work / "certify")
++    items = []
++    for side, lst in (("add", d["added"]), ("drop", d["dropped"])):
++        for j, a in enumerate(lst):
++            k = f"{side}{j}"
++            red, res, nec = (f"{k}_{x}" in certs for x in ("redundant", "restrictive", "necessary"))
++            cls = "INCONSISTENT" if red and (res or nec) else ("NECESSARY" if nec else "RESTRICTIVE" if res else
++                                                                "REDUNDANT" if red else "INCONCLUSIVE")
++            items.append({"side": "added" if side == "add" else "dropped", "assumption": a["prop"], "class": cls,
++                          "witness_model": witness_text.get(f"{k}_necessary") or witness_text.get(f"{k}_restrictive"),
++                          "witness_statement": (r["certificates"].get(f"{k}_necessary") or r["certificates"].get(f"{k}_restrictive") or {}).get("statement")})
++    out["assumptions"] = items
++    cl = [(i["side"], i["class"]) for i in items]
++    if any(c == "INCONSISTENT" for _, c in cl):
++        out["verdict"] = "INCONSISTENT"
++    elif ("added", "NECESSARY") in cl:
++        out.update(verdict="REFERENCE_NEEDS_ASSUMPTION", theorem="necessary_refutes_reference",
++                   reason="a certified model satisfies the shared conditions, violates the added assumption and "
++                          "falsifies the conclusion: the reference claim is false without it")
++    elif ("dropped", "NECESSARY") in cl:
++        out.update(verdict="LEAN_CLAIM_FALSE", theorem="necessary_refutes_reference",
++                   reason="the Lean statement dropped an assumption and a certified model falsifies it")
++    elif ("added", "RESTRICTIVE") in cl and ("dropped", "RESTRICTIVE") not in cl:
++        out.update(verdict="LEAN_WEAKER_BY_ASSUMPTION", theorem="restrictive_iff_strictly_weaker")
++    elif ("dropped", "RESTRICTIVE") in cl and ("added", "RESTRICTIVE") not in cl:
++        out.update(verdict="LEAN_STRONGER_BY_ASSUMPTION", theorem="restrictive_iff_strictly_weaker")
++    elif all(c == "REDUNDANT" for _, c in cl):
++        out.update(verdict="ASSUMPTION_EQUIVALENT", theorem="redundant_schema_equiv")
++    elif ("added", "RESTRICTIVE") in cl and ("dropped", "RESTRICTIVE") in cl:
++        out.update(verdict="ASSUMPTION_INCOMPARABLE")
++    else:
++        out["verdict"] = "INCONCLUSIVE"
++    return out
++
++
++def _one(a):
++    p, buildp, out = a
++    spec = json.loads(Path(p).read_text())
++    row = run_case(spec, Toolchain.find(), buildp, out / "work" / Path(p).stem)
++    for k in ("expected", "domain", "family", "split", "must_not_be"):
++        row[k] = spec.get(k)
++    (out / "rows").mkdir(parents=True, exist_ok=True)
++    (out / "rows" / (Path(p).stem + ".json")).write_text(json.dumps(row, ensure_ascii=False, indent=1))
++    return row
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python3 -m proofscope.adelta")
++    ap.add_argument("specs", nargs="+")
++    ap.add_argument("--out", type=Path, required=True)
++    ap.add_argument("--jobs", type=int, default=1)
++    a = ap.parse_args(argv)
++    out = a.out.resolve()
++    b = build(Toolchain.find(), out / "build")
++    if not b["ok"]:
++        print(json.dumps(b, indent=2)[:3000])
++        return 2
++    from concurrent.futures import ProcessPoolExecutor
++    with ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
++        rows = list(ex.map(_one, [(p, out / "build", out) for p in a.specs]))
++    for r in rows:
++        ok = "" if not r.get("expected") else ("OK" if r["verdict"] == r["expected"] else f"MISS(expected {r['expected']})")
++        print(r["id"], r["verdict"], ok, flush=True)
++    (out / "adelta_results.json").write_text(json.dumps({"rows": rows}, indent=1, ensure_ascii=False))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/proofscope/benchmark/V10_FREEZE.txt b/proofscope/benchmark/V10_FREEZE.txt
+new file mode 100644
+index 0000000..b10b780
+--- /dev/null
++++ b/proofscope/benchmark/V10_FREEZE.txt
+@@ -0,0 +1,25 @@
++# ProofScope v1.0 freeze (Mon Nov  9 16:00:57 UTC 2026). Engines: adelta (new), cmcd_v10 (wraps frozen v0.9 cmcd).
++# Suites hashed before their first run. cmcd_blind is DEVELOPMENT data for v1.0 (b13/b14 used to design boundary synthesis).
++fec5423e5d8d932c9da93cd8628a5eba579304f56a65f50a3d7a1af99efb02e3  proofscope/adelta.py
++15dc16860677dbcc29c410ac8301469dcb00207861817186c0b902bdd6734b71  proofscope/cmcd_v10.py
++53ce2b7feea2e1dca91af796e99d58a772bd0aca9a4464d71ecc046f24c47289  lean/ProofScope/AssumptionExtract.lean
++38c2e3af419bee798d9fd7acad29f2fe6f18513125d91d32a1819761cf195bec  lean/ProofScope/BoundarySynth.lean
++a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
++49cc8d0646197aaaad24ddda5681900f9db2e24c9b70efee1cf66de879221e33  proofscope/cmcd.py
++1629ed72e7c9debd19db5c74b1c594e92e2b7a961c9f3f1468868639e1fb7bf4  lean/ProofScope/DriftExtract.lean
++68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
++23e0557adbb39f3b379ece73702b4cc1a0abef2f0e94ce36bd06c33e2ed05b75  adelta_v10_dev suite
++24bdedb15b8853daae2a9ed3ab5a62dec96a844b26505d8c3f3c7415072bbb84  v10_adversarial suite
++28faf77321e8e3103e371657280a3cdc0e3120ec04c09904e9de3d721d9eb554  mathlib_v10 suite
++
++# Block 2 (v1.0.2), after the frozen block-1 run: Assumption Delta model = ALL reference binders and hypotheses,
++# as in restrictive_iff_strictly_weaker. Block-1 run: adelta_v10_dev 11/11 by label but ad02 UNSOUND (label also wrong);
++# v10_adversarial x01 WRONG (false restriction). Both suites are now development data. (Mon Nov  9 16:12:38 UTC 2026)
++eb1ab5adca1a85b330f6fd3265099ad9dc553a90aeff9f08fd2279d466b594cd  proofscope/adelta.py
++15dc16860677dbcc29c410ac8301469dcb00207861817186c0b902bdd6734b71  proofscope/cmcd_v10.py
++b04bf409954c0083b5b70beb6f8358ace3acc4b63a4443b7792dfbc3a00b7089  lean/ProofScope/AssumptionExtract.lean
++38c2e3af419bee798d9fd7acad29f2fe6f18513125d91d32a1819761cf195bec  lean/ProofScope/BoundarySynth.lean
++a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
++49cc8d0646197aaaad24ddda5681900f9db2e24c9b70efee1cf66de879221e33  proofscope/cmcd.py
++1629ed72e7c9debd19db5c74b1c594e92e2b7a961c9f3f1468868639e1fb7bf4  lean/ProofScope/DriftExtract.lean
++68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad01_hidden_comm.json b/proofscope/benchmark/adelta_v10_dev/ad01_hidden_comm.json
+new file mode 100644
+index 0000000..7bc8232
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad01_hidden_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad01_hidden_comm",
++ "domain": "Algebra",
++ "family": "hidden typeclass assumption",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b c : α), op (op a b) c = op a (op b c)) → ∀ (a b c d : α), op (op (op a b) c) d = op a (op b (op c d))",
++ "lean": "∀ (α : Type) (op : α → α → α) [Std.Commutative op], (∀ (a b c : α), op (op a b) c = op a (op b c)) → ∀ (a b c d : α), op (op (op a b) c) d = op a (op b (op c d))",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad02_nonempty.json b/proofscope/benchmark/adelta_v10_dev/ad02_nonempty.json
+new file mode 100644
+index 0000000..b3d3e6f
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad02_nonempty.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad02_nonempty",
++ "domain": "Types",
++ "family": "nonemptiness assumption",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (f : α → α), (∀ (a b : α), f a = f b → a = b) → ∀ (a : α), f a = f a",
++ "lean": "∀ (α : Type) [Nonempty α] (f : α → α), (∀ (a b : α), f a = f b → a = b) → ∀ (a : α), f a = f a",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad03_dependent_instance.json b/proofscope/benchmark/adelta_v10_dev/ad03_dependent_instance.json
+new file mode 100644
+index 0000000..4d33b9d
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad03_dependent_instance.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad03_dependent_instance",
++ "domain": "Types",
++ "family": "dependent instance",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) [Inhabited α], (default : α) = default",
++ "lean": "∀ (α : Type), True",
++ "expected": "INCONCLUSIVE",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad04_redundant_comm.json b/proofscope/benchmark/adelta_v10_dev/ad04_redundant_comm.json
+new file mode 100644
+index 0000000..ae82658
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad04_redundant_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad04_redundant_comm",
++ "domain": "Algebra",
++ "family": "redundant assumption",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
++ "lean": "∀ (α : Type) (op : α → α → α) [Std.Commutative op], (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad05_needed_comm.json b/proofscope/benchmark/adelta_v10_dev/ad05_needed_comm.json
+new file mode 100644
+index 0000000..66705a1
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad05_needed_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad05_needed_comm",
++ "domain": "Algebra",
++ "family": "reference needs assumption",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b c : α), op (op a b) c = op a (op b c)) → ∀ (a b : α), op a b = op b a",
++ "lean": "∀ (α : Type) (op : α → α → α) [Std.Commutative op], (∀ (a b c : α), op (op a b) c = op a (op b c)) → ∀ (a b : α), op a b = op b a",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad06_order_antisymm.json b/proofscope/benchmark/adelta_v10_dev/ad06_order_antisymm.json
+new file mode 100644
+index 0000000..056abce
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad06_order_antisymm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad06_order_antisymm",
++ "domain": "Order",
++ "family": "added antisymmetry",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (r : α → α → Prop), (∀ (a : α), r a a) → (∀ (a b c : α), r a b → r b c → r a c) → ∀ (a : α), r a a",
++ "lean": "∀ (α : Type) (r : α → α → Prop), (∀ (a : α), r a a) → (∀ (a b c : α), r a b → r b c → r a c) → (∀ (a b : α), r a b → r b a → a = b) → ∀ (a : α), r a a",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad07_dropped_injectivity.json b/proofscope/benchmark/adelta_v10_dev/ad07_dropped_injectivity.json
+new file mode 100644
+index 0000000..5f793b1
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad07_dropped_injectivity.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad07_dropped_injectivity",
++ "domain": "Functions",
++ "family": "dropped needed hypothesis",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (f : α → α), (∀ (a b : α), f a = f b → a = b) → ∀ (a b : α), f a = f b → a = b",
++ "lean": "∀ (α : Type) (f : α → α), ∀ (a b : α), f a = f b → a = b",
++ "expected": "LEAN_CLAIM_FALSE",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad08_decidable_redundant.json b/proofscope/benchmark/adelta_v10_dev/ad08_decidable_redundant.json
+new file mode 100644
+index 0000000..4ba5565
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad08_decidable_redundant.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad08_decidable_redundant",
++ "domain": "Types",
++ "family": "decidability assumption",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (α : Type) (a : α), a = a",
++ "lean": "∀ (α : Type) [DecidableEq α] (a : α), a = a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad09_domain_int.json b/proofscope/benchmark/adelta_v10_dev/ad09_domain_int.json
+new file mode 100644
+index 0000000..f3dbc95
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad09_domain_int.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad09_domain_int",
++ "domain": "Int",
++ "family": "domain restriction",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (a : Int), 0 ≤ a * a",
++ "lean": "∀ (a : Int), 0 ≤ a → 0 ≤ a * a",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad10_redundant_nat.json b/proofscope/benchmark/adelta_v10_dev/ad10_redundant_nat.json
+new file mode 100644
+index 0000000..20ffdee
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad10_redundant_nat.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad10_redundant_nat",
++ "domain": "Nat",
++ "family": "redundant assumption",
++ "split": "adelta_v10_dev",
++ "reference": "∀ (n : Nat), n < 2 ^ n",
++ "lean": "∀ (n : Nat), 0 ≤ n → n < 2 ^ n",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/adelta_v10_dev/ad11_negative_position.json b/proofscope/benchmark/adelta_v10_dev/ad11_negative_position.json
+new file mode 100644
+index 0000000..60eecf3
+--- /dev/null
++++ b/proofscope/benchmark/adelta_v10_dev/ad11_negative_position.json
+@@ -0,0 +1,11 @@
++{
++ "id": "ad11_negative_position",
++ "domain": "Logic",
++ "family": "assumption under negation",
++ "split": "adelta_v10_dev",
++ "reference": "(∀ (α : Type) (op : α → α → α) (a b : α), op a b = op b a) → False",
++ "lean": "(∀ (α : Type) (op : α → α → α) [Std.Commutative op] (a b : α), op a b = op b a) → False",
++ "expected": "INCONCLUSIVE",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m01_real_restriction.json b/proofscope/benchmark/mathlib_v10/m01_real_restriction.json
+new file mode 100644
+index 0000000..1904ee5
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m01_real_restriction.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m01_real_restriction",
++ "domain": "Real analysis",
++ "family": "added hypothesis",
++ "split": "mathlib_v10",
++ "reference": "∀ (x : ℝ), 0 ≤ x ^ 2",
++ "lean": "∀ (x : ℝ), 0 < x → 0 ≤ x ^ 2",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m02_real_dropped_needed.json b/proofscope/benchmark/mathlib_v10/m02_real_dropped_needed.json
+new file mode 100644
+index 0000000..f64c25a
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m02_real_dropped_needed.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m02_real_dropped_needed",
++ "domain": "Real analysis",
++ "family": "dropped needed hypothesis",
++ "split": "mathlib_v10",
++ "reference": "∀ (x : ℝ), 1 ≤ x → x ≤ x ^ 2",
++ "lean": "∀ (x : ℝ), x ≤ x ^ 2",
++ "expected": "LEAN_CLAIM_FALSE",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m03_real_redundant.json b/proofscope/benchmark/mathlib_v10/m03_real_redundant.json
+new file mode 100644
+index 0000000..41a9a43
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m03_real_redundant.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m03_real_redundant",
++ "domain": "Real analysis",
++ "family": "redundant hypothesis",
++ "split": "mathlib_v10",
++ "reference": "∀ (x : ℝ), 0 ≤ x ^ 2 + 1",
++ "lean": "∀ (x : ℝ), 0 ≤ x ^ 2 → 0 ≤ x ^ 2 + 1",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m04_group_hidden_comm.json b/proofscope/benchmark/mathlib_v10/m04_group_hidden_comm.json
+new file mode 100644
+index 0000000..f21a2fa
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m04_group_hidden_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m04_group_hidden_comm",
++ "domain": "Algebra",
++ "family": "hidden commutativity",
++ "split": "mathlib_v10",
++ "reference": "∀ (G : Type) [Group G] (a : G), a * a⁻¹ = 1",
++ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a : G), a * a⁻¹ = 1",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m05_group_needed_comm.json b/proofscope/benchmark/mathlib_v10/m05_group_needed_comm.json
+new file mode 100644
+index 0000000..7cf5584
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m05_group_needed_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m05_group_needed_comm",
++ "domain": "Algebra",
++ "family": "reference needs commutativity",
++ "split": "mathlib_v10",
++ "reference": "∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹",
++ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m06_set_nonempty.json b/proofscope/benchmark/mathlib_v10/m06_set_nonempty.json
+new file mode 100644
+index 0000000..c7e2a1b
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m06_set_nonempty.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m06_set_nonempty",
++ "domain": "Sets",
++ "family": "nonemptiness assumption",
++ "split": "mathlib_v10",
++ "reference": "∀ (s t : Set ℕ), s ⊆ t → s ∩ t = s",
++ "lean": "∀ (s t : Set ℕ), s.Nonempty → s ⊆ t → s ∩ t = s",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m07_set_dropped_needed.json b/proofscope/benchmark/mathlib_v10/m07_set_dropped_needed.json
+new file mode 100644
+index 0000000..70f814d
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m07_set_dropped_needed.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m07_set_dropped_needed",
++ "domain": "Sets",
++ "family": "dropped needed hypothesis",
++ "split": "mathlib_v10",
++ "reference": "∀ (s t : Set ℕ), s ⊆ t → s ∪ t = t",
++ "lean": "∀ (s t : Set ℕ), s ∪ t = t",
++ "expected": "LEAN_CLAIM_FALSE",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/mathlib_v10/m08_real_strict_cmcd.json b/proofscope/benchmark/mathlib_v10/m08_real_strict_cmcd.json
+new file mode 100644
+index 0000000..5ff2c23
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v10/m08_real_strict_cmcd.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m08_real_strict_cmcd",
++ "domain": "Real analysis",
++ "family": "strict to weak (CMCD)",
++ "split": "mathlib_v10",
++ "reference": "∀ (x : ℝ), 0 < x → x < x + 1",
++ "lean": "∀ (x : ℝ), 0 < x → x ≤ x + 1",
++ "expected": "NO_SHARED_SYMBOLS",
++ "must_not_be": [],
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/x01_point_makes_nonempty_redundant.json b/proofscope/benchmark/v10_adversarial/x01_point_makes_nonempty_redundant.json
+new file mode 100644
+index 0000000..18623d6
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/x01_point_makes_nonempty_redundant.json
+@@ -0,0 +1,16 @@
++{
++ "id": "x01_point_makes_nonempty_redundant",
++ "domain": "Types",
++ "family": "redundancy trap",
++ "split": "v10_adversarial",
++ "reference": "∀ (α : Type) (x : α), x = x",
++ "lean": "∀ (α : Type) (x : α) [Nonempty α], x = x",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/x02_dup_hypothesis.json b/proofscope/benchmark/v10_adversarial/x02_dup_hypothesis.json
+new file mode 100644
+index 0000000..48c226a
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/x02_dup_hypothesis.json
+@@ -0,0 +1,16 @@
++{
++ "id": "x02_dup_hypothesis",
++ "domain": "Algebra",
++ "family": "redundancy trap",
++ "split": "v10_adversarial",
++ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → ∀ (a : α), op a a = op a a",
++ "lean": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → (∀ (a b : α), op b a = op a b) → ∀ (a : α), op a a = op a a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/x03_dropped_redundant.json b/proofscope/benchmark/v10_adversarial/x03_dropped_redundant.json
+new file mode 100644
+index 0000000..36622e4
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/x03_dropped_redundant.json
+@@ -0,0 +1,16 @@
++{
++ "id": "x03_dropped_redundant",
++ "domain": "Nat",
++ "family": "redundancy trap",
++ "split": "v10_adversarial",
++ "reference": "∀ (n : Nat), 0 ≤ n → n ≤ n * n + n",
++ "lean": "∀ (n : Nat), n ≤ n * n + n",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/x04_weaker_but_true_both.json b/proofscope/benchmark/v10_adversarial/x04_weaker_but_true_both.json
+new file mode 100644
+index 0000000..004392a
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/x04_weaker_but_true_both.json
+@@ -0,0 +1,13 @@
++{
++ "id": "x04_weaker_but_true_both",
++ "domain": "Int",
++ "family": "restriction, both true",
++ "split": "v10_adversarial",
++ "reference": "∀ (a : Int), a ≤ a * a",
++ "lean": "∀ (a : Int), 1 ≤ a → a ≤ a * a",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/x05_conclusion_also_changed.json b/proofscope/benchmark/v10_adversarial/x05_conclusion_also_changed.json
+new file mode 100644
+index 0000000..ed4883c
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/x05_conclusion_also_changed.json
+@@ -0,0 +1,13 @@
++{
++ "id": "x05_conclusion_also_changed",
++ "domain": "Int",
++ "family": "mixed change",
++ "split": "v10_adversarial",
++ "reference": "∀ (a : Int), a ≤ a * a",
++ "lean": "∀ (a : Int), 1 ≤ a → a < a * a + 1",
++ "expected": "INCONCLUSIVE",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/x06_lean_drops_needed.json b/proofscope/benchmark/v10_adversarial/x06_lean_drops_needed.json
+new file mode 100644
+index 0000000..69a0832
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/x06_lean_drops_needed.json
+@@ -0,0 +1,13 @@
++{
++ "id": "x06_lean_drops_needed",
++ "domain": "Order",
++ "family": "dropped needed assumption",
++ "split": "v10_adversarial",
++ "reference": "∀ (α : Type) (r : α → α → Prop), (∀ (a b : α), r a b → r b a) → ∀ (a b : α), r a b → r b a",
++ "lean": "∀ (α : Type) (r : α → α → Prop), ∀ (a b : α), r a b → r b a",
++ "expected": "LEAN_CLAIM_FALSE",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/y01_boundary_equivalent.json b/proofscope/benchmark/v10_adversarial/y01_boundary_equivalent.json
+new file mode 100644
+index 0000000..6c55b7a
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/y01_boundary_equivalent.json
+@@ -0,0 +1,15 @@
++{
++ "id": "y01_boundary_equivalent",
++ "domain": "Int",
++ "family": "boundary trap (CMCD)",
++ "split": "v10_adversarial",
++ "reference": "∀ (a : Int), a * a < a + 2",
++ "lean": "∀ (a : Int), a * a + 1 ≤ a + 2",
++ "expected": "SCHEMA_EQUIVALENT",
++ "must_not_be": [
++  "CLAIM_LEAN_WEAKER",
++  "CLAIM_LEAN_STRONGER",
++  "CLAIM_INCOMPARABLE"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/y02_boundary_shifted.json b/proofscope/benchmark/v10_adversarial/y02_boundary_shifted.json
+new file mode 100644
+index 0000000..f8cb1eb
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/y02_boundary_shifted.json
+@@ -0,0 +1,15 @@
++{
++ "id": "y02_boundary_shifted",
++ "domain": "Nat",
++ "family": "boundary (CMCD)",
++ "split": "v10_adversarial",
++ "reference": "∀ (n : Nat), n * n ≤ n * n * n",
++ "lean": "∀ (n : Nat), n * n < n * n * n + 1",
++ "expected": "SCHEMA_EQUIVALENT",
++ "must_not_be": [
++  "CLAIM_LEAN_WEAKER",
++  "CLAIM_LEAN_STRONGER",
++  "CLAIM_INCOMPARABLE"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/y03_eq_to_le.json b/proofscope/benchmark/v10_adversarial/y03_eq_to_le.json
+new file mode 100644
+index 0000000..dd03c9b
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/y03_eq_to_le.json
+@@ -0,0 +1,15 @@
++{
++ "id": "y03_eq_to_le",
++ "domain": "Nat",
++ "family": "boundary (CMCD)",
++ "split": "v10_adversarial",
++ "reference": "∀ (a b : Nat), Nat.gcd a b ≤ a + b",
++ "lean": "∀ (a b : Nat), Nat.gcd a b < a + b + 1",
++ "expected": "SCHEMA_EQUIVALENT",
++ "must_not_be": [
++  "CLAIM_LEAN_WEAKER",
++  "CLAIM_LEAN_STRONGER",
++  "CLAIM_INCOMPARABLE"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v10_adversarial/y04_real_change.json b/proofscope/benchmark/v10_adversarial/y04_real_change.json
+new file mode 100644
+index 0000000..22aa600
+--- /dev/null
++++ b/proofscope/benchmark/v10_adversarial/y04_real_change.json
+@@ -0,0 +1,13 @@
++{
++ "id": "y04_real_change",
++ "domain": "Int",
++ "family": "boundary (CMCD)",
++ "split": "v10_adversarial",
++ "reference": "∀ (a : Int), a * a ≥ a",
++ "lean": "∀ (a : Int), a * a > a",
++ "expected": "CLAIM_LEAN_STRONGER",
++ "must_not_be": [
++  "SCHEMA_EQUIVALENT"
++ ],
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/cmcd_v10.py b/proofscope/cmcd_v10.py
+new file mode 100644
+index 0000000..909150c
+--- /dev/null
++++ b/proofscope/cmcd_v10.py
+@@ -0,0 +1,146 @@
++"""CMCD v1.0: the frozen v0.9 drift-localization engine plus boundary witness synthesis.
++
++`proofscope/cmcd.py` (v0.9) is unchanged and still frozen. This module wraps it: before a case runs,
++`lean/ProofScope/BoundarySynth.lean` reads every abstracted chain statement and proposes, for each
++abstracted operator, interpretations that place it exactly on a comparison boundary
++(`x a a < a + 2` gives `fun b0 _ => b0 + 2`, and the ±1 neighbours). They are added to the front of
++the witness pool for that operator's type. Proposals carry no authority: they only enter Lean-checked
++separation certificates through the unchanged `certify` gate.
++
++General principle (not case-specific): a strict/non-strict, `=`/`≤` or constant change at an atom
++`x ts ⋈ e` is separated exactly by interpretations of `x` on the boundary `e`.
++"""
++
++from __future__ import annotations
++
++import argparse
++import os
++import json
++from pathlib import Path
++
++from . import cmcd as V9
++from .toolchain import Toolchain
++
++SRC = V9.SRC
++IMPORTS = [m for m in os.environ.get("PROOFSCOPE_IMPORTS", "").split(",") if m.strip()]
++_v9_extract, _v9_certify = V9.extract, V9.certify
++
++
++def import_lines() -> str:
++    return "".join(f"import {m.strip()}\n" for m in IMPORTS)
++
++
++def _extract_with_imports(ref, lean, tc, buildp, work):
++    work.mkdir(parents=True, exist_ok=True)
++    f = work / "Drift_input.lean"
++    f.write_text(f"{import_lines()}import ProofScope.DriftExtract\n\n#proofscope_drift ({ref}) ({lean})\n")
++    r = tc.run([tc.lean, str(f)], cwd=work, extra_path=buildp, timeout=600)
++    for line in r.output.splitlines():
++        i = line.find("PROOFSCOPE_DRIFT ")
++        if i >= 0:
++            return json.loads(line[i + len("PROOFSCOPE_DRIFT "):])
++    return {"error": r.output[-3000:]}
++
++
++def _certify_with_imports(ident, header, *a, **k):
++    return _v9_certify(ident, import_lines() + header, *a, **k)
++
++
++REAL_POOLS = {"ℝ": ["(0 : ℝ)", "(1 : ℝ)", "(-1 : ℝ)", "(1 / 2 : ℝ)", "(2 : ℝ)"],
++              "ℝ → ℝ": ["fun x => x", "fun _ => 0", "fun x => x + 1", "fun x => -x", "fun x => x ^ 2"],
++              "ℝ → ℝ → ℝ": ["fun a _ => a", "fun _ b => b", "fun a b => a + b", "fun _ _ => 0", "fun a b => a - b"]}
++_EXTRA: dict[str, list[str]] = {}
++_v9_pool = V9.pool
++
++
++def pool(typ: str, ls: list[int]) -> list[str]:
++    t = " ".join(typ.split())
++    extra = _EXTRA.get(t, []) + (REAL_POOLS.get(t, []) if IMPORTS else [])
++    return extra + [p for p in _v9_pool(typ, ls) if p not in extra]
++
++
++def build(tc: Toolchain, out: Path) -> dict:
++    b = V9.build(tc, out)
++    o = out / "ProofScope" / "BoundarySynth.olean"
++    if b["ok"] and not o.exists():
++        r = tc.compile(SRC / "ProofScope" / "BoundarySynth.lean", o, SRC, timeout=900)
++        return {"ok": r.returncode == 0 and o.exists(), "log": r.as_dict()}
++    return b
++
++
++def synthesize(chain: list[str], symbols: list[dict], tc: Toolchain, buildp: Path, work: Path) -> dict[str, list[str]]:
++    work.mkdir(parents=True, exist_ok=True)
++    binders = " ".join(f"(x{i + 1} : {s['type']})" for i, s in enumerate(symbols))
++    f = work / "Boundary_input.lean"
++    f.write_text(import_lines() + "import ProofScope.BoundarySynth\n\n" + "".join(f"#proofscope_boundary (fun {binders} => {S})\n" for S in chain))
++    r = tc.run([tc.lean, str(f)], cwd=work, extra_path=buildp, timeout=600)
++    per: dict[str, list[str]] = {}
++    for line in r.output.splitlines():
++        if "PROOFSCOPE_BOUNDARY " not in line:
++            continue
++        for i, cands in enumerate(json.loads(line[line.index("PROOFSCOPE_BOUNDARY ") + 20:])):
++            t = " ".join(symbols[i]["type"].split())
++            for c in cands:
++                head, _, body = c.partition("=>")
++                for v in (c, f"{head}=> ({body.strip()}) + 1", f"{head}=> ({body.strip()}) - 1"):
++                    per.setdefault(t, [])
++                    if v not in per[t]:
++                        per[t].append(v)
++    return per
++
++
++def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    if IMPORTS:
++        V9.extract, V9.certify = _extract_with_imports, _certify_with_imports
++    d = V9.extract(spec["reference"], spec["lean"], tc, buildp, work / "pre")
++    extra = {}
++    if "error" not in d and d.get("symbols") and d.get("edits"):
++        extra = synthesize([c["abstract"] for c in d["chain"]], d["symbols"], tc, buildp, work / "boundary")
++    _EXTRA.clear()
++    _EXTRA.update(extra)
++    V9.pool = pool
++    try:
++        row = V9.run_case(spec, tc, buildp, work)
++    finally:
++        V9.pool = _v9_pool
++        V9.extract, V9.certify = _v9_extract, _v9_certify
++        _EXTRA.clear()
++    row["engine"] = "cmcd_v10"
++    row["boundary_candidates"] = extra
++    return row
++
++
++def _one(a):
++    p, buildp, out = a
++    spec = json.loads(Path(p).read_text())
++    row = run_case(spec, Toolchain.find(), buildp, out / "work" / Path(p).stem)
++    for k in ("expected", "expected_localized_at", "domain", "family", "split", "must_not_be"):
++        row[k] = spec.get(k)
++    (out / "rows").mkdir(parents=True, exist_ok=True)
++    (out / "rows" / (Path(p).stem + ".json")).write_text(json.dumps(row, ensure_ascii=False, indent=1))
++    return row
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python3 -m proofscope.cmcd_v10")
++    ap.add_argument("specs", nargs="+")
++    ap.add_argument("--out", type=Path, required=True)
++    ap.add_argument("--jobs", type=int, default=1)
++    a = ap.parse_args(argv)
++    out = a.out.resolve()
++    b = build(Toolchain.find(), out / "build")
++    if not b["ok"]:
++        print(json.dumps(b, indent=2)[:3000])
++        return 2
++    from concurrent.futures import ProcessPoolExecutor
++    with ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
++        rows = list(ex.map(_one, [(p, out / "build", out) for p in a.specs]))
++    for r in rows:
++        ok = "" if not r.get("expected") else ("OK" if r["verdict"] == r["expected"] else f"MISS(expected {r['expected']})")
++        print(r["id"], r["verdict"], r.get("localized_at"), ok, flush=True)
++    (out / "cmcd_results.json").write_text(json.dumps({"engine": "cmcd_v10", "rows": rows}, indent=1, ensure_ascii=False))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tests/v02/test_v10.py b/tests/v02/test_v10.py
+new file mode 100644
+index 0000000..c7de5d0
+--- /dev/null
++++ b/tests/v02/test_v10.py
+@@ -0,0 +1,47 @@
++"""v1.0: Assumption Delta (soundness of the model scope) and boundary witness synthesis."""
++import json
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++
++from proofscope import adelta as A
++
++
++class Unit(unittest.TestCase):
++    def test_witnesses_pick_carrier_then_operations(self):
++        ws = A.witnesses([{"name": "α", "type": "Type"}, {"name": "op", "type": "α → α → α"}])
++        self.assertIn(["Bool", "fun a _ => a"], ws)
++        self.assertIn(["Empty", "fun a _ => a"], ws)
++
++    def test_no_nested_by(self):
++        self.assertFalse(any("(by " in t for t in A.sep_tactics([{"name": "α", "type": "Type"}], 0)))
++
++
++@unittest.skipUnless(shutil.which("lean"), "Lean not on PATH")
++class EndToEnd(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        from proofscope.toolchain import Toolchain
++        cls.tc = Toolchain.find()
++        cls.out = Path(tempfile.mkdtemp())
++        assert A.build(cls.tc, cls.out / "build")["ok"]
++
++    def run_spec(self, i, r, l):
++        return A.run_case({"id": i, "reference": r, "lean": l}, self.tc, self.out / "build", self.out / i)
++
++    def test_hidden_commutativity_is_restrictive_with_model(self):
++        asc = "∀ (a b c : α), op (op a b) c = op a (op b c)"
++        r = self.run_spec("comm", f"∀ (α : Type) (op : α → α → α), ({asc}) → ∀ (a : α), op a a = op a a",
++                          f"∀ (α : Type) (op : α → α → α) [Std.Commutative op], ({asc}) → ∀ (a : α), op a a = op a a")
++        self.assertEqual(r["verdict"], "LEAN_WEAKER_BY_ASSUMPTION")
++        self.assertEqual(r["assumptions"][0]["witness_model"][:2], ["Bool", "fun (a x : Bool) => a"])
++
++    def test_point_binder_makes_nonempty_redundant(self):
++        # regression for the v1.0 block-1 soundness bug (adversarial x01)
++        r = self.run_spec("x01", "∀ (α : Type) (x : α), x = x", "∀ (α : Type) (x : α) [Nonempty α], x = x")
++        self.assertEqual(r["verdict"], "ASSUMPTION_EQUIVALENT")
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.43.0
+
