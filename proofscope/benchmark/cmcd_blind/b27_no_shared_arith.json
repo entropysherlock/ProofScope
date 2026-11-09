@@ -1,0 +1,13 @@
+{
+  "id": "b27_no_shared_arith",
+  "domain": "Nat",
+  "family": "no shared opaque operator",
+  "split": "cmcd_blind",
+  "reference": "∀ (n : Nat), n + 0 = n",
+  "lean": "∀ (n : Nat), n * 1 = n",
+  "expected": "NO_SHARED_SYMBOLS",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Neither statement shares an abstracted nonlinear operator; ordinary truth is insufficient."
+}

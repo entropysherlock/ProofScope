@@ -1,0 +1,18 @@
+{
+  "id": "b17_gcd_weak",
+  "domain": "Nat",
+  "family": "gcd strictness",
+  "split": "cmcd_blind",
+  "reference": "∀ (a b : Nat), Nat.gcd a b < a + 2",
+  "lean": "∀ (a b : Nat), Nat.gcd a b ≤ a + 2",
+  "expected": "CLAIM_LEAN_WEAKER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "For arbitrary binary gcd interpretation, strict bound is stronger."
+}

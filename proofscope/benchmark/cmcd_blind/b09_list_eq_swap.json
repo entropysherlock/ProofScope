@@ -1,0 +1,13 @@
+{
+  "id": "b09_list_eq_swap",
+  "domain": "List",
+  "family": "harmless equation symmetry",
+  "split": "cmcd_blind",
+  "reference": "∀ (l : List Nat), List.length (List.reverse l) = List.length l",
+  "lean": "∀ (l : List Nat), List.length l = List.length (List.reverse l)",
+  "expected": "SCHEMA_EQUIVALENT",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Symmetry of equality does not restrict list-function interpretations."
+}

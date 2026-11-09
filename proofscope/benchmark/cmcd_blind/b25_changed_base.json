@@ -1,0 +1,16 @@
+{
+  "id": "b25_changed_base",
+  "domain": "Nat",
+  "family": "different operator inputs",
+  "split": "cmcd_blind",
+  "reference": "∀ (n : Nat), n < 2 ^ n",
+  "lean": "∀ (n : Nat), n < 3 ^ n",
+  "expected": "CLAIM_INCOMPARABLE",
+  "expected_localized_at": null,
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "An arbitrary binary power interpretation may favor either base; no universal direction."
+}

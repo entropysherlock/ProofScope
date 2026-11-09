@@ -1,0 +1,18 @@
+{
+  "id": "b24_quantifier_reverse",
+  "domain": "Logic",
+  "family": "quantifier-order relaxation",
+  "split": "cmcd_blind",
+  "reference": "∃ (y : Nat), ∀ (x : Nat), x < 2 ^ y",
+  "lean": "∀ (x : Nat), ∃ (y : Nat), x < 2 ^ y",
+  "expected": "CLAIM_LEAN_WEAKER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Quantifier order permits each x to choose its own witness."
+}

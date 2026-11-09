@@ -1,0 +1,13 @@
+{
+  "id": "b05_int_alpha_rename",
+  "domain": "Int",
+  "family": "harmless alpha equivalence",
+  "split": "cmcd_blind",
+  "reference": "∀ (x : Int), x * x ≤ x + 1",
+  "lean": "∀ (z : Int), z * z ≤ z + 1",
+  "expected": "IDENTICAL",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Bound names are not semantic parameters."
+}

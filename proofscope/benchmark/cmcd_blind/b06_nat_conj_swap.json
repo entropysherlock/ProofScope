@@ -1,0 +1,13 @@
+{
+  "id": "b06_nat_conj_swap",
+  "domain": "Logic",
+  "family": "harmless conjunction permutation",
+  "split": "cmcd_blind",
+  "reference": "∀ (n : Nat), n < 2 ^ n ∧ n ≤ 2 ^ n",
+  "lean": "∀ (n : Nat), n ≤ 2 ^ n ∧ n < 2 ^ n",
+  "expected": "SCHEMA_EQUIVALENT",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Conjunct permutation is a propositional equivalence for every power interpretation."
+}

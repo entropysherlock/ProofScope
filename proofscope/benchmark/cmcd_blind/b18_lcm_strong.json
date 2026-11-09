@@ -1,0 +1,18 @@
+{
+  "id": "b18_lcm_strong",
+  "domain": "Nat",
+  "family": "lcm strictness",
+  "split": "cmcd_blind",
+  "reference": "∀ (a b : Nat), Nat.lcm a b ≤ a + b",
+  "lean": "∀ (a b : Nat), Nat.lcm a b < a + b",
+  "expected": "CLAIM_LEAN_STRONGER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "For arbitrary lcm interpretation, strict bound is stronger."
+}

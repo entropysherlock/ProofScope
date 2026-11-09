@@ -1,0 +1,18 @@
+{
+  "id": "b13_int_weak",
+  "domain": "Int",
+  "family": "strict to nonstrict",
+  "split": "cmcd_blind",
+  "reference": "∀ (a : Int), a * a < a + 2",
+  "lean": "∀ (a : Int), a * a ≤ a + 2",
+  "expected": "CLAIM_LEAN_WEAKER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Integer order strictness remains meaningful under arbitrary multiplication."
+}

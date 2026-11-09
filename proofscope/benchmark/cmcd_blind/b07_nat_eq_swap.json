@@ -1,0 +1,13 @@
+{
+  "id": "b07_nat_eq_swap",
+  "domain": "Nat",
+  "family": "harmless equation symmetry",
+  "split": "cmcd_blind",
+  "reference": "∀ (a b : Nat), Nat.gcd a b = a",
+  "lean": "∀ (a b : Nat), a = Nat.gcd a b",
+  "expected": "SCHEMA_EQUIVALENT",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Equality is symmetric for every interpretation of gcd."
+}

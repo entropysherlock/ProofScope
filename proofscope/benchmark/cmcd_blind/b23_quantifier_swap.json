@@ -1,0 +1,18 @@
+{
+  "id": "b23_quantifier_swap",
+  "domain": "Logic",
+  "family": "quantifier-order tightening",
+  "split": "cmcd_blind",
+  "reference": "∀ (x : Nat), ∃ (y : Nat), x < 2 ^ y",
+  "lean": "∃ (y : Nat), ∀ (x : Nat), x < 2 ^ y",
+  "expected": "CLAIM_LEAN_STRONGER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "A shared witness for all x is stronger than separate witnesses depending on x."
+}

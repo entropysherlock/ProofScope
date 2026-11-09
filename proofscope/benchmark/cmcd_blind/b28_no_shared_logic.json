@@ -1,0 +1,13 @@
+{
+  "id": "b28_no_shared_logic",
+  "domain": "Logic",
+  "family": "no shared opaque operator",
+  "split": "cmcd_blind",
+  "reference": "∀ (n : Nat), n = n",
+  "lean": "∃ (n : Nat), n = n",
+  "expected": "NO_SHARED_SYMBOLS",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Core-logical true statements carry no shared opaque operator under this policy."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "b02_int_identical",
+  "domain": "Int",
+  "family": "harmless identical",
+  "split": "cmcd_blind",
+  "reference": "∀ (a : Int), a * a + 0 = a * a",
+  "lean": "∀ (a : Int), a * a + 0 = a * a",
+  "expected": "IDENTICAL",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Exact statement repeated."
+}

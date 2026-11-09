@@ -1,0 +1,18 @@
+{
+  "id": "b16_list_strong",
+  "domain": "List",
+  "family": "list length weak to strict",
+  "split": "cmcd_blind",
+  "reference": "∀ (l : List Nat), List.length l ≤ List.length (List.reverse l)",
+  "lean": "∀ (l : List Nat), List.length l < List.length (List.reverse l)",
+  "expected": "CLAIM_LEAN_STRONGER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Mirror of b15; strictness is stronger."
+}

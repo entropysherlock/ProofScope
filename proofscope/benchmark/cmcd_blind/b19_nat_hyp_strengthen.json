@@ -1,0 +1,18 @@
+{
+  "id": "b19_nat_hyp_strengthen",
+  "domain": "Nat",
+  "family": "stronger hypothesis weakens theorem",
+  "split": "cmcd_blind",
+  "reference": "∀ (n : Nat), 0 < n → n < 2 ^ n",
+  "lean": "∀ (n : Nat), 1 < n → n < 2 ^ n",
+  "expected": "CLAIM_LEAN_WEAKER",
+  "expected_localized_at": [
+    1
+  ],
+  "must_not_be": [
+    "SCHEMA_EQUIVALENT",
+    "EQUIVALENT_BY_LAWS"
+  ],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Concluding over fewer inputs weakens a universally quantified implication."
+}

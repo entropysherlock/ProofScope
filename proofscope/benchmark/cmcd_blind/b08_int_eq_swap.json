@@ -1,0 +1,13 @@
+{
+  "id": "b08_int_eq_swap",
+  "domain": "Int",
+  "family": "harmless equation symmetry",
+  "split": "cmcd_blind",
+  "reference": "∀ (a : Int), a * a = a + 1",
+  "lean": "∀ (a : Int), a + 1 = a * a",
+  "expected": "SCHEMA_EQUIVALENT",
+  "expected_localized_at": null,
+  "must_not_be": [],
+  "annotation": "Independent author: ChatGPT (OpenAI), 2026-11-09; written after Claude v0.9 engine freeze, before any engine run on these cases; source-level mathematical labels are provisional until adjudicated.",
+  "rationale": "Equation orientation is mathematically harmless."
+}
