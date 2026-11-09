@@ -1,0 +1,11 @@
+{
+ "id": "ad04_redundant_comm",
+ "domain": "Algebra",
+ "family": "redundant assumption",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
+ "lean": "∀ (α : Type) (op : α → α → α) [Std.Commutative op], (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

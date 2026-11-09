@@ -84,6 +84,18 @@ documented in [`docs/engine.md`](docs/engine.md):
 Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
 resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
 
+## v1.0: Assumption Delta, boundary synthesis, Mathlib track
+
+Details: [`docs/v1.0_assumption_delta.md`](docs/v1.0_assumption_delta.md).
+
+- **Assumption Delta:** an added assumption changes the claim exactly when a model of the reference's
+  conditions violates it (`restrictive_iff_strictly_weaker`, Lean). ProofScope certifies such models, reads
+  them out of the kernel-checked proof term (e.g. `Bool` with `op a b := a` for a hidden commutativity
+  assumption), and certifies when a reference is false without an assumption.
+- **Boundary witness synthesis** closes the blind-suite strict/non-strict gap (blind suite now development data).
+- **Mathlib track** (ℝ, groups, sets): workflow ready, **pending its first run**.
+- A soundness bug found by the adversarial suite (model scope) is documented and fixed (v1.0.2).
+
 ## v0.9: certified drift localization (CMCD)
 
 Details: [`docs/v0.9_cmcd.md`](docs/v0.9_cmcd.md).

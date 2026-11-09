@@ -1,0 +1,15 @@
+{
+ "id": "y03_eq_to_le",
+ "domain": "Nat",
+ "family": "boundary (CMCD)",
+ "split": "v10_adversarial",
+ "reference": "∀ (a b : Nat), Nat.gcd a b ≤ a + b",
+ "lean": "∀ (a b : Nat), Nat.gcd a b < a + b + 1",
+ "expected": "SCHEMA_EQUIVALENT",
+ "must_not_be": [
+  "CLAIM_LEAN_WEAKER",
+  "CLAIM_LEAN_STRONGER",
+  "CLAIM_INCOMPARABLE"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

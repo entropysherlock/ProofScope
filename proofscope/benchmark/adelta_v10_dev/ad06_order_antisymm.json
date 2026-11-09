@@ -1,0 +1,11 @@
+{
+ "id": "ad06_order_antisymm",
+ "domain": "Order",
+ "family": "added antisymmetry",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) (r : α → α → Prop), (∀ (a : α), r a a) → (∀ (a b c : α), r a b → r b c → r a c) → ∀ (a : α), r a a",
+ "lean": "∀ (α : Type) (r : α → α → Prop), (∀ (a : α), r a a) → (∀ (a b c : α), r a b → r b c → r a c) → (∀ (a b : α), r a b → r b a → a = b) → ∀ (a : α), r a a",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

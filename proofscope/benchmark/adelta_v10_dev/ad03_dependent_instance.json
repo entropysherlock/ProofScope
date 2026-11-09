@@ -1,0 +1,11 @@
+{
+ "id": "ad03_dependent_instance",
+ "domain": "Types",
+ "family": "dependent instance",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) [Inhabited α], (default : α) = default",
+ "lean": "∀ (α : Type), True",
+ "expected": "INCONCLUSIVE",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

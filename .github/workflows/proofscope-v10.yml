@@ -1,0 +1,89 @@
+name: ProofScope v1.0 Assumption Delta and Boundary
+
+# Core Lean: Assumption Delta theory (fresh replay), Assumption Delta engine, CMCD v1.0 (boundary synthesis).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-v10.yml"
+      - "proofscope/adelta.py"
+      - "proofscope/cmcd_v10.py"
+      - "lean/ProofScope/AssumptionDelta.lean"
+      - "lean/ProofScope/AssumptionExtract.lean"
+      - "lean/ProofScope/BoundarySynth.lean"
+      - "proofscope/benchmark/adelta_v10_dev/**"
+      - "proofscope/benchmark/v10_adversarial/**"
+      - "proofscope/benchmark/V10_FREEZE.txt"
+      - "tests/v02/test_v10.py"
+
+permissions:
+  contents: read
+
+jobs:
+  v10:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
+        uses: ./.github/actions/setup-lean
+      - name: Freeze check (V10_FREEZE.txt block 2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          awk '/^# Block 2 \(v1.0.2\)/{f=1;next} f && /^[0-9a-f]{64}  [a-z]+\//' proofscope/benchmark/V10_FREEZE.txt > /tmp/f.sha
+          test "$(wc -l < /tmp/f.sha)" = 8
+          sha256sum -c /tmp/f.sha
+      - name: Assumption Delta theory (7 axiom-free + 2 standard-axiom theorems, fresh replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ad/ProofScope" v10-evidence
+          lean -R lean -o "$RUNNER_TEMP/ad/ProofScope/ClaimDelta.olean" lean/ProofScope/ClaimDelta.lean > /dev/null
+          LEAN_PATH="$RUNNER_TEMP/ad" lean -R lean -o "$RUNNER_TEMP/ad/ProofScope/AssumptionDelta.olean" \
+            lean/ProofScope/AssumptionDelta.lean | tee v10-evidence/assumption-delta-axioms.log
+          test "$(grep -c 'does not depend on any axioms' v10-evidence/assumption-delta-axioms.log)" = 7
+          test "$(grep -c 'depends on axioms: \[propext, Classical.choice, Quot.sound\]' v10-evidence/assumption-delta-axioms.log)" = 2
+          ! grep -q sorryAx v10-evidence/assumption-delta-axioms.log
+          (cd "$RUNNER_TEMP/ad" && LEAN_PATH="$RUNNER_TEMP/ad" leanchecker --fresh ProofScope.AssumptionDelta)
+      - name: Tests
+        run: python -m unittest tests.v02.test_v10 -v
+      - name: Assumption Delta suites
+        run: |
+          python -m proofscope.adelta proofscope/benchmark/adelta_v10_dev/*.json proofscope/benchmark/v10_adversarial/x*.json \
+            --out v10-evidence/adelta --jobs 4 | tee v10-evidence/adelta.log
+      - name: CMCD v1.0 (boundary synthesis) suites and regression
+        run: |
+          python -m proofscope.cmcd_v10 proofscope/benchmark/v10_adversarial/y*.json proofscope/benchmark/cmcd_v09_dev/*.json \
+            proofscope/benchmark/cmcd_v09_adversarial/*.json proofscope/benchmark/cmcd_blind/b*.json \
+            --out v10-evidence/cmcd --jobs 4 | tee v10-evidence/cmcd.log
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, pathlib
+          print("## ProofScope v1.0 (core Lean)")
+          for name, f in (("Assumption Delta", "adelta/adelta_results.json"), ("CMCD v1.0", "cmcd/cmcd_results.json")):
+              p = pathlib.Path("v10-evidence") / f
+              if not p.exists():
+                  print(f"- {name}: no results"); continue
+              rows = json.loads(p.read_text())["rows"]
+              ok = sum(r["verdict"] == r.get("expected") for r in rows)
+              bad = [r["id"] for r in rows if r["verdict"] in (r.get("must_not_be") or [])]
+              print(f"- {name}: {len(rows)} cases, label match {ok}, must-not-be violations {bad}")
+          print("Development data only (author-written). Known author label errors: ad02, a1, a6. b21/b22 do not parse in core Lean.")
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-v10-evidence
+          path: v10-evidence/
+          if-no-files-found: warn

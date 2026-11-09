@@ -1,0 +1,11 @@
+{
+ "id": "ad10_redundant_nat",
+ "domain": "Nat",
+ "family": "redundant assumption",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (n : Nat), n < 2 ^ n",
+ "lean": "∀ (n : Nat), 0 ≤ n → n < 2 ^ n",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

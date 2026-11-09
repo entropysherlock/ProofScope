@@ -1,0 +1,11 @@
+{
+ "id": "m01_real_restriction",
+ "domain": "Real analysis",
+ "family": "added hypothesis",
+ "split": "mathlib_v10",
+ "reference": "∀ (x : ℝ), 0 ≤ x ^ 2",
+ "lean": "∀ (x : ℝ), 0 < x → 0 ≤ x ^ 2",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
+}

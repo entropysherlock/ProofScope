@@ -1,0 +1,13 @@
+{
+ "id": "x06_lean_drops_needed",
+ "domain": "Order",
+ "family": "dropped needed assumption",
+ "split": "v10_adversarial",
+ "reference": "∀ (α : Type) (r : α → α → Prop), (∀ (a b : α), r a b → r b a) → ∀ (a b : α), r a b → r b a",
+ "lean": "∀ (α : Type) (r : α → α → Prop), ∀ (a b : α), r a b → r b a",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

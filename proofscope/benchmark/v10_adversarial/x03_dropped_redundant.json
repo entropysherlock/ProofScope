@@ -1,0 +1,16 @@
+{
+ "id": "x03_dropped_redundant",
+ "domain": "Nat",
+ "family": "redundancy trap",
+ "split": "v10_adversarial",
+ "reference": "∀ (n : Nat), 0 ≤ n → n ≤ n * n + n",
+ "lean": "∀ (n : Nat), n ≤ n * n + n",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

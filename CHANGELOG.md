@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0 (unreleased)
+
+- Assumption Delta: `lean/ProofScope/AssumptionDelta.lean` (9 theorems), `lean/ProofScope/AssumptionExtract.lean`
+  (telescope alignment, witness readout), `proofscope/adelta.py`.
+- Boundary witness synthesis: `lean/ProofScope/BoundarySynth.lean`, `proofscope/cmcd_v10.py` (wraps frozen v0.9 CMCD).
+- Suites `adelta_v10_dev` (11), `v10_adversarial` (10), `mathlib_v10` (8, pending); `V10_FREEZE.txt` (blocks 1 and 2).
+- Workflows **ProofScope v1.0 Assumption Delta and Boundary**, **ProofScope v1.0 Mathlib Track**; `tests/v02/test_v10.py`.
+- Fixed (block 2): Assumption Delta model scope (soundness; adversarial x01, ad02, ad04).
+
 ## 0.9.0 (unreleased)
 
 - CMCD drift localization: `lean/ProofScope/DriftExtract.lean` (edit sites, chain, per-occurrence

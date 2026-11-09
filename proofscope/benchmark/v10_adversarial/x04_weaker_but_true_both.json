@@ -1,0 +1,13 @@
+{
+ "id": "x04_weaker_but_true_both",
+ "domain": "Int",
+ "family": "restriction, both true",
+ "split": "v10_adversarial",
+ "reference": "∀ (a : Int), a ≤ a * a",
+ "lean": "∀ (a : Int), 1 ≤ a → a ≤ a * a",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

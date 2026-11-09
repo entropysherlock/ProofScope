@@ -1,0 +1,11 @@
+{
+ "id": "ad07_dropped_injectivity",
+ "domain": "Functions",
+ "family": "dropped needed hypothesis",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) (f : α → α), (∀ (a b : α), f a = f b → a = b) → ∀ (a b : α), f a = f b → a = b",
+ "lean": "∀ (α : Type) (f : α → α), ∀ (a b : α), f a = f b → a = b",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

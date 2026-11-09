@@ -1,0 +1,11 @@
+{
+ "id": "ad08_decidable_redundant",
+ "domain": "Types",
+ "family": "decidability assumption",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) (a : α), a = a",
+ "lean": "∀ (α : Type) [DecidableEq α] (a : α), a = a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

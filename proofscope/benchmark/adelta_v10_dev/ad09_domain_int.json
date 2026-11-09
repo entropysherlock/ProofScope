@@ -1,0 +1,11 @@
+{
+ "id": "ad09_domain_int",
+ "domain": "Int",
+ "family": "domain restriction",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (a : Int), 0 ≤ a * a",
+ "lean": "∀ (a : Int), 0 ≤ a → 0 ≤ a * a",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

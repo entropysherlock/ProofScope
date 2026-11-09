@@ -1,0 +1,11 @@
+{
+ "id": "ad05_needed_comm",
+ "domain": "Algebra",
+ "family": "reference needs assumption",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b c : α), op (op a b) c = op a (op b c)) → ∀ (a b : α), op a b = op b a",
+ "lean": "∀ (α : Type) (op : α → α → α) [Std.Commutative op], (∀ (a b c : α), op (op a b) c = op a (op b c)) → ∀ (a b : α), op a b = op b a",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

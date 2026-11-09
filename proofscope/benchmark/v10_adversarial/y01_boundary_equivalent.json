@@ -1,0 +1,15 @@
+{
+ "id": "y01_boundary_equivalent",
+ "domain": "Int",
+ "family": "boundary trap (CMCD)",
+ "split": "v10_adversarial",
+ "reference": "∀ (a : Int), a * a < a + 2",
+ "lean": "∀ (a : Int), a * a + 1 ≤ a + 2",
+ "expected": "SCHEMA_EQUIVALENT",
+ "must_not_be": [
+  "CLAIM_LEAN_WEAKER",
+  "CLAIM_LEAN_STRONGER",
+  "CLAIM_INCOMPARABLE"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

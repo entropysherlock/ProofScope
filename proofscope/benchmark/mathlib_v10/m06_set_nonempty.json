@@ -1,0 +1,11 @@
+{
+ "id": "m06_set_nonempty",
+ "domain": "Sets",
+ "family": "nonemptiness assumption",
+ "split": "mathlib_v10",
+ "reference": "∀ (s t : Set ℕ), s ⊆ t → s ∩ t = s",
+ "lean": "∀ (s t : Set ℕ), s.Nonempty → s ⊆ t → s ∩ t = s",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
+}

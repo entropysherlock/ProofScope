@@ -1,0 +1,13 @@
+{
+ "id": "y04_real_change",
+ "domain": "Int",
+ "family": "boundary (CMCD)",
+ "split": "v10_adversarial",
+ "reference": "∀ (a : Int), a * a ≥ a",
+ "lean": "∀ (a : Int), a * a > a",
+ "expected": "CLAIM_LEAN_STRONGER",
+ "must_not_be": [
+  "SCHEMA_EQUIVALENT"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

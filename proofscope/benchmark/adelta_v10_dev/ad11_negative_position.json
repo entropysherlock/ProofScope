@@ -1,0 +1,11 @@
+{
+ "id": "ad11_negative_position",
+ "domain": "Logic",
+ "family": "assumption under negation",
+ "split": "adelta_v10_dev",
+ "reference": "(∀ (α : Type) (op : α → α → α) (a b : α), op a b = op b a) → False",
+ "lean": "(∀ (α : Type) (op : α → α → α) [Std.Commutative op] (a b : α), op a b = op b a) → False",
+ "expected": "INCONCLUSIVE",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

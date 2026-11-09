@@ -1,0 +1,1706 @@
+{
+ "local": true,
+ "block1_frozen_run": {
+  "adelta_v10_dev": [
+   {
+    "id": "ad01_hidden_comm",
+    "domain": "Algebra",
+    "family": "hidden typeclass assumption",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Std.Commutative op",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "Bool",
+       "fun (a x : Bool) => a"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad02_nonempty",
+    "domain": "Types",
+    "family": "nonemptiness assumption",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Nonempty α",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "Empty",
+       "fun (a : Empty) => a"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad03_dependent_instance",
+    "domain": "Types",
+    "family": "dependent instance",
+    "expected": "INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+    "engine": "adelta v1.0"
+   },
+   {
+    "id": "ad04_redundant_comm",
+    "domain": "Algebra",
+    "family": "redundant assumption",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Std.Commutative op",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad05_needed_comm",
+    "domain": "Algebra",
+    "family": "reference needs assumption",
+    "expected": "REFERENCE_NEEDS_ASSUMPTION",
+    "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "necessary_refutes_reference",
+    "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Std.Commutative op",
+      "class": "NECESSARY",
+      "witness_model": [
+       "Bool",
+       "fun (a x : Bool) => a",
+       "true",
+       "false"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad06_order_antisymm",
+    "domain": "Order",
+    "family": "added antisymmetry",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "∀ (a b : α), r a b → r b a → a = b",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "Bool",
+       "fun (x x_1 : Bool) => True"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad07_dropped_injectivity",
+    "domain": "Functions",
+    "family": "dropped needed hypothesis",
+    "expected": "LEAN_CLAIM_FALSE",
+    "verdict": "LEAN_CLAIM_FALSE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "necessary_refutes_reference",
+    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "dropped",
+      "assumption": "∀ (a b : α), f a = f b → a = b",
+      "class": "NECESSARY",
+      "witness_model": [
+       "Bool",
+       "fun (x : Bool) => true",
+       "true",
+       "false"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad08_decidable_redundant",
+    "domain": "Types",
+    "family": "decidability assumption",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Nonempty (DecidableEq α)",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad09_domain_int",
+    "domain": "Int",
+    "family": "domain restriction",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "(0 : Int) ≤ a",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "-1"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad10_redundant_nat",
+    "domain": "Nat",
+    "family": "redundant assumption",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "(0 : Nat) ≤ n",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad11_negative_position",
+    "domain": "Logic",
+    "family": "assumption under negation",
+    "expected": "INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "canonical telescope not linked to the elaborated statements",
+    "engine": "adelta v1.0"
+   }
+  ],
+  "v10_adversarial_adelta": [
+   {
+    "id": "x01_point_makes_nonempty_redundant",
+    "domain": "Types",
+    "family": "redundancy trap",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Nonempty α",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "Empty"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "x02_dup_hypothesis",
+    "domain": "Algebra",
+    "family": "redundancy trap",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "∀ (a b : α), op b a = op a b",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "x03_dropped_redundant",
+    "domain": "Nat",
+    "family": "redundancy trap",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "dropped",
+      "assumption": "(0 : Nat) ≤ n",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "x04_weaker_but_true_both",
+    "domain": "Int",
+    "family": "restriction, both true",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "(1 : Int) ≤ a",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "-1"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "x05_conclusion_also_changed",
+    "domain": "Int",
+    "family": "mixed change",
+    "expected": "INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+    "engine": "adelta v1.0"
+   },
+   {
+    "id": "x06_lean_drops_needed",
+    "domain": "Order",
+    "family": "dropped needed assumption",
+    "expected": "LEAN_CLAIM_FALSE",
+    "verdict": "LEAN_CLAIM_FALSE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "necessary_refutes_reference",
+    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
+    "engine": "adelta v1.0",
+    "assumptions": [
+     {
+      "side": "dropped",
+      "assumption": "∀ (a b : α), r a b → r b a",
+      "class": "NECESSARY",
+      "witness_model": [
+       "Bool",
+       "fun (a b : Bool) => a = true ∨ b = false",
+       "true",
+       "false"
+      ]
+     }
+    ]
+   }
+  ],
+  "v10_adversarial_cmcd": [
+   {
+    "id": "y01_boundary_equivalent",
+    "domain": "Int",
+    "family": "boundary trap (CMCD)",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => b0 + (2 : Int)",
+      "fun (b0 b1 : Int) => (b0 + (2 : Int)) + 1",
+      "fun (b0 b1 : Int) => (b0 + (2 : Int)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "y02_boundary_shifted",
+    "domain": "Nat",
+    "family": "boundary (CMCD)",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "y03_eq_to_le",
+    "domain": "Nat",
+    "family": "boundary (CMCD)",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "boundary_candidates": {
+     "Nat → Nat → Nat": [
+      "fun (b0 b1 : Nat) => b0 + b1",
+      "fun (b0 b1 : Nat) => (b0 + b1) + 1",
+      "fun (b0 b1 : Nat) => (b0 + b1) - 1",
+      "fun (b0 b1 : Nat) => b0 + b1 + (1 : Nat)",
+      "fun (b0 b1 : Nat) => (b0 + b1 + (1 : Nat)) + 1",
+      "fun (b0 b1 : Nat) => (b0 + b1 + (1 : Nat)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "y04_real_change",
+    "domain": "Int",
+    "family": "boundary (CMCD)",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≥ a) ∧ ¬ (∀ (a : Int), x1 a a > a)"
+    ],
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => b0",
+      "fun (b0 b1 : Int) => (b0) + 1",
+      "fun (b0 b1 : Int) => (b0) - 1"
+     ]
+    }
+   }
+  ],
+  "regression_cmcd_v10": [
+   {
+    "id": "a1_unrelated_true_shared",
+    "domain": "Nat",
+    "family": "adversarial: must never be certified equivalent",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "a2_unrelated_gcd_true",
+    "domain": "Nat",
+    "family": "adversarial: must never be certified equivalent",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "CLAIM_INCOMPARABLE",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "single edit",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "a3_tautological_lean",
+    "domain": "Nat",
+    "family": "adversarial: must never be certified equivalent",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 (2 : Nat) n = x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "a4_law_trap",
+    "domain": "Nat",
+    "family": "adversarial: must never be certified equivalent",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "CLAIM_INCOMPARABLE",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "single edit",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "a5_identical",
+    "domain": "Nat",
+    "family": "adversarial: must never be certified equivalent",
+    "expected": "IDENTICAL",
+    "verdict": "IDENTICAL",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "a6_reversed_false",
+    "domain": "Nat",
+    "family": "adversarial: must never be certified equivalent",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "single edit",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b01_nat_identical",
+    "domain": "Nat",
+    "family": "harmless identical",
+    "expected": "IDENTICAL",
+    "verdict": "IDENTICAL",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b02_int_identical",
+    "domain": "Int",
+    "family": "harmless identical",
+    "expected": "IDENTICAL",
+    "verdict": "IDENTICAL",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b03_list_identical",
+    "domain": "List",
+    "family": "harmless identical",
+    "expected": "IDENTICAL",
+    "verdict": "IDENTICAL",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b04_nat_alpha_rename",
+    "domain": "Nat",
+    "family": "harmless alpha equivalence",
+    "expected": "IDENTICAL",
+    "verdict": "IDENTICAL",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b05_int_alpha_rename",
+    "domain": "Int",
+    "family": "harmless alpha equivalence",
+    "expected": "IDENTICAL",
+    "verdict": "IDENTICAL",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b06_nat_conj_swap",
+    "domain": "Logic",
+    "family": "harmless conjunction permutation",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b07_nat_eq_swap",
+    "domain": "Nat",
+    "family": "harmless equation symmetry",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "boundary_candidates": {
+     "Nat → Nat → Nat": [
+      "fun (b0 b1 : Nat) => b0",
+      "fun (b0 b1 : Nat) => (b0) + 1",
+      "fun (b0 b1 : Nat) => (b0) - 1"
+     ]
+    }
+   },
+   {
+    "id": "b08_int_eq_swap",
+    "domain": "Int",
+    "family": "harmless equation symmetry",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => b0 + (1 : Int)",
+      "fun (b0 b1 : Int) => (b0 + (1 : Int)) + 1",
+      "fun (b0 b1 : Int) => (b0 + (1 : Int)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "b09_list_eq_swap",
+    "domain": "List",
+    "family": "harmless equation symmetry",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b10_logic_conj_swap",
+    "domain": "Logic",
+    "family": "harmless propositional reorder",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b11_nat_weak_strict",
+    "domain": "Nat",
+    "family": "strict to nonstrict",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "b12_nat_strong_strict",
+    "domain": "Nat",
+    "family": "nonstrict to strict",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "b13_int_weak",
+    "domain": "Int",
+    "family": "strict to nonstrict",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≤ a + (2 : Int)) ∧ ¬ (∀ (a : Int), x1 a a < a + (2 : Int))"
+    ],
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => b0 + (2 : Int)",
+      "fun (b0 b1 : Int) => (b0 + (2 : Int)) + 1",
+      "fun (b0 b1 : Int) => (b0 + (2 : Int)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "b14_int_strong",
+    "domain": "Int",
+    "family": "nonstrict to strict",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≤ a + (2 : Int)) ∧ ¬ (∀ (a : Int), x1 a a < a + (2 : Int))"
+    ],
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => b0 + (2 : Int)",
+      "fun (b0 b1 : Int) => (b0 + (2 : Int)) + 1",
+      "fun (b0 b1 : Int) => (b0 + (2 : Int)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "b15_list_weak",
+    "domain": "List",
+    "family": "list length strict to weak",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 l ≤ x1 (x2 l)) ∧ ¬ (∀ (l : List Nat), x1 l < x1 (x2 l))"
+    ]
+   },
+   {
+    "id": "b16_list_strong",
+    "domain": "List",
+    "family": "list length weak to strict",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 l ≤ x1 (x2 l)) ∧ ¬ (∀ (l : List Nat), x1 l < x1 (x2 l))"
+    ]
+   },
+   {
+    "id": "b17_gcd_weak",
+    "domain": "Nat",
+    "family": "gcd strictness",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (a b : Nat), x1 a b ≤ a + (2 : Nat)) ∧ ¬ (∀ (a b : Nat), x1 a b < a + (2 : Nat))"
+    ],
+    "boundary_candidates": {
+     "Nat → Nat → Nat": [
+      "fun (b0 b1 : Nat) => b0 + (2 : Nat)",
+      "fun (b0 b1 : Nat) => (b0 + (2 : Nat)) + 1",
+      "fun (b0 b1 : Nat) => (b0 + (2 : Nat)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "b18_lcm_strong",
+    "domain": "Nat",
+    "family": "lcm strictness",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (a b : Nat), x1 a b ≤ a + b) ∧ ¬ (∀ (a b : Nat), x1 a b < a + b)"
+    ],
+    "boundary_candidates": {
+     "Nat → Nat → Nat": [
+      "fun (b0 b1 : Nat) => b0 + b1",
+      "fun (b0 b1 : Nat) => (b0 + b1) + 1",
+      "fun (b0 b1 : Nat) => (b0 + b1) - 1"
+     ]
+    }
+   },
+   {
+    "id": "b19_nat_hyp_strengthen",
+    "domain": "Nat",
+    "family": "stronger hypothesis weakens theorem",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) < n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (0 : Nat) < n → n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "b20_nat_hyp_weaken",
+    "domain": "Nat",
+    "family": "weaker hypothesis strengthens theorem",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) < n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (0 : Nat) < n → n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "b21_existential_relax",
+    "domain": "Logic",
+    "family": "existence versus uniqueness",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": null,
+    "reason": "extraction failed",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b22_existential_tighten",
+    "domain": "Logic",
+    "family": "existence versus uniqueness",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": null,
+    "reason": "extraction failed",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b23_quantifier_swap",
+    "domain": "Logic",
+    "family": "quantifier-order tightening",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x < x1 (2 : Nat) y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x < x1 (2 : Nat) y)"
+    ]
+   },
+   {
+    "id": "b24_quantifier_reverse",
+    "domain": "Logic",
+    "family": "quantifier-order relaxation",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x < x1 (2 : Nat) y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x < x1 (2 : Nat) y)"
+    ]
+   },
+   {
+    "id": "b25_changed_base",
+    "domain": "Nat",
+    "family": "different operator inputs",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "CLAIM_INCOMPARABLE",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "single edit",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b26_changed_gcd_arg",
+    "domain": "Nat",
+    "family": "different operator inputs",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "CLAIM_INCOMPARABLE",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "single edit",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b27_no_shared_arith",
+    "domain": "Nat",
+    "family": "no shared opaque operator",
+    "expected": "NO_SHARED_SYMBOLS",
+    "verdict": "NO_SHARED_SYMBOLS",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "b28_no_shared_logic",
+    "domain": "Logic",
+    "family": "no shared opaque operator",
+    "expected": "NO_SHARED_SYMBOLS",
+    "verdict": "NO_SHARED_SYMBOLS",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "l01_quant_swap_false",
+    "domain": "Logic",
+    "family": "quantifier order",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (x : Nat), ∃ (y : Nat), x ≤ x1 y y) ∧ ¬ (∃ (y : Nat), ∀ (x : Nat), x ≤ x1 y y)"
+    ]
+   },
+   {
+    "id": "l02_unique_to_exists",
+    "domain": "Logic",
+    "family": "uniqueness dropped",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∃ (y : Nat), x1 y y = (4 : Nat)) ∧ ¬ (∃ (y : Nat), x1 y y = (4 : Nat) ∧ ∀ (z : Nat), x1 z z = (4 : Nat) → z = y)"
+    ],
+    "boundary_candidates": {
+     "Nat → Nat → Nat": [
+      "fun (b0 b1 : Nat) => (4 : Nat)",
+      "fun (b0 b1 : Nat) => ((4 : Nat)) + 1",
+      "fun (b0 b1 : Nat) => ((4 : Nat)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "l03_eq_orientation",
+    "domain": "Logic",
+    "family": "harmless",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "boundary_candidates": {
+     "Nat → Nat → Nat": [
+      "fun (b0 b1 : Nat) => (1 : Nat)",
+      "fun (b0 b1 : Nat) => ((1 : Nat)) + 1",
+      "fun (b0 b1 : Nat) => ((1 : Nat)) - 1"
+     ]
+    }
+   },
+   {
+    "id": "l04_conjunct_order",
+    "domain": "Logic",
+    "family": "harmless",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "l05_forall_to_exists",
+    "domain": "Logic",
+    "family": "quantifier change",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∃ (n : Nat), n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "li01_append_strict",
+    "domain": "List",
+    "family": "weak to strict",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat → List Nat), (∀ (l m : List Nat), x1 l ≤ x1 (x2 l m)) ∧ ¬ (∀ (l m : List Nat), x1 l < x1 (x2 l m))"
+    ]
+   },
+   {
+    "id": "li02_append_comm",
+    "domain": "List",
+    "family": "harmless",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "li03_reverse_weak",
+    "domain": "List",
+    "family": "eq to le",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : List Nat → Nat) (x2 : List Nat → List Nat), (∀ (l : List Nat), x1 (x2 l) ≤ x1 l) ∧ ¬ (∀ (l : List Nat), x1 (x2 l) = x1 l)"
+    ]
+   },
+   {
+    "id": "n01_two_edits_one_weak",
+    "domain": "Nat",
+    "family": "multi-edit localization",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     2
+    ],
+    "expected_localized_at": [
+     2
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n + n + n ≤ x1 n n → n + (1 : Nat) < x2 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "n02_changed_base",
+    "domain": "Nat",
+    "family": "changed constant",
+    "expected": "CLAIM_INCOMPARABLE",
+    "verdict": "CLAIM_INCOMPARABLE",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": null,
+    "reason": "single edit",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "n03_harmless_succ",
+    "domain": "Nat",
+    "family": "harmless",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "n04_added_restriction",
+    "domain": "Nat",
+    "family": "hidden assumption",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "n05_mixed_directions",
+    "domain": "Nat",
+    "family": "mixed (no localization)",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "n06_gcd_comm",
+    "domain": "Nat",
+    "family": "harmless (law)",
+    "expected": "EQUIVALENT_BY_LAWS",
+    "verdict": "EQUIVALENT_BY_LAWS",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "the two statements are rewritings of each other by the listed equational laws; the proof of each direction uses the other statement",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "n07_unrelated_true",
+    "domain": "Nat",
+    "family": "unrelated provable",
+    "expected": "NO_SHARED_SYMBOLS",
+    "verdict": "NO_SHARED_SYMBOLS",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "n08_vacuous_hyp",
+    "domain": "Nat",
+    "family": "vacuous",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (1 : Nat) → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+    ]
+   },
+   {
+    "id": "n09_mul_interpreted",
+    "domain": "Nat",
+    "family": "harmless (occurrence policy)",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "z01_int_strict",
+    "domain": "Int",
+    "family": "strict to weak",
+    "expected": "CLAIM_LEAN_WEAKER",
+    "verdict": "CLAIM_LEAN_WEAKER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) < a → a ≤ x1 a a + (1 : Int)) ∧ ¬ (∀ (a : Int), (0 : Int) < a → a < x1 a a + (1 : Int))"
+    ]
+   },
+   {
+    "id": "z02_int_symm",
+    "domain": "Int",
+    "family": "harmless",
+    "expected": "SCHEMA_EQUIVALENT",
+    "verdict": "SCHEMA_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "equiv_trans",
+    "reason": null,
+    "engine": "cmcd_v10"
+   },
+   {
+    "id": "z03_int_dropped_sign",
+    "domain": "Int",
+    "family": "dropped hypothesis",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Int → Int → Int), (∀ (a : Int), (0 : Int) ≤ a → a ≤ x1 a a) ∧ ¬ (∀ (a : Int), a ≤ x1 a a)"
+    ],
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => b0",
+      "fun (b0 b1 : Int) => (b0) + 1",
+      "fun (b0 b1 : Int) => (b0) - 1"
+     ]
+    }
+   },
+   {
+    "id": "z04_int_constant",
+    "domain": "Int",
+    "family": "changed constant",
+    "expected": "CLAIM_LEAN_STRONGER",
+    "verdict": "CLAIM_LEAN_STRONGER",
+    "localized_at": [
+     1
+    ],
+    "expected_localized_at": [
+     1
+    ],
+    "theorem": "localize_stronger/monotone_strict",
+    "reason": null,
+    "engine": "cmcd_v10",
+    "countermodels": [
+     "∃ (x1 : Int → Int → Int), (∀ (a : Int), x1 a a ≥ (0 : Int)) ∧ ¬ (∀ (a : Int), x1 a a ≥ (1 : Int))"
+    ],
+    "boundary_candidates": {
+     "Int → Int → Int": [
+      "fun (b0 b1 : Int) => (0 : Int)",
+      "fun (b0 b1 : Int) => ((0 : Int)) + 1",
+      "fun (b0 b1 : Int) => ((0 : Int)) - 1",
+      "fun (b0 b1 : Int) => (1 : Int)",
+      "fun (b0 b1 : Int) => ((1 : Int)) + 1",
+      "fun (b0 b1 : Int) => ((1 : Int)) - 1"
+     ]
+    }
+   }
+  ]
+ },
+ "block2_development": {
+  "adelta_dev_and_adversarial": [
+   {
+    "id": "ad01_hidden_comm",
+    "domain": "Algebra",
+    "family": "hidden typeclass assumption",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Std.Commutative op",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "Bool",
+       "fun (a x : Bool) => a",
+       "true",
+       "true",
+       "true",
+       "true"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad02_nonempty",
+    "domain": "Types",
+    "family": "nonemptiness assumption",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Nonempty α",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad03_dependent_instance",
+    "domain": "Types",
+    "family": "dependent instance",
+    "expected": "INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+    "engine": "adelta v1.0.2"
+   },
+   {
+    "id": "ad04_redundant_comm",
+    "domain": "Algebra",
+    "family": "redundant assumption",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Std.Commutative op",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad05_needed_comm",
+    "domain": "Algebra",
+    "family": "reference needs assumption",
+    "expected": "REFERENCE_NEEDS_ASSUMPTION",
+    "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "necessary_refutes_reference",
+    "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Std.Commutative op",
+      "class": "NECESSARY",
+      "witness_model": [
+       "Bool",
+       "fun (a x : Bool) => a",
+       "true",
+       "false"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad06_order_antisymm",
+    "domain": "Order",
+    "family": "added antisymmetry",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "∀ (a b : α), r a b → r b a → a = b",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "Bool",
+       "fun (x x_1 : Bool) => True",
+       "true"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad07_dropped_injectivity",
+    "domain": "Functions",
+    "family": "dropped needed hypothesis",
+    "expected": "LEAN_CLAIM_FALSE",
+    "verdict": "LEAN_CLAIM_FALSE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "necessary_refutes_reference",
+    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "dropped",
+      "assumption": "∀ (a b : α), f a = f b → a = b",
+      "class": "NECESSARY",
+      "witness_model": [
+       "Bool",
+       "fun (x : Bool) => true",
+       "true",
+       "false"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad08_decidable_redundant",
+    "domain": "Types",
+    "family": "decidability assumption",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Nonempty (DecidableEq α)",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad09_domain_int",
+    "domain": "Int",
+    "family": "domain restriction",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "(0 : Int) ≤ a",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "-1"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ad10_redundant_nat",
+    "domain": "Nat",
+    "family": "redundant assumption",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "(0 : Nat) ≤ n",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "ad11_negative_position",
+    "domain": "Logic",
+    "family": "assumption under negation",
+    "expected": "INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "canonical telescope not linked to the elaborated statements",
+    "engine": "adelta v1.0.2"
+   },
+   {
+    "id": "x01_point_makes_nonempty_redundant",
+    "domain": "Types",
+    "family": "redundancy trap",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "Nonempty α",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "x02_dup_hypothesis",
+    "domain": "Algebra",
+    "family": "redundancy trap",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "∀ (a b : α), op b a = op a b",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "x03_dropped_redundant",
+    "domain": "Nat",
+    "family": "redundancy trap",
+    "expected": "ASSUMPTION_EQUIVALENT",
+    "verdict": "ASSUMPTION_EQUIVALENT",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "redundant_schema_equiv",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "dropped",
+      "assumption": "(0 : Nat) ≤ n",
+      "class": "REDUNDANT",
+      "witness_model": null
+     }
+    ]
+   },
+   {
+    "id": "x04_weaker_but_true_both",
+    "domain": "Int",
+    "family": "restriction, both true",
+    "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+    "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "restrictive_iff_strictly_weaker",
+    "reason": null,
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "added",
+      "assumption": "(1 : Int) ≤ a",
+      "class": "RESTRICTIVE",
+      "witness_model": [
+       "-1"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "x05_conclusion_also_changed",
+    "domain": "Int",
+    "family": "mixed change",
+    "expected": "INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": null,
+    "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+    "engine": "adelta v1.0.2"
+   },
+   {
+    "id": "x06_lean_drops_needed",
+    "domain": "Order",
+    "family": "dropped needed assumption",
+    "expected": "LEAN_CLAIM_FALSE",
+    "verdict": "LEAN_CLAIM_FALSE",
+    "localized_at": null,
+    "expected_localized_at": null,
+    "theorem": "necessary_refutes_reference",
+    "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
+    "engine": "adelta v1.0.2",
+    "assumptions": [
+     {
+      "side": "dropped",
+      "assumption": "∀ (a b : α), r a b → r b a",
+      "class": "NECESSARY",
+      "witness_model": [
+       "Bool",
+       "fun (a b : Bool) => a = true ∨ b = false",
+       "true",
+       "false"
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

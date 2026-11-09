@@ -1,0 +1,15 @@
+{
+ "id": "y02_boundary_shifted",
+ "domain": "Nat",
+ "family": "boundary (CMCD)",
+ "split": "v10_adversarial",
+ "reference": "∀ (n : Nat), n * n ≤ n * n * n",
+ "lean": "∀ (n : Nat), n * n < n * n * n + 1",
+ "expected": "SCHEMA_EQUIVALENT",
+ "must_not_be": [
+  "CLAIM_LEAN_WEAKER",
+  "CLAIM_LEAN_STRONGER",
+  "CLAIM_INCOMPARABLE"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

@@ -1,0 +1,11 @@
+{
+ "id": "ad02_nonempty",
+ "domain": "Types",
+ "family": "nonemptiness assumption",
+ "split": "adelta_v10_dev",
+ "reference": "∀ (α : Type) (f : α → α), (∀ (a b : α), f a = f b → a = b) → ∀ (a : α), f a = f a",
+ "lean": "∀ (α : Type) [Nonempty α] (f : α → α), (∀ (a b : α), f a = f b → a = b) → ∀ (a : α), f a = f a",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

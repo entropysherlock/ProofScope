@@ -1,0 +1,13 @@
+{
+ "id": "x05_conclusion_also_changed",
+ "domain": "Int",
+ "family": "mixed change",
+ "split": "v10_adversarial",
+ "reference": "∀ (a : Int), a ≤ a * a",
+ "lean": "∀ (a : Int), 1 ≤ a → a < a * a + 1",
+ "expected": "INCONCLUSIVE",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

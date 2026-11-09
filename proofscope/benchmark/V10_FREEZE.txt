@@ -1,0 +1,25 @@
+# ProofScope v1.0 freeze (Mon Nov  9 16:00:57 UTC 2026). Engines: adelta (new), cmcd_v10 (wraps frozen v0.9 cmcd).
+# Suites hashed before their first run. cmcd_blind is DEVELOPMENT data for v1.0 (b13/b14 used to design boundary synthesis).
+fec5423e5d8d932c9da93cd8628a5eba579304f56a65f50a3d7a1af99efb02e3  proofscope/adelta.py
+15dc16860677dbcc29c410ac8301469dcb00207861817186c0b902bdd6734b71  proofscope/cmcd_v10.py
+53ce2b7feea2e1dca91af796e99d58a772bd0aca9a4464d71ecc046f24c47289  lean/ProofScope/AssumptionExtract.lean
+38c2e3af419bee798d9fd7acad29f2fe6f18513125d91d32a1819761cf195bec  lean/ProofScope/BoundarySynth.lean
+a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
+49cc8d0646197aaaad24ddda5681900f9db2e24c9b70efee1cf66de879221e33  proofscope/cmcd.py
+1629ed72e7c9debd19db5c74b1c594e92e2b7a961c9f3f1468868639e1fb7bf4  lean/ProofScope/DriftExtract.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+23e0557adbb39f3b379ece73702b4cc1a0abef2f0e94ce36bd06c33e2ed05b75  adelta_v10_dev suite
+24bdedb15b8853daae2a9ed3ab5a62dec96a844b26505d8c3f3c7415072bbb84  v10_adversarial suite
+28faf77321e8e3103e371657280a3cdc0e3120ec04c09904e9de3d721d9eb554  mathlib_v10 suite
+
+# Block 2 (v1.0.2), after the frozen block-1 run: Assumption Delta model = ALL reference binders and hypotheses,
+# as in restrictive_iff_strictly_weaker. Block-1 run: adelta_v10_dev 11/11 by label but ad02 UNSOUND (label also wrong);
+# v10_adversarial x01 WRONG (false restriction). Both suites are now development data. (Mon Nov  9 16:12:38 UTC 2026)
+eb1ab5adca1a85b330f6fd3265099ad9dc553a90aeff9f08fd2279d466b594cd  proofscope/adelta.py
+15dc16860677dbcc29c410ac8301469dcb00207861817186c0b902bdd6734b71  proofscope/cmcd_v10.py
+b04bf409954c0083b5b70beb6f8358ace3acc4b63a4443b7792dfbc3a00b7089  lean/ProofScope/AssumptionExtract.lean
+38c2e3af419bee798d9fd7acad29f2fe6f18513125d91d32a1819761cf195bec  lean/ProofScope/BoundarySynth.lean
+a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
+49cc8d0646197aaaad24ddda5681900f9db2e24c9b70efee1cf66de879221e33  proofscope/cmcd.py
+1629ed72e7c9debd19db5c74b1c594e92e2b7a961c9f3f1468868639e1fb7bf4  lean/ProofScope/DriftExtract.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py

@@ -1,0 +1,11 @@
+{
+ "id": "m05_group_needed_comm",
+ "domain": "Algebra",
+ "family": "reference needs commutativity",
+ "split": "mathlib_v10",
+ "reference": "∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹",
+ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
+}

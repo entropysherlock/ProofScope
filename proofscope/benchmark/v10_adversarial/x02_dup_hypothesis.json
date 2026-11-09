@@ -1,0 +1,16 @@
+{
+ "id": "x02_dup_hypothesis",
+ "domain": "Algebra",
+ "family": "redundancy trap",
+ "split": "v10_adversarial",
+ "reference": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → ∀ (a : α), op a a = op a a",
+ "lean": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → (∀ (a b : α), op b a = op a b) → ∀ (a : α), op a a = op a a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE"
+ ],
+ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.0 freeze; synthetic, same author as the engine"
+}

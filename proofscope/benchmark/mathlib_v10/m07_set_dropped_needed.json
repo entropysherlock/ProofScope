@@ -1,0 +1,11 @@
+{
+ "id": "m07_set_dropped_needed",
+ "domain": "Sets",
+ "family": "dropped needed hypothesis",
+ "split": "mathlib_v10",
+ "reference": "∀ (s t : Set ℕ), s ⊆ t → s ∪ t = t",
+ "lean": "∀ (s t : Set ℕ), s ∪ t = t",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
+}

@@ -1,0 +1,11 @@
+{
+ "id": "m02_real_dropped_needed",
+ "domain": "Real analysis",
+ "family": "dropped needed hypothesis",
+ "split": "mathlib_v10",
+ "reference": "∀ (x : ℝ), 1 ≤ x → x ≤ x ^ 2",
+ "lean": "∀ (x : ℝ), x ≤ x ^ 2",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [],
+ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib (could not be built in the sandbox); PENDING first GitHub run"
+}
