@@ -1,0 +1,64 @@
+name: ProofScope ClaimDelta Alpha
+
+# A schematic Nat-bound relation audit, not paper-to-Lean fidelity.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-claimdelta.yml"
+      - "proofscope/strength.py"
+      - "lean/ProofScope/Strength.lean"
+      - "tests/v02/test_strength.py"
+
+permissions:
+  contents: read
+
+jobs:
+  claimdelta:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Regression tests
+        run: python -m unittest tests.v02.test_strength -v
+      - name: Prove Nat schema properties (axiom free)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/strength/ProofScope"
+          lean -R lean -o "$RUNNER_TEMP/strength/ProofScope/Strength.olean" lean/ProofScope/Strength.lean | tee strength-axioms.log
+          test "$(grep -c 'does not depend on any axioms' strength-axioms.log)" = 4
+          (cd "$RUNNER_TEMP/strength" && LEAN_PATH="$RUNNER_TEMP/strength" leanchecker --fresh ProofScope.Strength)
+      - name: Generate structural evidence
+        run: |
+          python -m proofscope.strength --splits dev heldout_oracle --out claimdelta-evidence/strength.json
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r=json.load(open("claimdelta-evidence/strength.json"))
+          print("## ClaimDelta schematic-alpha")
+          print("Cases:",r["cases"])
+          print("Status counts:",r["by_status"])
+          print("Schematic strength is not concrete theorem inequivalence or paper fidelity.")
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-claimdelta-alpha-evidence
+          path: |
+            strength-axioms.log
+            claimdelta-evidence/strength.json
+          if-no-files-found: warn
