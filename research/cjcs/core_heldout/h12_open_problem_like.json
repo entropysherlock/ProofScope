@@ -1,0 +1,1 @@
+{"id": "h12_open_problem_like", "reference": "∀ (n : Nat), n % 2 = 0 → ∃ (k : Nat), n = 2 * k", "lean": "∀ (n : Nat), ∃ (k : Nat), n = 2 * k", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

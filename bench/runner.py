@@ -26,6 +26,7 @@ ADAPTER_CPU_S, ADAPTER_WALL_S = 300, 600
 WALL_FACTOR = 4                 # wall cap = WALL_FACTOR x CPU limit + slack; reported as TIMEOUT_WALL, never as CPU
 MEASURE_CEILING_S = 900          # calibration measurement ceiling (availability only; never a scored budget)
 CALIBRATION_ID = "avail-calibration-identical"
+ENFORCEMENT_TOLERANCE_S = 0.5    # preregistered limiter precision (SOTA-3 amendment A9)
 REPO = Path(__file__).resolve().parents[1]
 
 
@@ -52,7 +53,7 @@ def _error_lines(log: str, path: Path) -> list[int]:
     return [int(m.group(1)) for m in re.finditer(re.escape(path.name) + r":(\d+):\d+: error", log)]
 
 
-def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> dict:
+def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str, engine: str = "proofscope.v12") -> dict:
     from .adapters import proofscope as A
     prep = A.prepare(case, work, [lean])
     rec = {"adapter": {}}
@@ -90,12 +91,13 @@ def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> d
             rec["adapter"]["error"] = f"printed {side} statement does not round-trip: " + (c.stdout + c.stderr)[-1500:]
             return rec
     rec["printed"] = printed
-    cmd = A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work)
+    cmd = A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work, engine)
     r = run_limited(cmd, budget, mem_mb, WALL_FACTOR * budget + 120, cwd=str(REPO), env=env, inputs=(cmd[4],))
     rec["run"] = _strip(r)
     rec["log_tail"] = (r.stdout + r.stderr)[-3000:]
     rec["status"] = r.status
-    rec.update(A.parse_engine(case["case_id"], work))
+    from . import outcomes
+    rec.update(A.parse_engine(case["case_id"], work, outcomes.cjcs if engine.endswith("cjcs") else None))
     return rec
 
 
@@ -163,6 +165,7 @@ def measure_startup(system: str, case: dict, n: int, a) -> dict:
 
 RUNNERS = {
     "proofscope": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean),
+    "cjcs": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean, "proofscope.experimental.cjcs"),
     "semanteq": lambda c, w, b, a: run_semanteq(c, w, b, a.tier, a.mem_mb, a.tool_dir),
     "beqplus": lambda c, w, b, a: run_beqplus(c, w, b, a.tier, a.mem_mb, a.tool_dir, a.beq_lean_version),
 }
@@ -170,7 +173,7 @@ RUNNERS = {
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="python -m bench.runner")
-    ap.add_argument("--system", required=True, choices=["proofscope", "semanteq", "beqplus"])
+    ap.add_argument("--system", required=True, choices=["proofscope", "cjcs", "semanteq", "beqplus"])
     ap.add_argument("--cases", type=Path, required=True)
     ap.add_argument("--tier", type=int, required=True, choices=[20, 180])
     ap.add_argument("--startup-allowance", default="0",
@@ -238,7 +241,13 @@ def main(argv=None) -> int:
                              "cpu_tree_s": run.get("cpu_tree_s"),
                              "chargeable_cpu_s": None if run.get("cpu_tree_s") is None else round(run["cpu_tree_s"] - allowance, 3),
                              "compliant": rec["status"] == "OK" and run.get("cpu_tree_s") is not None
-                                          and run["cpu_tree_s"] <= budget}
+                                          and run["cpu_tree_s"] <= budget,
+                             # SOTA-3: a TIMEOUT is never compliant (the budget was exhausted); separately, the
+                             # limiter's own precision: overshoot beyond the preregistered tolerance is an
+                             # infrastructure defect, flagged here and never attributed to the tool
+                             "enforcement_overshoot_s": run.get("cpu_overshoot_s"),
+                             "enforcement_tolerance_s": ENFORCEMENT_TOLERANCE_S,
+                             "enforcement_ok": (run.get("cpu_overshoot_s") or 0.0) <= ENFORCEMENT_TOLERANCE_S}
             rec["evaluation_class"] = evaluation_class(rec)
             (base / f"{case['case_id']}.r{rep}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1))
             print(case["case_id"], a.system, rec["status"], rec.get("native_verdict"), rec["evaluation_class"],

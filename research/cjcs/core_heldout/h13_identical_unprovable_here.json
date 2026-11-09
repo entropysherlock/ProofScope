@@ -1,0 +1,1 @@
+{"id": "h13_identical_unprovable_here", "reference": "∀ (l : List Nat), l.reverse.length = l.length", "lean": "∀ (l : List Nat), l.reverse.length = l.length", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}

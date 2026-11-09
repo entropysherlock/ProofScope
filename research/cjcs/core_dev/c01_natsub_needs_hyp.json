@@ -1,0 +1,1 @@
+{"id": "c01_natsub_needs_hyp", "reference": "∀ (n : Nat), n - 1 + 1 = n", "lean": "∀ (n : Nat), 1 ≤ n → n - 1 + 1 = n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}

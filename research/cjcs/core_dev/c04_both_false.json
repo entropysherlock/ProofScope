@@ -1,0 +1,1 @@
+{"id": "c04_both_false", "reference": "∀ (n : Nat), n + 1 = n", "lean": "∀ (n : Nat), n * 2 = n + 3", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}

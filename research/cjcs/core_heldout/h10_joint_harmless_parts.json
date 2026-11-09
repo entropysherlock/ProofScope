@@ -1,0 +1,1 @@
+{"id": "h10_joint_harmless_parts", "reference": "∀ (n : Nat), n ≤ 3 → n ≤ 20", "lean": "∀ (n : Nat), n ≤ 12 → n ≤ 11", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

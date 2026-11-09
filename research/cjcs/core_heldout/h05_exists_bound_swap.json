@@ -1,0 +1,1 @@
+{"id": "h05_exists_bound_swap", "reference": "∀ (n : Nat), ∃ (m : Nat), n ≤ m", "lean": "∃ (m : Nat), ∀ (n : Nat), n ≤ m", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

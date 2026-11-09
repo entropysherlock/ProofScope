@@ -1,0 +1,1 @@
+{"id": "h14_mixed_strict", "reference": "∀ (n : Nat), 2 ≤ n → n * n ≥ 2 * n", "lean": "∀ (n : Nat), 1 ≤ n → n * n ≥ 2 * n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

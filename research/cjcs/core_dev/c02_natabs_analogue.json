@@ -1,0 +1,1 @@
+{"id": "c02_natabs_analogue", "reference": "∀ (x : Int), (x.natAbs : Int) = x", "lean": "∀ (x : Int), 0 ≤ x → (x.natAbs : Int) = x", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}

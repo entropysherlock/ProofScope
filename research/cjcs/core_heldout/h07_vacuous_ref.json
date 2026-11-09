@@ -1,0 +1,1 @@
+{"id": "h07_vacuous_ref", "reference": "∀ (n : Nat), n + 1 = 0 → n = 5", "lean": "∀ (n : Nat), n = 5", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

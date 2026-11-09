@@ -1,0 +1,1 @@
+{"id": "c08_joint_drift", "reference": "∀ (n : Nat), n ≤ 5 → n ≤ 10", "lean": "∀ (n : Nat), n ≤ 7 → n ≤ 6", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}

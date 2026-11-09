@@ -1,0 +1,1 @@
+{"id": "h03_bool_and_comm", "reference": "∀ (a b : Bool), (a && b) = (b && a)", "lean": "∀ (p q : Bool), (q && p) = (p && q)", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}

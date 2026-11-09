@@ -1,0 +1,1 @@
+{"id": "h01_int_abs_sq", "reference": "∀ (x : Int), x * x ≥ 0", "lean": "∀ (x : Int), x ≥ 0 → x * x ≥ 0", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}

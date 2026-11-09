@@ -65,14 +65,14 @@ def extract_printed(output: str) -> str | None:
     return None
 
 
-def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path) -> list[str]:
+def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path, module: str = "proofscope.v12") -> list[str]:
     workdir = workdir.resolve()
     spec = workdir / f"{case_id}.json"
     spec.write_text(json.dumps({"id": case_id, "reference": ref, "lean": cand}, ensure_ascii=False))
-    return [sys.executable, "-m", "proofscope.v12", "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
+    return [sys.executable, "-m", module, "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
 
 
-def parse_engine(case_id: str, workdir: Path) -> dict:
+def parse_engine(case_id: str, workdir: Path, mapper=None) -> dict:
     p = workdir.resolve() / "ps_out" / "rows" / f"{case_id}.json"
     if not p.exists():
         return {"native_verdict": None}
@@ -84,8 +84,12 @@ def parse_engine(case_id: str, workdir: Path) -> dict:
            # NO_ASSUMPTION_DELTA is decided by meta-level comparison of the elaborated telescopes, with no
            # kernel certificate; decisive verdicts carry kernel-replayed certificates (certify gate)
            "certificate_kind": "structural" if v == "NO_ASSUMPTION_DELTA" else ("kernel" if certs and row.get("theorem") else None)}
+    if mapper is not None:
+        out["certificate_kind"] = "kernel" if v.startswith("CERTIFIED_") else None
+        out["direction"] = row.get("direction")
+        out["regions"] = row.get("regions")
     for t in ("A", "B"):
-        o = outcomes.proofscope(v, t)
+        o = (mapper or outcomes.proofscope)(v, t)
         if row.get("reason") == "extraction failed":
             o = {"certified": "NON_ELABORATING", "native": "NON_ELABORATING"}
         out[f"track_{t}"] = o

@@ -1,0 +1,1 @@
+{"id": "h08_both_false_different", "reference": "∀ (n : Nat), n * n = n", "lean": "∀ (n : Nat), n + n = n", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}

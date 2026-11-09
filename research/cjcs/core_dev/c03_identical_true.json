@@ -1,0 +1,1 @@
+{"id": "c03_identical_true", "reference": "∀ (a b : Nat), a + b = b + a", "lean": "∀ (x y : Nat), x + y = y + x", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}

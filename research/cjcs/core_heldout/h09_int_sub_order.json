@@ -1,0 +1,1 @@
+{"id": "h09_int_sub_order", "reference": "∀ (a b : Int), a - b = b - a", "lean": "∀ (a b : Int), a = b → a - b = b - a", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

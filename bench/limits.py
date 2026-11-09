@@ -6,10 +6,15 @@ Accounting semantics (SOTA-2; protocol amendment A7):
   runner starts and every descendant (Lean, Lake, REPL servers, worker pools). It is not a per-process
   limit. (SOTA-1 used `prlimit --cpu`, which is per process: a tool with four busy children could use four
   budgets and still be reported OK; tests/bench/test_bench.py reproduces this.)
-* The tree is the new session the runner creates (`start_new_session=True`), plus orphans, which return
-  to the runner because it is a child subreaper (`PR_SET_CHILD_SUBREAPER`) and are reaped and counted here.
+* The tree is every **descendant by ancestry** of the process the runner starts (parent links in /proc),
+  tracked from the first poll on, so a descendant that leaves the session (`setsid`, as LeanInteract
+  does for its Lean REPL: `start_new_session=True` in lean_interact/server.py) is still charged and killed.
+  (SOTA-2 tracked the session only; the BEq+ REPL escaped it, its CPU arrived in one step when it was
+  reaped, which is the 3.654 s overshoot of run 42694874449.) Orphans return to the runner because it is a
+  child subreaper (`PR_SET_CHILD_SUBREAPER`); a previously tracked pid keeps being tracked after
+  re-parenting, and is reaped and counted here.
 * Enforcement: every 20 ms the runner sums `utime + stime + cutime + cstime` (from /proc/<pid>/stat) over
-  the live processes of the session, plus the CPU of reaped orphans. A dead descendant's time reaches
+  the live tracked processes, plus the CPU of reaped orphans. A dead descendant's time reaches
   exactly one live ancestor's cutime/cstime when its parent reaps it, so the sum counts each process once.
   When the sum exceeds the limit, the whole session is killed and the status is TIMEOUT_CPU.
   Enforcement is calibrated, not exact: overshoot is bounded by the polling interval times the number of
@@ -53,6 +58,8 @@ class Run:
     processes_seen: int
     stdout: str
     stderr: str
+    polls: int = 0
+    mean_poll_ms: float = 0.0
 
     def as_dict(self) -> dict:
         d = asdict(self)
@@ -71,30 +78,71 @@ def _set_subreaper() -> bool:
 SUBREAPER = _set_subreaper()
 
 
-def _session_stats(sid: int) -> tuple[float, float, set[int]]:
-    """(CPU seconds incl. reaped descendants, RSS MB, pids) over the live processes of session `sid`."""
-    cpu_ticks, rss_kb, pids = 0, 0, set()
+def _proc_table() -> dict[int, tuple[int, int, int, float]]:
+    """pid -> (ppid, session, starttime ticks, cpu seconds incl. reaped descendants) for all processes."""
+    tab = {}
     for d in os.listdir("/proc"):
         if not d.isdigit():
             continue
         try:
             with open(f"/proc/{d}/stat") as f:
                 st = f.read()
-            fields = st[st.rindex(")") + 2:].split()
-            # after the comm field: index 0 = state (field 3), 3 = session (field 6),
-            # 11..14 = utime, stime, cutime, cstime (fields 14..17)
-            if int(fields[3]) != sid:
-                continue
-            cpu_ticks += int(fields[11]) + int(fields[12]) + int(fields[13]) + int(fields[14])
-            pids.add(int(d))
-            with open(f"/proc/{d}/status") as f:
-                for line in f:
-                    if line.startswith("VmRSS:"):
-                        rss_kb += int(line.split()[1])
-                        break
+            f_ = st[st.rindex(")") + 2:].split()
+            # after comm: 0 state, 1 ppid, 3 session, 11..14 utime stime cutime cstime, 19 starttime
+            tab[int(d)] = (int(f_[1]), int(f_[3]), int(f_[19]),
+                           (int(f_[11]) + int(f_[12]) + int(f_[13]) + int(f_[14])) / CLK)
         except (OSError, ValueError, IndexError):
             continue
-    return cpu_ticks / CLK, rss_kb / 1024, pids
+    return tab
+
+
+def _rss_mb(pid: int) -> float:
+    try:
+        with open(f"/proc/{pid}/status") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    return int(line.split()[1]) / 1024
+    except OSError:
+        pass
+    return 0.0
+
+
+class Tree:
+    """Descendants of `root` by ancestry. A tracked process is identified by (pid, starttime) so pid reuse
+    cannot attach an unrelated process."""
+
+    def __init__(self, root: int):
+        self.root = root
+        self.members: dict[int, int] = {}     # pid -> starttime
+        self.seen = 0
+
+    def update(self) -> tuple[float, float, list[int]]:
+        tab = _proc_table()
+        if self.root in tab and self.root not in self.members:
+            self.members[self.root] = tab[self.root][2]
+        changed = True
+        while changed:
+            changed = False
+            me = os.getpid()
+            for pid, (ppid, _sid, start, _cpu) in tab.items():
+                orphan = ppid == me and pid != self.root     # re-parented to the subreaper before we saw it
+                if pid not in self.members and (orphan or (ppid in self.members and tab.get(ppid, (0, 0, -1))[2] == self.members[ppid])):
+                    self.members[pid] = start
+                    self.seen += 1
+                    changed = True
+        live = [p for p, st in self.members.items() if p in tab and tab[p][2] == st]
+        # forget dead members (their CPU is in an ancestor's cutime or was reaped by the runner)
+        self.members = {p: self.members[p] for p in live}
+        cpu = sum(tab[p][3] for p in live)
+        rss = sum(_rss_mb(p) for p in live)
+        return cpu, rss, live
+
+    def kill(self) -> None:
+        for p in list(self.members):
+            try:
+                os.kill(p, signal.SIGKILL)
+            except (ProcessLookupError, PermissionError):
+                pass
 
 
 def _reap_orphans(root: int) -> float:
@@ -158,16 +206,18 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
           threading.Thread(target=pump, args=(p.stderr, "err"), daemon=True)]
     for t in ts:
         t.start()
-    sid = p.pid
-    cause, peak_cpu, peak_rss, seen, orphan_cpu = None, 0.0, 0.0, set(), 0.0
-    status_word, ru = 0, None
+    tree = Tree(p.pid)
+    cause, peak_cpu, peak_rss, orphan_cpu = None, 0.0, 0.0, 0.0
+    status_word, ru, polls, poll_cost = 0, None, 0, 0.0
     while True:
         pid, status_word, ru = os.wait4(p.pid, os.WNOHANG)
         if pid == p.pid:
             break
+        t_poll = time.perf_counter()
         orphan_cpu += _reap_orphans(p.pid)
-        cpu, rss, pids = _session_stats(sid)
-        seen |= pids
+        cpu, rss, _live = tree.update()
+        poll_cost += time.perf_counter() - t_poll
+        polls += 1
         peak_cpu = max(peak_cpu, cpu + orphan_cpu)
         peak_rss = max(peak_rss, rss)
         if cause is None:
@@ -178,17 +228,19 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
             elif time.monotonic() - t0 > wall_s:
                 cause = "TIMEOUT_WALL"
             if cause:
+                tree.kill()
                 try:
-                    os.killpg(sid, signal.SIGKILL)
+                    os.killpg(p.pid, signal.SIGKILL)
                 except ProcessLookupError:
                     pass
         time.sleep(POLL_S)
-    # the root is gone: kill whatever is left of its session (no descendant may outlive the pair) and count it
-    left_cpu, _, left = _session_stats(sid)
+    # the root is gone: account for and kill every remaining tracked descendant (nothing may outlive the pair)
+    left_cpu, _, left = tree.update()
     if left:
         peak_cpu = max(peak_cpu, left_cpu + orphan_cpu + ru.ru_utime + ru.ru_stime)
+        tree.kill()
         try:
-            os.killpg(sid, signal.SIGKILL)
+            os.killpg(p.pid, signal.SIGKILL)
         except ProcessLookupError:
             pass
         time.sleep(0.2)
@@ -202,12 +254,12 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
     rc = p.returncode
     sig = signal.Signals(-rc).name if rc is not None and rc < 0 else None
     root_cpu = ru.ru_utime + ru.ru_stime
-    tree = max(root_cpu + orphan_cpu, peak_cpu)
+    tree_cpu = max(root_cpu + orphan_cpu, peak_cpu)
     dec = lambda b: b"".join(b).decode("utf-8", "replace")
     err_text = dec(bufs["err"])
     if cause:
         status = cause
-    elif tree > cpu_s:
+    elif tree_cpu > cpu_s:
         status = "TIMEOUT_CPU"  # finished, but the tree used more than the budget between two polls
     elif sig:
         status = "TIMEOUT_CPU" if sig == "SIGXCPU" else "KILLED"
@@ -217,6 +269,6 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
         status = "OOM"
     else:
         status = "ERROR"
-    return Run(rc, sig, status, round(tree, 3), round(root_cpu, 3), round(peak_cpu, 3), cpu_s,
-               round(max(0.0, tree - cpu_s), 3), round(wall, 3), round(max(ru.ru_maxrss / 1024, peak_rss), 1),
-               len(seen), dec(bufs["out"]), err_text)
+    return Run(rc, sig, status, round(tree_cpu, 3), round(root_cpu, 3), round(peak_cpu, 3), cpu_s,
+               round(max(0.0, tree_cpu - cpu_s), 3), round(wall, 3), round(max(ru.ru_maxrss / 1024, peak_rss), 1),
+               tree.seen + 1, dec(bufs["out"]), err_text, polls, round(poll_cost / max(1, polls) * 1000, 3))

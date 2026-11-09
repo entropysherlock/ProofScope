@@ -63,3 +63,16 @@ def beqplus(result: bool | None, track: str) -> dict:
     if result is None:
         return {"certified": "ERROR", "native": "ERROR"}
     return {"certified": "EQUIV" if result else "ABSTAIN", "native": "EQUIV" if result else "NONEQUIV"}
+
+
+def cjcs(verdict: str, track: str) -> dict:
+    """Experimental CJCS (proofscope/experimental/cjcs.py). A certified logical difference is a difference
+    in both tracks (a faithful formalization is in particular logically equivalent); a certified logical
+    equivalence is EQUIV in Track A only (`CJCS.vacuous_logical_equiv`: it never certifies fidelity)."""
+    if verdict == "CERTIFIED_LOGICAL_DIFFERENCE":
+        c = "NONEQUIV"
+    elif verdict == "CERTIFIED_LOGICAL_EQUIVALENCE":
+        c = "EQUIV" if track == "A" else "ABSTAIN"
+    else:
+        c = "ABSTAIN"
+    return {"certified": c, "native": "EQUIV" if c == "EQUIV" else "NONEQUIV"}

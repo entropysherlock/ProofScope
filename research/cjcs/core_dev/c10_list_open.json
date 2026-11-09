@@ -1,0 +1,1 @@
+{"id": "c10_list_open", "reference": "∀ (l : List Nat), l.reverse.reverse = l", "lean": "∀ (l : List Nat), l ≠ [] → l.reverse.reverse = l", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}

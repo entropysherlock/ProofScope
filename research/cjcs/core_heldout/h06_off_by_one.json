@@ -1,0 +1,1 @@
+{"id": "h06_off_by_one", "reference": "∀ (n : Nat), n < 10 → n ≤ 9", "lean": "∀ (n : Nat), n < 10 → n ≤ 8", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

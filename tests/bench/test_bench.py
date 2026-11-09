@@ -110,6 +110,36 @@ class Limits(unittest.TestCase):
         self.assertGreater(r.cpu_tree_s, r.cpu_peak_polled_s * 0.5)
         self.assertGreaterEqual(r.cpu_tree_s, r.cpu_root_wait4_s)
 
+    def test_session_escape_is_still_charged(self):
+        # SOTA-3: LeanInteract starts its REPL with start_new_session=True; SOTA-2 tracked the session only, so
+        # the REPL's CPU arrived in one step when it was reaped (BEq+ overshoot 3.654 s in run 42694874449)
+        code = "import subprocess\np=subprocess.Popen(['python3','-c','x=0\\nwhile True: x+=1'],start_new_session=True)\np.wait()"
+        r = run_limited(["python3", "-c", code], cpu_s=1.5, mem_mb=2000, wall_s=60)
+        self.assertEqual(r.status, "TIMEOUT_CPU")
+        self.assertLess(r.cpu_overshoot_s, 0.5)
+
+    def test_setsid_double_fork_is_charged_and_killed(self):
+        code = ("import os,time\nif os.fork()==0:\n  os.setsid()\n  if os.fork()==0:\n    x=0\n    while True: x+=1\n"
+                "  os._exit(0)\ntime.sleep(30)")
+        r = run_limited(["python3", "-c", code], cpu_s=1.5, mem_mb=2000, wall_s=60)
+        self.assertEqual(r.status, "TIMEOUT_CPU")
+        self.assertLess(r.cpu_overshoot_s, 0.5)
+
+    def test_many_busy_children_overshoot_is_bounded(self):
+        code = ("import multiprocessing as m\ndef f():\n  x=0\n  while True: x+=1\n"
+                "ps=[m.Process(target=f) for _ in range(8)]\n[p.start() for p in ps]\n[p.join() for p in ps]")
+        r = run_limited(["python3", "-c", code], cpu_s=2, mem_mb=4000, wall_s=60)
+        self.assertEqual(r.status, "TIMEOUT_CPU")
+        self.assertLess(r.cpu_overshoot_s, 0.5)
+
+    def test_no_process_outlives_its_run(self):
+        import subprocess as sp
+        code = "import subprocess,time\nsubprocess.Popen(['sleep','300'],start_new_session=True)\ntime.sleep(0.5)"
+        r = run_limited(["python3", "-c", code], cpu_s=5, mem_mb=2000, wall_s=30)
+        self.assertEqual(r.status, "OK")
+        left = sp.run(["pgrep", "-f", "^sleep 300$"], capture_output=True, text=True).stdout.split()
+        self.assertEqual(left, [])
+
     def test_wall_timeout_is_not_a_cpu_timeout(self):
         self.assertEqual(run_limited(["sleep", "20"], cpu_s=5, mem_mb=200, wall_s=1).status, "TIMEOUT_WALL")
 

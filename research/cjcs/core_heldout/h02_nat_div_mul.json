@@ -1,0 +1,1 @@
+{"id": "h02_nat_div_mul", "reference": "∀ (n : Nat), n / 2 * 2 = n", "lean": "∀ (n : Nat), n % 2 = 0 → n / 2 * 2 = n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

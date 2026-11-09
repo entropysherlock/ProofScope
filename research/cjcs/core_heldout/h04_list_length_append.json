@@ -1,0 +1,1 @@
+{"id": "h04_list_length_append", "reference": "∀ (l m : List Nat), (l ++ m).length = l.length + m.length", "lean": "∀ (l m : List Nat), (l ++ m).length = l.length", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "must_not_be": ["CERTIFIED_LOGICAL_EQUIVALENCE"], "split": "cjcs_core_heldout"}

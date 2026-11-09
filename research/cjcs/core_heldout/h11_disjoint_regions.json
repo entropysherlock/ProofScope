@@ -1,0 +1,1 @@
+{"id": "h11_disjoint_regions", "reference": "∀ (n : Nat), n ≤ 3 → n ≤ 20", "lean": "∀ (n : Nat), n ≤ 12 → n ≤ 15", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "must_not_be": ["CERTIFIED_LOGICAL_DIFFERENCE"], "split": "cjcs_core_heldout"}

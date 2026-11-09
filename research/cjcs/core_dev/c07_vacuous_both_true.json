@@ -1,0 +1,1 @@
+{"id": "c07_vacuous_both_true", "reference": "∀ (n : Nat), n < 0 → n = 7", "lean": "∀ (n : Nat), n < 0 → n = 8", "expected": "CERTIFIED_LOGICAL_EQUIVALENCE", "split": "cjcs_core_dev"}

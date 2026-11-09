@@ -19,6 +19,7 @@ GATE_CASES = ("avail-calibration-identical", "avail-equivalent-rename")
 EVALUATED = ("EVALUATED_POSITIVE_KERNEL", "EVALUATED_POSITIVE_STRUCTURAL", "EVALUATED_NEGATIVE_LOGICAL",
              "EVALUATED_NEGATIVE_FIDELITY", "EVALUATED_ABSTAIN")
 SYSTEMS = ("proofscope", "semanteq", "beqplus")
+EXPERIMENTAL = ("cjcs",)
 
 
 def system_report(recs: dict[str, dict], cases: list[str], manifests: list[dict]) -> dict:
@@ -70,7 +71,8 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     cases = [c["case_id"] for c in read_jsonl(a.cases)]
     rep = {"tier_cpu_s": a.tier, "systems": {}}
-    for s in SYSTEMS:
+    present = {p.parent.parent.name for p in a.runs.glob(f"**/t{a.tier}/*.json")}
+    for s in SYSTEMS + tuple(x for x in EXPERIMENTAL if x in present):
         recs, mans = {}, []
         for p in a.runs.glob(f"**/{s}/t{a.tier}/*.json"):
             d = json.loads(p.read_text())
@@ -79,7 +81,7 @@ def main(argv=None) -> int:
             elif p.name.endswith(".r0.json"):
                 recs[d["case_id"]] = d
         rep["systems"][s] = system_report(recs, cases, mans)
-    rep["all_gates_pass"] = all(v["gate_pass"] for v in rep["systems"].values())
+    rep["all_gates_pass"] = all(v["gate_pass"] for k, v in rep["systems"].items() if k in SYSTEMS)
     a.out.write_text(json.dumps(rep, indent=1, ensure_ascii=False))
     md = [f"## SOTA-1 availability gates (tier {a.tier} CPU-s, whole process tree)", ""]
     for s, v in rep["systems"].items():

@@ -1,0 +1,1 @@
+{"id": "c06_strengthened_conclusion", "reference": "∀ (n : Nat), 3 ≤ n → 2 ≤ n", "lean": "∀ (n : Nat), 3 ≤ n → 4 ≤ n", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}

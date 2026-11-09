@@ -1,0 +1,1 @@
+{"id": "c09_bool_dropped", "reference": "∀ (a b : Bool), a = true → (a || b) = true", "lean": "∀ (a b : Bool), (a || b) = true", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}

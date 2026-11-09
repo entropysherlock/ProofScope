@@ -1,0 +1,1 @@
+{"id": "c05_quantifier_swap", "reference": "∀ (x : Nat), ∃ (y : Nat), x < y", "lean": "∃ (y : Nat), ∀ (x : Nat), x < y", "expected": "CERTIFIED_LOGICAL_DIFFERENCE", "split": "cjcs_core_dev"}
