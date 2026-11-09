@@ -52,7 +52,8 @@ def compare(semanteq: Path, proofscope: Path, out: Path) -> dict:
     for line in semanteq.read_text().splitlines():
         if line.strip():
             r = json.loads(line)
-            se[r["id"]] = r.get("verdict", "missing")
+            if "id" in r:  # SemantEq begins with a {"_meta": ...} record
+                se[r["id"]] = r.get("verdict", "missing")
     rows = json.loads(proofscope.read_text())["rows"]
     table: dict = {}
     for r in rows:
@@ -71,8 +72,57 @@ def compare(semanteq: Path, proofscope: Path, out: Path) -> dict:
                       "Two true closed statements are logically equivalent, so disagreement is not by itself an "
                       "error of either tool; each disagreement should be read individually.",
            "note": __doc__.split("Why the comparison is only partial", 1)[1].strip()}
+    res["ground_truth"] = ground_truth(se, rows)
     out.write_text(json.dumps(res, indent=2))
     return res
+
+
+
+_DIR = {"EQUIVALENT": "equivalent", "LEAN_STRONGER": "stronger", "COVERS": "stronger"}
+_SE_DIR = {"LikelyTooWeak": "weaker", "LikelyTooStrong": "stronger"}
+
+
+def ground_truth(se: dict, rows: list) -> dict:
+    """Score both tools against the benchmark's expected labels.
+
+    These labels encode ProofScope's pointwise semantics, which are not SemantEq's
+    restricted equivalence policy; disagreement alone is not an error.
+    """
+    cases = {}
+    for p in HERE.glob("*/*.json"):
+        case = json.loads(p.read_text())
+        if isinstance(case, dict) and "expected" in case and "id" in case:
+            cases[case["id"]] = case
+    score: dict = {}
+    disagreements = []
+    for r in rows:
+        i = r["id"]
+        if i not in se or i not in cases:
+            continue
+        case = cases[i]
+        truth = _DIR.get(case["expected"], "weaker")
+        s = "equivalent" if se[i] in EQUIV else _SE_DIR.get(se[i])
+        p = None if r["classification"] == "INCONCLUSIVE" else _DIR.get(r["classification"], "weaker")
+        split = r.get("split") or case.get("split", "?")
+        k = score.setdefault(split, {"pairs": 0,
+            "semanteq": {"agree": 0, "disagree": 0, "abstain": 0, "false_equivalent": 0},
+            "proofscope": {"agree": 0, "disagree": 0, "abstain": 0, "false_equivalent": 0}})
+        k["pairs"] += 1
+        for name, v in (("semanteq", s), ("proofscope", p)):
+            if v is None:
+                k[name]["abstain"] += 1
+            elif v == truth:
+                k[name]["agree"] += 1
+            else:
+                k[name]["disagree"] += 1
+                if v == "equivalent":
+                    k[name]["false_equivalent"] += 1
+                if name == "semanteq":
+                    disagreements.append({"id": i, "split": split, "expected": case["expected"],
+                        "semanteq": se[i], "proofscope": r["classification"],
+                        "lean": f"{case['lean_hyp']} → {case['lean_concl']}",
+                        "reference": f"{case['ref_hyp']} → {case['ref_concl']}"})
+    return {"by_split": score, "semanteq_disagreements": disagreements}
 
 
 def main(argv=None) -> int:

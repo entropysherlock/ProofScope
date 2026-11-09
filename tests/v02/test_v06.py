@@ -97,11 +97,13 @@ class ResearchAndCompetitorTests(unittest.TestCase):
         self.assertGreaterEqual(n, 30)
         first = json.loads((out / "pairs.jsonl").read_text().splitlines()[0])
         self.assertTrue(first["reference"].startswith("import Mathlib\ntheorem r :"))
-        (out / "se.jsonl").write_text(json.dumps({"id": first["id"], "verdict": "EquivalentRestricted"}) + "\n")
+        (out / "se.jsonl").write_text(json.dumps({"_meta": {"tool": "semanteq"}}) + "\n"
+                                      + json.dumps({"id": first["id"], "verdict": "EquivalentRestricted"}) + "\n")
         (out / "ps.json").write_text(json.dumps({"rows": [{"id": first["id"], "classification": "EQUIVALENT"}]}))
         res = S.compare(out / "se.jsonl", out / "ps.json", out / "cmp.json")
         self.assertEqual(res["agree_equivalent"], 1)
         self.assertEqual(res["disagreements"], [])
+        self.assertEqual(sum(v["pairs"] for v in res["ground_truth"]["by_split"].values()), 1)
 
 
 if __name__ == "__main__":
