@@ -1,0 +1,153 @@
+name: ProofScope ClaimDelta 208 Sharded
+
+# This is the unfinished 208-case v0.6 evaluation ONLY.
+# The 15 Lean theorems and 25 development cases run in ClaimDelta Certified.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-claimdelta-sharded.yml"
+      - "proofscope/claimdelta.py"
+      - "proofscope/benchmark/CLAIMDELTA_FREEZE.txt"
+      - "proofscope/benchmark/dev/**"
+      - "proofscope/benchmark/heldout_oracle/**"
+
+permissions:
+  contents: read
+
+jobs:
+  shards:
+    name: Evaluate shard ${{ matrix.shard }} / 8
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Check frozen engine hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          awk '/^# v0.8 engine after dev fixes/{f=1;next} f && /^[0-9a-f]{64}  /' proofscope/benchmark/CLAIMDELTA_FREEZE.txt > /tmp/freeze.sha
+          test -s /tmp/freeze.sha
+          sha256sum -c /tmp/freeze.sha
+      - name: Evaluate 26 cases, preserving manifest and output
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, subprocess, sys
+          from pathlib import Path
+          paths = sorted(list(Path("proofscope/benchmark/dev").glob("*.json"))
+                         + list(Path("proofscope/benchmark/heldout_oracle").glob("*.json")))
+          assert len(paths) == 208, f"Input changed: {len(paths)} != 208"
+          shard = int(os.environ["SHARD"])
+          selected = [p for i, p in enumerate(paths) if i % 8 == shard]
+          assert len(selected) == 26
+          dest = Path("claimdelta-evidence/v06")
+          dest.mkdir(parents=True, exist_ok=True)
+          (dest / "case_manifest.json").write_text(json.dumps({
+              "shard": shard, "total_shards": 8,
+              "cases": [{"path": str(p), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+                         "id": json.loads(p.read_text())["id"]} for p in selected]
+          }, indent=2) + "\n")
+          command = [sys.executable, "-m", "proofscope.claimdelta", *map(str, selected),
+                     "--out", str(dest), "--jobs", "4"]
+          print(f"Starting shard {shard}/8, 26/208 cases", flush=True)
+          with (dest / "shard.log").open("w") as log:
+              result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
+          print((dest / "shard.log").read_text()[-15000:], flush=True)
+          sys.exit(result.returncode)
+          PY
+      - name: Upload shard evidence, even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claimdelta-v06-shard-${{ matrix.shard }}
+          path: claimdelta-evidence/v06/
+          if-no-files-found: warn
+          retention-days: 60
+
+  aggregate:
+    name: Validate 208/208 cases and aggregate verdicts
+    runs-on: ubuntu-24.04
+    needs: shards
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: claimdelta-v06-shard-*
+          path: claimdelta-shards
+      - name: Verify coverage, source hashes, and all conclusions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p claimdelta-aggregate
+          python - <<'PY' | tee claimdelta-aggregate/summary.txt
+          import collections, hashlib, json
+          from pathlib import Path
+          root = Path("claimdelta-shards")
+          rows = []
+          seen = set()
+          dirs = list(root.glob("claimdelta-v06-shard-*"))
+          assert len(dirs) == 8, f"Only {len(dirs)}/8 artifacts"
+          for shard in range(8):
+              folder = root / f"claimdelta-v06-shard-{shard}"
+              manifest = json.loads((folder / "case_manifest.json").read_text())
+              assert manifest["shard"] == shard and manifest["total_shards"] == 8
+              items = manifest["cases"]
+              assert len(items) == 26, f"Shard {shard}: wrong input count"
+              expected_ids = set()
+              for item in items:
+                  path = Path(item["path"])
+                  assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"], str(path)
+                  assert str(path) not in seen, f"Duplicate input {path}"
+                  seen.add(str(path))
+                  assert json.loads(path.read_text())["id"] == item["id"]
+                  expected_ids.add(item["id"])
+              result_file = folder / "claimdelta_results.json"
+              assert result_file.exists(), f"Shard {shard}: incomplete, missing results"
+              group = json.loads(result_file.read_text())["rows"]
+              ids = [x["id"] for x in group]
+              assert len(group) == 26 and len(set(ids)) == 26 and set(ids) == expected_ids
+              rows.extend(group)
+              print(f"Shard {shard}: PASS, 26/26 verified")
+          source = {str(p) for d in ("dev", "heldout_oracle")
+                    for p in (Path("proofscope/benchmark") / d).glob("*.json")}
+          assert len(source) == 208 and source == seen and len(rows) == 208
+          counts = dict(sorted(collections.Counter(x["verdict"] for x in rows).items()))
+          incompatible = [x["id"] for x in rows if x["verdict"] == "INCONSISTENT"]
+          labelled = [x for x in rows if x.get("expected_claimdelta")]
+          errors = [{"id": x["id"], "expected": x["expected_claimdelta"], "got": x["verdict"]}
+                    for x in labelled if x["expected_claimdelta"] != x["verdict"]]
+          report = {"total": 208, "verdicts": counts, "inconsistent": incompatible,
+                    "labelled": len(labelled), "label_disagreements": errors, "rows": rows}
+          Path("claimdelta-aggregate/claimdelta_results.json").write_text(json.dumps(report, indent=2))
+          print(f"TOTAL: 208/208; VERDICTS: {counts}")
+          print(f"INCONSISTENT: {incompatible}; LABEL ERRORS: {errors}")
+          print("Internal v0.6 comparison set; not an independent external benchmark.")
+          assert not incompatible, "Contradictory certificate: soundness gate failed"
+          PY
+          cat claimdelta-aggregate/summary.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload consolidated evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claimdelta-208-aggregate
+          path: claimdelta-aggregate/
+          if-no-files-found: warn
+          retention-days: 60
