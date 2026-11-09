@@ -42,7 +42,7 @@ jobs:
           sh /tmp/elan-init.sh -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           cd "$RUNNER_TEMP/semanteq"
-          "$HOME/.elan/bin/lake" build 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
+          "$HOME/.elan/bin/lake" exe cache get 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/cache.log"
           "$HOME/.elan/bin/lake" build semanteq 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
       - name: Native pair smoke (not benchmark scoring)
         shell: bash
@@ -143,7 +143,7 @@ jobs:
         run: |
           set -o pipefail
           cd "$RUNNER_TEMP/mc/examples/toy-paper/lean"
-          "$HOME/.elan/bin/lake" exe cache get 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/cache.log"
+          "$HOME/.elan/bin/lake" build 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
           cd ..
           uv run --project "$RUNNER_TEMP/mc" --python 3.11 --with "$RUNNER_TEMP/mc" machinechecked check --json 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log"
       - name: Always upload raw evidence
