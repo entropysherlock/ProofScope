@@ -1,0 +1,3102 @@
+From bb4eb19d6c705b8c1d3fdbc0aff7340a85f1d4e9 Mon Sep 17 00:00:00 2001
+From: "Caleb J. Westfall" <calebwestfall1989@gmail.com>
+Date: Mon, 9 Nov 2026 10:04:52 -0700
+Subject: [PATCH] ProofScope v1.1: dependent-structure linking, compositional
+ soundness, minimality
+
+- Composition.lean: 15 theorems (14 axiom-free, 1 propext): linking transport,
+  same-text-different-structure, polarity sign rule, strict_lift_iff
+  (strictness survives a monotone context iff k True and not k False),
+  exists/empty-binder absorption counterexamples, inclusion_minimal,
+  redundant_drop, substitutable_example
+- AssumptionExtract11.lean + adelta11.py: clean binder names, instance binders
+  re-declared as instances, instance witnesses from carrier operations,
+  pp.analyze round-trip; minimality mode (NECESSARY/REDUNDANT/UNNEEDED,
+  jointly necessary pairs); CONCLUSION_ONLY_CHANGE
+- Root cause of Mathlib m04/m05 (hygienic instance names) reproduced in core
+  Lean and fixed; Mathlib rerun PENDING
+- Block-1 frozen run 16/18, 0 hostile violations; block 2 34/36 (dev)
+- Pre-registered competitor scoring protocol and SemantEq exporter
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D6eL9tvFdmWVfTWBctgXnC
+---
+ .github/workflows/proofscope-mathlib-v11.yml  |   58 +
+ .github/workflows/proofscope-v11.yml          |   80 ++
+ CHANGELOG.md                                  |   10 +
+ README.md                                     |   12 +
+ docs/v1.1_foundations.md                      |  157 ++
+ docs/v1.1_results.json                        | 1270 +++++++++++++++++
+ lean/ProofScope/AssumptionExtract11.lean      |  149 ++
+ lean/ProofScope/Composition.lean              |  192 +++
+ proofscope/__init__.py                        |    2 +-
+ proofscope/adelta11.py                        |  402 ++++++
+ proofscope/benchmark/V11_FREEZE.txt           |   17 +
+ .../mathlib_v11/m04_group_hidden_comm.json    |   11 +
+ .../mathlib_v11/m05_group_needed_comm.json    |   11 +
+ .../mathlib_v11/m09_partial_order_total.json  |   11 +
+ .../mathlib_v11/m10_conjugation.json          |   11 +
+ .../mathlib_v11/m11_commmonoid_redundant.json |   11 +
+ .../mathlib_v11/m12_real_minimal.json         |   10 +
+ .../mathlib_v11/m13_real_unneeded.json        |   10 +
+ .../benchmark/v11_dev/l1_mul_hidden_comm.json |   11 +
+ .../v11_dev/l2_add_reference_needs.json       |   11 +
+ .../benchmark/v11_dev/l3_two_structures.json  |   11 +
+ .../benchmark/v11_dev/l4_redundant_class.json |   11 +
+ .../benchmark/v11_dev/mn1_unneeded_assoc.json |   10 +
+ proofscope/benchmark/v11_dev/mn2_bounds.json  |   10 +
+ .../benchmark/v11_dev/mn3_substitutable.json  |   10 +
+ .../benchmark/v11_dev/mn4_single_needed.json  |   10 +
+ .../v11_hostile/h01_empty_carrier_point.json  |   17 +
+ .../v11_hostile/h02_redundant_data_class.json |   17 +
+ .../h03_inconsistent_hypothesis.json          |   13 +
+ .../v11_hostile/h04_swapped_structure.json    |   13 +
+ .../benchmark/v11_hostile/h05_polarity.json   |   18 +
+ .../v11_hostile/h06_unrelated_true.json       |   13 +
+ .../v11_hostile/h07_false_reference.json      |   13 +
+ .../h08_instance_implies_nonempty.json        |   17 +
+ .../h09_min_duplicate_rephrased.json          |   12 +
+ .../v11_hostile/h10_min_vacuous.json          |   10 +
+ proofscope/competitors/v11_protocol.py        |   67 +
+ tests/v02/test_v11.py                         |   45 +
+ 38 files changed, 2762 insertions(+), 1 deletion(-)
+ create mode 100644 .github/workflows/proofscope-mathlib-v11.yml
+ create mode 100644 .github/workflows/proofscope-v11.yml
+ create mode 100644 docs/v1.1_foundations.md
+ create mode 100644 docs/v1.1_results.json
+ create mode 100644 lean/ProofScope/AssumptionExtract11.lean
+ create mode 100644 lean/ProofScope/Composition.lean
+ create mode 100644 proofscope/adelta11.py
+ create mode 100644 proofscope/benchmark/V11_FREEZE.txt
+ create mode 100644 proofscope/benchmark/mathlib_v11/m04_group_hidden_comm.json
+ create mode 100644 proofscope/benchmark/mathlib_v11/m05_group_needed_comm.json
+ create mode 100644 proofscope/benchmark/mathlib_v11/m09_partial_order_total.json
+ create mode 100644 proofscope/benchmark/mathlib_v11/m10_conjugation.json
+ create mode 100644 proofscope/benchmark/mathlib_v11/m11_commmonoid_redundant.json
+ create mode 100644 proofscope/benchmark/mathlib_v11/m12_real_minimal.json
+ create mode 100644 proofscope/benchmark/mathlib_v11/m13_real_unneeded.json
+ create mode 100644 proofscope/benchmark/v11_dev/l1_mul_hidden_comm.json
+ create mode 100644 proofscope/benchmark/v11_dev/l2_add_reference_needs.json
+ create mode 100644 proofscope/benchmark/v11_dev/l3_two_structures.json
+ create mode 100644 proofscope/benchmark/v11_dev/l4_redundant_class.json
+ create mode 100644 proofscope/benchmark/v11_dev/mn1_unneeded_assoc.json
+ create mode 100644 proofscope/benchmark/v11_dev/mn2_bounds.json
+ create mode 100644 proofscope/benchmark/v11_dev/mn3_substitutable.json
+ create mode 100644 proofscope/benchmark/v11_dev/mn4_single_needed.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h01_empty_carrier_point.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h02_redundant_data_class.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h03_inconsistent_hypothesis.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h04_swapped_structure.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h05_polarity.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h06_unrelated_true.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h07_false_reference.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h08_instance_implies_nonempty.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h09_min_duplicate_rephrased.json
+ create mode 100644 proofscope/benchmark/v11_hostile/h10_min_vacuous.json
+ create mode 100644 proofscope/competitors/v11_protocol.py
+ create mode 100644 tests/v02/test_v11.py
+
+diff --git a/.github/workflows/proofscope-mathlib-v11.yml b/.github/workflows/proofscope-mathlib-v11.yml
+new file mode 100644
+index 0000000..df06c3c
+--- /dev/null
++++ b/.github/workflows/proofscope-mathlib-v11.yml
+@@ -0,0 +1,58 @@
++name: ProofScope v1.1 Mathlib Track
++
++# Assumption Delta v1.1 (dependent-structure linking, minimality) on Mathlib: the v1.1 cases and the v1.0 cases m01-m07 as regression. Mathlib is pinned to the research-corpus revision
++# (same Lean 4.34.1). These cases were written without a local Mathlib: a first-run failure is expected to
++# be possible and must be reported exactly, not patched around.
++on:
++  workflow_dispatch:
++
++permissions:
++  contents: read
++
++env:
++  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
++
++jobs:
++  mathlib:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 180
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
++        uses: ./.github/actions/setup-lean
++      - name: Mathlib project at the pinned revision (binary cache)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/ml"
++          cd "$RUNNER_TEMP/ml"
++          echo "leanprover/lean4:v4.34.1" > lean-toolchain
++          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
++            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
++          for i in 1 2 3; do lake update && break || sleep 30; done
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
++      - name: Mathlib import smoke test
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p ml-evidence
++          printf 'import Mathlib\nexample : (2 : ℝ) + 2 = 4 := by norm_num\n#check Equiv.Perm (Fin 3)\n' > /tmp/smoke.lean
++          lean /tmp/smoke.lean | tee ml-evidence/smoke.log
++      - name: Assumption Delta v1.1 on Mathlib cases
++        env:
++          PROOFSCOPE_IMPORTS: Mathlib
++        run: |
++          python -m proofscope.adelta11 proofscope/benchmark/mathlib_v11/*.json proofscope/benchmark/mathlib_v10/m0[12367]*.json --out ml-evidence/adelta11 --jobs 2 | tee ml-evidence/adelta11.log
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: proofscope-mathlib-v11-evidence
++          path: ml-evidence/
++          if-no-files-found: warn
+diff --git a/.github/workflows/proofscope-v11.yml b/.github/workflows/proofscope-v11.yml
+new file mode 100644
+index 0000000..79774d8
+--- /dev/null
++++ b/.github/workflows/proofscope-v11.yml
+@@ -0,0 +1,80 @@
++name: ProofScope v1.1 Linking, Composition and Minimality
++
++on:
++  workflow_dispatch:
++  push:
++    branches: [main]
++    paths:
++      - ".github/workflows/proofscope-v11.yml"
++      - "proofscope/adelta11.py"
++      - "lean/ProofScope/AssumptionExtract11.lean"
++      - "lean/ProofScope/Composition.lean"
++      - "proofscope/benchmark/v11_*/**"
++      - "proofscope/benchmark/V11_FREEZE.txt"
++      - "tests/v02/test_v11.py"
++
++permissions:
++  contents: read
++
++jobs:
++  v11:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 150
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
++        uses: ./.github/actions/setup-lean
++      - name: Freeze check (V11_FREEZE.txt block 2)
++        shell: bash
++        run: |
++          set -euo pipefail
++          awk '/^# Block 2 \(v1.1.1\)/{f=1;next} f && /^[0-9a-f]{64}  [a-z]+\//' proofscope/benchmark/V11_FREEZE.txt > /tmp/f.sha
++          test "$(wc -l < /tmp/f.sha)" = 5
++          sha256sum -c /tmp/f.sha
++      - name: Composition theory (14 axiom-free + 1 propext-only theorems, fresh replay)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/cp/ProofScope" v11-evidence
++          lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/ClaimDelta.olean" lean/ProofScope/ClaimDelta.lean > /dev/null
++          LEAN_PATH="$RUNNER_TEMP/cp" lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/AssumptionDelta.olean" lean/ProofScope/AssumptionDelta.lean > /dev/null
++          LEAN_PATH="$RUNNER_TEMP/cp" lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/Composition.olean" \
++            lean/ProofScope/Composition.lean | tee v11-evidence/composition-axioms.log
++          test "$(grep -c 'does not depend on any axioms' v11-evidence/composition-axioms.log)" = 14
++          grep -q "substitutable_example' depends on axioms: \[propext\]" v11-evidence/composition-axioms.log
++          ! grep -q sorryAx v11-evidence/composition-axioms.log
++          (cd "$RUNNER_TEMP/cp" && LEAN_PATH="$RUNNER_TEMP/cp" leanchecker --fresh ProofScope.Composition)
++      - name: Tests
++        run: python -m unittest tests.v02.test_v11 -v
++      - name: Assumption Delta v1.1 (v1.1 suites + v1.0 regression)
++        run: |
++          python -m proofscope.adelta11 proofscope/benchmark/v11_dev/*.json proofscope/benchmark/v11_hostile/*.json \
++            proofscope/benchmark/adelta_v10_dev/*.json proofscope/benchmark/v10_adversarial/x*.json \
++            --out v11-evidence/adelta11 --jobs 4 | tee v11-evidence/adelta11.log
++      - name: Summary
++        if: always()
++        shell: bash
++        run: |
++          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
++          import json, pathlib
++          p = pathlib.Path("v11-evidence/adelta11/adelta_results.json")
++          print("## ProofScope v1.1 (core Lean)")
++          if p.exists():
++              rows = json.loads(p.read_text())["rows"]
++              ok = sum(r["verdict"] == r.get("expected") for r in rows)
++              bad = [r["id"] for r in rows if r["verdict"] in (r.get("must_not_be") or [])]
++              print(f"- {len(rows)} cases, label match {ok}, must-not-be violations {bad}")
++          print("Development data. Known: ad02 author label error; h06 reports CONCLUSION_ONLY_CHANGE (label said INCONCLUSIVE).")
++          PY
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: proofscope-v11-evidence
++          path: v11-evidence/
++          if-no-files-found: warn
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index ac9cb8c..a16071c 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,5 +1,15 @@
+ # Changelog
+ 
++## 1.1.0 (unreleased)
++
++- `lean/ProofScope/Composition.lean` (15 theorems: linking, polarity composition, strictness lifting,
++  absorption counterexamples, inclusion-minimality).
++- `lean/ProofScope/AssumptionExtract11.lean` and `proofscope/adelta11.py`: dependent-structure linking (clean
++  binder names, instance binders, instance witnesses, `pp.analyze`), minimality mode, `CONCLUSION_ONLY_CHANGE`.
++- Suites `v11_dev` (8), `v11_hostile` (10), `mathlib_v11` (7, pending); `V11_FREEZE.txt` (blocks 1 and 2).
++- `proofscope/competitors/v11_protocol.py` (pre-registered scoring, SemantEq exporter).
++- Workflows **ProofScope v1.1 Linking, Composition and Minimality**, **ProofScope v1.1 Mathlib Track**; `tests/v02/test_v11.py`.
++
+ ## 1.0.0 (unreleased)
+ 
+ - Assumption Delta: `lean/ProofScope/AssumptionDelta.lean` (9 theorems), `lean/ProofScope/AssumptionExtract.lean`
+diff --git a/README.md b/README.md
+index 886895c..d75a842 100644
+--- a/README.md
++++ b/README.md
+@@ -84,6 +84,18 @@ documented in [`docs/engine.md`](docs/engine.md):
+ Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
+ resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
+ 
++## v1.1: dependent-structure linking, compositional soundness, assumption minimality
++
++Details: [`docs/v1.1_foundations.md`](docs/v1.1_foundations.md).
++
++- **Linking** of statements with shared instance binders (`[Group G]`, `[Mul α]`): the cause of the Mathlib
++  m04/m05 abstentions, reproduced and fixed. Soundness rests on a kernel-checked `R ↔ canonical` link.
++- **Composition theorems** (Lean): sign rule for contexts; strictness survives a monotone context *iff*
++  `k True ∧ ¬ k False`; `∃` and empty binders absorb differences (counterexamples).
++- **Assumption minimality**: NECESSARY / REDUNDANT / UNNEEDED / jointly necessary, with removal-witness
++  models; inclusion-minimality certified (`inclusion_minimal`), never minimum cardinality.
++- Mathlib track v1.1 **pending**; competitor protocol pre-registered.
++
+ ## v1.0: Assumption Delta, boundary synthesis, Mathlib track
+ 
+ Details: [`docs/v1.0_assumption_delta.md`](docs/v1.0_assumption_delta.md).
+diff --git a/docs/v1.1_foundations.md b/docs/v1.1_foundations.md
+new file mode 100644
+index 0000000..85d92ab
+--- /dev/null
++++ b/docs/v1.1_foundations.md
+@@ -0,0 +1,157 @@
++# ProofScope v1.1: dependent-structure linking, compositional soundness, assumption minimality
++
++Base: `entropysherlock/ProofScope` @ `b699e347564682890a7ae17fbd23f633d97daa5f`. Lean 4.34.1.
++**LOCAL** marks results from the author's sandbox (core Lean; Mathlib cannot be built there). **PENDING**
++marks anything that still needs a GitHub run. Frozen v0.6, v0.8, v0.9 and v1.0 code is untouched: v1.1 is
++new files (`adelta11.py`, `AssumptionExtract11.lean`, `Composition.lean`).
++
++## 1. Reconnaissance (novelty boundary, 2026-11-09)
++
++| System | What it does | Relevant difference |
++|---|---|---|
++| SemantEq, ACE/SAE, BEq+, BPF | whole-statement equivalence (see `docs/v0.9_cmcd.md` §1) | no certified model for an assumption change, no minimality |
++| **leanscreen** (open source, Aug 2026) | informal↔Lean faithfulness *screen* (lints, vacuity/triviality checks, LLM judge), calibrated on 886 human verdicts | its authors state it may only *reject* and that a pass is not certification; no kernel-checked countermodels |
++| **faithbench-neg** (v0 scaffold) | per-failure-class adversarial-negatives benchmark | a candidate *external* benchmark, not a checker |
++| "claimcheck" | the ClaimCheck found is a web fact-checking system (Putta et al. 2025), not a Lean tool | not a competitor |
++
++**Assessment.** We found no published or released system that certifies:
++- that an assumption is *necessary*, *unneeded* or *substitutable* for a Lean statement, with kernel-checked models; or
++- that a hidden assumption restricts a theorem, via a model read from the proof term.
++
++This is a search of what we found, **not proof of novelty**.
++
++## 2. Mathematics (all Lean-checked; fresh replay exit 0, LOCAL)
++
++`lean/ProofScope/Composition.lean`: 15 theorems. 14 use no axioms; `substitutable_example` uses `propext`.
++
++**Established theorems**
++
++- **Linking.**
++  - `linked_assumption_delta`: given kernel-checked `R ↔ RefS C P` and `L ↔ FormS C A P`, a certified
++    model `m` with `C m ∧ ¬A m` yields `R → L`, `R → P m`, and the failure of uniform entailment back.
++  - `same_text_different_structure`: one notation on one carrier with two meanings, so linking must
++    compare elaborated terms.
++- **Composition (polarity).**
++  - `mono_lift` / `anti_lift`: monotone contexts preserve the direction of an entailment; antitone contexts reverse it.
++  - `mono_comp` / `anti_anti` / `mono_anti`: the sign rule.
++  - `mono_forall` / `mono_exists`.
++- **Strictness through a context.** For a monotone context `k`, *every* strict weakening survives `k`
++  **iff** `k True ∧ ¬ k False` (`strict_lift_iff`, no axioms).
++- **Counterexamples to stronger composition claims.**
++  - `degenerate_context`: a constant context erases strictness.
++  - `exists_binder_absorbs`: a pointwise strict weakening becomes an equivalence under `∃`.
++  - `empty_binder_absorbs`: a binder over an empty type erases every difference.
++  - v0.9 `cancellation`: mixed directions cancel.
++
++  *Consequence:* a local strict edit implies a global strict verdict only through a **global**
++  separating model; v0.9's `monotone_strict` provides one when all edits point one way.
++- **Minimality.**
++  - `inclusion_minimal`: a sufficient selection where every member has a removal witness (a model of
++    the others and the conditions where the conclusion fails) has no sufficient proper subset.
++  - `redundant_drop`: an assumption implied by the others can be dropped.
++  - `substitutable_example`: two copies of one assumption are each redundant but jointly necessary, and
++    the inclusion-minimal selections are not unique.
++
++  These certify **inclusion-minimality**, not minimum cardinality.
++
++**Not established (open).**
++- A complete linker for all Mathlib elaboration (coercions, universe polymorphism, `outParam` instances).
++- A composition theorem for *dependent* binders whose types change between the two statements.
++- Minimum-cardinality assumption sets.
++
++## 3. Breakthrough A: dependent-structure linking
++
++**Root cause of Mathlib m04/m05 (reproduced in core Lean with `[Mul α]`).** Shared instance binders were
++printed with their **hygienic internal names** (`inst._@…_hyg.8`), so the canonical telescope could not
++be re-parsed. The link certificate failed and the engine correctly abstained.
++
++**v1.1 fix.**
++- Binders get fresh accessible names.
++- Instance binders are re-declared as instance binders (`[i1 : Mul α]`).
++- Instance witnesses are `inferInstance` or one-field structures built from carrier operations, so two
++  different structures on one carrier are both explored.
++- Printing uses `pp.analyze` so ascriptions such as `(default : α)` survive (v1.1.1).
++
++**Soundness argument.** Every certificate is elaborated in the canonical context, and a kernel-checked
++`R ↔ canonical` ties that context to the original. A mis-resolved instance therefore makes the link
++fail; it can never produce a false certificate.
++
++**Core reproduction result.** `∀ α [Mul α] (a : α), …` against the version with a commutativity
++hypothesis is now LEAN_WEAKER_BY_ASSUMPTION, with model `Bool, mul := fun a _ => a`.
++
++**Mathlib.** m04 and m05 run again, unchanged, in **ProofScope v1.1 Mathlib Track**, together with five
++new Mathlib cases not used in development (partial order vs totality, conjugation, a redundant
++commutativity hypothesis for `CommMonoid`, two real-analysis minimality cases). **PENDING.**
++
++## 4. Breakthrough C: assumption minimality (engine)
++
++`adelta11.py`, minimality mode (`{"statement": …}`). For every assumption it certifies one of:
++- **NECESSARY:** a removal witness;
++- **REDUNDANT:** implied by the others;
++- **UNNEEDED:** the conclusion follows from the others;
++- **UNRESOLVED.**
++
++Redundant pairs are checked for **joint necessity**. INCLUSION_MINIMAL is claimed only when sufficiency is
++certified and every assumption is NECESSARY. Otherwise the verdict is
++`INCLUSION_MINIMAL_IF_THEOREM_HOLDS` or `HAS_REDUNDANT_ASSUMPTIONS`.
++
++**Examples (LOCAL, certified):**
++- `∀ α op, assoc → comm → comm`: associativity is UNNEEDED; commutativity is NECESSARY (`Bool`, left projection).
++- `∀ n, n ≠ 0 → 0 < n → 1 ≤ n`: both are REDUNDANT, and the pair is jointly necessary.
++- `∀ n, 1 ≤ n → n ≤ 3 → …`: both bounds are NECESSARY (witnesses `n = 0`, `n = 4`). Sufficiency is not
++  certified (nonlinear over a range), so the verdict is only conditional.
++
++## 5. Results
++
++| Run | Suites | Label match | Hostile / must-not-be violations |
++|---|---|---|---|
++| Block 1, frozen, single run (LOCAL) | `v11_dev` (8) + `v11_hostile` (10) | 16/18 | **0** |
++| Block 2 (v1.1.1), development (LOCAL) | the above + v1.0 Assumption Delta suites (17) + core m04 reproduction | 34/36 | **0** |
++
++**Block-1 misses.** Neither is a wrong certificate.
++- `h06`: a reporting defect inherited from v1.0. When only the conclusion differed, the engine said
++  NO_ASSUMPTION_DELTA. It now says CONCLUSION_ONLY_CHANGE.
++- `h08`: a round-trip failure (`default` printed without its type); the engine abstained correctly.
++  Fixed with `pp.analyze`.
++
++**Block-2 non-matches.**
++- `h06` returns CONCLUSION_ONLY_CHANGE; the author label said INCONCLUSIVE, which means the same abstention.
++- `ad02` is the documented v1.0 author label error.
++
++The hostile suite covered:
++- empty carriers;
++- redundant data and Prop classes;
++- inconsistent hypotheses;
++- two structures on one carrier;
++- negative polarity;
++- unrelated true theorems;
++- a false reference;
++- an instance implying nonemptiness;
++- substitutable and vacuous minimality.
++
++**Mathlib track: PENDING.**
++
++## 6. Breakthrough D: competitor benchmarking (protocol only)
++
++No competitor was run in v1.1: SemantEq and ACE need Mathlib and could not be run locally.
++
++`proofscope/competitors/v11_protocol.py` **pre-registers** the binary mapping and the scoring rules:
++- ABSTAIN is never counted as correct or wrong;
++- false equivalence and false difference are reported separately;
++- there is a SemantEq JSONL exporter.
++
++**Required before any comparison claim.** A benchmark written by someone other than the engine authors and
++frozen first. A candidate is faithbench-neg once it has human-verified items. Without that, any result is
++labelled "AI-authored, not human-adjudicated".
++
++## 7. Breakthrough E: real research auditing
++
++Not attempted in v1.1. It needs the Mathlib track working first. No discrepancy has been found or claimed.
++
++## 8. Lessons kept on the record
++
++Earlier soundness bugs:
++- v1.0 model scope (`x01`, `ad02`);
++- the v1.0.1 prefix scope (`ad04`).
++
++v1.1 regression tests guard both, through hostile case `h01`, which uses an instance binder.
+diff --git a/docs/v1.1_results.json b/docs/v1.1_results.json
+new file mode 100644
+index 0000000..a83f30c
+--- /dev/null
++++ b/docs/v1.1_results.json
+@@ -0,0 +1,1270 @@
++{
++ "local": true,
++ "block1_frozen_run": [
++  {
++   "id": "h01_empty_carrier_point",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty α",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h02_redundant_data_class",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty (Inhabited α)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h03_inconsistent_hypothesis",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "n < (0 : Nat)",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "0"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h04_swapped_structure",
++   "expected": "ASSUMPTION_INCOMPARABLE",
++   "verdict": "ASSUMPTION_INCOMPARABLE",
++   "reason": null,
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x + y = y + x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "{ add := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    },
++    {
++     "side": "dropped",
++     "assumption": "∀ (x y : α), x * y = y * x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "{ add := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h05_polarity",
++   "expected": "INCONCLUSIVE",
++   "verdict": "INCONCLUSIVE",
++   "reason": "canonical telescope not linked to the elaborated statements",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE",
++    "ASSUMPTION_EQUIVALENT"
++   ]
++  },
++  {
++   "id": "h06_unrelated_true",
++   "expected": "INCONCLUSIVE",
++   "verdict": "NO_ASSUMPTION_DELTA",
++   "reason": null,
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ]
++  },
++  {
++   "id": "h07_false_reference",
++   "expected": "REFERENCE_NEEDS_ASSUMPTION",
++   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative fun (x y : α) => x * y",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h08_instance_implies_nonempty",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "INCONCLUSIVE",
++   "reason": "canonical telescope not linked to the elaborated statements",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE"
++   ]
++  },
++  {
++   "id": "h09_min_duplicate_rephrased",
++   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
++   "reason": null,
++   "theorem": "redundant_drop",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [
++    [
++     0,
++     1
++    ]
++   ],
++   "must_not_be": [
++    "INCLUSION_MINIMAL"
++   ],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "n ≠ (0 : Nat)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    },
++    {
++     "side": null,
++     "assumption": "(1 : Nat) ≤ n",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h10_min_vacuous",
++   "expected": "INCLUSION_MINIMAL",
++   "verdict": "INCLUSION_MINIMAL",
++   "reason": null,
++   "theorem": "inclusion_minimal",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "n < (0 : Nat)",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "0"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "l1_mul_hidden_comm",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x * y = y * x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "l2_add_reference_needs",
++   "expected": "REFERENCE_NEEDS_ASSUMPTION",
++   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x + y = y + x",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "{ add := fun (a x : Bool) => a }",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "l3_two_structures",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x + y = x * y",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "{ add := fun (x b : Bool) => b }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "l4_redundant_class",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative fun (x y : α) => x * y",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "mn1_unneeded_assoc",
++   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
++   "reason": null,
++   "theorem": "redundant_drop",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "∀ (a b c : α), op (op a b) c = op a (op b c)",
++     "class": "UNNEEDED",
++     "witness_model": null,
++     "removal_witness": null
++    },
++    {
++     "side": null,
++     "assumption": "∀ (a b : α), op a b = op b a",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "Bool",
++      "fun (a x : Bool) => a",
++      "true",
++      "false"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "mn2_bounds",
++   "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
++   "verdict": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
++   "reason": null,
++   "theorem": "inclusion_minimal",
++   "sufficiency": "NOT_CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "(1 : Nat) ≤ n",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "0"
++     ]
++    },
++    {
++     "side": null,
++     "assumption": "n ≤ (3 : Nat)",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "4"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "mn3_substitutable",
++   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
++   "reason": null,
++   "theorem": "redundant_drop",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [
++    [
++     0,
++     1
++    ]
++   ],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "n ≠ (0 : Nat)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    },
++    {
++     "side": null,
++     "assumption": "(0 : Nat) < n",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "mn4_single_needed",
++   "expected": "INCLUSION_MINIMAL",
++   "verdict": "INCLUSION_MINIMAL",
++   "reason": null,
++   "theorem": "inclusion_minimal",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "∀ (a b : α), op a b = op b a",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "Bool",
++      "fun (a x : Bool) => a",
++      "true",
++      "false"
++     ]
++    }
++   ]
++  }
++ ],
++ "block2_development": [
++  {
++   "id": "ad01_hidden_comm",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative op",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "fun (a x : Bool) => a",
++      "true",
++      "true",
++      "true",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad02_nonempty",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty α",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad03_dependent_instance",
++   "expected": "INCONCLUSIVE",
++   "verdict": "INCONCLUSIVE",
++   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": []
++  },
++  {
++   "id": "ad04_redundant_comm",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative op",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad05_needed_comm",
++   "expected": "REFERENCE_NEEDS_ASSUMPTION",
++   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative op",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "fun (a x : Bool) => a",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad06_order_antisymm",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (a b : α), r a b → r b a → a = b",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "fun (x x_1 : Bool) => True",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad07_dropped_injectivity",
++   "expected": "LEAN_CLAIM_FALSE",
++   "verdict": "LEAN_CLAIM_FALSE",
++   "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "dropped",
++     "assumption": "∀ (a b : α), f a = f b → a = b",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "fun (x : Bool) => true",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad08_decidable_redundant",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty (DecidableEq α)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad09_domain_int",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "(0 : Int) ≤ a",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "-1"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad10_redundant_nat",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "(0 : Nat) ≤ n",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "ad11_negative_position",
++   "expected": "INCONCLUSIVE",
++   "verdict": "INCONCLUSIVE",
++   "reason": "canonical telescope not linked to the elaborated statements",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": []
++  },
++  {
++   "id": "h01_empty_carrier_point",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty α",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h02_redundant_data_class",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty (Inhabited α)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h03_inconsistent_hypothesis",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "n < (0 : Nat)",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "0"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h04_swapped_structure",
++   "expected": "ASSUMPTION_INCOMPARABLE",
++   "verdict": "ASSUMPTION_INCOMPARABLE",
++   "reason": null,
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x + y = y + x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "{ add := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    },
++    {
++     "side": "dropped",
++     "assumption": "∀ (x y : α), x * y = y * x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "{ add := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h05_polarity",
++   "expected": "INCONCLUSIVE",
++   "verdict": "INCONCLUSIVE",
++   "reason": "canonical telescope not linked to the elaborated statements",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE",
++    "ASSUMPTION_EQUIVALENT"
++   ]
++  },
++  {
++   "id": "h06_unrelated_true",
++   "expected": "INCONCLUSIVE",
++   "verdict": "CONCLUSION_ONLY_CHANGE",
++   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ]
++  },
++  {
++   "id": "h07_false_reference",
++   "expected": "REFERENCE_NEEDS_ASSUMPTION",
++   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative fun (x y : α) => x * y",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h08_instance_implies_nonempty",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE",
++    "ASSUMPTION_INCOMPARABLE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty α",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h09_min_duplicate_rephrased",
++   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
++   "reason": null,
++   "theorem": "redundant_drop",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [
++    [
++     0,
++     1
++    ]
++   ],
++   "must_not_be": [
++    "INCLUSION_MINIMAL"
++   ],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "n ≠ (0 : Nat)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    },
++    {
++     "side": null,
++     "assumption": "(1 : Nat) ≤ n",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "h10_min_vacuous",
++   "expected": "INCLUSION_MINIMAL",
++   "verdict": "INCLUSION_MINIMAL",
++   "reason": null,
++   "theorem": "inclusion_minimal",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "n < (0 : Nat)",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "0"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "l1_mul_hidden_comm",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x * y = y * x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "l2_add_reference_needs",
++   "expected": "REFERENCE_NEEDS_ASSUMPTION",
++   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
++   "reason": "a certified model satisfies the shared conditions, violates the added assumption and falsifies the conclusion: the reference claim is false without it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x + y = y + x",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "{ add := fun (a x : Bool) => a }",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "l3_two_structures",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x + y = x * y",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "{ add := fun (x b : Bool) => b }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "l4_redundant_class",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Std.Commutative fun (x y : α) => x * y",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "mn1_unneeded_assoc",
++   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
++   "reason": null,
++   "theorem": "redundant_drop",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "∀ (a b c : α), op (op a b) c = op a (op b c)",
++     "class": "UNNEEDED",
++     "witness_model": null,
++     "removal_witness": null
++    },
++    {
++     "side": null,
++     "assumption": "∀ (a b : α), op a b = op b a",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "Bool",
++      "fun (a x : Bool) => a",
++      "true",
++      "false"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "mn2_bounds",
++   "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
++   "verdict": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
++   "reason": null,
++   "theorem": "inclusion_minimal",
++   "sufficiency": "NOT_CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "(1 : Nat) ≤ n",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "0"
++     ]
++    },
++    {
++     "side": null,
++     "assumption": "n ≤ (3 : Nat)",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "4"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "mn3_substitutable",
++   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
++   "reason": null,
++   "theorem": "redundant_drop",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [
++    [
++     0,
++     1
++    ]
++   ],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "n ≠ (0 : Nat)",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    },
++    {
++     "side": null,
++     "assumption": "(0 : Nat) < n",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "mn4_single_needed",
++   "expected": "INCLUSION_MINIMAL",
++   "verdict": "INCLUSION_MINIMAL",
++   "reason": null,
++   "theorem": "inclusion_minimal",
++   "sufficiency": "CERTIFIED",
++   "jointly_necessary_pairs": [],
++   "must_not_be": [],
++   "assumptions": [
++    {
++     "side": null,
++     "assumption": "∀ (a b : α), op a b = op b a",
++     "class": "NECESSARY",
++     "witness_model": null,
++     "removal_witness": [
++      "Bool",
++      "fun (a x : Bool) => a",
++      "true",
++      "false"
++     ]
++    }
++   ]
++  },
++  {
++   "id": "rp_mul_inst",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": null,
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (x y : α), x * y = y * x",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "Bool",
++      "{ mul := fun (a x : Bool) => a }",
++      "true"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "x01_point_makes_nonempty_redundant",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "Nonempty α",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "x02_dup_hypothesis",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "∀ (a b : α), op b a = op a b",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "x03_dropped_redundant",
++   "expected": "ASSUMPTION_EQUIVALENT",
++   "verdict": "ASSUMPTION_EQUIVALENT",
++   "reason": null,
++   "theorem": "redundant_schema_equiv",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "LEAN_WEAKER_BY_ASSUMPTION",
++    "LEAN_STRONGER_BY_ASSUMPTION",
++    "REFERENCE_NEEDS_ASSUMPTION",
++    "LEAN_CLAIM_FALSE"
++   ],
++   "assumptions": [
++    {
++     "side": "dropped",
++     "assumption": "(0 : Nat) ≤ n",
++     "class": "REDUNDANT",
++     "witness_model": null,
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "x04_weaker_but_true_both",
++   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
++   "reason": null,
++   "theorem": "restrictive_iff_strictly_weaker",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "added",
++     "assumption": "(1 : Int) ≤ a",
++     "class": "RESTRICTIVE",
++     "witness_model": [
++      "-1"
++     ],
++     "removal_witness": null
++    }
++   ]
++  },
++  {
++   "id": "x05_conclusion_also_changed",
++   "expected": "INCONCLUSIVE",
++   "verdict": "INCONCLUSIVE",
++   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
++   "theorem": null,
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ]
++  },
++  {
++   "id": "x06_lean_drops_needed",
++   "expected": "LEAN_CLAIM_FALSE",
++   "verdict": "LEAN_CLAIM_FALSE",
++   "reason": "the Lean statement dropped an assumption and a certified model falsifies it",
++   "theorem": "necessary_refutes_reference",
++   "sufficiency": null,
++   "jointly_necessary_pairs": null,
++   "must_not_be": [
++    "ASSUMPTION_EQUIVALENT"
++   ],
++   "assumptions": [
++    {
++     "side": "dropped",
++     "assumption": "∀ (a b : α), r a b → r b a",
++     "class": "NECESSARY",
++     "witness_model": [
++      "Bool",
++      "fun (a b : Bool) => a = true ∨ b = false",
++      "true",
++      "false"
++     ],
++     "removal_witness": null
++    }
++   ]
++  }
++ ]
++}
+\ No newline at end of file
+diff --git a/lean/ProofScope/AssumptionExtract11.lean b/lean/ProofScope/AssumptionExtract11.lean
+new file mode 100644
+index 0000000..a30701c
+--- /dev/null
++++ b/lean/ProofScope/AssumptionExtract11.lean
+@@ -0,0 +1,149 @@
++import Lean
++/-!
++# Assumption extraction v1.1 (elaborator side)
++
++v1.1 changes (dependent-structure linking): every binder gets a fresh *accessible* name (hygienic and
++inaccessible names such as `inst✝` cannot be printed back), and the binder info of shared binders is
++reported so instance binders are re-declared as instance binders `[i : C α]`. Soundness does not depend
++on this: every certificate is elaborated in the canonical context that a kernel-checked `R ↔ canonical`
++ties to the original statement (`ProofScope.Linking.link_transport`).
++
++
++`#proofscope_assumptions (R) (L)` telescopes both elaborated statements in step:
++
++* binders with definitionally equal types are **shared**: model binders (types, operations, points)
++  or shared hypotheses (Prop-typed, including Prop-valued typeclass instances);
++* a Prop-typed binder present only in `L` is an **added assumption**, only in `R` a **dropped** one;
++* an instance-implicit *data* binder present on one side only (`[Inhabited α]`, `[DecidableEq α]`) is
++  the assumption `Nonempty (Cls)`;
++* an added or dropped binder that later parts of the statement depend on is marked `dependent`; there is
++  no well-typed statement without it, so downstream it is INCONCLUSIVE, never compared;
++* the remaining conclusions are compared by definitional equality.
++
++Output `PROOFSCOPE_ASSUMPTIONS <json>` with everything printed in the context of the shared binders.
++-/
++
++open Lean Meta Elab Command Term
++
++namespace ProofScope.Assumptions11
++
++def ppS (e : Expr) : MetaM String := do
++  -- v1.1.1: `pp.analyze` adds the type ascriptions needed to re-elaborate the printed term
++  -- (e.g. `(default : α)`), which the link certificates then check
++  let fmt ← withOptions (fun o => (o.setBool `pp.funBinderTypes true).setBool `pp.numericTypes true
++      |>.setBool `pp.fieldNotation false |>.setBool `pp.analyze true) (ppExpr e)
++  return toString fmt
++
++structure Acc where
++  model : Array (Name × Expr) := #[]
++  hyps : Array Expr := #[]
++  added : Array (Expr × Bool) := #[]
++  dropped : Array (Expr × Bool) := #[]
++  -- v1.0.1: how many model binders and shared hypotheses precede each added/dropped assumption.
++  -- A witness must instantiate *all* of them (a point `x : α` already proves `Nonempty α`).
++  addedPrefix : Array (Nat × Nat) := #[]
++  droppedPrefix : Array (Nat × Nat) := #[]
++  fvars : Array Expr := #[]
++
++def asAssumption (t : Expr) (bi : BinderInfo) : MetaM (Option Expr) := do
++  if ← isProp t then return some t
++  if bi.isInstImplicit then return some (← mkAppM ``Nonempty #[t])
++  return none
++
++def cleanName (n : Name) (k : Nat) : Name :=
++  if n.hasMacroScopes || n.isInaccessibleUserName || n.isAnonymous || n.toString.contains '✝' then
++    Name.mkSimple s!"i{k}"
++  else n.eraseMacroScopes
++
++partial def go (r l : Expr) (acc : Acc) (k : Acc → Expr → Expr → MetaM Json) : MetaM Json := do
++  let r ← whnfCore r
++  let l ← whnfCore l
++  match r, l with
++  | .forallE n t b bi, .forallE _ t' b' _ =>
++    if ← isDefEq t t' then
++      return ← withLocalDecl (cleanName n acc.fvars.size) bi t fun fv => do
++        let acc := if ← isProp t then { acc with hyps := acc.hyps.push t, fvars := acc.fvars.push fv }
++                   else { acc with model := acc.model.push (n, t), fvars := acc.fvars.push fv }
++        go (b.instantiate1 fv) (b'.instantiate1 fv) acc k
++    -- an assumption only in L?
++    if let some a ← asAssumption t' (l.bindingInfo!) then
++      return ← withLocalDecl `h bi t' fun fv => go r (b'.instantiate1 fv)
++        { acc with added := acc.added.push (a, b'.hasLooseBVar 0), addedPrefix := acc.addedPrefix.push (acc.model.size, acc.hyps.size) } k
++    if let some a ← asAssumption t bi then
++      return ← withLocalDecl `h bi t fun fv => go (b.instantiate1 fv) l
++        { acc with dropped := acc.dropped.push (a, b.hasLooseBVar 0), droppedPrefix := acc.droppedPrefix.push (acc.model.size, acc.hyps.size) } k
++    k acc r l
++  | .forallE n t b bi, _ =>
++    if let some a ← asAssumption t bi then
++      withLocalDecl n bi t fun fv => go (b.instantiate1 fv) l { acc with dropped := acc.dropped.push (a, b.hasLooseBVar 0), droppedPrefix := acc.droppedPrefix.push (acc.model.size, acc.hyps.size) } k
++    else k acc r l
++  | _, .forallE n t b bi =>
++    if let some a ← asAssumption t bi then
++      withLocalDecl n bi t fun fv => go r (b.instantiate1 fv) { acc with added := acc.added.push (a, b.hasLooseBVar 0), addedPrefix := acc.addedPrefix.push (acc.model.size, acc.hyps.size) } k
++    else k acc r l
++  | _, _ => k acc r l
++
++elab "#proofscope_assumptions11 " r:term:max l:term:max : command => liftTermElabM do
++  let R ← elabTerm r (some (mkSort .zero))
++  let L ← elabTerm l (some (mkSort .zero))
++  synthesizeSyntheticMVarsNoPostponing
++  let R ← instantiateMVars R
++  let L ← instantiateMVars L
++  if R.hasMVar || L.hasMVar then throwError "statement has unresolved metavariables"
++  let out ← go R L {} fun acc cr cl => do
++    let same ← isDefEq cr cl
++    -- binders in the scope of the assumptions: those occurring in a hypothesis or an added/dropped
++    -- assumption, closed under "occurs in the type of a binder in scope"
++    let props := acc.hyps ++ acc.added.map (·.1) ++ acc.dropped.map (·.1)
++    let modelFvs := acc.fvars.filter fun fv => !(props.any (· == fv))
++    let mut scope : Array Expr := #[]
++    for fv in acc.fvars.reverse do
++      let used := props.any (·.containsFVar fv.fvarId!) ||
++        (← scope.anyM fun s => return (← inferType s).containsFVar fv.fvarId!)
++      if used && !(← isProp (← inferType fv)) then scope := scope.push fv
++    let _ := modelFvs
++    let modelVars ← acc.fvars.filterM (fun fv => do return !(← isProp (← inferType fv)))
++    let pair (x : Expr × Bool) : MetaM Json := do
++      return Json.mkObj [("prop", ← ppS x.1), ("dependent", toJson x.2)]
++    return Json.mkObj [
++      ("model", Json.arr (← modelVars.mapM fun fv => do
++          return Json.mkObj [("name", toJson (← fv.fvarId!.getUserName).toString), ("type", ← ppS (← inferType fv)),
++                             ("inst", toJson (← fv.fvarId!.getBinderInfo).isInstImplicit),
++                             ("in_scope", toJson (scope.contains fv))])),
++      ("hyps", Json.arr (← acc.hyps.mapM fun h => return Json.str (← ppS h))),
++      ("added", Json.arr (← acc.added.mapM pair)),
++      ("dropped", Json.arr (← acc.dropped.mapM pair)),
++      ("added_prefix", toJson (acc.addedPrefix.map fun (m, h) => [m, h])),
++      ("dropped_prefix", toJson (acc.droppedPrefix.map fun (m, h) => [m, h])),
++      ("conclusion_same", toJson same),
++      ("conclusion_ref", ← ppS cr), ("conclusion_lean", ← ppS cl)]
++  logInfo m!"PROOFSCOPE_ASSUMPTIONS11 {out.compress}"
++
++end ProofScope.Assumptions11
++
++namespace ProofScope.Assumptions11
++open Lean Meta Elab Command
++
++/-- Read the witnesses out of a checked existential proof term (`Exists.intro w h`, nested). The
++witness is taken from the kernel-checked declaration, not from the search that produced it. -/
++partial def witnessesOf (e : Expr) : MetaM (Array Expr) := do
++  let e ← instantiateMVars e
++  let e := e.consumeMData
++  if e.isAppOfArity ``Exists.intro 4 then
++    let w := e.getArg! 2
++    return #[w] ++ (← witnessesOf (e.getArg! 3))
++  let e' ← whnfCore e
++  if e' != e then witnessesOf e' else return #[]
++
++elab "#proofscope_witness11 " id:ident : command => liftTermElabM do
++  let n ← realizeGlobalConstNoOverloadWithInfo id
++  let some ci := (← getEnv).find? n | throwError "unknown declaration"
++  let v ← match ci with
++    | .thmInfo t => pure t.value
++    | .defnInfo d => pure d.value
++    | _ => throwError "no value"
++  let ws ← witnessesOf v
++  let strs ← ws.mapM fun w => do return toString (← withOptions (·.setBool `pp.funBinderTypes true) (ppExpr w))
++  logInfo m!"PROOFSCOPE_WITNESS11 {(Json.arr (strs.map Json.str)).compress}"
++
++end ProofScope.Assumptions11
+diff --git a/lean/ProofScope/Composition.lean b/lean/ProofScope/Composition.lean
+new file mode 100644
+index 0000000..9cf4e5c
+--- /dev/null
++++ b/lean/ProofScope/Composition.lean
+@@ -0,0 +1,192 @@
++import ProofScope.AssumptionDelta
++/-!
++# v1.1 foundations: linking, polarity-aware composition, assumption minimality
++
++## 1. Linking judgment
++`Link R A := R ↔ A`, kernel-checked, where `A` is the canonical form whose parts (shared conditions,
++assumptions, conclusion) are the statements certificates are elaborated against, **in the same
++context**. Every certificate about `A`'s parts transports to `R` (`linked_assumption_delta`). The
++linker may be incomplete (unsupported elaboration → no link → INCONCLUSIVE); it cannot be unsound,
++because nothing is concluded about `R` without the checked `↔`. Textual identity is not linking:
++`same_text_different_structure` shows one notation with two meanings on one carrier.
++
++## 2. Polarity-aware composition
++A *context* is `k : Prop → Prop`. Monotone contexts preserve the direction of a uniform entailment,
++antitone contexts reverse it (`mono_lift`, `anti_lift`); contexts compose with the sign rule
++(`mono_comp`, `anti_anti`). **Strictness is subtler:** a strict local weakening survives a monotone
++context exactly when the context is non-degenerate, `k True ∧ ¬ k False` (`strict_lift_iff`).
++Under a *binder* even that is not enough: an `∃` absorbs a pointwise separation
++(`exists_binder_absorbs`), and a binder over an empty type absorbs every difference
++(`empty_binder_absorbs`). So a global strict verdict needs a separating model **of the global
++statement**, which is what `monotone_strict` (v0.9) provides when every edit points one way.
++
++## 3. Assumption minimality (inclusion-minimal, not minimum cardinality)
++For assumptions `A i` (`i : Fin n`) selected by `σ`, `Sufficient σ` says the conclusion follows. If `σ`
++is sufficient and every `i ∈ σ` has a *removal witness* (a model of the shared conditions and the
++other selected assumptions where the conclusion fails), then **no proper subset of `σ` is sufficient**
++(`inclusion_minimal`). A redundant assumption (implied by the others) can be dropped without losing
++sufficiency (`redundant_drop`). Individual redundancy does not compose: two copies of one assumption
++are each redundant but jointly necessary, and the inclusion-minimal sets are not unique
++(`substitutable_example`).
++-/
++
++namespace ProofScope.ClaimDelta
++
++universe u
++
++/-! ### 1. Linking -/
++
++/-- What a linked Assumption Delta certificate says about the original statements `R` and `L`. -/
++theorem linked_assumption_delta {M : Sort u} {R L : Prop} {C A P : M → Prop}
++    (hR : R ↔ RefS C P) (hL : L ↔ FormS C A P) (m : M) (hc : C m) (ha : ¬ A m) :
++    (R → L) ∧ (R → P m) ∧ ¬ (∀ Q : M → Prop, FormS C A Q → RefS C Q) :=
++  ⟨fun r => hL.2 fun m c _ => hR.1 r m c, fun r => hR.1 r m hc,
++   fun h => ha (h A (fun _ _ a => a) m hc)⟩
++
++/-- Two structures on one carrier. -/
++def mulAnd : Mul Bool := ⟨fun a b => a && b⟩
++def mulLeft : Mul Bool := ⟨fun a _ => a⟩
++
++/-- The same notation `a * b` on the same carrier denotes two structures with different properties, so
++linking must compare elaborated terms (with their instances), never printed text. -/
++theorem same_text_different_structure :
++    (∀ a b : Bool, @HMul.hMul Bool Bool Bool (@instHMul Bool mulAnd) a b =
++        @HMul.hMul Bool Bool Bool (@instHMul Bool mulAnd) b a) ∧
++    ¬ (∀ a b : Bool, @HMul.hMul Bool Bool Bool (@instHMul Bool mulLeft) a b =
++        @HMul.hMul Bool Bool Bool (@instHMul Bool mulLeft) b a) :=
++  ⟨fun a b => by cases a <;> cases b <;> rfl, fun h => absurd (h true false) (by decide)⟩
++
++/-! ### 2. Polarity-aware composition -/
++
++def Mono (k : Prop → Prop) : Prop := ∀ p q : Prop, (p → q) → k p → k q
++def Anti (k : Prop → Prop) : Prop := ∀ p q : Prop, (p → q) → k q → k p
++
++theorem mono_id : Mono id := fun _ _ h => h
++theorem mono_and (c : Prop) : Mono (fun p => c ∧ p) := fun _ _ h ⟨hc, hp⟩ => ⟨hc, h hp⟩
++theorem mono_or (c : Prop) : Mono (fun p => c ∨ p) := fun _ _ h o => o.imp id h
++theorem mono_imp_right (c : Prop) : Mono (fun p => c → p) := fun _ _ h f x => h (f x)
++theorem anti_imp_left (c : Prop) : Anti (fun p => p → c) := fun _ _ h f x => f (h x)
++theorem anti_not : Anti Not := fun _ _ h nq p => nq (h p)
++theorem mono_comp {k₁ k₂ : Prop → Prop} (h₁ : Mono k₁) (h₂ : Mono k₂) : Mono (k₁ ∘ k₂) :=
++  fun p q h => h₁ _ _ (h₂ p q h)
++theorem anti_anti {k₁ k₂ : Prop → Prop} (h₁ : Anti k₁) (h₂ : Anti k₂) : Mono (k₁ ∘ k₂) :=
++  fun p q h => h₁ _ _ (h₂ p q h)
++theorem mono_anti {k₁ k₂ : Prop → Prop} (h₁ : Mono k₁) (h₂ : Anti k₂) : Anti (k₁ ∘ k₂) :=
++  fun p q h => h₁ _ _ (h₂ p q h)
++theorem mono_forall {β : Sort u} {P Q : β → Prop} (h : ∀ y, P y → Q y) : (∀ y, P y) → ∀ y, Q y :=
++  fun f y => h y (f y)
++theorem mono_exists {β : Sort u} {P Q : β → Prop} (h : ∀ y, P y → Q y) : (∃ y, P y) → ∃ y, Q y :=
++  fun ⟨y, p⟩ => ⟨y, h y p⟩
++
++section Lift
++variable {T : Sort u}
++
++theorem mono_lift {k : Prop → Prop} (hk : Mono k) {P Q : T → Prop} (h : SchemaEntails P Q) :
++    SchemaEntails (fun x => k (P x)) (fun x => k (Q x)) := fun x => hk _ _ (h x)
++
++theorem anti_lift {k : Prop → Prop} (hk : Anti k) {P Q : T → Prop} (h : SchemaEntails P Q) :
++    SchemaEntails (fun x => k (Q x)) (fun x => k (P x)) := fun x => hk _ _ (h x)
++
++/-- Strictness survives a monotone, non-degenerate context, with the same separating model. -/
++theorem strict_lift {k : Prop → Prop} (hk : Mono k) (h1 : k True) (h0 : ¬ k False) {P Q : T → Prop}
++    (h : StrictlyWeaker Q P) : StrictlyWeaker (fun x => k (Q x)) (fun x => k (P x)) :=
++  let ⟨e, x, hq, hp⟩ := h
++  ⟨mono_lift hk e, x, hk _ _ (fun _ => hq) h1, fun kp => h0 (hk _ _ (fun p => hp p) kp)⟩
++
++end Lift
++
++/-- Exactly the non-degenerate monotone contexts preserve every strict weakening. -/
++theorem strict_lift_iff {k : Prop → Prop} (hk : Mono k) :
++    (∀ (T : Type) (P Q : T → Prop), StrictlyWeaker Q P →
++        StrictlyWeaker (fun x => k (Q x)) (fun x => k (P x))) ↔ (k True ∧ ¬ k False) := by
++  constructor
++  · intro h
++    have s : StrictlyWeaker (fun _ : Unit => True) (fun _ : Unit => False) :=
++      ⟨fun _ f => f.elim, (), trivial, id⟩
++    obtain ⟨_, x, hq, hp⟩ := h Unit _ _ s
++    exact ⟨hq, hp⟩
++  · intro ⟨h1, h0⟩ T P Q s
++    exact strict_lift hk h1 h0 s
++
++/-- A degenerate context (`fun _ => True`) erases every difference. -/
++theorem degenerate_context :
++    StrictlyWeaker (fun _ : Unit => True) (fun _ : Unit => False) ∧
++      SchemaEquiv (fun _ : Unit => (fun _ : Prop => True) True) (fun _ : Unit => (fun _ : Prop => True) False) :=
++  ⟨⟨fun _ f => f.elim, (), trivial, id⟩, fun _ h => h, fun _ h => h⟩
++
++/-- An `∃` binder absorbs a pointwise strict weakening: `y = true` against `True`, pointwise strict
++over `Bool`, become equivalent under `∃ y`. -/
++theorem exists_binder_absorbs :
++    StrictlyWeaker (fun _ : Bool => True) (fun y : Bool => y = true) ∧
++      ((∃ y : Bool, y = true) ↔ (∃ _ : Bool, True)) :=
++  ⟨⟨fun _ _ => trivial, false, trivial, Bool.false_ne_true⟩,
++   ⟨fun ⟨y, _⟩ => ⟨y, trivial⟩, fun _ => ⟨true, rfl⟩⟩⟩
++
++/-- A binder over an empty type absorbs every difference. -/
++theorem empty_binder_absorbs (P Q : Empty → Prop) : (∀ y, P y) ↔ (∀ y, Q y) :=
++  ⟨(fun _ y => nomatch y), (fun _ y => nomatch y)⟩
++
++/-! ### 3. Assumption minimality -/
++
++section Minimality
++variable {M : Sort u} {n : Nat} (C : M → Prop) (A : Fin n → M → Prop) (P : M → Prop)
++
++def Sufficient (σ : Fin n → Prop) : Prop := ∀ m, C m → (∀ i, σ i → A i m) → P m
++
++def RemovalWitness (σ : Fin n → Prop) (i : Fin n) : Prop :=
++  ∃ m, C m ∧ (∀ j, σ j → j ≠ i → A j m) ∧ ¬ P m
++
++/-- Removal witnesses for every selected assumption make a sufficient selection inclusion-minimal. -/
++theorem inclusion_minimal {σ : Fin n → Prop} (hw : ∀ i, σ i → RemovalWitness C A P σ i)
++    (τ : Fin n → Prop) (hsub : ∀ i, τ i → σ i) (hproper : ∃ i, σ i ∧ ¬ τ i) :
++    ¬ Sufficient C A P τ := by
++  intro hs
++  obtain ⟨i, hσ, hτ⟩ := hproper
++  obtain ⟨m, hc, hothers, hp⟩ := hw i hσ
++  apply hp
++  refine hs m hc fun j hj => hothers j (hsub j hj) ?_
++  intro e
++  exact hτ (e ▸ hj)
++
++/-- An assumption implied by the other selected ones can be dropped without losing sufficiency. -/
++theorem redundant_drop {σ : Fin n → Prop} {i : Fin n}
++    (hr : ∀ m, C m → (∀ j, σ j → j ≠ i → A j m) → A i m) :
++    Sufficient C A P σ ↔ Sufficient C A P (fun j => σ j ∧ j ≠ i) := by
++  constructor
++  · intro hs m hc ha
++    refine hs m hc fun j hj => ?_
++    by_cases e : j = i
++    · subst e; exact hr m hc fun k hk hne => ha k ⟨hk, hne⟩
++    · exact ha j ⟨hj, e⟩
++  · intro hs m hc ha
++    exact hs m hc fun j hj => ha j hj.1
++
++end Minimality
++
++/-- Two copies of one assumption: each is redundant given the other, the pair is jointly necessary,
++and `{0}` and `{1}` are two different inclusion-minimal sufficient selections. -/
++theorem substitutable_example :
++    let C : Nat → Prop := fun _ => True
++    let A : Fin 2 → Nat → Prop := fun _ x => x ≠ 0
++    let P : Nat → Prop := fun x => x ≠ 0
++    Sufficient C A P (fun i => i = 0) ∧ Sufficient C A P (fun i => i = 1) ∧
++      ¬ Sufficient C A P (fun _ => False) := by
++  refine ⟨fun m _ h => h 0 rfl, fun m _ h => h 1 rfl, fun h => h 0 trivial (fun _ f => f.elim) rfl⟩
++
++end ProofScope.ClaimDelta
++
++#print axioms ProofScope.ClaimDelta.linked_assumption_delta
++#print axioms ProofScope.ClaimDelta.same_text_different_structure
++#print axioms ProofScope.ClaimDelta.mono_comp
++#print axioms ProofScope.ClaimDelta.anti_anti
++#print axioms ProofScope.ClaimDelta.mono_anti
++#print axioms ProofScope.ClaimDelta.mono_lift
++#print axioms ProofScope.ClaimDelta.anti_lift
++#print axioms ProofScope.ClaimDelta.strict_lift
++#print axioms ProofScope.ClaimDelta.strict_lift_iff
++#print axioms ProofScope.ClaimDelta.degenerate_context
++#print axioms ProofScope.ClaimDelta.exists_binder_absorbs
++#print axioms ProofScope.ClaimDelta.empty_binder_absorbs
++#print axioms ProofScope.ClaimDelta.inclusion_minimal
++#print axioms ProofScope.ClaimDelta.redundant_drop
++#print axioms ProofScope.ClaimDelta.substitutable_example
+diff --git a/proofscope/__init__.py b/proofscope/__init__.py
+index 3b05f7b..c528bba 100644
+--- a/proofscope/__init__.py
++++ b/proofscope/__init__.py
+@@ -1,2 +1,2 @@
+ """ProofScope by Caleb J. Westfall. Minimal public audit prototype."""
+-__version__ = "1.0.0"
++__version__ = "1.1.0"
+diff --git a/proofscope/adelta11.py b/proofscope/adelta11.py
+new file mode 100644
+index 0000000..d55aa57
+--- /dev/null
++++ b/proofscope/adelta11.py
+@@ -0,0 +1,402 @@
++"""Assumption Delta v1.1 (copy of the frozen v1.0 engine with dependent-structure linking and minimality).
++
++Changes from v1.0: clean binder names and instance binders printed as `[i : C α]` (linking of
++dependent structures, Mathlib m04/m05); instance witnesses built from carrier operations; an
++assumption-minimality mode (`lean/ProofScope/Composition.lean`, `inclusion_minimal`).
++
++Original v1.0 description:
++Assumption Delta (v1.0): certified meaning of assumptions added or dropped by a formalization.
++
++For a reference R and a formal statement L, `lean/ProofScope/AssumptionExtract.lean` aligns the
++elaborated binder telescopes and returns the shared model binders, the shared hypotheses, the added
++and dropped assumptions (Prop binders, Prop-valued typeclasses, and data instances as `Nonempty (Cls)`),
++and whether the conclusions agree. For each added assumption `A`, with shared conditions `C`:
++
++    link_R / link_L   R and L are equivalent to the canonical telescopes the certificates talk about
++    redundant         ∀ scope, C → A                        (theorem `redundant_schema_equiv`)
++    restrictive       ∃ scope, C ∧ ¬ A        a model witness (theorem `restrictive_iff_strictly_weaker`)
++    necessary         ∃ all,   C ∧ ¬ A ∧ ¬ P  the reference is false without A (`necessary_refutes_reference`)
++
++Dropped assumptions are the mirror image (the Lean statement covers more; a `necessary` certificate
++then shows the Lean claim is false). Each is checked by `certify` (clean recompile, standard axioms,
++kernel replay). An assumption the rest of the statement depends on is DEPENDENT: no comparison is
++defined, so it stays INCONCLUSIVE. Witness models are drawn from finite carriers (Bool, Fin 3, Unit,
++Empty) and Nat/Int with small operation pools; failure to find one is reported, never read as redundancy.
++"""
++
++from __future__ import annotations
++
++import argparse
++import os
++import json
++import re
++from itertools import product
++from pathlib import Path
++
++from .certify import certify
++from .toolchain import Toolchain
++
++SRC = Path(__file__).resolve().parents[1] / "lean"
++# Mathlib mode: PROOFSCOPE_IMPORTS=Mathlib with LEAN_PATH pointing at a built Mathlib (GitHub workflow)
++IMPORTS = [m for m in os.environ.get("PROOFSCOPE_IMPORTS", "").split(",") if m.strip()]
++MATHLIB = "Mathlib" in IMPORTS
++
++
++def import_lines() -> str:
++    return "".join(f"import {m.strip()}\n" for m in IMPORTS)
++
++CARRIERS = {
++    "Bool": {"vals": ["true", "false"],
++             "op2": ["fun a _ => a", "fun _ b => b", "fun a b => a && b", "fun a b => a || b", "fun a b => Bool.xor a b",
++                     "fun a b => !a || b", "fun _ _ => true"],
++             "op1": ["fun a => a", "fun a => !a", "fun _ => true"],
++             "rel": ["fun _ _ => True", "fun a b => a = b", "fun a b => a ≠ b", "fun _ _ => False",
++                     "fun a b => a = true ∨ b = false"]},
++    "Fin 3": {"vals": ["(0 : Fin 3)", "(1 : Fin 3)", "(2 : Fin 3)"],
++              "op2": ["fun a _ => a", "fun a b => a + b", "fun a b => a * b", "fun a b => max a b", "fun a b => a - b"],
++              "op1": ["fun a => a", "fun a => a + 1", "fun _ => 0"],
++              "rel": ["fun a b => a ≤ b", "fun a b => a < b", "fun a b => a = b", "fun _ _ => True"]},
++    "Unit": {"vals": ["()"], "op2": ["fun _ _ => ()"], "op1": ["fun a => a"], "rel": ["fun _ _ => True", "fun _ _ => False"]},
++    "Empty": {"vals": [], "op2": ["fun a _ => a"], "op1": ["fun a => a"], "rel": ["fun _ _ => True"]},
++    "Nat": {"vals": ["0", "1", "2"],
++            "op2": ["fun a b => a + b", "fun a b => a * b", "fun a _ => a", "fun a b => a - b", "fun _ _ => 0", "fun a b => max a b"],
++            "op1": ["fun a => a", "fun a => a + 1", "fun _ => 0", "fun a => a / 2"],
++            "rel": ["fun a b => a ≤ b", "fun a b => a < b", "fun a b => a = b", "fun _ _ => True"]},
++}
++POINT_POOLS = {"Nat": ["0", "1", "2", "3"], "Int": ["(-1 : Int)", "0", "1", "2"], "Bool": ["true", "false"]}
++if MATHLIB:
++    CARRIERS["Equiv.Perm (Fin 3)"] = {
++        "vals": ["(1 : Equiv.Perm (Fin 3))", "(Equiv.swap 0 1 : Equiv.Perm (Fin 3))", "(Equiv.swap 1 2 : Equiv.Perm (Fin 3))"],
++        "op2": ["fun a b => a * b"], "op1": ["fun a => a⁻¹", "fun a => a"], "rel": ["fun a b => a = b"]}
++    CARRIERS["Bool × Bool"] = {"vals": ["((true, false) : Bool × Bool)", "((false, true) : Bool × Bool)"],
++                              "op2": ["fun a _ => a"], "op1": ["fun a => a"], "rel": ["fun a b => a = b"]}
++    POINT_POOLS.update({"ℝ": ["(-2 : ℝ)", "(-1 : ℝ)", "(0 : ℝ)", "(1 / 2 : ℝ)", "(1 : ℝ)", "(2 : ℝ)"],
++                        "Set ℕ": ["(∅ : Set ℕ)", "(Set.univ : Set ℕ)", "({0} : Set ℕ)", "({1} : Set ℕ)"],
++                        "ℕ": ["0", "1", "2", "3"], "ℤ": ["(-1 : ℤ)", "0", "1", "2"]})
++
++
++def build(tc: Toolchain, out: Path) -> dict:
++    o = out / "ProofScope" / "AssumptionExtract11.olean"
++    if o.exists():
++        return {"ok": True}
++    r = tc.compile(SRC / "ProofScope" / "AssumptionExtract11.lean", o, SRC, timeout=900)
++    return {"ok": r.returncode == 0 and o.exists(), "log": r.as_dict()}
++
++
++def extract(ref: str, lean: str, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    work.mkdir(parents=True, exist_ok=True)
++    f = work / "Assumptions_input.lean"
++    f.write_text(f"{import_lines()}import ProofScope.AssumptionExtract11\n\n#proofscope_assumptions11 ({ref}) ({lean})\n")
++    r = tc.run([tc.lean, str(f)], cwd=work, extra_path=buildp, timeout=600)
++    for line in r.output.splitlines():
++        i = line.find("PROOFSCOPE_ASSUMPTIONS11 ")
++        if i >= 0:
++            return json.loads(line[i + len("PROOFSCOPE_ASSUMPTIONS11 "):])
++    return {"error": r.output[-3000:]}
++
++
++def _subst(typ: str, carrier_names: dict[str, str]) -> str:
++    for n, c in carrier_names.items():
++        typ = re.sub(rf"(?<![\w.]){re.escape(n)}(?![\w.])", f"({c})" if " " in c else c, typ)
++    return re.sub(r"\s+", " ", typ.strip())
++
++
++def _pool_for(typ: str, carrier: str | None) -> list[str]:
++    if carrier is not None:
++        c = CARRIERS[carrier]
++        cc = f"({carrier})" if " " in carrier else carrier
++        if typ == f"{cc} → {cc} → {cc}":
++            return c["op2"]
++        if typ == f"{cc} → {cc}":
++            return c["op1"]
++        if typ == f"{cc} → {cc} → Prop":
++            return c["rel"]
++        if typ == cc:
++            return c["vals"]
++        # an instance binder over the carrier (e.g. `Group (Equiv.Perm (Fin 3))`, `Mul Bool`): the inferred
++        # instance, or a one-field structure built from the carrier's operations (two structures on one
++        # carrier are thereby both explored)
++        if typ.endswith(cc) and re.match(r"^[A-Z][\w.]*\s", typ):
++            return ["inferInstance"] + [f"⟨{o}⟩" for o in c["op2"] + c["op1"]]
++    return POINT_POOLS.get(typ, [])
++
++
++def witnesses(scope: list[dict]) -> list[list[str]]:
++    """Witness tuples for the in-scope binders: choose a carrier for each `Type` binder first, then
++    operations and points from that carrier's pools (types printed by Lean, carriers substituted)."""
++    types = [b for b in scope if b["type"] == "Type"]
++    out = []
++    for carriers in product(list(CARRIERS), repeat=len(types)):
++        names = {b["name"]: c for b, c in zip(types, carriers)}
++        cols = []
++        for b in scope:
++            if b["type"] == "Type":
++                cols.append([names[b["name"]]])
++                continue
++            t = _subst(b["type"], names)
++            car = next((c for c in carriers if t.startswith(f"({c})" if " " in c else c)), carriers[0] if carriers else None)
++            cols.append(_pool_for(t, car))
++        if all(cols):
++            out += [list(t) for t in product(*cols)][:60]
++    return out[:150]
++
++
++def closers(vals: list[str]) -> str:
++    base = ["decide", "trivial", "(intros; decide)", "(intro a; cases a)", "(intros; simp_all)", "(intros; omega)",
++            "(intro h; obtain ⟨e⟩ := h; cases e)", "(intros; trivial)", "(constructor; decide)", "simp", "omega"]
++    if MATHLIB:
++        base += ["norm_num", "(intros; norm_num)", "(intros; linarith)", "(intros; positivity)", "(intros; nlinarith)",
++                 "(intro h; have := h 1 (by norm_num); norm_num at this)", "(simp [Set.Nonempty])",
++                 "(intro h; have := h (1 / 2) (by norm_num); norm_num at this)", "(intro h; obtain ⟨x, hx⟩ := h; simp at hx)"]
++    pts = vals[:3] or ["true", "false"]
++    for a in pts:
++        for b in pts:
++            base.append(f"(intro h; obtain ⟨h⟩ := h; have := h {a} {b}; revert this; decide)")
++            base.append(f"(intro h; have := h {a} {b}; revert this; decide)")
++            for c in pts[:2]:
++                base.append(f"(intro h; have := h {a} {b} {c}; revert this; decide)")
++        base.append(f"(intro h; have := h {a}; revert this; decide)")
++        base.append(f"(intro h; have := h {a}; omega)")
++    return " | ".join(f"({c}; done)" for c in base)
++
++
++ALL_VALS = ["true", "false", "(0 : Fin 3)", "(1 : Fin 3)", "(2 : Fin 3)", "0", "1", "2", "(-1 : Int)", "()"]
++
++
++def sep_tactics(scope: list[dict], body_count: int) -> list[str]:
++    tac = []
++    for w in witnesses(scope):
++        vals = [v for v in ALL_VALS]
++        tac.append(f"refine ⟨{', '.join(w)}, ?_⟩; and_intros <;> first | {closers(vals)}")
++    return tac
++
++
++REDUNDANT = (["(intros; positivity)", "(intros; norm_num)", "(intros; linarith)", "(intros; exact mul_comm _ _)",
++              "(intros; simp [mul_comm])", "(intros; exact le_total _ _)"] if MATHLIB else []) + [
++             "(intros; exact ⟨⟨‹_›⟩⟩)", "(intros; exact ⟨default⟩)", "(intros; exact ⟨fun _ _ => ‹∀ _ _, _› _ _⟩)","(intros; infer_instance)", "(intros; exact ⟨inferInstance⟩)", "(intros; exact ⟨Classical.decEq _⟩)",
++             "(intros; exact ⟨fun _ => Classical.propDecidable _⟩)", "(intros; constructor; assumption)",
++             "(intros; constructor; intros; simp_all)", "(intros; exact ⟨‹_›⟩)", "(intros; omega)", "(intros; simp_all)",
++             "(intros; grind)", "(intros; trivial)"]
++
++
++def read_witnesses(ident: str, names: list[str], tc: Toolchain, buildp: Path, certdir: Path) -> dict:
++    """Witness models, read from the kernel-checked declarations of the certified module."""
++    if not names:
++        return {}
++    f = certdir / "Witness_read.lean"
++    f.write_text(f"{import_lines()}import ProofScope.AssumptionExtract11\nimport ProofScopeCert.{ident}\n\n"
++                 + "".join(f"#proofscope_witness11 ProofScopeCert.{ident}.{n}\n" for n in names))
++    r = tc.run([tc.lean, str(f)], cwd=certdir, extra_path=os.pathsep.join([str(buildp), str(certdir / "build")]), timeout=300)
++    got = [json.loads(l[l.index("PROOFSCOPE_WITNESS11 ") + 21:]) for l in r.output.splitlines() if "PROOFSCOPE_WITNESS11 " in l]
++    return dict(zip(names, got)) if len(got) == len(names) else {}
++
++
++def binders(model: list[dict], exists: bool = False) -> str:
++    """Instance binders are re-declared as instance binders, so the canonical context resolves instances
++    exactly as the original statement did (checked by the link certificates). In `∃` they are explicit."""
++    return " ".join(f"[{b['name']} : {b['type']}]" if b.get("inst") and not exists else f"({b['name']} : {b['type']})"
++                    for b in model)
++
++
++def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    ref, lean = spec["reference"], spec["lean"]
++    out = {"id": spec["id"], "reference": ref, "lean": lean}
++    d = extract(ref, lean, tc, buildp, work / "extract")
++    if "error" in d:
++        out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=d["error"][-600:])
++        return out
++    out["extraction"] = d
++    if not d["added"] and not d["dropped"]:
++        # v1.1.1: never report "no delta" when the conclusions differ
++        out.update(verdict="NO_ASSUMPTION_DELTA" if d["conclusion_same"] else "CONCLUSION_ONLY_CHANGE",
++                   reason=None if d["conclusion_same"] else "assumptions agree, conclusions differ: not an "
++                          "assumption-level question (use CMCD on the conclusion)")
++        return out
++    if not d["conclusion_same"]:
++        out.update(verdict="INCONCLUSIVE", reason="the conclusion also changed: assumption and conclusion deltas are not "
++                                                   "composed here (use CMCD on the conclusion)")
++        return out
++    if any(a["dependent"] for a in d["added"] + d["dropped"]):
++        out.update(verdict="INCONCLUSIVE_DEPENDENT",
++                   reason="the rest of the statement depends on an added/dropped binder; no well-typed statement "
++                          "without it exists, so no comparison is defined")
++        return out
++    model = d["model"]
++    allb = binders(model)
++    hyps = d["hyps"]
++    H = " ∧ ".join(f"({h})" for h in hyps) if hyps else "True"
++    Himp = "".join(f"({h}) → " for h in hyps)
++    P = d["conclusion_ref"]
++    ob = {}
++    link_tac = ["constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩)"
++                " | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))"]
++    ob["link_R"] = (f"({ref}) ↔ (∀ {allb}, {Himp}{''.join(f'({a['prop']}) → ' for a in d['dropped'])}{P})", link_tac)
++    ob["link_L"] = (f"({lean}) ↔ (∀ {allb}, {Himp}{''.join(f'({a['prop']}) → ' for a in d['added'])}{P})", link_tac)
++    for side, items, prefixes in (("add", d["added"], d["added_prefix"]), ("drop", d["dropped"], d["dropped_prefix"])):
++        for j, a in enumerate(items):
++            A = a["prop"]
++            # v1.0.2: the model is ALL binders and ALL shared hypotheses of the reference telescope, exactly
++            # as in `restrictive_iff_strictly_weaker` (R = ∀ m, C m → P m). Order does not matter (non-dependent
++            # hypotheses commute). Minimizing to "mentioned" binders (v1.0) or to the prefix (v1.0.1) is unsound:
++            # adversarial cases x01 (a point x : α proves Nonempty α) and ad04 (a later hypothesis implies A).
++            pre = model
++            preb = allb
++            pH, pHimp, ph = H, Himp, len(hyps)
++            scope_q = f"∀ {preb}, " if pre else ""
++            ob[f"{side}{j}_redundant"] = (f"{scope_q}{pHimp}{A}", REDUNDANT)
++            if pre:
++                ob[f"{side}{j}_restrictive"] = (f"∃ {binders(model, True)}, ¬ ({A}) ∧ {pH}", sep_tactics(pre, ph))
++            ob[f"{side}{j}_necessary"] = (f"∃ {binders(model, True)}, ¬ ({A}) ∧ ¬ ({P}) ∧ {H}", sep_tactics(model, len(hyps)))
++    ident = "AD_" + re.sub(r"[^A-Za-z0-9_]", "_", spec["id"])
++    r = certify(ident, import_lines() + "set_option maxHeartbeats 4000000\nset_option linter.unusedVariables false\n",
++                ob, tc, work / "certify")
++    certs = set(r["certificates"])
++    out["certify_status"] = r["status"]
++    out["certificates"] = r["certificates"]
++    if not {"link_R", "link_L"} <= certs:
++        out.update(verdict="INCONCLUSIVE", reason="canonical telescope not linked to the elaborated statements")
++        return out
++    witness_text = read_witnesses(ident, [k for k in certs if k.endswith(("_restrictive", "_necessary"))],
++                                  tc, buildp, work / "certify")
++    items = []
++    for side, lst in (("add", d["added"]), ("drop", d["dropped"])):
++        for j, a in enumerate(lst):
++            k = f"{side}{j}"
++            red, res, nec = (f"{k}_{x}" in certs for x in ("redundant", "restrictive", "necessary"))
++            cls = "INCONSISTENT" if red and (res or nec) else ("NECESSARY" if nec else "RESTRICTIVE" if res else
++                                                                "REDUNDANT" if red else "INCONCLUSIVE")
++            items.append({"side": "added" if side == "add" else "dropped", "assumption": a["prop"], "class": cls,
++                          "witness_model": witness_text.get(f"{k}_necessary") or witness_text.get(f"{k}_restrictive"),
++                          "witness_statement": (r["certificates"].get(f"{k}_necessary") or r["certificates"].get(f"{k}_restrictive") or {}).get("statement")})
++    out["assumptions"] = items
++    cl = [(i["side"], i["class"]) for i in items]
++    if any(c == "INCONSISTENT" for _, c in cl):
++        out["verdict"] = "INCONSISTENT"
++    elif ("added", "NECESSARY") in cl:
++        out.update(verdict="REFERENCE_NEEDS_ASSUMPTION", theorem="necessary_refutes_reference",
++                   reason="a certified model satisfies the shared conditions, violates the added assumption and "
++                          "falsifies the conclusion: the reference claim is false without it")
++    elif ("dropped", "NECESSARY") in cl:
++        out.update(verdict="LEAN_CLAIM_FALSE", theorem="necessary_refutes_reference",
++                   reason="the Lean statement dropped an assumption and a certified model falsifies it")
++    elif ("added", "RESTRICTIVE") in cl and ("dropped", "RESTRICTIVE") not in cl:
++        out.update(verdict="LEAN_WEAKER_BY_ASSUMPTION", theorem="restrictive_iff_strictly_weaker")
++    elif ("dropped", "RESTRICTIVE") in cl and ("added", "RESTRICTIVE") not in cl:
++        out.update(verdict="LEAN_STRONGER_BY_ASSUMPTION", theorem="restrictive_iff_strictly_weaker")
++    elif all(c == "REDUNDANT" for _, c in cl):
++        out.update(verdict="ASSUMPTION_EQUIVALENT", theorem="redundant_schema_equiv")
++    elif ("added", "RESTRICTIVE") in cl and ("dropped", "RESTRICTIVE") in cl:
++        out.update(verdict="ASSUMPTION_INCOMPARABLE")
++    else:
++        out["verdict"] = "INCONCLUSIVE"
++    return out
++
++
++SUFFICIENT = ["decide", "(intros; decide)", "(intros; omega)", "(intros; simp_all)", "(intros; grind)",
++              "(intro _ _ _ h a b; cases a <;> cases b <;> simp_all)", "(intros; trivial)", "(intros; assumption)"]
++
++
++def minimality(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
++    """Which of a statement's assumptions are needed (`Composition.lean`: inclusion_minimal,
++    redundant_drop, substitutable_example). Every assumption gets a removal witness (NECESSARY given the
++    others), a proof from the others (REDUNDANT given the others), or stays UNRESOLVED. Inclusion-minimality
++    is claimed only if sufficiency is certified and every assumption is NECESSARY."""
++    L = spec["statement"]
++    out = {"id": spec["id"], "statement": L, "mode": "minimality"}
++    d = extract(L, L, tc, buildp, work / "extract")
++    if "error" in d:
++        out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=d["error"][-600:])
++        return out
++    model, hyps, P = d["model"], d["hyps"], d["conclusion_ref"]
++    lits = sorted({int(x) for x in re.findall(r"\b(\d+)\b", L) if int(x) <= 20})
++    for t in ("Nat", "ℕ"):
++        POINT_POOLS[t] = sorted(set(POINT_POOLS.get(t, [])) | {str(c) for c in lits} | {str(c + 1) for c in lits}, key=int)
++    if not hyps:
++        out.update(verdict="NO_ASSUMPTIONS")
++        return out
++    allf, alle = binders(model), binders(model, True)
++    conj = lambda xs: " ∧ ".join(f"({x})" for x in xs) if xs else "True"
++    imp = lambda xs: "".join(f"({x}) → " for x in xs)
++    ob = {"link": (f"({L}) ↔ (∀ {allf}, {imp(hyps)}{P})",
++                   ["constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | simp_all)"]),
++          "sufficient": (f"∀ {allf}, {imp(hyps)}{P}", SUFFICIENT)}
++    for i, a in enumerate(hyps):
++        others = [h for j, h in enumerate(hyps) if j != i]
++        ob[f"removal{i}"] = (f"∃ {alle}, {conj(others)} ∧ ¬ ({P})", sep_tactics(model, 0))
++        ob[f"redundant{i}"] = (f"∀ {allf}, {imp(others)}{a}", REDUNDANT)
++        # UNNEEDED: the conclusion follows from the other assumptions (weaker than REDUNDANT, which says the
++        # assumption itself follows from them)
++        ob[f"unneeded{i}"] = (f"∀ {allf}, {imp(others)}{P}", SUFFICIENT)
++    for i in range(len(hyps)):
++        for j in range(i + 1, len(hyps)):
++            rest = [h for k, h in enumerate(hyps) if k not in (i, j)]
++            ob[f"joint{i}_{j}"] = (f"∃ {alle}, {conj(rest)} ∧ ¬ ({P})", sep_tactics(model, 0))
++    ident = "MIN_" + re.sub(r"[^A-Za-z0-9_]", "_", spec["id"])
++    r = certify(ident, import_lines() + "set_option maxHeartbeats 4000000\nset_option linter.unusedVariables false\n",
++                ob, tc, work / "certify")
++    certs = set(r["certificates"])
++    out["certify_status"] = r["status"]
++    if "link" not in certs:
++        out.update(verdict="INCONCLUSIVE", reason="canonical telescope not linked")
++        return out
++    wit = read_witnesses(ident, [k for k in certs if k.startswith(("removal", "joint"))], tc, buildp, work / "certify")
++    items = []
++    for i, a in enumerate(hyps):
++        nec, red, unn = f"removal{i}" in certs, f"redundant{i}" in certs, f"unneeded{i}" in certs
++        items.append({"assumption": a, "class": "INCONSISTENT" if nec and (red or unn) else "NECESSARY" if nec else
++                      "REDUNDANT" if red else "UNNEEDED" if unn else "UNRESOLVED",
++                      "removal_witness": wit.get(f"removal{i}")})
++    out["assumptions"] = items
++    out["sufficiency"] = "CERTIFIED" if "sufficient" in certs else "NOT_CERTIFIED"
++    red = [i for i, x in enumerate(items) if x["class"] in ("REDUNDANT", "UNNEEDED")]
++    out["jointly_necessary_pairs"] = [[i, j] for i in red for j in red if i < j and f"joint{i}_{j}" in certs]
++    cls = [x["class"] for x in items]
++    if "INCONSISTENT" in cls:
++        out["verdict"] = "INCONSISTENT"
++    elif all(c == "NECESSARY" for c in cls):
++        out.update(verdict="INCLUSION_MINIMAL" if out["sufficiency"] == "CERTIFIED" else "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
++                   theorem="inclusion_minimal")
++    elif any(c in ("REDUNDANT", "UNNEEDED") for c in cls):
++        out.update(verdict="HAS_REDUNDANT_ASSUMPTIONS", theorem="redundant_drop",
++                   note="drop redundant assumptions one at a time and re-check: individual redundancy does not "
++                        "compose (substitutable_example)")
++    else:
++        out["verdict"] = "INCONCLUSIVE"
++    return out
++
++
++def _one(a):
++    p, buildp, out = a
++    spec = json.loads(Path(p).read_text())
++    fn = minimality if "statement" in spec else run_case
++    row = fn(spec, Toolchain.find(), buildp, out / "work" / Path(p).stem)
++    for k in ("expected", "domain", "family", "split", "must_not_be"):
++        row[k] = spec.get(k)
++    (out / "rows").mkdir(parents=True, exist_ok=True)
++    (out / "rows" / (Path(p).stem + ".json")).write_text(json.dumps(row, ensure_ascii=False, indent=1))
++    return row
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python3 -m proofscope.adelta11")
++    ap.add_argument("specs", nargs="+")
++    ap.add_argument("--out", type=Path, required=True)
++    ap.add_argument("--jobs", type=int, default=1)
++    a = ap.parse_args(argv)
++    out = a.out.resolve()
++    b = build(Toolchain.find(), out / "build")
++    if not b["ok"]:
++        print(json.dumps(b, indent=2)[:3000])
++        return 2
++    from concurrent.futures import ProcessPoolExecutor
++    with ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
++        rows = list(ex.map(_one, [(p, out / "build", out) for p in a.specs]))
++    for r in rows:
++        ok = "" if not r.get("expected") else ("OK" if r["verdict"] == r["expected"] else f"MISS(expected {r['expected']})")
++        print(r["id"], r["verdict"], ok, flush=True)
++    (out / "adelta_results.json").write_text(json.dumps({"rows": rows}, indent=1, ensure_ascii=False))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/proofscope/benchmark/V11_FREEZE.txt b/proofscope/benchmark/V11_FREEZE.txt
+new file mode 100644
+index 0000000..ea1dcaf
+--- /dev/null
++++ b/proofscope/benchmark/V11_FREEZE.txt
+@@ -0,0 +1,17 @@
++# ProofScope v1.1 freeze (Mon Nov  9 16:50:41 UTC 2026). Engine adelta11 (new; frozen adelta v1.0 untouched).
++c491e246a4a8712f63ced5e50d826a6d015739391a1f14b0032534f339c2c94e  proofscope/adelta11.py
++0e72d4de4bd4820a17d8620fe14cf2df77eab0384560a975c9045ae513036d00  lean/ProofScope/AssumptionExtract11.lean
++7c35f3b4f439f9e9df00b01593cc1c231dbc267eeb36c5fd1f6f2085051f4351  lean/ProofScope/Composition.lean
++a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
++68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
++5d41c11f1127722040a8cf04f01a5d5904a93d1eb8b3d5e7364c38f86078b060  v11_dev suite
++07f4e1ad050910597a70cb56a27eb37dcc6f9c7a78b41fa51169ea90b507dd8a  v11_hostile suite
++ff601df3b77033e5abbede612bd6ccba6bfd41349cdb4c2fc70c05488c28fa5a  mathlib_v11 suite
++
++# Block 2 (v1.1.1) after the block-1 run (v11_dev + v11_hostile: 16/18, 0 must-not-be violations; misses h06 reporting, h08 round-trip).
++# Fixes: pp.analyze in printing, CONCLUSION_ONLY_CHANGE. v11_dev and v11_hostile are now development data. (Mon Nov  9 16:55:35 UTC 2026)
++4478234fdb83f1f958445b53b4d9b5b9e5c430f3dd1aff655a32e8c582b55f32  proofscope/adelta11.py
++f616fe54837d07f50d6e88b2ce45fdb8ed6841798aaccbb9391d8fd98246ffc0  lean/ProofScope/AssumptionExtract11.lean
++7c35f3b4f439f9e9df00b01593cc1c231dbc267eeb36c5fd1f6f2085051f4351  lean/ProofScope/Composition.lean
++a3c8e35dc6c954f986e1f6eac15e8cbaaa2c568e21999a9a87b0efc8db707317  lean/ProofScope/AssumptionDelta.lean
++68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+diff --git a/proofscope/benchmark/mathlib_v11/m04_group_hidden_comm.json b/proofscope/benchmark/mathlib_v11/m04_group_hidden_comm.json
+new file mode 100644
+index 0000000..22dcc17
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m04_group_hidden_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m04_group_hidden_comm",
++ "domain": "Algebra",
++ "family": "hidden commutativity",
++ "reference": "∀ (G : Type) [Group G] (a : G), a * a⁻¹ = 1",
++ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a : G), a * a⁻¹ = 1",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/mathlib_v11/m05_group_needed_comm.json b/proofscope/benchmark/mathlib_v11/m05_group_needed_comm.json
+new file mode 100644
+index 0000000..a839862
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m05_group_needed_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m05_group_needed_comm",
++ "domain": "Algebra",
++ "family": "reference needs commutativity",
++ "reference": "∀ (G : Type) [Group G] (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹",
++ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a b : G), (a * b)⁻¹ = a⁻¹ * b⁻¹",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/mathlib_v11/m09_partial_order_total.json b/proofscope/benchmark/mathlib_v11/m09_partial_order_total.json
+new file mode 100644
+index 0000000..4a28246
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m09_partial_order_total.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m09_partial_order_total",
++ "domain": "Order",
++ "family": "reference needs totality",
++ "reference": "∀ (α : Type) [PartialOrder α] (a b : α), a ≤ b ∨ b ≤ a",
++ "lean": "∀ (α : Type) [PartialOrder α], (∀ (x y : α), x ≤ y ∨ y ≤ x) → ∀ (a b : α), a ≤ b ∨ b ≤ a",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/mathlib_v11/m10_conjugation.json b/proofscope/benchmark/mathlib_v11/m10_conjugation.json
+new file mode 100644
+index 0000000..a450d8b
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m10_conjugation.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m10_conjugation",
++ "domain": "Algebra",
++ "family": "reference needs commutativity",
++ "reference": "∀ (G : Type) [Group G] (a b : G), a * b * a⁻¹ = b",
++ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a b : G), a * b * a⁻¹ = b",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/mathlib_v11/m11_commmonoid_redundant.json b/proofscope/benchmark/mathlib_v11/m11_commmonoid_redundant.json
+new file mode 100644
+index 0000000..d4d49ef
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m11_commmonoid_redundant.json
+@@ -0,0 +1,11 @@
++{
++ "id": "m11_commmonoid_redundant",
++ "domain": "Algebra",
++ "family": "redundant hypothesis",
++ "reference": "∀ (M : Type) [CommMonoid M] (a b : M), a * b = b * a",
++ "lean": "∀ (M : Type) [CommMonoid M], (∀ (x y : M), x * y = y * x) → ∀ (a b : M), a * b = b * a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/mathlib_v11/m12_real_minimal.json b/proofscope/benchmark/mathlib_v11/m12_real_minimal.json
+new file mode 100644
+index 0000000..c5fd820
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m12_real_minimal.json
+@@ -0,0 +1,10 @@
++{
++ "id": "m12_real_minimal",
++ "domain": "Real analysis",
++ "family": "minimality",
++ "statement": "∀ (x : ℝ), 0 ≤ x → x ≤ 1 → x ^ 2 ≤ 1",
++ "expected": "INCLUSION_MINIMAL",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/mathlib_v11/m13_real_unneeded.json b/proofscope/benchmark/mathlib_v11/m13_real_unneeded.json
+new file mode 100644
+index 0000000..8b4dde1
+--- /dev/null
++++ b/proofscope/benchmark/mathlib_v11/m13_real_unneeded.json
+@@ -0,0 +1,10 @@
++{
++ "id": "m13_real_unneeded",
++ "domain": "Real analysis",
++ "family": "minimality",
++ "statement": "∀ (x : ℝ), 0 ≤ x → 0 ≤ x ^ 2",
++ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++ "must_not_be": [],
++ "split": "mathlib_v11",
++ "annotation": "Claude (Anthropic), 2026-11-09; Mathlib statements written without a local Mathlib; m04/m05 identical to mathlib_v10; PENDING GitHub"
++}
+diff --git a/proofscope/benchmark/v11_dev/l1_mul_hidden_comm.json b/proofscope/benchmark/v11_dev/l1_mul_hidden_comm.json
+new file mode 100644
+index 0000000..d16c530
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/l1_mul_hidden_comm.json
+@@ -0,0 +1,11 @@
++{
++ "id": "l1_mul_hidden_comm",
++ "domain": "Algebra",
++ "family": "instance linking",
++ "reference": "∀ (α : Type) [Mul α] (a : α), a * a = a * a",
++ "lean": "∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a : α), a * a = a * a",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/l2_add_reference_needs.json b/proofscope/benchmark/v11_dev/l2_add_reference_needs.json
+new file mode 100644
+index 0000000..c786f56
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/l2_add_reference_needs.json
+@@ -0,0 +1,11 @@
++{
++ "id": "l2_add_reference_needs",
++ "domain": "Algebra",
++ "family": "instance linking",
++ "reference": "∀ (α : Type) [Add α] (a b : α), a + b = b + a",
++ "lean": "∀ (α : Type) [Add α], (∀ (x y : α), x + y = y + x) → ∀ (a b : α), a + b = b + a",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/l3_two_structures.json b/proofscope/benchmark/v11_dev/l3_two_structures.json
+new file mode 100644
+index 0000000..eac56a1
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/l3_two_structures.json
+@@ -0,0 +1,11 @@
++{
++ "id": "l3_two_structures",
++ "domain": "Algebra",
++ "family": "two structures, one carrier",
++ "reference": "∀ (α : Type) [Mul α] [Add α] (a : α), a * a = a * a",
++ "lean": "∀ (α : Type) [Mul α] [Add α], (∀ (x y : α), x + y = x * y) → ∀ (a : α), a * a = a * a",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/l4_redundant_class.json b/proofscope/benchmark/v11_dev/l4_redundant_class.json
+new file mode 100644
+index 0000000..9ccd0df
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/l4_redundant_class.json
+@@ -0,0 +1,11 @@
++{
++ "id": "l4_redundant_class",
++ "domain": "Algebra",
++ "family": "redundant Prop class",
++ "reference": "∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a b : α), a * b = b * a",
++ "lean": "∀ (α : Type) [Mul α] [Std.Commutative (fun (x y : α) => x * y)], (∀ (x y : α), x * y = y * x) → ∀ (a b : α), a * b = b * a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/mn1_unneeded_assoc.json b/proofscope/benchmark/v11_dev/mn1_unneeded_assoc.json
+new file mode 100644
+index 0000000..d20591d
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/mn1_unneeded_assoc.json
+@@ -0,0 +1,10 @@
++{
++ "id": "mn1_unneeded_assoc",
++ "domain": "Algebra",
++ "family": "minimality",
++ "statement": "∀ (α : Type) (op : α → α → α), (∀ (a b c : α), op (op a b) c = op a (op b c)) → (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
++ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/mn2_bounds.json b/proofscope/benchmark/v11_dev/mn2_bounds.json
+new file mode 100644
+index 0000000..49733b4
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/mn2_bounds.json
+@@ -0,0 +1,10 @@
++{
++ "id": "mn2_bounds",
++ "domain": "Nat",
++ "family": "minimality",
++ "statement": "∀ (n : Nat), 1 ≤ n → n ≤ 3 → n * n ≤ 9 ∧ 1 ≤ n * n",
++ "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/mn3_substitutable.json b/proofscope/benchmark/v11_dev/mn3_substitutable.json
+new file mode 100644
+index 0000000..858e6ba
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/mn3_substitutable.json
+@@ -0,0 +1,10 @@
++{
++ "id": "mn3_substitutable",
++ "domain": "Nat",
++ "family": "minimality",
++ "statement": "∀ (n : Nat), n ≠ 0 → 0 < n → 1 ≤ n",
++ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_dev/mn4_single_needed.json b/proofscope/benchmark/v11_dev/mn4_single_needed.json
+new file mode 100644
+index 0000000..cf68b9c
+--- /dev/null
++++ b/proofscope/benchmark/v11_dev/mn4_single_needed.json
+@@ -0,0 +1,10 @@
++{
++ "id": "mn4_single_needed",
++ "domain": "Algebra",
++ "family": "minimality",
++ "statement": "∀ (α : Type) (op : α → α → α), (∀ (a b : α), op a b = op b a) → ∀ (a b : α), op a b = op b a",
++ "expected": "INCLUSION_MINIMAL",
++ "must_not_be": [],
++ "split": "v11_dev",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h01_empty_carrier_point.json b/proofscope/benchmark/v11_hostile/h01_empty_carrier_point.json
+new file mode 100644
+index 0000000..cf951bd
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h01_empty_carrier_point.json
+@@ -0,0 +1,17 @@
++{
++ "id": "h01_empty_carrier_point",
++ "domain": "Types",
++ "family": "empty carrier",
++ "reference": "∀ (α : Type) (f : α → α) (a : α), f a = f a",
++ "lean": "∀ (α : Type) [Nonempty α] (f : α → α) (a : α), f a = f a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE",
++  "ASSUMPTION_INCOMPARABLE"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h02_redundant_data_class.json b/proofscope/benchmark/v11_hostile/h02_redundant_data_class.json
+new file mode 100644
+index 0000000..d9ce4d6
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h02_redundant_data_class.json
+@@ -0,0 +1,17 @@
++{
++ "id": "h02_redundant_data_class",
++ "domain": "Types",
++ "family": "redundant typeclass",
++ "reference": "∀ (α : Type) [Mul α] (a : α), a * a = a * a",
++ "lean": "∀ (α : Type) [Mul α] [Inhabited α] (a : α), a * a = a * a",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE",
++  "ASSUMPTION_INCOMPARABLE"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h03_inconsistent_hypothesis.json b/proofscope/benchmark/v11_hostile/h03_inconsistent_hypothesis.json
+new file mode 100644
+index 0000000..2a4c1b2
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h03_inconsistent_hypothesis.json
+@@ -0,0 +1,13 @@
++{
++ "id": "h03_inconsistent_hypothesis",
++ "domain": "Nat",
++ "family": "inconsistent hypothesis",
++ "reference": "∀ (n : Nat), n < 2 ^ n",
++ "lean": "∀ (n : Nat), n < 0 → n < 2 ^ n",
++ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h04_swapped_structure.json b/proofscope/benchmark/v11_hostile/h04_swapped_structure.json
+new file mode 100644
+index 0000000..b78335c
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h04_swapped_structure.json
+@@ -0,0 +1,13 @@
++{
++ "id": "h04_swapped_structure",
++ "domain": "Algebra",
++ "family": "multiple structures",
++ "reference": "∀ (α : Type) [Mul α] [Add α], (∀ (x y : α), x * y = y * x) → ∀ (a : α), a = a",
++ "lean": "∀ (α : Type) [Mul α] [Add α], (∀ (x y : α), x + y = y + x) → ∀ (a : α), a = a",
++ "expected": "ASSUMPTION_INCOMPARABLE",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h05_polarity.json b/proofscope/benchmark/v11_hostile/h05_polarity.json
+new file mode 100644
+index 0000000..991b663
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h05_polarity.json
+@@ -0,0 +1,18 @@
++{
++ "id": "h05_polarity",
++ "domain": "Logic",
++ "family": "negative position",
++ "reference": "(∀ (α : Type) [Mul α] (a b : α), a * b = b * a) → False",
++ "lean": "(∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a b : α), a * b = b * a) → False",
++ "expected": "INCONCLUSIVE",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE",
++  "ASSUMPTION_INCOMPARABLE",
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h06_unrelated_true.json b/proofscope/benchmark/v11_hostile/h06_unrelated_true.json
+new file mode 100644
+index 0000000..f2cae68
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h06_unrelated_true.json
+@@ -0,0 +1,13 @@
++{
++ "id": "h06_unrelated_true",
++ "domain": "Nat",
++ "family": "unrelated true theorems",
++ "reference": "∀ (n : Nat), n < 2 ^ n",
++ "lean": "∀ (n : Nat), n ≤ n * n + n",
++ "expected": "INCONCLUSIVE",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h07_false_reference.json b/proofscope/benchmark/v11_hostile/h07_false_reference.json
+new file mode 100644
+index 0000000..2e1c6ba
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h07_false_reference.json
+@@ -0,0 +1,13 @@
++{
++ "id": "h07_false_reference",
++ "domain": "Algebra",
++ "family": "false reference",
++ "reference": "∀ (α : Type) [Mul α] (a b : α), a * b = b * a",
++ "lean": "∀ (α : Type) [Mul α] [Std.Commutative (fun (x y : α) => x * y)] (a b : α), a * b = b * a",
++ "expected": "REFERENCE_NEEDS_ASSUMPTION",
++ "must_not_be": [
++  "ASSUMPTION_EQUIVALENT"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h08_instance_implies_nonempty.json b/proofscope/benchmark/v11_hostile/h08_instance_implies_nonempty.json
+new file mode 100644
+index 0000000..30b0480
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h08_instance_implies_nonempty.json
+@@ -0,0 +1,17 @@
++{
++ "id": "h08_instance_implies_nonempty",
++ "domain": "Types",
++ "family": "redundant via instance",
++ "reference": "∀ (α : Type) [Inhabited α], (default : α) = default",
++ "lean": "∀ (α : Type) [Inhabited α] [Nonempty α], (default : α) = default",
++ "expected": "ASSUMPTION_EQUIVALENT",
++ "must_not_be": [
++  "LEAN_WEAKER_BY_ASSUMPTION",
++  "LEAN_STRONGER_BY_ASSUMPTION",
++  "REFERENCE_NEEDS_ASSUMPTION",
++  "LEAN_CLAIM_FALSE",
++  "ASSUMPTION_INCOMPARABLE"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h09_min_duplicate_rephrased.json b/proofscope/benchmark/v11_hostile/h09_min_duplicate_rephrased.json
+new file mode 100644
+index 0000000..646f664
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h09_min_duplicate_rephrased.json
+@@ -0,0 +1,12 @@
++{
++ "id": "h09_min_duplicate_rephrased",
++ "domain": "Nat",
++ "family": "minimality: substitutable",
++ "statement": "∀ (n : Nat), n ≠ 0 → 1 ≤ n → 0 < n",
++ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
++ "must_not_be": [
++  "INCLUSION_MINIMAL"
++ ],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/benchmark/v11_hostile/h10_min_vacuous.json b/proofscope/benchmark/v11_hostile/h10_min_vacuous.json
+new file mode 100644
+index 0000000..f3a6702
+--- /dev/null
++++ b/proofscope/benchmark/v11_hostile/h10_min_vacuous.json
+@@ -0,0 +1,10 @@
++{
++ "id": "h10_min_vacuous",
++ "domain": "Nat",
++ "family": "minimality: vacuous premise",
++ "statement": "∀ (n : Nat), n < 0 → n = 5",
++ "expected": "INCLUSION_MINIMAL",
++ "must_not_be": [],
++ "split": "v11_hostile",
++ "annotation": "Claude (Anthropic), 2026-11-09; written and hashed before the v1.1 freeze; synthetic, same author as the engine"
++}
+diff --git a/proofscope/competitors/v11_protocol.py b/proofscope/competitors/v11_protocol.py
+new file mode 100644
+index 0000000..5bdf195
+--- /dev/null
++++ b/proofscope/competitors/v11_protocol.py
+@@ -0,0 +1,67 @@
++"""Pre-registered scoring for comparing ProofScope with binary equivalence checkers (v1.1).
++
++Registered before any competitor run. A pair is labelled by an independent reviewer as EQUIVALENT or
++NOT_EQUIVALENT (plus optional direction). Mapping of ProofScope verdicts to the binary task:
++
++    EQUIVALENT      SCHEMA_EQUIVALENT, EQUIVALENT_BY_LAWS, ASSUMPTION_EQUIVALENT, IDENTICAL
++    NOT_EQUIVALENT  CLAIM_*, *_BY_ASSUMPTION, REFERENCE_NEEDS_ASSUMPTION, LEAN_CLAIM_FALSE, ASSUMPTION_INCOMPARABLE
++    ABSTAIN         INCONCLUSIVE*, NO_SHARED_SYMBOLS, CONCLUSION_ONLY_CHANGE, NO_ASSUMPTION_DELTA
++
++ABSTAIN is never counted as correct or incorrect; coverage is reported separately. False equivalence and
++false difference are reported separately, never folded into one accuracy number. Direction is scored only
++for systems that output one. Competitor outputs are mapped by their own documented semantics
++(SemantEq: ExactMatch/DefEq/EquivalentRestricted → EQUIVALENT, LikelyTooWeak/LikelyTooStrong → NOT_EQUIVALENT,
++Inconclusive/Timeout → ABSTAIN).
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++PS_EQ = {"SCHEMA_EQUIVALENT", "EQUIVALENT_BY_LAWS", "ASSUMPTION_EQUIVALENT", "IDENTICAL"}
++SE_EQ = {"ExactMatch", "DefEq", "EquivalentRestricted"}
++SE_NE = {"LikelyTooWeak", "LikelyTooStrong"}
++
++
++def proofscope_binary(v: str) -> str:
++    if v in PS_EQ:
++        return "EQUIVALENT"
++    if v.startswith("CLAIM_") or v.endswith("_BY_ASSUMPTION") or v in {"REFERENCE_NEEDS_ASSUMPTION", "LEAN_CLAIM_FALSE",
++                                                                      "ASSUMPTION_INCOMPARABLE"}:
++        return "NOT_EQUIVALENT"
++    return "ABSTAIN"
++
++
++def semanteq_binary(v: str) -> str:
++    return "EQUIVALENT" if v in SE_EQ else "NOT_EQUIVALENT" if v in SE_NE else "ABSTAIN"
++
++
++def score(labels: dict[str, str], preds: dict[str, str]) -> dict:
++    s = {"pairs": len(labels), "decided": 0, "abstain": 0, "correct": 0, "false_equivalence": 0, "false_difference": 0}
++    for k, gold in labels.items():
++        p = preds.get(k, "ABSTAIN")
++        if p == "ABSTAIN":
++            s["abstain"] += 1
++            continue
++        s["decided"] += 1
++        if p == gold:
++            s["correct"] += 1
++        elif p == "EQUIVALENT":
++            s["false_equivalence"] += 1
++        else:
++            s["false_difference"] += 1
++    return s
++
++
++def export_semanteq(specs: list[Path], out: Path) -> int:
++    """SemantEq JSONL for closed-statement specs (`reference`/`lean`), with `import Mathlib` statements."""
++    n = 0
++    with out.open("w") as f:
++        for p in specs:
++            d = json.loads(p.read_text())
++            if "reference" not in d:
++                continue
++            f.write(json.dumps({"id": d["id"], "reference": f"import Mathlib\ntheorem r : {d['reference']} := sorry",
++                                "candidate": f"import Mathlib\ntheorem r : {d['lean']} := sorry"}, ensure_ascii=False) + "\n")
++            n += 1
++    return n
+diff --git a/tests/v02/test_v11.py b/tests/v02/test_v11.py
+new file mode 100644
+index 0000000..ce26b97
+--- /dev/null
++++ b/tests/v02/test_v11.py
+@@ -0,0 +1,45 @@
++"""v1.1: dependent-structure linking (instance binders), minimality classes, hostile regressions."""
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++
++from proofscope import adelta11 as A
++
++
++class Unit(unittest.TestCase):
++    def test_instance_binders_are_redeclared_as_instances(self):
++        m = [{"name": "α", "type": "Type", "inst": False}, {"name": "i1", "type": "Mul α", "inst": True}]
++        self.assertEqual(A.binders(m), "(α : Type) [i1 : Mul α]")
++        self.assertEqual(A.binders(m, True), "(α : Type) (i1 : Mul α)")
++
++    def test_instance_pool_builds_structures(self):
++        self.assertIn("⟨fun a _ => a⟩", A._pool_for("Mul Bool", "Bool"))
++
++
++@unittest.skipUnless(shutil.which("lean"), "Lean not on PATH")
++class EndToEnd(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        from proofscope.toolchain import Toolchain
++        cls.tc = Toolchain.find()
++        cls.out = Path(tempfile.mkdtemp())
++        assert A.build(cls.tc, cls.out / "build")["ok"]
++
++    def test_shared_instance_binder_links(self):
++        # the core-Lean reproduction of the Mathlib m04 linking failure
++        r = A.run_case({"id": "l", "reference": "∀ (α : Type) [Mul α] (a : α), a * a = a * a",
++                        "lean": "∀ (α : Type) [Mul α], (∀ (x y : α), x * y = y * x) → ∀ (a : α), a * a = a * a"},
++                       self.tc, self.out / "build", self.out / "l")
++        self.assertEqual(r["verdict"], "LEAN_WEAKER_BY_ASSUMPTION")
++        self.assertEqual(r["assumptions"][0]["witness_model"][0], "Bool")
++
++    def test_substitutable_assumptions(self):
++        r = A.minimality({"id": "s", "statement": "∀ (n : Nat), n ≠ 0 → 0 < n → 1 ≤ n"},
++                         self.tc, self.out / "build", self.out / "s")
++        self.assertEqual(r["verdict"], "HAS_REDUNDANT_ASSUMPTIONS")
++        self.assertEqual(r["jointly_necessary_pairs"], [[0, 1]])
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.43.0
+
