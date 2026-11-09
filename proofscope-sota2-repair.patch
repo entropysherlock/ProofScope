@@ -1,0 +1,1260 @@
+From bee1824fc54a1acddd3e777069a5c9a4d1121f27 Mon Sep 17 00:00:00 2001
+From: "Caleb J. Westfall" <calebwestfall1989@gmail.com>
+Date: Mon, 9 Nov 2026 13:27:48 -0700
+Subject: [PATCH] SOTA-2: absolute paths, whole-process-tree CPU budget,
+ fail-closed availability gates
+
+Root causes of availability run 42689439284 (all reproduced locally before fixing):
+- ProofScope 3/3 NON_ELABORATING and SemantEq 3/3 ERROR: the workflow's relative --out produced
+  relative input paths, and tools were started in other working directories ('no such file or
+  directory: runs/work/...'). Nothing reached elaboration. All paths are now absolute; a launch check
+  returns LAUNCH_ERROR for missing/relative inputs; NON_ELABORATING only when Lean's errors fall inside
+  the source declaration, else ADAPTER_ERROR.
+- BEq+ 72.1 CPU-s at a 20 CPU-s tier: prlimit --cpu is per process, so every descendant had its own
+  budget (4 busy children under a '2 s' limit used 8.04 CPU-s and were reported OK). bench/limits.py now
+  enforces the budget on the whole session (+ orphans via child subreaper) by 20 ms polling of
+  /proc utime+stime+cutime+cstime, records tree CPU, overshoot, peak tree RSS and processes seen.
+  Startup allowance is measured in the availability phase (median of 3 calibration runs, never scored).
+- Upstream defaults restored: BEq+ per-proof timeout = upstream DEFAULT_TIMEOUT (was the tier);
+  SemantEq keeps its default --timeout (was the tier).
+- CI passed with zero usable evaluations: every record now has an evaluation_class; bench/gate.py
+  fails the collect job unless each system validly evaluates both equivalent calibration fixtures
+  within budget (no verdict required; the non-equivalent fixture is reported, not gated).
+- Upstream checks: SemantEq reproduces its own recall-suite manifest on 2 pairs; ProofScope runs its
+  v1.2 tests and a Mathlib smoke file; integrity step checks V12 freeze, fixture and JointDrift hashes
+  and records competitor pins.
+
+Frozen ProofScope v1.2 files, fixtures, JointDrift, competitor revisions, budgets and labels unchanged.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D6eL9tvFdmWVfTWBctgXnC
+---
+ .github/workflows/competitor-benchmark.yml | 106 ++++++----
+ bench/adapters/beqplus.py                  |  14 +-
+ bench/adapters/beqplus_driver.py           |  10 +-
+ bench/adapters/proofscope.py               |  12 +-
+ bench/adapters/semanteq.py                 |  16 +-
+ bench/gate.py                              | 106 ++++++++++
+ bench/limits.py                            | 230 +++++++++++++++------
+ bench/runner.py                            | 176 ++++++++++++----
+ docs/sota1/README.md                       |  54 +++++
+ tests/bench/test_bench.py                  | 151 ++++++++++++++
+ 10 files changed, 718 insertions(+), 157 deletions(-)
+ create mode 100644 bench/gate.py
+
+diff --git a/.github/workflows/competitor-benchmark.yml b/.github/workflows/competitor-benchmark.yml
+index edb74a9..064a62c 100644
+--- a/.github/workflows/competitor-benchmark.yml
++++ b/.github/workflows/competitor-benchmark.yml
+@@ -79,7 +79,16 @@ jobs:
+           python-version: "3.12"
+       - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+         uses: ./.github/actions/setup-lean
+-      - name: Benchmark infrastructure unit tests
++      - name: Integrity (frozen ProofScope v1.2, unchanged fixtures and research file, pinned competitor revisions)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p evidence
++          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c | tee evidence/v12-freeze.txt
++          echo "4b0d36de474ea39d9802e6a21e7240397a903ddc886bc25849a178773bc2f971  bench/fixtures/availability.cases.jsonl" | sha256sum -c | tee evidence/fixtures.txt
++          echo "da34fb9dea0fa8a110ed1a8343bf2f269501954b55221102b85856124821ce29  research/joint_drift/JointDrift.lean" | sha256sum -c | tee -a evidence/fixtures.txt
++          printf 'MATHLIB_REV=%s\nSEMANTEQ_REV=%s\nLEANINTERACT_REV=%s\nASSESS_REV=%s\n' "$MATHLIB_REV" "$SEMANTEQ_REV" "$LEANINTERACT_REV" "$ASSESS_REV" | tee evidence/pins.txt
++      - name: Benchmark infrastructure unit tests (incl. process-tree CPU, orphan, wall, OOM, launch-error classification)
+         run: python -m unittest tests.bench.test_bench -v
+       - name: Research theorems (JointDrift; 6 axiom-free + 1 standard-axiom, fresh kernel replay)
+         shell: bash
+@@ -147,11 +156,22 @@ jobs:
+           for i in 1 2 3; do lake update && break || sleep 30; done
+           for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
++      - name: ProofScope native checks (v1.2 unit and end-to-end tests; Mathlib elaboration smoke)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p ps-evidence
++          python -m unittest tests.v02.test_v12 -v 2>&1 | tee ps-evidence/test_v12-${{ matrix.shard }}.log
++          printf 'import Mathlib\nexample (x : ℝ) : Real.sqrt (x ^ 2) = |x| := Real.sqrt_sq_eq_abs x\n' > /tmp/ps_smoke.lean
++          lean /tmp/ps_smoke.lean 2>&1 | tee ps-evidence/mathlib-smoke-${{ matrix.shard }}.log
+       - name: Run (shard ${{ matrix.shard }}/4)
+         shell: bash
+         run: |
+           set -euo pipefail
+-          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['proofscope'])" '${{ inputs.startup_allowance }}')
++          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
++          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
++          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
++            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['proofscope'])" '${{ inputs.startup_allowance }}'); fi
+           python -m bench.runner --system proofscope --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
+             --startup-allowance "$A" --mem-mb 12000 --repeat 1 --shard ${{ matrix.shard }}/4 --out runs | tee runs-proofscope-${{ matrix.shard }}.log
+       - name: Upload runs
+@@ -161,6 +181,7 @@ jobs:
+           name: sota1-runs-proofscope-${{ matrix.shard }}
+           path: |
+             runs/
++            ps-evidence/
+             !runs/work/**/ps_out/build/**
+             runs-proofscope-*.log
+           if-no-files-found: warn
+@@ -193,11 +214,37 @@ jobs:
+           test "$(git rev-parse HEAD)" = "$SEMANTEQ_REV"
+           for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+           lake build semanteq 2>&1 | tail -5
++      - name: SemantEq upstream check (two pairs of its own recall suite, compared with its own manifest)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p se-evidence
++          cd "$RUNNER_TEMP/se"
++          grep -E '"id": "auto:Compfiles:(Imo1963P5|Imo1983P1)"' test/eval/recall/suite.jsonl > /tmp/se_upstream.jsonl
++          test "$(wc -l < /tmp/se_upstream.jsonl)" = 2
++          lake exe semanteq --raw --timeout 0 /tmp/se_upstream.jsonl /tmp/se_upstream_out.jsonl > "$GITHUB_WORKSPACE/se-evidence/upstream-stdout.log" 2>&1
++          cp /tmp/se_upstream_out.jsonl "$GITHUB_WORKSPACE/se-evidence/"
++          python - <<'PY'
++          import json
++          acc = {"ExactMatch", "DefEq", "EquivalentRestricted"}
++          man = {r["id"]: r for r in map(json.loads, open("test/eval/recall/manifest.jsonl"))}
++          out = [r for r in map(json.loads, open("/tmp/se_upstream_out.jsonl")) if "_meta" not in r]
++          assert len(out) == 2, out
++          for r in out:
++              want = man[r["id"]]["default_search_accepts"]
++              got = r["verdict"] in acc
++              print(r["id"], r["verdict"], "accepts" if got else "rejects", "manifest:", want)
++              assert got == want, f"SemantEq does not reproduce its own manifest on {r['id']}"
++          print("SEMANTEQ_UPSTREAM_OK")
++          PY
+       - name: Run (shard ${{ matrix.shard }}/4)
+         shell: bash
+         run: |
+           set -euo pipefail
+-          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['semanteq'])" '${{ inputs.startup_allowance }}')
++          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
++          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
++          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
++            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['semanteq'])" '${{ inputs.startup_allowance }}'); fi
+           python -m bench.runner --system semanteq --tool-dir "$RUNNER_TEMP/se" --cases '${{ inputs.cases }}' \
+             --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 --shard ${{ matrix.shard }}/4 \
+             --out runs | tee runs-semanteq-${{ matrix.shard }}.log
+@@ -209,6 +256,7 @@ jobs:
+           path: |
+             runs/
+             runs-semanteq-*.log
++            se-evidence/
+           if-no-files-found: warn
+ 
+   beqplus:
+@@ -274,7 +322,10 @@ jobs:
+         shell: bash
+         run: |
+           set -euo pipefail
+-          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['beqplus'])" '${{ inputs.startup_allowance }}')
++          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
++          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
++          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
++            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['beqplus'])" '${{ inputs.startup_allowance }}'); fi
+           python -m bench.runner --system beqplus --tool-dir "$RUNNER_TEMP/li" --beq-lean-version v4.8.0 \
+             --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 \
+             --shard ${{ matrix.shard }}/4 --out runs | tee runs-beqplus-${{ matrix.shard }}.log
+@@ -306,47 +357,18 @@ jobs:
+           pattern: sota1-runs-*
+           path: shards
+           merge-multiple: true
+-      - name: Completeness check (one record per case and system) and outcome table
++      - name: Availability gates (fail closed; every record is kept and uploaded)
+         shell: bash
+         run: |
+-          set -euo pipefail
+-          python - <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
+-          import json, pathlib, collections
+-          from bench.canonical import read_jsonl
+-          cases = [c["case_id"] for c in read_jsonl(pathlib.Path("${{ inputs.cases }}"))]
+-          root = pathlib.Path("shards")
+-          print(f"## SOTA-1 phase `${{ inputs.phase }}`, tier ${{ inputs.tier }} CPU-s, {len(cases)} cases")
+-          bad = []
+-          for system in ("proofscope", "semanteq", "beqplus"):
+-              recs = {}
+-              for p in root.glob(f"**/{system}/t${{ inputs.tier }}/*.r0.json"):
+-                  r = json.loads(p.read_text()); recs[r["case_id"]] = r
+-              missing = sorted(set(cases) - set(recs))
+-              if missing:
+-                  bad.append(f"{system}: missing records {missing}")
+-              st = collections.Counter(r["status"] for r in recs.values())
+-              print(f"### {system}: records {len(recs)}/{len(cases)}, status {dict(st)}")
+-              print("| case | status | native verdict | certified A / B | CPU s | peak RSS MB | wall s | note |")
+-              print("|---|---|---|---|---|---|---|---|")
+-              for cid in cases:
+-                  r = recs.get(cid)
+-                  if r is None:
+-                      print(f"| {cid} | MISSING | | | | | | |"); continue
+-                  run = r.get("run") or {}
+-                  note = (r.get("adapter", {}).get("error") or r.get("error") or "")[:160].replace("|", "/").replace("\n", " ")
+-                  if r["status"] != "OK" and not note:
+-                      note = (r.get("log_tail") or "")[-160:].replace("|", "/").replace("\n", " ")
+-                  print(f"| {cid} | {r['status']} | {r.get('native_verdict')} | {r['track_A']['certified']} / {r['track_B']['certified']} "
+-                        f"| {run.get('cpu_s')} | {run.get('max_rss_mb')} | {run.get('wall_s')} | {note} |")
+-          if bad:
+-              print("**INCOMPLETE:** " + "; ".join(bad))
+-          pathlib.Path("audit_incomplete.txt").write_text("\n".join(bad))
+-          print("Outcome counts only; no accuracy is computed without released gold labels.")
+-          PY
+-          # a run with a missing record is not a complete availability run
+-          test ! -s audit_incomplete.txt
++          set -uo pipefail
++          mkdir -p scored
++          python -m bench.gate --runs shards --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
++            --out scored/availability.json --markdown scored/availability.md | tee -a "$GITHUB_STEP_SUMMARY"
++          rc=${PIPESTATUS[0]}
++          echo "gate exit code: $rc"
++          exit "$rc"
+       - name: Score (only when the custodian has released gold)
+-        if: inputs.gold != ''
++        if: always() && inputs.gold != ''
+         run: |
+           mkdir -p scored
+           python -m bench.score --runs shards/runs --gold '${{ inputs.gold }}' --tier ${{ inputs.tier }} \
+diff --git a/bench/adapters/beqplus.py b/bench/adapters/beqplus.py
+index 57a405f..f9c23ac 100644
+--- a/bench/adapters/beqplus.py
++++ b/bench/adapters/beqplus.py
+@@ -10,18 +10,24 @@ from .. import outcomes
+ DRIVER = Path(__file__).with_name("beqplus_driver.py")
+ 
+ 
+-def prepare(case: dict, workdir: Path, leaninteract_dir: Path, lean_version: str, per_proof_s: int) -> dict:
++def prepare(case: dict, workdir: Path, leaninteract_dir: Path, lean_version: str) -> dict:
++    """BEq+ keeps upstream's per-proof timeout (`DEFAULT_TIMEOUT` in the pinned beq_plus.py); the external
++    whole-tree CPU limit is authoritative. All paths are absolute."""
++    workdir = workdir.resolve()
+     workdir.mkdir(parents=True, exist_ok=True)
+     (workdir / "pair.json").write_text(json.dumps(case, ensure_ascii=False))
+-    return {"cmd": [sys.executable, str(DRIVER), "--leaninteract", str(leaninteract_dir), "--lean-version", lean_version,
+-                    "--timeout", str(per_proof_s), str(workdir / "pair.json"), str(workdir / "out.json")]}
++    return {"cmd": [sys.executable, str(DRIVER), "--leaninteract", str(Path(leaninteract_dir).resolve()),
++                    "--lean-version", lean_version, str(workdir / "pair.json"), str(workdir / "out.json")],
++            "input": str(workdir / "pair.json")}
+ 
+ 
+ def parse(case: dict, out_path: Path) -> dict:
+     if not out_path.exists():
+         return {"native_verdict": None}
+     r = json.loads(out_path.read_text())
+-    out = {"native_verdict": r.get("beq_plus"), "startup_s": r.get("startup_s")}
++    out = {"native_verdict": r.get("beq_plus"), "startup_s": r.get("startup_s"),
++           "per_proof_timeout_s": r.get("per_proof_timeout_s"),
++           "certificate_kind": "kernel" if r.get("beq_plus") else None}
+     for t in ("A", "B"):
+         out[f"track_{t}"] = outcomes.beqplus(r.get("beq_plus"), t)
+     return out
+diff --git a/bench/adapters/beqplus_driver.py b/bench/adapters/beqplus_driver.py
+index a788bd6..b4a49bf 100644
+--- a/bench/adapters/beqplus_driver.py
++++ b/bench/adapters/beqplus_driver.py
+@@ -1,6 +1,6 @@
+ """BEq+ driver: runs the upstream `beq_plus` function (LeanInteract, pinned commit) on ONE pair.
+ 
+-    python beqplus_driver.py --leaninteract DIR --lean-version v4.8.0 --timeout 20 pair.json out.json
++    python beqplus_driver.py --leaninteract DIR --lean-version v4.8.0 pair.json out.json
+ 
+ The algorithm is imported unmodified from the pinned `examples/beq_plus.py`. The REPL project is the one
+ upstream's own ProofNetVerif driver uses (`TempRequireProject(lean_version=..., require="mathlib")`).
+@@ -29,7 +29,7 @@ def main():
+     ap = argparse.ArgumentParser()
+     ap.add_argument("--leaninteract", required=True)
+     ap.add_argument("--lean-version", default="v4.8.0")
+-    ap.add_argument("--timeout", type=int, default=20)
++    ap.add_argument("--timeout", type=int, default=None, help="default: upstream DEFAULT_TIMEOUT")
+     ap.add_argument("pair")
+     ap.add_argument("out")
+     a = ap.parse_args()
+@@ -37,13 +37,15 @@ def main():
+     spec = importlib.util.spec_from_file_location("beq_plus_mod", f"{a.leaninteract}/examples/beq_plus.py")
+     m = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(m)
++    per_proof = a.timeout if a.timeout is not None else m.DEFAULT_TIMEOUT
+     from lean_interact import AutoLeanServer, LeanREPLConfig, TempRequireProject
+     t0 = time.time()
+     server = AutoLeanServer(config=LeanREPLConfig(project=TempRequireProject(lean_version=a.lean_version, require="mathlib")))
+     t_start = time.time() - t0
+     res = m.beq_plus(pair["ref_decl"], pair["cand_decl"], merge_headers(pair["ref_header"], pair["cand_header"]),
+-                     server, timeout_per_proof=a.timeout)
+-    json.dump({"beq_plus": bool(res), "startup_s": round(t_start, 3), "total_s": round(time.time() - t0, 3)}, open(a.out, "w"))
++                     server, timeout_per_proof=per_proof)
++    json.dump({"beq_plus": bool(res), "startup_s": round(t_start, 3), "total_s": round(time.time() - t0, 3),
++               "per_proof_timeout_s": per_proof}, open(a.out, "w"))
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/bench/adapters/proofscope.py b/bench/adapters/proofscope.py
+index f95fd2d..e6ea53d 100644
+--- a/bench/adapters/proofscope.py
++++ b/bench/adapters/proofscope.py
+@@ -44,6 +44,7 @@ def check_file(header: str, decl: str, name: str, imports: list[str], printed: s
+ 
+ 
+ def prepare(case: dict, workdir: Path, lean_cmd: list[str]) -> dict:
++    workdir = workdir.resolve()
+     workdir.mkdir(parents=True, exist_ok=True)
+     imports = merged_imports(case["ref_header"], case["cand_header"])
+     steps = []
+@@ -65,19 +66,24 @@ def extract_printed(output: str) -> str | None:
+ 
+ 
+ def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path) -> list[str]:
++    workdir = workdir.resolve()
+     spec = workdir / f"{case_id}.json"
+     spec.write_text(json.dumps({"id": case_id, "reference": ref, "lean": cand}, ensure_ascii=False))
+     return [sys.executable, "-m", "proofscope.v12", "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
+ 
+ 
+ def parse_engine(case_id: str, workdir: Path) -> dict:
+-    p = workdir / "ps_out" / "rows" / f"{case_id}.json"
++    p = workdir.resolve() / "ps_out" / "rows" / f"{case_id}.json"
+     if not p.exists():
+         return {"native_verdict": None}
+     row = json.loads(p.read_text())
+     v = row.get("verdict", "INCONCLUSIVE")
+-    out = {"native_verdict": v, "reason": row.get("reason"), "theorem": row.get("theorem"),
+-           "certificates": sorted((row.get("certificates") or {}).keys())}
++    certs = sorted((row.get("certificates") or {}).keys())
++    out = {"native_verdict": v, "reason": row.get("reason"), "theorem": row.get("theorem"), "certificates": certs,
++           "certify_status": row.get("certify_status"),
++           # NO_ASSUMPTION_DELTA is decided by meta-level comparison of the elaborated telescopes, with no
++           # kernel certificate; decisive verdicts carry kernel-replayed certificates (certify gate)
++           "certificate_kind": "structural" if v == "NO_ASSUMPTION_DELTA" else ("kernel" if certs and row.get("theorem") else None)}
+     for t in ("A", "B"):
+         o = outcomes.proofscope(v, t)
+         if row.get("reason") == "extraction failed":
+diff --git a/bench/adapters/semanteq.py b/bench/adapters/semanteq.py
+index 4f2bc69..80b50d4 100644
+--- a/bench/adapters/semanteq.py
++++ b/bench/adapters/semanteq.py
+@@ -1,9 +1,8 @@
+ """SemantEq adapter (pinned f92767000e14d11744580946980cf874324f5d19, native toolchain v4.30.0-rc1).
+ 
+ Input is exactly SemantEq's documented pair format: each side is the full file text (the source header and
+-the declaration closed with `sorry`). One pair per process so the external CPU limit binds; SemantEq's own
+-`--timeout` is set to the same budget in wall seconds (its documented limit; compilation is not
+-interrupted by it, which is why the external limit is authoritative)."""
++the declaration closed with `sorry`). One pair per process so the external whole-tree CPU limit binds.
++SemantEq keeps its documented default `--timeout` (20 s wall); all paths passed are absolute."""
+ from __future__ import annotations
+ 
+ import json
+@@ -18,12 +17,15 @@ def side(header: str, decl: str) -> str:
+ 
+ 
+ def prepare(case: dict, workdir: Path, semanteq_dir: Path, budget_s: int) -> dict:
++    """`budget_s` is accepted for interface symmetry but NOT passed: SemantEq runs with its own default
++    `--timeout` (20 s wall, README at the pin); the external whole-tree CPU limit is authoritative."""
++    workdir = workdir.resolve()
+     workdir.mkdir(parents=True, exist_ok=True)
+     inp, out = workdir / "pair.jsonl", workdir / "result.jsonl"
+     inp.write_text(json.dumps({"id": case["case_id"], "reference": side(case["ref_header"], case["ref_decl"]),
+                                "candidate": side(case["cand_header"], case["cand_decl"])}, ensure_ascii=False) + "\n")
+-    return {"cmd": ["lake", "exe", "semanteq", "--raw", "--timeout", str(budget_s), str(inp), str(out)],
+-            "cwd": str(semanteq_dir), "result": str(out)}
++    return {"cmd": ["lake", "exe", "semanteq", "--raw", str(inp), str(out)],
++            "cwd": str(Path(semanteq_dir).resolve()), "result": str(out), "input": str(inp)}
+ 
+ 
+ def parse(case: dict, result_path: Path) -> dict:
+@@ -37,7 +39,9 @@ def parse(case: dict, result_path: Path) -> dict:
+     if not recs:
+         return {"native_verdict": None}
+     v = recs[0].get("verdict")
+-    out = {"native_verdict": v, "elapsedMs": recs[0].get("elapsedMs"), "directions": recs[0].get("directions")}
++    out = {"native_verdict": v, "elapsedMs": recs[0].get("elapsedMs"), "directions": recs[0].get("directions"),
++           "certificate_kind": "kernel" if v == "EquivalentRestricted" else "structural" if v in ("ExactMatch", "DefEq") else None,
++           "native_record": recs[0]}
+     for t in ("A", "B"):
+         out[f"track_{t}"] = outcomes.semanteq(v, t)
+     return out
+diff --git a/bench/gate.py b/bench/gate.py
+new file mode 100644
+index 0000000..0702fa8
+--- /dev/null
++++ b/bench/gate.py
+@@ -0,0 +1,106 @@
++"""Availability gates (SOTA-2, amendment A8). Fail closed: a system is available for blind benchmarking
++only if it produced a valid mathematical evaluation, within the budget, of BOTH equivalent calibration
++fixtures. The gate does not require any particular verdict (no tool is asked to make an unsupported
++claim); the non-equivalent fixture is reported separately and never gates.
++
++    python -m bench.gate --runs DIR --cases bench/fixtures/availability.cases.jsonl --tier 20 --out availability.json
++
++Exit status 1 if any system fails its gate; every record is still written to the report.
++"""
++from __future__ import annotations
++
++import argparse
++import json
++from pathlib import Path
++
++from .canonical import read_jsonl
++
++GATE_CASES = ("avail-calibration-identical", "avail-equivalent-rename")
++EVALUATED = ("EVALUATED_POSITIVE_KERNEL", "EVALUATED_POSITIVE_STRUCTURAL", "EVALUATED_NEGATIVE_LOGICAL",
++             "EVALUATED_NEGATIVE_FIDELITY", "EVALUATED_ABSTAIN")
++SYSTEMS = ("proofscope", "semanteq", "beqplus")
++
++
++def system_report(recs: dict[str, dict], cases: list[str], manifests: list[dict]) -> dict:
++    rows = {}
++    for cid in cases:
++        r = recs.get(cid)
++        if r is None:
++            rows[cid] = {"evaluation_class": "MISSING_RECORD"}
++            continue
++        run = r.get("run") or {}
++        rows[cid] = {"status": r.get("status"), "evaluation_class": r.get("evaluation_class"),
++                     "native_verdict": r.get("native_verdict"), "certificate_kind": r.get("certificate_kind"),
++                     "certified_A": r["track_A"]["certified"], "certified_B": r["track_B"]["certified"],
++                     "cpu_tree_s": run.get("cpu_tree_s"), "cpu_overshoot_s": run.get("cpu_overshoot_s"),
++                     "wall_s": run.get("wall_s"), "max_rss_mb": run.get("max_rss_mb"),
++                     "processes_seen": run.get("processes_seen"), "budget": r.get("budget"),
++                     "note": (r.get("adapter", {}).get("error") or r.get("error") or
++                              (r.get("log_tail") or "")[-300:] if r.get("status") != "OK" else None)}
++    present = [x for x in rows.values() if x["evaluation_class"] != "MISSING_RECORD"]
++    gate = {cid: rows.get(cid, {}).get("evaluation_class") in EVALUATED and bool((rows.get(cid, {}).get("budget") or {}).get("compliant"))
++            for cid in GATE_CASES if cid in cases}
++    return {
++        "infrastructure_ready": bool(present),
++        "native_initialized": any(x["evaluation_class"] in EVALUATED for x in present),
++        "valid_mathematical_evaluations": sum(x["evaluation_class"] in EVALUATED for x in present),
++        "certified_positive_kernel": sum(x["evaluation_class"] == "EVALUATED_POSITIVE_KERNEL" for x in present),
++        "positive_structural_only": sum(x["evaluation_class"] == "EVALUATED_POSITIVE_STRUCTURAL" for x in present),
++        "certified_negative": sum(x["evaluation_class"] in ("EVALUATED_NEGATIVE_LOGICAL", "EVALUATED_NEGATIVE_FIDELITY") for x in present),
++        "abstentions": sum(x["evaluation_class"] == "EVALUATED_ABSTAIN" for x in present),
++        "resource_exhausted": sum(x["evaluation_class"] == "RESOURCE_EXHAUSTED" for x in present),
++        "not_evaluated": sum(x["evaluation_class"] in ("NOT_EVALUATED_INFRA", "INPUT_NOT_EVALUABLE", "MISSING_RECORD")
++                             for x in rows.values()),
++        "startup_allowance_cpu_s": sorted({m.get("startup_allowance_cpu_s") for m in manifests}, key=str),
++        "calibration_runs_cpu_s": [run.get("cpu_tree_s") for m in manifests for run in
++                                   [(x.get("run") or {}) for x in ((m.get("calibration") or {}).get("runs") or [])]],
++        "gate_cases": gate,
++        "gate_pass": bool(gate) and all(gate.values()),
++        "cases": rows,
++    }
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m bench.gate")
++    ap.add_argument("--runs", type=Path, required=True)
++    ap.add_argument("--cases", type=Path, required=True)
++    ap.add_argument("--tier", type=int, required=True)
++    ap.add_argument("--out", type=Path, required=True)
++    ap.add_argument("--markdown", type=Path)
++    a = ap.parse_args(argv)
++    cases = [c["case_id"] for c in read_jsonl(a.cases)]
++    rep = {"tier_cpu_s": a.tier, "systems": {}}
++    for s in SYSTEMS:
++        recs, mans = {}, []
++        for p in a.runs.glob(f"**/{s}/t{a.tier}/*.json"):
++            d = json.loads(p.read_text())
++            if p.name.startswith("manifest"):
++                mans.append(d)
++            elif p.name.endswith(".r0.json"):
++                recs[d["case_id"]] = d
++        rep["systems"][s] = system_report(recs, cases, mans)
++    rep["all_gates_pass"] = all(v["gate_pass"] for v in rep["systems"].values())
++    a.out.write_text(json.dumps(rep, indent=1, ensure_ascii=False))
++    md = [f"## SOTA-1 availability gates (tier {a.tier} CPU-s, whole process tree)", ""]
++    for s, v in rep["systems"].items():
++        md.append(f"### {s}: gate {'PASS' if v['gate_pass'] else 'FAIL'}; startup allowance {v['startup_allowance_cpu_s']} "
++                  f"(calibration CPU {v['calibration_runs_cpu_s']})")
++        md.append("| case | status | class | native verdict | cert. kind | A / B | tree CPU s | overshoot | wall s | peak RSS MB | procs | compliant | note |")
++        md.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
++        for cid, r in v["cases"].items():
++            b = r.get("budget") or {}
++            note = (r.get("note") or "").replace("|", "/").replace("\n", " ")[:160]
++            md.append(f"| {cid} | {r.get('status')} | {r['evaluation_class']} | {r.get('native_verdict')} | {r.get('certificate_kind')} | "
++                      f"{r.get('certified_A')} / {r.get('certified_B')} | {r.get('cpu_tree_s')} | {r.get('cpu_overshoot_s')} | "
++                      f"{r.get('wall_s')} | {r.get('max_rss_mb')} | {r.get('processes_seen')} | {b.get('compliant')} | {note} |")
++        md.append("")
++    md.append(f"**All gates pass: {rep['all_gates_pass']}**. Outcome classes only; no accuracy without released gold.")
++    text = "\n".join(md) + "\n"
++    if a.markdown:
++        a.markdown.write_text(text)
++    print(text)
++    return 0 if rep["all_gates_pass"] else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/bench/limits.py b/bench/limits.py
+index 151c6ec..faa1c1e 100644
+--- a/bench/limits.py
++++ b/bench/limits.py
+@@ -1,12 +1,31 @@
+-"""Run one process under a hard CPU-time and address-space limit and account for its resources.
++"""Run one tool invocation under a CPU budget for its whole process tree and account for its resources.
+ 
+-The limit is applied from outside (`prlimit`), so it binds every tool the same way whether or not the
+-tool has its own budget flag. A process killed by SIGXCPU/SIGKILL at the limit is a TIMEOUT, never an
+-abstention. CPU time and peak RSS come from `wait4` for that child (its own rusage, including its
+-descendants that it waited for), not from the parent's cumulative counters.
++Accounting semantics (SOTA-2; protocol amendment A7):
++
++* The budget limits the **complete process tree** of one tool invocation for one pair: the process the
++  runner starts and every descendant (Lean, Lake, REPL servers, worker pools). It is not a per-process
++  limit. (SOTA-1 used `prlimit --cpu`, which is per process: a tool with four busy children could use four
++  budgets and still be reported OK; tests/bench/test_bench.py reproduces this.)
++* The tree is the new session the runner creates (`start_new_session=True`), plus orphans, which return
++  to the runner because it is a child subreaper (`PR_SET_CHILD_SUBREAPER`) and are reaped and counted here.
++* Enforcement: every 20 ms the runner sums `utime + stime + cutime + cstime` (from /proc/<pid>/stat) over
++  the live processes of the session, plus the CPU of reaped orphans. A dead descendant's time reaches
++  exactly one live ancestor's cutime/cstime when its parent reaps it, so the sum counts each process once.
++  When the sum exceeds the limit, the whole session is killed and the status is TIMEOUT_CPU.
++  Enforcement is calibrated, not exact: overshoot is bounded by the polling interval times the number of
++  busy cores, and the observed overshoot is recorded on every record (`cpu_overshoot_s`).
++* Final accounting: `cpu_tree_s = max(wait4 rusage of the root, which includes every descendant that was
++  waited for, + reaped orphans, peak polled tree sum)`. Peak memory is the peak polled sum of VmRSS over
++  the tree (and never less than the root's ru_maxrss).
++* A per-process RLIMIT_CPU of limit + 5 s remains as a backstop only.
++
++Statuses: OK, TIMEOUT_CPU (tree budget exhausted), TIMEOUT_WALL (wall cap; never reported as a CPU limit),
++OOM (tree RSS cap or allocation failure), KILLED (signal not caused by the runner), ERROR (non-zero exit),
++LAUNCH_ERROR (the executable, working directory or an input path does not exist; checked before launch).
+ """
+ from __future__ import annotations
+ 
++import ctypes
+ import os
+ import shutil
+ import signal
+@@ -15,33 +34,117 @@ import threading
+ import time
+ from dataclasses import asdict, dataclass
+ 
++CLK = os.sysconf("SC_CLK_TCK")
++POLL_S = 0.02
++
+ 
+ @dataclass
+ class Run:
+     exit_code: int | None
+     signal: str | None
+-    status: str            # OK | TIMEOUT_CPU | TIMEOUT_WALL | OOM_OR_KILLED | ERROR
+-    cpu_user_s: float
+-    cpu_sys_s: float
++    status: str
++    cpu_tree_s: float
++    cpu_root_wait4_s: float
++    cpu_peak_polled_s: float
++    cpu_limit_s: float
++    cpu_overshoot_s: float
+     wall_s: float
+     max_rss_mb: float
++    processes_seen: int
+     stdout: str
+     stderr: str
+ 
+     def as_dict(self) -> dict:
+         d = asdict(self)
+-        d["cpu_s"] = round(self.cpu_user_s + self.cpu_sys_s, 3)
++        d["cpu_s"] = self.cpu_tree_s
+         return d
+ 
+ 
++def _set_subreaper() -> bool:
++    try:
++        libc = ctypes.CDLL("libc.so.6", use_errno=True)
++        return libc.prctl(36, 1, 0, 0, 0) == 0  # PR_SET_CHILD_SUBREAPER
++    except OSError:
++        return False
++
++
++SUBREAPER = _set_subreaper()
++
++
++def _session_stats(sid: int) -> tuple[float, float, set[int]]:
++    """(CPU seconds incl. reaped descendants, RSS MB, pids) over the live processes of session `sid`."""
++    cpu_ticks, rss_kb, pids = 0, 0, set()
++    for d in os.listdir("/proc"):
++        if not d.isdigit():
++            continue
++        try:
++            with open(f"/proc/{d}/stat") as f:
++                st = f.read()
++            fields = st[st.rindex(")") + 2:].split()
++            # after the comm field: index 0 = state (field 3), 3 = session (field 6),
++            # 11..14 = utime, stime, cutime, cstime (fields 14..17)
++            if int(fields[3]) != sid:
++                continue
++            cpu_ticks += int(fields[11]) + int(fields[12]) + int(fields[13]) + int(fields[14])
++            pids.add(int(d))
++            with open(f"/proc/{d}/status") as f:
++                for line in f:
++                    if line.startswith("VmRSS:"):
++                        rss_kb += int(line.split()[1])
++                        break
++        except (OSError, ValueError, IndexError):
++            continue
++    return cpu_ticks / CLK, rss_kb / 1024, pids
++
++
++def _reap_orphans(root: int) -> float:
++    """Reap children of the runner other than `root` (orphans re-parented to the subreaper); CPU seconds."""
++    total = 0.0
++    for pid in [int(d) for d in os.listdir("/proc") if d.isdigit()]:
++        if pid == root:
++            continue
++        try:
++            with open(f"/proc/{pid}/stat") as f:
++                st = f.read()
++            ppid = int(st[st.rindex(")") + 2:].split()[1])
++        except (OSError, ValueError, IndexError):
++            continue
++        if ppid != os.getpid():
++            continue
++        try:
++            rpid, _, ru = os.wait4(pid, os.WNOHANG)
++        except ChildProcessError:
++            continue
++        if rpid == pid:
++            total += ru.ru_utime + ru.ru_stime
++    return total
++
++
++def check_launch(cmd: list[str], cwd: str | None, inputs: list[str]) -> str | None:
++    """Fail before launch on a missing executable, working directory or input file."""
++    if cwd is not None and not os.path.isdir(cwd):
++        return f"working directory does not exist: {cwd}"
++    exe = cmd[0]
++    if os.sep in exe:
++        if not os.path.exists(exe):
++            return f"executable does not exist: {exe}"
++    elif shutil.which(exe) is None:
++        return f"executable not found on PATH: {exe}"
++    for p in inputs:
++        if not os.path.isabs(p):
++            return f"input path is not absolute: {p}"
++        if not os.path.exists(p):
++            return f"input file does not exist: {p}"
++    return None
++
++
+ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: str | None = None,
+-                env: dict | None = None) -> Run:
+-    if shutil.which("prlimit") is None:
+-        raise RuntimeError("prlimit not found: the CPU limit cannot be enforced (INFRASTRUCTURE)")
+-    soft = max(1, int(round(cpu_s)))
+-    # CPU: hard kernel limit. Memory: a resident-set watchdog over the whole process group (an
+-    # address-space rlimit is unusable for Lean, which reserves large virtual ranges for its threads).
+-    full = ["prlimit", f"--cpu={soft}:{soft + 1}", "--"] + cmd
++                env: dict | None = None, inputs: tuple[str, ...] = ()) -> Run:
++    err = check_launch(cmd, cwd, list(inputs))
++    if err:
++        return Run(None, None, "LAUNCH_ERROR", 0.0, 0.0, 0.0, cpu_s, 0.0, 0.0, 0.0, 0, "", err)
++    backstop = int(cpu_s) + 5
++    full = ["prlimit", f"--cpu={backstop}:{backstop + 1}", "--"] + cmd
+     t0 = time.monotonic()
+     p = subprocess.Popen(full, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                          start_new_session=True)
+@@ -55,64 +158,65 @@ def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: s
+           threading.Thread(target=pump, args=(p.stderr, "err"), daemon=True)]
+     for t in ts:
+         t.start()
+-    wall_hit, mem_hit, status_word, ru, peak_group_mb = False, False, 0, None, 0.0
++    sid = p.pid
++    cause, peak_cpu, peak_rss, seen, orphan_cpu = None, 0.0, 0.0, set(), 0.0
++    status_word, ru = 0, None
+     while True:
+         pid, status_word, ru = os.wait4(p.pid, os.WNOHANG)
+         if pid == p.pid:
+             break
+-        g = _group_rss_mb(p.pid)
+-        peak_group_mb = max(peak_group_mb, g)
+-        if g > mem_mb:
+-            mem_hit = True
+-            os.killpg(p.pid, signal.SIGKILL)
+-            pid, status_word, ru = os.wait4(p.pid, 0)
+-            break
+-        if time.monotonic() - t0 > wall_s:
+-            wall_hit = True
+-            os.killpg(p.pid, signal.SIGKILL)
+-            pid, status_word, ru = os.wait4(p.pid, 0)
+-            break
+-        time.sleep(0.05)
++        orphan_cpu += _reap_orphans(p.pid)
++        cpu, rss, pids = _session_stats(sid)
++        seen |= pids
++        peak_cpu = max(peak_cpu, cpu + orphan_cpu)
++        peak_rss = max(peak_rss, rss)
++        if cause is None:
++            if cpu + orphan_cpu > cpu_s:
++                cause = "TIMEOUT_CPU"
++            elif rss > mem_mb:
++                cause = "OOM"
++            elif time.monotonic() - t0 > wall_s:
++                cause = "TIMEOUT_WALL"
++            if cause:
++                try:
++                    os.killpg(sid, signal.SIGKILL)
++                except ProcessLookupError:
++                    pass
++        time.sleep(POLL_S)
++    # the root is gone: kill whatever is left of its session (no descendant may outlive the pair) and count it
++    left_cpu, _, left = _session_stats(sid)
++    if left:
++        peak_cpu = max(peak_cpu, left_cpu + orphan_cpu + ru.ru_utime + ru.ru_stime)
++        try:
++            os.killpg(sid, signal.SIGKILL)
++        except ProcessLookupError:
++            pass
++        time.sleep(0.2)
++    orphan_cpu += _reap_orphans(p.pid)
+     for t in ts:
+         t.join(timeout=5)
++    for stream in (p.stdout, p.stderr):
++        stream.close()
+     p.returncode = os.waitstatus_to_exitcode(status_word)
+     wall = time.monotonic() - t0
+     rc = p.returncode
+     sig = signal.Signals(-rc).name if rc is not None and rc < 0 else None
+-    cpu = ru.ru_utime + ru.ru_stime
+-    if mem_hit:
+-        status = "OOM"
+-    elif wall_hit:
+-        status = "TIMEOUT_WALL"
+-    elif sig == "SIGXCPU" or (sig == "SIGKILL" and cpu >= soft - 0.5):
+-        status = "TIMEOUT_CPU"
+-    elif sig in ("SIGKILL", "SIGSEGV", "SIGABRT"):
+-        status = "OOM_OR_KILLED"
++    root_cpu = ru.ru_utime + ru.ru_stime
++    tree = max(root_cpu + orphan_cpu, peak_cpu)
++    dec = lambda b: b"".join(b).decode("utf-8", "replace")
++    err_text = dec(bufs["err"])
++    if cause:
++        status = cause
++    elif tree > cpu_s:
++        status = "TIMEOUT_CPU"  # finished, but the tree used more than the budget between two polls
++    elif sig:
++        status = "TIMEOUT_CPU" if sig == "SIGXCPU" else "KILLED"
+     elif rc == 0:
+         status = "OK"
++    elif any(m in err_text for m in ("MemoryError", "out of memory", "bad_alloc", "Cannot allocate")):
++        status = "OOM"
+     else:
+         status = "ERROR"
+-    dec = lambda b: b"".join(b).decode("utf-8", "replace")
+-    if status == "ERROR" and any(m in dec(bufs["err"]) for m in ("MemoryError", "out of memory", "bad_alloc", "Cannot allocate")):
+-        status = "OOM"
+-    return Run(rc, sig, status, round(ru.ru_utime, 3), round(ru.ru_stime, 3), round(wall, 3),
+-               round(max(ru.ru_maxrss / 1024, peak_group_mb), 1), dec(bufs["out"]), dec(bufs["err"]))
+-
+-
+-def _group_rss_mb(pgid: int) -> float:
+-    """Sum of VmRSS over all processes in the session/process group `pgid` (Linux /proc)."""
+-    total = 0
+-    for d in os.listdir("/proc"):
+-        if not d.isdigit():
+-            continue
+-        try:
+-            if os.getpgid(int(d)) != pgid:
+-                continue
+-            with open(f"/proc/{d}/status") as f:
+-                for line in f:
+-                    if line.startswith("VmRSS:"):
+-                        total += int(line.split()[1])
+-                        break
+-        except (OSError, ProcessLookupError):
+-            continue
+-    return total / 1024
++    return Run(rc, sig, status, round(tree, 3), round(root_cpu, 3), round(peak_cpu, 3), cpu_s,
++               round(max(0.0, tree - cpu_s), 3), round(wall, 3), round(max(ru.ru_maxrss / 1024, peak_rss), 1),
++               len(seen), dec(bufs["out"]), err_text)
+diff --git a/bench/runner.py b/bench/runner.py
+index 94a9e3d..e0fdc32 100644
+--- a/bench/runner.py
++++ b/bench/runner.py
+@@ -13,15 +13,20 @@ from __future__ import annotations
+ 
+ import argparse
+ import json
++import re
+ import platform
+ import shutil
+ import time
+ from pathlib import Path
+ 
+ from .canonical import read_jsonl, sha256_file
+-from .limits import run_limited
++from .limits import POLL_S, run_limited
+ 
+ ADAPTER_CPU_S, ADAPTER_WALL_S = 300, 600
++WALL_FACTOR = 4                 # wall cap = WALL_FACTOR x CPU limit + slack; reported as TIMEOUT_WALL, never as CPU
++MEASURE_CEILING_S = 900          # calibration measurement ceiling (availability only; never a scored budget)
++CALIBRATION_ID = "avail-calibration-identical"
++REPO = Path(__file__).resolve().parents[1]
+ 
+ 
+ def _shard(rows, spec):
+@@ -31,6 +36,22 @@ def _shard(rows, spec):
+     return [r for k, r in enumerate(rows) if k % n == i]
+ 
+ 
++def _strip(r) -> dict:
++    return {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")}
++
++
++def _decl_lines(text: str, name: str) -> tuple[int, int]:
++    """1-based line range of the renamed declaration inside a generated file."""
++    lines = text.splitlines()
++    start = next((i + 1 for i, l in enumerate(lines) if f"theorem {name}" in l), 0)
++    end = next((i + 1 for i in range(start, len(lines)) if lines[i].strip() == "end"), len(lines))
++    return start, end
++
++
++def _error_lines(log: str, path: Path) -> list[int]:
++    return [int(m.group(1)) for m in re.finditer(re.escape(path.name) + r":(\d+):\d+: error", log)]
++
++
+ def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> dict:
+     from .adapters import proofscope as A
+     prep = A.prepare(case, work, [lean])
+@@ -42,27 +63,36 @@ def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> d
+     env = A.imports_env(prep["imports"])
+     printed = {}
+     for side, cmd in zip(("ref", "cand"), prep["print_cmds"]):
+-        r = run_limited(cmd, ADAPTER_CPU_S, mem_mb, ADAPTER_WALL_S, cwd=str(work), env=env)
+-        rec["adapter"][f"print_{side}"] = {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")}
+-        p = A.extract_printed(r.stdout + r.stderr)
++        f = Path(cmd[-1])
++        r = run_limited(cmd, ADAPTER_CPU_S, mem_mb, ADAPTER_WALL_S, cwd=str(work), env=env, inputs=(str(f),))
++        rec["adapter"][f"print_{side}"] = _strip(r)
++        log = r.stdout + r.stderr
++        p = A.extract_printed(log)
+         if r.status != "OK" or p is None:
+-            rec["status"] = "NON_ELABORATING" if r.status in ("OK", "ERROR") else "ADAPTER_" + r.status
+-            rec["adapter"][f"print_{side}_log"] = (r.stdout + r.stderr)[-3000:]
++            rec["adapter"][f"print_{side}_log"] = log[-3000:]
++            lo, hi = _decl_lines(f.read_text(), f"ps_{side}_decl")
++            errs = _error_lines(log, f)
++            if r.status in ("OK", "ERROR") and errs and all(lo <= e <= hi for e in errs):
++                rec["status"] = "NON_ELABORATING"      # Lean rejects the source declaration itself
++            elif r.status in ("OK", "ERROR"):
++                rec["status"] = "ADAPTER_ERROR"        # failure outside the declaration (adapter or environment)
++            else:
++                rec["status"] = "ADAPTER_" + r.status  # LAUNCH_ERROR, TIMEOUT_*, OOM in the adapter step
+             return rec
+         printed[side] = p
+         h, d = (case["ref_header"], case["ref_decl"]) if side == "ref" else (case["cand_header"], case["cand_decl"])
+-        f = work / f"{side}_check.lean"
+-        f.write_text(A.check_file(h, d, f"ps_{side}_decl", prep["imports"], p))
+-        c = run_limited([lean, str(f)], ADAPTER_CPU_S, mem_mb, ADAPTER_WALL_S, cwd=str(work), env=env)
+-        rec["adapter"][f"check_{side}"] = {k: v for k, v in c.as_dict().items() if k not in ("stdout", "stderr")}
++        cf = work / f"{side}_check.lean"
++        cf.write_text(A.check_file(h, d, f"ps_{side}_decl", prep["imports"], p))
++        c = run_limited([lean, str(cf)], ADAPTER_CPU_S, mem_mb, ADAPTER_WALL_S, cwd=str(work), env=env, inputs=(str(cf),))
++        rec["adapter"][f"check_{side}"] = _strip(c)
+         if c.status != "OK" or ": error" in (c.stdout + c.stderr):
+-            rec["status"] = "UNSUPPORTED_INPUT"
++            rec["status"] = "UNSUPPORTED_INPUT" if c.status in ("OK", "ERROR") else "ADAPTER_" + c.status
+             rec["adapter"]["error"] = f"printed {side} statement does not round-trip: " + (c.stdout + c.stderr)[-1500:]
+             return rec
+     rec["printed"] = printed
+-    r = run_limited(A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work), budget, mem_mb,
+-                    3 * budget + 120, cwd=None, env=env)
+-    rec["run"] = {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")}
++    cmd = A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work)
++    r = run_limited(cmd, budget, mem_mb, WALL_FACTOR * budget + 120, cwd=str(REPO), env=env, inputs=(cmd[4],))
++    rec["run"] = _strip(r)
+     rec["log_tail"] = (r.stdout + r.stderr)[-3000:]
+     rec["status"] = r.status
+     rec.update(A.parse_engine(case["case_id"], work))
+@@ -72,29 +102,80 @@ def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> d
+ def run_semanteq(case, work: Path, budget: float, tier: int, mem_mb: int, tool_dir: Path) -> dict:
+     from .adapters import semanteq as A
+     prep = A.prepare(case, work, tool_dir, tier)
+-    r = run_limited(prep["cmd"], budget, mem_mb, 3 * budget + 120, cwd=prep["cwd"])
+-    rec = {"run": {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")},
+-           "log_tail": (r.stdout + r.stderr)[-3000:], "status": r.status}
++    r = run_limited(prep["cmd"], budget, mem_mb, WALL_FACTOR * budget + 120, cwd=prep["cwd"], inputs=(prep["input"],))
++    rec = {"run": _strip(r), "log_tail": (r.stdout + r.stderr)[-3000:], "status": r.status}
+     rec.update(A.parse(case, Path(prep["result"])))
+     return rec
+ 
+ 
+ def run_beqplus(case, work: Path, budget: float, tier: int, mem_mb: int, tool_dir: Path, lean_version: str) -> dict:
+     from .adapters import beqplus as A
+-    prep = A.prepare(case, work, tool_dir, lean_version, tier)
+-    r = run_limited(prep["cmd"], budget, mem_mb, 3 * budget + 300)
+-    rec = {"run": {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")},
+-           "log_tail": (r.stdout + r.stderr)[-3000:], "status": r.status}
++    prep = A.prepare(case, work, tool_dir, lean_version)
++    r = run_limited(prep["cmd"], budget, mem_mb, WALL_FACTOR * budget + 300, cwd=str(work), inputs=(prep["input"],))
++    rec = {"run": _strip(r), "log_tail": (r.stdout + r.stderr)[-3000:], "status": r.status}
+     rec.update(A.parse(case, work / "out.json"))
+     return rec
+ 
+ 
++def evaluation_class(rec: dict) -> str:
++    """Machine-readable outcome class (SOTA-2, protocol amendment A8). Only EVALUATED_* records count as a
++    mathematical evaluation; nothing else may be scored as an abstention or a verdict."""
++    st = rec.get("status")
++    if st in ("TIMEOUT_CPU", "TIMEOUT_WALL", "OOM"):
++        return "RESOURCE_EXHAUSTED"
++    if st in ("NON_ELABORATING", "UNSUPPORTED_INPUT", "INCOMPATIBLE"):
++        return "INPUT_NOT_EVALUABLE"
++    if st != "OK" or rec.get("native_verdict") is None:
++        return "NOT_EVALUATED_INFRA"
++    a, b = rec["track_A"]["certified"], rec["track_B"]["certified"]
++    if a in ("NON_ELABORATING", "UNSUPPORTED_INPUT", "INCOMPATIBLE"):
++        return "INPUT_NOT_EVALUABLE"          # the tool ran but reports that it could not read the input
++    if a in ("TIMEOUT_WALL", "TIMEOUT_CPU", "OOM"):
++        return "RESOURCE_EXHAUSTED"           # the tool's own limit (e.g. SemantEq `Timeout`)
++    if a not in ("EQUIV", "NONEQUIV", "ABSTAIN"):
++        return "NOT_EVALUATED_INFRA"          # ERROR / internal error reported by the tool
++    kind = rec.get("certificate_kind")
++    if a == "EQUIV" or b == "EQUIV":
++        return "EVALUATED_POSITIVE_KERNEL" if kind == "kernel" else "EVALUATED_POSITIVE_STRUCTURAL"
++    if a == "NONEQUIV":
++        return "EVALUATED_NEGATIVE_LOGICAL"
++    if b == "NONEQUIV":
++        return "EVALUATED_NEGATIVE_FIDELITY"
++    return "EVALUATED_ABSTAIN"
++
++
++def measure_startup(system: str, case: dict, n: int, a) -> dict:
++    """Startup allowance (amendment A1/A7): median whole-tree CPU of the calibration pair over n runs under
++    a measurement ceiling. These runs are measurements, never scored."""
++    vals, recs = [], []
++    for k in range(n):
++        work = a.out / "work" / system / "calibration" / f"m{k}"
++        rec = RUNNERS[system](case, work, MEASURE_CEILING_S, a)
++        recs.append({"status": rec.get("status"), "native_verdict": rec.get("native_verdict"), "run": rec.get("run")})
++        if rec.get("status") == "OK" and rec.get("run"):
++            vals.append(rec["run"]["cpu_tree_s"])
++    vals.sort()
++    med = vals[len(vals) // 2] if len(vals) == n else None
++    return {"calibration_case": case["case_id"], "runs": recs, "ceiling_cpu_s": MEASURE_CEILING_S,
++            "startup_allowance_cpu_s": med,
++            "note": None if med is not None else "calibration did not complete in every run: no allowance derived"}
++
++
++RUNNERS = {
++    "proofscope": lambda c, w, b, a: run_proofscope(c, w, b, a.mem_mb, a.lean),
++    "semanteq": lambda c, w, b, a: run_semanteq(c, w, b, a.tier, a.mem_mb, a.tool_dir),
++    "beqplus": lambda c, w, b, a: run_beqplus(c, w, b, a.tier, a.mem_mb, a.tool_dir, a.beq_lean_version),
++}
++
++
+ def main(argv=None) -> int:
+     ap = argparse.ArgumentParser(prog="python -m bench.runner")
+     ap.add_argument("--system", required=True, choices=["proofscope", "semanteq", "beqplus"])
+     ap.add_argument("--cases", type=Path, required=True)
+     ap.add_argument("--tier", type=int, required=True, choices=[20, 180])
+-    ap.add_argument("--startup-allowance", type=float, default=0.0)
++    ap.add_argument("--startup-allowance", default="0",
++                    help="CPU seconds, or 'measure' (availability only): median tree CPU of the calibration pair")
++    ap.add_argument("--calibration-runs", type=int, default=3)
+     ap.add_argument("--mem-mb", type=int, default=12000)
+     ap.add_argument("--repeat", type=int, default=1)
+     ap.add_argument("--shard")
+@@ -104,12 +185,33 @@ def main(argv=None) -> int:
+     ap.add_argument("--cache-state", default="unknown", choices=["cold", "warm", "unknown"])
+     ap.add_argument("--out", type=Path, required=True)
+     a = ap.parse_args(argv)
+-    cases = _shard(read_jsonl(a.cases), a.shard)
+-    budget = a.tier + a.startup_allowance
++    # every path absolute: tools are started in their own working directories (SOTA-1 defect: a relative
++    # --out made every generated input path unresolvable from the tool's cwd)
++    a.out = a.out.resolve()
++    a.cases = a.cases.resolve()
++    if a.tool_dir is not None:
++        a.tool_dir = a.tool_dir.resolve()
++    all_cases = read_jsonl(a.cases)
++    cases = _shard(all_cases, a.shard)
++    calibration = None
++    if a.startup_allowance == "measure":
++        cal = next((c for c in all_cases if c["case_id"] == CALIBRATION_ID), None)
++        if cal is None:
++            raise SystemExit(f"--startup-allowance measure needs the calibration case {CALIBRATION_ID}")
++        calibration = measure_startup(a.system, cal, a.calibration_runs, a)
++        allowance = calibration["startup_allowance_cpu_s"]
++        if allowance is None:
++            allowance = 0.0
++    else:
++        allowance = float(a.startup_allowance)
++    budget = a.tier + allowance
+     base = a.out / a.system / f"t{a.tier}"
+     base.mkdir(parents=True, exist_ok=True)
+-    manifest = {"system": a.system, "tier_cpu_s": a.tier, "startup_allowance_cpu_s": a.startup_allowance,
+-                "limit_cpu_s": budget, "mem_mb": a.mem_mb, "repeat": a.repeat, "shard": a.shard,
++    manifest = {"system": a.system, "tier_cpu_s": a.tier, "startup_allowance_cpu_s": allowance,
++                "startup_allowance_source": "measured (calibration)" if calibration else "preregistered input",
++                "calibration": calibration, "limit_cpu_s": budget,
++                "budget_semantics": "whole process tree of one tool invocation per pair; polled enforcement "
++                                    f"every {POLL_S}s; adapter conversion steps limited separately and not charged", "mem_mb": a.mem_mb, "repeat": a.repeat, "shard": a.shard,
+                 "cases_file_sha256": sha256_file(a.cases), "cases": len(cases), "cache_state": a.cache_state,
+                 "host": platform.node(), "cpu": platform.processor() or platform.machine(),
+                 "python": platform.python_version(), "prlimit": shutil.which("prlimit"),
+@@ -120,23 +222,27 @@ def main(argv=None) -> int:
+             work = a.out / "work" / a.system / f"t{a.tier}" / case["case_id"] / f"r{rep}"
+             t0 = time.time()
+             try:
+-                if a.system == "proofscope":
+-                    rec = run_proofscope(case, work, budget, a.mem_mb, a.lean)
+-                elif a.system == "semanteq":
+-                    rec = run_semanteq(case, work, budget, a.tier, a.mem_mb, a.tool_dir)
+-                else:
+-                    rec = run_beqplus(case, work, budget, a.tier, a.mem_mb, a.tool_dir, a.beq_lean_version)
++                rec = RUNNERS[a.system](case, work, budget, a)
+             except Exception as e:  # recorded, never dropped
+-                rec = {"status": "RUNNER_ERROR", "error": repr(e)}
++                import traceback
++                rec = {"status": "RUNNER_ERROR", "error": repr(e), "traceback": traceback.format_exc()[-3000:]}
+             rec.update(case_id=case["case_id"], system=a.system, tier=a.tier, repeat=rep, group=case.get("group"),
+                        source=case.get("source"), wall_total_s=round(time.time() - t0, 3))
+             if rec.get("status") == "OK" and rec.get("native_verdict") is None:
+                 rec["status"] = "ERROR_NO_OUTPUT"
+             for t in ("A", "B"):
+-                if f"track_{t}" not in rec:
++                if f"track_{t}" not in rec or rec["status"] != "OK":
+                     rec[f"track_{t}"] = {"certified": rec["status"], "native": rec["status"]}
++            run = rec.get("run") or {}
++            rec["budget"] = {"tier_cpu_s": a.tier, "startup_allowance_cpu_s": allowance, "limit_cpu_s": budget,
++                             "cpu_tree_s": run.get("cpu_tree_s"),
++                             "chargeable_cpu_s": None if run.get("cpu_tree_s") is None else round(run["cpu_tree_s"] - allowance, 3),
++                             "compliant": rec["status"] == "OK" and run.get("cpu_tree_s") is not None
++                                          and run["cpu_tree_s"] <= budget}
++            rec["evaluation_class"] = evaluation_class(rec)
+             (base / f"{case['case_id']}.r{rep}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1))
+-            print(case["case_id"], a.system, rec["status"], rec.get("native_verdict"), flush=True)
++            print(case["case_id"], a.system, rec["status"], rec.get("native_verdict"), rec["evaluation_class"],
++                  run.get("cpu_tree_s"), flush=True)
+     return 0
+ 
+ 
+diff --git a/docs/sota1/README.md b/docs/sota1/README.md
+index da401a3..fa02425 100644
+--- a/docs/sota1/README.md
++++ b/docs/sota1/README.md
+@@ -219,3 +219,57 @@ baseline):
+ | No Mathlib in the sandbox | No Mathlib-level adapter test here |
+ | ACE/SAE and FormalRx-CC code not released | Not benchmarked |
+ | Track C needs three independent papers and human time | Not started |
++
++## 13. SOTA-2 repair (availability run 42689439284)
++
++All three defects reproduced locally before any fix.
++
++| Run 42689439284 result | Root cause | Fix |
++|---|---|---|
++| ProofScope 3/3 NON_ELABORATING | The workflow passes `--out runs`, so every generated file path was relative (`runs/work/...`). The adapter then started Lean with `cwd=` the work directory, and Lean reported `no such file or directory: runs/work/proofscope/t20/<case>/r0/ref_print.lean`. Nothing reached elaboration, so the label NON_ELABORATING was itself a misclassification. | Every path is absolute (`--out`, `--cases` and `--tool-dir` are resolved). A launch-time check returns LAUNCH_ERROR for a missing or relative input. A Lean failure is NON_ELABORATING only when its error lines fall inside the source declaration; otherwise it is ADAPTER_ERROR. |
++| SemantEq 3/3 ERROR | The same relative path, handed to `lake exe semanteq`, which ran with `cwd=` the SemantEq checkout. | Same fix. The adapter also no longer overrides SemantEq's `--timeout`, so its documented default is restored. |
++| BEq+ used 72.1 CPU-s at a 20 CPU-s tier | `prlimit --cpu` sets RLIMIT_CPU **per process**. The Lean REPL and other descendants each had their own 20 s. Reproduced: four busy children under a "2 s" limit used 8.04 CPU-s and were reported OK. Separately, the adapter set BEq+'s per-proof timeout to the tier (20 s) instead of upstream's `DEFAULT_TIMEOUT` (60 s). | See amendment A7 below. The BEq+ driver now uses upstream's `DEFAULT_TIMEOUT`. |
++| CI green with zero usable evaluations | The collect job only counted records. | See amendment A8 below. |
++
++**Amendment A7: budget semantics.** The budget binds the **whole process tree of one tool invocation**,
++measured over a new session plus orphans: the runner is a child subreaper, so orphans return to it and
++are counted.
++- **Enforcement.** Every 20 ms, the runner sums utime + stime + cutime + cstime over the live session
++  processes and kills the session at the limit. This is calibrated, not exact: the overshoot is recorded
++  per record. Locally, the four-child test now stops at 2.074 CPU-s (overshoot 0.074 s).
++- **Accounting.** `cpu_tree_s = max(wait4 of root + reaped orphans, peak polled sum)`, and peak RSS is
++  summed over the tree.
++- **Startup allowance.** In the availability phase it is **measured**: the median tree CPU of the
++  calibration pair over 3 runs, under a 900 CPU-s measurement ceiling. These runs are never scored. For
++  pilot and primary runs, the frozen value from that manifest is passed in.
++- **Per record.** Each record stores `chargeable_cpu_s = cpu_tree_s - allowance` and `compliant`.
++- **Uncharged conversion.** Adapter conversion (ProofScope's printing and round-trip check) runs under its
++  own limit and is not charged.
++- **Wall cap.** A wall cap is reported as TIMEOUT_WALL, never as a CPU limit.
++
++**Amendment A8: fail closed.** Every record has an `evaluation_class`:
++- EVALUATED_POSITIVE_KERNEL
++- EVALUATED_POSITIVE_STRUCTURAL
++- EVALUATED_NEGATIVE_LOGICAL
++- EVALUATED_NEGATIVE_FIDELITY
++- EVALUATED_ABSTAIN
++- RESOURCE_EXHAUSTED
++- INPUT_NOT_EVALUABLE
++- NOT_EVALUATED_INFRA
++
++`bench/gate.py` writes the availability report: infrastructure readiness, native initialization, valid
++evaluations, kernel and structural positives, negatives, abstentions and resource exhaustion. Each
++system's gate requires a valid, budget-compliant evaluation of **both** equivalent calibration fixtures.
++No particular verdict is required. The non-equivalent fixture is reported but does not gate.
++
++The collect job fails when any gate fails, and all evidence is uploaded first. Two upstream checks were
++added:
++- SemantEq reproduces its own manifest on two pairs from its recall suite.
++- ProofScope runs its v1.2 tests and a Mathlib smoke file. (BEq+ already has its native REPL init check.)
++
++**Expected and not fixable in the interoperability layer.** Frozen ProofScope v1.2 answers
++`NO_ASSUMPTION_DELTA` for identical or alpha-renamed statements. That comparison is meta-level (Lean's
++comparison of the elaborated telescopes) and comes with **no kernel certificate**, so it is classified
++EVALUATED_POSITIVE_STRUCTURAL, not EVALUATED_POSITIVE_KERNEL. Producing a kernel certificate for this case
++would be an engine change (v1.3 and a new freeze), not an adapter fix. SemantEq's `ExactMatch`/`DefEq` are
++classified the same way, for symmetry.
+diff --git a/tests/bench/test_bench.py b/tests/bench/test_bench.py
+index 27b832b..0576364 100644
+--- a/tests/bench/test_bench.py
++++ b/tests/bench/test_bench.py
+@@ -88,6 +88,40 @@ class Limits(unittest.TestCase):
+         r = run_limited(["python3", "-c", "while True: pass"], cpu_s=1, mem_mb=512, wall_s=30)
+         self.assertEqual(r.status, "TIMEOUT_CPU")
+ 
++    def test_budget_binds_the_whole_process_tree(self):
++        # SOTA-1 defect: a per-process rlimit let 4 busy children use 4 budgets and report OK
++        code = ("import multiprocessing as m\ndef f():\n  x=0\n  while True: x+=1\n"
++                "ps=[m.Process(target=f) for _ in range(4)]\n[p.start() for p in ps]\n[p.join() for p in ps]")
++        r = run_limited(["python3", "-c", code], cpu_s=2, mem_mb=2000, wall_s=60)
++        self.assertEqual(r.status, "TIMEOUT_CPU")
++        self.assertLess(r.cpu_tree_s, 2.6)
++        self.assertGreaterEqual(r.processes_seen, 2)
++
++    def test_orphans_are_counted_and_killed(self):
++        code = "import os,time\nif os.fork()==0:\n  if os.fork()==0:\n    x=0\n    while True: x+=1\n  os._exit(0)\ntime.sleep(20)"
++        r = run_limited(["python3", "-c", code], cpu_s=1.5, mem_mb=2000, wall_s=60)
++        self.assertEqual(r.status, "TIMEOUT_CPU")
++
++    def test_finished_tree_is_fully_accounted(self):
++        code = ("import multiprocessing as m\ndef f():\n  x=0\n  for i in range(2*10**6): x+=1\n"
++                "ps=[m.Process(target=f) for _ in range(3)]\n[p.start() for p in ps]\n[p.join() for p in ps]")
++        r = run_limited(["python3", "-c", code], cpu_s=30, mem_mb=2000, wall_s=60)
++        self.assertEqual(r.status, "OK")
++        self.assertGreater(r.cpu_tree_s, r.cpu_peak_polled_s * 0.5)
++        self.assertGreaterEqual(r.cpu_tree_s, r.cpu_root_wait4_s)
++
++    def test_wall_timeout_is_not_a_cpu_timeout(self):
++        self.assertEqual(run_limited(["sleep", "20"], cpu_s=5, mem_mb=200, wall_s=1).status, "TIMEOUT_WALL")
++
++    def test_launch_errors(self):
++        self.assertEqual(run_limited(["no-such-binary-x"], 5, 200, 10).status, "LAUNCH_ERROR")
++        self.assertEqual(run_limited(["python3", "-c", "0"], 5, 200, 10, inputs=("rel/path.jsonl",)).status, "LAUNCH_ERROR")
++        self.assertEqual(run_limited(["python3", "-c", "0"], 5, 200, 10, inputs=("/nonexistent/x.jsonl",)).status, "LAUNCH_ERROR")
++        self.assertEqual(run_limited(["python3", "-c", "0"], 5, 200, 10, cwd="/nonexistent-dir").status, "LAUNCH_ERROR")
++
++    def test_nonzero_exit_is_error(self):
++        self.assertEqual(run_limited(["python3", "-c", "import sys; sys.exit(3)"], 5, 200, 10).status, "ERROR")
++
+     def test_memory_watchdog(self):
+         r = run_limited(["python3", "-c", "import time;a=bytearray(600*2**20);a[::4096]=b'x'*len(a[::4096]);time.sleep(3)"],
+                         cpu_s=10, mem_mb=200, wall_s=30)
+@@ -96,3 +130,120 @@ class Limits(unittest.TestCase):
+ 
+ if __name__ == "__main__":
+     unittest.main()
++
++
++FAKE_LAKE = """#!/usr/bin/env python3
++import json, os, sys
++args = sys.argv[1:]
++assert args[:3] == ["exe", "semanteq", "--raw"], args
++inp, out = args[-2], args[-1]
++pair = json.loads(open(inp).readline())
++assert "reference" in pair and "candidate" in pair
++v = "MalformedInput" if "MALFORMED" in pair["reference"] else ("ExactMatch" if pair["reference"].split("\\n")[-2:] and
++     pair["reference"].replace("ref", "") == pair["candidate"].replace("cand", "") else "Inconclusive")
++open(out, "w").write(json.dumps({"_meta": {}}) + "\\n" + json.dumps({"id": pair["id"], "verdict": v, "elapsedMs": 1}) + "\\n")
++"""
++
++
++class RunnerPlumbing(unittest.TestCase):
++    """Plumbing only: a stand-in `lake` checks that the runner hands SemantEq absolute, existing paths
++    from inside the tool directory (the SOTA-1 failure) and that outputs are parsed and classified."""
++
++    def test_semanteq_paths_from_relative_out(self):
++        import os
++        import subprocess
++        import sys
++        with tempfile.TemporaryDirectory() as t:
++            t = Path(t)
++            tool = t / "se"
++            (t / "bin").mkdir()
++            tool.mkdir()
++            lake = t / "bin" / "lake"
++            lake.write_text(FAKE_LAKE)
++            lake.chmod(0o755)
++            cases = [{"case_id": "avail-calibration-identical", "group": "g", "source": "s", "ref_header": "import Mathlib",
++                      "ref_decl": "theorem ref (x : Nat) : x = x := by sorry", "cand_header": "import Mathlib",
++                      "cand_decl": "theorem cand (x : Nat) : x = x := by sorry"},
++                     {"case_id": "avail-malformed", "group": "g", "source": "s", "ref_header": "MALFORMED",
++                      "ref_decl": "theorem r : True", "cand_header": "", "cand_decl": "theorem c : True"}]
++            C.write_jsonl(t / "cases.jsonl", cases)
++            env = dict(os.environ, PATH=f"{t / 'bin'}:{os.environ['PATH']}")
++            r = subprocess.run([sys.executable, "-m", "bench.runner", "--system", "semanteq", "--tool-dir", str(tool),
++                                "--cases", str(t / "cases.jsonl"), "--tier", "20", "--mem-mb", "2000", "--out", "runs_rel"],
++                               cwd=str(t), env=dict(env, PYTHONPATH=str(Path(__file__).resolve().parents[2])),
++                               capture_output=True, text=True)
++            self.assertEqual(r.returncode, 0, r.stderr)
++            import json
++            rec = json.loads((t / "runs_rel/semanteq/t20/avail-calibration-identical.r0.json").read_text())
++            self.assertEqual(rec["status"], "OK", rec)
++            self.assertEqual(rec["native_verdict"], "ExactMatch")
++            self.assertEqual(rec["evaluation_class"], "EVALUATED_POSITIVE_STRUCTURAL")
++            bad = json.loads((t / "runs_rel/semanteq/t20/avail-malformed.r0.json").read_text())
++            self.assertEqual(bad["track_A"]["certified"], "UNSUPPORTED_INPUT")
++            self.assertEqual(bad["evaluation_class"], "INPUT_NOT_EVALUABLE")
++            self.assertTrue(rec["budget"]["compliant"])
++
++
++class Classification(unittest.TestCase):
++    def test_classes(self):
++        from bench.runner import evaluation_class as E
++        ok = lambda a, b, kind=None: {"status": "OK", "native_verdict": "v", "certificate_kind": kind,
++                                      "track_A": {"certified": a}, "track_B": {"certified": b}}
++        self.assertEqual(E(ok("EQUIV", "EQUIV", "kernel")), "EVALUATED_POSITIVE_KERNEL")
++        self.assertEqual(E(ok("EQUIV", "EQUIV", "structural")), "EVALUATED_POSITIVE_STRUCTURAL")
++        self.assertEqual(E(ok("ABSTAIN", "NONEQUIV", "kernel")), "EVALUATED_NEGATIVE_FIDELITY")
++        self.assertEqual(E(ok("ABSTAIN", "ABSTAIN")), "EVALUATED_ABSTAIN")
++        self.assertEqual(E({"status": "TIMEOUT_CPU"}), "RESOURCE_EXHAUSTED")
++        self.assertEqual(E({"status": "NON_ELABORATING"}), "INPUT_NOT_EVALUABLE")
++        self.assertEqual(E({"status": "OK", "native_verdict": None}), "NOT_EVALUATED_INFRA")
++        self.assertEqual(E({"status": "LAUNCH_ERROR"}), "NOT_EVALUATED_INFRA")
++        self.assertEqual(E(ok("UNSUPPORTED_INPUT", "UNSUPPORTED_INPUT")), "INPUT_NOT_EVALUABLE")
++        self.assertEqual(E(ok("TIMEOUT_WALL", "TIMEOUT_WALL")), "RESOURCE_EXHAUSTED")
++        self.assertEqual(E(ok("ERROR", "ERROR")), "NOT_EVALUATED_INFRA")
++
++    def test_gate_fails_closed(self):
++        from bench.gate import system_report
++        cases = ["avail-calibration-identical", "avail-equivalent-rename", "avail-nonequivalent-hypothesis"]
++        good = {"status": "OK", "evaluation_class": "EVALUATED_ABSTAIN", "native_verdict": "x",
++                "track_A": {"certified": "ABSTAIN"}, "track_B": {"certified": "ABSTAIN"}, "budget": {"compliant": True}}
++        err = dict(good, status="ERROR", evaluation_class="NOT_EVALUATED_INFRA", budget={"compliant": False})
++        self.assertTrue(system_report({c: good for c in cases[:2]}, cases, [])["gate_pass"])
++        self.assertFalse(system_report({cases[0]: good, cases[1]: err}, cases, [])["gate_pass"])
++        self.assertFalse(system_report({}, cases, [])["gate_pass"])
++        over = dict(good, budget={"compliant": False})
++        self.assertFalse(system_report({cases[0]: good, cases[1]: over}, cases, [])["gate_pass"])
++
++
++class BeqDriverPlumbing(unittest.TestCase):
++    """Plumbing only: stand-in `lean_interact` and `beq_plus.py` check that the driver keeps upstream's
++    DEFAULT_TIMEOUT, passes the declarations and merged header, and that the result is parsed."""
++
++    def test_driver_uses_upstream_default_timeout(self):
++        import json
++        import os
++        import subprocess
++        with tempfile.TemporaryDirectory() as t:
++            t = Path(t)
++            (t / "li" / "examples").mkdir(parents=True)
++            (t / "li" / "examples" / "beq_plus.py").write_text(
++                "DEFAULT_TIMEOUT = 60\n"
++                "def beq_plus(f1, f2, header, server, timeout_per_proof):\n"
++                "    assert timeout_per_proof == 60 and 'import Mathlib' in header\n"
++                "    return f1.split(':', 1)[1] == f2.split(':', 1)[1]\n")
++            (t / "pkg" / "lean_interact").mkdir(parents=True)
++            (t / "pkg" / "lean_interact" / "__init__.py").write_text(
++                "class TempRequireProject:\n    def __init__(self, **k): pass\n"
++                "class LeanREPLConfig:\n    def __init__(self, **k): pass\n"
++                "class AutoLeanServer:\n    def __init__(self, **k): pass\n")
++            from bench.adapters import beqplus as B
++            case = {"case_id": "x", "ref_header": "import Mathlib", "cand_header": "import Mathlib\nopen Real",
++                    "ref_decl": "theorem a : 1 = 1 := by sorry", "cand_decl": "theorem b : 1 = 1 := by sorry"}
++            prep = B.prepare(case, t / "w", t / "li", "v4.8.0")
++            self.assertNotIn("--timeout", prep["cmd"])
++            r = subprocess.run(prep["cmd"], env=dict(os.environ, PYTHONPATH=str(t / "pkg")), capture_output=True, text=True)
++            self.assertEqual(r.returncode, 0, r.stderr)
++            out = B.parse(case, t / "w" / "out.json")
++            self.assertEqual(out["native_verdict"], True)
++            self.assertEqual(out["per_proof_timeout_s"], 60)
++            self.assertEqual(out["certificate_kind"], "kernel")
++            self.assertEqual(json.loads((t / "w" / "out.json").read_text())["beq_plus"], True)
+-- 
+2.43.0
+
