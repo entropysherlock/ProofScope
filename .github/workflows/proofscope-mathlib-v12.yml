@@ -5,6 +5,10 @@ name: ProofScope v1.2 Mathlib Coverage (frozen evaluation split)
 # Elaboration failures are expected to be possible and must be reported exactly, not patched around.
 on:
   workflow_dispatch:
+  push:
+    branches: [v1.2-review]
+    paths:
+      - ".github/workflows/proofscope-mathlib-v12.yml"
 
 permissions:
   contents: read
