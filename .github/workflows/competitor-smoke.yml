@@ -110,7 +110,7 @@ jobs:
           if-no-files-found: warn
   machinechecked:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 45
     env:
       UPSTREAM: https://github.com/cgarryZA/MachineChecked.git
       REV: 47276b5309779497412ada208b2f630718ddcdc8
@@ -138,14 +138,49 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
           sh /tmp/elan-init.sh -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      # INFRASTRUCTURE: upstream MachineChecked CI packages at the pinned commit.
+      - name: Install TeX Live latexmk and Poppler
+        shell: bash
+        run: |
+          set -euo pipefail
+          PKGS="latexmk texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended poppler-utils"
+          NET="-o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 -o Acquire::Retries=3"
+          for i in 1 2 3; do sudo apt-get -q $NET update && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: apt-get update failed 3 times"; exit 1; }; sleep 20; done
+          for i in 1 2 3; do sudo apt-get -q $NET install -y --no-install-recommends $PKGS && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: apt-get install failed 3 times"; exit 1; }; sleep 30; done
+          dpkg-query -W -f='${Package} ${Version}\n' $PKGS texlive-base texlive-binaries texlive-latex-base | tee "$GITHUB_WORKSPACE/competitor-smoke/apt-packages.txt"
+      - name: Preflight required MachineChecked tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$GITHUB_WORKSPACE/competitor-smoke/preflight.txt"
+          : > "$out"
+          missing=0
+          for t in latexmk pdflatex synctex pdftohtml pdfinfo elan lake git uv; do
+            if p=$(command -v "$t"); then echo "OK $t $p" | tee -a "$out"; else echo "MISSING $t" | tee -a "$out"; missing=1; fi
+          done
+          for c in "latexmk -v" "pdflatex --version" "pdftohtml -v" "elan --version"; do
+            { $c 2>&1 | head -n 2 || true; } | tee -a "$out"
+          done
+          [ "$missing" = 0 ] || { echo "INFRASTRUCTURE_ERROR: a required executable is missing"; exit 1; }
+      - name: Native toy-paper Lean build
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/mc/examples/toy-paper/lean"
+          cat lean-toolchain | tee "$GITHUB_WORKSPACE/competitor-smoke/toolchain.txt"
+          lake build 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
       - name: Native toy-paper audit smoke
         shell: bash
         run: |
-          set -o pipefail
-          cd "$RUNNER_TEMP/mc/examples/toy-paper/lean"
-          "$HOME/.elan/bin/lake" build 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
-          cd ..
-          uv run --project "$RUNNER_TEMP/mc" --python 3.11 --with "$RUNNER_TEMP/mc" machinechecked check --json 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log"
+          set -uo pipefail
+          cd "$RUNNER_TEMP/mc/examples/toy-paper"
+          uv run --project "$RUNNER_TEMP/mc" --python 3.11 --with "$RUNNER_TEMP/mc" machinechecked check --json \
+            > "$GITHUB_WORKSPACE/competitor-smoke/check.json" 2> >(tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log" >&2)
+          rc=$?
+          echo "$rc" > "$GITHUB_WORKSPACE/competitor-smoke/check_exit_code.txt"
+          echo "machinechecked check exit code: $rc"
+          head -c 4000 "$GITHUB_WORKSPACE/competitor-smoke/check.json" || true
+          exit "$rc"
       - name: Always upload raw evidence
         if: always()
         uses: actions/upload-artifact@v4
