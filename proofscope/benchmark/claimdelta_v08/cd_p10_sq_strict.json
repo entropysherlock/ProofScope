@@ -1,0 +1,17 @@
+{
+  "id": "cd_p10_sq_strict",
+  "family": "strict to weak inequality",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "a",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "2 ≤ a",
+  "ref_concl": "a < a * a",
+  "lean_hyp": "2 ≤ a",
+  "lean_concl": "a ≤ a * a",
+  "expected_claimdelta": "CLAIM_LEAN_WEAKER",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

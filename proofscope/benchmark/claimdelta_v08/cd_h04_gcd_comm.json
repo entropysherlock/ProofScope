@@ -1,0 +1,21 @@
+{
+  "id": "cd_h04_gcd_comm",
+  "family": "harmless rewrite",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "a",
+      "Nat"
+    ],
+    [
+      "b",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "True",
+  "ref_concl": "Nat.gcd a b ∣ b",
+  "lean_hyp": "True",
+  "lean_concl": "Nat.gcd b a ∣ b",
+  "expected_claimdelta": "EQUIVALENT_BY_LAWS",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

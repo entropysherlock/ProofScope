@@ -100,10 +100,18 @@ def annotate(lean: Path, project: Path, dossiers: Path, out: Path) -> dict:
     docs = _doc_map(lean)
     out.mkdir(parents=True, exist_ok=True)
     rows = []
-    for p in sorted(dossiers.glob("*.json")):
+    inputs = sorted(dossiers.glob("*.json"))
+    index = dossiers.parent / "dossier_index.json"
+    if index.exists():
+        extracted = len(json.loads(index.read_text())["theorems"])
+        if extracted != len(inputs):
+            raise RuntimeError(f"DOSSIER_COUNT_MISMATCH: index lists {extracted} records, {len(inputs)} files present")
+    skipped = []
+    for p in inputs:
         d = json.loads(p.read_text())
         s = by_mod.get(d.get("module"))
         if not s:
+            skipped.append(d.get("dossier_key") or d.get("theorem_id"))
             continue
         d["source_commit"] = sel["corpus_commit"]
         d["corpus"] = "https://github.com/openai/math"
@@ -123,7 +131,8 @@ def annotate(lean: Path, project: Path, dossiers: Path, out: Path) -> dict:
                              "semantic_review": "NOT_REVIEWED"} if tr else {"status": "NO_SCOPE_DOCUMENT"})
         (out / p.name).write_text(json.dumps(d, indent=2, ensure_ascii=False))
         rows.append(d)
-    summary = {"dossiers": len(rows), "areas": sorted({r["area"] for r in rows}),
+    summary = {"input_records": len(inputs), "dossiers": len(rows),
+               "skipped_not_in_selection": skipped, "areas": sorted({r["area"] for r in rows}),
                "theorems": sum(r["kind"] == "theorem" for r in rows),
                "by_trust_status": {k: sum(r["trust_status"] == k for r in rows)
                                    for k in ("STATEMENT_ONLY", "PROVED_STANDARD_AXIOMS", "NONSTANDARD_AXIOMS")},

@@ -1,0 +1,17 @@
+{
+  "id": "cd_h02_pos_ne_zero",
+  "family": "harmless rewrite",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "True",
+  "ref_concl": "0 < 2 ^ n",
+  "lean_hyp": "True",
+  "lean_concl": "2 ^ n ≠ 0",
+  "expected_claimdelta": "SCHEMA_EQUIVALENT",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

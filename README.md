@@ -84,6 +84,21 @@ documented in [`docs/engine.md`](docs/engine.md):
 Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
 resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
 
+## v0.8: ClaimDelta, certified statement strength beyond logical equivalence
+
+Details: [`docs/v0.8_claimdelta.md`](docs/v0.8_claimdelta.md).
+
+- **The problem:** two *true* theorems are logically equivalent, so no equivalence checker can see a
+  formalization that proves a weaker true claim (`n ≤ 2^n` for a paper's `n < 2^n`).
+- **ClaimDelta** abstracts the operators both statements share (`^`, nonlinear `*`, `gcd`, `%` by a variable, ...)
+  and certifies either a uniform entailment or a **countermodel**: an interpretation of those operators
+  where the Lean claim holds and the reference fails. Every certificate is Lean-checked; the
+  abstraction is bound to the elaborated statements by `Iff.rfl`.
+- **Soundness in Lean** (`lean/ProofScope/ClaimDelta.lean`, 15 axiom-free theorems), including the
+  counterexamples that limit what a verdict means.
+- **Fixed:** research-audit dossier identity (module-qualified; the 35 overwritten records), fail-closed counts.
+- Development evidence only (author-written cases); external benchmark (ProofNetVerif) **pending**.
+
 ## v0.6: blind evaluation, soundness theorems, research-statement audit
 
 Details: [`docs/v0.6_report.md`](docs/v0.6_report.md).

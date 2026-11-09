@@ -1,0 +1,13 @@
+# ClaimDelta engine + suite freeze (Mon Nov  9 06:29:35 UTC 2026)
+e7e6389a81cca62ee35933f5c84bc73851b9a7b76153291783152d5b1d1bb086  proofscope/claimdelta.py
+bd87a28bc8cc2168d37c0da4c4200968a72ee72fd20643192443f47ef8080093  lean/ProofScope/Abstract.lean
+fa7d1f57b302fd72f30703c44616916aa254b6620804cc8129cd1171b34f1efd  lean/ProofScope/ClaimDelta.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+a2ac16b2686bc1e7d7e3c6a81ed3c5a51586d5bbed446dfff299d80bb1baae25  claimdelta_v08 suite (concatenated, sorted)
+
+# v0.8 engine after dev fixes (instance args excluded; patch witnesses). claimdelta_v08 is now DEVELOPMENT data.
+# Frozen before the single run on dev + heldout_oracle (Mon Nov  9 06:40:03 UTC 2026)
+a4c54f2f7e4278c54ad4052a03ce8c2f1c23c7fa72b82b43c7e6e4ac1763385e  proofscope/claimdelta.py
+8ef9e3bb360ac1e1a5b3213d9de168c14827a348dfe22637cdc92be573a51642  lean/ProofScope/Abstract.lean
+fa7d1f57b302fd72f30703c44616916aa254b6620804cc8129cd1171b34f1efd  lean/ProofScope/ClaimDelta.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py

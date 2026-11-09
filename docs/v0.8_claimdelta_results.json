@@ -1,0 +1,2557 @@
+{
+ "policy": "LINEAR_CORE_SHARED",
+ "engine_freeze": "CLAIMDELTA_FREEZE.txt block 2",
+ "local": true,
+ "rows": [
+  {
+   "id": "concl_bound_weaker",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (n ≤ 2 * n)",
+   "lean": "∀ (n : Nat), (True) → (n ≤ 3 * n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "concl_bound_wrong",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (n / 2 < n)",
+   "lean": "∀ (n : Nat), (True) → (n / 2 ≤ n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "concl_const_weak",
+   "split": "dev",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), (1 ≤ n) → (2 * n ≤ n * n)",
+   "lean": "∀ (n : Nat), (1 ≤ n) → (n ≤ 2 * n * n)",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 (x1 (2 : Nat) n) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "domain_bounded",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (n < n + 1)",
+   "lean": "∀ (n : Nat), (n < 10) → (n < n + 1)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "domain_odd_only",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (n % 2 = 1 ∨ n % 2 = 0)",
+   "lean": "∀ (n : Nat), (n % 2 = 1) → (n % 2 = 1)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "empty_list_excluded",
+   "split": "dev",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (l : List Nat), (True) → (l.length ≥ 0)",
+   "lean": "∀ (l : List Nat), (l ≠ []) → (l.length ≥ 0)",
+   "symbols": [
+    "List",
+    "List.length"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "empty_list_harmless",
+   "split": "dev",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (l : List Nat), (l ≠ []) → (0 < l.length)",
+   "lean": "∀ (l : List Nat), (0 < l.length) → (l ≠ [])",
+   "symbols": [
+    "List",
+    "[]",
+    "List.length"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "extra_hyp_big",
+   "split": "dev",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), (True) → (n < 2 ^ n)",
+   "lean": "∀ (n : Nat), (10 ≤ n) → (n < 2 ^ n)",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (10 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "extra_hyp_even",
+   "split": "dev",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), (True) → (n ≤ n * n)",
+   "lean": "∀ (n : Nat), (n % 2 = 0) → (n ≤ n * n)",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → n ≤ x1 n n) ∧ ¬ (∀ (n : Nat), True → n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "extra_hyp_pos",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (n ≤ n + m)",
+   "lean": "∀ (n : Nat) (m : Nat), (0 < m) → (n ≤ n + m)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "int_coercion_harmless",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (m ≤ n) → (((n : Int) - m) ≥ 0)",
+   "lean": "∀ (n : Nat) (m : Nat), (((n : Int) - m) ≥ 0) → (m ≤ n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "junk_div_concl",
+   "split": "dev",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (n / m < n + 1)",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (n / m ≤ n)",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "junk_div_hyp",
+   "split": "dev",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (0 < m ∧ n / m = 0) → (n < m)",
+   "lean": "∀ (n : Nat) (m : Nat), (n / m = 0) → (n < m ∨ m = 0)",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "junk_sub_concl",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (n - m < n)",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (n - m ≤ n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "mislinked_true_true",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (n * 1 = n)",
+   "lean": "∀ (n : Nat), (True) → (n + 0 = n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "missing_hyp_div",
+   "split": "dev",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (0 < m) → (n / m * m ≤ n)",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (n / m * m ≤ n)",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "missing_hyp_pred",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (0 < n) → (n - 1 + 1 = n)",
+   "lean": "∀ (n : Nat), (True) → (n - 1 + 1 = n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "missing_hyp_sub",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (m ≤ n) → (n - m + m ≥ n)",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (n - m + m ≥ n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "nat_vs_int_sub",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (((n : Int) - m) ≥ 0)",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (n - m ≥ 0)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "nonvacuous_tight",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (n = 3) → (3 ≤ n)",
+   "lean": "∀ (n : Nat), (3 ≤ n ∧ n ≤ 3) → (n = 3)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o001_s_le_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ≤ (n + m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n < 10)) → ((n ≤ (n + m)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o002_s_le_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ≤ (n + m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → ((n < (n + m)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o003_s_le_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ≤ (n + m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n + m) ≤ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o004_s_le_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ≤ (n + m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n < 0)) → ((n ≤ (n + m)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o005_s_le_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ≤ (n + m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n ≤ (n + m)) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o006_s_sub_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((m ≤ n)) → ((((n - m) + m) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → ((((n - m) + m) = n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o007_s_sub_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((m ≤ n)) → ((((n - m) + m) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((m ≤ n) ∧ (n < 10))) → ((((n - m) + m) = n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o008_s_sub_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((m ≤ n)) → ((((n - m) + m) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((m ≤ n) ∧ (n < 0))) → ((((n - m) + m) = n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o009_s_sub_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((m ≤ n)) → ((((n - m) + m) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((m ≤ n)) → (((((n - m) + m) = n) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o010_s_sub_add",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((m ≤ n)) → ((((n - m) + m) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((¬ (n < m))) → ((((n - m) + m) = n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o011_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), ((m < 10)) → ((n < 10))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o012_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n < m)) → ((n < 10))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o013_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), ((((n < m) ∧ (m < 10)) ∧ (2 ≤ n))) → ((n < 10))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o014_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 11))) → ((n < 10))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o015_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 11))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o016_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n ≤ 10))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o017_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((10 < n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o018_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), ((((n < m) ∧ (m < 10)) ∧ (n < 0))) → ((n < 10))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o019_s_lt_trans",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → ((n < 10))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n < m) ∧ (m < 10))) → (((n < 10) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o020_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n - m) ≤ 0))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o021_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n ≤ m) ∧ (n < 10))) → (((n - m) ≤ 0))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o022_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 1))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o023_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) < 0))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o024_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → ((0 ≤ (n - m)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o025_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), (((n ≤ m) ∧ (n < 0))) → (((n - m) ≤ 0))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o026_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → ((((n - m) ≤ 0) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o027_s_max_like",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), ((n ≤ m)) → (((n - m) ≤ 0))",
+   "lean": "∀ (n : Nat) (m : Nat), ((¬ (m < n))) → (((n - m) ≤ 0))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o028_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 ≤ n)) → ((n ≤ (n * m)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ n → n ≤ x1 n m)"
+   ]
+  },
+  {
+   "id": "o029_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 ≤ m)) → ((n ≤ (n * m)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o030_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((((1 ≤ m) ∧ (1 ≤ n)) ∧ ((n % 2) = 0))) → ((n ≤ (n * m)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), ((1 : Nat) ≤ m ∧ (1 : Nat) ≤ n) ∧ n % (2 : Nat) = (0 : Nat) → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m)"
+   ]
+  },
+  {
+   "id": "o031_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (((2 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (2 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m)"
+   ]
+  },
+  {
+   "id": "o032_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n < (n * m)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n < x1 n m)"
+   ]
+  },
+  {
+   "id": "o033_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → (((n * m) ≤ n))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m)"
+   ]
+  },
+  {
+   "id": "o034_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((((1 ≤ m) ∧ (1 ≤ n)) ∧ (n < 0))) → ((n ≤ (n * m)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), ((1 : Nat) ≤ m ∧ (1 : Nat) ≤ n) ∧ n < (0 : Nat) → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m)"
+   ]
+  },
+  {
+   "id": "o035_s_mul_mono",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → ((n ≤ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (((1 ≤ m) ∧ (1 ≤ n))) → (((n ≤ (n * m)) ∨ (n = 3)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m ∨ n = (3 : Nat)) ∧ ¬ (∀ (n m : Nat), (1 : Nat) ≤ m ∧ (1 : Nat) ≤ n → n ≤ x1 n m)"
+   ]
+  },
+  {
+   "id": "o036_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), (True) → ((n ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o037_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), (((1 ≤ n) ∧ (n < 10))) → ((n ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (10 : Nat) → n ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "o038_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → ((n ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → n ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "o039_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → ((n < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 n n)"
+   ]
+  },
+  {
+   "id": "o040_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → (((n * n) ≤ n))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → x1 n n ≤ n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "o041_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), (((1 ≤ n) ∧ (n < 0))) → ((n ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (0 : Nat) → n ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "o042_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → (((n ≤ (n * n)) ∨ (n = 3)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n ∨ n = (3 : Nat)) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "o043_s_sq_ge",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (n * n)))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((n ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o044_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), (True) → (((n + 2) ≤ (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o045_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), (((2 ≤ n) ∧ (2 ≤ n))) → (((n + 2) ≤ (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o046_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), ((3 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o047_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → (((n + 3) ≤ (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o048_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) < (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o049_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → (((2 * n) ≤ (n + 2)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o050_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), (((2 ≤ n) ∧ (n < 0))) → (((n + 2) ≤ (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o051_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → ((((n + 2) ≤ (2 * n)) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o052_s_two_n",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → (((n + 2) ≤ (2 * n)))",
+   "lean": "∀ (n : Nat), ((¬ (n < 2))) → (((n + 2) ≤ (2 * n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o053_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), (True) → ((((2 * n) + 1) < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o054_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), (((3 ≤ n) ∧ (2 ≤ n))) → ((((2 * n) + 1) < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o055_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), ((4 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (4 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) < x1 n n) ∧ ¬ (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) < x1 n n)"
+   ]
+  },
+  {
+   "id": "o056_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), ((3 ≤ n)) → ((((3 * n) + 1) < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o057_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) < x1 n n)"
+   ]
+  },
+  {
+   "id": "o058_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), ((3 ≤ n)) → (((n * n) < ((2 * n) + 1)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o059_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), (((3 ≤ n) ∧ (n < 0))) → ((((2 * n) + 1) < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (3 : Nat) ≤ n ∧ n < (0 : Nat) → x1 (2 : Nat) n + (1 : Nat) < x1 n n) ∧ ¬ (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) < x1 n n)"
+   ]
+  },
+  {
+   "id": "o060_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), ((3 ≤ n)) → (((((2 * n) + 1) < (n * n)) ∨ (n = 3)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) < x1 n n ∨ n = (3 : Nat)) ∧ ¬ (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) < x1 n n)"
+   ]
+  },
+  {
+   "id": "o061_s_sq_gap",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((3 ≤ n)) → ((((2 * n) + 1) < (n * n)))",
+   "lean": "∀ (n : Nat), ((¬ (n < 3))) → ((((2 * n) + 1) < (n * n)))",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o062_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n / m) ≤ n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o063_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (n < 10))) → (((n / m) ≤ n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m ∧ n < (10 : Nat) → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o064_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 < m)) → (((n / m) ≤ n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o065_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) < n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o066_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((n ≤ (n / m)))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o067_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (n < 0))) → (((n / m) ≤ n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m ∧ n < (0 : Nat) → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o068_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) ≤ n) ∨ (n = 3)))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ n ∨ n = (3 : Nat)) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o069_s_div_le",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n / m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((m ≠ 0)) → (((n / m) ≤ n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o070_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → ((((n / m) * m) ≤ n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o071_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (n < 10))) → ((((n / m) * m) ≤ n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o072_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 < m)) → ((((n / m) * m) ≤ n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o073_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) < n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o074_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((n ≤ ((n / m) * m)))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o075_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (n < 0))) → ((((n / m) * m) ≤ n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o076_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) ≤ n) ∨ (n = 3)))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o077_s_div_mul_le",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n / m) * m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((m ≠ 0)) → ((((n / m) * m) ≤ n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o078_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < n)) → (((n / m) < n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o079_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 < m)) → (((n / m) < n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n) ∧ ¬ (∀ (n m : Nat), (1 : Nat) < m → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o080_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((((1 < m) ∧ (0 < n)) ∧ (n < 10))) → (((n / m) < n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), ((1 : Nat) < m ∧ (0 : Nat) < n) ∧ n < (10 : Nat) → x1 n m < n) ∧ ¬ (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o081_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((2 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o082_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) ≤ n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o083_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → ((n < (n / m)))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → n < x1 n m) ∧ ¬ (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o084_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((((1 < m) ∧ (0 < n)) ∧ (n < 0))) → (((n / m) < n))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), ((1 : Nat) < m ∧ (0 : Nat) < n) ∧ n < (0 : Nat) → x1 n m < n) ∧ ¬ (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o085_s_div_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → (((n / m) < n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((1 < m) ∧ (0 < n))) → ((((n / m) < n) ∨ (n = 3)))",
+   "symbols": [
+    "HDiv.hDiv"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n ∨ n = (3 : Nat)) ∧ ¬ (∀ (n m : Nat), (1 : Nat) < m ∧ (0 : Nat) < n → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o086_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n % m) < m))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m) ∧ ¬ (∀ (n m : Nat), True → x1 n m < m)"
+   ]
+  },
+  {
+   "id": "o087_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (0 < m))) → (((n % m) < m))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o088_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 < m)) → (((n % m) < m))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (1 : Nat) < m → x1 n m < m) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m)"
+   ]
+  },
+  {
+   "id": "o089_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) ≤ m))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → x1 n m ≤ m) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m)"
+   ]
+  },
+  {
+   "id": "o090_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((m < (n % m)))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → m < x1 n m) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m)"
+   ]
+  },
+  {
+   "id": "o091_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (n < 0))) → (((n % m) < m))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m ∧ n < (0 : Nat) → x1 n m < m) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m)"
+   ]
+  },
+  {
+   "id": "o092_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((n % m) < m) ∨ (n = 3)))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m ∨ n = (3 : Nat)) ∧ ¬ (∀ (n m : Nat), (0 : Nat) < m → x1 n m < m)"
+   ]
+  },
+  {
+   "id": "o093_s_mod_lt",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((n % m) < m))",
+   "lean": "∀ (n : Nat) (m : Nat), ((m ≠ 0)) → (((n % m) < m))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o094_s_mod_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (((n % m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((2 ≤ n)) → (((n % m) ≤ n))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), (2 : Nat) ≤ n → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), True → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o095_s_mod_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (((n % m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n % m) < n))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), True → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), True → x1 n m < n)"
+   ]
+  },
+  {
+   "id": "o096_s_mod_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (((n % m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → ((n ≤ (n % m)))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), True → n ≤ x1 n m) ∧ ¬ (∀ (n m : Nat), True → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o097_s_mod_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (((n % m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n < 0)) → (((n % m) ≤ n))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), n < (0 : Nat) → x1 n m ≤ n) ∧ ¬ (∀ (n m : Nat), True → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o098_s_mod_le",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → (((n % m) ≤ n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → ((((n % m) ≤ n) ∨ (n = 3)))",
+   "symbols": [
+    "HMod.hMod"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n m : Nat), True → x1 n m ≤ n ∨ n = (3 : Nat)) ∧ ¬ (∀ (n m : Nat), True → x1 n m ≤ n)"
+   ]
+  },
+  {
+   "id": "o099_s_mod_two",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → ((((n % 2) = 0) ∨ ((n % 2) = 1)))",
+   "lean": "∀ (n : Nat), ((n < 10)) → ((((n % 2) = 0) ∨ ((n % 2) = 1)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o100_s_mod_two",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → ((((n % 2) = 0) ∨ ((n % 2) = 1)))",
+   "lean": "∀ (n : Nat), (True) → ((((n % 3) = 0) ∨ ((n % 2) = 1)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o101_s_mod_two",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → ((((n % 2) = 0) ∨ ((n % 2) = 1)))",
+   "lean": "∀ (n : Nat), ((n < 0)) → ((((n % 2) = 0) ∨ ((n % 2) = 1)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o102_s_mod_two",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → ((((n % 2) = 0) ∨ ((n % 2) = 1)))",
+   "lean": "∀ (n : Nat), (True) → (((((n % 2) = 0) ∨ ((n % 2) = 1)) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o103_s_div_mod",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((((n / m) * m) + (n % m)) = n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o104_s_div_mod",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (2 ≤ n))) → (((((n / m) * m) + (n % m)) = n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o105_s_div_mod",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((1 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o106_s_div_mod",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), (((0 < m) ∧ (n < 0))) → (((((n / m) * m) + (n % m)) = n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o107_s_div_mod",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((0 < m)) → ((((((n / m) * m) + (n % m)) = n) ∨ (n = 3)))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o108_s_div_mod",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), ((0 < m)) → (((((n / m) * m) + (n % m)) = n))",
+   "lean": "∀ (n : Nat) (m : Nat), ((m ≠ 0)) → (((((n / m) * m) + (n % m)) = n))",
+   "symbols": [
+    "HMul.hMul",
+    "HDiv.hDiv",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o109_s_dvd_mul",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ∣ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((2 ≤ n)) → ((n ∣ (n * m)))",
+   "symbols": [
+    "Dvd.dvd",
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o110_s_dvd_mul",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ∣ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), ((n < 0)) → ((n ∣ (n * m)))",
+   "symbols": [
+    "Dvd.dvd",
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o111_s_dvd_mul",
+   "split": "heldout_oracle",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (True) → ((n ∣ (n * m)))",
+   "lean": "∀ (n : Nat) (m : Nat), (True) → (((n ∣ (n * m)) ∨ (n = 3)))",
+   "symbols": [
+    "Dvd.dvd",
+    "HMul.hMul"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o112_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), (True) → ((2 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o113_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), (((4 ∣ n) ∧ (2 ≤ n))) → ((2 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o114_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), ((5 ∣ n)) → ((2 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o115_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), ((4 ∣ n)) → ((3 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o116_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), (((4 ∣ n) ∧ (n < 0))) → ((2 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o117_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), ((4 ∣ n)) → (((2 ∣ n) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o118_s_dvd_even",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((4 ∣ n)) → ((2 ∣ n))",
+   "lean": "∀ (n : Nat), (((n % 4) = 0)) → ((2 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o119_s_dvd_mod",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (((n % 3) = 0)) → ((3 ∣ n))",
+   "lean": "∀ (n : Nat), (True) → ((3 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o120_s_dvd_mod",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (((n % 3) = 0)) → ((3 ∣ n))",
+   "lean": "∀ (n : Nat), ((((n % 3) = 0) ∧ ((n % 2) = 0))) → ((3 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o121_s_dvd_mod",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (((n % 3) = 0)) → ((3 ∣ n))",
+   "lean": "∀ (n : Nat), (((n % 4) = 0)) → ((3 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o122_s_dvd_mod",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (((n % 3) = 0)) → ((3 ∣ n))",
+   "lean": "∀ (n : Nat), (((n % 3) = 0)) → ((4 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o123_s_dvd_mod",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (((n % 3) = 0)) → ((3 ∣ n))",
+   "lean": "∀ (n : Nat), ((((n % 3) = 0) ∧ (n < 0))) → ((3 ∣ n))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o124_s_dvd_mod",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (((n % 3) = 0)) → ((3 ∣ n))",
+   "lean": "∀ (n : Nat), (((n % 3) = 0)) → (((3 ∣ n) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o125_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), (True) → ((n < (2 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o126_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), (((1 ≤ n) ∧ (n < 10))) → ((n < (2 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (10 : Nat) → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o127_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → ((n < (2 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o128_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → ((n < (3 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (3 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o129_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → ((n ≤ (2 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o130_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → (((2 ^ n) < n))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n < n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o131_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), (((1 ≤ n) ∧ (n < 0))) → ((n < (2 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ n < (0 : Nat) → n < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o132_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((1 ≤ n)) → (((n < (2 ^ n)) ∨ (n = 3)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n ∨ n = (3 : Nat)) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n < x1 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o133_s_pow_lt",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((1 ≤ n)) → ((n < (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((n < (2 ^ n)))",
+   "symbols": [
+    "HPow.hPow"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o134_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1_2"
+   ],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), (True) → (((n * n) ≤ (2 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), True → x1 n n ≤ x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o135_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), (((4 ≤ n) ∧ (2 ≤ n))) → (((n * n) ≤ (2 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o136_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1_2"
+   ],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((5 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), (5 : Nat) ≤ n → x1 n n ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n ≤ x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o137_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1_2"
+   ],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (3 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n ≤ x2 (3 : Nat) n) ∧ ¬ (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n ≤ x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o138_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1_2"
+   ],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) < (2 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n < x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o139_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_INCOMPARABLE",
+   "minimal_separating_subsets": [
+    "s1_2"
+   ],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((4 ≤ n)) → (((2 ^ n) ≤ (n * n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat) (x2 : Nat → Nat → Nat), (∀ (n : Nat), (4 : Nat) ≤ n → x2 (2 : Nat) n ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (4 : Nat) ≤ n → x1 n n ≤ x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o140_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s2"
+   ],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), (((4 ≤ n) ∧ (n < 0))) → (((n * n) ≤ (2 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": [
+    "∃ (x2 : Nat → Nat → Nat), (∀ (n : Nat), (4 : Nat) ≤ n ∧ n < (0 : Nat) → n * n ≤ x2 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (4 : Nat) ≤ n → n * n ≤ x2 (2 : Nat) n)"
+   ]
+  },
+  {
+   "id": "o141_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((4 ≤ n)) → ((((n * n) ≤ (2 ^ n)) ∨ (n = 3)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o142_s_pow_sq",
+   "split": "heldout_oracle",
+   "verdict": "SCHEMA_EQUIVALENT",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat), ((4 ≤ n)) → (((n * n) ≤ (2 ^ n)))",
+   "lean": "∀ (n : Nat), ((¬ (n < 4))) → (((n * n) ≤ (2 ^ n)))",
+   "symbols": [
+    "HMul.hMul",
+    "HPow.hPow"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "o143_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), (True) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o144_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), (((0 < n) ∧ ((n % 2) = 0))) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o145_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), ((1 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o146_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 2))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o147_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k < (n - 1))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o148_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → ((n - 1) ≤ k)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o149_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), (((0 < n) ∧ (n < 0))) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o150_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → (((∀ k : Nat, k < n → (k ≤ (n - 1))) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o151_s_all_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (k ≤ (n - 1))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < (n + 1) → (k ≤ (n - 1))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o152_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), (True) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o153_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), (((0 < n) ∧ (2 ≤ n))) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o154_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), ((1 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o155_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 2) = n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o156_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), (((0 < n) ∧ (n < 0))) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o157_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), ((0 < n)) → (((∃ k : Nat, k < n ∧ ((k + 1) = n)) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o158_s_exists_below",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < n ∧ ((k + 1) = n)))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∃ k : Nat, k < (n - 1) ∧ ((k + 1) = n)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o159_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), (True) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o160_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), (((2 ≤ n) ∧ (2 ≤ n))) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o161_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), ((3 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o162_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), (((2 ≤ n) ∧ (n < 0))) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o163_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → (((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o164_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o165_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < (n + 1) → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o166_s_forall_exists",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((2 ≤ n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "lean": "∀ (n : Nat), ((¬ (n < 2))) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (j ≠ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o167_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), (True) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o168_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), (((0 < n) ∧ (2 ≤ n))) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o169_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), ((1 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o170_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k < j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o171_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (j ≤ k))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o172_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), (((0 < n) ∧ (n < 0))) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o173_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → (((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))) ∨ (n = 3)))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o174_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (k ≤ j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "o175_s_exists_forall",
+   "split": "heldout_oracle",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "lean": "∀ (n : Nat), ((0 < n)) → ((∃ j : Nat, j < (n - 1) ∧ (∀ k : Nat, k < n → (k ≤ j))))",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "quantifier_swap",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (∃ m : Nat, ∀ k : Nat, k < m)",
+   "lean": "∀ (n : Nat), (True) → (∀ k : Nat, ∃ m : Nat, k < m)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "reversed_ineq",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (m ≤ n) → (n ≤ m)",
+   "lean": "∀ (n : Nat) (m : Nat), (m ≤ n) → (m ≤ n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "reversed_ineq_strict",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (0 < n) → (n < n - 1)",
+   "lean": "∀ (n : Nat), (0 < n) → (n - 1 < n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "rewrite_ceil_div",
+   "split": "dev",
+   "verdict": "INCONCLUSIVE",
+   "minimal_separating_subsets": [],
+   "reference": "∀ (n : Nat) (m : Nat), (0 < m) → ((n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1))",
+   "lean": "∀ (n : Nat) (m : Nat), (0 < m) → ((n + m - 1) / m = n / m + (if n % m = 0 then 0 else 1))",
+   "symbols": [
+    "HDiv.hDiv",
+    "ite",
+    "HMod.hMod"
+   ],
+   "countermodels": []
+  },
+  {
+   "id": "rewrite_dvd",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (n % 2 = 0) → (n / 2 + n / 2 = n)",
+   "lean": "∀ (n : Nat), (2 ∣ n) → ((n / 2) * 2 = n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "rewrite_ge",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (n ≥ m) → (m ≤ n)",
+   "lean": "∀ (n : Nat) (m : Nat), (m ≤ n) → (n ≥ m)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "rewrite_ne_zero",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (0 < n) → (1 ≤ n)",
+   "lean": "∀ (n : Nat), (n ≠ 0) → (0 < n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "rewrite_not_le",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (3 ≤ n) → (2 < n)",
+   "lean": "∀ (n : Nat), (¬ n ≤ 2) → (3 ≤ n)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "threshold_lower_ok",
+   "split": "dev",
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), (5 ≤ n) → (2 * n + 1 ≤ n * n)",
+   "lean": "∀ (n : Nat), (3 ≤ n) → (2 * n + 1 ≤ n * n)",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (5 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "threshold_too_high",
+   "split": "dev",
+   "verdict": "CLAIM_LEAN_WEAKER",
+   "minimal_separating_subsets": [
+    "s1"
+   ],
+   "reference": "∀ (n : Nat), (3 ≤ n) → (2 * n + 1 ≤ n * n)",
+   "lean": "∀ (n : Nat), (5 ≤ n) → (2 * n + 1 ≤ n * n)",
+   "symbols": [
+    "HMul.hMul"
+   ],
+   "countermodels": [
+    "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (5 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) ≤ x1 n n) ∧ ¬ (∀ (n : Nat), (3 : Nat) ≤ n → x1 (2 : Nat) n + (1 : Nat) ≤ x1 n n)"
+   ]
+  },
+  {
+   "id": "trunc_sub_eq_zero",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat) (m : Nat), (n ≤ m) → (n - m = 0)",
+   "lean": "∀ (n : Nat) (m : Nat), (n - m = 0) → (n ≤ m)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "vacuous_parity",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (True) → (True)",
+   "lean": "∀ (n : Nat), (n % 2 = 0 ∧ n % 2 = 1) → (False)",
+   "symbols": [],
+   "countermodels": []
+  },
+  {
+   "id": "vacuous_range",
+   "split": "dev",
+   "verdict": "NO_SHARED_SYMBOLS",
+   "minimal_separating_subsets": null,
+   "reference": "∀ (n : Nat), (3 ≤ n) → (True)",
+   "lean": "∀ (n : Nat), (n < 3 ∧ 5 < n) → (False)",
+   "symbols": [],
+   "countermodels": []
+  }
+ ]
+}

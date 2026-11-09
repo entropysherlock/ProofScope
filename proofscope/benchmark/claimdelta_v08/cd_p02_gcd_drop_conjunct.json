@@ -1,0 +1,21 @@
+{
+  "id": "cd_p02_gcd_drop_conjunct",
+  "family": "dropped conjunct",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "a",
+      "Nat"
+    ],
+    [
+      "b",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "True",
+  "ref_concl": "Nat.gcd a b ∣ a ∧ Nat.gcd a b ∣ b",
+  "lean_hyp": "True",
+  "lean_concl": "Nat.gcd a b ∣ a",
+  "expected_claimdelta": "CLAIM_LEAN_WEAKER",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

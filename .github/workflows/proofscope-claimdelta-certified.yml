@@ -1,0 +1,85 @@
+name: ProofScope ClaimDelta Certified
+
+# v0.8: abstraction-relative statement strength with Lean-checked certificates and countermodels.
+# Core Lean only (no Mathlib). Development suite + the v0.6 benchmark; NOT an external benchmark.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-claimdelta-certified.yml"
+      - "proofscope/claimdelta.py"
+      - "lean/ProofScope/Abstract.lean"
+      - "lean/ProofScope/ClaimDelta.lean"
+      - "proofscope/benchmark/claimdelta_v08/**"
+      - "proofscope/benchmark/CLAIMDELTA_FREEZE.txt"
+      - "tests/v02/test_v08_*.py"
+
+permissions:
+  contents: read
+
+jobs:
+  claimdelta:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Engine freeze check (last block of CLAIMDELTA_FREEZE.txt must match)
+        shell: bash
+        run: |
+          set -euo pipefail
+          awk '/^# v0.8 engine after dev fixes/{f=1;next} f && /^[0-9a-f]{64}  /' proofscope/benchmark/CLAIMDELTA_FREEZE.txt > /tmp/freeze.sha
+          test -s /tmp/freeze.sha
+          sha256sum -c /tmp/freeze.sha
+      - name: Lean ClaimDelta theorems (15 axiom-free, fresh kernel replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/cd/ProofScope" claimdelta-evidence
+          lean -R lean -o "$RUNNER_TEMP/cd/ProofScope/ClaimDelta.olean" lean/ProofScope/ClaimDelta.lean | tee claimdelta-evidence/claimdelta-axioms.log
+          test "$(grep -c 'does not depend on any axioms' claimdelta-evidence/claimdelta-axioms.log)" = 15
+          (cd "$RUNNER_TEMP/cd" && LEAN_PATH="$RUNNER_TEMP/cd" leanchecker --fresh ProofScope.ClaimDelta)
+      - name: Unit and end-to-end tests
+        run: python -m unittest tests.v02.test_v08_identity tests.v02.test_v08_claimdelta -v
+      - name: ClaimDelta on the development suite (25 cases, labels written before the first freeze)
+        run: python -m proofscope.claimdelta proofscope/benchmark/claimdelta_v08/*.json --out claimdelta-evidence/suite --jobs 4 | tee claimdelta-evidence/suite.log
+      - name: ClaimDelta on the v0.6 benchmark (dev + heldout_oracle, 208 cases)
+        run: python -m proofscope.claimdelta proofscope/benchmark/dev/*.json proofscope/benchmark/heldout_oracle/*.json --out claimdelta-evidence/v06 --jobs 4 | tee claimdelta-evidence/v06.log
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, collections, pathlib
+          print("## ProofScope ClaimDelta (certified)")
+          for name in ("suite", "v06"):
+              p = pathlib.Path(f"claimdelta-evidence/{name}/claimdelta_results.json")
+              if not p.exists():
+                  print(f"- {name}: INCONCLUSIVE (no results file)"); continue
+              rows = json.loads(p.read_text())["rows"]
+              c = collections.Counter(r["verdict"] for r in rows)
+              lab = [r for r in rows if r.get("expected_claimdelta")]
+              ok = sum(r["verdict"] == r["expected_claimdelta"] for r in lab)
+              wrong = [r["id"] for r in lab if r["verdict"] != r["expected_claimdelta"] and r["verdict"] != "INCONCLUSIVE"]
+              print(f"- {name}: {len(rows)} cases, verdicts {dict(c)}" + (f"; expected-label agreement {ok}/{len(lab)}; wrong {wrong}" if lab else ""))
+          print("Verdicts are relative to policy LINEAR_CORE_SHARED. Development data only; no external benchmark.")
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-claimdelta-certified-evidence
+          path: claimdelta-evidence/
+          if-no-files-found: warn

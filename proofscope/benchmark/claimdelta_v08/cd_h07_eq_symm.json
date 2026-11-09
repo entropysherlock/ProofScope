@@ -1,0 +1,17 @@
+{
+  "id": "cd_h07_eq_symm",
+  "family": "harmless rewrite",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "True",
+  "ref_concl": "n * n = n ^ 2",
+  "lean_hyp": "True",
+  "lean_concl": "n ^ 2 = n * n",
+  "expected_claimdelta": "SCHEMA_EQUIVALENT",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

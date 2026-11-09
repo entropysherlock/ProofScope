@@ -1,0 +1,17 @@
+{
+  "id": "cd_p05_changed_exponent",
+  "family": "changed exponent",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "1 ≤ n",
+  "ref_concl": "n ≤ n ^ 2",
+  "lean_hyp": "1 ≤ n",
+  "lean_concl": "n ≤ n ^ 3",
+  "expected_claimdelta": "CLAIM_INCOMPARABLE",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

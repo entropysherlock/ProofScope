@@ -1,0 +1,21 @@
+{
+  "id": "cd_n01_linear_escape",
+  "family": "weakened conclusion (linear only)",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "m ≤ n",
+  "ref_concl": "n - m + m = n",
+  "lean_hyp": "m ≤ n",
+  "lean_concl": "n - m + m = n ∨ n = 3",
+  "expected_claimdelta": "NO_SHARED_SYMBOLS",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

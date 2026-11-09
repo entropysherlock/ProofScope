@@ -1,0 +1,17 @@
+{
+  "id": "cd_h11_add_zero",
+  "family": "representation change",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "True",
+  "ref_concl": "n + 0 = n",
+  "lean_hyp": "True",
+  "lean_concl": "n = n",
+  "expected_claimdelta": "NO_SHARED_SYMBOLS",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

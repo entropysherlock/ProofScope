@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 (unreleased)
+
+- ClaimDelta: `lean/ProofScope/Abstract.lean` (shared-operator abstraction, elaborator side),
+  `proofscope/claimdelta.py` (certified entailment / countermodel / law check), `lean/ProofScope/ClaimDelta.lean`
+  (15 axiom-free soundness theorems and counterexamples), suite `benchmark/claimdelta_v08` (25 cases),
+  `CLAIMDELTA_FREEZE.txt`, workflow **ProofScope ClaimDelta Certified**.
+- Dossiers: module-qualified identity (`dossier_key`, `dossier_file`), collision and count checks in
+  `dossier.py` and `research.annotate`; tests `test_v08_identity.py`.
+
 ## 0.6.0 (unreleased)
 
 - `lean/ProofScope/Soundness.lean`: nine axiom-free soundness/observability theorems (fresh replay in CI).

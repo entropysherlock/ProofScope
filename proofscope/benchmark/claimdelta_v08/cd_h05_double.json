@@ -1,0 +1,17 @@
+{
+  "id": "cd_h05_double",
+  "family": "harmless rewrite",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "True",
+  "ref_concl": "2 * 2 ^ n = 2 ^ (n + 1)",
+  "lean_hyp": "True",
+  "lean_concl": "2 ^ (n + 1) = 2 ^ n + 2 ^ n",
+  "expected_claimdelta": "SCHEMA_EQUIVALENT",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}

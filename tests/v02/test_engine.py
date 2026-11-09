@@ -16,6 +16,14 @@ ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / "tests" / "fixtures" / "demo_project"
 
 
+
+def _by_name(out, name):
+    """Dossier files are keyed by module + name (v0.8); look one up through the index."""
+    idx = json.loads((out / "dossier_index.json").read_text())["theorems"]
+    hits = [t for t in idx if t["theorem_id"] == name]
+    assert len(hits) == 1, hits
+    return json.loads((out / hits[0]["dossier_file"]).read_text())
+
 class ClassifyTests(unittest.TestCase):
     def test_priority_and_labels(self):
         self.assertEqual(C.classify({"vacuous", "app_gap"}), "VACUOUS")
@@ -68,7 +76,7 @@ class LeanEngineTests(unittest.TestCase):
         self.assertEqual(s["errors"], [])
         self.assertGreaterEqual(s["dossiers"], 12)
         self.assertEqual(s["incomplete_extractions"], 0)
-        d = json.loads((out / "dossiers" / "Nat.add_comm.json").read_text())
+        d = _by_name(out, "Nat.add_comm")
         self.assertEqual(d["elaborated_type"], "∀ (n m : Nat), n + m = m + n")
         self.assertEqual(d["axiom_status"], "NONE")
         self.assertEqual(d["kernel_status"], "TOOLCHAIN_LIBRARY")
@@ -82,7 +90,7 @@ class LeanEngineTests(unittest.TestCase):
         s = run(["Demo"], [], ["Demo.Basic", "Demo.Flawed"], out, project=str(proj))
         self.assertEqual(s["by_kernel_status"]["REPLAYED"], 4)
         self.assertEqual(s["by_axiom_status"], {"NONE": 1, "STANDARD": 1, "NONSTANDARD": 1, "SORRY": 1})
-        d = json.loads((out / "dossiers" / "Demo.sum_formula.json").read_text())
+        d = _by_name(out, "Demo.sum_formula")
         self.assertEqual(sorted(x["name"] for x in d["statement_dependencies"] if x["role"] == "definition"),
                          ["List.range", "List.sum"])
 

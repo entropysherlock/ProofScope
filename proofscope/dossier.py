@@ -19,6 +19,7 @@ NONSTANDARD (any other axiom).
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -68,6 +69,18 @@ def to_markdown(d: dict) -> str:
     L += [f"- {u}" for u in d["unresolved_items"]]
     L += ["", "_A dossier describes what Lean elaborated. It does not say the statement matches any paper._", ""]
     return "\n".join(L)
+
+
+def dossier_key(d: dict) -> str:
+    """Identity of one extracted record: the same constant name can be declared in two modules that are
+    never imported together (one Lean environment per module), so the name alone is not an identity."""
+    return f"{d['module']}::{d['theorem_id']}"
+
+
+def dossier_stem(d: dict) -> str:
+    key = dossier_key(d)
+    safe = re.sub(r"[^A-Za-z0-9_.-]", "_", f"{d['module']}__{d['theorem_id']}")[:140]
+    return f"{safe}-{hashlib.sha256(key.encode()).hexdigest()[:12]}"
 
 
 def run(imports: list[str], decls: list[str], modules: list[str], out: Path, project: str | None = None,
@@ -139,7 +152,10 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
             (out / "replay").mkdir(exist_ok=True)
             (out / "replay" / f"{m}.log").write_text(rp.output)
     (out / "dossiers").mkdir(parents=True, exist_ok=True)
+    for stale in (out / "dossiers").glob("*"):
+        stale.unlink()  # never mix a previous run's files into this run's count
     kept = []
+    written: dict[str, str] = {}
     for d in rows:
         if "error" in d:
             summary["errors"].append(f"UNKNOWN_CONSTANT: {d['theorem_id']}")
@@ -159,10 +175,18 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
             d["kernel_status"] = "NOT_REPLAYED"
         d["verification_evidence"] = {"elaboration_log": "elaboration.log",
                                       "replay_log": f"replay/{d['module']}.log" if d["module"] in replayed else None}
-        safe = re.sub(r"[^A-Za-z0-9_.-]", "_", d["theorem_id"])[:150]
-        (out / "dossiers" / f"{safe}.json").write_text(json.dumps(d, indent=2, ensure_ascii=False))
-        (out / "dossiers" / f"{safe}.md").write_text(to_markdown(d))
+        d["dossier_key"] = dossier_key(d)
+        stem = dossier_stem(d)
+        if stem in written:
+            raise RuntimeError(f"DOSSIER_IDENTITY_COLLISION: {d['dossier_key']} and {written[stem]} map to {stem}")
+        written[stem] = d["dossier_key"]
+        d["dossier_file"] = f"dossiers/{stem}.json"
+        (out / "dossiers" / f"{stem}.json").write_text(json.dumps(d, indent=2, ensure_ascii=False))
+        (out / "dossiers" / f"{stem}.md").write_text(to_markdown(d))
         kept.append(d)
+    on_disk = len(list((out / "dossiers").glob("*.json")))
+    if on_disk != len(kept):
+        raise RuntimeError(f"DOSSIER_COUNT_MISMATCH: {len(kept)} kept records but {on_disk} JSON files on disk")
     summary["dossiers"] = len(kept)
     summary["by_axiom_status"] = {s: sum(1 for d in kept if d["axiom_status"] == s)
                                   for s in ("NONE", "STANDARD", "NONSTANDARD", "SORRY")}
@@ -173,7 +197,8 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
         1 for d in kept if any(x["role"] == "definition" for x in d["statement_dependencies"]))
     summary["incomplete_extractions"] = sum(1 for d in kept if any("fields missing" in u for u in d["unresolved_items"]))
     (out / "dossier_index.json").write_text(json.dumps(
-        {"summary": summary, "theorems": [{k: d[k] for k in ("theorem_id", "module", "kernel_status", "axiom_status")}
+        {"summary": summary, "theorems": [{k: d[k] for k in ("dossier_key", "theorem_id", "module", "kernel_status", "axiom_status",
+                                                                    "dossier_file")}
                                            for d in kept]}, indent=2, ensure_ascii=False))
     return summary
 

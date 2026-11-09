@@ -1,0 +1,21 @@
+{
+  "id": "cd_p09_mod_strict",
+  "family": "strict to weak inequality",
+  "split": "claimdelta_v08",
+  "binders": [
+    [
+      "a",
+      "Nat"
+    ],
+    [
+      "b",
+      "Nat"
+    ]
+  ],
+  "ref_hyp": "0 < b",
+  "ref_concl": "a % b < b",
+  "lean_hyp": "0 < b",
+  "lean_concl": "a % b ≤ b",
+  "expected_claimdelta": "CLAIM_LEAN_WEAKER",
+  "annotation": "Claude (Anthropic), 2026-11-09, written and hashed before the ClaimDelta engine freeze; synthetic mutations, not research errors"
+}
