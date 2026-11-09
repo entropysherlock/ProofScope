@@ -1,0 +1,41 @@
+{
+  "id": "o096_s_mod_le",
+  "family": "reversed inequality",
+  "area": "modular",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "(n ≤ (n % m))",
+  "ref_hyp": "True",
+  "ref_concl": "((n % m) ≤ n)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^2",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": true,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": false,
+    "vacuous": false
+  },
+  "tactics": {}
+}

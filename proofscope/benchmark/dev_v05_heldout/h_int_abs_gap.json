@@ -1,0 +1,21 @@
+{
+  "id": "h_int_abs_gap",
+  "family": "type coercion",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "z",
+      "Int"
+    ]
+  ],
+  "lean_hyp": "0 ≤ z",
+  "lean_concl": "z.natAbs = z.toNat",
+  "ref_hyp": "True",
+  "ref_concl": "z.natAbs = z.toNat",
+  "bounds": {},
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

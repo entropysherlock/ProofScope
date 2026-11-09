@@ -1,0 +1,36 @@
+{
+  "id": "o102_s_mod_two",
+  "family": "weakened conclusion",
+  "area": "modular",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "((((n % 2) = 0) ∨ ((n % 2) = 1)) ∨ (n = 3))",
+  "ref_hyp": "True",
+  "ref_concl": "(((n % 2) = 0) ∨ ((n % 2) = 1))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

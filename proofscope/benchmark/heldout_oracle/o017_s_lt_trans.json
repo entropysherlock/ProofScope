@@ -1,0 +1,41 @@
+{
+  "id": "o017_s_lt_trans",
+  "family": "reversed inequality",
+  "area": "order",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "((n < m) ∧ (m < 10))",
+  "lean_concl": "(10 < n)",
+  "ref_hyp": "((n < m) ∧ (m < 10))",
+  "ref_concl": "(n < 10)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^2",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": true,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": false,
+    "vacuous": false
+  },
+  "tactics": {}
+}

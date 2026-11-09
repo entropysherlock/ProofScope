@@ -1,0 +1,36 @@
+{
+  "id": "o123_s_dvd_mod",
+  "family": "vacuous hypotheses",
+  "area": "divisibility",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(((n % 3) = 0) ∧ (n < 0))",
+  "lean_concl": "(3 ∣ n)",
+  "ref_hyp": "((n % 3) = 0)",
+  "ref_concl": "(3 ∣ n)",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "VACUOUS",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": false,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": true
+  },
+  "tactics": {}
+}

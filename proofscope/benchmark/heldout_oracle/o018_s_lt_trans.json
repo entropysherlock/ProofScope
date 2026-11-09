@@ -1,0 +1,41 @@
+{
+  "id": "o018_s_lt_trans",
+  "family": "vacuous hypotheses",
+  "area": "order",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(((n < m) ∧ (m < 10)) ∧ (n < 0))",
+  "lean_concl": "(n < 10)",
+  "ref_hyp": "((n < m) ∧ (m < 10))",
+  "ref_concl": "(n < 10)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "VACUOUS",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^2",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": false,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": true
+  },
+  "tactics": {}
+}

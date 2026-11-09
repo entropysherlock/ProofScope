@@ -1,0 +1,28 @@
+{
+  "id": "h_nonvac_two",
+  "family": "vacuous hypotheses",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "n < m ∧ m < n + 2",
+  "lean_concl": "m = n + 1",
+  "ref_hyp": "m = n + 1",
+  "ref_concl": "n < m ∧ m < n + 2",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

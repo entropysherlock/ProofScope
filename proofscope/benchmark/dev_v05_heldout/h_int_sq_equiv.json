@@ -1,0 +1,21 @@
+{
+  "id": "h_int_sq_equiv",
+  "family": "harmless rewrite",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "z",
+      "Int"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "0 ≤ z * z",
+  "ref_hyp": "True",
+  "ref_concl": "z * z ≥ 0",
+  "bounds": {},
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

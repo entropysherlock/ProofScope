@@ -1,0 +1,23 @@
+{
+  "id": "h_quant_exists_weak",
+  "family": "quantifier swap",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "0 < n",
+  "lean_concl": "∃ k, k < n",
+  "ref_hyp": "0 < n",
+  "ref_concl": "∀ k, k < n",
+  "bounds": {
+    "n": 40
+  },
+  "expected": "CONCLUSION_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

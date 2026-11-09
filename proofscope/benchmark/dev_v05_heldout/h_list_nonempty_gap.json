@@ -1,0 +1,21 @@
+{
+  "id": "h_list_nonempty_gap",
+  "family": "empty-set edge case",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "l",
+      "List Nat"
+    ]
+  ],
+  "lean_hyp": "l ≠ []",
+  "lean_concl": "l.length ≥ 1",
+  "ref_hyp": "True",
+  "ref_concl": "l.length ≥ 1",
+  "bounds": {},
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

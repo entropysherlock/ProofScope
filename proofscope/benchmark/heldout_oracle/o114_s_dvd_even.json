@@ -1,0 +1,36 @@
+{
+  "id": "o114_s_dvd_even",
+  "family": "incorrect constant (hypothesis)",
+  "area": "divisibility",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(5 ∣ n)",
+  "lean_concl": "(2 ∣ n)",
+  "ref_hyp": "(4 ∣ n)",
+  "ref_concl": "(2 ∣ n)",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "certain",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": true,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": false,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

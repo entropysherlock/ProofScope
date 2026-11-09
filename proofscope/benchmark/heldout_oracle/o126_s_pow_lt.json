@@ -1,0 +1,36 @@
+{
+  "id": "o126_s_pow_lt",
+  "family": "extra hypothesis",
+  "area": "powers",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "((1 ≤ n) ∧ (n < 10))",
+  "lean_concl": "(n < (2 ^ n))",
+  "ref_hyp": "(1 ≤ n)",
+  "ref_concl": "(n < (2 ^ n))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "certain",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

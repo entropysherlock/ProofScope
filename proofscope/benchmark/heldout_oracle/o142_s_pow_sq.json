@@ -1,0 +1,36 @@
+{
+  "id": "o142_s_pow_sq",
+  "family": "harmless rewrite",
+  "area": "powers",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(¬ (n < 4))",
+  "lean_concl": "((n * n) ≤ (2 ^ n))",
+  "ref_hyp": "(4 ≤ n)",
+  "ref_concl": "((n * n) ≤ (2 ^ n))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

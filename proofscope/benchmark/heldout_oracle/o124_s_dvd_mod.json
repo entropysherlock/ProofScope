@@ -1,0 +1,36 @@
+{
+  "id": "o124_s_dvd_mod",
+  "family": "weakened conclusion",
+  "area": "divisibility",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "((n % 3) = 0)",
+  "lean_concl": "((3 ∣ n) ∨ (n = 3))",
+  "ref_hyp": "((n % 3) = 0)",
+  "ref_concl": "(3 ∣ n)",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

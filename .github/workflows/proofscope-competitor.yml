@@ -1,0 +1,75 @@
+name: ProofScope Competitor Comparison
+
+# Matched-task comparison with SemantEq (https://github.com/hlxr89/SemantEq) on ProofScope's benchmark pairs.
+# Only the shared question "is the formal statement equivalent to the reference?" is compared; see
+# proofscope/competitors/semanteq.py for why this is a partial comparison and not a ranking.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SEMANTEQ_REPO: https://github.com/hlxr89/SemantEq
+  SEMANTEQ_COMMIT: f92767000e14d11744580946980cf874324f5d19
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL && df -h /
+      - name: Install elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.34.1
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Export benchmark pairs
+        run: |
+          mkdir -p competitor-evidence
+          python -m proofscope.competitors.semanteq export --splits heldout_oracle dev --out competitor-evidence/pairs.jsonl
+      - name: ProofScope on the same pairs
+        run: python -m proofscope.bench --split heldout_oracle dev --jobs 4 --skip-adversarial --out competitor-evidence/proofscope
+      - name: Fetch SemantEq at the pinned commit, Mathlib cache, build
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q "$RUNNER_TEMP/se" && cd "$RUNNER_TEMP/se"
+          git remote add origin "$SEMANTEQ_REPO"
+          git -c protocol.version=2 fetch -q --depth 1 origin "$SEMANTEQ_COMMIT" && git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SEMANTEQ_COMMIT"
+          lake exe cache get 2>&1 | tail -3
+          lake build semanteq 2>&1 | tail -3
+      - name: SemantEq on the pairs (20 s per pair, its default)
+        shell: bash
+        run: |
+          cd "$RUNNER_TEMP/se"
+          lake exe semanteq --raw "$GITHUB_WORKSPACE/competitor-evidence/pairs.jsonl" "$GITHUB_WORKSPACE/competitor-evidence/semanteq_results.jsonl" \
+            > "$GITHUB_WORKSPACE/competitor-evidence/semanteq_stdout.log" 2>&1 || echo "semanteq exit $?" >> "$GITHUB_WORKSPACE/competitor-evidence/semanteq_stdout.log"
+      - name: Agreement table
+        if: always()
+        run: |
+          python -m proofscope.competitors.semanteq compare --semanteq competitor-evidence/semanteq_results.jsonl \
+            --proofscope competitor-evidence/proofscope/bench_results.json --out competitor-evidence/comparison.json \
+            | tee -a "$GITHUB_STEP_SUMMARY" || echo "INCONCLUSIVE: comparison not produced" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-competitor-evidence
+          path: |
+            competitor-evidence/*.jsonl
+            competitor-evidence/*.json
+            competitor-evidence/*.log
+            competitor-evidence/proofscope/bench_results.json
+          if-no-files-found: warn

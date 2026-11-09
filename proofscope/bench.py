@@ -1,6 +1,8 @@
 """Benchmark runner for theorem-level comparison (v0.9) and adversarial certificate cases.
 
-    python3 -m proofscope.bench --split dev|heldout|all --out DIR
+    python3 -m proofscope.bench --split all|<split> [<split> ...] [--jobs N] --out DIR
+
+Splits are the subdirectories of proofscope/benchmark/ that contain case files.
 
 Metrics
   exact      engine label == annotated label
@@ -17,6 +19,7 @@ and data not available here, so no comparison is reported for them.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures as cf
 import json
 import math
 import sys
@@ -68,6 +71,54 @@ def baseline_label(d: dict) -> str:
     return "EQUIVALENT" if same else "CONCLUSION_GAP"
 
 
+def _one(args):
+    f, out = args
+    raw = json.loads(Path(f).read_text())
+    spec = CompareSpec.load(f)
+    tc = Toolchain.find()
+    t0 = time.time()
+    r = run_compare(spec, tc, Path(out) / "work" / raw.get("split", "x") / spec.ident)
+    r["seconds"] = round(time.time() - t0, 2)
+    r["fidelity_failure"] = raw["fidelity_failure"]
+    r["baseline"] = baseline_label(raw)
+    r["label_source"] = raw.get("label_source", "hand-annotated")
+    r["oracle_facts"] = raw.get("oracle_facts")
+    return r
+
+
+def by_family(rows: list[dict]) -> dict:
+    fams: dict = {}
+    for r in rows:
+        f = fams.setdefault(r["family"] or "?", {"cases": 0, "exact": 0, "inconclusive": 0, "flag_tp": 0, "flag_fp": 0, "flag_fn": 0})
+        f["cases"] += 1
+        f["exact"] += bool(r.get("correct"))
+        f["inconclusive"] += r["classification"] == "INCONCLUSIVE"
+        flagged = r["classification"] in FLAG
+        f["flag_tp"] += flagged and r["fidelity_failure"]
+        f["flag_fp"] += flagged and not r["fidelity_failure"]
+        f["flag_fn"] += (not flagged) and r["fidelity_failure"]
+    return fams
+
+
+def oracle_disagreements(rows: list[dict]) -> list[dict]:
+    """A Lean certificate that contradicts a fact the finite oracle established (an existential witness the
+    oracle found, or a universal the oracle refuted) means the oracle's Lean-semantics model or the engine is
+    wrong. Universals the oracle only checked on a finite grid cannot contradict a certificate."""
+    bad = []
+    for r in rows:
+        o = r.get("oracle_facts")
+        if not o:
+            continue
+        c = set(r["certificates"])
+        for ex, univ in (("app_gap", "hyp_cover"), ("concl_gap", "concl_cover"), ("strict_hyp", "hyp_back"),
+                         ("strict_concl", "concl_back"), ("inhabited", "vacuous")):
+            if o.get(ex) and univ in c:
+                bad.append({"id": r["id"], "oracle_witness_for": ex, "engine_certified": univ})
+            if not o.get(ex) and ex in c:
+                bad.append({"id": r["id"], "engine_certified": ex, "oracle_found_no_witness_on_grid": True})
+    return bad
+
+
 def run_adversarial(tc: Toolchain, work: Path) -> list[dict]:
     cases = json.loads((HERE / "adversarial_certificates.json").read_text())
     out = []
@@ -85,27 +136,23 @@ def run_adversarial(tc: Toolchain, work: Path) -> list[dict]:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="python3 -m proofscope.bench")
-    ap.add_argument("--split", default="all", choices=["dev", "heldout", "all"])
+    ap.add_argument("--split", nargs="+", default=["all"])
+    ap.add_argument("--jobs", type=int, default=1)
     ap.add_argument("--out", default="proofscope-bench")
     ap.add_argument("--skip-adversarial", action="store_true")
     a = ap.parse_args(argv)
     out = Path(a.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
     tc = Toolchain.find()
-    splits = ["dev", "heldout"] if a.split == "all" else [a.split]
+    found = sorted(d.name for d in HERE.iterdir() if d.is_dir() and any(d.glob("*.json")))
+    splits = found if a.split == ["all"] else a.split
+    files = [(str(f), str(out)) for sp in splits for f in sorted((HERE / sp).glob("*.json"))]
     rows = []
-    for sp in splits:
-        for f in sorted((HERE / sp).glob("*.json")):
-            raw = json.loads(f.read_text())
-            spec = CompareSpec.load(f)
-            t0 = time.time()
-            r = run_compare(spec, tc, out / "work" / sp / spec.ident)
-            r["seconds"] = round(time.time() - t0, 2)
-            r["fidelity_failure"] = raw["fidelity_failure"]
-            r["baseline"] = baseline_label(raw)
+    with cf.ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
+        for r in ex.map(_one, files):
             rows.append(r)
-            mark = "ok" if r.get("correct") else f"expected {spec.expected}"
-            print(f"[{sp}] {spec.id:<26} {r['classification']:<18} {mark}", flush=True)
+            mark = "ok" if r.get("correct") else f"expected {r['expected']}"
+            print(f"[{r['split']}] {r['id']:<34} {r['classification']:<18} {mark}", flush=True)
     report = {"toolchain": tc.version(), "splits": {}}
     for sp in splits:
         rs = [r for r in rows if r["split"] == sp]
@@ -118,6 +165,11 @@ def main(argv=None) -> int:
             "certificates": sum(len(r["certificates"]) for r in rs),
             "inconsistent_runs": sum(1 for r in rs if r["classification"] == "INCONSISTENT"),
             "median_seconds": sorted(r["seconds"] for r in rs)[len(rs) // 2],
+            "p90_seconds": sorted(r["seconds"] for r in rs)[min(len(rs) - 1, int(0.9 * len(rs)))],
+            "inconclusive_rate": round(sum(r["classification"] == "INCONCLUSIVE" for r in rs) / len(rs), 3),
+            "by_family": by_family(rs),
+            "oracle_disagreements": oracle_disagreements(rs),
+            "label_sources": sorted({r["label_source"] for r in rs}),
             "misses": [{"id": r["id"], "expected": r["expected"], "got": r["classification"]} for r in rs if not r.get("correct")],
         }
     if not a.skip_adversarial:

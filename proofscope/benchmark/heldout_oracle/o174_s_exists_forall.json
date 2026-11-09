@@ -1,0 +1,36 @@
+{
+  "id": "o174_s_exists_forall",
+  "family": "quantifier swap",
+  "area": "bounded quantifiers",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(0 < n)",
+  "lean_concl": "(∀ k : Nat, k < n → (∃ j : Nat, j < n ∧ (k ≤ j)))",
+  "ref_hyp": "(0 < n)",
+  "ref_concl": "(∃ j : Nat, j < n ∧ (∀ k : Nat, k < n → (k ≤ j)))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

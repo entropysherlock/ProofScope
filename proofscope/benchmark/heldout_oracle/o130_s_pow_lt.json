@@ -1,0 +1,36 @@
+{
+  "id": "o130_s_pow_lt",
+  "family": "reversed inequality",
+  "area": "powers",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(1 ≤ n)",
+  "lean_concl": "((2 ^ n) < n)",
+  "ref_hyp": "(1 ≤ n)",
+  "ref_concl": "(n < (2 ^ n))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": true,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": false,
+    "vacuous": false
+  },
+  "tactics": {}
+}

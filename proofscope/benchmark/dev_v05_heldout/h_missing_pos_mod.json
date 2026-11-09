@@ -1,0 +1,28 @@
+{
+  "id": "h_missing_pos_mod",
+  "family": "missing hypothesis",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "n % m ≤ n",
+  "ref_hyp": "0 < m",
+  "ref_concl": "n % m ≤ n",
+  "bounds": {
+    "n": 15,
+    "m": 15
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

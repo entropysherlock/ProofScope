@@ -1,0 +1,23 @@
+{
+  "id": "h_pow_threshold",
+  "family": "incorrect constant",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "5 ≤ n",
+  "lean_concl": "n * n < 2 ^ n",
+  "ref_hyp": "4 ≤ n",
+  "ref_concl": "n * n ≤ 2 ^ n",
+  "bounds": {
+    "n": 40
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

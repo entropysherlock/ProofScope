@@ -1,0 +1,25 @@
+{
+  "id": "h_list_append_len",
+  "family": "harmless rewrite",
+  "split": "dev_v05_heldout",
+  "binders": [
+    [
+      "l",
+      "List Nat"
+    ],
+    [
+      "k",
+      "List Nat"
+    ]
+  ],
+  "lean_hyp": "True",
+  "lean_concl": "(l ++ k).length = l.length + k.length",
+  "ref_hyp": "True",
+  "ref_concl": "(l ++ k).length = k.length + l.length",
+  "bounds": {},
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "tactics": {},
+  "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+  "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"
+}

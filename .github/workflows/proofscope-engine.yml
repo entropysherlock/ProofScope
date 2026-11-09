@@ -20,7 +20,7 @@ jobs:
   engine:
     name: Dossiers, comparison benchmark, certificate gate, viewer
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,8 +41,21 @@ jobs:
         run: sha256sum -c proofscope/benchmark/ENGINE_FREEZE.txt
       - name: All v0.2-v1.0 tests
         run: python -m unittest discover -s tests/v02 -v
-      - name: Benchmark (dev, held-out, adversarial certificates)
-        run: python -m proofscope.bench --split all --out engine-evidence/bench
+      - name: Lean soundness theorems (axiom-free, fresh kernel replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/sound/ProofScope"
+          lean -R lean -o "$RUNNER_TEMP/sound/ProofScope/Soundness.olean" lean/ProofScope/Soundness.lean | tee engine-soundness.log
+          test "$(grep -c 'does not depend on any axioms' engine-soundness.log)" = 9
+          (cd "$RUNNER_TEMP/sound" && LEAN_PATH="$RUNNER_TEMP/sound" leanchecker --fresh ProofScope.Soundness)
+      - name: Oracle generator is deterministic and matches the committed held-out cases
+        run: |
+          git stash list >/dev/null
+          python proofscope/benchmark/gen_oracle.py
+          git diff --exit-code -- proofscope/benchmark/heldout_oracle
+      - name: Benchmark (all splits, adversarial certificates)
+        run: python -m proofscope.bench --split all --jobs 4 --out engine-evidence/bench
       - name: Theorem dossiers from Lean core and Std (at least 100)
         run: |
           python -m proofscope.dossier --imports Std.Data.HashMap.Lemmas \

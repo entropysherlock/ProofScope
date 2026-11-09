@@ -10,7 +10,7 @@ kernel status per declaration:
   REPLAYED            the declaring project module was re-checked by `leanchecker` in this run
   REPLAY_FAILED       `leanchecker` rejected the declaring module
   TOOLCHAIN_LIBRARY   declared in the Lean toolchain's own library; trusted with the toolchain, not replayed
-  NOT_RUN             replay was not requested or not possible
+  NOT_REPLAYED        not replayed in this run (replay disabled, beyond --replay-limit, or no project)
 
 Axiom status: STANDARD (subset of propext, Classical.choice, Quot.sound), NONE, SORRY (depends on sorryAx),
 NONSTANDARD (any other axiom).
@@ -71,7 +71,8 @@ def to_markdown(d: dict) -> str:
 
 
 def run(imports: list[str], decls: list[str], modules: list[str], out: Path, project: str | None = None,
-        commit: str | None = None, module_limit: int | None = None, replay: bool = True) -> dict:
+        commit: str | None = None, module_limit: int | None = None, replay: bool = True,
+        replay_limit: int | None = None) -> dict:
     for n in imports + decls + modules:
         if not NAME_RE.match(n):
             raise ValueError(f"invalid Lean name {n!r}")
@@ -106,6 +107,8 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
         for m in sorted({d["module"] for d in rows if "error" not in d}):
             if m.split(".")[0] in TOOLCHAIN_ROOTS or m.startswith("("):
                 continue
+            if replay_limit is not None and len(replayed) >= replay_limit:
+                break
             rp = tc.run([tc.leanchecker, m] if tc.leanchecker else ["false"], cwd=project, timeout=3600)
             replayed[m] = "REPLAYED" if rp.returncode == 0 else "REPLAY_FAILED"
             (out / "replay").mkdir(exist_ok=True)
@@ -128,7 +131,7 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
         elif root in TOOLCHAIN_ROOTS:
             d["kernel_status"] = "TOOLCHAIN_LIBRARY"
         else:
-            d["kernel_status"] = "NOT_RUN"
+            d["kernel_status"] = "NOT_REPLAYED"
         d["verification_evidence"] = {"elaboration_log": "elaboration.log",
                                       "replay_log": f"replay/{d['module']}.log" if d["module"] in replayed else None}
         safe = re.sub(r"[^A-Za-z0-9_.-]", "_", d["theorem_id"])[:150]
@@ -139,7 +142,7 @@ def run(imports: list[str], decls: list[str], modules: list[str], out: Path, pro
     summary["by_axiom_status"] = {s: sum(1 for d in kept if d["axiom_status"] == s)
                                   for s in ("NONE", "STANDARD", "NONSTANDARD", "SORRY")}
     summary["by_kernel_status"] = {s: sum(1 for d in kept if d["kernel_status"] == s)
-                                   for s in ("REPLAYED", "REPLAY_FAILED", "TOOLCHAIN_LIBRARY", "NOT_RUN")}
+                                   for s in ("REPLAYED", "REPLAY_FAILED", "TOOLCHAIN_LIBRARY", "NOT_REPLAYED")}
     summary["with_hypotheses"] = sum(1 for d in kept if d["hypotheses"])
     summary["with_definition_dependencies"] = sum(
         1 for d in kept if any(x["role"] == "definition" for x in d["statement_dependencies"]))
@@ -159,9 +162,11 @@ def main(argv=None) -> int:
     ap.add_argument("--project", default=None, help="Lake project directory (already built)")
     ap.add_argument("--commit", default=None)
     ap.add_argument("--no-replay", action="store_true")
+    ap.add_argument("--replay-limit", type=int, default=None, help="replay at most this many project modules")
     ap.add_argument("--out", default="proofscope-dossiers")
     a = ap.parse_args(argv)
-    s = run(a.imports, a.decls, a.modules, Path(a.out), a.project, a.commit, a.module_limit, not a.no_replay)
+    s = run(a.imports, a.decls, a.modules, Path(a.out), a.project, a.commit, a.module_limit, not a.no_replay,
+            a.replay_limit)
     print(json.dumps(s, indent=2, ensure_ascii=False))
     ok = s["metaprogram_built"] and s["dossiers"] > 0
     print("\nVERDICT\n - " + (f"{s['dossiers']} theorem dossiers were extracted from Lean's elaborated declarations. "

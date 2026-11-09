@@ -1,0 +1,41 @@
+{
+  "id": "o076_s_div_mul_le",
+  "family": "weakened conclusion",
+  "area": "division",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(0 < m)",
+  "lean_concl": "((((n / m) * m) ≤ n) ∨ (n = 3))",
+  "ref_hyp": "(0 < m)",
+  "ref_concl": "(((n / m) * m) ≤ n)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "EQUIVALENT",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^2",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

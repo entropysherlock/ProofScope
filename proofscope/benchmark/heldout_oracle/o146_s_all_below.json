@@ -1,0 +1,36 @@
+{
+  "id": "o146_s_all_below",
+  "family": "incorrect constant (conclusion)",
+  "area": "bounded quantifiers",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(0 < n)",
+  "lean_concl": "(∀ k : Nat, k < n → (k ≤ (n - 2)))",
+  "ref_hyp": "(0 < n)",
+  "ref_concl": "(∀ k : Nat, k < n → (k ≤ (n - 1)))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": true,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": false,
+    "vacuous": false
+  },
+  "tactics": {}
+}

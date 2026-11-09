@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.6.0 (unreleased)
+
+- `lean/ProofScope/Soundness.lean`: nine axiom-free soundness/observability theorems (fresh replay in CI).
+- `lean/ProofScope/Tactics.lean` (`ps_arith`) and instantiation-based quantifier closers in `compare.py`; both v0.5
+  held-out misses fixed; that split renamed `dev_v05_heldout`; engine re-frozen.
+- `proofscope/benchmark/gen_oracle.py` + `heldout_oracle/` (175 oracle-labelled cases); `bench.py`: split discovery,
+  `--jobs`, per-family metrics, inconclusive rate, p90 runtime, oracle cross-check.
+- `proofscope/research.py` + **ProofScope Research Audit** workflow (network/env isolation); dossier `--replay-limit`
+  and NOT_REPLAYED status.
+- `proofscope/competitors/semanteq.py` + **ProofScope Competitor Comparison** workflow.
+- Viewer: paper trace, separate proof-certification and semantic-review status, comparison table.
+- `tests/v02/test_v06.py`; `docs/v0.6_report.md`.
+
 ## 0.5.0 (unreleased): engine slice of the v1.0 roadmap
 
 - `lean/ProofScope/Dossier.lean` + `proofscope/dossier.py`: elaborator-based theorem dossiers (Project Audit S8).

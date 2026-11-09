@@ -1,0 +1,41 @@
+{
+  "id": "o063_s_div_le",
+  "family": "extra hypothesis",
+  "area": "division",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "((0 < m) ∧ (n < 10))",
+  "lean_concl": "((n / m) ≤ n)",
+  "ref_hyp": "(0 < m)",
+  "ref_concl": "((n / m) ≤ n)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^2",
+  "label_certainty": "certain",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

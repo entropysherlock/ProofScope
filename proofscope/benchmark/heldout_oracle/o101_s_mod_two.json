@@ -1,0 +1,36 @@
+{
+  "id": "o101_s_mod_two",
+  "family": "vacuous hypotheses",
+  "area": "modular",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(n < 0)",
+  "lean_concl": "(((n % 2) = 0) ∨ ((n % 2) = 1))",
+  "ref_hyp": "True",
+  "ref_concl": "(((n % 2) = 0) ∨ ((n % 2) = 1))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "VACUOUS",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": false,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": true
+  },
+  "tactics": {}
+}

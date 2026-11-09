@@ -1,0 +1,41 @@
+{
+  "id": "o079_s_div_lt",
+  "family": "missing hypothesis",
+  "area": "division",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ],
+    [
+      "m",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(1 < m)",
+  "lean_concl": "((n / m) < n)",
+  "ref_hyp": "((1 < m) ∧ (0 < n))",
+  "ref_concl": "((n / m) < n)",
+  "bounds": {
+    "n": 12,
+    "m": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^2",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": true,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": false,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

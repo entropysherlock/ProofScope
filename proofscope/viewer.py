@@ -29,14 +29,14 @@ pre{background:transparent;border:1px solid var(--line);border-radius:8px;paddin
 table{border-collapse:collapse;width:100%;font-size:13.5px;margin:6px 0 16px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--mute);font-weight:600}code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}h2{font-size:17px;margin:22px 0 8px}h3{font-size:14.5px;margin:18px 0 6px;color:var(--mute)}
 .note{color:var(--mute);font-size:13px;border-left:3px solid var(--line);padding-left:10px}
-.stats{display:flex;gap:28px;flex-wrap:wrap;margin:10px 0 4px}.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+details{margin:12px 0}summary{cursor:pointer}.stats{display:flex;gap:28px;flex-wrap:wrap;margin:10px 0 4px}.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
 """
 
 JS = """
 const data=JSON.parse(document.getElementById('d').textContent);
 const nav=document.getElementById('list'),view=document.getElementById('view'),q=document.getElementById('q');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const cls=s=>({REPLAYED:'ok',NONE:'ok',STANDARD:'ok',TOOLCHAIN_LIBRARY:'info',NOT_RUN:'warn',NONSTANDARD:'warn',REPLAY_FAILED:'bad',SORRY:'bad'}[s]||'info');
+const cls=s=>({REPLAYED:'ok',NONE:'ok',STANDARD:'ok',TOOLCHAIN_LIBRARY:'info',NOT_RUN:'warn',NOT_REPLAYED:'warn',STATEMENT_ONLY:'info',NONSTANDARD:'warn',REPLAY_FAILED:'bad',SORRY:'bad'}[s]||'info');
 function show(i){const d=data[i];[...nav.children].forEach((a,j)=>a.classList.toggle('on',j==i));
  const defs=d.statement_dependencies.filter(x=>x.role==='definition');
  view.innerHTML=`<h2><code>${esc(d.theorem_id)}</code></h2>
@@ -46,6 +46,10 @@ function show(i){const d=data[i];[...nav.children].forEach((a,j)=>a.classList.to
  <h3>Binders</h3><table><tr><th>Name</th><th>Binder</th><th>Role</th><th>Type</th></tr>${d.binders.map(b=>`<tr><td><code>${esc(b.name)}</code></td><td>${esc(b.binder)}</td><td>${esc(b.role)}</td><td><code>${esc(b.type)}</code></td></tr>`).join('')}</table>
  <h3>Definitions the statement depends on</h3>${defs.length?'<ul>'+defs.map(x=>`<li><code>${esc(x.name)}</code> <span class="sub">${esc(x.module)}</span></li>`).join('')+'</ul>':'<p class="sub">None beyond logic, types and notation.</p>'}
  <h3>Axioms</h3><p>${d.axioms.length?d.axioms.map(a=>`<code>${esc(a)}</code>`).join(', '):'none'}</p>
+ <h3>Status</h3><table><tr><th>Proof certification</th><td>kernel ${esc(d.kernel_status)} · axioms ${esc(d.axiom_status)}${d.trust_status?` · ${esc(d.trust_status)}`:''}</td></tr>
+ <tr><th>Semantic review</th><td>${esc((d.paper_trace&&d.paper_trace.semantic_review)||'NOT_REVIEWED')}</td></tr></table>
+ ${d.paper_trace?`<h3>Paper trace</h3>${d.paper_trace.status==='LINKED_BY_CORPUS_DOCS'?`<p>Scope document <code>${esc(d.paper_trace.scope_document)}</code> · result: ${esc(d.paper_trace.result)}</p><ul>${d.paper_trace.papers.map(p=>`<li>${esc(p.title)} <span class="sub">${esc(p.path)}</span></li>`).join('')}</ul><p class="note">The link comes from the corpus's own scope document. Whether the statement matches the paper has not been reviewed.</p>`:`<p class="sub">${esc(d.paper_trace.status)}</p>`}`:''}
+ ${d.area?`<p class="sub">Area: ${esc(d.area)} · source <code>${esc(d.source_path||'')}</code></p>`:''}
  <h3>Unresolved</h3><ul>${d.unresolved_items.map(u=>`<li>${esc(u)}</li>`).join('')}</ul>
  <p class="note">This dossier describes what Lean elaborated and which axioms it uses. It does not say the statement matches any paper.</p>`;}
 function render(){const t=q.value.toLowerCase();nav.innerHTML='';data.forEach((d,i)=>{if(t&&!d.theorem_id.toLowerCase().includes(t))return;const a=document.createElement('a');a.href='#';a.textContent=d.theorem_id;a.onclick=e=>{e.preventDefault();show(i)};a.className=cls(d.axiom_status)==='bad'?'bad':'';nav.appendChild(a)});}
@@ -53,8 +57,28 @@ q.oninput=render;render();if(data.length)show(0);
 """
 
 
+def _comparisons(bench: Path | None) -> str:
+    if not bench or not bench.exists():
+        return ""
+    rows = json.loads(bench.read_text()).get("rows", [])
+    out = ["<details><summary><b>Theorem comparisons</b> (" + str(len(rows)) + " cases; click to expand)</summary>",
+           "<table><tr><th>Case</th><th>Split</th><th>Family</th><th>Expected</th><th>Certified label</th><th>Certified propositions</th></tr>"]
+    for r in rows:
+        ok = "ok" if r.get("correct") else "bad"
+        certs = "<br>".join(f"<code>{html.escape(k)}</code>: <code>{html.escape(v['statement'])}</code>"
+                            for k, v in sorted(r.get("certificates", {}).items())) or "none"
+        out.append(f"<tr><td><code>{html.escape(r['id'])}</code></td><td>{html.escape(r.get('split', ''))}</td>"
+                   f"<td>{html.escape(r.get('family', ''))}</td><td>{html.escape(str(r.get('expected')))}</td>"
+                   f"<td class='{ok}'><b>{html.escape(r['classification'])}</b></td><td>{certs}</td></tr>")
+    out.append("</table><p class='note'>Each listed proposition compiled cleanly, uses only standard axioms and passed "
+               "leanchecker replay. Labels follow the soundness table in docs/engine.md; reference statements are "
+               "benchmark inputs, not reviewed paper transcriptions.</p></details>")
+    return "".join(out)
+
+
 def build(dossier_dir: Path, bench: Path | None, out: Path, title: str) -> Path:
-    ds = [json.loads(p.read_text()) for p in sorted(dossier_dir.glob("*.json"))]
+    ds = [json.loads(p.read_text()) for p in sorted(dossier_dir.glob("*.json")) if p.name != "research_index.json"
+          and not p.name.endswith("_index.json")]
     stat = lambda k, v: sum(1 for d in ds if d.get(k) == v)  # noqa: E731
     bench_html = ""
     if bench and bench.exists():
@@ -77,7 +101,7 @@ def build(dossier_dir: Path, bench: Path | None, out: Path, title: str) -> Path:
 <header><h1>{html.escape(title)}</h1><div class="sub">ProofScope by Caleb J. Westfall · Verify the proof. Validate the claim.</div>
 <div class="stats"><div class="stat"><b>{len(ds)}</b>dossiers</div><div class="stat"><b>{stat('kernel_status','REPLAYED')}</b>kernel-replayed</div>
 <div class="stat"><b>{stat('axiom_status','SORRY')}</b>depend on sorry</div><div class="stat"><b>{stat('axiom_status','NONSTANDARD')}</b>non-standard axioms</div></div>
-{bench_html}</header>
+{bench_html}{_comparisons(bench)}</header>
 <main><nav><input id="q" placeholder="Filter theorems"><div id="list"></div></nav><section id="view"></section></main>
 <script type="application/json" id="d">{json.dumps(ds, ensure_ascii=False).replace('</', '<\\/')}</script><script>{JS}</script></body></html>"""
     out.write_text(doc)

@@ -31,11 +31,12 @@ C = [
  ("h_quant_exists_weak", "quantifier swap", N, "0 < n", "∃ k, k < n", "0 < n", "∀ k, k < n", B1, "CONCLUSION_GAP", True),
  ("h_mislinked2", "incorrectly linked theorem", N, "True", "n * 0 = 0", "True", "0 + n = n", B1, "EQUIVALENT", True),
 ]
-out = Path(__file__).resolve().parent / "heldout"
+out = Path(__file__).resolve().parent / "dev_v05_heldout"
 out.mkdir(exist_ok=True)
 for (cid, fam, b, hl, cl, hr, cr, bounds, exp, failure) in C:
-    (out / f"{cid}.json").write_text(json.dumps({"id": cid, "family": fam, "split": "heldout", "binders": b,
+    (out / f"{cid}.json").write_text(json.dumps({"id": cid, "family": fam, "split": "dev_v05_heldout", "binders": b,
         "lean_hyp": hl, "lean_concl": cl, "ref_hyp": hr, "ref_concl": cr, "bounds": bounds, "expected": exp,
-        "fidelity_failure": failure, "tactics": {}, "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze"},
+        "fidelity_failure": failure, "tactics": {}, "annotation": "Claude (Anthropic), 2026-11-08, after engine freeze",
+        "note": "v0.5 held-out set; used to diagnose and fix two misses in v0.6, so it is no longer held out"},
         indent=2, ensure_ascii=False))
 print(len(C), "held-out cases")

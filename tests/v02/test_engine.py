@@ -49,7 +49,7 @@ class ClassifyTests(unittest.TestCase):
                          "EQUIVALENT")
 
     def test_benchmark_files(self):
-        for split in ("dev", "heldout"):
+        for split in ("dev", "dev_v05_heldout", "heldout_oracle"):
             files = list((ROOT / "proofscope" / "benchmark" / split).glob("*.json"))
             self.assertGreaterEqual(len(files), 20)
             for f in files:

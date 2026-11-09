@@ -51,7 +51,10 @@ from pathlib import Path
 from .certify import certify
 from .toolchain import Toolchain
 
-FORALL = ["intros; omega", "intros; simp_all", "intros; simp_all <;> omega", "intros; grind", "decide",
+TACTIC_LIB = (Path(__file__).resolve().parents[1] / "lean" / "ProofScope" / "Tactics.lean").read_text()
+_TAC_BODY = TACTIC_LIB.split("open Lean Meta Elab Tactic", 1)[1]
+
+FORALL = ["intros; omega", "intros; ps_arith", "intros; simp_all", "intros; simp_all <;> omega", "intros; grind", "decide",
           "intros; constructor <;> intros <;> omega", "intros; exact ‹_›", "intros; trivial"]
 EXISTS = ["decide +kernel", "decide", "grind", "simp"]
 NEG_EXISTS = ["intro h; obtain ⟨{pat}, h⟩ := h; omega", "intro h; obtain ⟨{pat}, h⟩ := h; simp_all",
@@ -139,16 +142,38 @@ class CompareSpec:
              inner.split(f"(fun {names[0]} h1 => ", 1)[1][:-1]) + ")"
 
     def _witnesses(self, _tag: str) -> list[str]:
-        """Small concrete witnesses for existentials over Nat, Int and List Nat binders (at most two)."""
+        """Witness search for existential obligations over Nat, Int and List Nat binders (at most two).
+        For each candidate tuple: `refine ⟨v, ?_⟩; and_intros`, then close every conjunct with one of:
+        decision procedures, ps_arith, a concrete existential witness, refutation of a universal by a
+        concrete instance (`h c`), or diagonal instantiation of a refuted ∃∀ (`hy y`, `hy (y+1)`).
+        Every successful alternative is an ordinary Lean proof, checked like any other."""
         pools = {"Nat": [str(i) for i in range(6)], "Int": ["0", "1", "-1", "2", "-2"],
                  "List Nat": ["[]", "[0]", "[1]", "[1, 0]", "[0, 1]"]}
         cols = [pools.get(t.strip()) for _, t in self.binders]
         if any(c is None for c in cols) or len(cols) > 2:
             return []
-        return [f"exact ⟨{', '.join(v)}, by decide⟩" for v in product(*cols)]
+        names = [n for n, _ in self.binders]
+        inst = [str(i) for i in range(4)] + names + [f"{n} + 1" for n in names]
+        closers = (
+            ["decide", "trivial", "omega", "ps_arith", "simp"]
+            + [f"(exact ⟨{c}, by decide⟩)" for c in ("0", "1", "2", "3")]
+            + [f"(intro h; exact absurd (h {c}) (by decide))" for c in inst]
+            + [f"(intro h; exact absurd (h {c}) (by omega))" for c in inst]
+            + ["(intro k; exact ⟨k + 1, by omega⟩)",
+               "(intro h; obtain ⟨y, hy⟩ := h; exact absurd (hy y) (by omega))",
+               "(intro h; obtain ⟨y, hy⟩ := h; exact absurd (hy (y + 1)) (by omega))"])
+        # every closer must finish its goal: a closer that only rewrites (e.g. `simp`) must not be accepted
+        closer = " | ".join(f"({c}; done)" for c in closers)
+        out = []
+        for v in product(*cols):
+            out.append(f"exact ⟨{', '.join(v)}, by decide⟩")
+            out.append(f"refine ⟨{', '.join(v)}, ?_⟩; and_intros <;> first | {closer}")
+        return out
 
     def header(self) -> str:
-        return ("".join(f"import {m}\n" for m in self.imports)
+        imports = list(dict.fromkeys(["Lean"] + self.imports))
+        return ("".join(f"import {m}\n" for m in imports)
+                + "\nsection ProofScopeTactics\nopen Lean Meta Elab Tactic\n" + _TAC_BODY + "\nend ProofScopeTactics\n\n"
                 + "set_option maxHeartbeats 400000\nset_option maxRecDepth 20000\n"
                 + "set_option linter.unusedVariables false\n\n"
                 + (self.preamble.strip() + "\n\n" if self.preamble.strip() else "")

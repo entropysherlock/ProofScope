@@ -1,0 +1,36 @@
+{
+  "id": "o156_s_exists_below",
+  "family": "vacuous hypotheses",
+  "area": "bounded quantifiers",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "((0 < n) ∧ (n < 0))",
+  "lean_concl": "(∃ k : Nat, k < n ∧ ((k + 1) = n))",
+  "ref_hyp": "(0 < n)",
+  "ref_concl": "(∃ k : Nat, k < n ∧ ((k + 1) = n))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "VACUOUS",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": false,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": true
+  },
+  "tactics": {}
+}

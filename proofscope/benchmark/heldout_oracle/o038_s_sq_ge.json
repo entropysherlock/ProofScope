@@ -1,0 +1,36 @@
+{
+  "id": "o038_s_sq_ge",
+  "family": "incorrect constant (hypothesis)",
+  "area": "multiplication",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(2 ≤ n)",
+  "lean_concl": "(n ≤ (n * n))",
+  "ref_hyp": "(1 ≤ n)",
+  "ref_concl": "(n ≤ (n * n))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "APPLICABILITY_GAP",
+  "fidelity_failure": true,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "certain",
+  "oracle_facts": {
+    "app_gap": true,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": false,
+    "inhabited": true,
+    "hyp_cover": false,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": true,
+    "vacuous": false
+  },
+  "tactics": {}
+}

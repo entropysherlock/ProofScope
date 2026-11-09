@@ -1,0 +1,36 @@
+{
+  "id": "o049_s_two_n",
+  "family": "reversed inequality",
+  "area": "multiplication",
+  "split": "heldout_oracle",
+  "binders": [
+    [
+      "n",
+      "Nat"
+    ]
+  ],
+  "lean_hyp": "(2 ≤ n)",
+  "lean_concl": "((2 * n) ≤ (n + 2))",
+  "ref_hyp": "(2 ≤ n)",
+  "ref_concl": "((n + 2) ≤ (2 * n))",
+  "bounds": {
+    "n": 12
+  },
+  "expected": "LEAN_STRONGER",
+  "fidelity_failure": false,
+  "label_source": "python oracle, Lean ℕ semantics, exhaustive on [0,24)^1",
+  "label_certainty": "grid-verified",
+  "oracle_facts": {
+    "app_gap": false,
+    "concl_gap": false,
+    "strict_hyp": false,
+    "strict_concl": true,
+    "inhabited": true,
+    "hyp_cover": true,
+    "concl_cover": true,
+    "hyp_back": true,
+    "concl_back": false,
+    "vacuous": false
+  },
+  "tactics": {}
+}

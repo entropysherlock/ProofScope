@@ -84,6 +84,23 @@ documented in [`docs/engine.md`](docs/engine.md):
 Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
 resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
 
+## v0.6: blind evaluation, soundness theorems, research-statement audit
+
+Details: [`docs/v0.6_report.md`](docs/v0.6_report.md).
+
+- **Soundness theorems** for every comparison label, proved in Lean with no axioms (`lean/ProofScope/Soundness.lean`),
+  including an *observability* theorem: when both statements are true, a pointwise conclusion difference can never be
+  certified, so a certified conclusion gap against a proved Lean theorem refutes the reference transcription.
+- **Both v0.5 held-out misses fixed** by general methods (`ps_arith`, an elaborator-level arithmetic tactic, and
+  instantiation-based quantifier refutation); that set is now development data.
+- **Blind oracle benchmark** (175 cases, labels from an independent Python model of Lean's ℕ semantics, engine frozen
+  first, run once): 154/175 exact, **0 wrong labels** (all misses INCONCLUSIVE), detection precision 1.0 and recall 1.0,
+  0 false positives, 0 oracle disagreements.
+- **ProofScope Research Audit** workflow: dossiers for up to 150 OpenAI research statements across 20 areas, Mathlib
+  pinned to the corpus revision, corpus code compiled without network or credentials. *Not yet run on GitHub.*
+- **ProofScope Competitor Comparison** workflow against SemantEq on the shared question "equivalent or not".
+  *Not yet run.* State-of-the-art superiority has not been established.
+
 ## Local use
 
 Install Lean 4.34.1, then run:
