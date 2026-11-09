@@ -89,8 +89,10 @@ jobs:
           PYDIR="$(dirname "$(command -v python)")"
           cat > "$RUNNER_TEMP/isolated.sh" <<'SH'
           set -euo pipefail
+          # Check from the workspace (no lean-toolchain file there), where the dossier extractor runs.
+          echo "isolated ELAN_TOOLCHAIN=$ELAN_TOOLCHAIN; lean (workspace): $(cd "$WS" && lean --version)"
           cd "$RESEARCH"
-          echo "isolated Lean toolchain: $(lean --version)"
+          echo "lean (research project): $(lean --version)"
           if ! lake build $(cat modules.txt) > build.log 2>&1; then
             : > built.txt; : > failed.txt
             for m in $(cat modules.txt); do
@@ -116,7 +118,7 @@ jobs:
           sudo unshare --net -- sudo -u "$USER" env -i HOME="$HOME" LANG=C.UTF-8 \
             PATH="$HOME/.elan/bin:$PYDIR:/usr/bin:/bin" RESEARCH="$RUNNER_TEMP/research" WS="$GITHUB_WORKSPACE" \
             CORPUS_COMMIT="$CORPUS_COMMIT" REPLAY_LIMIT="$REPLAY_LIMIT" \
-            LEAN_TOOLCHAIN=leanprover/lean4:v4.34.1 \
+            ELAN_TOOLCHAIN="$(cat "$RUNNER_TEMP/research/lean-toolchain")" \
             bash -c 'curl -sS -m 5 https://github.com >/dev/null 2>&1 && echo "ISOLATION FAILED: network reachable" && exit 3; env | grep -c . ; bash "$0"' "$RUNNER_TEMP/isolated.sh"
           cp "$RUNNER_TEMP/research/build.log" "$RUNNER_TEMP/research/built.txt" "$RUNNER_TEMP/research/failed.txt" research-evidence/ || true
           echo "built: $(wc -l < research-evidence/built.txt)  failed: $(wc -l < research-evidence/failed.txt)"
