@@ -1,0 +1,25 @@
+{
+ "id": "e_r07_abs_mixed",
+ "domain": "Real analysis",
+ "family": "mixed change: strict to non-strict hypothesis",
+ "reference": "∀ (x : ℝ), 0 < x → |x| = x",
+ "lean": "∀ (x : ℝ), 0 ≤ x → |x| = x",
+ "expected": "LEAN_STRONGER_BY_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "0 < x implies 0 ≤ x; x = 0 is covered only by the Lean statement (abs_of_nonneg)",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

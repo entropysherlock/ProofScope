@@ -1,0 +1,24 @@
+{
+ "id": "e_o06_preorder_vs_partial",
+ "domain": "Order / lattices",
+ "family": "different structure, same text",
+ "reference": "∀ (α : Type) [Preorder α] (a b : α), a ≤ b → b ≤ a → a = b",
+ "lean": "∀ (α : Type) [PartialOrder α] (a b : α), a ≤ b → b ≤ a → a = b",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_INCOMPARABLE"
+ ],
+ "label_basis": "the preorder version fails for the trivial preorder on Bool",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

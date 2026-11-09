@@ -1,0 +1,24 @@
+{
+ "id": "e_r11_sqrt_sq_drop",
+ "domain": "Real analysis",
+ "family": "dropped needed hypothesis (junk value)",
+ "reference": "∀ (x : ℝ), 0 ≤ x → Real.sqrt x ^ 2 = x",
+ "lean": "∀ (x : ℝ), Real.sqrt x ^ 2 = x",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "x = -1: sqrt (-1) = 0",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

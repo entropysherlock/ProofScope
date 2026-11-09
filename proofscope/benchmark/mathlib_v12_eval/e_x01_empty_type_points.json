@@ -1,0 +1,25 @@
+{
+ "id": "e_x01_empty_type_points",
+ "domain": "Adversarial",
+ "family": "empty type: points in the telescope",
+ "reference": "∀ (α : Type) (f : α → α), (∀ (a : α), f a = a) → ∀ (a : α), f (f a) = a",
+ "lean": "∀ (α : Type) [Nonempty α] (f : α → α), (∀ (a : α), f a = a) → ∀ (a : α), f (f a) = a",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "a point a : α proves Nonempty α (the v1.0 ad02 lesson)",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

@@ -1,0 +1,105 @@
+name: ProofScope v1.2 Mathlib Coverage (frozen evaluation split)
+
+# Assumption Delta v1.2 on Mathlib: the frozen 80-case evaluation split (7 domain groups) plus the v1.1
+# unresolved cases (m05, m09, m10, m12, m13). These cases were written without a local Mathlib.
+# Elaboration failures are expected to be possible and must be reported exactly, not patched around.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+
+jobs:
+  shard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
+        uses: ./.github/actions/setup-lean
+      - name: Freeze check
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt > /tmp/f.sha
+          sha256sum -c /tmp/f.sha
+      - name: Mathlib project at the pinned revision (binary cache)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ml"
+          cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
+          for i in 1 2 3; do lake update && break || sleep 30; done
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Registry smoke test (every countermodel family elaborates)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ml-evidence
+          printf '%s\n' 'import Mathlib' \
+            'example : Group (DihedralGroup 3) := inferInstance' \
+            'example : (DihedralGroup.r 1 : DihedralGroup 3) * DihedralGroup.sr 0 ≠ DihedralGroup.sr 0 * DihedralGroup.r 1 := by decide' \
+            'example : PartialOrder (Finset (Fin 2)) := inferInstance' \
+            'example : ¬ (({0} : Finset (Fin 2)) ≤ {1}) := by decide' \
+            'example : CommRing (ZMod 4) := inferInstance' \
+            'example : Field (ZMod 3) := inferInstance' \
+            'example : (2 : ZMod 4) * 2 = 0 := by decide' > /tmp/smoke.lean
+          lean /tmp/smoke.lean 2>&1 | tee ml-evidence/registry-smoke-${{ matrix.shard }}.log || echo "SMOKE_FAILED (reported, not fatal)" | tee -a ml-evidence/registry-smoke-${{ matrix.shard }}.log
+      - name: Assumption Delta v1.2, shard ${{ matrix.shard }}/6
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        run: |
+          python -m proofscope.v12 run proofscope/benchmark/mathlib_v12_eval/*.json proofscope/benchmark/mathlib_v12_dev/*.json \
+            --shard ${{ matrix.shard }}/6 --out ml-evidence/shard${{ matrix.shard }} --jobs 2 | tee ml-evidence/shard${{ matrix.shard }}.log
+      - name: Upload shard evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-mathlib-v12-shard${{ matrix.shard }}
+          path: |
+            ml-evidence/
+            !ml-evidence/**/work/**/build/**
+          if-no-files-found: warn
+
+  coverage:
+    needs: shard
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: proofscope-mathlib-v12-shard*
+          path: shards
+      - name: Coverage matrix (elaborates vs certified vs matches; fails on any unsound verdict)
+        run: |
+          python -m proofscope.v12 aggregate shards --out ml-coverage/coverage.json --markdown ml-coverage/coverage.md \
+            | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-mathlib-v12-evidence
+          path: ml-coverage/
+          if-no-files-found: warn

@@ -1,0 +1,85 @@
+name: ProofScope v1.2 Core (composition theory, interacting changes, regression)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proofscope-v12-core.yml"
+      - "proofscope/adelta12.py"
+      - "proofscope/models.py"
+      - "proofscope/v12.py"
+      - "lean/ProofScope/CompositionV12.lean"
+      - "proofscope/benchmark/v12_*/**"
+      - "proofscope/benchmark/V12_FREEZE.txt"
+      - "tests/v02/test_v12.py"
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
+        uses: ./.github/actions/setup-lean
+      - name: Freeze check (V12_FREEZE.txt; frozen v1.1 files unchanged)
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt > /tmp/f.sha
+          test "$(wc -l < /tmp/f.sha)" = 8
+          sha256sum -c /tmp/f.sha
+          python - <<'PY'
+          import hashlib, pathlib
+          B = pathlib.Path("proofscope/benchmark"); text = (B / "V12_FREEZE.txt").read_text()
+          for n in ("mathlib_v12_eval", "mathlib_v12_dev", "v12_hostile"):
+              h = hashlib.sha256()
+              for p in sorted((B / n).glob("*.json")):
+                  h.update(p.name.encode()); h.update(p.read_bytes())
+              assert f"{h.hexdigest()}  {n} suite" in text, n
+              print(n, "OK")
+          PY
+      - name: Composition theory v1.2 (12 axiom-free + 2 standard-axiom theorems, fresh replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/cp/ProofScope" v12-evidence
+          lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/ClaimDelta.olean" lean/ProofScope/ClaimDelta.lean > /dev/null
+          for m in AssumptionDelta Composition; do
+            LEAN_PATH="$RUNNER_TEMP/cp" lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/$m.olean" lean/ProofScope/$m.lean > /dev/null
+          done
+          LEAN_PATH="$RUNNER_TEMP/cp" lean -R lean -o "$RUNNER_TEMP/cp/ProofScope/CompositionV12.olean" \
+            lean/ProofScope/CompositionV12.lean | tee v12-evidence/composition-v12-axioms.log
+          test "$(grep -c 'does not depend on any axioms' v12-evidence/composition-v12-axioms.log)" = 12
+          test "$(grep -c 'depends on axioms: \[propext, Quot.sound\]' v12-evidence/composition-v12-axioms.log)" = 2
+          ! grep -q sorryAx v12-evidence/composition-v12-axioms.log
+          (cd "$RUNNER_TEMP/cp" && LEAN_PATH="$RUNNER_TEMP/cp" leanchecker --fresh ProofScope.CompositionV12)
+      - name: Tests
+        run: python -m unittest tests.v02.test_v12 tests.v02.test_v11 -v
+      - name: Assumption Delta v1.2 (v1.2 hostile + v1.1/v1.0 regression)
+        run: |
+          python -m proofscope.v12 run proofscope/benchmark/v12_hostile/*.json proofscope/benchmark/v11_dev/*.json \
+            proofscope/benchmark/v11_hostile/*.json proofscope/benchmark/adelta_v10_dev/*.json \
+            proofscope/benchmark/v10_adversarial/x*.json --out v12-evidence/core --jobs 4 | tee v12-evidence/core.log
+      - name: Frozen v1.1 on the v1.2 hostile cases (documents the v1.1 defect; informational)
+        run: |
+          python -m proofscope.adelta11 proofscope/benchmark/v12_hostile/*.json --out v12-evidence/v11_on_z --jobs 4 | tee v12-evidence/v11_on_z.log
+      - name: Coverage and soundness gate (fails on any must-not-be verdict from v1.2)
+        run: |
+          python -m proofscope.v12 aggregate v12-evidence/core --out v12-evidence/core_coverage.json \
+            --markdown v12-evidence/core_coverage.md | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofscope-v12-core-evidence
+          path: v12-evidence/
+          if-no-files-found: warn

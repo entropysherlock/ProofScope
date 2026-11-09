@@ -1,0 +1,25 @@
+{
+ "id": "e_g11_normal_subgroup",
+ "domain": "Group theory / algebra",
+ "family": "restrictive hypothesis on a substructure",
+ "reference": "∀ (G : Type) [Group G] (H : Subgroup G) (a : G), a ∈ H → a⁻¹ ∈ H",
+ "lean": "∀ (G : Type) [Group G] (H : Subgroup G), H.Normal → ∀ (a : G), a ∈ H → a⁻¹ ∈ H",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "inv_mem holds for every subgroup; non-normal subgroups exist (a reflection subgroup of D3)",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

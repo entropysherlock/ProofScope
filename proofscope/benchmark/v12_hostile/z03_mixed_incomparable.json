@@ -1,0 +1,19 @@
+{
+ "id": "z03_mixed_incomparable",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (n : Nat), n ≤ 3 → n + 0 = n",
+ "lean": "∀ (n : Nat), 2 ≤ n → n + 0 = n",
+ "expected": "ASSUMPTION_INCOMPARABLE",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE"
+ ],
+ "label_basis": "n = 4 and n = 0 separate in both directions",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

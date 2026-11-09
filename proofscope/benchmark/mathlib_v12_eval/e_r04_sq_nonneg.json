@@ -1,0 +1,25 @@
+{
+ "id": "e_r04_sq_nonneg",
+ "domain": "Real analysis",
+ "family": "restrictive hypothesis",
+ "reference": "∀ (x : ℝ), 0 ≤ x ^ 2",
+ "lean": "∀ (x : ℝ), 0 ≤ x → 0 ≤ x ^ 2",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "sq_nonneg; x = -1 violates the added hypothesis",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

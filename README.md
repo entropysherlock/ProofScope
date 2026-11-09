@@ -84,6 +84,21 @@ documented in [`docs/engine.md`](docs/engine.md):
 Not done yet: Mathlib-project dossiers, real-paper comparisons, a 100+ case independently annotated benchmark,
 resumable audits, a hosted interface. See the continuation point in `docs/engine.md`.
 
+## v1.2: countermodel families, Mathlib proof search, interacting changes
+
+Details: [`docs/v1.2_coverage.md`](docs/v1.2_coverage.md).
+
+- **Soundness erratum for v1.1** found by the v1.2 hostile tests: when a formalization *replaces* an assumption
+  (drops `D`, adds `A`), v1.1 could give wrong decisive verdicts (4 of 7 hostile cases). v1.2 decides such changes
+  jointly (`mixed_strict`, `mixed_incomparable`, `mixed_ref_false`); no previously reported result is affected.
+- **Countermodel registry** (`proofscope/models.py`): nonabelian groups, non-total orders, rings with zero divisors,
+  fields, sets and functions, filtered by instance elaboration; round-robin search (v1.1 never reached late carriers).
+- **Mathlib proof portfolio** for sufficiency, redundancy and unneeded assumptions; failure stays non-decisive.
+- **Composition theorems** (`CompositionV12.lean`, 14): transport along equivalences, instance substitution,
+  interacting assumption/conclusion changes, dependent binders, vacuity.
+- **Frozen 80-case Mathlib evaluation split** across 6 domains + adversarial cases; coverage matrix separates
+  "elaborates", "certified" and "matches". Mathlib results **pending** GitHub.
+
 ## v1.1: dependent-structure linking, compositional soundness, assumption minimality
 
 Details: [`docs/v1.1_foundations.md`](docs/v1.1_foundations.md).

@@ -1,0 +1,19 @@
+{
+ "id": "e_r02_min_abs_bound",
+ "domain": "Real analysis",
+ "family": "minimality: sufficiency and necessity",
+ "statement": "∀ (x : ℝ), -1 ≤ x → x ≤ 1 → x ^ 2 ≤ 1",
+ "expected": "INCLUSION_MINIMAL",
+ "must_not_be": [
+  "HAS_REDUNDANT_ASSUMPTIONS"
+ ],
+ "label_basis": "nlinarith; removal witnesses x = -2 and x = 2",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "e_x13_domain_change",
+ "domain": "Adversarial",
+ "family": "wrong-domain countermodel trap",
+ "reference": "∀ (x : ℕ), x - 1 + 1 = x → 1 ≤ x",
+ "lean": "∀ (x : ℤ), x - 1 + 1 = x → 1 ≤ x",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "ASSUMPTION_EQUIVALENT",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_WEAKER_BY_ASSUMPTION"
+ ],
+ "label_basis": "the ℕ statement is true; the ℤ statement fails at 0",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

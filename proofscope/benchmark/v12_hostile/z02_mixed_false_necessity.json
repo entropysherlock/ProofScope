@@ -1,0 +1,19 @@
+{
+ "id": "z02_mixed_false_necessity",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (n : Nat), 1 ≤ n → n ≠ 0",
+ "lean": "∀ (n : Nat), n = 3 → n ≠ 0",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_INCOMPARABLE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "label_basis": "v1.1 says REFERENCE_NEEDS_ASSUMPTION (unsound): its witness n = 0 violates the reference's own 1 ≤ n; the reference is true",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

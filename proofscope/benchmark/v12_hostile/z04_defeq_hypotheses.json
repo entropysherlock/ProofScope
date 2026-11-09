@@ -1,0 +1,19 @@
+{
+ "id": "z04_defeq_hypotheses",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (n : Nat), 1 ≤ n → n * 1 = n",
+ "lean": "∀ (n : Nat), 0 < n → n * 1 = n",
+ "expected": "NO_ASSUMPTION_DELTA",
+ "must_not_be": [
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "ASSUMPTION_INCOMPARABLE",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE"
+ ],
+ "label_basis": "0 < n unfolds to 1 ≤ n on Nat",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

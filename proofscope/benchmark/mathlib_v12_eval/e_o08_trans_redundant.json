@@ -1,0 +1,25 @@
+{
+ "id": "e_o08_trans_redundant",
+ "domain": "Order / lattices",
+ "family": "redundant hypothesis implied by others",
+ "reference": "∀ (α : Type) [PartialOrder α] (a b c : α), a ≤ b → b ≤ c → a ≤ c",
+ "lean": "∀ (α : Type) [PartialOrder α] (a b c : α), a ≤ b → b ≤ c → a ≤ c → a ≤ c",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "le_trans from the shared hypotheses",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}
