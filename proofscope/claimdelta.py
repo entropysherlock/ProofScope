@@ -259,9 +259,13 @@ def run_case(spec: dict, tc: Toolchain, build: Path, work: Path) -> dict:
 
 
 def _one(args) -> dict:
-    p, build, out = args
+    p, build, out = args[:3]
     spec = json.loads(Path(p).read_text())
     row = run_case(spec, Toolchain.find(), build, out / "work" / Path(p).stem)
+    if len(args) > 3 and args[3] and row["verdict"] == "INCONCLUSIVE":
+        # SOTA-15, opt-in: exact fragment criteria for cases the witness registry leaves open
+        from .scopeelim import fallback
+        row = fallback(spec, row, Toolchain.find(), out)
     row["expected_claimdelta"] = spec.get("expected_claimdelta")
     row["family"] = spec.get("family")
     row["split"] = spec.get("split")
@@ -273,6 +277,8 @@ def main(argv=None) -> int:
     ap.add_argument("specs", nargs="+", help="case JSON files (binders, *_hyp, *_concl)")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--jobs", type=int, default=1)
+    ap.add_argument("--scopeelim", action="store_true",
+                    help="on INCONCLUSIVE, try the ScopeElim fragment criteria (SOTA-15; off by default)")
     a = ap.parse_args(argv)
     tc = Toolchain.find()
     out = a.out.resolve()
@@ -281,9 +287,15 @@ def main(argv=None) -> int:
     if not b["ok"]:
         print(json.dumps(b, indent=2)[:3000])
         return 2
+    if a.scopeelim:
+        from .scopeelim import build_lib
+        b = build_lib(tc, out / "scopeelim_lib")
+        if not b["ok"]:
+            print(json.dumps(b, indent=2)[:3000])
+            return 2
     from concurrent.futures import ProcessPoolExecutor
     with ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
-        rows = list(ex.map(_one, [(p, build, out) for p in a.specs]))
+        rows = list(ex.map(_one, [(p, build, out, a.scopeelim) for p in a.specs]))
     for row in rows:
         print(row["id"], row["verdict"], "expected:", row["expected_claimdelta"], flush=True)
     (out / "claimdelta_results.json").write_text(json.dumps({"policy": POLICY, "rows": rows}, indent=2,

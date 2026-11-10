@@ -1,0 +1,13 @@
+SOTA-15 freeze: cases and engine hashed before the first evaluation run.
+Generator seed 20261110. Same author as the engine; cases were not inspected against engine output.
+
+861141f8cd4f0683a42ffc9ab671aa91ec5ae380f659035ccc792d00ec96e7e6  ../../proofscope/scopeelim.py
+5315d3912b9e7890e10669704fffcbf526718c87c0ee93ee55745c0e57e8bcbe  ../../proofscope/scope_expr.py
+44dabe18bd72b08b14c509e8d166e002588b5e6d181e3bbbb1265e41c50eff0c  ../../lean/ProofScope/ScopeElim.lean
+0a6f6ab990b7fbc275ba293d0fd10767413bc57db40158da01e1852ce3c4653c  ../../lean/ProofScope/ScopeCert.lean
+2103490afa8bd750f5b73b5c4b365b2bd388582ee281371157ef7fad8f69a979  ../../lean/ProofScope/HornFin.lean
+76ecf784ae1c67a3442258ff18ad8149b57416c09f36ea74ff534b6a022c49b2  ../../lean/ProofScope/MonoElim.lean
+39903862d46ef2472798e99136b0f4188e3b161050fb71c1f0b1e55addb74649  gen_cases.py
+11c123a7690e8a34b377367047a3b2c007ed2234547883c4e3a6071971d7940a  oracle.py
+3315171ec8b5c9be481f0ec183502347e50b7274e9f289ba068cf78e8fffc52d  z3_check.py
+5ec4d0570a7f3a3765ef023fcfd89fd863c875d7ca7ee0d287575d559bbd5d70  cases (hash of sorted per-file hashes)

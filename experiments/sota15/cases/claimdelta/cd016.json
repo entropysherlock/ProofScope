@@ -1,0 +1,15 @@
+{
+ "id": "cd016",
+ "family": "sota15",
+ "split": "sota15_eval",
+ "binders": [
+  [
+   "n",
+   "Nat"
+  ]
+ ],
+ "ref_hyp": "True",
+ "ref_concl": "2 ^ (2 * n) + n ≥ 3",
+ "lean_hyp": "n < 3",
+ "lean_concl": "2 ^ (n + 2) < 5"
+}
