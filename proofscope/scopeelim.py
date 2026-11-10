@@ -352,7 +352,7 @@ def _refute_tactic(F: Schema, ci: int, env: dict) -> str:
 
 def _sep_tactics(R: Schema, F: Schema, models: list[str], ci: int, env: dict, decidable: bool) -> list[str]:
     m = ", ".join(models)
-    holds = "(repeat' constructor) <;> (intros; first | omega | trivial | decide)"
+    holds = "(repeat' constructor) <;> (intros; first | omega | trivial | simp_all | (simp_all; omega) | decide)"
     slow = (f"refine ⟨{m}, ?_, ?_⟩; (dsimp only [{R.name}]; {holds}); "
             f"(dsimp only [{F.name}]; {_refute_tactic(F, ci, env)})")
     return ([f"refine ⟨{m}, ?_, ?_⟩ <;> decide"] if decidable else []) + [slow]

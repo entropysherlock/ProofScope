@@ -73,7 +73,7 @@ class TestEngine(unittest.TestCase):
                                [cl("y", "6", [["S", ["y"]]], ["S", ["y + 2"]])]))
         self.assertEqual(r["verdict"], "LEAN_WEAKER")
         self.assertTrue(r["complete_fragment"])
-        self.assertEqual(r["axioms"]["fwd"], [])
+        self.assertLessEqual(set(r["axioms"]["fwd"]), {"propext", "Quot.sound"})   # no choice
 
     def test_bounded_identical_and_vacuous(self):
         c = cl("x", "4", [["S", ["x"]]], ["S", ["x + 1"]])

@@ -26,15 +26,17 @@ def main(out: Path, jobs: int):
             r = se.compare(spec, tc, out / "lib", out / "work" / spec["id"])
             r["group"] = group
             r["oracle"] = oracle.truth(spec) if group == "horn_bounded" else None
+            return r
+        with ThreadPoolExecutor(max_workers=jobs) as ex:
+            got = list(ex.map(one, specs))
+        for r, spec in zip(got, specs):                 # Z3 is not thread-safe: run it serially
             t0 = time.time()
             try:
                 r["z3"] = z3_check.directions(spec)
             except Exception as e:                      # noqa: BLE001
                 r["z3"] = {"error": str(e)[:200]}
             r["z3_seconds"] = round(time.time() - t0, 2)
-            return r
-        with ThreadPoolExecutor(max_workers=jobs) as ex:
-            rows += list(ex.map(one, specs))
+        rows += got
     (out / "native_results.json").write_text(json.dumps({"rows": rows}, indent=1, ensure_ascii=False, default=str))
     summary = {}
     for g in ("horn_bounded", "horn_symbolic", "func"):
