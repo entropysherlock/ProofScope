@@ -47,11 +47,18 @@ jobs:
           cd "$RUNNER_TEMP/mathlib4"
           git checkout -q d13f23b723b8a846827a245b89c10fc7d3f11612
           test "$(git rev-parse HEAD)" = "d13f23b723b8a846827a245b89c10fc7d3f11612"
-          lake update
+          # Never run lake update: it upgrades pinned dependencies from Mathlib's lockfile.
+          git diff --exit-code -- lake-manifest.json lean-toolchain
+          cp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
           lake exe cache get
-          lake build Mathlib
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json" || { echo "::error::Mathlib dependency lockfile changed"; exit 1; }
+          if [ ! -s .lake/build/lib/lean/Mathlib.olean ]; then
+            echo "Prebuilt Mathlib.olean missing; using exact locked dependencies for fallback build"
+            lake build Mathlib
+          fi
           test -s .lake/build/lib/lean/Mathlib.olean
-          echo "Mathlib.olean exists after pinned build"
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          echo "Pinned Mathlib.olean available with original dependency lockfile"
           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
       - name: Build pinned Lean REPL for frozen engine
         shell: bash
@@ -121,7 +128,8 @@ jobs:
             python -m bench.sota7.replay --run pilot25_results/execution --public bench/pilot25_run/public --out pilot25_results/replay.jsonl > pilot25_results/replay.log 2>&1
             cat pilot25_results/replay.log
           else
-            mkdir -p pilot25_results\n            echo "NOT_RUN: execution not sealed" > pilot25_results/replay.log
+            mkdir -p pilot25_results
+            echo "NOT_RUN: execution not sealed" > pilot25_results/replay.log
           fi
       - name: Upload unscored records and logs regardless of outcome
         if: always()
