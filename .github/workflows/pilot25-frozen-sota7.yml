@@ -49,6 +49,9 @@ jobs:
           test "$(git rev-parse HEAD)" = "d13f23b723b8a846827a245b89c10fc7d3f11612"
           lake update
           lake exe cache get
+          lake build Mathlib
+          test -s .lake/build/lib/lean/Mathlib.olean
+          echo "Mathlib.olean exists after pinned build"
           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
       - name: Build pinned Lean REPL for frozen engine
         shell: bash
