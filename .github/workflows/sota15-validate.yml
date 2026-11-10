@@ -9,6 +9,8 @@ on:
       - "proofscope/**"
       - "tests/**"
       - "experiments/sota15/**"
+  pull_request:
+    branches: [v1.2-review]
   workflow_dispatch:
 
 permissions:
