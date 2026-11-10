@@ -1,0 +1,3 @@
+{"id": "e2_square_idem", "laws": {"assoc": "(x*y)*z = x*(y*z)", "comm": "x*y = y*x", "idem": "x*x = x"},
+ "P": "(a*b)*(a*b) = a*b", "Q": "a*a = a",
+ "note": "idempotence of products vs idempotence"}

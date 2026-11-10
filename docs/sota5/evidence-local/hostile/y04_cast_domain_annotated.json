@@ -1,0 +1,159 @@
+{
+ "id": "y04_cast_domain_annotated",
+ "reference": "∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1",
+ "lean": "∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1",
+ "engine": "cjcs-sota4-oneprocess",
+ "stats": {
+  "search_processes": 1,
+  "search_env_loads": 1,
+  "verify_processes": 2,
+  "repl_requests": 5,
+  "env_load_s": 1.07,
+  "search_s": 0.36,
+  "verify_s": 0.53
+ },
+ "stage1_refuted": [
+  "R"
+ ],
+ "search": {
+  "stage1": {
+   "link_R": {
+    "alt": 0,
+    "heartbeats_k": 78,
+    "name": "link_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_R": {
+    "alt": 0,
+    "heartbeats_k": 246,
+    "name": "wit_R",
+    "status": "proposed",
+    "tried": 4
+   },
+   "false_R": {
+    "alt": 0,
+    "heartbeats_k": 54,
+    "name": "false_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "link_L": {
+    "alt": 0,
+    "heartbeats_k": 87,
+    "name": "link_L",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_L": {
+    "heartbeats_k": 1353,
+    "last_error": "Function expected at\n  h\nbut this term has type\n  ↑(3 - 1) = ↑3 - 1\n\nNote: Expected a function because this term is being applied to the argument\n  false",
+    "name": "wit_L",
+    "status": "failed",
+    "tried": 4
+   },
+   "false_L": {
+    "name": "false_L",
+    "status": "dep_failed"
+   }
+  },
+  "stage2": {
+   "equiv_defeq": {
+    "heartbeats_k": 93,
+    "last_error": "Type mismatch\n  Iff.rfl\nhas type\n  ?m.32 ↔ ?m.32\nbut is expected to have type\n  (∀ (n : Nat), ↑(n - 1) = ↑n - 1) ↔ ∀ (n : Nat), 1 ≤ n → ↑(n - 1) = ↑n - 1",
+    "name": "equiv_defeq",
+    "status": "failed",
+    "tried": 1
+   },
+   "true_L": {
+    "alt": 2,
+    "heartbeats_k": 188,
+    "name": "true_L",
+    "status": "proposed",
+    "tried": 49
+   },
+   "diff_RL": {
+    "alt": 0,
+    "heartbeats_k": 85,
+    "name": "diff_RL",
+    "status": "proposed",
+    "tried": 1
+   },
+   "region_ref_excluded": {
+    "alt": 0,
+    "heartbeats_k": 272,
+    "name": "region_ref_excluded",
+    "status": "proposed",
+    "tried": 4
+   }
+  }
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.link_R",
+   "statement": "(∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1) ↔ (∀ (n : Nat), ↑(n - (1 : Nat)) = ↑n - (1 : Int))",
+   "axioms": []
+  },
+  "wit_R": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.wit_R",
+   "statement": "∃ (n : Nat), ¬ (↑(n - (1 : Nat)) = ↑n - (1 : Int)) ∧ True",
+   "axioms": []
+  },
+  "false_R": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.false_R",
+   "statement": "¬ (∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1)",
+   "axioms": []
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.link_L",
+   "statement": "(∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1) ↔ (∀ (n : Nat), ((1 : Nat) ≤ n) → ↑(n - (1 : Nat)) = ↑n - (1 : Int))",
+   "axioms": []
+  },
+  "true_L": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.true_L",
+   "statement": "∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  },
+  "diff_RL": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.diff_RL",
+   "statement": "¬ ((∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1) ↔ (∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1))",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  },
+  "region_ref_excluded": {
+   "declaration": "ProofScopeCert.CJ_y04_cast_domain_annotated.region_ref_excluded",
+   "statement": "∃ (n : Nat), True ∧ True ∧ ¬ (((1 : Nat) ≤ n)) ∧ ¬ (↑(n - (1 : Nat)) = ↑n - (1 : Int))",
+   "axioms": []
+  }
+ },
+ "rejected": {},
+ "certificate_source": "set_option maxHeartbeats 200000\nset_option linter.unusedVariables false\n\nnamespace ProofScopeCert.CJ_y04_cast_domain_annotated\n\ntheorem link_R : (∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1) ↔ (∀ (n : Nat), ↑(n - (1 : Nat)) = ↑n - (1 : Int)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem wit_R : ∃ (n : Nat), ¬ (↑(n - (1 : Nat)) = ↑n - (1 : Int)) ∧ True := by\n  first\n    | ((refine ⟨0, ?_⟩; and_intros <;> first | (decide; done) | (trivial; done) | ((intros; decide); done) | ((intro a; cases a); done) | ((intros; simp_all); done) | ((intros; omega); done) | ((intro h; obtain ⟨e⟩ := h; cases e); done) | ((intros; trivial); done) | ((constructor; decide); done) | (simp; done) | (omega; done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0 0; revert this; decide); done) | ((intro h; have := h 0 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true 0; revert this; decide); done) | ((intro h; have := h 0 true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false 0; revert this; decide); done) | ((intro h; have := h 0 false true; revert this; decide); done) | ((intro h; have := h 0; revert this; decide); done) | ((intro h; have := h 0; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0 0; revert this; decide); done) | ((intro h; have := h true 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true true; revert this; decide); done) | ((intro h; have := h true true; revert this; decide); done) | ((intro h; have := h true true 0; revert this; decide); done) | ((intro h; have := h true true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true false; revert this; decide); done) | ((intro h; have := h true false; revert this; decide); done) | ((intro h; have := h true false 0; revert this; decide); done) | ((intro h; have := h true false true; revert this; decide); done) | ((intro h; have := h true; revert this; decide); done) | ((intro h; have := h true; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0 0; revert this; decide); done) | ((intro h; have := h false 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false true; revert this; decide); done) | ((intro h; have := h false true; revert this; decide); done) | ((intro h; have := h false true 0; revert this; decide); done) | ((intro h; have := h false true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false false; revert this; decide); done) | ((intro h; have := h false false; revert this; decide); done) | ((intro h; have := h false false 0; revert this; decide); done) | ((intro h; have := h false false true; revert this; decide); done) | ((intro h; have := h false; revert this; decide); done) | ((intro h; have := h false; omega); done)); done)\n\ntheorem false_R : ¬ (∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1) := by\n  first\n    | ((intro h; have hc := (link_R).mp h; obtain ⟨w0, hn, -⟩ := wit_R; exact hn (@hc w0)); done)\n\ntheorem link_L : (∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1) ↔ (∀ (n : Nat), ((1 : Nat) ≤ n) → ↑(n - (1 : Nat)) = ↑n - (1 : Int)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem true_L : ∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1 := by\n  first\n    | (((intros; omega)); done)\n\ntheorem diff_RL : ¬ ((∀ (n : Nat), (↑(n - 1) : Int) = (↑n : Int) - 1) ↔ (∀ (n : Nat), 1 ≤ n → (↑(n - 1) : Int) = (↑n : Int) - 1)) := by\n  first\n    | ((exact fun h => false_R (h.mpr true_L)); done)\n\ntheorem region_ref_excluded : ∃ (n : Nat), True ∧ True ∧ ¬ (((1 : Nat) ≤ n)) ∧ ¬ (↑(n - (1 : Nat)) = ↑n - (1 : Int)) := by\n  first\n    | ((refine ⟨0, ?_⟩; and_intros <;> first | (decide; done) | (trivial; done) | ((intros; decide); done) | ((intro a; cases a); done) | ((intros; simp_all); done) | ((intros; omega); done) | ((intro h; obtain ⟨e⟩ := h; cases e); done) | ((intros; trivial); done) | ((constructor; decide); done) | (simp; done) | (omega; done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0 0; revert this; decide); done) | ((intro h; have := h 0 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true 0; revert this; decide); done) | ((intro h; have := h 0 true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false 0; revert this; decide); done) | ((intro h; have := h 0 false true; revert this; decide); done) | ((intro h; have := h 0; revert this; decide); done) | ((intro h; have := h 0; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0 0; revert this; decide); done) | ((intro h; have := h true 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true true; revert this; decide); done) | ((intro h; have := h true true; revert this; decide); done) | ((intro h; have := h true true 0; revert this; decide); done) | ((intro h; have := h true true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true false; revert this; decide); done) | ((intro h; have := h true false; revert this; decide); done) | ((intro h; have := h true false 0; revert this; decide); done) | ((intro h; have := h true false true; revert this; decide); done) | ((intro h; have := h true; revert this; decide); done) | ((intro h; have := h true; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0 0; revert this; decide); done) | ((intro h; have := h false 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false true; revert this; decide); done) | ((intro h; have := h false true; revert this; decide); done) | ((intro h; have := h false true 0; revert this; decide); done) | ((intro h; have := h false true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false false; revert this; decide); done) | ((intro h; have := h false false; revert this; decide); done) | ((intro h; have := h false false 0; revert this; decide); done) | ((intro h; have := h false false true; revert this; decide); done) | ((intro h; have := h false; revert this; decide); done) | ((intro h; have := h false; omega); done)); done)\n\nend ProofScopeCert.CJ_y04_cast_domain_annotated\n\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.link_R\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.wit_R\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.false_R\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.link_L\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.true_L\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.diff_RL\n#print axioms ProofScopeCert.CJ_y04_cast_domain_annotated.region_ref_excluded\n",
+ "proposed_not_certified": [],
+ "witnesses": {
+  "wit_R": [
+   "0"
+  ],
+  "region_ref_excluded": [
+   "0"
+  ]
+ },
+ "regions": [
+  "region_ref_excluded"
+ ],
+ "verdict": "CERTIFIED_LOGICAL_DIFFERENCE",
+ "direction": "reference_false_formalization_true",
+ "theorem": "CJCS.cjcs_sound",
+ "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+ "domain": null,
+ "family": null,
+ "split": "sota5_hostile",
+ "must_not_be": [
+  "CERTIFIED_LOGICAL_EQUIVALENCE"
+ ]
+}

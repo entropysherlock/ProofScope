@@ -1,0 +1,139 @@
+{
+ "id": "y02_unrelated_both_false",
+ "reference": "2 + 2 = 5",
+ "lean": "∀ (n : Nat), n = 0",
+ "engine": "cjcs-sota4-oneprocess",
+ "stats": {
+  "search_processes": 1,
+  "search_env_loads": 1,
+  "verify_processes": 2,
+  "repl_requests": 5,
+  "env_load_s": 0.98,
+  "search_s": 0.27,
+  "verify_s": 0.57
+ },
+ "stage1_refuted": [
+  "L",
+  "R"
+ ],
+ "search": {
+  "stage1": {
+   "link_R": {
+    "alt": 0,
+    "heartbeats_k": 67,
+    "name": "link_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_R": {
+    "alt": 0,
+    "heartbeats_k": 123,
+    "name": "wit_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "false_R": {
+    "alt": 0,
+    "heartbeats_k": 54,
+    "name": "false_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "link_L": {
+    "alt": 0,
+    "heartbeats_k": 27,
+    "name": "link_L",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_L": {
+    "alt": 1,
+    "heartbeats_k": 511,
+    "name": "wit_L",
+    "status": "proposed",
+    "tried": 6
+   },
+   "false_L": {
+    "alt": 0,
+    "heartbeats_k": 23,
+    "name": "false_L",
+    "status": "proposed",
+    "tried": 1
+   }
+  },
+  "stage2": {
+   "equiv_defeq": {
+    "heartbeats_k": 62,
+    "last_error": "Type mismatch\n  Iff.rfl\nhas type\n  ?m.19 ↔ ?m.19\nbut is expected to have type\n  2 + 2 = 5 ↔ ∀ (n : Nat), n = 0",
+    "name": "equiv_defeq",
+    "status": "failed",
+    "tried": 1
+   },
+   "equiv_both_false": {
+    "alt": 0,
+    "heartbeats_k": 60,
+    "name": "equiv_both_false",
+    "status": "proposed",
+    "tried": 1
+   }
+  }
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.link_R",
+   "statement": "(2 + 2 = 5) ↔ ((2 : Nat) + (2 : Nat) = (5 : Nat))",
+   "axioms": []
+  },
+  "wit_R": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.wit_R",
+   "statement": "¬ ((2 : Nat) + (2 : Nat) = (5 : Nat)) ∧ True",
+   "axioms": []
+  },
+  "false_R": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.false_R",
+   "statement": "¬ (2 + 2 = 5)",
+   "axioms": []
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.link_L",
+   "statement": "(∀ (n : Nat), n = 0) ↔ (∀ (n : Nat), n = (0 : Nat))",
+   "axioms": []
+  },
+  "wit_L": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.wit_L",
+   "statement": "∃ (n : Nat), ¬ (n = (0 : Nat)) ∧ True",
+   "axioms": []
+  },
+  "false_L": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.false_L",
+   "statement": "¬ (∀ (n : Nat), n = 0)",
+   "axioms": []
+  },
+  "equiv_both_false": {
+   "declaration": "ProofScopeCert.CJ_y02_unrelated_both_false.equiv_both_false",
+   "statement": "(2 + 2 = 5) ↔ (∀ (n : Nat), n = 0)",
+   "axioms": []
+  }
+ },
+ "rejected": {},
+ "certificate_source": "set_option maxHeartbeats 200000\nset_option linter.unusedVariables false\n\nnamespace ProofScopeCert.CJ_y02_unrelated_both_false\n\ntheorem link_R : (2 + 2 = 5) ↔ ((2 : Nat) + (2 : Nat) = (5 : Nat)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem wit_R : ¬ ((2 : Nat) + (2 : Nat) = (5 : Nat)) ∧ True := by\n  first\n    | ((and_intros <;> first | (decide; done) | (trivial; done) | ((intros; decide); done) | ((intro a; cases a); done) | ((intros; simp_all); done) | ((intros; omega); done) | ((intro h; obtain ⟨e⟩ := h; cases e); done) | ((intros; trivial); done) | ((constructor; decide); done) | (simp; done) | (omega; done) | ((intro h; obtain ⟨h⟩ := h; have := h true true; revert this; decide); done) | ((intro h; have := h true true; revert this; decide); done) | ((intro h; have := h true true true; revert this; decide); done) | ((intro h; have := h true true false; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true false; revert this; decide); done) | ((intro h; have := h true false; revert this; decide); done) | ((intro h; have := h true false true; revert this; decide); done) | ((intro h; have := h true false false; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true (0 : Fin 3); revert this; decide); done) | ((intro h; have := h true (0 : Fin 3); revert this; decide); done) | ((intro h; have := h true (0 : Fin 3) true; revert this; decide); done) | ((intro h; have := h true (0 : Fin 3) false; revert this; decide); done) | ((intro h; have := h true; revert this; decide); done) | ((intro h; have := h true; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h false true; revert this; decide); done) | ((intro h; have := h false true; revert this; decide); done) | ((intro h; have := h false true true; revert this; decide); done) | ((intro h; have := h false true false; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false false; revert this; decide); done) | ((intro h; have := h false false; revert this; decide); done) | ((intro h; have := h false false true; revert this; decide); done) | ((intro h; have := h false false false; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false (0 : Fin 3); revert this; decide); done) | ((intro h; have := h false (0 : Fin 3); revert this; decide); done) | ((intro h; have := h false (0 : Fin 3) true; revert this; decide); done) | ((intro h; have := h false (0 : Fin 3) false; revert this; decide); done) | ((intro h; have := h false; revert this; decide); done) | ((intro h; have := h false; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h (0 : Fin 3) true; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) true; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) true true; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) true false; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h (0 : Fin 3) false; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) false; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) false true; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) false false; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h (0 : Fin 3) (0 : Fin 3); revert this; decide); done) | ((intro h; have := h (0 : Fin 3) (0 : Fin 3); revert this; decide); done) | ((intro h; have := h (0 : Fin 3) (0 : Fin 3) true; revert this; decide); done) | ((intro h; have := h (0 : Fin 3) (0 : Fin 3) false; revert this; decide); done) | ((intro h; have := h (0 : Fin 3); revert this; decide); done) | ((intro h; have := h (0 : Fin 3); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0) (y0); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0) (y0); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0) (y0); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0 + 1); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0 + 1) (y0 + 1); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0 + 1); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0 + 1) (y0 + 1); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0 + 1); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (y0 + 1) (y0 + 1); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (0); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (0) (0); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (0); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (0) (0); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (0); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (0) (0); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (1); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (1) (1); omega); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (1); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (1) (1); simp_all); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (1); (revert this; decide)); done) | ((intro hx; obtain ⟨y0, hy⟩ := hx; have := hy (1) (1); (revert this; decide)); done)); done)\n\ntheorem false_R : ¬ (2 + 2 = 5) := by\n  first\n    | ((intro h; have hc := (link_R).mp h; obtain ⟨hn, -⟩ := wit_R; exact hn (hc)); done)\n\ntheorem link_L : (∀ (n : Nat), n = 0) ↔ (∀ (n : Nat), n = (0 : Nat)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem wit_L : ∃ (n : Nat), ¬ (n = (0 : Nat)) ∧ True := by\n  first\n    | ((refine ⟨1, ?_⟩; and_intros <;> first | (decide; done) | (trivial; done) | ((intros; decide); done) | ((intro a; cases a); done) | ((intros; simp_all); done) | ((intros; omega); done) | ((intro h; obtain ⟨e⟩ := h; cases e); done) | ((intros; trivial); done) | ((constructor; decide); done) | (simp; done) | (omega; done) | ((intro h; obtain ⟨h⟩ := h; have := h 1 1; revert this; decide); done) | ((intro h; have := h 1 1; revert this; decide); done) | ((intro h; have := h 1 1 1; revert this; decide); done) | ((intro h; have := h 1 1 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 1 true; revert this; decide); done) | ((intro h; have := h 1 true; revert this; decide); done) | ((intro h; have := h 1 true 1; revert this; decide); done) | ((intro h; have := h 1 true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 1 false; revert this; decide); done) | ((intro h; have := h 1 false; revert this; decide); done) | ((intro h; have := h 1 false 1; revert this; decide); done) | ((intro h; have := h 1 false true; revert this; decide); done) | ((intro h; have := h 1; revert this; decide); done) | ((intro h; have := h 1; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h true 1; revert this; decide); done) | ((intro h; have := h true 1; revert this; decide); done) | ((intro h; have := h true 1 1; revert this; decide); done) | ((intro h; have := h true 1 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true true; revert this; decide); done) | ((intro h; have := h true true; revert this; decide); done) | ((intro h; have := h true true 1; revert this; decide); done) | ((intro h; have := h true true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true false; revert this; decide); done) | ((intro h; have := h true false; revert this; decide); done) | ((intro h; have := h true false 1; revert this; decide); done) | ((intro h; have := h true false true; revert this; decide); done) | ((intro h; have := h true; revert this; decide); done) | ((intro h; have := h true; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h false 1; revert this; decide); done) | ((intro h; have := h false 1; revert this; decide); done) | ((intro h; have := h false 1 1; revert this; decide); done) | ((intro h; have := h false 1 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false true; revert this; decide); done) | ((intro h; have := h false true; revert this; decide); done) | ((intro h; have := h false true 1; revert this; decide); done) | ((intro h; have := h false true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false false; revert this; decide); done) | ((intro h; have := h false false; revert this; decide); done) | ((intro h; have := h false false 1; revert this; decide); done) | ((intro h; have := h false false true; revert this; decide); done) | ((intro h; have := h false; revert this; decide); done) | ((intro h; have := h false; omega); done)); done)\n\ntheorem false_L : ¬ (∀ (n : Nat), n = 0) := by\n  first\n    | ((intro h; have hc := (link_L).mp h; obtain ⟨w0, hn, -⟩ := wit_L; exact hn (@hc w0)); done)\n\ntheorem equiv_both_false : (2 + 2 = 5) ↔ (∀ (n : Nat), n = 0) := by\n  first\n    | ((exact ⟨fun h => absurd h false_R, fun h => absurd h false_L⟩); done)\n\nend ProofScopeCert.CJ_y02_unrelated_both_false\n\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.link_R\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.wit_R\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.false_R\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.link_L\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.wit_L\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.false_L\n#print axioms ProofScopeCert.CJ_y02_unrelated_both_false.equiv_both_false\n",
+ "proposed_not_certified": [],
+ "witnesses": {
+  "wit_R": [],
+  "wit_L": [
+   "1"
+  ]
+ },
+ "regions": [],
+ "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+ "direction": "both_false",
+ "theorem": "CJCS.both_false_equiv",
+ "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+ "domain": null,
+ "family": null,
+ "split": "sota5_hostile",
+ "must_not_be": [
+  "CERTIFIED_LOGICAL_DIFFERENCE"
+ ]
+}

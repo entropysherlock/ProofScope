@@ -1,0 +1,124 @@
+{
+ "id": "e1_absorption",
+ "laws": {
+  "assoc": "(x*y)*z = x*(y*z)",
+  "comm": "x*y = y*x",
+  "idem": "x*x = x"
+ },
+ "P": "a*(a*b) = a*b",
+ "Q": "(a*b)*b = a*b",
+ "subsets": {
+  "none": {
+   "status": "REFUTED",
+   "model": "m0"
+  },
+  "assoc": {
+   "status": "REFUTED",
+   "model": "m0"
+  },
+  "comm": {
+   "status": "ENTAILS",
+   "tactic": "constructor <;> intro hpq <;> intros <;> grind"
+  },
+  "idem": {
+   "status": "REFUTED",
+   "model": "m1"
+  },
+  "assoc_comm": {
+   "status": "ENTAILS_BY_MONOTONICITY",
+   "from": "comm"
+  },
+  "assoc_idem": {
+   "status": "ENTAILS",
+   "tactic": "constructor <;> intro hpq <;> intros <;> grind"
+  },
+  "comm_idem": {
+   "status": "ENTAILS_BY_MONOTONICITY",
+   "from": "comm"
+  },
+  "assoc_comm_idem": {
+   "status": "ENTAILS_BY_MONOTONICITY",
+   "from": "comm"
+  }
+ },
+ "models": {
+  "m0": {
+   "size": 3,
+   "table": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2
+   ],
+   "satisfies": [
+    "assoc"
+   ]
+  },
+  "m1": {
+   "size": 3,
+   "table": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    1,
+    2
+   ],
+   "satisfies": [
+    "idem"
+   ]
+  }
+ },
+ "minimal_sufficient": [
+  [
+   "comm"
+  ],
+  [
+   "assoc",
+   "idem"
+  ]
+ ],
+ "necessary_in_family": [],
+ "certified": true,
+ "axioms": {
+  "suff_comm": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "suff_assoc_idem": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "M_m0_sep": [
+   "propext"
+  ],
+  "M_m1_sep": [
+   "propext"
+  ],
+  "minimal_comm": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "minimal_assoc_idem": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ]
+ },
+ "compile_rc": 0,
+ "leanchecker_rc": 0,
+ "compile_errors": [],
+ "certificate": "/tmp/lr/e1_absorption/LR_e1_absorption.lean",
+ "scope": "relative to the declared candidate family and the magma signature; inclusion-minimal, not minimum; UNKNOWN is not a negative result"
+}

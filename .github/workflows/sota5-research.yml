@@ -1,0 +1,228 @@
+name: ProofScope SOTA-5 semantic integrity (research; development evidence, not a benchmark)
+
+# Research branch research/sota5-semantic-integrity only. Read-only token, no secrets; external repositories
+# are cloned at pinned commits. Research acceptance checks are reported in sota5-summary; a green run does
+# not mean every research criterion passed.
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/sota5-semantic-integrity]
+
+permissions:
+  contents: read
+
+env:
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+  REPL_REV: 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+
+jobs:
+  baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota5-semantic-integrity
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: SOTA-4 base, frozen sources and datasets unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          git merge-base --is-ancestor b7f6cf8d3da950e8cefbbd33a50b91a4d25e0933 HEAD
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c | tee evidence/v12-freeze.txt
+          grep -E '^[0-9a-f]{64}  ' docs/sota4/SOTA3_FREEZE.txt | sha256sum -c | tee evidence/sota3-freeze.txt
+          python -m bench.sota4.integrity verify --require-legacy research/cjcs/core_heldout.MANIFEST.json research/cjcs/core_dev.MANIFEST.json | tee evidence/manifests.jsonl
+          git diff --stat b7f6cf8d3da950e8cefbbd33a50b91a4d25e0933 -- research/cjcs/core_dev research/cjcs/core_heldout research/cjcs/sota4_hostile bench/dev_sota3 bench/fixtures docs/sota4 proofscope/experimental/cjcs4.py proofscope/experimental/cjcs.py lean/ProofScope bench/adapters bench/runner.py | tee evidence/protected-diff.txt
+          test ! -s evidence/protected-diff.txt
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota5-baseline
+          path: evidence/
+          if-no-files-found: warn
+
+  theory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota5-semantic-integrity
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Relations.lean (autoImplicit off; no sorryAx; only standard axioms; leanchecker --fresh)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence "$RUNNER_TEMP/r"
+          lean -o "$RUNNER_TEMP/r/Relations.olean" research/sota5/Relations.lean 2>&1 | tee evidence/relations-axioms.log
+          ! grep -q sorryAx evidence/relations-axioms.log
+          ! grep -q ': error' evidence/relations-axioms.log
+          test "$(grep -c "depends on axioms\|does not depend on any axioms" evidence/relations-axioms.log)" = 14
+          ! grep "depends on axioms" evidence/relations-axioms.log | grep -vE 'axioms: \[(propext|Classical.choice|Quot.sound)(, (propext|Classical.choice|Quot.sound))*\]$'
+          (cd "$RUNNER_TEMP/r" && LEAN_PATH="$RUNNER_TEMP/r" leanchecker --fresh Relations) 2>&1 | tee evidence/relations-leanchecker.log
+      - name: Law-relative prototype (certified minimal sufficient law sets) and its tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          for e in e1_absorption e2_square_idem; do python -m proofscope.experimental.lawrel research/sota5/lawrel/$e.json --out evidence/lawrel/$e | tee evidence/lawrel-$e.log; done
+          python -m unittest tests.sota5.test_lawrel tests.sota5.test_relations -v 2>&1 | tee evidence/lawrel-tests.log
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota5-theory
+          path: evidence/
+          if-no-files-found: warn
+
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota5-semantic-integrity
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Lean REPL (leanprover-community/repl v4.34.0, pinned commit; built with Lean 4.34.1)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl" && git checkout -q "$REPL_REV"
+          test "$(git rev-parse HEAD)" = "$REPL_REV"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl 2>&1 | tail -n 5
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: d03 regression (core analog), hostile pairs, SOTA-4 tests unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          python -m unittest tests.sota5.test_d03_regression tests.sota4.test_engine_hostile tests.sota4.test_integrity -v 2>&1 | tee evidence/tests.log
+          python -m proofscope.experimental.cjcs4 run research/cjcs/sota5_hostile/*.json --out evidence/hostile --jobs 1 | tee evidence/hostile.log
+          python -m bench.sota5.report hostile --rows evidence/hostile/rows --specs research/cjcs/sota5_hostile | tee evidence/hostile.md
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota5-core
+          path: |
+            evidence/
+            !evidence/**/build/**
+          if-no-files-found: warn
+
+  mathlib:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota5-semantic-integrity
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Mathlib at the pinned revision (binary cache)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ml" && cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
+          for i in 1 2 3; do lake update && break || sleep 30; done
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Lean REPL (leanprover-community/repl v4.34.0, pinned commit; built with Lean 4.34.1)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl" && git checkout -q "$REPL_REV"
+          test "$(git rev-parse HEAD)" = "$REPL_REV"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl 2>&1 | tail -n 5
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Adapter audit (v1 print vs v2 print; frozen check vs standalone check) on the unchanged 27 cases
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p evidence
+          python -m bench.sota5.specs --cases bench/dev_sota3/combined.cases.jsonl --gold bench/dev_sota3/gold_provisional.jsonl --shard ${{ matrix.shard }}/4 --out specs 2>&1 | tee evidence/adapter-audit-${{ matrix.shard }}.log
+      - name: Corrected extended measurement (same engine, same 900 CPU-s ceiling, round-trip enforced)
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        shell: bash
+        run: |
+          set -uo pipefail
+          ls specs/*.json >/dev/null 2>&1 && python -m bench.sota4.measure --engine cjcs4 --specs specs/*.json --cpu-ceiling 900 --mem-mb 14000 --out evidence/measure-${{ matrix.shard }} 2>&1 | tee evidence/measure-${{ matrix.shard }}.log
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota5-mathlib-${{ matrix.shard }}
+          path: |
+            evidence/
+            specs/
+            !evidence/**/shim/**
+            !evidence/**/build/**
+            !specs/_prep/**/*.olean
+          if-no-files-found: warn
+
+  summary:
+    needs: [baseline, theory, core, mathlib]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota5-semantic-integrity
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: sota5-mathlib-*
+          path: mathlib
+      - name: Research acceptance checks (reported, not enforced as CI gates)
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p summary
+          python -m bench.sota5.report summary --mathlib mathlib --out summary/sota5_summary.json | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota5-summary
+          path: summary/
+          if-no-files-found: warn

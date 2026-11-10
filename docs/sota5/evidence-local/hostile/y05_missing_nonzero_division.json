@@ -1,0 +1,142 @@
+{
+ "id": "y05_missing_nonzero_division",
+ "reference": "∀ (n : Nat), n / n = 1",
+ "lean": "∀ (n : Nat), n ≠ 0 → n / n = 1",
+ "engine": "cjcs-sota4-oneprocess",
+ "stats": {
+  "search_processes": 1,
+  "search_env_loads": 1,
+  "verify_processes": 2,
+  "repl_requests": 5,
+  "env_load_s": 1.17,
+  "search_s": 3.88,
+  "verify_s": 0.55
+ },
+ "stage1_refuted": [
+  "R"
+ ],
+ "search": {
+  "stage1": {
+   "link_R": {
+    "alt": 0,
+    "heartbeats_k": 38,
+    "name": "link_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_R": {
+    "alt": 0,
+    "heartbeats_k": 225,
+    "name": "wit_R",
+    "status": "proposed",
+    "tried": 4
+   },
+   "false_R": {
+    "alt": 0,
+    "heartbeats_k": 31,
+    "name": "false_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "link_L": {
+    "alt": 0,
+    "heartbeats_k": 47,
+    "name": "link_L",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_L": {
+    "heartbeats_k": 1088,
+    "last_error": "Function expected at\n  h\nbut this term has type\n  3 / 3 = 1\n\nNote: Expected a function because this term is being applied to the argument\n  false",
+    "name": "wit_L",
+    "status": "failed",
+    "tried": 4
+   },
+   "false_L": {
+    "name": "false_L",
+    "status": "dep_failed"
+   }
+  },
+  "stage2": {
+   "equiv_defeq": {
+    "heartbeats_k": 48,
+    "last_error": "Type mismatch\n  Iff.rfl\nhas type\n  ?m.19 ↔ ?m.19\nbut is expected to have type\n  (∀ (n : Nat), n / n = 1) ↔ ∀ (n : Nat), n ≠ 0 → n / n = 1",
+    "name": "equiv_defeq",
+    "status": "failed",
+    "tried": 1
+   },
+   "true_L": {
+    "heartbeats_k": 7958,
+    "last_error": "`exact?` could not close the goal. Try `apply?` to see partial suggestions.",
+    "name": "true_L",
+    "status": "failed",
+    "tried": 49
+   },
+   "diff_RL": {
+    "name": "diff_RL",
+    "status": "dep_failed"
+   },
+   "region_ref_excluded": {
+    "alt": 0,
+    "heartbeats_k": 250,
+    "name": "region_ref_excluded",
+    "status": "proposed",
+    "tried": 4
+   }
+  }
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.CJ_y05_missing_nonzero_division.link_R",
+   "statement": "(∀ (n : Nat), n / n = 1) ↔ (∀ (n : Nat), n / n = (1 : Nat))",
+   "axioms": []
+  },
+  "wit_R": {
+   "declaration": "ProofScopeCert.CJ_y05_missing_nonzero_division.wit_R",
+   "statement": "∃ (n : Nat), ¬ (n / n = (1 : Nat)) ∧ True",
+   "axioms": []
+  },
+  "false_R": {
+   "declaration": "ProofScopeCert.CJ_y05_missing_nonzero_division.false_R",
+   "statement": "¬ (∀ (n : Nat), n / n = 1)",
+   "axioms": []
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.CJ_y05_missing_nonzero_division.link_L",
+   "statement": "(∀ (n : Nat), n ≠ 0 → n / n = 1) ↔ (∀ (n : Nat), (n ≠ (0 : Nat)) → n / n = (1 : Nat))",
+   "axioms": []
+  },
+  "region_ref_excluded": {
+   "declaration": "ProofScopeCert.CJ_y05_missing_nonzero_division.region_ref_excluded",
+   "statement": "∃ (n : Nat), True ∧ True ∧ ¬ ((n ≠ (0 : Nat))) ∧ ¬ (n / n = (1 : Nat))",
+   "axioms": []
+  }
+ },
+ "rejected": {},
+ "certificate_source": "set_option maxHeartbeats 200000\nset_option linter.unusedVariables false\n\nnamespace ProofScopeCert.CJ_y05_missing_nonzero_division\n\ntheorem link_R : (∀ (n : Nat), n / n = 1) ↔ (∀ (n : Nat), n / n = (1 : Nat)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem wit_R : ∃ (n : Nat), ¬ (n / n = (1 : Nat)) ∧ True := by\n  first\n    | ((refine ⟨0, ?_⟩; and_intros <;> first | (decide; done) | (trivial; done) | ((intros; decide); done) | ((intro a; cases a); done) | ((intros; simp_all); done) | ((intros; omega); done) | ((intro h; obtain ⟨e⟩ := h; cases e); done) | ((intros; trivial); done) | ((constructor; decide); done) | (simp; done) | (omega; done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0 0; revert this; decide); done) | ((intro h; have := h 0 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true 0; revert this; decide); done) | ((intro h; have := h 0 true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false 0; revert this; decide); done) | ((intro h; have := h 0 false true; revert this; decide); done) | ((intro h; have := h 0; revert this; decide); done) | ((intro h; have := h 0; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0 0; revert this; decide); done) | ((intro h; have := h true 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true true; revert this; decide); done) | ((intro h; have := h true true; revert this; decide); done) | ((intro h; have := h true true 0; revert this; decide); done) | ((intro h; have := h true true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true false; revert this; decide); done) | ((intro h; have := h true false; revert this; decide); done) | ((intro h; have := h true false 0; revert this; decide); done) | ((intro h; have := h true false true; revert this; decide); done) | ((intro h; have := h true; revert this; decide); done) | ((intro h; have := h true; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0 0; revert this; decide); done) | ((intro h; have := h false 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false true; revert this; decide); done) | ((intro h; have := h false true; revert this; decide); done) | ((intro h; have := h false true 0; revert this; decide); done) | ((intro h; have := h false true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false false; revert this; decide); done) | ((intro h; have := h false false; revert this; decide); done) | ((intro h; have := h false false 0; revert this; decide); done) | ((intro h; have := h false false true; revert this; decide); done) | ((intro h; have := h false; revert this; decide); done) | ((intro h; have := h false; omega); done)); done)\n\ntheorem false_R : ¬ (∀ (n : Nat), n / n = 1) := by\n  first\n    | ((intro h; have hc := (link_R).mp h; obtain ⟨w0, hn, -⟩ := wit_R; exact hn (@hc w0)); done)\n\ntheorem link_L : (∀ (n : Nat), n ≠ 0 → n / n = 1) ↔ (∀ (n : Nat), (n ≠ (0 : Nat)) → n / n = (1 : Nat)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem region_ref_excluded : ∃ (n : Nat), True ∧ True ∧ ¬ ((n ≠ (0 : Nat))) ∧ ¬ (n / n = (1 : Nat)) := by\n  first\n    | ((refine ⟨0, ?_⟩; and_intros <;> first | (decide; done) | (trivial; done) | ((intros; decide); done) | ((intro a; cases a); done) | ((intros; simp_all); done) | ((intros; omega); done) | ((intro h; obtain ⟨e⟩ := h; cases e); done) | ((intros; trivial); done) | ((constructor; decide); done) | (simp; done) | (omega; done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0; revert this; decide); done) | ((intro h; have := h 0 0 0; revert this; decide); done) | ((intro h; have := h 0 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true; revert this; decide); done) | ((intro h; have := h 0 true 0; revert this; decide); done) | ((intro h; have := h 0 true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false; revert this; decide); done) | ((intro h; have := h 0 false 0; revert this; decide); done) | ((intro h; have := h 0 false true; revert this; decide); done) | ((intro h; have := h 0; revert this; decide); done) | ((intro h; have := h 0; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0; revert this; decide); done) | ((intro h; have := h true 0 0; revert this; decide); done) | ((intro h; have := h true 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true true; revert this; decide); done) | ((intro h; have := h true true; revert this; decide); done) | ((intro h; have := h true true 0; revert this; decide); done) | ((intro h; have := h true true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h true false; revert this; decide); done) | ((intro h; have := h true false; revert this; decide); done) | ((intro h; have := h true false 0; revert this; decide); done) | ((intro h; have := h true false true; revert this; decide); done) | ((intro h; have := h true; revert this; decide); done) | ((intro h; have := h true; omega); done) | ((intro h; obtain ⟨h⟩ := h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0; revert this; decide); done) | ((intro h; have := h false 0 0; revert this; decide); done) | ((intro h; have := h false 0 true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false true; revert this; decide); done) | ((intro h; have := h false true; revert this; decide); done) | ((intro h; have := h false true 0; revert this; decide); done) | ((intro h; have := h false true true; revert this; decide); done) | ((intro h; obtain ⟨h⟩ := h; have := h false false; revert this; decide); done) | ((intro h; have := h false false; revert this; decide); done) | ((intro h; have := h false false 0; revert this; decide); done) | ((intro h; have := h false false true; revert this; decide); done) | ((intro h; have := h false; revert this; decide); done) | ((intro h; have := h false; omega); done)); done)\n\nend ProofScopeCert.CJ_y05_missing_nonzero_division\n\n#print axioms ProofScopeCert.CJ_y05_missing_nonzero_division.link_R\n#print axioms ProofScopeCert.CJ_y05_missing_nonzero_division.wit_R\n#print axioms ProofScopeCert.CJ_y05_missing_nonzero_division.false_R\n#print axioms ProofScopeCert.CJ_y05_missing_nonzero_division.link_L\n#print axioms ProofScopeCert.CJ_y05_missing_nonzero_division.region_ref_excluded\n",
+ "proposed_not_certified": [],
+ "witnesses": {
+  "wit_R": [
+   "0"
+  ],
+  "region_ref_excluded": [
+   "0"
+  ]
+ },
+ "regions": [
+  "region_ref_excluded"
+ ],
+ "verdict": "ABSTAIN",
+ "partial": [
+  "false_R"
+ ],
+ "reason": "no certified countermodel for one side together with a certified proof of the other",
+ "expected": "CERTIFIED_LOGICAL_DIFFERENCE",
+ "domain": null,
+ "family": null,
+ "split": "sota5_hostile",
+ "must_not_be": [
+  "CERTIFIED_LOGICAL_EQUIVALENCE"
+ ]
+}

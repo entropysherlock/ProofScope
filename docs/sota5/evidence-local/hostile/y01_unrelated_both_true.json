@@ -1,0 +1,135 @@
+{
+ "id": "y01_unrelated_both_true",
+ "reference": "2 + 2 = 4",
+ "lean": "∀ (n : Nat), n + 0 = n",
+ "engine": "cjcs-sota4-oneprocess",
+ "stats": {
+  "search_processes": 1,
+  "search_env_loads": 1,
+  "verify_processes": 2,
+  "repl_requests": 4,
+  "env_load_s": 0.98,
+  "search_s": 0.41,
+  "verify_s": 0.54
+ },
+ "stage1_refuted": [],
+ "search": {
+  "stage1": {
+   "link_R": {
+    "alt": 0,
+    "heartbeats_k": 67,
+    "name": "link_R",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_R": {
+    "heartbeats_k": 477,
+    "last_error": "Unknown identifier `hy`",
+    "name": "wit_R",
+    "status": "failed",
+    "tried": 1
+   },
+   "false_R": {
+    "name": "false_R",
+    "status": "dep_failed"
+   },
+   "link_L": {
+    "alt": 0,
+    "heartbeats_k": 38,
+    "name": "link_L",
+    "status": "proposed",
+    "tried": 1
+   },
+   "wit_L": {
+    "heartbeats_k": 1562,
+    "last_error": "Function expected at\n  h\nbut this term has type\n  5 + 0 = 5\n\nNote: Expected a function because this term is being applied to the argument\n  false",
+    "name": "wit_L",
+    "status": "failed",
+    "tried": 6
+   },
+   "false_L": {
+    "name": "false_L",
+    "status": "dep_failed"
+   }
+  },
+  "stage2": {
+   "equiv_defeq": {
+    "heartbeats_k": 70,
+    "last_error": "Type mismatch\n  Iff.rfl\nhas type\n  ?m.23 ↔ ?m.23\nbut is expected to have type\n  2 + 2 = 4 ↔ ∀ (n : Nat), n + 0 = n",
+    "name": "equiv_defeq",
+    "status": "failed",
+    "tried": 1
+   },
+   "true_R": {
+    "alt": 0,
+    "heartbeats_k": 90,
+    "name": "true_R",
+    "status": "proposed",
+    "tried": 49
+   },
+   "true_L": {
+    "alt": 2,
+    "heartbeats_k": 106,
+    "name": "true_L",
+    "status": "proposed",
+    "tried": 49
+   },
+   "equiv_both_true": {
+    "alt": 0,
+    "heartbeats_k": 65,
+    "name": "equiv_both_true",
+    "status": "proposed",
+    "tried": 1
+   }
+  }
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.CJ_y01_unrelated_both_true.link_R",
+   "statement": "(2 + 2 = 4) ↔ ((2 : Nat) + (2 : Nat) = (4 : Nat))",
+   "axioms": []
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.CJ_y01_unrelated_both_true.link_L",
+   "statement": "(∀ (n : Nat), n + 0 = n) ↔ (∀ (n : Nat), n + (0 : Nat) = n)",
+   "axioms": []
+  },
+  "true_R": {
+   "declaration": "ProofScopeCert.CJ_y01_unrelated_both_true.true_R",
+   "statement": "2 + 2 = 4",
+   "axioms": []
+  },
+  "true_L": {
+   "declaration": "ProofScopeCert.CJ_y01_unrelated_both_true.true_L",
+   "statement": "∀ (n : Nat), n + 0 = n",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  },
+  "equiv_both_true": {
+   "declaration": "ProofScopeCert.CJ_y01_unrelated_both_true.equiv_both_true",
+   "statement": "(2 + 2 = 4) ↔ (∀ (n : Nat), n + 0 = n)",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  }
+ },
+ "rejected": {},
+ "certificate_source": "set_option maxHeartbeats 200000\nset_option linter.unusedVariables false\n\nnamespace ProofScopeCert.CJ_y01_unrelated_both_true\n\ntheorem link_R : (2 + 2 = 4) ↔ ((2 : Nat) + (2 : Nat) = (4 : Nat)) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem link_L : (∀ (n : Nat), n + 0 = n) ↔ (∀ (n : Nat), n + (0 : Nat) = n) := by\n  first\n    | ((constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption | exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))); done)\n\ntheorem true_R : 2 + 2 = 4 := by\n  first\n    | ((decide); done)\n\ntheorem true_L : ∀ (n : Nat), n + 0 = n := by\n  first\n    | (((intros; omega)); done)\n\ntheorem equiv_both_true : (2 + 2 = 4) ↔ (∀ (n : Nat), n + 0 = n) := by\n  first\n    | ((exact ⟨fun _ => true_L, fun _ => true_R⟩); done)\n\nend ProofScopeCert.CJ_y01_unrelated_both_true\n\n#print axioms ProofScopeCert.CJ_y01_unrelated_both_true.link_R\n#print axioms ProofScopeCert.CJ_y01_unrelated_both_true.link_L\n#print axioms ProofScopeCert.CJ_y01_unrelated_both_true.true_R\n#print axioms ProofScopeCert.CJ_y01_unrelated_both_true.true_L\n#print axioms ProofScopeCert.CJ_y01_unrelated_both_true.equiv_both_true\n",
+ "proposed_not_certified": [],
+ "witnesses": {},
+ "regions": [],
+ "verdict": "CERTIFIED_LOGICAL_EQUIVALENCE",
+ "direction": "both_true",
+ "theorem": "CJCS.both_true_equiv",
+ "expected": "CERTIFIED_LOGICAL_EQUIVALENCE",
+ "domain": null,
+ "family": null,
+ "split": "sota5_hostile",
+ "must_not_be": [
+  "CERTIFIED_LOGICAL_DIFFERENCE"
+ ]
+}

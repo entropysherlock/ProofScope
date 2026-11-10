@@ -1,0 +1,3 @@
+{"id": "e1_absorption", "laws": {"assoc": "(x*y)*z = x*(y*z)", "comm": "x*y = y*x", "idem": "x*x = x"},
+ "P": "a*(a*b) = a*b", "Q": "(a*b)*b = a*b",
+ "note": "left vs right self-absorption: which background laws make the two formulations agree?"}

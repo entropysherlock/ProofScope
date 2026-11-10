@@ -1,0 +1,91 @@
+{
+ "id": "e2_square_idem",
+ "laws": {
+  "assoc": "(x*y)*z = x*(y*z)",
+  "comm": "x*y = y*x",
+  "idem": "x*x = x"
+ },
+ "P": "(a*b)*(a*b) = a*b",
+ "Q": "a*a = a",
+ "subsets": {
+  "none": {
+   "status": "REFUTED",
+   "model": "m0"
+  },
+  "assoc": {
+   "status": "REFUTED",
+   "model": "m0"
+  },
+  "comm": {
+   "status": "REFUTED",
+   "model": "m0"
+  },
+  "idem": {
+   "status": "ENTAILS",
+   "tactic": "constructor <;> intro hpq <;> intros <;> grind"
+  },
+  "assoc_comm": {
+   "status": "REFUTED",
+   "model": "m0"
+  },
+  "assoc_idem": {
+   "status": "ENTAILS_BY_MONOTONICITY",
+   "from": "idem"
+  },
+  "comm_idem": {
+   "status": "ENTAILS_BY_MONOTONICITY",
+   "from": "idem"
+  },
+  "assoc_comm_idem": {
+   "status": "ENTAILS_BY_MONOTONICITY",
+   "from": "idem"
+  }
+ },
+ "models": {
+  "m0": {
+   "size": 2,
+   "table": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "satisfies": [
+    "assoc",
+    "comm"
+   ]
+  }
+ },
+ "minimal_sufficient": [
+  [
+   "idem"
+  ]
+ ],
+ "necessary_in_family": [
+  "idem"
+ ],
+ "certified": true,
+ "axioms": {
+  "suff_idem": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "M_m0_sep": [
+   "propext"
+  ],
+  "minimal_idem": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "necessary_idem": [
+   "propext"
+  ]
+ },
+ "compile_rc": 0,
+ "leanchecker_rc": 0,
+ "compile_errors": [],
+ "certificate": "/tmp/lr/e2_square_idem/LR_e2_square_idem.lean",
+ "scope": "relative to the declared candidate family and the magma signature; inclusion-minimal, not minimum; UNKNOWN is not a negative result"
+}
