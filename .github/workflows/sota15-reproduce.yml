@@ -92,7 +92,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p evidence/native
-          python experiments/sota15/run_eval.py evidence/native 2 2>&1 | tee evidence/run.log
+          python -X faulthandler experiments/sota15/run_eval.py evidence/native 1 2>&1 | tee evidence/run.log
       - name: Compare reproduced decisions with historical stage summary
         shell: bash
         env:
