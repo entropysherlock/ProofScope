@@ -110,3 +110,26 @@ The bottleneck is barriers 1–3 together: no entry point and no report layer th
 | Full 88-test SOTA-8 regression | Not rerun for this step: smoke-test policy. `auditor.py` changed only by an optional import argument and the extraction-after-delta rule, which is unit-tested |
 | Google Colab | Not yet run for this step |
 | Mathlib source files | Not run. They need Mathlib on LEAN_PATH (the cell's MATHLIB mode) |
+
+## 9. Discovery track: certified defect hunt in formal math benchmarks (`proofscope/defect_hunt.py`)
+
+**Goal.** Find statements in public Lean benchmarks that are provably wrong *as formalized*. A finding is a machine-checked defect in the benchmark, not a new theorem.
+
+**What it certifies.**
+- **FALSE:** `¬ (type_of% @T)`. The certificate instantiates every numeric variable at concrete values, including rationals such as 1/2 for real variables. Each hypothesis instance and the negated conclusion must then close with `norm_num`, `decide`, `omega`, `positivity`, `linarith` or `simp`.
+- **VACUOUS:** `vacuous_of% @T`. Every binder is kept and the conclusion is replaced by `False`, so the hypotheses are contradictory. Tactics tried: `omega`, `linarith`, `nlinarith`, `norm_num`, `simp_all`.
+- **Auto-implicit flag:** statements that compile only because an unknown identifier was auto-bound as a variable are flagged.
+
+**What is skipped.** Statements whose type mentions a `sorry` placeholder (an unfilled answer) are skipped. For PutnamBench, answers come from the benchmark's own `scripts/rewrite_solutions.py`, and its `autoImplicit false` setting is applied.
+
+**How a finding is verified.** One clean module contains each unchanged statement (proof `sorry`) and its certificate. A finding is kept only if `#print axioms` shows nothing outside {propext, Classical.choice, Quot.sound} and leanchecker replays the module. A certificate that leans on the statement's own `sorry` is rejected by the axiom audit.
+
+**Prior art.** Ammanmanchi & Bhat, *Faults in Our Formal Benchmarking* (ICML 2026, arXiv 2606.29493), certified 398 issues in FormalMath, ProverBench, ProofNet, miniF2F and CombiBench. Their counterexamples came from `decide` over small finite or integer domains and random testing; their vacuity checks used omega/grind. PutnamBench was not audited. Every finding here records how it was found, and real/rational witnesses or nlinarith/linarith/norm_num contradictions are labelled as outside their certified search. Overlap with their findings still has to be checked per finding before anything is reported.
+
+**Honest status.**
+
+| Item | Status |
+|---|---|
+| Core-Lean planted-defect test (`tests/sota9/test_defect_hunt.py`) | Passes in the sandbox: false Nat/Int statements and contradictory hypotheses certified; true statements, placeholders and foreign imports not |
+| Mathlib runs (all real benchmarks) | Only on Colab (`colab/hunt_cell.py`); not yet run |
+| Findings | None yet. A search that finds nothing is not evidence that a statement is correct |
