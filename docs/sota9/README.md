@@ -76,7 +76,7 @@ The bottleneck is barriers 1–3 together: no entry point and no report layer th
 |---|---|
 | SOTA-9 tests | 16/16 pass locally with Lean 4.34.1 and the REPL at `193cf4bb`, core Lean |
 | SOTA-8 regression suite on this branch | 88/88 pass, unchanged |
-| Colab cell | Run end to end in a Linux sandbox with a clean `PATH` and a fresh root: `VERDICT: PASS` in 96–106 s fresh and 65 s with a warm cache. **Not yet run on Google Colab.** Colab CPUs are slower; the estimate there is 3–5 min |
+| Colab cell | Sandbox: `VERDICT: PASS` in 96–106 s fresh, 65 s warm. **Google Colab (2026-11-10, run by Caleb J. Westfall): `VERDICT: PASS` in 118 s** with Lean and REPL cached from a first run (Lean 26 s, 36 tests 65 s, three demo audits as expected). The first Colab run exposed a `tests` package installed in Colab that shadowed ProofScope's `tests/`; fixed by adding `tests/__init__.py` |
 | Mathlib mode of the cell, and Mathlib audits through the new entry point | **Not run.** Mathlib is unavailable in this sandbox. Unverified until executed |
 | New mathematics | None. Every "proved" line comes from the SOTA-8 certificate pipeline: clean compile, axioms ⊆ {propext, Classical.choice, Quot.sound}, `leanchecker` replay |
 | Claims | No state-of-the-art or novelty claim is made. This deliverable is about usability and safety |
