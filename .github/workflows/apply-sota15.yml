@@ -22,7 +22,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c research/sota15-scopeelim
-          git am --check sota15-scopeelim.patch
           git am sota15-scopeelim.patch
           git push origin HEAD:refs/heads/research/sota15-scopeelim
           echo "SOTA-15 applied to research/sota15-scopeelim; v1.2-review unchanged."
