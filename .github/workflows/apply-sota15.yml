@@ -1,0 +1,28 @@
+name: Apply SOTA-15 Patch
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout v1.2 review
+        uses: actions/checkout@v4
+        with:
+          ref: v1.2-review
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Apply patch on isolated branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c research/sota15-scopeelim
+          git am --check sota15-scopeelim.patch
+          git am sota15-scopeelim.patch
+          git push origin HEAD:refs/heads/research/sota15-scopeelim
+          echo "SOTA-15 applied to research/sota15-scopeelim; v1.2-review unchanged."
