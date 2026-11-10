@@ -88,3 +88,25 @@ The bottleneck is barriers 1–3 together: no entry point and no report layer th
 3. Mission C: widen certified reasoning, for example by instantiating binders for refutations and adding the `simp`/`omega` normal-form bridge. Measure only on the frozen Pilot-25 plus a new, separately frozen set.
 4. Mission E: a CI job that runs `colab/sota9_cell.py` headless in core mode, so the launcher is tested on every push.
 5. Mission F: an independent benchmark split, frozen before any engine change and with gold labels kept separate. Report with Clopper-Pearson intervals using the SOTA-7 harness.
+
+## 8. Mission B, first step: audit theorems straight from a Lean file (`proofscope/source_audit.py`)
+
+`python -m proofscope.source_audit --file Paper.lean --ref Foo.main --cand Foo.main' --out DIR`, also available in the UI as "compare two theorems from a Lean file".
+
+- **Nothing is re-typed.** The file is compiled unchanged as its own module `PSrc_<sha>`, and Lean reports each named declaration's exact kernel type, universe parameters, kind and `sorry` use. The compared statements are `type_of% @Name.{u…}`, the kernel types themselves, so namespaces, `open`, `variable` binders, implicit arguments, coercions and notation are exactly as in the source.
+- **Certificates and replay use the source module.** The search session and the certificate both `import` the module, and leanchecker replays the certificate against it. A certificate whose proof leans on a source `sorry` or a source `axiom` is rejected by the existing axiom audit. This is tested with a file declaring `axiom cheat : False`: nothing is certified.
+- **Universes are handled soundly.** When both declarations have the same number of universe parameters, they are shared positionally. A certificate for every value of the shared parameters implies the relation between the universe-polymorphic theorems. With different counts, each side keeps its own names: still sound, but derivations across universes are not attempted.
+- **Refusals are explicit.** These all give NOT_EVALUABLE with the reason:
+  - a file that does not compile unchanged;
+  - a missing name, or one that is ambiguous within the file;
+  - a declaration that is not a proposition.
+- **Sorry placeholders are reported.** A statement mentioning a definition that is itself `sorry` gets a not-established note: any relation holds only relative to the placeholder. A `sorry` in a theorem's *proof* is reported as irrelevant, since only statements are compared.
+- **Report fix.** If the derivation stage showed that both statements elaborate, a later failure of the refutation stage's own extraction is reported as UNKNOWN, not NOT_EVALUABLE.
+- **Security.** Compiling a Lean file runs its metaprograms (`#eval`, macros). Only audit trusted files, in a disposable environment, and never in CI jobs holding secrets or write tokens.
+
+| Item | Status |
+|---|---|
+| Tests (`tests/sota9/test_source_audit.py`) | 10 tests, 3 without Lean: universe mapping. The other 7 run end to end: variables/universes kept, implication with a sorry note, sorry-definition flag, ambiguous and missing names, non-proposition, compile error, fake axiom. All pass in the sandbox, plus a UI round trip for source mode |
+| Full 88-test SOTA-8 regression | Not rerun for this step: smoke-test policy. `auditor.py` changed only by an optional import argument and the extraction-after-delta rule, which is unit-tested |
+| Google Colab | Not yet run for this step |
+| Mathlib source files | Not run. They need Mathlib on LEAN_PATH (the cell's MATHLIB mode) |

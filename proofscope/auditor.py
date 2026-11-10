@@ -120,7 +120,8 @@ def report_from_row(row: dict) -> dict:
         w = row.get("witnesses") or {}
         rep["counterexample"] = w.get("wit_R") if d == "reference_false_formalization_true" else w.get("wit_L")
         rep["not_established"].append("Which statement is the intended one.")
-    elif row.get("failure_class") == "EXTRACTION" or "extraction failed" in str(row.get("reason", "")):
+    elif (row.get("failure_class") == "EXTRACTION" or "extraction failed" in str(row.get("reason", ""))) \
+            and (row.get("delta") or {}).get("status") != "OK":
         rep["status"] = "NOT_EVALUABLE"
         text = json.dumps(row.get("detail"), ensure_ascii=False) + str(row.get("reason", ""))
         rep["diagnostics"].append(text[-2000:])
@@ -147,7 +148,10 @@ def engine_commit() -> str:
         return "UNKNOWN"
 
 
-def audit(reference: str, candidate: str, preamble: list[str] | None = None, out: Path | None = None) -> dict:
+def audit(reference: str, candidate: str, preamble: list[str] | None = None, out: Path | None = None,
+          extra_imports: list[str] | None = None, extra_lean_path: str | None = None) -> dict:
+    """extra_imports / extra_lean_path: used by source_audit to make a compiled source module visible to the
+    search session and to the certificate (the certificate then `import`s it, so replay rechecks against it)."""
     out = Path(out or "proofscope_audit").resolve()
     out.mkdir(parents=True, exist_ok=True)
     tc = Toolchain.find()
@@ -157,19 +161,30 @@ def audit(reference: str, candidate: str, preamble: list[str] | None = None, out
         raise RuntimeError(f"extractor build failed: {b}")
     old = os.environ.get("PROOFSCOPE_PREAMBLE")
     os.environ["PROOFSCOPE_PREAMBLE"] = "\n".join(preamble or [])
+    old_imports, old_lp = list(A.IMPORTS), os.environ.get("LEAN_PATH")
+    if extra_imports:
+        A.IMPORTS[:] = old_imports + [m for m in extra_imports if m not in old_imports]
+    if extra_lean_path:
+        os.environ["LEAN_PATH"] = os.pathsep.join(p for p in [extra_lean_path, old_lp or ""] if p)
     t0, r0 = time.monotonic(), resource.getrusage(resource.RUSAGE_CHILDREN)
     try:
         spec = {"id": "audit_" + _sha(f"{reference}\0{candidate}\0{preamble}")[:12], "reference": reference, "lean": candidate}
         row = S8.run_case(spec, tc, build, out / "work")
+        imports_used = list(A.IMPORTS)
     finally:
         if old is None:
             os.environ.pop("PROOFSCOPE_PREAMBLE", None)
         else:
             os.environ["PROOFSCOPE_PREAMBLE"] = old
+        A.IMPORTS[:] = old_imports
+        if old_lp is None:
+            os.environ.pop("LEAN_PATH", None)
+        else:
+            os.environ["LEAN_PATH"] = old_lp
     r1 = resource.getrusage(resource.RUSAGE_CHILDREN)
     rep = report_from_row(row)
     rep.update(inputs={"reference": reference, "candidate": candidate, "preamble": preamble or [],
-                       "imports": A.IMPORTS, "sha256": _sha(f"{reference}\0{candidate}")},
+                       "imports": imports_used, "sha256": _sha(f"{reference}\0{candidate}")},
                environment={"lean": tc.version() if hasattr(tc, "version") else "4.34.1", "engine": "sota8 (derivation + CJCS4)",
                             "engine_commit": engine_commit()},
                resources={"wall_s": round(time.monotonic() - t0, 2),

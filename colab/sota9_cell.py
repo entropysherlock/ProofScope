@@ -1,5 +1,5 @@
 # ProofScope SOTA-9 — single Colab cell (paste into one code cell and run; Python 3, CPU runtime).
-# Core mode (default): about 3–5 min on a fresh runtime. Mathlib mode (MATHLIB=True): add roughly 5–15 min, and ~6 GB disk.
+# Core mode (default): about 4–5 min on a fresh runtime, about 3 min when Lean/REPL are already cached in this runtime. Mathlib mode (MATHLIB=True): add roughly 5–15 min, and ~6 GB disk.
 # Nothing persists unless DRIVE_CACHE=True; the cache is then re-verified by SHA-256 / git commit before use.
 BRANCH, COMMIT = "research/sota9-usable-auditor", None      # set COMMIT to an exact sha to pin the run
 MATHLIB = False          # True: also fetch pinned Mathlib + precompiled cache, enable `import Mathlib`
@@ -9,6 +9,7 @@ EXPENSIVE = False        # True: full 88-test regression (+~2 min); never runs b
 
 import hashlib, json, os, shutil, subprocess, sys, time, threading
 from pathlib import Path
+if Path("/content").exists(): os.chdir("/content")   # the old working folder may have been deleted
 T0 = time.time(); ROOT = Path(os.environ.get("PS_ROOT", "/content")); SRC = os.environ.get("PS_SRC", "https://github.com/entropysherlock/ProofScope")
 LEAN_V, LEAN_SHA = "4.34.1", "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4"
 REPL_SHA, MATHLIB_SHA = "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee", "d13f23b723b8a846827a245b89c10fc7d3f11612"
@@ -77,8 +78,8 @@ def get_mathlib():
     os.environ["PROOFSCOPE_IMPORTS"] = "Mathlib"
 
 def tests():
-    mods = ["tests.sota9.test_audit", "tests.pilot25r.test_preamble", "tests.sota4.test_integrity"]
-    if EXPENSIVE: mods = ["tests.sota9.test_audit", "tests.sota8.test_sota8", "tests.pilot25r.test_preamble", "tests.sota7.test_schema_integrity",
+    mods = ["tests.sota9.test_audit", "tests.sota9.test_source_audit"]
+    if EXPENSIVE: mods = ["tests.sota9.test_audit", "tests.sota9.test_source_audit", "tests.sota8.test_sota8", "tests.pilot25r.test_preamble", "tests.sota7.test_schema_integrity",
         "tests.sota7.test_scoring_adversarial", "tests.sota7.test_blinding_replay", "tests.sota6.test_repair", "tests.sota5.test_d03_regression",
         "tests.sota5.test_relations", "tests.sota5.test_lawrel", "tests.sota4.test_engine_hostile", "tests.sota4.test_integrity"]
     env = dict(os.environ); env.pop("PROOFSCOPE_IMPORTS", None); env.pop("LEAN_PATH", None)      # regressions are core-Lean
@@ -88,15 +89,27 @@ def tests():
     if p.returncode or skipped: raise RuntimeError("tests failed" if p.returncode else "Lean tests were skipped — toolchain not visible")
     return tail[-3]
 
+SOURCE_DEMO = """namespace Demo
+variable {α : Type _} (xs : List α)
+theorem len_app (ys : List α) : (xs ++ ys).length = xs.length + ys.length := by simp
+theorem len_app_swap (ys : List α) : (ys ++ xs).length = xs.length + ys.length := by simp; omega
+theorem div_self_any (n : Nat) : n / n = 1 := sorry
+theorem div_self_pos (n : Nat) (h : n ≠ 0) : n / n = 1 := Nat.div_self (Nat.pos_of_ne_zero h)
+end Demo
+"""
+
 def demos():
     sys.path.insert(0, str(repo)); os.chdir(repo)
     from proofscope.auditor import audit
-    cases = [("∀ (n : Nat), n + 0 = n", "∀ (m : Nat), m = m + 0", [], {"PROVED_EQUIVALENT"}),
-             ("∀ (n : Nat), n / n = 1", "∀ (n : Nat), n ≠ 0 → n / n = 1", [], {"PROVED_IMPLICATION", "DISPROVED_EQUIVALENCE"}),
-             ("∀ (n : Nat), succ n ≠ 0", "∀ (n : Nat), n + 1 ≠ 0", [], {"NOT_EVALUABLE"})]
-    for r, c, pre, want in cases:
-        rep = audit(r, c, pre, ROOT / "ps_demo" / hashlib.sha1((r + c).encode()).hexdigest()[:8])
-        print(f"  {rep['status']:<22} R: {r}   C: {c}   ({rep['resources']['wall_s']} s)")
+    from proofscope.source_audit import source_audit
+    cases = [("text", "∀ (n : Nat), n / n = 1", "∀ (n : Nat), n ≠ 0 → n / n = 1", {"PROVED_IMPLICATION", "DISPROVED_EQUIVALENCE"}),
+             ("text", "∀ (n : Nat), succ n ≠ 0", "∀ (n : Nat), n + 1 ≠ 0", {"NOT_EVALUABLE"}),
+             ("file", "len_app", "len_app_swap", {"PROVED_EQUIVALENT"}),
+             ("file", "div_self_any", "div_self_pos", {"PROVED_IMPLICATION", "DISPROVED_EQUIVALENCE"})]
+    for mode, r, c, want in cases:
+        o = ROOT / "ps_demo" / hashlib.sha1((mode + r + c).encode()).hexdigest()[:8]
+        rep = audit(r, c, [], o) if mode == "text" else source_audit(SOURCE_DEMO, r, c, o)
+        print(f"  [{mode}] {rep['status']:<22} R: {r}   C: {c}   ({rep['resources']['wall_s'] if 'resources' in rep else '-'} s)")
         if rep["status"] not in want: raise RuntimeError(f"demo expected {want}, got {rep['status']}")
 
 try:
@@ -110,13 +123,16 @@ try:
 except Exception as e:
     verdict = f"FAIL — {e}"
 print("\n" + "\n".join(f"  {n:<45} {s:<8} {t:>6} s" for n, s, t in STEPS))
-print(f"\nVERDICT: {verdict}\nTotal: {time.time() - T0:.0f} s (fresh core runtime ≈ 3–5 min; with DRIVE_CACHE warm ≈ 1–2 min; MATHLIB adds ≈ 5–15 min)")
+print(f"\nVERDICT: {verdict}\nTotal: {time.time() - T0:.0f} s (fresh core runtime ≈ 4–5 min; Lean/REPL cached ≈ 3 min; MATHLIB adds ≈ 5–15 min)")
 print("Mode:", "Mathlib" if MATHLIB else "core Lean", "· memory note: Mathlib imports map ~1.5 GB+ of .olean files; free Colab has ~12 GB RAM")
 
 if verdict == "PASS" and LAUNCH_UI:
     from proofscope import ui
     from http.server import ThreadingHTTPServer
-    srv = ThreadingHTTPServer(("127.0.0.1", 8765), ui.Handler); threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        srv = ThreadingHTTPServer(("127.0.0.1", 8765), ui.Handler); threading.Thread(target=srv.serve_forever, daemon=True).start()
+    except OSError:
+        print("UI port 8765 already in use (an earlier run's UI is still up; restart the runtime to load new UI code)")
     try:
         from google.colab import output; output.serve_kernel_port_as_window(8765, anchor_text="Open the ProofScope UI")
     except ImportError:

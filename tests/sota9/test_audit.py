@@ -72,6 +72,11 @@ class ReportMapping(unittest.TestCase):
         self.assertTrue(r["hints"] and all(h["applied"] is False for h in r["hints"]))
         self.assertIn("Filter", r["hints"][0]["suggestion"])
 
+    def test_cjcs_extraction_failure_after_delta_ok_is_unknown(self):
+        r = report_from_row({"verdict": "INCONCLUSIVE", "failure_class": "EXTRACTION", "reason": "extraction failed",
+                             "delta": {"status": "OK"}})
+        self.assertEqual(r["status"], "UNKNOWN")
+
     def test_markdown_shows_status(self):
         r = report_from_row({"verdict": "ABSTAIN"}); r.update(inputs={"reference": "A", "candidate": "B", "preamble": [], "imports": []})
         md = markdown(r)
@@ -139,6 +144,11 @@ class UIServer(unittest.TestCase):
             rep = json.loads(urllib.request.urlopen(urllib.request.Request(base + "/audit", body, method="POST")).read())
             self.assertEqual(rep["status"], "PROVED_EQUIVALENT")
             self.assertNotIn("engine_row", rep)
+            body = json.dumps({"source": "theorem a (n : Nat) : n + 0 = n := rfl\ntheorem b (m : Nat) : m = m + 0 := rfl\n",
+                               "ref": "a", "cand": "b"}).encode()
+            rep = json.loads(urllib.request.urlopen(urllib.request.Request(base + "/audit_source", body, method="POST")).read())
+            self.assertEqual(rep["status"], "PROVED_EQUIVALENT")
+            self.assertIn("a : ∀ (n : Nat), n + 0 = n", rep["statements_display"]["R"])
             bad = json.loads(urllib.request.urlopen(urllib.request.Request(base + "/audit", b"{not json", method="POST")).read())
             self.assertEqual(bad["status"], "ERROR")
         finally:
