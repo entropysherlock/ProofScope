@@ -1,0 +1,9 @@
+{"id": "r3_conclusion_disjunct",
+ "context": [["x", "Int"]],
+ "reference_source": "∀ (x : Int), x * x = 1 → x = 1 ∨ x = -1",
+ "candidate_source": "∀ (x : Int), x * x = 1 → x = 1",
+ "reference": {"hyps": ["x * x = 1"], "concl": "x = 1 ∨ x = -1"},
+ "candidate": {"hyps": ["x * x = 1"], "concl": "x = 1"},
+ "edits": [{"set_concl": "x = 1 ∨ x = 0"}, {"set_concl": "x = 1 ∨ x = -1"}, {"add_hyp": "0 ≤ x"}],
+ "pool": {"x": [-2, -1, 0, 1, 2]},
+ "note": "dropped disjunct; adding 0 ≤ x makes the statement true but changes the region"}

@@ -1,0 +1,9 @@
+{"id": "r1_division_nonzero",
+ "context": [["n", "Nat"]],
+ "reference_source": "∀ (n : Nat), n ≠ 0 → n / n = 1",
+ "candidate_source": "∀ (n : Nat), n / n = 1",
+ "reference": {"hyps": ["n ≠ 0"], "concl": "n / n = 1"},
+ "candidate": {"hyps": [], "concl": "n / n = 1"},
+ "edits": [{"add_hyp": "n ≠ 0"}, {"add_hyp": "0 < n"}, {"add_hyp": "2 ≤ n"}, {"add_hyp": "n % 2 = 1"}],
+ "pool": {"n": [0, 1, 2, 3, 4, 5]},
+ "note": "missing nonzero hypothesis; two distinct minimal repairs expected; 2 ≤ n is a valid but wrong repair"}

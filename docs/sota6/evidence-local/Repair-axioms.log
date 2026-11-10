@@ -1,0 +1,9 @@
+'SOTA6.formEquiv_open' does not depend on any axioms
+'SOTA6.formEquiv_stmt' does not depend on any axioms
+'SOTA6.not_formEquiv_of_separates' does not depend on any axioms
+'SOTA6.open_equiv_trivial_for_true' does not depend on any axioms
+'SOTA6.minimal_repair_sound' does not depend on any axioms
+'SOTA6.formEquiv_iff_points' does not depend on any axioms
+'SOTA6.two_minimal_repairs' does not depend on any axioms
+'SOTA6.div_open_equiv' depends on axioms: [propext, Quot.sound]
+'SOTA6.div_not_formEquiv' does not depend on any axioms

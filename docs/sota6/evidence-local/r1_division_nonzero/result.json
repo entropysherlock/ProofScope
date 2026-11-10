@@ -1,0 +1,99 @@
+{
+ "id": "r1_division_nonzero",
+ "outcome": "MINIMAL_REPAIR",
+ "proposed_outcome": "MINIMAL_REPAIR",
+ "certified": true,
+ "minimal_cost": 1,
+ "repairs": [
+  {
+   "mask": 1,
+   "cost": 1,
+   "edits": [
+    {
+     "add_hyp": "n ≠ 0"
+    }
+   ]
+  },
+  {
+   "mask": 2,
+   "cost": 1,
+   "edits": [
+    {
+     "add_hyp": "0 < n"
+    }
+   ]
+  }
+ ],
+ "cheaper_masks_separated": 1,
+ "unknown_masks": [],
+ "separations": {
+  "0": {
+   "n": 0
+  },
+  "1": null,
+  "2": null,
+  "3": null,
+  "4": {
+   "n": 1
+  },
+  "5": {
+   "n": 1
+  },
+  "6": {
+   "n": 1
+  },
+  "7": {
+   "n": 1
+  },
+  "8": {
+   "n": 2
+  },
+  "9": {
+   "n": 2
+  },
+  "10": {
+   "n": 2
+  },
+  "11": {
+   "n": 2
+  },
+  "12": {
+   "n": 1
+  },
+  "13": {
+   "n": 1
+  },
+  "14": {
+   "n": 1
+  },
+  "15": {
+   "n": 1
+  }
+ },
+ "axioms": {
+  "R_source_stmt": [
+   "propext"
+  ],
+  "F_source_stmt": [
+   "propext"
+  ],
+  "repair_1": [
+   "propext"
+  ],
+  "repair_2": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "cheaper_separated": [
+   "propext"
+  ],
+  "minimal": [
+   "propext"
+  ]
+ },
+ "leanchecker_rc": 0,
+ "compile_errors": [],
+ "certificate": "/tmp/rr/r1_division_nonzero/Cert_r1_division_nonzero.lean",
+ "scope": "formulation equivalence over the declared aligned context; minimum cost within the declared edit grammar only; the reference hypothesis form is linked to its source text by R_source_stmt"
+}

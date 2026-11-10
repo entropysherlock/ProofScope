@@ -1,0 +1,105 @@
+{
+ "id": "r2_square_order",
+ "outcome": "MINIMAL_REPAIR",
+ "proposed_outcome": "MINIMAL_REPAIR",
+ "certified": true,
+ "minimal_cost": 1,
+ "repairs": [
+  {
+   "mask": 1,
+   "cost": 1,
+   "edits": [
+    {
+     "add_hyp": "0 ≤ a"
+    }
+   ]
+  }
+ ],
+ "cheaper_masks_separated": 1,
+ "unknown_masks": [],
+ "separations": {
+  "0": {
+   "a": -2,
+   "b": -2
+  },
+  "1": null,
+  "2": {
+   "a": -2,
+   "b": 0
+  },
+  "3": null,
+  "4": {
+   "a": 0,
+   "b": 0
+  },
+  "5": {
+   "a": 0,
+   "b": 0
+  },
+  "6": {
+   "a": 0,
+   "b": 0
+  },
+  "7": {
+   "a": 0,
+   "b": 0
+  },
+  "8": {
+   "a": -2,
+   "b": -2
+  },
+  "9": {
+   "a": 0,
+   "b": -2
+  },
+  "10": {
+   "a": -2,
+   "b": 0
+  },
+  "11": {
+   "a": 1,
+   "b": 0
+  },
+  "12": {
+   "a": 0,
+   "b": 0
+  },
+  "13": {
+   "a": 0,
+   "b": 0
+  },
+  "14": {
+   "a": 0,
+   "b": 0
+  },
+  "15": {
+   "a": 0,
+   "b": 0
+  }
+ },
+ "axioms": {
+  "R_source_stmt": [
+   "propext",
+   "Quot.sound"
+  ],
+  "F_source_stmt": [
+   "propext",
+   "Quot.sound"
+  ],
+  "repair_1": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "cheaper_separated": [
+   "propext"
+  ],
+  "minimal": [
+   "propext"
+  ]
+ },
+ "leanchecker_rc": 0,
+ "compile_errors": [],
+ "certificate": "/tmp/rr/r2_square_order/Cert_r2_square_order.lean",
+ "scope": "formulation equivalence over the declared aligned context; minimum cost within the declared edit grammar only; the reference hypothesis form is linked to its source text by R_source_stmt"
+}

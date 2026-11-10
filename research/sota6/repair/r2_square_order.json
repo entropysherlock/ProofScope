@@ -1,0 +1,9 @@
+{"id": "r2_square_order",
+ "context": [["a", "Int"], ["b", "Int"]],
+ "reference_source": "∀ (a b : Int), 0 ≤ a → a ≤ b → a * a ≤ b * b",
+ "candidate_source": "∀ (a b : Int), a ≤ b → a * a ≤ b * b",
+ "reference": {"hyps": ["0 ≤ a", "a ≤ b"], "concl": "a * a ≤ b * b"},
+ "candidate": {"hyps": ["a ≤ b"], "concl": "a * a ≤ b * b"},
+ "edits": [{"add_hyp": "0 ≤ a"}, {"add_hyp": "0 ≤ b"}, {"add_hyp": "0 < a"}, {"del_hyp": 0}],
+ "pool": {"a": [-2, -1, 0, 1, 2], "b": [-2, -1, 0, 1, 2]},
+ "note": "order: missing sign hypothesis"}

@@ -1,0 +1,66 @@
+{
+ "id": "r3_conclusion_disjunct",
+ "outcome": "MINIMAL_REPAIR",
+ "proposed_outcome": "MINIMAL_REPAIR",
+ "certified": true,
+ "minimal_cost": 1,
+ "repairs": [
+  {
+   "mask": 2,
+   "cost": 1,
+   "edits": [
+    {
+     "set_concl": "x = 1 ∨ x = -1"
+    }
+   ]
+  }
+ ],
+ "cheaper_masks_separated": 1,
+ "unknown_masks": [],
+ "separations": {
+  "0": {
+   "x": -1
+  },
+  "1": {
+   "x": -1
+  },
+  "2": null,
+  "3": {
+   "x": -1
+  },
+  "4": {
+   "x": -1
+  },
+  "5": {
+   "x": -1
+  },
+  "6": {
+   "x": -1
+  },
+  "7": {
+   "x": -1
+  }
+ },
+ "axioms": {
+  "R_source_stmt": [
+   "propext"
+  ],
+  "F_source_stmt": [
+   "propext",
+   "Quot.sound"
+  ],
+  "repair_2": [
+   "propext"
+  ],
+  "cheaper_separated": [
+   "propext"
+  ],
+  "minimal": [
+   "propext"
+  ]
+ },
+ "leanchecker_rc": 0,
+ "compile_errors": [],
+ "certificate": "/tmp/rr/r3_conclusion_disjunct/Cert_r3_conclusion_disjunct.lean",
+ "scope": "formulation equivalence over the declared aligned context; minimum cost within the declared edit grammar only; the reference hypothesis form is linked to its source text by R_source_stmt"
+}
