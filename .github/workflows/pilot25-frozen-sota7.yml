@@ -21,7 +21,7 @@ jobs:
       - name: Verify engine untouched
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = "666c873371f30fe7d79a7b46f607e425ad7d1bd4"
+          git merge-base --is-ancestor 666c873371f30fe7d79a7b46f607e425ad7d1bd4 HEAD
           git diff --exit-code 666c873371f30fe7d79a7b46f607e425ad7d1bd4 HEAD -- proofscope lean bench/sota7 bench/sota4
           echo "FROZEN_ENGINE_UNCHANGED"
 
