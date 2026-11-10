@@ -1,0 +1,97 @@
+name: SOTA-15 Independent Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/sota15-validate.yml"
+      - "lean/ProofScope/**"
+      - "proofscope/**"
+      - "tests/**"
+      - "experiments/sota15/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/sota15-scopeelim
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+
+      - name: Tool versions and evidence directory
+        run: |
+          set -euo pipefail
+          mkdir -p validation-evidence
+          lean --version | tee validation-evidence/lean-version.txt
+          python --version | tee validation-evidence/python-version.txt
+          git rev-parse HEAD | tee validation-evidence/commit.txt
+
+      - name: Verify SOTA-14 and SOTA-15 Lean modules and fresh kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/sota15/ProofScope"
+          for m in ScopeElim HornFin MonoElim; do
+            echo "::group::Compile $m"
+            LEAN_PATH="$RUNNER_TEMP/sota15" lean -R lean \
+              -o "$RUNNER_TEMP/sota15/ProofScope/$m.olean" \
+              "lean/ProofScope/$m.lean" 2>&1 | tee "validation-evidence/$m.compile.log"
+            echo "::endgroup::"
+            if grep -Ei 'sorryAx|declaration uses .sorry.|^error:' "validation-evidence/$m.compile.log"; then exit 1; fi
+          done
+          LEAN_PATH="$RUNNER_TEMP/sota15" lean -R lean \
+            -o "$RUNNER_TEMP/sota15/ProofScope/ScopeCert.olean" \
+            lean/ProofScope/ScopeCert.lean 2>&1 | tee validation-evidence/ScopeCert.compile.log
+          for m in ScopeElim HornFin MonoElim ScopeCert; do
+            echo "::group::Fresh kernel replay $m"
+            (cd "$RUNNER_TEMP/sota15" && LEAN_PATH="$RUNNER_TEMP/sota15" \
+              leanchecker --fresh "ProofScope.$m") 2>&1 | tee "validation-evidence/$m.replay.log"
+            echo "::endgroup::"
+          done
+
+      - name: Install test dependencies
+        run: python -m pip install pytest z3-solver
+
+      - name: Existing and new Python regressions
+        run: |
+          set -o pipefail
+          python -m pytest tests/v02 -q -ra 2>&1 | tee validation-evidence/pytest.log
+
+      - name: Report frozen engine and generator integrity
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY' | tee validation-evidence/freeze-integrity.log
+          import hashlib
+          from pathlib import Path
+          root=Path("experiments/sota15")
+          for line in (root/"FREEZE.txt").read_text().splitlines():
+              fields=line.split("  ",1)
+              if len(fields)!=2 or len(fields[0])!=64: continue
+              expected,target=fields
+              if target.startswith("cases "): 
+                  print("CASE COLLECTION: aggregate hash needs generator-specific reconstruction")
+                  continue
+              p=root/target
+              actual=hashlib.sha256(p.read_bytes()).hexdigest() if p.is_file() else "MISSING"
+              print(("MATCH" if expected==actual else "DIFF"),target,expected,actual)
+          PY
+
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota15-independent-validation
+          path: validation-evidence/
+          if-no-files-found: warn
