@@ -80,9 +80,19 @@ jobs:
               if not compiled["ok"]:
                   raise SystemExit("Extractor module did not compile")
               lp=os.pathsep.join((str(d/"build"),os.environ.get("LEAN_PATH","")))
+              for tag,imports in (("LEAN", "import Lean\n#check Lean.Name\n"), ("MATHLIB", "import Mathlib\n#check Nat\n"), ("COMBINED","import Lean\nimport Mathlib\nimport ProofScope.AssumptionExtract11\n#check Lean.Name\n")):
+                  file=d/(tag+".lean")
+                  file.write_text(imports)
+                  cr=tc.run([tc.lean,str(file)],extra_path=d/"build",timeout=120)
+                  print("LEAN_FILE_PROBE",tag,"returncode",cr.returncode,"output",cr.output[-2500:],flush=True)
+                  rr=cjcs4.Repl(cjcs4.find_repl(),lp,d)
+                  try:
+                      res=rr.send(imports,None)
+                      print("REPL_IMPORT_PROBE",tag,json.dumps(res.get("messages",[]),ensure_ascii=False)[:3500],flush=True)
+                  finally: rr.close()
               r=cjcs4.Repl(cjcs4.find_repl(),lp,d)
               try:
-                  source=A.import_lines()+"import ProofScope.AssumptionExtract11\nimport Lean\n"+cjcs4.search_source()+"\nset_option linter.unusedVariables false"
+                  source="import Lean\n"+A.import_lines()+"import ProofScope.AssumptionExtract11\n"+cjcs4.search_source()+"\nset_option linter.unusedVariables false"
                   result=r.send(source,None)
                   print("INIT_ENV",result.get("env"),flush=True)
                   print("INIT_MESSAGES",json.dumps(result.get("messages",[]),ensure_ascii=False)[:12000],flush=True)
@@ -108,7 +118,7 @@ jobs:
             python -m bench.sota7.replay --run pilot25_results/execution --public bench/pilot25_run/public --out pilot25_results/replay.jsonl > pilot25_results/replay.log 2>&1
             cat pilot25_results/replay.log
           else
-            echo "NOT_RUN: execution not sealed" > pilot25_results/replay.log
+            mkdir -p pilot25_results\n            echo "NOT_RUN: execution not sealed" > pilot25_results/replay.log
           fi
       - name: Upload unscored records and logs regardless of outcome
         if: always()
