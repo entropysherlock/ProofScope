@@ -35,6 +35,11 @@ jobs:
         with:
           ref: ${{ matrix.commit }}
           persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/sota15-scopeelim
+          path: baseline-reports
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -96,7 +101,7 @@ jobs:
           python - <<'PY' | tee evidence/comparison.txt
           import json, os
           from pathlib import Path
-          base=Path("experiments/sota15")
+          base=Path("baseline-reports/experiments/sota15")
           new=json.loads(Path("evidence/native/native_summary.json").read_text())
           old=json.loads((base/os.environ["EXPECTED_FILE"]).read_text())
           for group in ("horn_bounded","horn_symbolic","func"):
