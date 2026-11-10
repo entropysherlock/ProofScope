@@ -61,6 +61,35 @@ jobs:
           echo "leanprover/lean4:v4.34.1" > lean-toolchain
           lake build repl
           echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Diagnose frozen Lean REPL search initialization (no case outputs or gold)
+        shell: bash
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        run: |
+          python - <<'PY'
+          import json, os, tempfile
+          from pathlib import Path
+          from proofscope import adelta12 as A
+          from proofscope.experimental import cjcs4
+          from proofscope.toolchain import Toolchain
+          with tempfile.TemporaryDirectory() as temp:
+              d=Path(temp)
+              tc=Toolchain.find()
+              compiled=A.build(tc,d/"build")
+              print("EXTRACTOR_BUILD",json.dumps(compiled)[:6000],flush=True)
+              if not compiled["ok"]:
+                  raise SystemExit("Extractor module did not compile")
+              lp=os.pathsep.join((str(d/"build"),os.environ.get("LEAN_PATH","")))
+              r=cjcs4.Repl(cjcs4.find_repl(),lp,d)
+              try:
+                  source=A.import_lines()+"import ProofScope.AssumptionExtract11\nimport Lean\n"+cjcs4.search_source()+"\nset_option linter.unusedVariables false"
+                  result=r.send(source,None)
+                  print("INIT_ENV",result.get("env"),flush=True)
+                  print("INIT_MESSAGES",json.dumps(result.get("messages",[]),ensure_ascii=False)[:12000],flush=True)
+                  if result.get("env") is None or cjcs4._errors(result):
+                      raise SystemExit("REPL_INIT_FAILED_DIAGNOSTIC")
+              finally: r.close()
+          PY
       - name: Run all 23 convertible cases; preserve complete results including failures
         shell: bash
         run: |
