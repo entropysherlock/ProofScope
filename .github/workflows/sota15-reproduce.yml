@@ -1,0 +1,134 @@
+name: SOTA-15 Reproduce Frozen vs Post-fix
+
+on:
+  pull_request:
+    branches: [v1.2-review]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/sota15-reproduce.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: Reproduce ${{ matrix.stage }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - stage: frozen-first-run
+            commit: a2592a729d2f0a8686d0d7698a2df238b83873e1
+            expected: first_run_native_summary.json
+            expected_bounded: 108
+          - stage: post-certificate-fix
+            commit: 2a215577a7d20a419e8d506498d334d892e30c7f
+            expected: postfix_native_summary.json
+            expected_bounded: 109
+          - stage: integrated-current
+            commit: research/sota15-scopeelim
+            expected: postfix_native_summary.json
+            expected_bounded: 109
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.commit }}
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/sota15-scopeelim
+          path: baseline-reports
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Install benchmark dependencies
+        run: python -m pip install z3-solver
+      - name: Preserve run provenance and check frozen files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          git rev-parse HEAD | tee evidence/commit.txt
+          lean --version | tee evidence/lean-version.txt
+          python --version | tee evidence/python-version.txt
+          RUN_STAGE="${{ matrix.stage }}" python - <<'PY' | tee evidence/frozen-hashes.txt
+          import hashlib, os
+          from pathlib import Path
+          root = Path("experiments/sota15")
+          bad = []
+          for line in (root / "FREEZE.txt").read_text().splitlines():
+              fields=line.split("  ",1)
+              if len(fields) != 2 or len(fields[0]) != 64: continue
+              expected,path=fields
+              p=root/path
+              if not p.is_file():
+                  if path.startswith("cases "):
+                      print("CASE AGGREGATE: separate regeneration/gitrevision check")
+                      continue
+                  bad.append(path + " MISSING");continue
+              actual=hashlib.sha256(p.read_bytes()).hexdigest()
+              status="MATCH" if actual == expected else "DIFF"
+              print(status,path,expected,actual)
+              if status=="DIFF" and not (path=="../../proofscope/scopeelim.py" and
+                                          os.environ["RUN_STAGE"] != "frozen-first-run"):
+                  bad.append(path)
+          if bad: raise SystemExit("Unexpected frozen-source differences: " + repr(bad))
+          PY
+      - name: Regenerate frozen cases and verify bit-for-bit identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python experiments/sota15/gen_cases.py
+          git diff --exit-code -- experiments/sota15/cases
+          test -z "$(git ls-files --others --exclude-standard experiments/sota15/cases)"
+      - name: Re-execute native 130-case benchmark and Z3/oracle comparisons
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p evidence/native
+          python experiments/sota15/run_eval.py evidence/native 2 2>&1 | tee evidence/run.log
+      - name: Compare reproduced decisions with historical stage summary
+        shell: bash
+        env:
+          EXPECTED_FILE: ${{ matrix.expected }}
+          EXPECTED_BOUNDED: ${{ matrix.expected_bounded }}
+          RUN_STAGE: ${{ matrix.stage }}
+        run: |
+          python - <<'PY' | tee evidence/comparison.txt
+          import json, os
+          from pathlib import Path
+          base=Path("baseline-reports/experiments/sota15")
+          new=json.loads(Path("evidence/native/native_summary.json").read_text())
+          old=json.loads((base/os.environ["EXPECTED_FILE"]).read_text())
+          for group in ("horn_bounded","horn_symbolic","func"):
+              a,b=new[group],old[group]
+              print(group, "historical", b["directions_certified"], "reproduced", a["directions_certified"])
+              for key in ("cases","directions","directions_certified","inconsistent"):
+                  assert a[key]==b[key], (group,key,a[key],b[key])
+              assert not a["z3_disagreements"], (group,a["z3_disagreements"])
+              if group=="horn_bounded":
+                  assert not a["wrong_vs_oracle"], a["wrong_vs_oracle"]
+          assert new["horn_bounded"]["directions_certified"] == int(os.environ["EXPECTED_BOUNDED"])
+          print(os.environ["RUN_STAGE"],"REPRODUCED (decision counts; times excluded)")
+          PY
+      - name: Upload benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota15-reproduction-${{ matrix.stage }}
+          path: |
+            evidence/commit.txt
+            evidence/lean-version.txt
+            evidence/python-version.txt
+            evidence/frozen-hashes.txt
+            evidence/run.log
+            evidence/comparison.txt
+            evidence/native/native_summary.json
+            evidence/native/native_results.json
+          if-no-files-found: warn
