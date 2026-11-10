@@ -280,31 +280,50 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
     done_f, res_f = out / "done_ids.txt", out / "results.jsonl"
     done = set(done_f.read_text().split("\n")) if done_f.exists() else set()
     todo = [r for r in rows if r["id"] not in done]
-    t_end = time.monotonic() + minutes * 60 - (75 if mathlib else 15)
-    lock, results, ws = threading.Lock(), [], []
+    lock, results, ws, errors = threading.Lock(), [], [], []
     it = iter(todo)
 
-    def loop(w: Worker):
-        w.start()
-        while time.monotonic() < t_end:
-            with lock:
-                row = next(it, None)
-            if row is None:
-                return
-            res = w.check(row)
-            if res["status"] == "CANDIDATE":
-                for c in res["candidates"]:
-                    c["alt"] = winning_alt("", c["proof"], c["stmt"], w, res["_env"])
-            with lock:
-                results.append((row, res))
-                with res_f.open("a") as fh:
-                    fh.write(json.dumps({k: v for k, v in res.items() if k not in ("body", "_env")}, ensure_ascii=False) + "\n")
-                with done_f.open("a") as fh:
-                    fh.write(row["id"] + "\n")
+    # 1) start every worker (each loads Mathlib once); the scan clock starts only after that
+    t_start = time.monotonic()
+    ws = [Worker(tc, out / f"w{i}", mathlib, hb) for i in range(workers)]
 
-    for i in range(workers):
-        w = Worker(tc, out / f"w{i}", mathlib, hb)
-        ws.append(w)
+    def boot(w: Worker):
+        try:
+            w.start()
+        except Exception as e:                      # reported in the summary, never silent
+            with lock:
+                errors.append(f"worker start failed: {str(e)[:500]}")
+            w.repl = None
+    boots = [threading.Thread(target=boot, args=(w,), daemon=True) for w in ws]
+    for t in boots:
+        t.start()
+    for t in boots:
+        t.join()
+    startup_s = round(time.monotonic() - t_start, 1)
+    ws = [w for w in ws if w.env0 is not None]
+    t_end = time.monotonic() + minutes * 60          # `minutes` = scanning time only (startup and verification excluded)
+
+    def loop(w: Worker):
+        try:
+            while time.monotonic() < t_end:
+                with lock:
+                    row = next(it, None)
+                if row is None:
+                    return
+                res = w.check(row)
+                if res["status"] == "CANDIDATE":
+                    for c in res["candidates"]:
+                        c["alt"] = winning_alt("", c["proof"], c["stmt"], w, res["_env"])
+                with lock:
+                    results.append((row, res))
+                    with res_f.open("a") as fh:
+                        fh.write(json.dumps({k: v for k, v in res.items() if k not in ("body", "_env")}, ensure_ascii=False) + "\n")
+                    with done_f.open("a") as fh:
+                        fh.write(row["id"] + "\n")
+        except Exception as e:
+            with lock:
+                errors.append(f"worker crashed: {type(e).__name__}: {str(e)[:500]}")
+
     threads = [threading.Thread(target=loop, args=(w,), daemon=True) for w in ws]
     for t in threads:
         t.start()
@@ -315,7 +334,9 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
             w.repl.close()
     cands = [{**c, "id": row["id"], "theorem": res["theorem"], "body": res["body"], "row": row, "res": res}
              for row, res in results if res["status"] == "CANDIDATE" for c in res["candidates"]]
+    t_v = time.monotonic()
     verified = verify(tc, [{k: v for k, v in c.items()} for c in cands], out, mathlib, hb)
+    verify_s = round(time.monotonic() - t_v, 1)
     findings = []
     for v in verified:
         f = {"id": v["id"], "source": v["row"].get("source"), "theorem": v["theorem"], "kind": v["kind"],
@@ -332,6 +353,7 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
     for _, res in results:
         counts[res["status"]] = counts.get(res["status"], 0) + 1
     return {"scanned_this_run": len(results), "remaining": len(todo) - len(results), "status_counts": counts,
+            "workers_started": len(ws), "startup_s": startup_s, "verify_s": verify_s, "errors": errors,
             "candidates": len(cands), "verified_findings": findings}
 
 

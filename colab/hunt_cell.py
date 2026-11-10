@@ -1,7 +1,7 @@
 # ProofScope DEFECT HUNT — single Colab cell (Python 3, CPU runtime).
 # Looks for formal-math benchmark statements that are provably FALSE or VACUOUS (contradictory hypotheses),
 # each backed by a Lean certificate that Lean's own checker replays.
-# First run in a fresh runtime: ~12–18 min (one-time Mathlib download). Every later run in the same runtime: ~5 min.
+# First run in a fresh runtime: ~8–12 min (one-time Mathlib download). Every later run in the same runtime: ~5 min.
 # Each run continues where the previous one stopped.
 BENCH = "putnam"        # "putnam" (PutnamBench, 672 problems; not in the 2026 prior audit) or "formalmath" (5,560)
 RUN_MINUTES = 5.0       # target length of a run once Mathlib is installed
@@ -106,9 +106,9 @@ try:
     step("Lean REPL", get_repl)
     step("Mathlib (pinned)", get_mathlib)
     total = step(f"benchmark data: {BENCH}", get_data)
-    first_run = time.time() - T0 > 240
-    minutes = 3.5 if first_run else max(2.0, RUN_MINUTES - (time.time() - T0) / 60 - 0.25)
-    summary, out = step(f"scan + certify ({minutes:.1f} min)", lambda: hunt(minutes))
+    # scanning time only; loading Mathlib into the 2 workers (~1–1.5 min) and certifying findings (~1 min) come on top
+    minutes = max(1.5, RUN_MINUTES - (time.time() - T0) / 60 - 2.5)
+    summary, out = step(f"load Mathlib, scan {minutes:.1f} min, certify", lambda: hunt(minutes))
     verdict = "RAN"
 except Exception as e:
     verdict = f"FAIL — {e}"
@@ -117,11 +117,17 @@ print("\n" + "\n".join(f"  {n:<40} {s:<8} {t:>5} s" for n, s, t in STEPS))
 print("\n================ VERDICT ================")
 if verdict != "RAN":
     print(f"The run did not finish: {verdict}\nThis is a setup/infrastructure problem, not a result about any benchmark. Paste this output to Claude.")
+elif summary["scanned_this_run"] == 0:
+    print("The run did NOT check any statements, so it says nothing about the benchmark (not even 'no defects').")
+    print(f"  workers started: {summary.get('workers_started')} · Mathlib load time: {summary.get('startup_s')} s")
+    for e in summary.get("errors") or []: print("  error:", e)
+    print("This is a problem with the run itself. Paste this output to Claude.")
 else:
     done = len((out / "done_ids.txt").read_text().split()) if (out / "done_ids.txt").exists() else 0
     allf = [json.loads(l) for l in (out / "findings.jsonl").read_text().splitlines()] if (out / "findings.jsonl").exists() else []
     c = summary["status_counts"]
     print(f"Benchmark: {BENCH} · this run checked {summary['scanned_this_run']} statements · progress {done}/{total} · run time {time.time() - T0:.0f} s")
+    print(f"  (Mathlib load {summary.get('startup_s')} s, certification {summary.get('verify_s')} s{'; errors: ' + '; '.join(summary['errors']) if summary.get('errors') else ''})")
     print(f"  compiled and searched, nothing found ........ {c.get('NO_DEFECT_FOUND', 0)}  (not proof they are correct — only that this search found no defect)")
     print(f"  did not compile with our Mathlib version .... {c.get('COMPILE_FAIL', 0) + c.get('COMPILE_TIMEOUT', 0)}  (version drift — not counted as defects)")
     print(f"  skipped (unfilled answer / other) ........... {sum(v for k, v in c.items() if k.startswith('SKIP') or k == 'PROBE_FAIL')}")
