@@ -100,6 +100,8 @@ end Demo
 
 def demos():
     sys.path.insert(0, str(repo)); os.chdir(repo)
+    for m in [m for m in sys.modules if m == "proofscope" or m.startswith("proofscope.")]:
+        del sys.modules[m]                                          # a rerun in the same runtime must load the fresh clone
     from proofscope.auditor import audit
     from proofscope.source_audit import source_audit
     cases = [("text", "∀ (n : Nat), n / n = 1", "∀ (n : Nat), n ≠ 0 → n / n = 1", {"PROVED_IMPLICATION", "DISPROVED_EQUIVALENCE"}),
@@ -125,6 +127,14 @@ except Exception as e:
 print("\n" + "\n".join(f"  {n:<45} {s:<8} {t:>6} s" for n, s, t in STEPS))
 print(f"\nVERDICT: {verdict}\nTotal: {time.time() - T0:.0f} s (fresh core runtime ≈ 4–5 min; Lean/REPL cached ≈ 3 min; MATHLIB adds ≈ 5–15 min)")
 print("Mode:", "Mathlib" if MATHLIB else "core Lean", "· memory note: Mathlib imports map ~1.5 GB+ of .olean files; free Colab has ~12 GB RAM")
+if verdict == "PASS":
+    print("Meaning: Lean and the REPL are installed exactly as pinned. The SOTA-9 tests passed here: the report never "
+          "upgrades an unknown, and theorems read straight from a Lean file are compared without re-typing anything "
+          "(including a file that declares a fake axiom, which must not certify anything). The demos gave the expected "
+          "honest answers: typed statements (one-way implication; 'not evaluable' without `open Nat`) and declarations "
+          "read from a Lean file by name (equivalence with variables/universes kept exactly; one-way implication).")
+else:
+    print("Meaning: something failed; the step table above shows where. A failure is not a mathematical result.")
 
 if verdict == "PASS" and LAUNCH_UI:
     from proofscope import ui
