@@ -246,9 +246,31 @@ def verdict(out: dict, certs: set) -> None:
                    reason="no certified countermodel for one side together with a certified proof of the other")
 
 
+PREAMBLE_LINE = re.compile(r"^(open( scoped)? (?!in\b)[A-Za-z_][A-Za-z0-9_.]*( (?!in\b)[A-Za-z_][A-Za-z0-9_.]*)*|universe [a-z][A-Za-z0-9_]*( [a-z][A-Za-z0-9_]*)*)$")
+
+
+def preamble() -> str:
+    """PS-25R: elaboration context taken verbatim from the source header (`open …`, `open scoped …`,
+    `universe …` lines only). Anything else (variable, axiom, def, set_option, notation) is refused: it could
+    change meaning or add axioms. The same lines precede the search session and the certificate, so the
+    certificate states exactly the propositions that were searched; replay recompiles it verbatim."""
+    raw = os.environ.get("PROOFSCOPE_PREAMBLE", "")
+    lines = [l.strip() for l in raw.splitlines() if l.strip()]
+    bad = [l for l in lines if not PREAMBLE_LINE.match(l)]
+    if bad:
+        raise ValueError(f"preamble lines not allowed: {bad}")
+    return "".join(l + "\n" for l in lines)
+
+
 def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path, repl_exe: str | None = None) -> dict:
     R, L = spec["reference"], spec["lean"]
     out = {"id": spec["id"], "reference": R, "lean": L, "engine": "cjcs-sota4-oneprocess"}
+    try:
+        pre = preamble()
+    except ValueError as err:
+        out.update(verdict="INCONCLUSIVE", reason=f"extraction failed: {err}", failure_class="EXTRACTION")
+        return out
+    out["preamble"] = pre
     stats = {"search_processes": 1, "search_env_loads": 1, "verify_processes": 0, "repl_requests": 0}
     out["stats"] = stats
     work = Path(work).resolve()
@@ -258,7 +280,7 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path, repl_exe: str 
     repl = Repl(repl_exe or find_repl(), os.pathsep.join(p for p in [str(buildp), os.environ.get("LEAN_PATH", "")] if p), work)
     try:
         init = (A.import_lines() + "import ProofScope.AssumptionExtract11\nimport Lean\n"
-                + search_source() + "\nset_option linter.unusedVariables false")
+                + search_source() + "\nset_option linter.unusedVariables false\n" + pre)
         r0 = repl.send(init, None)
         if "env" not in r0 or _errors(r0):
             out.update(verdict="INCONCLUSIVE", reason="search environment failed to load", detail=_errors(r0)[:3])
@@ -268,6 +290,12 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path, repl_exe: str 
         env0 = r0["env"]
         rx = repl.send("".join(f"#proofscope_assumptions11 ({a}) ({b})\n" for a, b in [(R, R), (L, L), (R, L)]), env0)
         ex = _infos(rx, "PROOFSCOPE_ASSUMPTIONS11")
+        # PS-25R: Lean recovers from elaboration errors (e.g. an unknown identifier becomes `sorry`) and the
+        # extractor still prints; such a statement is not the input. Any error => not evaluable (fail closed).
+        if _errors(rx):
+            out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=" | ".join(_errors(rx))[-1200:])
+            out["failure_class"] = "EXTRACTION"
+            return out
         if len(ex) != 3:
             out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=" | ".join(_errors(rx))[-600:])
             out["failure_class"] = "EXTRACTION"
@@ -322,7 +350,7 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path, repl_exe: str 
         A.POINT_POOLS.update(saved_pools)
     # ---- independent verification (fresh processes; the search process is gone) ----
     t2 = time.monotonic()
-    v = verify(ident, A.import_lines() + S3.HEADER, proposals, tc, work / "certify")
+    v = verify(ident, A.import_lines() + pre + S3.HEADER, proposals, tc, work / "certify")
     stats["verify_processes"] = 0 if not proposals else (1 if "replay" not in v else 2)
     stats["verify_s"] = round(time.monotonic() - t2, 2)
     certs = set(v["certificates"])

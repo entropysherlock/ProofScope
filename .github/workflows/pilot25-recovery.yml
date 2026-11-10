@@ -1,0 +1,310 @@
+name: ProofScope PS-25R engine recovery (Pilot-25 diagnostics, regressions, rerun; no gold)
+
+on:
+  push:
+    branches: [research/pilot25-engine-recovery]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pilot25-engine-recovery
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Baselines intact; inputs identical to Pilot-25; engine diff is exactly the documented one
+        run: |
+          set -euo pipefail
+          mkdir -p ps25r
+          git merge-base --is-ancestor 666c873371f30fe7d79a7b46f607e425ad7d1bd4 HEAD
+          git merge-base --is-ancestor 5ab4729e5398daa2e6de124a600b1ef71a5453bc HEAD
+          git diff --exit-code 5ab4729e5398daa2e6de124a600b1ef71a5453bc HEAD -- bench/pilot25_run
+          git diff --stat 666c873371f30fe7d79a7b46f607e425ad7d1bd4 HEAD -- proofscope lean bench/sota7 bench/sota4 | tee ps25r/engine-diff.txt
+          git diff 666c873371f30fe7d79a7b46f607e425ad7d1bd4 HEAD -- proofscope lean bench/sota7 > ps25r/engine-diff.patch
+          test "$(git diff --name-only 666c873371f30fe7d79a7b46f607e425ad7d1bd4 HEAD -- proofscope lean bench/sota7 bench/sota4 | sort | tr '\n' ' ')" = "bench/sota7/runner.py lean/ProofScope/CJCSSearch.lean proofscope/experimental/cjcs4.py "
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps25r-integrity
+          path: |
+            ps25r/
+          if-no-files-found: warn
+
+  regressions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pilot25-engine-recovery
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Build pinned Lean REPL for frozen engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl"
+          git checkout -q 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+          test "$(git rev-parse HEAD)" = "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: SOTA-4..7 suites, core verdicts vs SOTA-4 record, SOTA-7 synthetic classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ps25r
+          python -m unittest tests.pilot25r.test_preamble tests.sota7.test_schema_integrity tests.sota7.test_scoring_adversarial tests.sota7.test_blinding_replay tests.sota6.test_repair tests.sota5.test_d03_regression tests.sota5.test_relations tests.sota5.test_lawrel tests.sota4.test_engine_hostile tests.sota4.test_integrity -v 2>&1 | tee ps25r/regression-tests.log
+          for s in core_dev core_heldout; do python -m proofscope.experimental.cjcs4 run research/cjcs/$s/*.json --out ps25r/core/$s --jobs 1; done | tee ps25r/core.log
+          python - <<'PY' | tee ps25r/core-regression.txt
+          import json, glob
+          old = {r["case"]: r for r in json.load(open("docs/sota4/evidence-local/core-variantA/records.json")) if r["engine"] == "cjcs4"}
+          diff = []
+          for f in glob.glob("ps25r/core/*/rows/*.json"):
+              r = json.load(open(f)); o = old[f.split("/")[-1][:-5]]
+              if r["verdict"] != o["verdict"] or sorted(r.get("certificates", {})) != o["certificates"]:
+                  diff.append((r["id"], o["verdict"], r["verdict"]))
+          print("core cases", len(glob.glob("ps25r/core/*/rows/*.json")), "changes", diff)
+          assert not diff
+          PY
+          python -m bench.sota7.dryrun_freeze ps25r/m.json
+          python -m bench.sota7.runner --manifest ps25r/m.json --public bench/sota7/synthetic/public --out ps25r/s7run > ps25r/s7.log
+          python -m bench.sota7.replay --run ps25r/s7run --public bench/sota7/synthetic/public --out ps25r/s7rep.jsonl
+          python -m bench.sota7.scoring --manifest ps25r/m.json --public bench/sota7/synthetic/public --gold bench/sota7/synthetic/gold.jsonl --run ps25r/s7run --replay ps25r/s7rep.jsonl --out ps25r/s7scores.json > /dev/null
+          python -c "import json; s=json.load(open('ps25r/s7scores.json')); e=json.load(open('bench/sota7/synthetic/expected_classes.json'))['cases']; assert all(e[r['case_id']]['class']==r['class'] for r in s['rows']); print('SOTA-7 synthetic classes unchanged', s['classes'])" | tee -a ps25r/core-regression.txt
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps25r-regressions
+          path: |
+            ps25r/
+            !ps25r/**/build/**
+          if-no-files-found: warn
+
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pilot25-engine-recovery
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Install pinned Mathlib and precompiled cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/mathlib4 "$RUNNER_TEMP/mathlib4"
+          cd "$RUNNER_TEMP/mathlib4"
+          git checkout -q d13f23b723b8a846827a245b89c10fc7d3f11612
+          test "$(git rev-parse HEAD)" = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+          # Never run lake update: it upgrades pinned dependencies from Mathlib's lockfile.
+          git diff --exit-code -- lake-manifest.json lean-toolchain
+          cp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          lake exe cache get
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json" || { echo "::error::Mathlib dependency lockfile changed"; exit 1; }
+          if [ ! -s .lake/build/lib/lean/Mathlib.olean ]; then
+            echo "Prebuilt Mathlib.olean missing; using exact locked dependencies for fallback build"
+            lake build Mathlib
+          fi
+          test -s .lake/build/lib/lean/Mathlib.olean
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          echo "Pinned Mathlib.olean available with original dependency lockfile"
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Elaboration matrix for the 23 adapted cases (declaration / term / extractor; as executed and diagnostic opens)
+        shell: bash
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        run: |
+          set -uo pipefail
+          mkdir -p ps25r
+          python -c "from pathlib import Path; from proofscope import adelta12 as A; from proofscope.toolchain import Toolchain; print(A.build(Toolchain.find(), Path('ps25r/xbuild')))"
+          python -m bench.pilot25r.diagnose --build ps25r/xbuild --out ps25r/diagnose | tee ps25r/diagnose.md
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps25r-diagnose
+          path: |
+            ps25r/diagnose/
+            ps25r/diagnose.md
+          if-no-files-found: warn
+
+  telemetry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pilot25-engine-recovery
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Install pinned Mathlib and precompiled cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/mathlib4 "$RUNNER_TEMP/mathlib4"
+          cd "$RUNNER_TEMP/mathlib4"
+          git checkout -q d13f23b723b8a846827a245b89c10fc7d3f11612
+          test "$(git rev-parse HEAD)" = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+          # Never run lake update: it upgrades pinned dependencies from Mathlib's lockfile.
+          git diff --exit-code -- lake-manifest.json lean-toolchain
+          cp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          lake exe cache get
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json" || { echo "::error::Mathlib dependency lockfile changed"; exit 1; }
+          if [ ! -s .lake/build/lib/lean/Mathlib.olean ]; then
+            echo "Prebuilt Mathlib.olean missing; using exact locked dependencies for fallback build"
+            lake build Mathlib
+          fi
+          test -s .lake/build/lib/lean/Mathlib.olean
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          echo "Pinned Mathlib.olean available with original dependency lockfile"
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Build pinned Lean REPL for frozen engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl"
+          git checkout -q 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+          test "$(git rev-parse HEAD)" = "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Stage-resolved memory, frozen engine (666c873) vs recovered engine, no limiter (15 GB / 900 s safety caps)
+        shell: bash
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        run: |
+          set -uo pipefail
+          git worktree add "$RUNNER_TEMP/frozen" 666c873371f30fe7d79a7b46f607e425ad7d1bd4
+          python -m bench.pilot25r.shard_telemetry "$RUNNER_TEMP/frozen" frozen ${{ matrix.shard }}/4 ps25r/tele
+          python -m bench.pilot25r.shard_telemetry "$PWD" recovered ${{ matrix.shard }}/4 ps25r/tele
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps25r-telemetry-${{ matrix.shard }}
+          path: |
+            ps25r/tele/*.json
+          if-no-files-found: warn
+
+  pilot-rerun:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pilot25-engine-recovery
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Install pinned Mathlib and precompiled cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/mathlib4 "$RUNNER_TEMP/mathlib4"
+          cd "$RUNNER_TEMP/mathlib4"
+          git checkout -q d13f23b723b8a846827a245b89c10fc7d3f11612
+          test "$(git rev-parse HEAD)" = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+          # Never run lake update: it upgrades pinned dependencies from Mathlib's lockfile.
+          git diff --exit-code -- lake-manifest.json lean-toolchain
+          cp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          lake exe cache get
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json" || { echo "::error::Mathlib dependency lockfile changed"; exit 1; }
+          if [ ! -s .lake/build/lib/lean/Mathlib.olean ]; then
+            echo "Prebuilt Mathlib.olean missing; using exact locked dependencies for fallback build"
+            lake build Mathlib
+          fi
+          test -s .lake/build/lib/lean/Mathlib.olean
+          cmp lake-manifest.json "$RUNNER_TEMP/mathlib-lock-original.json"
+          echo "Pinned Mathlib.olean available with original dependency lockfile"
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Build pinned Lean REPL for frozen engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl"
+          git checkout -q 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+          test "$(git rev-parse HEAD)" = "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Same 23 cases, recovered engine, protocol budget (12000 MB, 900 CPU-s), sealed, replayed
+        shell: bash
+        run: |
+          set -uo pipefail
+          python -m bench.pilot25r.rerun "$(git rev-parse HEAD)" > pilot25r_log.txt 2>&1; echo "rc=$?" >> pilot25r_log.txt
+          cat pilot25r_log.txt
+          if [ -f pilot25r_results/execution/seal.json ]; then
+            python -m bench.sota7.replay --run pilot25r_results/execution --public pilot25r_results/public --out pilot25r_results/replay.jsonl | tee pilot25r_results/replay.log
+          fi
+          mv pilot25r_log.txt pilot25r_results/
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps25r-pilot-rerun
+          path: |
+            pilot25r_results/
+          if-no-files-found: warn
+
+  report:
+    needs: [integrity, regressions, diagnose, telemetry, pilot-rerun]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/pilot25-engine-recovery
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: One row per original case
+        run: |
+          python -m bench.pilot25r.report --matrix art/ps25r-diagnose/diagnose/matrix.json --telemetry art --rerun art/ps25r-pilot-rerun/execution/records.jsonl --replay art/ps25r-pilot-rerun/replay.jsonl --out report | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps25r-report
+          path: |
+            report/
+          if-no-files-found: warn

@@ -71,6 +71,11 @@ def run_case(c: dict, public: Path, out: Path, budget: dict) -> dict:
             env["PROOFSCOPE_IMPORTS"] = ",".join(imports)
         else:
             env.pop("PROOFSCOPE_IMPORTS", None)
+        pre = (c.get("environment") or {}).get("preamble") or []
+        if pre:
+            env["PROOFSCOPE_PREAMBLE"] = "\n".join(pre)          # PS-25R: verbatim source header lines
+        else:
+            env.pop("PROOFSCOPE_PREAMBLE", None)
         visible = sorted(p.name for p in sb.iterdir())
         r = run_limited([sys.executable, "-m"] + args, budget["cpu_s"], budget["mem_mb"], budget["wall_s"],
                         cwd=str(sb), env=env, inputs=(str(sb / "spec.json"),))

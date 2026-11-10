@@ -27,9 +27,10 @@ Semantics kept from SOTA-3 (`proofscope/certify.py` + `proofscope/experimental/c
 The verifier is authoritative regardless of anything reported here.
 -/
 
-open Lean Elab Command
-
 namespace ProofScope.CJCSSearch
+
+-- PS-25R: opened inside the namespace so it ends with `end`; it must not leak into the user's statements
+open Lean Elab Command
 
 structure Ob where
   name : String
