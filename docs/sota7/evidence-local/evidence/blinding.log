@@ -1,0 +1,5 @@
+test_gold_canary_never_reaches_outputs (tests.sota7.test_blinding_replay.BlindRun.test_gold_canary_never_reaches_outputs) ... ok
+test_modified_record_detected (tests.sota7.test_blinding_replay.BlindRun.test_modified_record_detected) ... ok
+test_records_are_read_only_and_sealed (tests.sota7.test_blinding_replay.BlindRun.test_records_are_read_only_and_sealed) ... ok
+test_sandbox_env_drops_gold_variables (tests.sota7.test_blinding_replay.BlindRun.test_sandbox_env_drops_gold_variables) ... ok
+test_sandbox_sees_only_the_public_case (tests.sota7.test_blinding_replay.BlindRun.test_sandbox_sees_only_the_public_case) ... ok

@@ -1,0 +1,72 @@
+{
+ "capabilities": [
+  "structural_match",
+  "closed_equivalence",
+  "closed_non_equivalence",
+  "open_relation",
+  "source_fidelity",
+  "assumption_explanation",
+  "repair_generation",
+  "certified_repair_minimality"
+ ],
+ "matrix": {
+  "ProofScope SOTA-6 (cjcs4 + repair)": {
+   "structural_match": "unsupported",
+   "closed_equivalence": "kernel",
+   "closed_non_equivalence": "kernel",
+   "open_relation": "unsupported",
+   "source_fidelity": "adapter v2 check + source-link theorems",
+   "assumption_explanation": "kernel (finite fragments)",
+   "repair_generation": "kernel (declared grammar)",
+   "certified_repair_minimality": "kernel (declared grammar)"
+  },
+  "BEq+ (LeanInteract, Poiroux et al., EMNLP 2025)": {
+   "structural_match": "yes",
+   "closed_equivalence": "kernel (bidirectional proof)",
+   "closed_non_equivalence": "unsupported",
+   "open_relation": "unsupported",
+   "source_fidelity": "unsupported",
+   "assumption_explanation": "unsupported",
+   "repair_generation": "unsupported",
+   "certified_repair_minimality": "unsupported"
+  },
+  "SemantEq": {
+   "structural_match": "yes (normalization)",
+   "closed_equivalence": "unsupported",
+   "closed_non_equivalence": "unsupported",
+   "open_relation": "unsupported",
+   "source_fidelity": "unsupported",
+   "assumption_explanation": "unsupported",
+   "repair_generation": "unsupported",
+   "certified_repair_minimality": "unsupported"
+  },
+  "FormalRx / FormalRx-CC (ICML 2026)": {
+   "structural_match": "unsupported",
+   "closed_equivalence": "unsupported",
+   "closed_non_equivalence": "Lean-checked witness (CC)",
+   "open_relation": "unsupported",
+   "source_fidelity": "LLM diagnosis (FormalRx); Lean-checked separating witness (CC)",
+   "assumption_explanation": "unsupported",
+   "repair_generation": "LLM correction (not certified)",
+   "certified_repair_minimality": "unsupported"
+  },
+  "BPF (Faithfulness Gap, 2026)": {
+   "structural_match": "unsupported",
+   "closed_equivalence": "unsupported",
+   "closed_non_equivalence": "unsupported",
+   "open_relation": "unsupported",
+   "source_fidelity": "probe-based NL fingerprinting (statistical)",
+   "assumption_explanation": "unsupported",
+   "repair_generation": "unsupported",
+   "certified_repair_minimality": "unsupported"
+  }
+ },
+ "availability": {
+  "BEq+ (LeanInteract, Poiroux et al., EMNLP 2025)": "NOT_INSTALLED",
+  "SemantEq": "NOT_INSTALLED",
+  "ProofScope SOTA-6 (cjcs4 + repair)": "AVAILABLE",
+  "FormalRx / FormalRx-CC (ICML 2026)": "NOT_INTEGRATED",
+  "BPF (Faithfulness Gap, 2026)": "NOT_INTEGRATED"
+ },
+ "benchmark_runs": "NOT RUN (no independent dataset; smoke = availability probe only)"
+}

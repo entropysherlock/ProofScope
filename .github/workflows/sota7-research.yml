@@ -1,0 +1,222 @@
+name: ProofScope SOTA-7 independent-evaluation infrastructure (synthetic dry run; independent evaluation NOT RUN)
+
+# Research branch only. Read-only token, no secrets. The execution job never has the gold file: it is deleted
+# from the checkout before the engine runs, and scoring happens in a later job.
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/sota7-independent-evaluation]
+
+permissions:
+  contents: read
+
+env:
+  REPL_REV: 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+  LEANINTERACT_REV: 768e18ebcb5c7ec34d308768a785389eeac37798
+
+jobs:
+  integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota7-independent-evaluation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: SOTA-6 base unchanged, synthetic manifest frozen and verified, schema/integrity tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          {
+            git merge-base --is-ancestor 26eee2bd36b29c895c3f783f33b97a48e4e816a8 HEAD && echo "ancestor: OK"
+            git diff --stat 26eee2bd36b29c895c3f783f33b97a48e4e816a8 -- research/cjcs research/sota5 research/sota6 bench/sota4 bench/sota5 bench/dev_sota3 bench/fixtures bench/adapters bench/runner.py docs/sota4 docs/sota5 docs/sota6 proofscope lean tests/sota4 tests/sota5 tests/sota6 .github/workflows/sota4-research.yml .github/workflows/sota5-research.yml .github/workflows/sota6-research.yml > evidence/protected-diff.txt
+            test ! -s evidence/protected-diff.txt && echo "protected paths byte-identical: OK"
+            python -m bench.sota7.dryrun_freeze evidence/source-manifest.json
+            python -c "from pathlib import Path; from bench.sota7.blind import verify_manifest as v; m=v(Path('evidence/source-manifest.json'), Path('bench/sota7/synthetic/public'), Path('bench/sota7/synthetic/gold.jsonl')); print('manifest verified', m['manifest_sha256'])"
+            python -m unittest tests.sota7.test_schema_integrity -v 2>&1
+          } 2>&1 | tee evidence/integrity.log
+          grep -q '^OK' evidence/integrity.log
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota7-integrity
+          path: evidence/
+          if-no-files-found: warn
+
+  harness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota7-independent-evaluation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Scoring rules, adversarial taxonomy, statistics
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          python -m unittest tests.sota7.test_scoring_adversarial -v 2>&1 | tee evidence/harness-tests.log
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota7-harness
+          path: evidence/
+          if-no-files-found: warn
+
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota7-independent-evaluation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Blinding, sealing, certificate replay, malicious-certificate rejection
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          python -m unittest tests.sota7.test_blinding_replay -v 2>&1 | tee evidence/replay.log
+          grep -E 'sandbox|canary|sealed|modified' evidence/replay.log > evidence/blinding.log
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota7-replay
+          path: evidence/
+          if-no-files-found: warn
+
+  pilot-dryrun:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota7-independent-evaluation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Lean REPL (leanprover-community/repl v4.34.0, pinned commit; built with Lean 4.34.1)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl" && git checkout -q "$REPL_REV"
+          test "$(git rev-parse HEAD)" = "$REPL_REV"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl 2>&1 | tail -n 5
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: SYNTHETIC dry run (NOT the independent evaluation) — gold removed before execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          python -m bench.sota7.dryrun_freeze evidence/source-manifest.json
+          rm bench/sota7/synthetic/gold.jsonl
+          ! ls bench/sota7/synthetic/gold.jsonl 2>/dev/null
+          python -m bench.sota7.runner --manifest evidence/source-manifest.json --public bench/sota7/synthetic/public --out evidence/run | tee evidence/runner.log
+          python -m bench.sota7.replay --run evidence/run --public bench/sota7/synthetic/public --out evidence/replay.jsonl | tee evidence/replay-run.log
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota7-pilot-dryrun
+          path: evidence/
+          if-no-files-found: warn
+
+  competitors:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota7-independent-evaluation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Availability smoke (import only; no benchmark run)
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p evidence
+          pip install "git+https://github.com/augustepoiroux/LeanInteract@$LEANINTERACT_REV" > evidence/leaninteract-install.log 2>&1 || echo "LeanInteract install failed (recorded, not a mathematical failure)" | tee -a evidence/leaninteract-install.log
+          python -m bench.sota7.competitors --out evidence/competitor-status.json
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota7-competitors
+          path: evidence/
+          if-no-files-found: warn
+
+  report:
+    needs: [integrity, harness, replay, pilot-dryrun, competitors]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: research/sota7-independent-evaluation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          name: sota7-pilot-dryrun
+          path: dry
+      - uses: actions/download-artifact@v4
+        with:
+          name: sota7-competitors
+          path: comp
+      - name: Score sealed records against the withheld labels; fail on integrity breach or classification regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p summary evidence
+          python -m bench.sota7.scoring --manifest dry/source-manifest.json --public bench/sota7/synthetic/public --gold bench/sota7/synthetic/gold.jsonl --run dry/run --replay dry/replay.jsonl --out evidence/pilot-dryrun.json
+          python -m bench.sota7.report --scores evidence/pilot-dryrun.json --competitors comp/competitor-status.json --out summary | tee -a "$GITHUB_STEP_SUMMARY"
+          python - <<'PY'
+          import json
+          s = json.load(open("evidence/pilot-dryrun.json")); e = json.load(open("bench/sota7/synthetic/expected_classes.json"))["cases"]
+          got = {r["case_id"]: r["class"] for r in s["rows"]}
+          bad = {k: (v["class"], got.get(k)) for k, v in e.items() if got.get(k) != v["class"]}
+          assert not bad, f"classification regression: {bad}"
+          assert not s["independent"], "synthetic run must never be marked independent"
+          assert all(r["replay"] == "VERIFIED" for r in s["rows"] if r["class"] in ("CORRECT", "INCORRECT", "REPAIR_MISMATCH", "MINIMALITY_CONFLICT", "CLOSED_ONLY_AGREEMENT", "CLOSED_ONLY_UNCHECKED")), "decisive verdict without verified certificate"
+          print("report checks OK")
+          PY
+      - name: Upload evidence (also on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota7-summary
+          path: |
+            summary/
+            evidence/
+          if-no-files-found: warn

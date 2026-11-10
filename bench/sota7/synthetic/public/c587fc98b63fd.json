@@ -1,0 +1,27 @@
+{
+ "schema": "proofscope-eval/1",
+ "case_id": "c587fc98b63fd",
+ "task": "relation",
+ "domain": "order",
+ "difficulty": "easy",
+ "provenance": {
+  "source": "ProofScope developer (synthetic development fixture)",
+  "url": "",
+  "retrieved": "2026-11-09",
+  "license": "same as repository",
+  "upstream_revision": "26eee2bd36b29c895c3f783f33b97a48e4e816a8"
+ },
+ "environment": {
+  "lean": "4.34.1",
+  "mathlib": null,
+  "imports": []
+ },
+ "reference": {
+  "text": "∀ (x : Nat), ∃ (y : Nat), y > x",
+  "lean": "∀ (x : Nat), ∃ (y : Nat), y > x"
+ },
+ "candidate": {
+  "text": "∃ (y : Nat), ∀ (x : Nat), y > x",
+  "lean": "∃ (y : Nat), ∀ (x : Nat), y > x"
+ }
+}

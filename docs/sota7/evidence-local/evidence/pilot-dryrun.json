@@ -1,0 +1,240 @@
+{
+ "manifest_sha256": "d08fe7697211e8fb93924aa79fe624bc396745bafd008662bd99fd8bf0d95cd9",
+ "dataset_version": "synthetic-dev-1",
+ "engine_commit": "26eee2bd36b29c895c3f783f33b97a48e4e816a8",
+ "cases": 11,
+ "classes": {
+  "ABSTAIN": 2,
+  "CLOSED_ONLY_AGREEMENT": 1,
+  "CORRECT": 7,
+  "REPAIR_MISMATCH": 1
+ },
+ "labeler_classes": {
+  "SYNTHETIC_DEVELOPMENT": 11
+ },
+ "independent": false,
+ "decisive_scored": 9,
+ "decisive_errors": 0,
+ "decisive_error_rate_ci95": [
+  0.0,
+  0.3363
+ ],
+ "correct_ci95_over_all_cases": [
+  0.3079,
+  0.8907
+ ],
+ "coverage": {
+  "decisive_fraction": 0.8182,
+  "verified_certificate_fraction": 0.8182,
+  "by_domain": {
+   "algebra": {
+    "CORRECT": 2
+   },
+   "arithmetic": {
+    "ABSTAIN": 1,
+    "CORRECT": 2,
+    "REPAIR_MISMATCH": 1,
+    "CLOSED_ONLY_AGREEMENT": 1
+   },
+   "number theory": {
+    "CORRECT": 1,
+    "ABSTAIN": 1
+   },
+   "order": {
+    "CORRECT": 2
+   }
+  },
+  "by_difficulty": {
+   "easy": {
+    "CORRECT": 4,
+    "ABSTAIN": 1,
+    "REPAIR_MISMATCH": 1,
+    "CLOSED_ONLY_AGREEMENT": 1
+   },
+   "hard": {
+    "ABSTAIN": 1
+   },
+   "medium": {
+    "CORRECT": 3
+   }
+  }
+ },
+ "performance": {
+  "median_cpu_s": 3.424,
+  "p90_cpu_s": 6.561,
+  "p95_cpu_s": 7.29,
+  "max_cpu_s": 7.29,
+  "median_wall_s": 3.405,
+  "peak_rss_mb": 1851.6,
+  "timeouts": 0,
+  "infra_errors": 0
+ },
+ "rows": [
+  {
+   "case_id": "c176c64a4a4e8",
+   "task": "repair",
+   "domain": "algebra",
+   "difficulty": "medium",
+   "claim": "MINIMAL_REPAIR",
+   "class": "CORRECT",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 1.26,
+   "wall_s": 1.188,
+   "max_rss_mb": 497.3,
+   "status": "OK"
+  },
+  {
+   "case_id": "c48da5ded8888",
+   "task": "relation",
+   "domain": "number theory",
+   "difficulty": "easy",
+   "claim": "NOT_EQUIVALENT_CLOSED",
+   "class": "CORRECT",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 3.852,
+   "wall_s": 3.875,
+   "max_rss_mb": 1675.9,
+   "status": "OK"
+  },
+  {
+   "case_id": "c587fc98b63fd",
+   "task": "relation",
+   "domain": "order",
+   "difficulty": "easy",
+   "claim": "NOT_EQUIVALENT_CLOSED",
+   "class": "CORRECT",
+   "gold_relation": "CAND_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 3.822,
+   "wall_s": 3.865,
+   "max_rss_mb": 1693.7,
+   "status": "OK"
+  },
+  {
+   "case_id": "c875b3ed67722",
+   "task": "relation",
+   "domain": "number theory",
+   "difficulty": "hard",
+   "claim": "ABSTAIN",
+   "class": "ABSTAIN",
+   "gold_relation": "UNRESOLVED",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "NO_DECISIVE_DECLARATION",
+   "cpu_tree_s": 7.29,
+   "wall_s": 6.417,
+   "max_rss_mb": 1813.0,
+   "status": "OK"
+  },
+  {
+   "case_id": "c8e2aaf84b7f1",
+   "task": "relation",
+   "domain": "arithmetic",
+   "difficulty": "easy",
+   "claim": "ABSTAIN",
+   "class": "ABSTAIN",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "NO_DECISIVE_DECLARATION",
+   "cpu_tree_s": 6.561,
+   "wall_s": 5.635,
+   "max_rss_mb": 1851.6,
+   "status": "OK"
+  },
+  {
+   "case_id": "c9afeab885ade",
+   "task": "repair",
+   "domain": "arithmetic",
+   "difficulty": "easy",
+   "claim": "MINIMAL_REPAIR",
+   "class": "CORRECT",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 1.765,
+   "wall_s": 1.614,
+   "max_rss_mb": 499.6,
+   "status": "OK"
+  },
+  {
+   "case_id": "ca8a9fea02948",
+   "task": "repair",
+   "domain": "arithmetic",
+   "difficulty": "easy",
+   "claim": "MINIMAL_REPAIR",
+   "class": "REPAIR_MISMATCH",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 1.878,
+   "wall_s": 1.734,
+   "max_rss_mb": 499.4,
+   "status": "OK"
+  },
+  {
+   "case_id": "cc7d81b9ebf12",
+   "task": "relation",
+   "domain": "arithmetic",
+   "difficulty": "easy",
+   "claim": "EQUIVALENT_CLOSED",
+   "class": "CORRECT",
+   "gold_relation": "EQUIVALENT",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 3.424,
+   "wall_s": 3.405,
+   "max_rss_mb": 1701.3,
+   "status": "OK"
+  },
+  {
+   "case_id": "ce750c58a39bc",
+   "task": "repair",
+   "domain": "order",
+   "difficulty": "medium",
+   "claim": "MINIMAL_REPAIR",
+   "class": "CORRECT",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 1.553,
+   "wall_s": 1.418,
+   "max_rss_mb": 515.2,
+   "status": "OK"
+  },
+  {
+   "case_id": "ceb669082a910",
+   "task": "repair",
+   "domain": "algebra",
+   "difficulty": "medium",
+   "claim": "NO_REPAIR_IN_GRAMMAR",
+   "class": "CORRECT",
+   "gold_relation": "REF_STRONGER",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 1.057,
+   "wall_s": 1.02,
+   "max_rss_mb": 495.6,
+   "status": "OK"
+  },
+  {
+   "case_id": "cf23978a86a65",
+   "task": "relation",
+   "domain": "arithmetic",
+   "difficulty": "easy",
+   "claim": "EQUIVALENT_CLOSED",
+   "class": "CLOSED_ONLY_AGREEMENT",
+   "gold_relation": "NOT_EQUIVALENT",
+   "labeler_class": "SYNTHETIC_DEVELOPMENT",
+   "replay": "VERIFIED",
+   "cpu_tree_s": 3.751,
+   "wall_s": 3.77,
+   "max_rss_mb": 1695.2,
+   "status": "OK"
+  }
+ ],
+ "zero_error_note": "0 decisive errors in 9: the 95% upper bound on the error rate is 0.3363, not zero"
+}

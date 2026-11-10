@@ -1,0 +1,82 @@
+{
+ "schema": "proofscope-eval/1",
+ "case_id": "ce750c58a39bc",
+ "task": "repair",
+ "domain": "order",
+ "difficulty": "medium",
+ "provenance": {
+  "source": "ProofScope developer (synthetic development fixture)",
+  "url": "",
+  "retrieved": "2026-11-09",
+  "license": "same as repository",
+  "upstream_revision": "26eee2bd36b29c895c3f783f33b97a48e4e816a8"
+ },
+ "environment": {
+  "lean": "4.34.1",
+  "mathlib": null,
+  "imports": []
+ },
+ "reference": {
+  "text": "∀ (a b : Int), 0 ≤ a → a ≤ b → a * a ≤ b * b",
+  "lean": "∀ (a b : Int), 0 ≤ a → a ≤ b → a * a ≤ b * b"
+ },
+ "candidate": {
+  "text": "∀ (a b : Int), a ≤ b → a * a ≤ b * b",
+  "lean": "∀ (a b : Int), a ≤ b → a * a ≤ b * b"
+ },
+ "repair": {
+  "context": [
+   [
+    "a",
+    "Int"
+   ],
+   [
+    "b",
+    "Int"
+   ]
+  ],
+  "reference": {
+   "hyps": [
+    "0 ≤ a",
+    "a ≤ b"
+   ],
+   "concl": "a * a ≤ b * b"
+  },
+  "candidate": {
+   "hyps": [
+    "a ≤ b"
+   ],
+   "concl": "a * a ≤ b * b"
+  },
+  "edits": [
+   {
+    "add_hyp": "0 ≤ a"
+   },
+   {
+    "add_hyp": "0 ≤ b"
+   },
+   {
+    "add_hyp": "0 < a"
+   },
+   {
+    "del_hyp": 0
+   }
+  ],
+  "pool": {
+   "a": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+   ],
+   "b": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+   ]
+  }
+ }
+}

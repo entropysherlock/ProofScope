@@ -1,0 +1,69 @@
+{
+ "schema": "proofscope-eval/1",
+ "case_id": "ca8a9fea02948",
+ "task": "repair",
+ "domain": "arithmetic",
+ "difficulty": "easy",
+ "provenance": {
+  "source": "ProofScope developer (synthetic development fixture)",
+  "url": "",
+  "retrieved": "2026-11-09",
+  "license": "same as repository",
+  "upstream_revision": "26eee2bd36b29c895c3f783f33b97a48e4e816a8"
+ },
+ "environment": {
+  "lean": "4.34.1",
+  "mathlib": null,
+  "imports": []
+ },
+ "reference": {
+  "text": "∀ (n : Nat), n ≠ 0 → n / n = 1",
+  "lean": "∀ (n : Nat), n ≠ 0 → n / n = 1"
+ },
+ "candidate": {
+  "text": "∀ (n : Nat), n / n = 1",
+  "lean": "∀ (n : Nat), n / n = 1"
+ },
+ "repair": {
+  "context": [
+   [
+    "n",
+    "Nat"
+   ]
+  ],
+  "reference": {
+   "hyps": [
+    "n ≠ 0"
+   ],
+   "concl": "n / n = 1"
+  },
+  "candidate": {
+   "hyps": [],
+   "concl": "n / n = 1"
+  },
+  "edits": [
+   {
+    "add_hyp": "n ≠ 0"
+   },
+   {
+    "add_hyp": "0 < n"
+   },
+   {
+    "add_hyp": "2 ≤ n"
+   },
+   {
+    "add_hyp": "n % 2 = 1"
+   }
+  ],
+  "pool": {
+   "n": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  }
+ }
+}

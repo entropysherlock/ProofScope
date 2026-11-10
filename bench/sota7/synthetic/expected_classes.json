@@ -1,0 +1,49 @@
+{
+ "note": "Regression expectations for the SYNTHETIC dry run (engine behaviour at 26eee2b on developer-written fixtures). Not accuracy evidence. A change here must be explained.",
+ "cases": {
+  "c176c64a4a4e8": {
+   "dev_name": "repair_disjunct",
+   "class": "CORRECT"
+  },
+  "c48da5ded8888": {
+   "dev_name": "cast_target",
+   "class": "CORRECT"
+  },
+  "c587fc98b63fd": {
+   "dev_name": "quantifier_swap",
+   "class": "CORRECT"
+  },
+  "c875b3ed67722": {
+   "dev_name": "open_pair",
+   "class": "ABSTAIN"
+  },
+  "c8e2aaf84b7f1": {
+   "dev_name": "division_nonzero",
+   "class": "ABSTAIN"
+  },
+  "c9afeab885ade": {
+   "dev_name": "repair_nonzero",
+   "class": "CORRECT"
+  },
+  "ca8a9fea02948": {
+   "dev_name": "planted_label_error",
+   "class": "REPAIR_MISMATCH"
+  },
+  "cc7d81b9ebf12": {
+   "dev_name": "rename",
+   "class": "CORRECT"
+  },
+  "ce750c58a39bc": {
+   "dev_name": "repair_sign",
+   "class": "CORRECT"
+  },
+  "ceb669082a910": {
+   "dev_name": "repair_none",
+   "class": "CORRECT"
+  },
+  "cf23978a86a65": {
+   "dev_name": "unrelated_true",
+   "class": "CLOSED_ONLY_AGREEMENT"
+  }
+ }
+}

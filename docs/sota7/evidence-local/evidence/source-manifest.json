@@ -1,0 +1,84 @@
+{
+ "schema": "proofscope-eval-manifest/1",
+ "case_schema": "proofscope-eval/1",
+ "dataset_version": "synthetic-dev-1",
+ "selection_protocol": "SYNTHETIC_DEVELOPMENT (not a selection protocol)",
+ "review_protocol": "SYNTHETIC_DEVELOPMENT (no review)",
+ "engine_commit": "26eee2bd36b29c895c3f783f33b97a48e4e816a8",
+ "toolchain": {
+  "lean": "4.34.1",
+  "mathlib": null,
+  "repl": "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee"
+ },
+ "budgets": {
+  "relation": {
+   "cpu_s": 120,
+   "mem_mb": 8000,
+   "wall_s": 400
+  },
+  "repair": {
+   "cpu_s": 120,
+   "mem_mb": 8000,
+   "wall_s": 400
+  }
+ },
+ "cases": [
+  {
+   "case_id": "c176c64a4a4e8",
+   "task": "repair",
+   "input_canonical_sha256": "f2d0a4c6915a8e7e7d35d0edbd7fce1c3a1899555edb6b007fc43524946b6d37"
+  },
+  {
+   "case_id": "c48da5ded8888",
+   "task": "relation",
+   "input_canonical_sha256": "08df85047803136a871878118471d46c5c68f33fa094be13ba31a6247d94d45b"
+  },
+  {
+   "case_id": "c587fc98b63fd",
+   "task": "relation",
+   "input_canonical_sha256": "f82a51ec1129a38808d131fde3f2b29039be9df4d303e386fc08a08b3ab39014"
+  },
+  {
+   "case_id": "c875b3ed67722",
+   "task": "relation",
+   "input_canonical_sha256": "311648a05449e335b9b769d6e07641c484ac0be4fe49bcb9ffd67d6e36485fb1"
+  },
+  {
+   "case_id": "c8e2aaf84b7f1",
+   "task": "relation",
+   "input_canonical_sha256": "e0fbd767487b2b20316ce0a39185c9e2586e5fda70cf4a8c3ca2ddf5fec8663b"
+  },
+  {
+   "case_id": "c9afeab885ade",
+   "task": "repair",
+   "input_canonical_sha256": "4f9c84ff1cff45ebaf68d7ad3155c2be7df26e8df1df5fec83c1baa224f0c9dd"
+  },
+  {
+   "case_id": "ca8a9fea02948",
+   "task": "repair",
+   "input_canonical_sha256": "a140a7033a0210ecdc429683c10616d88cd34056c303ac99497ac91fe20618b1"
+  },
+  {
+   "case_id": "cc7d81b9ebf12",
+   "task": "relation",
+   "input_canonical_sha256": "ec8a95b7e1112c99cdd5205e24d0a5c84fe7ac4a86b31b7f76a49a7f27e87f7c"
+  },
+  {
+   "case_id": "ce750c58a39bc",
+   "task": "repair",
+   "input_canonical_sha256": "1741a913f1f1b96f181f50f40fbb49134d791e97c51908a1341c6efab5088c30"
+  },
+  {
+   "case_id": "ceb669082a910",
+   "task": "repair",
+   "input_canonical_sha256": "5a30812d052de8d51927352a1c0a49f9693f851dbc03cc3b33905129df3390fa"
+  },
+  {
+   "case_id": "cf23978a86a65",
+   "task": "relation",
+   "input_canonical_sha256": "a6c382e6f128ee86cb6d2d643b8edb1568c12a67fff228c6176cec5e06055aed"
+  }
+ ],
+ "gold_sha256": "448c8f8787c4a235a25ea79f981836d860bdffdb3d7a1f6fb750f89e41a5640b",
+ "manifest_sha256": "d08fe7697211e8fb93924aa79fe624bc396745bafd008662bd99fd8bf0d95cd9"
+}

@@ -1,0 +1,61 @@
+{
+ "schema": "proofscope-eval/1",
+ "case_id": "ceb669082a910",
+ "task": "repair",
+ "domain": "algebra",
+ "difficulty": "medium",
+ "provenance": {
+  "source": "ProofScope developer (synthetic development fixture)",
+  "url": "",
+  "retrieved": "2026-11-09",
+  "license": "same as repository",
+  "upstream_revision": "26eee2bd36b29c895c3f783f33b97a48e4e816a8"
+ },
+ "environment": {
+  "lean": "4.34.1",
+  "mathlib": null,
+  "imports": []
+ },
+ "reference": {
+  "text": "∀ (x : Int), x * x = 1 → x = 1 ∨ x = -1",
+  "lean": "∀ (x : Int), x * x = 1 → x = 1 ∨ x = -1"
+ },
+ "candidate": {
+  "text": "∀ (x : Int), x * x = 1 → x = 1",
+  "lean": "∀ (x : Int), x * x = 1 → x = 1"
+ },
+ "repair": {
+  "context": [
+   [
+    "x",
+    "Int"
+   ]
+  ],
+  "reference": {
+   "hyps": [
+    "x * x = 1"
+   ],
+   "concl": "x = 1 ∨ x = -1"
+  },
+  "candidate": {
+   "hyps": [
+    "x * x = 1"
+   ],
+   "concl": "x = 1"
+  },
+  "edits": [
+   {
+    "add_hyp": "0 ≤ x"
+   }
+  ],
+  "pool": {
+   "x": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+   ]
+  }
+ }
+}

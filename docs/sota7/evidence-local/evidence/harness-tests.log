@@ -1,0 +1,15 @@
+test_abstention_is_not_negative (tests.sota7.test_scoring_adversarial.Rules.test_abstention_is_not_negative) ... ok
+test_clopper_pearson (tests.sota7.test_scoring_adversarial.Rules.test_clopper_pearson) ... ok
+test_closed_equivalence_never_counts_as_formulation_correct (tests.sota7.test_scoring_adversarial.Rules.test_closed_equivalence_never_counts_as_formulation_correct) ... ok
+test_difference_against_equivalent_gold_is_error (tests.sota7.test_scoring_adversarial.Rules.test_difference_against_equivalent_gold_is_error) ... ok
+test_repair_rules (tests.sota7.test_scoring_adversarial.Rules.test_repair_rules) ... ok
+test_timeout_is_not_a_negative (tests.sota7.test_scoring_adversarial.Rules.test_timeout_is_not_a_negative) ... ok
+test_unresolved_gold_scored_apart (tests.sota7.test_scoring_adversarial.Rules.test_unresolved_gold_scored_apart) ... ok
+test_unverified_certificate_is_not_certified (tests.sota7.test_scoring_adversarial.Rules.test_unverified_certificate_is_not_certified) ... ok
+test_every_category_gets_its_class (tests.sota7.test_scoring_adversarial.Taxonomy.test_every_category_gets_its_class) ... ok
+test_failure_classes_are_distinguishable_and_never_success_or_negative (tests.sota7.test_scoring_adversarial.Taxonomy.test_failure_classes_are_distinguishable_and_never_success_or_negative) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.001s
+
+OK
