@@ -1,0 +1,1 @@
+{"id": "g4_free_identifier", "reference": "∀ (n : Nat), n + 0 = n", "lean": "∀ (n : Nat), n + zeroish = n", "purpose": "invalid source: free identifier", "author": "engine developer (Claude), SOTA-8 development; not independent"}

@@ -1,0 +1,1 @@
+{"id": "g3_one_way", "reference": "∀ (n : Nat), n % 4 = 1 → ∃ a b : Nat, a * a + b * b = n", "lean": "∀ (n : Nat), n % 4 = 1 → n % 8 = 1 → ∃ a b : Nat, a * a + b * b = n", "purpose": "candidate adds a hypothesis: reference ⇒ candidate derivable, converse not (truth unknown to the engine)", "author": "engine developer (Claude), SOTA-8 development; not independent"}

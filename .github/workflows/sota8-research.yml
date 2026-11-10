@@ -1,0 +1,152 @@
+name: ProofScope SOTA-8 (derivation engine; paired Pilot-25 rerun; no gold)
+
+on:
+  push:
+    branches: [research/proofscope-sota8]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/proofscope-sota8
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Baselines intact; Pilot-25 inputs and headers unchanged
+        run: |
+          set -euo pipefail
+          mkdir -p s8
+          git merge-base --is-ancestor a7bd9bbd95e0a87d731ec6949f965f6cfee9294f HEAD
+          git diff --exit-code a7bd9bbd95e0a87d731ec6949f965f6cfee9294f HEAD -- bench/pilot25_run bench/pilot25r/source_headers.json bench/pilot25r/cases.py research/cjcs bench/sota7/synthetic
+          git diff --stat a7bd9bbd95e0a87d731ec6949f965f6cfee9294f HEAD | tee s8/diff-stat.txt
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota8-integrity
+          path: |
+            s8/
+          if-no-files-found: warn
+
+  regressions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/proofscope-sota8
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Build pinned Lean REPL for frozen engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl"
+          git checkout -q 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+          test "$(git rev-parse HEAD)" = "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: All suites (SOTA-4..8, PS-25R) in core mode
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p s8
+          python -m unittest tests.sota8.test_sota8 tests.pilot25r.test_preamble tests.sota7.test_schema_integrity tests.sota7.test_scoring_adversarial tests.sota7.test_blinding_replay tests.sota6.test_repair tests.sota5.test_d03_regression tests.sota5.test_relations tests.sota5.test_lawrel tests.sota4.test_engine_hostile tests.sota4.test_integrity -v 2>&1 | tee s8/tests.log
+          python -m proofscope.experimental.sota8 run research/sota8/dev/g1_goldbach_reformulated.json research/sota8/dev/g3_one_way.json research/sota8/dev/g4_free_identifier.json --out s8/dev | tee s8/dev.log
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota8-regressions
+          path: |
+            s8/
+            !s8/**/build/**
+          if-no-files-found: warn
+
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [cjcs4, sota8]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/proofscope-sota8
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Build pinned Lean REPL for frozen engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/leanprover-community/repl "$RUNNER_TEMP/repl"
+          cd "$RUNNER_TEMP/repl"
+          git checkout -q 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+          test "$(git rev-parse HEAD)" = "193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          lake build repl
+          echo "PROOFSCOPE_REPL=$RUNNER_TEMP/repl/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Same 23 Pilot-25 cases, same protocol budget (12000 MB, 900 CPU-s), sealed, then replayed
+        shell: bash
+        env:
+          PROOFSCOPE_RELATION_ENGINE: ${{ matrix.engine }}
+        run: |
+          set -uo pipefail
+          python -m bench.pilot25r.rerun "$(git rev-parse HEAD)" > run.log 2>&1; echo "rc=$?" >> run.log; cat run.log
+          if [ -f pilot25r_results/execution/seal.json ]; then
+            python -m bench.sota7.replay --run pilot25r_results/execution --public pilot25r_results/public --out pilot25r_results/replay.jsonl | tee pilot25r_results/replay.log
+          fi
+          mv run.log pilot25r_results/
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota8-pilot-${{ matrix.engine }}
+          path: |
+            pilot25r_results/
+          if-no-files-found: warn
+
+  compare:
+    needs: [integrity, regressions, pilot]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/proofscope-sota8
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Paired comparison (fails if any decisive claim lacks a verified certificate)
+        run: python -m bench.pilot25r.compare --a art/sota8-pilot-cjcs4 --b art/sota8-pilot-sota8 --out cmp | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota8-compare
+          path: |
+            cmp/
+          if-no-files-found: warn

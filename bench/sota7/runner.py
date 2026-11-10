@@ -26,7 +26,9 @@ REPO = Path(__file__).resolve().parents[2]
 def engine_spec(c: dict) -> tuple[list[str], dict]:
     if c["task"] == "relation":
         spec = {"id": c["case_id"], "reference": c["reference"]["lean"], "lean": c["candidate"]["lean"]}
-        return ["proofscope.experimental.cjcs4", "run", "spec.json", "--out", "out", "--jobs", "1"], spec
+        # SOTA-8: PROOFSCOPE_RELATION_ENGINE=sota8 selects the derivation + CJCS engine (default: frozen cjcs4)
+        mod = {"sota8": "proofscope.experimental.sota8"}.get(os.environ.get("PROOFSCOPE_RELATION_ENGINE", ""), "proofscope.experimental.cjcs4")
+        return [mod, "run", "spec.json", "--out", "out", "--jobs", "1"], spec
     r = c["repair"]
     spec = {"id": c["case_id"], "context": r["context"], "reference_source": c["reference"]["lean"],
             "candidate_source": c["candidate"]["lean"], "reference": r["reference"], "candidate": r["candidate"],
@@ -46,6 +48,8 @@ def claim_of(c: dict, row: dict | None) -> dict:
             truth = {"reference_false_formalization_true": {"reference": "FALSE", "candidate": "TRUE"},
                      "reference_true_formalization_false": {"reference": "TRUE", "candidate": "FALSE"}}[row["direction"]]
             return {"claim": "NOT_EQUIVALENT_CLOSED", "closed_truth": truth}
+        if v == "CERTIFIED_IMPLICATION":
+            return {"claim": "IMPLICATION_ONE_WAY", "direction": row["direction"]}
         if v == "ABSTAIN":
             return {"claim": "ABSTAIN"}
         if row.get("reason") == "extraction failed" or row.get("failure_class") == "EXTRACTION":

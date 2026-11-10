@@ -25,7 +25,7 @@ from bench.sota7.blind import load_public
 from bench.sota7.runner import verify_seal
 
 STD = {"propext", "Classical.choice", "Quot.sound"}
-DECISIVE = {"diff_RL", "diff_LR", "equiv_defeq", "equiv_both_true", "equiv_both_false"}
+DECISIVE = {"diff_RL", "diff_LR", "equiv_defeq", "equiv_both_true", "equiv_both_false", "impl_RC", "impl_CR", "equiv"}
 
 
 def _imports_env(case):
@@ -39,8 +39,12 @@ def expected_statements(case: dict, decls: dict) -> dict:
     for k in decls:
         if k in ("diff_RL", "diff_LR"):
             out[k] = f"¬ (({R}) ↔ ({F}))"
-        elif k in ("equiv_defeq", "equiv_both_true", "equiv_both_false"):
+        elif k in ("equiv_defeq", "equiv_both_true", "equiv_both_false", "equiv"):
             out[k] = f"({R}) ↔ ({F})"
+        elif k == "impl_RC":
+            out[k] = f"({R}) → ({F})"
+        elif k == "impl_CR":
+            out[k] = f"({F}) → ({R})"
     return out
 
 

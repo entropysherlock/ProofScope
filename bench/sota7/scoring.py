@@ -23,7 +23,7 @@ from bench.sota7.blind import load_gold, load_public, verify_manifest
 from bench.sota7.runner import verify_seal
 
 NONEQ = {"REF_STRONGER", "CAND_STRONGER", "INCOMPARABLE", "NOT_EQUIVALENT"}
-DECISIVE_CLAIMS = {"EQUIVALENT_CLOSED", "NOT_EQUIVALENT_CLOSED", "MINIMAL_REPAIR", "VERIFIED_REPAIR", "NO_REPAIR_IN_GRAMMAR"}
+DECISIVE_CLAIMS = {"EQUIVALENT_CLOSED", "NOT_EQUIVALENT_CLOSED", "IMPLICATION_ONE_WAY", "MINIMAL_REPAIR", "VERIFIED_REPAIR", "NO_REPAIR_IN_GRAMMAR"}
 ERRORS = {"INCORRECT", "MINIMALITY_CONFLICT"}
 
 
@@ -50,12 +50,29 @@ def classify(rec: dict, rep: dict, gold: dict) -> str:
         if ct and any(ct.get(k) not in (None, "UNKNOWN") and ct[k] != rec["claim"]["closed_truth"][k] for k in ("reference", "candidate")):
             return "INCORRECT"
         return "CORRECT"
+    if cl == "IMPLICATION_ONE_WAY":
+        # one certified direction; the converse is unknown. Consistent gold → CORRECT_PARTIAL (never full CORRECT)
+        rc = rec["claim"]["direction"] == "reference_implies_candidate"
+        bad = {"CAND_STRONGER", "INCOMPARABLE"} if rc else {"REF_STRONGER", "INCOMPARABLE"}
+        if rel in bad:
+            return "INCORRECT"
+        if ct and ((rc and ct.get("reference") == "TRUE" and ct.get("candidate") == "FALSE") or
+                   (not rc and ct.get("candidate") == "TRUE" and ct.get("reference") == "FALSE")):
+            return "INCORRECT"
+        return "CORRECT_PARTIAL"
     if cl == "EQUIVALENT_CLOSED":
         if rel == "EQUIVALENT":
             return "CORRECT"
         basis = rec["claim"].get("basis")
         if basis == "definitional":
             return "INCORRECT"
+        if basis == "mutual_derivation":
+            # R → C and C → R were each derived, but a derivation may ignore its hypothesis (both sides provable
+            # outright), so this is closed-level equivalence. It contradicts the gold only if the closed truth
+            # values differ; otherwise it is closed-only agreement, never formulation-level CORRECT.
+            if not ct or "UNKNOWN" in (ct.get("reference"), ct.get("candidate")):
+                return "CLOSED_ONLY_UNCHECKED"
+            return "CLOSED_ONLY_AGREEMENT" if ct["reference"] == ct["candidate"] else "INCORRECT"
         want = {"both_true": "TRUE", "both_false": "FALSE"}.get(basis)
         if not ct or "UNKNOWN" in (ct.get("reference"), ct.get("candidate")):
             return "CLOSED_ONLY_UNCHECKED"
@@ -119,7 +136,7 @@ def score(manifest: Path, public: Path, gold_file: Path, run: Path, replay: Path
                      "max_rss_mb": r["max_rss_mb"], "status": r["status"]})
     n = len(rows)
     cnt = Counter(x["class"] for x in rows)
-    decisive_scored = [x for x in rows if x["class"] in {"CORRECT", "INCORRECT", "MINIMALITY_CONFLICT", "REPAIR_MISMATCH",
+    decisive_scored = [x for x in rows if x["class"] in {"CORRECT", "CORRECT_PARTIAL", "INCORRECT", "MINIMALITY_CONFLICT", "REPAIR_MISMATCH",
                                                          "CLOSED_ONLY_AGREEMENT", "CLOSED_ONLY_UNCHECKED"}]
     errs = sum(x["class"] in ERRORS for x in decisive_scored)
     cpu = [x["cpu_tree_s"] for x in rows]

@@ -280,7 +280,7 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path, repl_exe: str 
     repl = Repl(repl_exe or find_repl(), os.pathsep.join(p for p in [str(buildp), os.environ.get("LEAN_PATH", "")] if p), work)
     try:
         init = (A.import_lines() + "import ProofScope.AssumptionExtract11\nimport Lean\n"
-                + search_source() + "\nset_option linter.unusedVariables false\n" + pre)
+                + search_source() + "\nset_option linter.unusedVariables false\nset_option autoImplicit false\n" + pre)
         r0 = repl.send(init, None)
         if "env" not in r0 or _errors(r0):
             out.update(verdict="INCONCLUSIVE", reason="search environment failed to load", detail=_errors(r0)[:3])
@@ -350,7 +350,7 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path, repl_exe: str 
         A.POINT_POOLS.update(saved_pools)
     # ---- independent verification (fresh processes; the search process is gone) ----
     t2 = time.monotonic()
-    v = verify(ident, A.import_lines() + pre + S3.HEADER, proposals, tc, work / "certify")
+    v = verify(ident, A.import_lines() + pre + "set_option autoImplicit false\n" + S3.HEADER, proposals, tc, work / "certify")
     stats["verify_processes"] = 0 if not proposals else (1 if "replay" not in v else 2)
     stats["verify_s"] = round(time.monotonic() - t2, 2)
     certs = set(v["certificates"])
