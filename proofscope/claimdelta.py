@@ -163,6 +163,24 @@ class Case:
                 for c in ["omega", "exact h' hyp", "exact h' (by omega)", "(have := h' (by omega); omega)",
                           "simp_all", "exact h' trivial"]]
 
+    def _reference_refutation_tactics(self) -> list[str]:
+        # A refutation must be certified by Lean, never inferred from failed proof search.
+        out = []
+        for k in sorted(set(range(8)) | set(self.lits)):
+            if len(self.names) != 1:
+                continue
+            for hyp in ("(by omega)", "(by decide)", "trivial"):
+                for close in ("simp at hbad", "simp_all", "omega", "decide at hbad"):
+                    out.append(f"intro h; have hbad := h {k} {hyp}; {close}")
+        return out
+
+    def _reference_validity_tactics(self) -> list[str]:
+        # We demand a positive, kernel-checked proof before calling a law match
+        # harmless rewriting. Absence of a refutation is NOT evidence of validity.
+        names = " ".join(self.names)
+        return [f"intro {names} hyp; {t}" for t in
+                ("omega", "simp_all", "simp", "decide", "exact hyp", "trivial")]
+
     def obligations(self, ab: dict) -> tuple[dict, dict]:
         syms = ab["symbols"]
         ob, meta = {}, {}
@@ -182,6 +200,10 @@ class Case:
             ob[f"sepS_{tag}"] = (f"∃ {binders}, ({R}) ∧ ¬ ({L})", self._sep_tactics(typs))
         ob["lawW"] = (f"({self.lean}) → ({self.ref})", self._law_tactics())
         ob["lawS"] = (f"({self.ref}) → ({self.lean})", self._law_tactics())
+        # A directional implication can hold vacuously if the reference is false.
+        # Only a kernel-checked positive reference proof licenses harmless-rewrite wording.
+        ob["refValid"] = (f"({self.ref})", self._reference_validity_tactics())
+        ob["refFalse"] = (f"¬ ({self.ref})", self._reference_refutation_tactics())
         return ob, meta
 
 
@@ -236,17 +258,28 @@ def run_case(spec: dict, tc: Toolchain, build: Path, work: Path) -> dict:
     minimal = [t for t in separating if not any(sets[u] < sets[t] for u in separating)]
     out["minimal_separating_subsets"] = minimal
     out["law_certificates"] = {k: r["certificates"][k] for k in ("lawW", "lawS") if k in certs}
-    if any(v["relation"] == "INCONSISTENT" for v in subsets.values()):
+    out["reference_status"] = ("INCONSISTENT" if {"refValid", "refFalse"} <= certs
+                              else "REFUTED" if "refFalse" in certs
+                              else "VERIFIED" if "refValid" in certs else "UNVERIFIED")
+    out["reference_certificates"] = {k: r["certificates"][k]
+                                      for k in ("refValid", "refFalse") if k in certs}
+    if any(v["relation"] == "INCONSISTENT" for v in subsets.values()) or out["reference_status"] == "INCONSISTENT":
         out["verdict"] = "INCONSISTENT"
+    elif out["reference_status"] == "REFUTED":
+        out["verdict"] = "REFERENCE_REFUTED"
+        out["reason"] = ("Lean certified a counterexample to the concrete reference; "
+                         "a vacuous implication must not be reported as harmless rewriting")
     elif minimal:
         rels = {subsets[t]["relation"] for t in minimal}
         rel = rels.pop() if len(rels) == 1 else "INCOMPARABLE"
         need = {"LEAN_WEAKER": ["lawW"], "LEAN_STRONGER": ["lawS"], "INCOMPARABLE": ["lawW", "lawS"]}[rel]
-        if all(k in certs for k in need):
+        if all(k in certs for k in need) and out["reference_status"] == "VERIFIED":
             out["verdict"] = "EQUIVALENT_BY_LAWS"
-            out["reason"] = ("separated as claims about the shared symbols, but the missing direction follows "
-                             "from equational laws of those symbols: a rewriting, not a change of claim")
+            out["reason"] = ("The reference itself is kernel-verified, and the missing concrete "
+                             "implication follows from certified mathematical laws")
         else:
+            if all(k in certs for k in need):
+                out["law_status"] = "IMPLICATION_PROVED_REFERENCE_UNVERIFIED"
             out["verdict"] = "CLAIM_" + rel
             out["explanation"] = [{"symbols": subsets[t]["symbols"], "relation": subsets[t]["relation"],
                                    "countermodel": subsets[t]["certificates"].get(
