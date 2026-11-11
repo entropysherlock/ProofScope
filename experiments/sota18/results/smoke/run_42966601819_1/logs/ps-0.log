@@ -1,0 +1,4 @@
+synth:c01_assumption_added ENGINES_RAN LEAN_WEAKER_BY_ASSUMPTION INCONCLUSIVE 84.1 
+synth:c02_renamed_binders ENGINES_RAN NO_ASSUMPTION_DELTA IDENTICAL 23.1 
+synth:c03_conclusion_weakened ENGINES_RAN CONCLUSION_ONLY_CHANGE INCONCLUSIVE 46.7 
+synth:c04_universe_typeclass UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)

@@ -1,0 +1,70 @@
+Downloading cpython-3.11.18-linux-x86_64-gnu (download) (29.2MiB)
+ Downloaded cpython-3.11.18-linux-x86_64-gnu (download)
+   Building lean-interact @ file:///home/runner/work/_temp/li
+Downloading pydantic-core (2.1MiB)
+Downloading hf-xet (4.1MiB)
+Downloading scipy (33.7MiB)
+Downloading pygments (1.2MiB)
+Downloading scikit-learn (8.9MiB)
+Downloading pyarrow (52.5MiB)
+Downloading pandas (11.8MiB)
+Downloading numpy (16.1MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded hf-xet
+ Downloaded scikit-learn
+ Downloaded pandas
+ Downloaded numpy
+ Downloaded scipy
+      Built lean-interact @ file:///home/runner/work/_temp/li
+ Downloaded pyarrow
+Installed 47 packages in 51ms
+info: downloading https://releases.lean-lang.org/lean4/v4.8.0/lean-4.8.0-linux.tar.zst
+info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.8.0
+[05:34:29] INFO     Preparing Lean environment with dependencies  project.py:330
+                    (may take a while the first time)...                        
+Lake version 5.0.0-df668f0 (Lean version 4.8.0)
+✔ [1/10] Fetched proofwidgets:optRelease
+✔ [2/10] Built Cache.IO
+✔ [3/10] Built Cache.Hashing
+✔ [4/10] Built Cache.Requests
+✔ [5/10] Built Cache.Hashing:c.o
+✔ [6/10] Built Cache.Main
+✔ [7/10] Built Cache.IO:c.o
+✔ [8/10] Built Cache.Requests:c.o
+✔ [9/10] Built Cache.Main:c.o
+✔ [10/10] Built cache
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1906k  100 1906k    0     0  5942k      0 --:--:-- --:--:-- --:--:-- 5942k
+
+installing leantar 0.1.11
+Attempting to download 4608 file(s)
+Downloaded: 1 file(s) [attempted 1/4608 = 0%]Downloaded: 454 file(s) [attempted 454/4608 = 9%]Downloaded: 992 file(s) [attempted 992/4608 = 21%]Downloaded: 1560 file(s) [attempted 1560/4608 = 33%]Downloaded: 2093 file(s) [attempted 2093/4608 = 45%]Downloaded: 2605 file(s) [attempted 2605/4608 = 56%]Downloaded: 3067 file(s) [attempted 3067/4608 = 66%]Downloaded: 3593 file(s) [attempted 3593/4608 = 77%]Downloaded: 4106 file(s) [attempted 4106/4608 = 89%]Downloaded: 4608 file(s) [attempted 4608/4608 = 100%]Downloaded: 4608 file(s) [attempted 4608/4608 = 100%] (100% success)
+Decompressing 4608 file(s)
+Unpacked in 11694 ms
+Completed successfully!
+info: dummy: no previous manifest, creating one from scratch
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git to '././.lake/packages/mathlib'
+info: batteries: cloning https://github.com/leanprover-community/batteries to '././.lake/packages/batteries'
+info: Qq: cloning https://github.com/leanprover-community/quote4 to '././.lake/packages/Qq'
+info: aesop: cloning https://github.com/leanprover-community/aesop to '././.lake/packages/aesop'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4 to '././.lake/packages/proofwidgets'
+info: Cli: cloning https://github.com/leanprover/lean4-cli to '././.lake/packages/Cli'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph.git to '././.lake/packages/importGraph'
+info: mathlib: running post-update hooks
+No files to download
+Decompressing 4608 file(s)
+Unpacked in 175 ms
+Completed successfully!
+✔ [2/4] Built dummy
+✔ [3/4] Built dummy:c.o
+✔ [4/4] Built dummy
+Build completed successfully.
+[05:35:16] INFO     Updated version-specific REPL cache to commit  config.py:388
+                    43a6f7954501b893df8ed04e87bac3e924ea4d74                    
+synth:c01_assumption_added False {'ref': True, 'cand': True} 12.2 
+synth:c02_renamed_binders True {'ref': True, 'cand': True} 0.0 
+synth:c03_conclusion_weakened False {'ref': True, 'cand': True} 6.6 
+synth:c04_universe_typeclass True {'ref': True, 'cand': True} 0.6 
