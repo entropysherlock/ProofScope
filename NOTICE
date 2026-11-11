@@ -1,0 +1,7 @@
+ScopeLedger
+Copyright 2026 Caleb J. Westfall
+
+Stage 1 result files quote theorem statements from:
+  * google-deepmind/formal-conjectures, Copyright The Formal Conjectures Authors, Apache-2.0
+  * openai/math, Copyright OpenAI, Apache-2.0
+.github/actions/setup-lean is adapted from entropysherlock/ProofScope (MIT, same copyright holder).

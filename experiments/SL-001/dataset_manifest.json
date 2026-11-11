@@ -1,0 +1,29 @@
+{
+  "experiment": "SL-001",
+  "protocol_version": "1.0",
+  "frozen": "2026-11-11",
+  "n_cases": 18,
+  "cases_sha256": "d591b15617ca4aca2d412bdf2d7411f3ee497a78d6e6a820293f326c52d0bd73",
+  "sources": {
+    "formal_conjectures": {
+      "url": "https://github.com/google-deepmind/formal-conjectures",
+      "license": "Apache-2.0",
+      "commits": {
+        "FC_PRE": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+        "FC_LINK": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+        "FC_HEAD": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5"
+      }
+    },
+    "openai_math": {
+      "url": "https://github.com/openai/math",
+      "license": "Apache-2.0",
+      "commits": {
+        "OAI_LINKED": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+        "OAI_HEAD": "4eaee87548250b2682affda7d05d947c05554bae"
+      },
+      "lean_toolchain": "leanprover/lean4:v4.34.1",
+      "mathlib_rev": "d13f23b723b8a846827a245b89c10fc7d3f11612"
+    }
+  },
+  "redistribution": "cases.jsonl stores identifiers, paths, line numbers and hashes only. Stage 1 results quote theorem statements from both Apache-2.0 sources with attribution."
+}

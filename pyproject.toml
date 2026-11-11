@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scopeledger"
+version = "0.1.0"
+description = "Open evidence infrastructure for AI-assisted mathematics: what was claimed, what was proved, what remains uncertain."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Caleb J. Westfall" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+scope-check = "scopeledger.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["scopeledger*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

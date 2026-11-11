@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use ScopeLedger, please cite it as below."
+title: "ScopeLedger: open evidence infrastructure for AI-assisted mathematics"
+authors:
+  - family-names: Westfall
+    given-names: Caleb J.
+version: 0.1.0
+date-released: 2026-11-11
+license: Apache-2.0
+repository-code: "https://github.com/entropysherlock/ProofScope/tree/scopeledger/staging"

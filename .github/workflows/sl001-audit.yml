@@ -1,0 +1,121 @@
+name: SL-001 audit
+
+# Launched by committing a new value to experiments/SL-001/RUN (same convention as ProofScope),
+# or by hand from the Actions tab.
+on:
+  push:
+    branches: ["scopeledger/**", "main"]
+    paths: ["experiments/SL-001/RUN"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FC_URL: https://github.com/google-deepmind/formal-conjectures
+  OAI_URL: https://github.com/openai/math
+  OAI_HEAD: 4eaee87548250b2682affda7d05d947c05554bae
+  OAI_LINKED: adc7f1241b42e322a6451854ab7e4b4c146bf78a
+
+jobs:
+  smoke:
+    name: Smoke tests 1-4 (kernel pipeline, synthetic)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Smoke tests
+        run: python experiments/SL-001/smoke_tests.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sl001-smoke
+          path: experiments/SL-001/results/smoke/
+
+  stage1:
+    name: Stage 1 (18 real cases, deterministic provenance audit)
+    needs: smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Protocol and cases are the frozen ones
+        run: |
+          set -euo pipefail
+          want=$(python -c "import json;print(json.load(open('experiments/SL-001/dataset_manifest.json'))['cases_sha256'])")
+          got=$(sha256sum experiments/SL-001/cases.jsonl | cut -d' ' -f1)
+          test "$want" = "$got" || { echo "::error::cases.jsonl does not match the frozen manifest"; exit 1; }
+      - name: Fetch Formal Conjectures (history, no blobs)
+        run: |
+          set -euo pipefail
+          for i in 1 2 3; do git clone --filter=blob:none --no-checkout "$FC_URL" "$RUNNER_TEMP/fc" && break || { rm -rf "$RUNNER_TEMP/fc"; sleep 30; }; done
+          test -d "$RUNNER_TEMP/fc/.git" || { echo "::error title=INFRASTRUCTURE_ERROR::could not clone Formal Conjectures"; exit 75; }
+      - name: Fetch openai/math (lean/ only, at the frozen head and the linked commit)
+        run: |
+          set -euo pipefail
+          for i in 1 2 3; do git clone --filter=blob:none --no-checkout --depth 1 "$OAI_URL" "$RUNNER_TEMP/oai" && break || { rm -rf "$RUNNER_TEMP/oai"; sleep 30; }; done
+          cd "$RUNNER_TEMP/oai"
+          git sparse-checkout set --no-cone '/lean/OAI/**' '/lean/ComparatorChallenges/**'
+          git fetch --filter=blob:none --depth 1 origin "$OAI_HEAD" "$OAI_LINKED"
+          git checkout -q "$OAI_HEAD"
+          test "$(git rev-parse HEAD)" = "$OAI_HEAD"
+      - name: Frozen case list still matches the source
+        run: python experiments/SL-001/sl001.py verify-freeze --fc "$RUNNER_TEMP/fc"
+      - name: Stage 1
+        run: python experiments/SL-001/sl001.py stage1 --fc "$RUNNER_TEMP/fc" --oai "$RUNNER_TEMP/oai" --out stage1-out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sl001-stage1
+          path: stage1-out/
+
+  probe:
+    name: Stage 2 feasibility probe (infrastructure only, Erdős 970 module)
+    needs: smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 320
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Fetch openai/math lean/ at the frozen head
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none --no-checkout --depth 1 "$OAI_URL" "$RUNNER_TEMP/oai"
+          cd "$RUNNER_TEMP/oai"
+          git sparse-checkout set --no-cone '/lean/**'
+          git fetch --filter=blob:none --depth 1 origin "$OAI_HEAD"
+          git checkout -q "$OAI_HEAD"
+          df -h . | tail -1
+      - name: Mathlib cache, then build one linked module (timed)
+        run: |
+          set -uo pipefail
+          cd "$RUNNER_TEMP/oai/lean"
+          start=$(date +%s)
+          status=ok
+          (for i in 1 2 3; do lake exe cache get && break || sleep 60; done) || status=cache_failed
+          t_cache=$(( $(date +%s) - start ))
+          if [ "$status" = ok ]; then
+            timeout 285m lake build OAI.NumberTheory.Jacobsthal.Conclusions.QuadraticBound 2>&1 | tail -40
+            rc=${PIPESTATUS[0]}
+            [ "$rc" = 0 ] || status="build_exit_$rc"
+          fi
+          t_total=$(( $(date +%s) - start ))
+          mkdir -p "$GITHUB_WORKSPACE/probe-out"
+          printf '{"module":"OAI.NumberTheory.Jacobsthal.Conclusions.QuadraticBound","status":"%s","seconds_cache":%s,"seconds_total":%s,"note":"infrastructure measurement only; certifies nothing"}\n' \
+            "$status" "$t_cache" "$t_total" | tee "$GITHUB_WORKSPACE/probe-out/probe.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sl001-probe
+          path: probe-out/
