@@ -164,3 +164,12 @@ SemantEq precision near 1.0 with recall near half; BEq+ recall similar with a fe
    "first `:` at bracket depth 0 following the declaration name". Reason: conclusions such as
    `∀ x : ℝ, P x` contain a depth-0 colon, so the last-colon rule would split inside the conclusion.
    Found while implementing `make_selection.py`.
+2. (2026-11-11, after the synthetic smoke stage, before the headline run; no benchmark output seen)
+   Soundness finding F1 (`SOUNDNESS.md`): frozen `adelta12` reports `NO_ASSUMPTION_DELTA` when a
+   statement fails to elaborate inside the engine (e.g. universe names), with no certificate. The frozen
+   engine remains the headline condition **H0**. A second reading **H1** is added and reported
+   separately: an `adelta12` verdict is discarded (ABSTAIN, reason `ENGINE_ELABORATION_FAILED`) when its
+   extraction record contains `sorry`. H1 changes no certificate and no engine file; it is the
+   fail-closed repair applied at scoring time. Every H0 `NO_ASSUMPTION_DELTA` with a `sorry` extraction is
+   counted in `S`.
+

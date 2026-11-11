@@ -90,22 +90,28 @@ def print_file(case) -> str:
                     f"  let some ci := (← getEnv).find? `ps_{side}_decl | throwError \"PS_NO_DECL\"\n"
                     f"  let fmt ← liftTermElabM <| withOptions (fun o => {opts}) <| Meta.ppExpr ci.type\n"
                     f"  logInfo m!\"PS_CLOSED {side} {k} {{(toString fmt).replace \"\\n\" \" \"}}\"\n")
+        src += (f"\nopen Lean Elab Command in\n#eval show CommandElabM Unit from do\n"
+                f"  let some ci := (← getEnv).find? `ps_{side}_decl | throwError \"PS_NO_DECL\"\n"
+                f"  logInfo m!\"PS_LEVELS {side} {{\",\".intercalate (ci.levelParams.map toString)}}\"\n")
     return src
 
 
 UNIVERSES = "universe " + " ".join([f"u_{k}" for k in range(1, 10)] + ["u", "v", "w"]) + "\n"
 
 
-def check_file(case, printed: dict) -> tuple[str, dict]:
-    # printed types of universe-polymorphic declarations mention `u_1`, ...; declare those names
-    src = "\n".join(imports_of(case)) + "\n\n" + UNIVERSES
+def check_file(case, printed: dict, levels: dict) -> tuple[str, dict]:
+    # printed types of universe-polymorphic declarations mention the declaration's own level names
+    # (`u_1`, ...); declare them and instantiate the declaration at exactly those names
+    names = sorted({x for v in levels.values() for x in v} - {f"u_{k}" for k in range(1, 10)} - {"u", "v", "w"})
+    src = "\n".join(imports_of(case)) + "\n\n" + UNIVERSES + ("universe " + " ".join(names) + "\n" if names else "")
     for side in ("ref", "cand"):
         src += f"\nsection\n{body_of(case[side + '_header'])}\n\n{rename(with_sorry(case[side + '_decl']), f'ps_{side}_decl')}\n\nend\n"
     lines = {}
     for (side, k), txt in printed.items():
         src += "\n"
         lines[(side, k)] = src.count("\n") + 1
-        src += f"example : ({txt}) = type_of% @ps_{side}_decl := by with_reducible rfl\n"
+        lv = ".{" + ", ".join(levels[side]) + "}" if levels.get(side) else ""
+        src += f"example : ({txt}) = type_of% @ps_{side}_decl{lv} := by with_reducible rfl\n"
     return src, lines
 
 
@@ -146,8 +152,11 @@ def one(case, work: Path, lean: str) -> dict:
     if rc == -9:
         row.update(outcome="TIMEOUT", reason="adapter print")
         return row
-    printed = {}
+    printed, levels = {}, {}
     for line in out.splitlines():
+        m = re.search(r"PS_LEVELS (ref|cand) ?(.*)$", line)
+        if m:
+            levels[m.group(1)] = [x for x in m.group(2).strip().split(",") if x]
         m = re.search(r"PS_CLOSED (ref|cand) (\d) (.*)$", line)
         if m:
             printed[(m.group(1), int(m.group(2)))] = m.group(3).strip()
@@ -157,7 +166,8 @@ def one(case, work: Path, lean: str) -> dict:
                    side=("ref" if not any(s == "ref" for s, _ in printed) else "cand"), errors=errs)
         return row
     # 1b. round trip
-    src, lines = check_file(case, printed)
+    src, lines = check_file(case, printed, levels)
+    row["levels"] = levels
     (work / "check.lean").write_text(src)
     rc, out, dt = run([lean, str(work / "check.lean")], work, left())
     row["stages"]["roundtrip"] = {"rc": rc, "s": round(dt, 1)}

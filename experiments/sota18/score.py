@@ -44,7 +44,11 @@ def ps_engine_class(v):
     return None, None
 
 
-def proofscope(row):
+def sorry_extraction(erow):
+    return bool(erow) and "sorry" in json.dumps(erow.get("extraction") or {}, ensure_ascii=False)
+
+
+def proofscope(row, erow=None, mode="H0"):
     if row is None:
         return {"cls": "MISSING", "why": "no record"}
     if row.get("outcome") != "ENGINES_RAN":
@@ -52,12 +56,15 @@ def proofscope(row):
     st = row["stages"]
     v = {e: st.get(e, {}).get("verdict") for e in ("adelta12", "cmcd_v10")}
     cl = {e: ps_engine_class(v[e]) for e in v}
+    f1 = sorry_extraction(erow)
+    if mode == "H1" and f1:
+        cl["adelta12"] = (None, None)
     dec = {e: c for e, c in cl.items() if c[0]}
-    out = {"verdicts": v, "seconds": row.get("seconds")}
+    out = {"verdicts": v, "seconds": row.get("seconds"), "F1_sorry_extraction": f1}
     if any(c[0] == "INCONSISTENT" for c in dec.values()):
         out.update(cls="INCONSISTENT", kind=None)
     elif not dec:
-        both_failed = all(st.get(e, {}).get("reason") == "extraction failed" for e in v)
+        both_failed = all(st.get(e, {}).get("reason") == "extraction failed" for e in v) or (mode == "H1" and f1)
         timed = [e for e in v if st.get(e, {}).get("outcome") == "TIMEOUT"]
         out.update(cls="TIMEOUT" if timed and len(timed) == 2 else "ABSTAIN",
                    why="ENGINE_EXTRACTION_FAILED" if both_failed else ",".join(f"{e}={v[e]}" for e in v))
@@ -223,14 +230,16 @@ def main():
     cases_p = Path(sys.argv[sys.argv.index("--cases") + 1]) if "--cases" in sys.argv else HERE / "frozen" / "cases.jsonl"
     cases = {c["case_id"]: c for c in (json.loads(l) for l in cases_p.read_text().splitlines() if l.strip())}
     ps, se, bq = load(rd / "proofscope"), load(rd / "semanteq"), load(rd / "beqplus")
+    ea = load(rd / "engine_adelta12")
+    mode = sys.argv[sys.argv.index("--mode") + 1] if "--mode" in sys.argv else "H0"
     res = {}
     for cid in cases:
         k = safe(cid)
-        res[cid] = {"proofscope": proofscope(ps.get(k)), "semanteq": semanteq(se.get(k)), "beqplus": beqplus(bq.get(k))}
+        res[cid] = {"proofscope": proofscope(ps.get(k), ea.get(k), mode), "semanteq": semanteq(se.get(k)), "beqplus": beqplus(bq.get(k))}
     tracks = {"A": [c for c in cases.values() if "A" in c.get("tracks", [])],
               "B": [c for c in cases.values() if "B" in c.get("tracks", [])],
               "C": [c for c in cases.values() if "C" in c.get("tracks", [])]}
-    out = {"tables": {}, "proofscope": {}, "gate": {}}
+    out = {"mode": mode, "tables": {}, "proofscope": {}, "gate": {}}
     for tr, cs in tracks.items():
         if not cs:
             continue
@@ -315,7 +324,10 @@ def main():
         Xr = [c["case_id"] for c in AB if not correct_decisive(c, res[c["case_id"]], "proofscope", "certified", "G1")
               and (correct_decisive(c, res[c["case_id"]], "semanteq", "native", "G1")
                    or correct_decisive(c, res[c["case_id"]], "beqplus", "native", "G1"))]
-        out["gate"] = {"U_A": round(UA, 4), "U_B": round(UB, 4), "P_N": None if PN is None else round(PN, 4),
+        S_F1 = [c["case_id"] for c in allc if res[c["case_id"]]["proofscope"].get("F1_sorry_extraction")
+                and (res[c["case_id"]]["proofscope"].get("verdicts") or {}).get("adelta12") == "NO_ASSUMPTION_DELTA"]
+        out["gate"] = {"S_F1_unsound_no_assumption_delta_H0": len(S_F1), "S_F1_cases": S_F1,
+                       "U_A": round(UA, 4), "U_B": round(UB, 4), "P_N": None if PN is None else round(PN, 4),
                        "P_N_count": len(ne), "X": len(X), "X_cases": X, "competitor_only_count": len(Xr),
                        "S": "set by the soundness audit (section 11 of the report)"}
     o = Path(sys.argv[sys.argv.index("--out") + 1]) if "--out" in sys.argv else rd / "summary.json"
