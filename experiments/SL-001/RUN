@@ -1,1 +1,2 @@
 launch 5 2026-11-11 Stage 2 build probe, fail-safe harness
+launch 6 2026-11-11 standalone-repository readiness check (branch scopeledger/standalone)

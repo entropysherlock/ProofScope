@@ -5,6 +5,7 @@ Only results reported by CI are recorded as certified; the arguments carry the r
 assembly outcomes read from that run's public annotations.
 """
 import hashlib
+import os
 import sys
 from pathlib import Path
 
@@ -16,7 +17,8 @@ import check  # noqa: E402
 
 AUTH = {"kind": "pipeline", "name": "SL-002 (experiments/SL-002), run by Claude (Anthropic) for Caleb J. Westfall"}
 WHEN = "2026-11-11T13:00:00Z"
-REPO = "https://github.com/entropysherlock/ProofScope"
+# Repository whose Actions history holds the cited runs. SL-002 ran while staged in ProofScope.
+REPO = os.environ.get("SCOPELEDGER_RUN_REPO", "https://github.com/entropysherlock/ProofScope")
 OAI_URL, FC_URL = "https://github.com/openai/math", "https://github.com/google-deepmind/formal-conjectures"
 AX = ["Classical.choice", "Quot.sound", "propext"]
 LIMITS = ["Produced and checked only by the project's own AI-assisted pipeline; no independent review.",

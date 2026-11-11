@@ -2,8 +2,9 @@
 
 *What was claimed. What was proved. What remains uncertain.*
 
-[![tests](https://github.com/entropysherlock/ProofScope/actions/workflows/tests.yml/badge.svg?branch=scopeledger%2Fstaging)](https://github.com/entropysherlock/ProofScope/actions/workflows/tests.yml)
-[![SL-001](https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml/badge.svg?branch=scopeledger%2Fstaging)](https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml)
+[![tests](https://github.com/entropysherlock/ScopeLedger/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/entropysherlock/ScopeLedger/actions/workflows/tests.yml)
+[![SL-001](https://github.com/entropysherlock/ScopeLedger/actions/workflows/sl001-audit.yml/badge.svg?branch=main)](https://github.com/entropysherlock/ScopeLedger/actions/workflows/sl001-audit.yml)
+[![SL-002](https://github.com/entropysherlock/ScopeLedger/actions/workflows/sl002-bridges.yml/badge.svg?branch=main)](https://github.com/entropysherlock/ScopeLedger/actions/workflows/sl002-bridges.yml)
 ![license](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![maturity](https://img.shields.io/badge/maturity-research%20prototype%2C%20unreviewed-orange)
 
@@ -13,8 +14,9 @@ the kernel actually checked, and what evidence, if any, connects the two. It is 
 registries and checkers, not a replacement for them.
 
 > **Status.** Research prototype, started 2026-11-11. Nothing here has been reviewed by anyone outside
-> the project. This branch is a staging area inside `entropysherlock/ProofScope`; a standalone
-> `entropysherlock/ScopeLedger` repository has not been created yet.
+> the project. Developed first on the branch `scopeledger/staging` of
+> [ProofScope](https://github.com/entropysherlock/ProofScope); this repository carries that branch's full
+> history. CI runs from before the move are linked where cited and remain in ProofScope's Actions history.
 
 ## Why ScopeLedger exists
 
@@ -127,7 +129,9 @@ Smoke tests 1–4 of the kernel pipeline pass on synthetic statements; they are 
 | [43016379474](https://github.com/entropysherlock/ProofScope/actions/runs/43016379474), [43017405870](https://github.com/entropysherlock/ProofScope/actions/runs/43017405870) | reproduction check failed: date-format difference between git versions (amendment 2) |
 | [43018353868](https://github.com/entropysherlock/ProofScope/actions/runs/43018353868) | smoke tests passed; **Stage 1 reproduced byte for byte** on a GitHub-hosted runner |
 
-All runs: https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml
+These runs were executed while the project was staged in ProofScope, so their logs live in
+[ProofScope's Actions history](https://github.com/entropysherlock/ProofScope/actions). New runs appear in
+this repository's Actions tab.
 
 ## SL-002: first kernel-checked bridges (Erdős 952 and 1150)
 
@@ -148,7 +152,7 @@ unchecked assertion. Neither says anything about whether either formal statement
 ## Reproducibility
 
 ```sh
-git clone -b scopeledger/staging https://github.com/entropysherlock/ProofScope scopeledger
+git clone https://github.com/entropysherlock/ScopeLedger scopeledger
 cd scopeledger
 pip install -e ".[dev]"
 pytest -q                 # unit tests

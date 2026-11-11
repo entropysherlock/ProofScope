@@ -1,8 +1,8 @@
 # SL-002 report: Erdős 952 and 1150, OpenAI proofs versus Formal Conjectures statements
 
 Caleb J. Westfall (research director); Claude (Anthropic), AI-assisted research and engineering.
-2026-11-11. Every claim below is tied to a CI run on `entropysherlock/ProofScope`, branch
-`scopeledger/staging`. Nothing here has been reviewed by anyone outside the project.
+2026-11-11. Every claim below is tied to a CI run. The runs cited were executed on `entropysherlock/ProofScope`,
+branch `scopeledger/staging`, before the project moved to `entropysherlock/ScopeLedger`. Nothing here has been reviewed by anyone outside the project.
 
 ## 1. Question
 
@@ -98,7 +98,7 @@ the point is that no one had, and the link was nonetheless marked solved.
 ## 6. Reproduce
 
 ```sh
-git clone -b scopeledger/staging https://github.com/entropysherlock/ProofScope sl && cd sl
+git clone https://github.com/entropysherlock/ScopeLedger sl && cd sl
 # CI: .github/workflows/sl002-bridges.yml (bridges job ~2 min after the Mathlib cache)
 ```
 Locally, with Lean 4.34.1 and a Mathlib-only Lake project at `d13f23b` (`lake exe cache get`):

@@ -3,7 +3,7 @@ name: SL-002 bridges
 # Launched by committing a new value to experiments/SL-002/RUN, or by hand.
 on:
   push:
-    branches: ["scopeledger/**"]
+    branches: ["main", "scopeledger/**"]
     paths: ["experiments/SL-002/RUN"]
   workflow_dispatch:
 

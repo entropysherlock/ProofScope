@@ -1,10 +1,10 @@
 name: SL-001 audit
 
-# Launched by committing a new value to experiments/SL-001/RUN (same convention as ProofScope),
+# Launched by committing a new value to experiments/SL-001/RUN (one line per launch, kept as a log),
 # or by hand from the Actions tab.
 on:
   push:
-    branches: ["scopeledger/**", "main"]
+    branches: ["main", "scopeledger/**"]
     paths: ["experiments/SL-001/RUN"]
   workflow_dispatch:
 
