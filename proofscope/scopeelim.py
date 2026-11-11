@@ -38,6 +38,7 @@ HEADER = ("import ProofScope.ScopeCert\nopen ProofScope.ScopeElim ProofScope.Sco
           "set_option linter.unusedVariables false\n")
 MAX_GROUND = 4000          # ground rule instances per schema (bounded fragment)
 MAX_LEAVES = 400           # case-split leaves per formal clause
+PRESBURGER = True          # SOTA-16 instantiation certificates for the linear one-occurrence fragment
 
 
 def build_lib(tc: Toolchain, out: Path) -> dict:
@@ -564,6 +565,140 @@ class FunClaim:
         return f"∀ ({self.var} : Nat), {g} → {r}"
 
 
+def affine(a, var: str):
+    """(k, c) with `a = k * var + c` by literal arithmetic only, else None."""
+    t = a[0]
+    if t == "num":
+        return 0, a[1]
+    if t == "var":
+        return (1, 0) if a[1] == var else None
+    if t == "bin" and a[1] == "+":
+        l, r = affine(a[2], var), affine(a[3], var)
+        return (l[0] + r[0], l[1] + r[1]) if l and r else None
+    if t == "bin" and a[1] == "*":
+        for n, o in ((a[2], a[3]), (a[3], a[2])):
+            if n[0] == "num":
+                r = affine(o, var)
+                return (n[1] * r[0], n[1] * r[1]) if r else None
+    return None
+
+
+def _linform(a):
+    """({atom: coef}, const) treating everything outside `+` and literal `*` as an opaque atom."""
+    t = a[0]
+    if t == "num":
+        return {}, a[1]
+    if t == "bin" and a[1] == "+":
+        (l, lc), (r, rc) = _linform(a[2]), _linform(a[3])
+        return {k: l.get(k, 0) + r.get(k, 0) for k in set(l) | set(r)}, lc + rc
+    if t == "bin" and a[1] == "*":
+        for n, o in ((a[2], a[3]), (a[3], a[2])):
+            if n[0] == "num":
+                d, c = _linform(o)
+                return {k: n[1] * v for k, v in d.items()}, n[1] * c
+    return {to_lean(a): 1}, 0
+
+
+def _sum(d: dict, c: int) -> str:
+    parts = [(k if v == 1 else f"{v} * {k}") for k, v in sorted(d.items()) if v] + ([str(c)] if c or not any(d.values()) else [])
+    return "(" + " + ".join(parts) + ")"
+
+
+def bound_terms(prop, var: str) -> list[str]:
+    """Candidate values for `var` read off the comparison atoms of `prop`: for an atom that bounds
+    `k * var` against the rest, the rounded quotient and its successor. Cooper's test points for the
+    atom and for its negation are among them; extra candidates are harmless."""
+    out = []
+
+    def walk(a):
+        if a[0] == "cmp":
+            (l, lc), (r, rc) = _linform(a[2]), _linform(a[3])
+            k = l.get(var, 0) - r.get(var, 0)
+            l = {x: v for x, v in l.items() if x != var}
+            r = {x: v for x, v in r.items() if x != var}
+            ls, rs = _sum(l, lc), _sum(r, rc)
+            if k > 0:
+                out.extend([f"(({rs} + {k - 1} - {ls}) / {k})", f"(({rs} + {k - 1} - {ls}) / {k} + 1)", f"(({rs} - {ls}) / {k})"])
+            elif k < 0:
+                out.extend([f"(({ls} - {rs}) / {-k})", f"(({ls} - {rs}) / {-k} + 1)", f"(({ls} + {-k - 1} - {rs}) / {-k})"])
+        elif a[0] == "not":
+            walk(a[1])
+        elif a[0] in ("and", "or", "imp"):
+            walk(a[1]), walk(a[2])
+    walk(prop)
+    seen, uniq = set(), []
+    for t in ["0"] + out:
+        if t not in seen:
+            seen.add(t)
+            uniq.append(t)
+    return uniq
+
+
+def _period(*props) -> int:
+    """lcm of the literal divisors and moduli, capped."""
+    import math
+    d = 1
+
+    def walk(a):
+        nonlocal d
+        if a[0] == "bin":
+            if a[1] in "/%" and a[3][0] == "num" and a[3][1] > 0:
+                d = math.lcm(d, a[3][1])
+            walk(a[2]), walk(a[3])
+        elif a[0] == "cmp":
+            walk(a[2]), walk(a[3])
+        elif a[0] == "not":
+            walk(a[1])
+        elif a[0] in ("and", "or", "imp"):
+            walk(a[1]), walk(a[2])
+    for p in props:
+        walk(p)
+    return min(d, 12)
+
+
+def presburger_tactics(R: "FunClaim", F: "FunClaim") -> dict:
+    """SOTA-16: instantiation certificates for the residual obligations when the reference argument
+    is `k * x + c`. For `k ≥ 1` the inner `∀ x` has the single relevant instance
+    `x = (z - c) / k`, so each obligation reduces to quantifier-free linear arithmetic plus witnesses.
+    Witness integers come from Z3 (untrusted) and from Cooper-style bound terms; Lean checks all."""
+    from . import scope_smt
+    ka = affine(R.arg, R.var)
+    if not ka:
+        return {}
+    k, c = ka
+    A, s, rho = R.at("x_")
+    _, t, _ = F.at("y_")
+    per = _period(R.rel, R.guard)
+    if k >= 1:
+        solve = lambda z: [z if (k, c) == (1, 0) else f"(({z} - {c}) / {k})"]
+    else:
+        # constant argument: every x lands on z = c, so x ranges freely; instantiate at the bound
+        # terms of x in `A ∧ ρ` (they may mention w_). Complete only when these cover Cooper's test
+        # points, which is not proved here; the engine abstains if Lean rejects the result.
+        body = subst(("and", R.guard, R.rel), {R.var: ("var", "x_")})
+        xs = [f"({b} + {j})" for b in bound_terms(body, "x_") for j in range(per)][:12]
+        solve = lambda z: xs
+    triv = " trivial" if R.guard == ("true",) else ""       # omega does not look under `True →`
+    inst = lambda z: "; ".join(f"have i{n} := hadm {x}{triv}" for n, x in enumerate(solve(z)))
+    out = {"fib": [f"intro y_ w_ hB hadm; {inst(t)}; omega"]}
+    out["nfib"] = [f"exact ⟨{y}, {w}, by ps_triv, (by intro x_ hA hs; omega), by omega⟩"
+                   for y, w in scope_smt.nfib_witnesses(R, F)]
+    zs = scope_smt.vac_witnesses(R) + ([c] if k == 0 else list(range(4)))
+    out["vac"] = [f"exact ⟨{z}, fun w_ hadm => by {inst(str(z))}; omega⟩" for z in dict.fromkeys(zs)]
+    # ∀ z, ∃ w: refute "no candidate works" with one bad x per candidate
+    if k >= 1:
+        rels = [subst(R.rel, {R.var: ("raw", solve("z_")[0])})]
+    else:
+        gx = bound_terms(subst(R.guard, {R.var: ("var", "x_")}), "x_")[:3]
+        rels = [subst(R.rel, {R.var: ("raw", g)}) for g in gx]
+    cands = list(dict.fromkeys(f"({b} + {j})" for r in rels for b in bound_terms(r, "w_") for j in range(per)))[:24]
+    adm = lambda w: f"(∀ (x_ : Nat), {A} → {s} = z_ → {to_lean(subst(subst(R.rel, {R.var: ('var', 'x_')}), {'w_': ('raw', w)}))})"
+    steps = [f"have n{i} : ¬ {adm(w)} := fun h => hne ⟨_, h⟩" for i, w in enumerate(cands)]
+    steps += [f"obtain ⟨x{i}, h{i}⟩ := Classical.not_forall.1 n{i}" for i in range(len(cands))]
+    out["nvac"] = ["intro z_; refine Classical.byContradiction fun hne => ?_; " + "; ".join(steps) + "; omega"]
+    return out
+
+
 _OFFS = ["y_", "(y_ + 1)", "(y_ + 2)", "(y_ + 3)", "(y_ - 1)", "(y_ - 2)", "(y_ - 3)", "0", "1", "2", "3"]
 
 
@@ -594,7 +729,13 @@ def func_residuals(R: FunClaim, F: FunClaim) -> dict:
                  f"have h2 := hadm {x2} (by ps_triv) (by ps_triv); omega⟩"
                  for z in range(3) for x in range(4) for x2 in range(x + 1, 5)]
     vac_tac = "first | " + " | ".join(vac_alts)
-    return {"fib": (fib, fib_tac), "nfib": (nfib, nfib_tac), "vac": (vac, vac_tac), "nvac": (nvac, nvac_tac)}
+    res = {"fib": (fib, fib_tac), "nfib": (nfib, nfib_tac), "vac": (vac, vac_tac), "nvac": (nvac, nvac_tac)}
+    if PRESBURGER:
+        for key, tacs in presburger_tactics(R, F).items():
+            if tacs:                                    # exact instantiation certificates go first
+                stmt, old = res[key]
+                res[key] = (stmt, "first | " + " | ".join(f"({t})" for t in tacs) + f" | ({old})")
+    return res
 
 
 def func_direction(R: FunClaim, F: FunClaim, rname: str, fname: str) -> dict:

@@ -1,0 +1,16 @@
+{
+ "id": "fl017",
+ "kind": "func",
+ "reference": {
+  "var": "n",
+  "guard": "True",
+  "arg": "n + 3",
+  "rel": "w ≠ n"
+ },
+ "formal": {
+  "var": "n",
+  "guard": "n % 2 = 0",
+  "arg": "n",
+  "rel": "w / 2 = n ∨ n < w"
+ }
+}
