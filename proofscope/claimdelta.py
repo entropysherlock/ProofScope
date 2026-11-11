@@ -163,6 +163,33 @@ class Case:
                 for c in ["omega", "exact h' hyp", "exact h' (by omega)", "(have := h' (by omega); omega)",
                           "simp_all", "exact h' trivial"]]
 
+    def _reference_refutation_tactics(self) -> list[str]:
+        # A refutation must be certified by Lean, never inferred from failed proof search.
+        out = []
+        for k in sorted(set(range(8)) | set(self.lits)):
+            if len(self.names) != 1:
+                continue
+            for hyp in ("(by omega)", "(by decide)", "trivial"):
+                for close in ("simp at hbad", "simp_all", "omega", "exact absurd hbad (by decide)", "(revert hbad; decide)"):
+                    out.append(f"intro h; have hbad := h {k} {hyp}; {close}")
+        return out
+
+    def _reference_validity_tactics(self) -> list[str]:
+        # We demand a positive, kernel-checked proof before calling a law match
+        # harmless rewriting. Absence of a refutation is NOT evidence of validity.
+        names = " ".join(self.names)
+        return [f"intro {names} hyp; {t}" for t in
+                ("omega", "simp_all", "simp", "decide", "exact hyp", "trivial", "grind",
+                 # core-library facts about the operators ClaimDelta abstracts (a proof portfolio:
+                 # failure leaves the reference UNVERIFIED, it never refutes it)
+                 "exact Nat.lt_two_pow_self", "exact Nat.lt_pow_self (by decide)", "exact Nat.pow_pos (by decide)",
+                 "exact Nat.mod_lt _ hyp", "exact Nat.gcd_dvd_right _ _", "exact Nat.gcd_dvd_left _ _",
+                 "exact ⟨Nat.gcd_dvd_left _ _, Nat.gcd_dvd_right _ _⟩", "exact Nat.le_mul_of_pos_right _ hyp",
+                 "exact ⟨Nat.lt_two_pow_self, Nat.pow_pos (by decide)⟩", "(simp [Nat.pow_two])",
+                 "(simp [Nat.pow_succ]; omega)", "(rw [Nat.pow_two]; exact Nat.le_mul_of_pos_right _ hyp)",
+                 "(obtain ⟨h1, h2⟩ := hyp; exact (Nat.lt_mul_iff_one_lt_right (by omega)).2 h2)",
+                 "exact (Nat.lt_mul_iff_one_lt_right (by omega)).2 (by omega)")]
+
     def obligations(self, ab: dict) -> tuple[dict, dict]:
         syms = ab["symbols"]
         ob, meta = {}, {}
@@ -182,6 +209,10 @@ class Case:
             ob[f"sepS_{tag}"] = (f"∃ {binders}, ({R}) ∧ ¬ ({L})", self._sep_tactics(typs))
         ob["lawW"] = (f"({self.lean}) → ({self.ref})", self._law_tactics())
         ob["lawS"] = (f"({self.ref}) → ({self.lean})", self._law_tactics())
+        # A directional implication can hold vacuously if the reference is false.
+        # Only a kernel-checked positive reference proof licenses harmless-rewrite wording.
+        ob["refValid"] = (f"({self.ref})", self._reference_validity_tactics())
+        ob["refFalse"] = (f"¬ ({self.ref})", self._reference_refutation_tactics())
         return ob, meta
 
 
@@ -236,17 +267,28 @@ def run_case(spec: dict, tc: Toolchain, build: Path, work: Path) -> dict:
     minimal = [t for t in separating if not any(sets[u] < sets[t] for u in separating)]
     out["minimal_separating_subsets"] = minimal
     out["law_certificates"] = {k: r["certificates"][k] for k in ("lawW", "lawS") if k in certs}
-    if any(v["relation"] == "INCONSISTENT" for v in subsets.values()):
+    out["reference_status"] = ("INCONSISTENT" if {"refValid", "refFalse"} <= certs
+                              else "REFUTED" if "refFalse" in certs
+                              else "VERIFIED" if "refValid" in certs else "UNVERIFIED")
+    out["reference_certificates"] = {k: r["certificates"][k]
+                                      for k in ("refValid", "refFalse") if k in certs}
+    if any(v["relation"] == "INCONSISTENT" for v in subsets.values()) or out["reference_status"] == "INCONSISTENT":
         out["verdict"] = "INCONSISTENT"
+    elif out["reference_status"] == "REFUTED":
+        out["verdict"] = "REFERENCE_REFUTED"
+        out["reason"] = ("Lean certified a counterexample to the concrete reference; "
+                         "a vacuous implication must not be reported as harmless rewriting")
     elif minimal:
         rels = {subsets[t]["relation"] for t in minimal}
         rel = rels.pop() if len(rels) == 1 else "INCOMPARABLE"
         need = {"LEAN_WEAKER": ["lawW"], "LEAN_STRONGER": ["lawS"], "INCOMPARABLE": ["lawW", "lawS"]}[rel]
-        if all(k in certs for k in need):
+        if all(k in certs for k in need) and out["reference_status"] == "VERIFIED":
             out["verdict"] = "EQUIVALENT_BY_LAWS"
-            out["reason"] = ("separated as claims about the shared symbols, but the missing direction follows "
-                             "from equational laws of those symbols: a rewriting, not a change of claim")
+            out["reason"] = ("The reference itself is kernel-verified, and the missing concrete "
+                             "implication follows from certified mathematical laws")
         else:
+            if all(k in certs for k in need):
+                out["law_status"] = "IMPLICATION_PROVED_REFERENCE_UNVERIFIED"
             out["verdict"] = "CLAIM_" + rel
             out["explanation"] = [{"symbols": subsets[t]["symbols"], "relation": subsets[t]["relation"],
                                    "countermodel": subsets[t]["certificates"].get(
@@ -259,9 +301,13 @@ def run_case(spec: dict, tc: Toolchain, build: Path, work: Path) -> dict:
 
 
 def _one(args) -> dict:
-    p, build, out = args
+    p, build, out = args[:3]
     spec = json.loads(Path(p).read_text())
     row = run_case(spec, Toolchain.find(), build, out / "work" / Path(p).stem)
+    if len(args) > 3 and args[3] and row["verdict"] == "INCONCLUSIVE":
+        # SOTA-15, opt-in: exact fragment criteria for cases the witness registry leaves open
+        from .scopeelim import fallback
+        row = fallback(spec, row, Toolchain.find(), out)
     row["expected_claimdelta"] = spec.get("expected_claimdelta")
     row["family"] = spec.get("family")
     row["split"] = spec.get("split")
@@ -273,6 +319,8 @@ def main(argv=None) -> int:
     ap.add_argument("specs", nargs="+", help="case JSON files (binders, *_hyp, *_concl)")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--jobs", type=int, default=1)
+    ap.add_argument("--scopeelim", action="store_true",
+                    help="on INCONCLUSIVE, try the ScopeElim fragment criteria (SOTA-15; off by default)")
     a = ap.parse_args(argv)
     tc = Toolchain.find()
     out = a.out.resolve()
@@ -281,9 +329,15 @@ def main(argv=None) -> int:
     if not b["ok"]:
         print(json.dumps(b, indent=2)[:3000])
         return 2
+    if a.scopeelim:
+        from .scopeelim import build_lib
+        b = build_lib(tc, out / "scopeelim_lib")
+        if not b["ok"]:
+            print(json.dumps(b, indent=2)[:3000])
+            return 2
     from concurrent.futures import ProcessPoolExecutor
     with ProcessPoolExecutor(max_workers=max(1, a.jobs)) as ex:
-        rows = list(ex.map(_one, [(p, build, out) for p in a.specs]))
+        rows = list(ex.map(_one, [(p, build, out, a.scopeelim) for p in a.specs]))
     for row in rows:
         print(row["id"], row["verdict"], "expected:", row["expected_claimdelta"], flush=True)
     (out / "claimdelta_results.json").write_text(json.dumps({"policy": POLICY, "rows": rows}, indent=2,

@@ -1,0 +1,7965 @@
+{
+ "rows": [
+  {
+   "id": "hb000",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1815,
+   "seconds": 1.26,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.02
+  },
+  {
+   "id": "hb001",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ],
+      [
+       "S",
+       [
+        3
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1568,
+   "seconds": 1.0,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb002",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": true,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1437,
+   "seconds": 1.03,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb003",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {},
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3973,
+   "seconds": 1.46,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 9
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb004",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ],
+      [
+       "S",
+       [
+        4
+       ]
+      ],
+      [
+       "S",
+       [
+        5
+       ]
+      ],
+      [
+       "S",
+       [
+        6
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1286,
+   "seconds": 1.28,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.02
+  },
+  {
+   "id": "hb005",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "E",
+       [
+        2,
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2,
+      "y": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 2081,
+   "seconds": 1.28,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb006",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        1
+       ]
+      ],
+      [
+       "S",
+       [
+        5
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 3
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1649,
+   "seconds": 1.04,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb007",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": true
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1189,
+   "seconds": 1.27,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb008",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1419,
+   "seconds": 0.88,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb009",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1065,
+   "seconds": 1.02,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 6
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb010",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1771,
+   "seconds": 1.03,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb011",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": true
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "T",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1524,
+   "seconds": 1.18,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 8
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb012",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ],
+      [
+       "S",
+       [
+        4
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1094,
+   "seconds": 0.94,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb013",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "T",
+       [
+        4
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1754,
+   "seconds": 1.37,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 6
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb014",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 0,
+      "y": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "E",
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       "E",
+       [
+        0,
+        2
+       ]
+      ],
+      [
+       "E",
+       [
+        1,
+        2
+       ]
+      ],
+      [
+       "E",
+       [
+        2,
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0,
+      "y": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1743,
+   "seconds": 1.09,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb015",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "E",
+       [
+        2,
+        1
+       ]
+      ],
+      [
+       "E",
+       [
+        2,
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1,
+      "y": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1351,
+   "seconds": 1.17,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 9
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb016",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2424,
+   "seconds": 1.23,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb017",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": true,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1800,
+   "seconds": 1.49,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb018",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ],
+      [
+       "T",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1721,
+   "seconds": 1.01,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb019",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        1
+       ]
+      ],
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1729,
+   "seconds": 1.4,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb020",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        3
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        3
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1850,
+   "seconds": 1.2,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb021",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ],
+      [
+       "T",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1653,
+   "seconds": 1.06,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb022",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ],
+      [
+       "T",
+       [
+        4
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1709,
+   "seconds": 1.16,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 6
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb023",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "E",
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       "E",
+       [
+        0,
+        2
+       ]
+      ],
+      [
+       "E",
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       "E",
+       [
+        1,
+        1
+       ]
+      ],
+      [
+       "E",
+       [
+        1,
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0,
+      "y": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "E",
+       [
+        1,
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0,
+      "y": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2069,
+   "seconds": 1.58,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 9
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb024",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "T",
+       [
+        2
+       ]
+      ],
+      [
+       "T",
+       [
+        4
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1212,
+   "seconds": 1.06,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 8
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb025",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "E",
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       "E",
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       "E",
+       [
+        2,
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0,
+      "y": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "E",
+       [
+        0,
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1,
+      "y": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1870,
+   "seconds": 1.27,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb026",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": true
+   },
+   "models": {},
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 857,
+   "seconds": 1.07,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 6
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb027",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2197,
+   "seconds": 1.15,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb028",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1173,
+   "seconds": 1.1,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb029",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1589,
+   "seconds": 1.25,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb030",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 2
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1523,
+   "seconds": 1.2,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb031",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ],
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1623,
+   "seconds": 0.99,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb032",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1548,
+   "seconds": 1.32,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb033",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1971,
+   "seconds": 1.36,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb034",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "T",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1833,
+   "seconds": 0.9,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 8
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb035",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2315,
+   "seconds": 1.45,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb036",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1635,
+   "seconds": 1.17,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb037",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1545,
+   "seconds": 1.29,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 6
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb038",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1908,
+   "seconds": 1.01,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb039",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        1
+       ]
+      ],
+      [
+       "S",
+       [
+        2
+       ]
+      ],
+      [
+       "S",
+       [
+        4
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1774,
+   "seconds": 1.04,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 8
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb040",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1583,
+   "seconds": 1.19,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 3
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb041",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1639,
+   "seconds": 1.15,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb042",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": true,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ],
+      [
+       "T",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1337,
+   "seconds": 1.26,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb043",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": true
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1583,
+   "seconds": 1.29,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb044",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1521,
+   "seconds": 1.3,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 4
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb045",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": true,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1302,
+   "seconds": 1.13,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb046",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1583,
+   "seconds": 1.12,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 3
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb047",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1797,
+   "seconds": 1.26,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 7
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb048",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1670,
+   "seconds": 1.09,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 3
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb049",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1705,
+   "seconds": 1.36,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb050",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        4
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 3
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1629,
+   "seconds": 1.06,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb051",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": true
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1447,
+   "seconds": 1.13,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb052",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1015,
+   "seconds": 1.09,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb053",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1288,
+   "seconds": 1.2,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 9
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb054",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1571,
+   "seconds": 1.38,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 1
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb055",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {
+    "fwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "E",
+       [
+        0,
+        0
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0,
+      "y": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {
+    "bwd": "unsupported: a rule with a nested implication in its hypothesis is not definite"
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1371,
+   "seconds": 1.13,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 9
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb056",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1679,
+   "seconds": 1.22,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED",
+    "atoms": 8
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb057",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "S",
+       [
+        0
+       ]
+      ],
+      [
+       "S",
+       [
+        1
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1689,
+   "seconds": 1.24,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 5
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hb058",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": true,
+    "bwd": true
+   },
+   "models": {},
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1247,
+   "seconds": 1.19,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS",
+    "atoms": 6
+   },
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hb059",
+   "kind": "horn",
+   "complete_fragment": true,
+   "vacuous": {
+    "fwd": false,
+    "bwd": false
+   },
+   "models": {
+    "fwd": {
+     "model": [
+      [
+       "T",
+       [
+        0
+       ]
+      ],
+      [
+       "T",
+       [
+        1
+       ]
+      ],
+      [
+       "T",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "model": [
+      [
+       "T",
+       [
+        2
+       ]
+      ]
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1786,
+   "seconds": 0.91,
+   "group": "horn_bounded",
+   "oracle": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED",
+    "atoms": 8
+   },
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs000",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 3)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2151,
+   "seconds": 0.95,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs001",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 0)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3364,
+   "seconds": 1.2,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs002",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": []
+   },
+   "rejected": {},
+   "certificate_bytes": 2140,
+   "seconds": 1.1,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs003",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 2)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3447,
+   "seconds": 1.13,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs004",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 1)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2168,
+   "seconds": 0.93,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs005",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z % 2 = 0)"
+     ],
+     "instance": {
+      "x": 3
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 1)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3385,
+   "seconds": 1.26,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs006",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun _ => False)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 0)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3233,
+   "seconds": 1.1,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs007",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun _ => False)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2153,
+   "seconds": 1.16,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs008",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 1)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3580,
+   "seconds": 1.22,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs009",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun _ => False)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 2022,
+   "seconds": 1.21,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs010",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 0)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2163,
+   "seconds": 1.16,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs011",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z % 3 = 0)"
+     ],
+     "instance": {
+      "x": 3
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3382,
+   "seconds": 1.2,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs012",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 1)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3439,
+   "seconds": 1.21,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs013",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z = 3)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => z % 3 ≠ 1)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3582,
+   "seconds": 1.19,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs014",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 1)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2355,
+   "seconds": 0.98,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs015",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => 2 ≤ z)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 0)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3558,
+   "seconds": 1.18,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs016",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 2)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 3 ≤ z)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3435,
+   "seconds": 1.28,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs017",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun _ => False)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1963,
+   "seconds": 1.04,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs018",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {},
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": []
+   },
+   "rejected": {},
+   "certificate_bytes": 772,
+   "seconds": 1.08,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs019",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2148,
+   "seconds": 1.15,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs020",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z = 2)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2412,
+   "seconds": 1.04,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs021",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => z = 3)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3386,
+   "seconds": 1.27,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs022",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z = 2)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3179,
+   "seconds": 0.94,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs023",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun _ => False)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "fwd",
+    "sepW"
+   ],
+   "axioms": {
+    "fwd": [],
+    "sepW": []
+   },
+   "rejected": {},
+   "certificate_bytes": 1980,
+   "seconds": 0.91,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs024",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 1)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 1
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 2954,
+   "seconds": 0.97,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs025",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => z ≤ 0)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepW"
+   ],
+   "axioms": {
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1887,
+   "seconds": 1.11,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "hs026",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "bwd": {
+     "templates": [
+      "(fun z => 2 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 1
+    }
+   },
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepW"
+   ],
+   "axioms": {
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1951,
+   "seconds": 1.06,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "hs027",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z ≤ 2)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": []
+   },
+   "rejected": {},
+   "certificate_bytes": 2186,
+   "seconds": 1.14,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "hs028",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => z = 3)"
+     ],
+     "instance": {
+      "x": 2
+     },
+     "clause": 0
+    },
+    "bwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "sepS",
+    "sepW"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "sepW": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 3449,
+   "seconds": 1.15,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "hs029",
+   "kind": "horn",
+   "complete_fragment": false,
+   "vacuous": {},
+   "models": {
+    "fwd": {
+     "templates": [
+      "(fun z => 1 ≤ z)"
+     ],
+     "instance": {
+      "x": 0
+     },
+     "clause": 0
+    }
+   },
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "sepS"
+   ],
+   "axioms": {
+    "sepS": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": []
+   },
+   "rejected": {},
+   "certificate_bytes": 2186,
+   "seconds": 0.68,
+   "group": "horn_symbolic",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "fn000",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18127,
+   "seconds": 3.26,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn001",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_fib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_fib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_fib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd_nfib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 19144,
+   "seconds": 3.38,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn002",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18038,
+   "seconds": 3.36,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn003",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": true,
+   "residuals_certified": [
+    "bwd_fib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_fib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_fib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd_nfib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 24368,
+   "seconds": 3.43,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn004",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "nbwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12833,
+   "seconds": 3.3,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "fn005",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 17932,
+   "seconds": 3.34,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn006",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 17859,
+   "seconds": 3.3,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn007",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": true,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26469,
+   "seconds": 2.83,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn008",
+   "kind": "func",
+   "reference_vacuous": true,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_vac"
+   ],
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd",
+    "fwd_nfib",
+    "fwd_vac",
+    "nbwd"
+   ],
+   "axioms": {
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "fwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26492,
+   "seconds": 2.54,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn009",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": true,
+   "residuals_certified": [
+    "bwd_fib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_fib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_fib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd_nfib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 24308,
+   "seconds": 2.77,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn010",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": true,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26423,
+   "seconds": 2.63,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn011",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18082,
+   "seconds": 3.02,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn012",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18046,
+   "seconds": 3.3,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn013",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18011,
+   "seconds": 3.35,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn014",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18092,
+   "seconds": 3.66,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn015",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "nbwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12897,
+   "seconds": 3.97,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn016",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "nbwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12891,
+   "seconds": 3.48,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.27
+  },
+  {
+   "id": "fn017",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18009,
+   "seconds": 3.51,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn018",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12895,
+   "seconds": 3.49,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "fn019",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18073,
+   "seconds": 3.57,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn020",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": true,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "LEAN_STRONGER",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26480,
+   "seconds": 3.2,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn021",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 17939,
+   "seconds": 2.95,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn022",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18010,
+   "seconds": 3.17,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn023",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18119,
+   "seconds": 3.37,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn024",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18269,
+   "seconds": 3.94,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn025",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18125,
+   "seconds": 3.62,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn026",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18055,
+   "seconds": 3.24,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn027",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "nbwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12767,
+   "seconds": 3.11,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.0
+  },
+  {
+   "id": "fn028",
+   "kind": "func",
+   "reference_vacuous": true,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_vac"
+   ],
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd",
+    "fwd_nfib",
+    "fwd_vac",
+    "nbwd"
+   ],
+   "axioms": {
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "fwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26460,
+   "seconds": 3.0,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn029",
+   "kind": "func",
+   "reference_vacuous": true,
+   "formal_vacuous": true,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd_fib",
+    "fwd_vac"
+   ],
+   "verdict": "SCHEMA_EQUIVALENT",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd",
+    "bwd_nfib",
+    "bwd_vac",
+    "fwd",
+    "fwd_fib",
+    "fwd_vac"
+   ],
+   "axioms": {
+    "bwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_fib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd_nfib": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 32594,
+   "seconds": 2.71,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "ENTAILS"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn030",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "nbwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12797,
+   "seconds": 2.83,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn031",
+   "kind": "func",
+   "reference_vacuous": true,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_vac"
+   ],
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd",
+    "fwd_nfib",
+    "fwd_vac",
+    "nbwd"
+   ],
+   "axioms": {
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "fwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26332,
+   "seconds": 2.76,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn032",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18127,
+   "seconds": 3.84,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn033",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 17974,
+   "seconds": 3.97,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn034",
+   "kind": "func",
+   "reference_vacuous": true,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_vac"
+   ],
+   "verdict": "LEAN_WEAKER",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd",
+    "fwd_nfib",
+    "fwd_vac",
+    "nbwd"
+   ],
+   "axioms": {
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "fwd_vac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd_nvac": "no tactic alternative closed the goal",
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 26314,
+   "seconds": 2.67,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn035",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nvac"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nvac",
+    "nbwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_nfib": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "nfwd": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 9823,
+   "seconds": 3.66,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "ENTAILS",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn036",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "bwd_nvac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "nbwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12823,
+   "seconds": 3.23,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "UNKNOWN"
+   },
+   "z3_seconds": 8.02
+  },
+  {
+   "id": "fn037",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18011,
+   "seconds": 3.49,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 0.01
+  },
+  {
+   "id": "fn038",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18001,
+   "seconds": 4.11,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 8.01
+  },
+  {
+   "id": "fn039",
+   "kind": "func",
+   "reference_vacuous": false,
+   "formal_vacuous": false,
+   "residuals_certified": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac"
+   ],
+   "verdict": "INCOMPARABLE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "SEPARATED"
+   },
+   "notes": {},
+   "certify_status": "OK",
+   "certificates": [
+    "bwd_nfib",
+    "bwd_nvac",
+    "fwd_nfib",
+    "fwd_nvac",
+    "nbwd",
+    "nfwd"
+   ],
+   "axioms": {
+    "fwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "bwd_nvac": [
+     "propext",
+     "Quot.sound"
+    ],
+    "fwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ],
+    "nbwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "bwd_nfib": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "bwd_vac": "no tactic alternative closed the goal",
+    "fwd": "no tactic alternative closed the goal",
+    "fwd_vac": "no tactic alternative closed the goal",
+    "fwd_fib": "no tactic alternative closed the goal",
+    "bwd": "no tactic alternative closed the goal",
+    "bwd_fib": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 18118,
+   "seconds": 2.88,
+   "group": "func",
+   "oracle": null,
+   "z3": {
+    "fwd": "UNKNOWN",
+    "bwd": "SEPARATED"
+   },
+   "z3_seconds": 8.01
+  }
+ ]
+}

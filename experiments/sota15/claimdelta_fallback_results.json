@@ -1,0 +1,2375 @@
+{
+  "policy": "LINEAR_CORE_SHARED",
+  "rows": [
+    {
+      "id": "cd000",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (2 ^ (2 * n) < 5)",
+      "lean": "∀ (n : Nat), (n < 3) → (2 ^ (n) + n ≥ 3)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) < (5 : Nat)",
+          "lean": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n + n ≥ (3 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd000.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) < (5 : Nat)) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n + n ≥ (3 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd000.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n + n ≥ (3 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n) + n ≥ 3))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd000.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) < (5 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (2 * n) < 5))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd000",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "bwd_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 10654,
+        "seconds": 1.55
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd001",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (1 ≤ n) → (n + 1 < 2 ^ (n))",
+      "lean": "∀ (n : Nat), (n < 3) → (n ≤ 2 ^ (n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), (1 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n",
+          "lean": "∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) n",
+          "linked": true,
+          "relation": "LEAN_WEAKER",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd001.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n) → (n + 1 < 2 ^ (n)))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd001.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (n ≤ 2 ^ (n)))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd001.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd001.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n) → (∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Classical.choice",
+                "Quot.sound"
+              ]
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "LEAN_WEAKER",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n)"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd002",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "lean": "∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n + 2) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "SCHEMA_EQUIVALENT",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd002.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd002.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n + 2) 6 = 1))",
+              "axioms": []
+            },
+            "bwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd002.bwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat))",
+              "axioms": []
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd002.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "SCHEMA_EQUIVALENT",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd003",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 1) 6 = 1)",
+      "lean": "∀ (n : Nat), (Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n + 2) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "LEAN_WEAKER",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd003.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 1) 6 = 1))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd003.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n + 2) 6 = 1))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd003.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd003.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "explanation": [
+        {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "relation": "LEAN_WEAKER",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd004",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "lean": "∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd004.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "bwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd004.bwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd004.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_STRONGER",
+      "scopeelim": {
+        "id": "cd004",
+        "engine": "scopeelim",
+        "fragment": "horn",
+        "symbol": "Nat.gcd",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_STRONGER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "bwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "bwd_s1": [],
+          "linkR_s1": []
+        },
+        "rejected": {},
+        "certificate_bytes": 3295,
+        "seconds": 0.71
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd005",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (n < 2 ^ (n) ∨ n = 2)",
+      "lean": "∀ (n : Nat), (1 ≤ n) → (2 ^ (n) < n)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat)",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n < n",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd005.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat)) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n < n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd005.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n < n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n) → (2 ^ (n) < n))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd005.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n < n) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd005.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n < 2 ^ (n) ∨ n = 2))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) n < n) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd006",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 3) 6 = 1)",
+      "lean": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "LEAN_WEAKER",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd006.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 3) 6 = 1))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd006.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd006.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd006.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "explanation": [
+        {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "relation": "LEAN_WEAKER",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd007",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (n < 3) → (2 ^ (2 * n) % 2 = 0)",
+      "lean": "∀ (n : Nat), (n < 3) → (2 ^ (n + 1) + n ≥ 3)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat)",
+          "lean": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) + n ≥ (3 : Nat)",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd007.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat)) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) + n ≥ (3 : Nat))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd007.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) + n ≥ (3 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n + 1) + n ≥ 3))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd007.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) + n ≥ (3 : Nat)) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd007.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (2 * n) % 2 = 0))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) + n ≥ (3 : Nat)) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd008",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (2 ^ (2 * n) ≤ n + 2)",
+      "lean": "∀ (n : Nat), (2 ≤ n) → (2 ^ (n + 1) % 2 = 0)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) ≤ n + (2 : Nat)",
+          "lean": "∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) (n + (1 : Nat)) % (2 : Nat) = (0 : Nat)",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd008.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) ≤ n + (2 : Nat)) ∧ ¬ (∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) (n + (1 : Nat)) % (2 : Nat) = (0 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd008.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) (n + (1 : Nat)) % (2 : Nat) = (0 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (2 ≤ n) → (2 ^ (n + 1) % 2 = 0))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd008.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) (n + (1 : Nat)) % (2 : Nat) = (0 : Nat)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) ≤ n + (2 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd008.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) ≤ n + (2 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (2 * n) ≤ n + 2))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {
+        "lawS": {
+          "declaration": "ProofScopeCert.CD_cd008.lawS",
+          "statement": "(∀ (n : Nat), (True) → (2 ^ (2 * n) ≤ n + 2)) → (∀ (n : Nat), (2 ≤ n) → (2 ^ (n + 1) % 2 = 0))",
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ]
+        }
+      },
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) (n + (1 : Nat)) % (2 : Nat) = (0 : Nat)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) ≤ n + (2 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd009",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (1 ≤ n) → (2 ^ (2 * n) = 0)",
+      "lean": "∀ (n : Nat), (n < 3) → (2 ^ (n + 1) < n)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) ((2 : Nat) * n) = (0 : Nat)",
+          "lean": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) < n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd009.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) ((2 : Nat) * n) = (0 : Nat)) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) < n)",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd009.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) < n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n + 1) < n))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd009.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) ((2 : Nat) * n) = (0 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n) → (2 ^ (2 * n) = 0))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {
+        "lawS": {
+          "declaration": "ProofScopeCert.CD_cd009.lawS",
+          "statement": "(∀ (n : Nat), (1 ≤ n) → (2 ^ (2 * n) = 0)) → (∀ (n : Nat), (n < 3) → (2 ^ (n + 1) < n))",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ]
+        }
+      },
+      "verdict": "EQUIVALENT_BY_LAWS",
+      "scopeelim": {
+        "id": "cd009",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_STRONGER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "bwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "bwd_s1": [
+            "propext",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "sepW_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 13745,
+        "seconds": 1.54
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd010",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 1) 6 = 1)",
+      "lean": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "LEAN_WEAKER",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd010.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 1) 6 = 1))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd010.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd010.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd010.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "explanation": [
+        {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "relation": "LEAN_WEAKER",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd011",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 2) 6 = 1)",
+      "lean": "∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n + 1) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd011.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 2) 6 = 1) → (Nat.gcd (n + 1) 6 = 1))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd011.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) ∧ ¬ (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd011.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 2) 6 = 1))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd011",
+        "engine": "scopeelim",
+        "fragment": "horn",
+        "symbol": "Nat.gcd",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {},
+        "certificate_bytes": 4633,
+        "seconds": 1.21
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd012",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n + 1) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "lean": "∀ (n : Nat), (n % 2 = 0 ∧ Nat.gcd (n + 1) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), n % (2 : Nat) = (0 : Nat) ∧ x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd012.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n + 1) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd012.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n % (2 : Nat) = (0 : Nat) ∧ x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n % 2 = 0 ∧ Nat.gcd (n + 1) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd012.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), n % (2 : Nat) = (0 : Nat) ∧ x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Classical.choice",
+                "Quot.sound"
+              ]
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "scopeelim": {
+        "id": "cd012",
+        "engine": "scopeelim",
+        "fragment": "horn",
+        "symbol": "Nat.gcd",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_WEAKER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "fwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "fwd_s1": [],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {},
+        "certificate_bytes": 3361,
+        "seconds": 0.83
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd013",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (1 ≤ n) → (n ≤ 2 ^ (n))",
+      "lean": "∀ (n : Nat), (True) → (n + 1 < 2 ^ (n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 (2 : Nat) n",
+          "lean": "∀ (n : Nat), True → n + (1 : Nat) < x1 (2 : Nat) n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd013.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), True → n + (1 : Nat) < x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd013.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n + (1 : Nat) < x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n + 1 < 2 ^ (n)))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd013.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n → n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n) → (n ≤ 2 ^ (n)))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_STRONGER",
+      "scopeelim": {
+        "id": "cd013",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_STRONGER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "bwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "bwd_s1": [
+            "propext",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "sepW_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 13666,
+        "seconds": 1.3
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd014",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n + 3) 6 = 1) → (Nat.gcd (n + 2) 6 = 1)",
+      "lean": "∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 1) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd014.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n ∧ Nat.gcd (n + 1) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            },
+            "bwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd014.bwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n ∧ x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd014.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n + 3) 6 = 1) → (Nat.gcd (n + 2) 6 = 1))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_STRONGER",
+      "scopeelim": {
+        "id": "cd014",
+        "engine": "scopeelim",
+        "fragment": "horn",
+        "symbol": "Nat.gcd",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_STRONGER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "bwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "bwd_s1": [
+            "propext",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {},
+        "certificate_bytes": 2803,
+        "seconds": 0.76
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd015",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (n < 2 ^ (n) ∨ n = 2)",
+      "lean": "∀ (n : Nat), (2 ≤ n) → (n + 1 < 2 ^ (n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat)",
+          "lean": "∀ (n : Nat), (2 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd015.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat)) ∧ ¬ (∀ (n : Nat), (2 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd015.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (2 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (2 ≤ n) → (n + 1 < 2 ^ (n)))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd015.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd015.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n < 2 ^ (n) ∨ n = 2))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → n + (1 : Nat) < x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) n ∨ n = (2 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd016",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (2 ^ (2 * n) + n ≥ 3)",
+      "lean": "∀ (n : Nat), (n < 3) → (2 ^ (n + 2) < 5)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) + n ≥ (3 : Nat)",
+          "lean": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (2 : Nat)) < (5 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd016.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (2 : Nat)) < (5 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n + 2) < 5))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd016.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (2 : Nat)) < (5 : Nat)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) + n ≥ (3 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd016.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) + n ≥ (3 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (2 * n) + n ≥ 3))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd016",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "bwd_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 10718,
+        "seconds": 1.53
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd017",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (n < 2 ^ (n + 1) ∨ n = 2)",
+      "lean": "∀ (n : Nat), (True) → (2 ^ (n + 1) < 5)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → n < x1 (2 : Nat) (n + (1 : Nat)) ∨ n = (2 : Nat)",
+          "lean": "∀ (n : Nat), True → x1 (2 : Nat) (n + (1 : Nat)) < (5 : Nat)",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd017.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → n < x1 (2 : Nat) (n + (1 : Nat)) ∨ n = (2 : Nat)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) (n + (1 : Nat)) < (5 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd017.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) (n + (1 : Nat)) < (5 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (n + 1) < 5))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd017.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) (n + (1 : Nat)) < (5 : Nat)) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) (n + (1 : Nat)) ∨ n = (2 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd017.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n < x1 (2 : Nat) (n + (1 : Nat)) ∨ n = (2 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n < 2 ^ (n + 1) ∨ n = 2))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) (n + (1 : Nat)) < (5 : Nat)) ∧ ¬ (∀ (n : Nat), True → n < x1 (2 : Nat) (n + (1 : Nat)) ∨ n = (2 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd018",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (n < 3) → (n ≤ 2 ^ (n + 1))",
+      "lean": "∀ (n : Nat), (True) → (n ≤ 2 ^ (n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) (n + (1 : Nat))",
+          "lean": "∀ (n : Nat), True → n ≤ x1 (2 : Nat) n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd018.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) (n + (1 : Nat))) ∧ ¬ (∀ (n : Nat), True → n ≤ x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd018.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n ≤ 2 ^ (n)))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd018.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → n ≤ x1 (2 : Nat) (n + (1 : Nat))) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (n ≤ 2 ^ (n + 1)))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_STRONGER",
+      "scopeelim": {
+        "id": "cd018",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_STRONGER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "bwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "bwd_s1": [
+            "propext",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "sepW_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 13672,
+        "seconds": 1.54
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd019",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (n < 3) → (2 ^ (n) < 5)",
+      "lean": "∀ (n : Nat), (True) → (n + 1 < 2 ^ (2 * n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n < (5 : Nat)",
+          "lean": "∀ (n : Nat), True → n + (1 : Nat) < x1 (2 : Nat) ((2 : Nat) * n)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd019.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n < (5 : Nat)) ∧ ¬ (∀ (n : Nat), True → n + (1 : Nat) < x1 (2 : Nat) ((2 : Nat) * n))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd019.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n + (1 : Nat) < x1 (2 : Nat) ((2 : Nat) * n)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n + 1 < 2 ^ (2 * n)))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd019.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n < (5 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n) < 5))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd019",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "bwd_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 10632,
+        "seconds": 1.54
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd020",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (2 ^ (n + 2) ≤ n + 2)",
+      "lean": "∀ (n : Nat), (1 ≤ n) → (2 ^ (n + 2) ≤ n)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≤ n + (2 : Nat)",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) (n + (2 : Nat)) ≤ n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd020.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≤ n + (2 : Nat)) ∧ ¬ (∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) (n + (2 : Nat)) ≤ n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd020.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n → x1 (2 : Nat) (n + (2 : Nat)) ≤ n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n) → (2 ^ (n + 2) ≤ n))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd020.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≤ n + (2 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (n + 2) ≤ n + 2))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd020",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "bwd_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 10767,
+        "seconds": 1.78
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd021",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (2 ≤ n) → (2 * n ≤ 2 ^ (n))",
+      "lean": "∀ (n : Nat), (1 ≤ n) → (2 * n ≤ 2 ^ (n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), (2 : Nat) ≤ n → (2 : Nat) * n ≤ x1 (2 : Nat) n",
+          "lean": "∀ (n : Nat), (1 : Nat) ≤ n → (2 : Nat) * n ≤ x1 (2 : Nat) n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd021.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (1 : Nat) ≤ n → (2 : Nat) * n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (1 ≤ n) → (2 * n ≤ 2 ^ (n)))",
+              "axioms": []
+            },
+            "bwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd021.bwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (1 : Nat) ≤ n → (2 : Nat) * n ≤ x1 (2 : Nat) n) → (∀ (n : Nat), (2 : Nat) ≤ n → (2 : Nat) * n ≤ x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Classical.choice",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd021.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (2 : Nat) ≤ n → (2 : Nat) * n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (2 ≤ n) → (2 * n ≤ 2 ^ (n)))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {
+        "lawW": {
+          "declaration": "ProofScopeCert.CD_cd021.lawW",
+          "statement": "(∀ (n : Nat), (1 ≤ n) → (2 * n ≤ 2 ^ (n))) → (∀ (n : Nat), (2 ≤ n) → (2 * n ≤ 2 ^ (n)))",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ]
+        }
+      },
+      "verdict": "CLAIM_LEAN_STRONGER",
+      "scopeelim": {
+        "id": "cd021",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_STRONGER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "bwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "bwd_s1": [
+            "propext",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "sepW_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 13811,
+        "seconds": 1.39
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd022",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (n ≤ 2 ^ (n))",
+      "lean": "∀ (n : Nat), (n % 2 = 0) → (2 ^ (n + 2) ≠ n)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → n ≤ x1 (2 : Nat) n",
+          "lean": "∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) (n + (2 : Nat)) ≠ n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd022.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) (n + (2 : Nat)) ≠ n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n % 2 = 0) → (2 ^ (n + 2) ≠ n))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd022.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) (n + (2 : Nat)) ≠ n) ∧ ¬ (∀ (n : Nat), True → n ≤ x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd022.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n ≤ 2 ^ (n)))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "scopeelim": {
+        "id": "cd022",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_WEAKER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "fwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "linkR_s1": [],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "fwd_s1": [
+            "propext",
+            "Quot.sound"
+          ]
+        },
+        "rejected": {
+          "sepS_s1": "no tactic alternative closed the goal",
+          "bwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 13736,
+        "seconds": 1.6
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd023",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n + 3) 6 = 1) → (Nat.gcd (n) 6 = 1)",
+      "lean": "∀ (n : Nat), (Nat.gcd (n + 3) 6 = 1) → (Nat.gcd (n + 1) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd023.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n + 3) 6 = 1) → (Nat.gcd (n + 1) 6 = 1))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd023.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 (n + (3 : Nat)) (6 : Nat) = (1 : Nat) → x1 n (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n + 3) 6 = 1) → (Nat.gcd (n) 6 = 1))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd023",
+        "engine": "scopeelim",
+        "fragment": "horn",
+        "symbol": "Nat.gcd",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {},
+        "certificate_bytes": 4497,
+        "seconds": 0.86
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd024",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 1) 6 = 1)",
+      "lean": "∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 2) 6 = 1)",
+      "symbols": [
+        {
+          "symbol": "Nat.gcd",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "Nat.gcd"
+          ],
+          "ref": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)",
+          "lean": "∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd024.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 1) 6 = 1))",
+              "axioms": []
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd024.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat)) (Nat.gcd : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (Nat.gcd (n) 6 = 1) → (Nat.gcd (n + 2) 6 = 1))",
+              "axioms": []
+            },
+            "fwd_s1": {
+              "declaration": "ProofScopeCert.CD_cd024.fwd_s1",
+              "statement": "∀ (x1 : Nat → Nat → Nat), (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (1 : Nat)) (6 : Nat) = (1 : Nat)) → (∀ (n : Nat), x1 n (6 : Nat) = (1 : Nat) → x1 (n + (2 : Nat)) (6 : Nat) = (1 : Nat))",
+              "axioms": [
+                "propext"
+              ]
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_LEAN_WEAKER",
+      "scopeelim": {
+        "id": "cd024",
+        "engine": "scopeelim",
+        "fragment": "horn",
+        "symbol": "Nat.gcd",
+        "type": "Nat → Nat → Nat",
+        "verdict": "LEAN_WEAKER",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "fwd_s1",
+          "linkL_s1",
+          "linkR_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "fwd_s1": [],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {},
+        "certificate_bytes": 3333,
+        "seconds": 0.79
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd025",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (n < 3) → (2 ^ (n) % 2 = 0)",
+      "lean": "∀ (n : Nat), (True) → (2 ^ (2 * n) % 2 = 0)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n % (2 : Nat) = (0 : Nat)",
+          "lean": "∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat)",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd025.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (2 * n) % 2 = 0))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd025.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) ((2 : Nat) * n) % (2 : Nat) = (0 : Nat)) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n % (2 : Nat) = (0 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd025.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) n % (2 : Nat) = (0 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n) % 2 = 0))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {
+        "lawW": {
+          "declaration": "ProofScopeCert.CD_cd025.lawW",
+          "statement": "(∀ (n : Nat), (True) → (2 ^ (2 * n) % 2 = 0)) → (∀ (n : Nat), (n < 3) → (2 ^ (n) % 2 = 0))",
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ]
+        }
+      },
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd025",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "bwd_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 10691,
+        "seconds": 2.23
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd026",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (2 ≤ n) → (2 ^ (n) < n)",
+      "lean": "∀ (n : Nat), (n < 3) → (2 ^ (n + 1) ≤ n)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) n < n",
+          "lean": "∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) ≤ n",
+          "linked": true,
+          "relation": "INCONCLUSIVE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd026.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) n < n) ∧ ¬ (∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) ≤ n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd026.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n < (3 : Nat) → x1 (2 : Nat) (n + (1 : Nat)) ≤ n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n < 3) → (2 ^ (n + 1) ≤ n))",
+              "axioms": []
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd026.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), (2 : Nat) ≤ n → x1 (2 : Nat) n < n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (2 ≤ n) → (2 ^ (n) < n))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "scopeelim": {
+        "id": "cd026",
+        "engine": "scopeelim",
+        "fragment": "func",
+        "symbol": "^",
+        "type": "Nat → Nat → Nat",
+        "verdict": "INCOMPARABLE",
+        "linked": true,
+        "certify_status": "OK",
+        "certificates": [
+          "linkL_s1",
+          "linkR_s1",
+          "sepS_s1",
+          "sepW_s1"
+        ],
+        "axioms": {
+          "sepS_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkL_s1": [],
+          "sepW_s1": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "linkR_s1": []
+        },
+        "rejected": {
+          "bwd_s1": "no tactic alternative closed the goal",
+          "fwd_s1": "no tactic alternative closed the goal"
+        },
+        "certificate_bytes": 10653,
+        "seconds": 1.59
+      },
+      "verdict_source": "scopeelim",
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd027",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (n % 2 = 0) → (2 ^ (n) ≤ n + 2)",
+      "lean": "∀ (n : Nat), (True) → (2 * n ≤ 2 ^ (n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) n ≤ n + (2 : Nat)",
+          "lean": "∀ (n : Nat), True → (2 : Nat) * n ≤ x1 (2 : Nat) n",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd027.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) n ≤ n + (2 : Nat)) ∧ ¬ (∀ (n : Nat), True → (2 : Nat) * n ≤ x1 (2 : Nat) n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd027.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → (2 : Nat) * n ≤ x1 (2 : Nat) n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 * n ≤ 2 ^ (n)))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd027.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → (2 : Nat) * n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) n ≤ n + (2 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd027.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) n ≤ n + (2 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (n % 2 = 0) → (2 ^ (n) ≤ n + 2))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → (2 : Nat) * n ≤ x1 (2 : Nat) n) ∧ ¬ (∀ (n : Nat), n % (2 : Nat) = (0 : Nat) → x1 (2 : Nat) n ≤ n + (2 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd028",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (2 ^ (n) + n ≥ 3)",
+      "lean": "∀ (n : Nat), (True) → (n ≤ 2 ^ (2 * n))",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → x1 (2 : Nat) n + n ≥ (3 : Nat)",
+          "lean": "∀ (n : Nat), True → n ≤ x1 (2 : Nat) ((2 : Nat) * n)",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd028.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) n + n ≥ (3 : Nat)) ∧ ¬ (∀ (n : Nat), True → n ≤ x1 (2 : Nat) ((2 : Nat) * n))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd028.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → n ≤ x1 (2 : Nat) ((2 : Nat) * n)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (n ≤ 2 ^ (2 * n)))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd028.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → n ≤ x1 (2 : Nat) ((2 : Nat) * n)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) n + n ≥ (3 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd028.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) n + n ≥ (3 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (n) + n ≥ 3))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → n ≤ x1 (2 : Nat) ((2 : Nat) * n)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) n + n ≥ (3 : Nat))"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    },
+    {
+      "id": "cd029",
+      "policy": "LINEAR_CORE_SHARED",
+      "reference": "∀ (n : Nat), (True) → (2 ^ (n + 2) ≠ n)",
+      "lean": "∀ (n : Nat), (True) → (2 ^ (n + 2) + n ≥ 3)",
+      "symbols": [
+        {
+          "symbol": "HPow.hPow",
+          "type": "Nat → Nat → Nat"
+        }
+      ],
+      "one_sided_symbols": [],
+      "certify_status": "OK",
+      "subsets": {
+        "s1": {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "ref": "∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≠ n",
+          "lean": "∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) + n ≥ (3 : Nat)",
+          "linked": true,
+          "relation": "INCOMPARABLE",
+          "certificates": {
+            "sepS_s1": {
+              "declaration": "ProofScopeCert.CD_cd029.sepS_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≠ n) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) + n ≥ (3 : Nat))",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkL_s1": {
+              "declaration": "ProofScopeCert.CD_cd029.linkL_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) + n ≥ (3 : Nat)) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (n + 2) + n ≥ 3))",
+              "axioms": []
+            },
+            "sepW_s1": {
+              "declaration": "ProofScopeCert.CD_cd029.sepW_s1",
+              "statement": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) + n ≥ (3 : Nat)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≠ n)",
+              "axioms": [
+                "propext",
+                "Quot.sound"
+              ]
+            },
+            "linkR_s1": {
+              "declaration": "ProofScopeCert.CD_cd029.linkR_s1",
+              "statement": "((fun (x1 : Nat → Nat → Nat) => ∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≠ n) (HPow.hPow : Nat → Nat → Nat)) ↔ (∀ (n : Nat), (True) → (2 ^ (n + 2) ≠ n))",
+              "axioms": []
+            }
+          }
+        }
+      },
+      "minimal_separating_subsets": [
+        "s1"
+      ],
+      "law_certificates": {},
+      "verdict": "CLAIM_INCOMPARABLE",
+      "explanation": [
+        {
+          "symbols": [
+            "HPow.hPow"
+          ],
+          "relation": "INCOMPARABLE",
+          "countermodel": "∃ (x1 : Nat → Nat → Nat), (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) + n ≥ (3 : Nat)) ∧ ¬ (∀ (n : Nat), True → x1 (2 : Nat) (n + (2 : Nat)) ≠ n)"
+        }
+      ],
+      "expected_claimdelta": null,
+      "family": "sota15",
+      "split": "sota15_eval"
+    }
+  ]
+}
