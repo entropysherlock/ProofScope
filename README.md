@@ -129,6 +129,22 @@ Smoke tests 1–4 of the kernel pipeline pass on synthetic statements; they are 
 
 All runs: https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml
 
+## SL-002: first kernel-checked bridges (Erdős 952 and 1150)
+
+Formal Conjectures marks Erdős 952 and 1150 as solved by OpenAI's Lean proofs, while recording that the
+linked theorems differ from its statements by a transport step nobody had machine-checked.
+[experiments/SL-002/REPORT.md](experiments/SL-002/REPORT.md) has the details.
+
+| Result | Imports | Status |
+|---|---|---|
+| Erdős 952: the Formal Conjectures statement **is equivalent to** OpenAI's (`fc_iff_main`) | Mathlib only | kernel-checked, standard axioms, `leanchecker` replay; two build paths ([43024368984](https://github.com/entropysherlock/ProofScope/actions/runs/43024368984), [43024708516](https://github.com/entropysherlock/ProofScope/actions/runs/43024708516)) |
+| Erdős 1150: OpenAI's statement **implies** the Formal Conjectures statement (`main_implies_fc`); reverse undecided | Mathlib only | same |
+| Erdős 952, Formal Conjectures statement verbatim, **from OpenAI's proof** | Mathlib + 41 OpenAI files | pending: assembly build in progress |
+| Erdős 1150, Formal Conjectures statement verbatim, **from OpenAI's proof** | Mathlib + 24 OpenAI files | pending: assembly build in progress |
+
+These are routine Lean (about 180 lines). What they add is a checked fact where there was an
+unchecked assertion. Neither says anything about whether either formal statement is what Erdős asked.
+
 ## Reproducibility
 
 ```sh
