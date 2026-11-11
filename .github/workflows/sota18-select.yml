@@ -1,0 +1,48 @@
+name: SOTA-18 Frozen Case Selection
+
+# Text-only selection of the evaluation cases (PROTOCOL.md sections 2-3). No tool is run here.
+on:
+  push:
+    branches: [research/sota18-independent-evaluation]
+    paths:
+      - ".github/workflows/sota18-select.yml"
+      - "experiments/sota18/make_selection.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SEMANTEQ_REV: f92767000e14d11744580946980cf874324f5d19
+  ASSESS_REV: bc7933547d8a6d1aaee41ccf56d68bc1f0fc575d
+
+jobs:
+  select:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "datasets==3.6.0" "huggingface_hub>=0.30"
+      - name: Fetch pinned SemantEq labels and EPLA
+        shell: bash
+        run: |
+          set -euo pipefail
+          for x in "semanteq https://github.com/hlxr89/SemantEq.git $SEMANTEQ_REV" "assess https://github.com/XiaoyangLiu-sjtu/ASSESS.git $ASSESS_REV"; do
+            set -- $x
+            git init -q "$RUNNER_TEMP/$1"; git -C "$RUNNER_TEMP/$1" remote add origin "$2"
+            git -C "$RUNNER_TEMP/$1" fetch -q --depth 1 origin "$3"; git -C "$RUNNER_TEMP/$1" checkout -q FETCH_HEAD
+            test "$(git -C "$RUNNER_TEMP/$1" rev-parse HEAD)" = "$3"
+          done
+      - name: Select and freeze
+        run: python experiments/sota18/make_selection.py "$RUNNER_TEMP/semanteq" "$RUNNER_TEMP/assess" frozen | tee selection.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sota18-frozen
+          path: |
+            frozen/
+            selection.log

@@ -30,7 +30,7 @@ environment is `NON_ELABORATING` for that system: counted in the denominator, ne
 ## 2. Data
 
 * **PNV**: ProofNetVerif (`PAug/ProofNetVerif`, Hugging Face), **test** split, all rows, as downloaded on
-  the runner; the dataset revision (commit sha) and card license are recorded by `select.py`.
+  the runner; the dataset revision (commit sha) and card license are recorded by `make_selection.py`.
   Gold label **G1** = the published `correct` field (human labels, Poiroux et al. 2025). Gold label
   **G2** = SemantEq's adjudicated label (`pnv_test_adjudicated_labels.jsonl` at the pinned commit) where
   present. G1 is authored by the BEq+ authors and G2 by the SemantEq authors: PNV is *vendor-home* for
@@ -39,15 +39,15 @@ environment is `NON_ELABORATING` for that system: counted in the denominator, ne
   (label, prediction) sub-question with `compiler_check == "success"`. Gold label **G3** =
   `likeness after transformation`. Neutral for all three systems run here (vendor-home for ASSESS, not run).
 
-## 3. Tracks and selection (all done by `select.py` on the runner, text only)
+## 3. Tracks and selection (all done by `make_selection.py` on the runner, text only)
 
 * **Track A** (unfiltered): 200 PNV test rows drawn uniformly without replacement with
   `random.Random(20261118)` from all rows, plus 100 EPLA rows drawn the same way with seed 20261119.
   No filtering of any kind.
 * **Track B** (capability-relevant, chosen by text only, from all PNV test rows and all EPLA rows):
   a pair qualifies when its two declarations, after whitespace normalisation, satisfy either
-  * **B1 assumption drift**: the conclusions (text after the last `:` at bracket depth 0 of the
-    signature) are identical and the binder lists differ; or
+  * **B1 assumption drift**: the conclusions (text after the first `:` at bracket depth 0 following
+    the declaration name; see amendment 1) are identical and the binder lists differ; or
   * **B2 single-token conclusion drift**: the binder lists are identical and the conclusions differ in
     exactly one token, that token being a relation (`< ≤ > ≥ = ≠ ∣`), a quantifier (`∀ ∃ ∃!`), a
     connective (`∧ ∨ → ↔ ¬`) or a numeral.
@@ -160,4 +160,7 @@ SemantEq precision near 1.0 with recall near half; BEq+ recall similar with a fe
 
 ## 10. Amendments
 
-None yet.
+1. (2026-11-11, before any data was loaded) Section 3, B1: "last `:` at bracket depth 0" replaced by
+   "first `:` at bracket depth 0 following the declaration name". Reason: conclusions such as
+   `∀ x : ℝ, P x` contain a depth-0 colon, so the last-colon rule would split inside the conclusion.
+   Found while implementing `make_selection.py`.
