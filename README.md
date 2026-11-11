@@ -2,6 +2,46 @@
 ### by Caleb J. Westfall
 **Verify the proof. Validate the claim.**
 
+## Latest merged research engine: SOTA-16
+
+**This is the advanced ProofScope development branch.** SOTA-16 was merged via [PR #6](https://github.com/entropysherlock/ProofScope/pull/6) at commit [`198e17c`](https://github.com/entropysherlock/ProofScope/commit/198e17c313e0752e948ce2f2bc32d74aa7c7cdc5). Default `main` still contains an earlier prototype; this branch contains the integrated ClaimDelta, ScopeElim and Presburger certificate work.
+
+**[Technical reviewer guide](https://github.com/entropysherlock/ProofScope/blob/main/docs/REVIEWER_GUIDE.md)** · **[SOTA-16 mathematical report](docs/sota16_presburger.md)** · **[v1.3 release report](docs/v1.3_release.md)** · **[Validation evidence](https://github.com/entropysherlock/ProofScope/actions/runs/42950230245)** · **[Reproduced benchmark](https://github.com/entropysherlock/ProofScope/actions/runs/42950230302)**
+
+### What the verified engine does
+
+- Builds Lean-checked certificates for **equivalent, weaker, stronger, and incomparable schematic claims**, with separating interpretations where supported.
+- Audits Lean proof dependencies and axioms and runs ClaimDelta and Assumption Delta analyses.
+- Uses exact elimination theorems for restricted Horn, one-occurrence, and affine function fragments.
+- Generates Presburger-related certificates using untrusted SMT candidate search plus Lean checking; the new pass is available via ClaimDelta's `--scopeelim` fallback.
+- Fails closed to inconclusive or infrastructure-error outcomes when it cannot produce acceptable proof evidence.
+
+### Reproduced SOTA-16 results
+
+| Metric on 120 author-generated cases | v1.3 | SOTA-16 |
+| --- | ---: | ---: |
+| Certified directions (240 total) | 178 | **231** |
+| Decisive case verdicts (120 total) | 68 | **111** |
+
+The successful GitHub Actions evaluation used 237 separately generated labels, agreeing with **230/230 labelled certified directions**. One certified result was not independently labelled; nine directed problems remain open. Same-author generation means this is not an external blind benchmark. Formal Python-to-Lean grounding completeness, broad Mathlib applicability, and SOTA superiority have **not** been established.
+
+### Reproduce locally
+
+Prerequisites: Lean **4.34.1** (pinned), Python, and optional dependencies for particular test suites.
+
+```bash
+git clone https://github.com/entropysherlock/ProofScope.git
+cd ProofScope
+git switch v1.2-review
+lean --version
+python3 -m unittest discover -s tests/v02 -v
+python3 -m proofscope.claimdelta --help
+```
+
+For end-to-end proof replay and full evidence regeneration, use the pinned successful CI workflows linked above. The current multi-occurrence SOTA-17 work is **experimental** and is not included in the verified SOTA-16 release.
+
+---
+
 ProofScope is an experimental open-source proof-scope auditing project for AI-assisted mathematics.
 
 ## One-click live prototype
