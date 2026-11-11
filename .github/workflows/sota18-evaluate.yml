@@ -171,6 +171,8 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
           sh /tmp/elan-init.sh -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          # LeanInteract calls `lake` before selecting a project toolchain (failed in smoke run 42965562451)
+          "$HOME/.elan/bin/elan" default leanprover/lean4:v4.8.0
           mkdir -p "$GITHUB_WORKSPACE/ev"
           { git rev-parse HEAD; sha256sum examples/beq_plus.py; nproc; free -g | head -2; } | tee "$GITHUB_WORKSPACE/ev/provenance-bq-${{ matrix.shard }}.txt"
       - name: BEq+ shard ${{ matrix.shard }}
