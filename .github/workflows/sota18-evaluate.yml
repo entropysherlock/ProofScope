@@ -208,10 +208,10 @@ jobs:
           set -euo pipefail
           d="experiments/sota18/results/${{ needs.plan.outputs.stage }}/run_${{ github.run_id }}_${{ github.run_attempt }}"
           mkdir -p "$d"/{proofscope,semanteq,beqplus,logs}
-          find shards -path '*/ev/ps/rows/*.json' -exec cp {} "$d/proofscope/" \;
+          find shards -path '*/ps/rows/*.json' -exec cp {} "$d/proofscope/" \;
           for e in adelta12 cmcd_v10; do mkdir -p "$d/engine_$e"; find shards -path "*/engine_$e/rows/*.json" -exec cp {} "$d/engine_$e/" \; ; done
-          find shards -path '*/ev/se/*.json' -exec cp {} "$d/semanteq/" \;
-          find shards -path '*/ev/bq/*.json' -exec cp {} "$d/beqplus/" \;
+          find shards -path '*/se/*.json' -exec cp {} "$d/semanteq/" \;
+          find shards -path '*/bq/*.json' -exec cp {} "$d/beqplus/" \;
           find shards -name '*.log' -exec cp {} "$d/logs/" \;
           find shards -name 'provenance-*.txt' -exec cp {} "$d/logs/" \;
           echo '{"jobs": {"proofscope": "${{ needs.proofscope.result }}", "semanteq": "${{ needs.semanteq.result }}", "beqplus": "${{ needs.beqplus.result }}"}}' > "$d/job_results.json"

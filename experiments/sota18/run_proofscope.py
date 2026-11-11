@@ -93,8 +93,12 @@ def print_file(case) -> str:
     return src
 
 
+UNIVERSES = "universe " + " ".join([f"u_{k}" for k in range(1, 10)] + ["u", "v", "w"]) + "\n"
+
+
 def check_file(case, printed: dict) -> tuple[str, dict]:
-    src = "\n".join(imports_of(case)) + "\n"
+    # printed types of universe-polymorphic declarations mention `u_1`, ...; declare those names
+    src = "\n".join(imports_of(case)) + "\n\n" + UNIVERSES
     for side in ("ref", "cand"):
         src += f"\nsection\n{body_of(case[side + '_header'])}\n\n{rename(with_sorry(case[side + '_decl']), f'ps_{side}_decl')}\n\nend\n"
     lines = {}
@@ -174,10 +178,12 @@ def one(case, work: Path, lean: str) -> dict:
     row["print_setting"] = {s: v[0] for s, v in chosen.items()}
     if len(chosen) < 2:
         row.update(outcome="UNSUPPORTED_INPUT", reason="printed statement does not round-trip (adapter limitation)",
-                   side=[s for s in ("ref", "cand") if s not in chosen])
+                   side=[s for s in ("ref", "cand") if s not in chosen],
+                   errors=[l[:300] for l in out.splitlines() if ": error" in l][:6])
         return row
     ref, cand = chosen["ref"][1], chosen["cand"][1]
     row["reference"], row["lean"] = ref, cand
+    row["universe_params"] = bool(re.search(r"\b(?:Type|Sort) u_\d", ref + " " + cand))
     row["grammar_entry"] = {"ref": grammar_entry(ref), "cand": grammar_entry(cand)}
     # 2. frozen engines
     safe = work.name
