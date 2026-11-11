@@ -1,0 +1,127 @@
+name: SL-002 bridges
+
+# Launched by committing a new value to experiments/SL-002/RUN, or by hand.
+on:
+  push:
+    branches: ["scopeledger/**"]
+    paths: ["experiments/SL-002/RUN"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OAI_URL: https://github.com/openai/math
+  OAI_HEAD: 4eaee87548250b2682affda7d05d947c05554bae
+  FC_URL: https://github.com/google-deepmind/formal-conjectures
+  FC_HEAD: da703a5f239f734a47ede2f4e99b9ccc9e644cb5
+
+jobs:
+  bridges:
+    name: "Bridges (Mathlib only): statement transport for Erdős 952 and 1150"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Sources at the frozen commits (blobs on demand)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q --filter=blob:none --no-checkout --depth 1 "$OAI_URL" "$RUNNER_TEMP/oai"
+          git -C "$RUNNER_TEMP/oai" fetch -q --filter=blob:none --depth 1 origin "$OAI_HEAD"
+          git clone -q --filter=blob:none --no-checkout "$FC_URL" "$RUNNER_TEMP/fc"
+          git -C "$RUNNER_TEMP/fc" cat-file -e "$FC_HEAD"
+      - name: Verbatim check and escape-hatch scan
+        run: |
+          python experiments/SL-002/check.py verbatim "$RUNNER_TEMP/oai" "$RUNNER_TEMP/fc"
+          python experiments/SL-002/check.py scan
+      - name: Mathlib (pinned) from cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -r experiments/SL-002/project "$RUNNER_TEMP/p"
+          cd "$RUNNER_TEMP/p"
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+      - name: Build bridges, print axioms, replay with leanchecker
+        shell: bash
+        run: |
+          set +e
+          cd "$RUNNER_TEMP/p"; mkdir -p out
+          lake build SL002.E952 SL002.E1150 > out/build.log 2>&1; echo "build exit $?" | tee -a out/build.log
+          lake env lean AuditBridges.lean > out/axioms.log 2>&1; echo "audit exit $?" >> out/axioms.log
+          cat out/build.log out/axioms.log > out/combined.log
+          python "$GITHUB_WORKSPACE/experiments/SL-002/check.py" audit out/combined.log \
+            ScopeLedger.SL002.E952.fc_iff_main ScopeLedger.SL002.E1150.main_implies_fc; ok=$?
+          for m in SL002.E952 SL002.E1150; do
+            timeout 30m lake env leanchecker "$m" > "out/leanchecker_$m.log" 2>&1; rc=$?
+            echo "::notice title=SL-002 leanchecker $m::exit $rc $(tail -c 300 out/leanchecker_$m.log | tr '\n' ' ')"
+            [ $rc = 0 ] || ok=1
+          done
+          exit $ok
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sl002-bridges
+          path: ${{ runner.temp }}/p/out/
+
+  assemble:
+    name: "Assembly: Formal Conjectures statements from OpenAI's proofs (65 OpenAI files)"
+    needs: bridges
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Project, Mathlib cache, verbatim OpenAI sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -r experiments/SL-002/project "$RUNNER_TEMP/p"
+          git clone -q --filter=blob:none --no-checkout --depth 1 "$OAI_URL" "$RUNNER_TEMP/oai"
+          git -C "$RUNNER_TEMP/oai" fetch -q --filter=blob:none --depth 1 origin "$OAI_HEAD"
+          python experiments/SL-002/fetch_oai.py "$RUNNER_TEMP/oai" "$RUNNER_TEMP/p"
+          echo "::notice title=SL-002 OpenAI sources::$(python -c "import json;m=json.load(open('$RUNNER_TEMP/p/oai_files.json'));print(m['n_files'],'files at',m['commit'])")"
+          cd "$RUNNER_TEMP/p"
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+      - name: Build OpenAI modules and assemblies (timed)
+        shell: bash
+        run: |
+          set +e
+          cd "$RUNNER_TEMP/p"; mkdir -p out
+          cp oai_files.json out/
+          start=$(date +%s)
+          timeout 280m lake build SL002.Assembly952 SL002.Assembly1150 > out/build.log 2>&1; rc=$?
+          echo "::notice title=SL-002 assembly build::exit $rc after $(( $(date +%s) - start ))s"
+          lake env lean AuditAssembly.lean > out/axioms.log 2>&1
+          cat out/build.log out/axioms.log > out/combined.log
+          python "$GITHUB_WORKSPACE/experiments/SL-002/check.py" audit out/combined.log \
+            ScopeLedger.SL002.E952.erdos_952 ScopeLedger.SL002.E1150.erdos_1150 \
+            OAI.GaussianMoat.fullMain OAI.AsymptoticallyMinimalLittlewood.main; ok=$?
+          exit $ok
+      - name: Replay every module with leanchecker (SL-002 and all 65 OpenAI files)
+        shell: bash
+        run: |
+          set +e
+          cd "$RUNNER_TEMP/p"
+          mods="SL002.E952 SL002.E1150 SL002.Assembly952 SL002.Assembly1150 $(python -c "import json;print(' '.join(json.load(open('oai_files.json'))['files']))")"
+          n=0; bad=0
+          for m in $mods; do
+            n=$((n+1))
+            timeout 30m lake env leanchecker "$m" > "out/leanchecker_$m.log" 2>&1 || { bad=$((bad+1)); echo "::error title=leanchecker::$m failed: $(tail -c 300 "out/leanchecker_$m.log" | tr '\n' ' ')"; }
+          done
+          echo "::notice title=SL-002 leanchecker replay::$((n-bad)) of $n modules replayed without error"
+          [ $bad = 0 ]
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sl002-assembly
+          path: ${{ runner.temp }}/p/out/

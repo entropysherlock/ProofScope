@@ -3,3 +3,5 @@ __pycache__/
 .pytest_cache/
 *.olean
 .lake/
+experiments/SL-002/project/.lake/
+experiments/SL-002/project/OAI/

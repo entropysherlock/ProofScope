@@ -1,0 +1,23 @@
+# SL-002 build: only Mathlib (the revision pinned by openai/math/lean) plus copied source files.
+name = "sl002"
+defaultTargets = []
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+
+# Bridges and assemblies written for SL-002.
+[[lean_lib]]
+name = "SL002"
+globs = ["SL002.+"]
+
+# Verbatim copies of the openai/math source files in the import closure of the two linked
+# theorems, fetched at 4eaee87548250b2682affda7d05d947c05554bae by fetch_oai.py (hashes in
+# oai_files.json). Not committed here; fetched at build time.
+[[lean_lib]]
+name = "OAI"
+globs = ["OAI.+"]
