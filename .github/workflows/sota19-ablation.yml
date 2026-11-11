@@ -1,0 +1,77 @@
+name: SOTA-19 Pilot A0 (apply-plus-portfolio ablation)
+
+on:
+  push:
+    branches: [research/sota19-strategic-pivot]
+    paths:
+      - "experiments/sota19/RUN_A0"
+
+permissions:
+  contents: write
+
+env:
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+  RUN: experiments/sota18/results/full/run_42969440169_1
+
+jobs:
+  g:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Mathlib at the pinned revision (binary cache)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ml"; cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
+          for i in 1 2 3; do lake update && break || sleep 30; done
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Ablation shard ${{ matrix.shard }}
+        run: python experiments/sota19/ablation_g.py "$RUN" ev/g --shard ${{ matrix.shard }}/12 | tee ev/g-${{ matrix.shard }}.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota19-g-${{ matrix.shard }}
+          path: ev/
+          if-no-files-found: warn
+
+  collect:
+    needs: g
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: sota19-g-*
+          path: shards
+      - name: Commit records
+        shell: bash
+        run: |
+          set -euo pipefail
+          d="experiments/sota19/results/a0_run_${{ github.run_id }}"
+          mkdir -p "$d/logs"
+          find shards -name '*.json' ! -name 'closers.json' -exec cp {} "$d/" \;
+          cp "$(find shards -name closers.json | head -1)" "$d/closers.json" || true
+          find shards -name '*.log' -exec cp {} "$d/logs/" \;
+          echo "records: $(ls "$d" | grep -c json)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/sota19/results
+          git commit -m "SOTA-19 A0: ablation records, run ${{ github.run_id }}"
+          for i in 1 2 3 4 5; do git pull --rebase -q origin "${{ github.ref_name }}" && git push origin HEAD:${{ github.ref_name }} && break || sleep 15; done
