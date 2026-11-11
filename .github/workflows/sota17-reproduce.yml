@@ -143,7 +143,7 @@ jobs:
         run: |
           mkdir -p evidence
           python experiments/sota17/mathlib_pilot/extract.py ../mathlib4 > evidence/population.json
-          python experiments/sota17/mathlib_pilot/select.py evidence/population.json
+          python experiments/sota17/mathlib_pilot/make_selection.py evidence/population.json
           git diff --exit-code -- experiments/sota17/mathlib_pilot/selection.json
       - name: Run the pilot on all three splits and compare with the committed results
         run: |

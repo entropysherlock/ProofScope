@@ -143,7 +143,7 @@ Median 1.7 s per case, maximum 4.4 s; median certificate module 1.8 kB.
 ### Track C: Mathlib pilot (`experiments/sota17/mathlib_pilot/`)
 
 Pin: Mathlib `v4.34.1`, `d13f23b`. `extract.py` finds 189,240 `theorem`/`lemma` signatures
-(text only; hash in `selection.json`). Selection (`select.py`, seed 20261117):
+(text only; hash in `selection.json`). Selection (`make_selection.py`, seed 20261117):
 
 * C1: 200 declarations sampled uniformly.
 * C2: all 69 declarations whose own signature binds a function `ℕ → ℕ`, split by a hash of the
@@ -193,7 +193,7 @@ products); wrong class guess; wrong and inconsistent witnesses.
     python3 experiments/sota17/run_eval.py OUT 4
     git clone --depth 1 --branch v4.34.1 https://github.com/leanprover-community/mathlib4 M
     python3 experiments/sota17/mathlib_pilot/extract.py M > population.json
-    python3 experiments/sota17/mathlib_pilot/select.py population.json   # must reproduce selection.json
+    python3 experiments/sota17/mathlib_pilot/make_selection.py population.json   # must reproduce selection.json
     python3 experiments/sota17/mathlib_pilot/pilot.py C2_heldout OUT/pilot
 
 Workflow `.github/workflows/sota17-reproduce.yml` runs all of this on a pull request to
