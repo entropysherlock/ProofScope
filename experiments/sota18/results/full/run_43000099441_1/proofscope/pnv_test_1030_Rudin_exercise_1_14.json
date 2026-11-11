@@ -1,0 +1,66 @@
+{
+ "case_id": "pnv:test:1030:Rudin|exercise_1_14",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 408.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    },
+    {
+     "symbol": "Lean.Name.str",
+     "type": "Lean.Name → String → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (z : ℂ), sorry = 1 → sorry ^ 2 + sorry ^ 2 = 4",
+ "lean": "∀ (z : ℂ), sorry = 1 → sorry ^ 2 + sorry ^ 2 = 2",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (z : ℂ), s'",
+  "cand": "unsupported: cannot tokenize at '∀ (z : ℂ), s'"
+ },
+ "seconds": 421.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7640804
+}

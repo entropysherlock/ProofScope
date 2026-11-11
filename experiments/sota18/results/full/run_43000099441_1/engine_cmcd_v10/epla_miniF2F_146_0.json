@@ -1,0 +1,103 @@
+{
+ "id": "epla_miniF2F_146_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℝ) (n : ℕ), 0 < a ∧ 0 < b → 0 < n → ((a + b) / 2) ^ n ≤ (a ^ n + b ^ n) / 2",
+ "lean": "∀ (a b : ℝ) (n : ℕ), 0 < a → 0 < b → 0 < n → ((a + b) / 2) ^ n ≤ (a ^ n + b ^ n) / 2",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+   "to": "(0 : ℝ) < a"
+  },
+  {
+   "from": "(0 : ℕ) < n",
+   "to": "(0 : ℝ) < b"
+  },
+  {
+   "from": "((a + b) / (2 : ℝ)) ^ n ≤ (a ^ n + b ^ n) / (2 : ℝ)",
+   "to": "(0 : ℕ) < n → ((a + b) / (2 : ℝ)) ^ n ≤ (a ^ n + b ^ n) / (2 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+   "to": "(0 : ℝ) < a",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_146_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ)) → (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a ∧ (0 : ℝ) < b → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(0 : ℕ) < n",
+   "to": "(0 : ℝ) < b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "((a + b) / (2 : ℝ)) ^ n ≤ (a ^ n + b ^ n) / (2 : ℝ)",
+   "to": "(0 : ℕ) < n → ((a + b) / (2 : ℝ)) ^ n ≤ (a ^ n + b ^ n) / (2 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_146_0.fwd_e3",
+     "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a → (0 : ℝ) < b → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ)) → (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a → (0 : ℝ) < b → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_146_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a → (0 : ℝ) < b → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ)) → (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a ∧ (0 : ℝ) < b → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_146_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a ∧ (0 : ℝ) < b → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ)) → (∀ (a b : ℝ) (n : ℕ), (0 : ℝ) < a → (0 : ℝ) < b → (0 : ℕ) < n → x1 ((a + b) / (2 : ℝ)) n ≤ (x1 a n + x1 b n) / (2 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

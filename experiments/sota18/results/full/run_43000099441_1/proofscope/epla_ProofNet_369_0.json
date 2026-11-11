@@ -1,0 +1,7 @@
+{
+ "case_id": "epla:ProofNet:369:0",
+ "stages": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "no theorem/lemma head",
+ "children_maxrss_kb_so_far": 7618400
+}

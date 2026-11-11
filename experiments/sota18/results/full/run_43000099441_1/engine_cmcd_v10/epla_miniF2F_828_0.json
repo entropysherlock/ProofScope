@@ -1,0 +1,18 @@
+{
+ "id": "epla_miniF2F_828_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), n % 5 = 3 → 2 * n % 5 = 1",
+ "lean": "∀ (n : ℕ), n % 5 = 3 → 2 * n % 5 = 1",
+ "symbols": [],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

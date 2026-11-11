@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_279_0",
+ "reference": "∀ (f : ℚ → ℝ), (∀ x > 0, ∀ y > 0, f (x * y) = f x + f y) → (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11) < 0",
+ "lean": "∀ (f : ℚ → ℚ),   (∀ (a b : ℚ), 0 < a ∧ 0 < b → f (a * b) = f a + f b) → (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11) < 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (f : ℚ → ℚ),\n  (∀ (a b : ℚ), (0 : ℚ) < a ∧ (0 : ℚ) < b → f (a * b) = f a + f b) →\n    (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11 : ℚ) < (0 : ℚ)",
+  "conclusion_ref": "∀ (f : ℚ → ℝ),\n  (∀ x > (0 : ℚ), ∀ y > (0 : ℚ), f (x * y) = f x + f y) →\n    (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11 : ℚ) < (0 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

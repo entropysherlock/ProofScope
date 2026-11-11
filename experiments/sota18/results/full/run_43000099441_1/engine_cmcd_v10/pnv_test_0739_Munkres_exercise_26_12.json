@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0739_Munkres_exercise_26_12",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] (p : X → Y),   Function.Surjective p →     Continuous p → IsClosedMap p → (∀ (y : Y), IsCompact (p ⁻¹' {y})) → CompactSpace Y → CompactSpace X",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] (p : X → Y),   Continuous p → (∀ (y : Y), IsCompact (p ⁻¹' {y})) → CompactSpace Y → CompactSpace X",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0739_Munkres_exercise_26_12/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0739_Munkres_exercise_26_12/extract/Drift_input.lean:4:46: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0739_Munkres_exercise_26_12/extract/Drift_input.lean:4:266: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0739_Munkres_exercise_26_12/extract/Drift_input.lean:4:281: error: unknown universe level `u_2`\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

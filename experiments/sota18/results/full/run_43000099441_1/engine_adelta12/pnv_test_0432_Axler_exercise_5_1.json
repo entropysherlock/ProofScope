@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0432_Axler_exercise_5_1",
+ "reference": "∀ {F : Type u_1} {V : Type u_2} [inst : AddCommGroup V] [inst_1 : Field F] [inst_2 : _root_.Module F V] {L : V →ₗ[F] V}   {n : ℕ} (U : Fin n → Submodule F V),   (∀ (i : Fin n), Submodule.map L (U i) = U i) → Submodule.map L (∑ i : Fin n, U i) = ∑ i : Fin n, U i",
+ "lean": "∀ {V : Type u_1} [inst : AddCommGroup V] [inst_1 : _root_.Module ℝ V] {T : V →ₗ[ℝ] V} {m : ℕ}   {U : Fin m → Submodule ℝ V},   (∀ (i : Fin m), ⇑T '' ↑(U i) ⊆ ↑(U i)) → ⇑T '' ⨆ (i : Fin m), ↑(U i) ⊆ ⨆ (i : Fin m), ↑(U i)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "tract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0432_Axler_exercise_5_1/extract/Assumptions_input.lean:4:54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0432_Axler_exercise_5_1/extract/Assumptions_input.lean:4:303: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0432_Axler_exercise_5_1/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

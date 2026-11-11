@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_623_0",
+ "reference": "∀ (a b c : ℕ),   1 ≤ a ∧ a ≤ 9 →     1 ≤ b ∧ b ≤ 9 →       1 ≤ c ∧ c ≤ 9 →         a ≠ b → a ≠ c → b ≠ c → a + b = c → 10 * a + a - b = 2 * c → c * b = 10 * a + a + a → a + b + c = 8",
+ "lean": "∃ (A : ℕ) (B : ℕ) (C : ℕ),   1 ≤ A ∧     A ≤ 9 ∧       1 ≤ B ∧         B ≤ 9 ∧           1 ≤ C ∧ C ≤ 9 ∧ A ≠ B ∧ B ≠ C ∧ A ≠ C ∧ A + B = C ∧ 11 * A - B = 2 * C ∧ C * B = 11 * A + A ∧ A + B + C = 8",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ (A : ℕ) (B : ℕ) (C : ℕ),\n  (1 : ℕ) ≤ A ∧\n    A ≤ (9 : ℕ) ∧\n      (1 : ℕ) ≤ B ∧\n        B ≤ (9 : ℕ) ∧\n          (1 : ℕ) ≤ C ∧\n            C ≤ (9 : ℕ) ∧\n              A ≠ B ∧\n                B ≠ C ∧\n                  A ≠ C ∧ A + B = C ∧ (11 : ℕ) * A - B = (2 : ℕ) * C ∧ C * B = (11 : ℕ) * A + A ∧ A + B + C = (8 : ℕ)",
+  "conclusion_ref": "∀ (a b c : ℕ),\n  (1 : ℕ) ≤ a ∧ a ≤ (9 : ℕ) →\n    (1 : ℕ) ≤ b ∧ b ≤ (9 : ℕ) →\n      (1 : ℕ) ≤ c ∧ c ≤ (9 : ℕ) →\n        a ≠ b →\n          a ≠ c →\n            b ≠ c → a + b = c → (10 : ℕ) * a + a - b = (2 : ℕ) * c → c * b = (10 : ℕ) * a + a + a → a + b + c = (8 : ℕ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_228_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (s t : ℝ), s = 9 - 2 * t → t = 3 * s + 1 → s = 1 ∧ t = 4",
+ "lean": "∀ (s t : ℝ), s = 9 - 2 * t ∧ t = 3 * s + 1 ↔ s = 1 ∧ t = 4",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "s = (9 : ℝ) - (2 : ℝ) * t → t = (3 : ℝ) * s + (1 : ℝ) → s = (1 : ℝ) ∧ t = (4 : ℝ)",
+   "to": "s = (9 : ℝ) - (2 : ℝ) * t ∧ t = (3 : ℝ) * s + (1 : ℝ) ↔ s = (1 : ℝ) ∧ t = (4 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

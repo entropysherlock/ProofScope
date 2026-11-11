@@ -1,0 +1,146 @@
+{
+ "id": "epla_miniF2F_298_0",
+ "reference": "∀ (i m o : ℕ), i ≠ m ∧ m ≠ o ∧ o ≠ i → i * m * o = 2001 → i + m + o ≤ 671",
+ "lean": "∀ (i m o : ℕ), 0 < i ∧ 0 < m ∧ 0 < o → i ≠ m → i ≠ o → m ≠ o → i * m * o = 2001 → i + m + o ≤ 671",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o"
+   },
+   {
+    "dependent": false,
+    "prop": "i ≠ m"
+   },
+   {
+    "dependent": false,
+    "prop": "i ≠ o"
+   },
+   {
+    "dependent": false,
+    "prop": "m ≠ o"
+   },
+   {
+    "dependent": false,
+    "prop": "i * m * o = (2001 : ℕ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "i + m + o ≤ (671 : ℕ)",
+  "conclusion_ref": "i + m + o ≤ (671 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "i ≠ m ∧ m ≠ o ∧ o ≠ i"
+   },
+   {
+    "dependent": false,
+    "prop": "i * m * o = (2001 : ℕ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "i",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "m",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "o",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_298_0.d_implies_a",
+   "statement": "∀ (i : ℕ) (m : ℕ) (o : ℕ), ((i ≠ m ∧ m ≠ o ∧ o ≠ i) ∧ (i * m * o = (2001 : ℕ))) → ((0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o) ∧ (i ≠ m) ∧ (i ≠ o) ∧ (m ≠ o) ∧ (i * m * o = (2001 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_298_0.link_L",
+   "statement": "(∀ (i m o : ℕ), 0 < i ∧ 0 < m ∧ 0 < o → i ≠ m → i ≠ o → m ≠ o → i * m * o = 2001 → i + m + o ≤ 671) ↔ (∀ (i : ℕ) (m : ℕ) (o : ℕ), ((0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o) → (i ≠ m) → (i ≠ o) → (m ≠ o) → (i * m * o = (2001 : ℕ)) → i + m + o ≤ (671 : ℕ))",
+   "axioms": []
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_298_0.link_R",
+   "statement": "(∀ (i m o : ℕ), i ≠ m ∧ m ≠ o ∧ o ≠ i → i * m * o = 2001 → i + m + o ≤ 671) ↔ (∀ (i : ℕ) (m : ℕ) (o : ℕ), (i ≠ m ∧ m ≠ o ∧ o ≠ i) → (i * m * o = (2001 : ℕ)) → i + m + o ≤ (671 : ℕ))",
+   "axioms": []
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_298_0.a_implies_d",
+   "statement": "∀ (i : ℕ) (m : ℕ) (o : ℕ), (((0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o) ∧ (i ≠ m) ∧ (i ≠ o) ∧ (m ≠ o) ∧ (i * m * o = (2001 : ℕ))) → (i ≠ m ∧ m ≠ o ∧ o ≠ i) ∧ (i * m * o = (2001 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o",
+  "i ≠ m",
+  "i ≠ o",
+  "m ≠ o",
+  "i * m * o = (2001 : ℕ)"
+ ],
+ "dropped": [
+  "i ≠ m ∧ m ≠ o ∧ o ≠ i",
+  "i * m * o = (2001 : ℕ)"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

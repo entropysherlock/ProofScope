@@ -1,0 +1,1 @@
+{"case_id": "pnv:test:1440:Axler|exercise_6_3", "record": {"candidate": {"errors": ["<pnv:test:1440:Axler|exercise_6_3.candidate>:6:42: error: unexpected token 'in'; expected ','\n"], "ok": false, "supersetEnv": false}, "elapsedMs": 99, "id": "pnv:test:1440:Axler|exercise_6_3", "reference": {"errors": [], "ok": true, "supersetEnv": false}, "verdict": "CandidateCompileError"}}

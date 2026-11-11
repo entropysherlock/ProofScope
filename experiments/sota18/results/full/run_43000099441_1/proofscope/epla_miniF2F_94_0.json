@@ -1,0 +1,16 @@
+{
+ "case_id": "epla:miniF2F:94:0",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 2.8
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "ref",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_94_0/print.lean:1:0: error: object file '/home/runner/work/_temp/ml/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Nat/Prime.olean' of module Mathlib.Data.Nat.Prime does not exist"
+ ],
+ "children_maxrss_kb_so_far": 8592588
+}

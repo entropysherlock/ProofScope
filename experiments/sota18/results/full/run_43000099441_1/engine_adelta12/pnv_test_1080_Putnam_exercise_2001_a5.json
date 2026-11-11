@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1080_Putnam_exercise_2001_a5",
+ "reference": "∃! p : ℕ × ℕ, p.1 > 0 ∧ p.2 > 0 ∧ p.1 ^ (p.2 + 1) - (p.1 + 1) ^ p.2 = 2001",
+ "lean": "∀ {a : ℕ}, a > 0 → a ^ 2 = 2001 → ∃ (a' : ℕ) (n : ℕ), a ^ (n + 1) = a'.succ ^ n ∧ a' > 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ {a : ℕ},\n  a > (0 : ℕ) → a ^ (2 : ℕ) = (2001 : ℕ) → ∃ (a' : ℕ) (n : ℕ), a ^ (n + (1 : ℕ)) = Nat.succ a' ^ n ∧ a' > (0 : ℕ)",
+  "conclusion_ref": "∃! p : ℕ × ℕ,\n  Prod.fst p > (0 : ℕ) ∧\n    Prod.snd p > (0 : ℕ) ∧ Prod.fst p ^ (Prod.snd p + (1 : ℕ)) - (Prod.fst p + (1 : ℕ)) ^ Prod.snd p = (2001 : ℕ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

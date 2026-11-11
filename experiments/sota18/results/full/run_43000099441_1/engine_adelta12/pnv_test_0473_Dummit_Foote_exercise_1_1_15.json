@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0473_Dummit_Foote_exercise_1_1_15",
+ "reference": "∀ {G : Type u_1} [inst : Group G] (as : List G), as.prod⁻¹ = (List.map (fun (x : G) => x⁻¹) as.reverse).prod",
+ "lean": "∀ (G : Type u_1) [inst : Group G] [DecidableEq G] (a₁ a₂ : G), (a₁ * a₂)⁻¹ = a₂⁻¹ * a₁⁻¹",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0473_Dummit_Foote_exercise_1_1_15/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0473_Dummit_Foote_exercise_1_1_15/extract/Assumptions_input.lean:4:150: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0473_Dummit_Foote_exercise_1_1_15/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

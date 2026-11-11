@@ -1,0 +1,59 @@
+{
+ "case_id": "pnv:test:0828:Munkres|exercise_13_4b2",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0828_Munkres_exercise_13_4b2/extract/Assumptions_input.lean:4:307: error: unknown universe level `u`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0828_Munkres_exercise_13_4b2/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "lean:4:284: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0828_Munkres_exercise_13_4b2/extract/Drift_input.lean:4:299: error: unknown universe level `u`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0828_Munkres_exercise_13_4b2/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u",
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (X : Type u_1) (I : Type u_2) (T : I → Set (Set X)),   (∀ (i : I), is_topology X (T i)) →     ∃! T' : Set (Set X),       is_topology X T' ∧         (∀ (i : I), T' ⊆ T i) ∧ ∀ (T'' : Set (Set X)), is_topology X T'' → (∀ (i : I), T'' ⊆ T i) → T'' ⊆ T'",
+ "lean": "∀ {ι : Sort u_1} (X : Type u) (T : ι → TopologicalSpace X),   ∃ (m : TopologicalSpace X), (∀ (i : ι), T i ≤ m) ∧ ∀ (t : TopologicalSpace X), (∀ (i : ι), T i ≤ t) → m ≤ t",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {ι : Sort '"
+ },
+ "seconds": 20.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 9435160
+}

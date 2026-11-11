@@ -1,0 +1,59 @@
+{
+ "case_id": "pnv:test:0822:Axler|exercise_1_9",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ":4:233: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0822_Axler_exercise_1_9/extract/Assumptions_input.lean:4:248: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0822_Axler_exercise_1_9/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "t_input.lean:4:225: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:240: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {F : Type u_1} {V : Type u_2} [inst : AddCommGroup V] [inst_1 : Field F] [inst_2 : _root_.Module F V]   (U W : Submodule F V), (∃ (U' : Submodule F V), U'.carrier = ↑U ∪ ↑W) ↔ U ≤ W ∨ W ≤ U",
+ "lean": "∀ {R : Type u_1} {M : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup M] [inst_2 : _root_.Module R M]   (X Y : Submodule R M), X ≤ Y → X ⊔ Y = Y",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {F : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {R : Type '"
+ },
+ "seconds": 16.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7620096
+}

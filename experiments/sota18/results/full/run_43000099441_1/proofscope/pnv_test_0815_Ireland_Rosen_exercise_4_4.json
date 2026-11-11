@@ -1,0 +1,58 @@
+{
+ "case_id": "pnv:test:0815:Ireland-Rosen|exercise_4_4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 216.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 1
+ },
+ "reference": "∀ {p t : ℕ}, Nat.Prime p → p = 4 * t + 1 → ∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+ "lean": "∀ {p a : ℕ},   Nat.Prime p →     p = OfNat.ofNat (nat_lit 4) * a + OfNat.ofNat (nat_lit 1) → (IsPrimitiveRoot (-a.cast) p ↔ IsPrimitiveRoot a p)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {p t : ℕ},'",
+  "cand": "unsupported: cannot tokenize at '∀ {p a : ℕ},'"
+ },
+ "seconds": 229.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8892588
+}

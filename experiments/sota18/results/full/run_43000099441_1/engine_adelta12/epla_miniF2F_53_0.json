@@ -1,0 +1,121 @@
+{
+ "id": "epla_miniF2F_53_0",
+ "reference": "∀ (A M C : ℕ),   A ≤ 9 ∧ M ≤ 9 ∧ C ≤ 9 → Nat.ofDigits 10 [0, 1, C, M, A] + Nat.ofDigits 10 [2, 1, C, M, A] = 123422 → A + M + C = 14",
+ "lean": "∀ (A M C : ℕ),   1 ≤ A ∧ A ≤ 9 →     M ≤ 9 →       C ≤ 9 → A * 10000 + M * 1000 + C * 100 + 10 + (A * 10000 + M * 1000 + C * 100 + 12) = 123422 → A + M + C = 14",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(1 : ℕ) ≤ A ∧ A ≤ (9 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "M ≤ (9 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "C ≤ (9 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (10 : ℕ) +\n    (A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (12 : ℕ)) =\n  (123422 : ℕ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "A + M + C = (14 : ℕ)",
+  "conclusion_ref": "A + M + C = (14 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "A ≤ (9 : ℕ) ∧ M ≤ (9 : ℕ) ∧ C ≤ (9 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "Nat.ofDigits (10 : ℕ) [(0 : ℕ), (1 : ℕ), C, M, A] + Nat.ofDigits (10 : ℕ) [(2 : ℕ), (1 : ℕ), C, M, A] = (123422 : ℕ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "A",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "M",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "C",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_53_0.link_L",
+   "statement": "(∀ (A M C : ℕ),   1 ≤ A ∧ A ≤ 9 →     M ≤ 9 →       C ≤ 9 → A * 10000 + M * 1000 + C * 100 + 10 + (A * 10000 + M * 1000 + C * 100 + 12) = 123422 → A + M + C = 14) ↔ (∀ (A : ℕ) (M : ℕ) (C : ℕ), ((1 : ℕ) ≤ A ∧ A ≤ (9 : ℕ)) → (M ≤ (9 : ℕ)) → (C ≤ (9 : ℕ)) → (A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (10 : ℕ) +\n    (A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (12 : ℕ)) =\n  (123422 : ℕ)) → A + M + C = (14 : ℕ))",
+   "axioms": []
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_53_0.link_R",
+   "statement": "(∀ (A M C : ℕ),   A ≤ 9 ∧ M ≤ 9 ∧ C ≤ 9 → Nat.ofDigits 10 [0, 1, C, M, A] + Nat.ofDigits 10 [2, 1, C, M, A] = 123422 → A + M + C = 14) ↔ (∀ (A : ℕ) (M : ℕ) (C : ℕ), (A ≤ (9 : ℕ) ∧ M ≤ (9 : ℕ) ∧ C ≤ (9 : ℕ)) → (Nat.ofDigits (10 : ℕ) [(0 : ℕ), (1 : ℕ), C, M, A] + Nat.ofDigits (10 : ℕ) [(2 : ℕ), (1 : ℕ), C, M, A] = (123422 : ℕ)) → A + M + C = (14 : ℕ))",
+   "axioms": [
+    "propext"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(1 : ℕ) ≤ A ∧ A ≤ (9 : ℕ)",
+  "M ≤ (9 : ℕ)",
+  "C ≤ (9 : ℕ)",
+  "A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (10 : ℕ) +\n    (A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (12 : ℕ)) =\n  (123422 : ℕ)"
+ ],
+ "dropped": [
+  "A ≤ (9 : ℕ) ∧ M ≤ (9 : ℕ) ∧ C ≤ (9 : ℕ)",
+  "Nat.ofDigits (10 : ℕ) [(0 : ℕ), (1 : ℕ), C, M, A] + Nat.ofDigits (10 : ℕ) [(2 : ℕ), (1 : ℕ), C, M, A] = (123422 : ℕ)"
+ ],
+ "witnesses": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "no joint certificate for the mixed assumption change",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,31 @@
+{
+ "case_id": "pnv:test:0461:Putnam|exercise_1998_b6",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.6
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref",
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0461_Putnam_exercise_1998_b6/check.lean:24:137: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0461_Putnam_exercise_1998_b6/check.lean:26:255: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0461_Putnam_exercise_1998_b6/check.lean:28:191: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0461_Putnam_exercise_1998_b6/check.lean:30:46: error: typeclass instance problem is stuck"
+ ],
+ "children_maxrss_kb_so_far": 7619128
+}

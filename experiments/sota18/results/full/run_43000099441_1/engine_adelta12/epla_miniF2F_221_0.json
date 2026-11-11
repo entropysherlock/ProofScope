@@ -1,0 +1,39 @@
+{
+ "id": "epla_miniF2F_221_0",
+ "reference": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = 2 * x - 3) → (∀ (x : ℝ), g x = x + 1) → g (f 5 - 1) = 7",
+ "lean": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = 2 * x - 3) → (∀ (x : ℝ), g x = x + 1) → g (f 5 - 1) = 7",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "g (f (5 : ℝ) - (1 : ℝ)) = (7 : ℝ)",
+  "conclusion_ref": "g (f (5 : ℝ) - (1 : ℝ)) = (7 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "∀ (x : ℝ), f x = (2 : ℝ) * x - (3 : ℝ)",
+   "∀ (x : ℝ), g x = x + (1 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "g",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

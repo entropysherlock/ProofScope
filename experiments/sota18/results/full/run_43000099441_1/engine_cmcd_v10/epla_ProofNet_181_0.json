@@ -1,0 +1,17 @@
+{
+ "id": "epla_ProofNet_181_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℝ → ℝ},   Differentiable ℝ f →     Filter.Tendsto (deriv f) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop Filter.atTop",
+ "lean": "∀ (f : ℝ → ℝ),   (∀ x > 0, DifferentiableAt ℝ f x) →     Filter.Tendsto (deriv f) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop (nhds 0)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_181_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

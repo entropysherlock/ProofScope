@@ -1,0 +1,23 @@
+{
+ "id": "epla_ProofNet_270_0",
+ "reference": "∀ {ι : Type u_1} {X : ι → Type u_2} [inst : (i : ι) → TopologicalSpace (X i)],   (∀ (i : ι), Nonempty (X i)) → NormalSpace ((i : ι) → X i) → ∀ (i : ι), NormalSpace (X i)",
+ "lean": "∀ {ι : Type u_1} {X : ι → Type u_2} [inst : (i : ι) → TopologicalSpace (X i)],   Nonempty ((i : ι) → X i) → NormalSpace ((i : ι) → X i) → ∀ (i : ι), NormalSpace (X i)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

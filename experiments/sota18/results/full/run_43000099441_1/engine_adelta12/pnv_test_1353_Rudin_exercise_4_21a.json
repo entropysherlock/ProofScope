@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_1353_Rudin_exercise_4_21a",
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] (K F : Set X),   IsCompact K → IsClosed F → Disjoint K F → ∃ δ > 0, ∀ (p q : X), p ∈ K → q ∈ F → Dist.dist p q > δ",
+ "lean": "∀ {X : Type u_1} [inst : MetricSpace X] {K F : Set X},   IsCompact K → IsClosed F → Disjoint K F → ∃ δ > 0, ∀ p ∈ K, ∀ q ∈ F, Dist.dist p q ≥ δ",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1353_Rudin_exercise_4_21a/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1353_Rudin_exercise_4_21a/extract/Assumptions_input.lean:4:196: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1353_Rudin_exercise_4_21a/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

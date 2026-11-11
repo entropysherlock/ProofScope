@@ -1,0 +1,27 @@
+{
+ "id": "epla_miniF2F_92_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℝ), a ^ 2 + b ^ 2 = 1 → a * b + (a - b) ≤ 1",
+ "lean": "∀ (a b : ℝ), a ^ 2 + b ^ 2 = 1 → a * b + (a - b) ≤ 1",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

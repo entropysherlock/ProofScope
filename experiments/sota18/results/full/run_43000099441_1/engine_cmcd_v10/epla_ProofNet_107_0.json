@@ -1,0 +1,24 @@
+{
+ "id": "epla_ProofNet_107_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {I : Ideal GaussianInt}, I ≠ ⊥ → ∃ (z : ↥I), z ≠ OfNat.ofNat (nat_lit 0) ∧ z.val.im = OfNat.ofNat (nat_lit 0)",
+ "lean": "∀ (I : Ideal ℤ), I ≠ 0 → ∃ x ∈ I, x ≠ 0",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ {I : Ideal GaussianInt}, I ≠ ⊥ → ∃ (z : ↥I), z ≠ (0 : ↥I) ∧ Zsqrtd.im ↑z = (0 : ℤ)",
+   "to": "∀ (I : Ideal ℤ), I ≠ (0 : Ideal ℤ) → ∃ x ∈ I, x ≠ (0 : ℤ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

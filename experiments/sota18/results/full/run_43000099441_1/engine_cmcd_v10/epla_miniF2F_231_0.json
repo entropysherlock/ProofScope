@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_231_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a : ℕ → ℝ), (∀ (n : ℕ), a (n + 2) - a (n + 1) = a (n + 1) - a n) → a 1 = 2 / 3 → a 9 = 4 / 5 → a 5 = 11 / 15",
+ "lean": "∀ (a : ℕ → ℚ), a 1 = 2 / 3 ∧ a 9 = 4 / 5 → a 5 = 11 / 15",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_231_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

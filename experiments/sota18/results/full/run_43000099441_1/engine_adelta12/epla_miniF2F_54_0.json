@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_54_0",
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "lean": "(∃ (a : ℕ) (b : ℕ), 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ a.gcd b = 6 ∧ a.lcm b = 108) ∧   ∀ (a b : ℕ), 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ a.gcd b = 6 → 108 ≤ a.lcm b",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) ∧ Nat.lcm a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) →\n      (108 : ℕ) ≤ Nat.lcm a b",
+  "conclusion_ref": "∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b →\n    a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → Nat.gcd a b = (6 : ℕ) → (108 : ℕ) ≤ Nat.lcm a b",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

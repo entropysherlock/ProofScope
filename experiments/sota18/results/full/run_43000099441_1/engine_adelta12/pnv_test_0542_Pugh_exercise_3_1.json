@@ -1,0 +1,32 @@
+{
+ "id": "pnv_test_0542_Pugh_exercise_3_1",
+ "reference": "∀ {f : ℝ → ℝ}, (∀ (x y : ℝ), |f x - f y| ≤ |x - y| ^ 2) → ∃ (c : ℝ), f = fun (x : ℝ) => c",
+ "lean": "∀ (f : ℝ → ℝ), (∀ (t x : ℝ), |f t - f x| ≤ |t - x| ^ 2) → ∃ (c : ℝ), ∀ (x : ℝ), f x = c",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ (c : ℝ), ∀ (x : ℝ), f x = c",
+  "conclusion_ref": "∃ (c : ℝ), f = fun (x : ℝ) => c",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "∀ (x y : ℝ), |f x - f y| ≤ |x - y| ^ (2 : ℕ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,63 @@
+{
+ "case_id": "epla:miniF2F:739:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 77.4,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 38.7,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720",
+ "lean": "∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b c : ℝ'"
+ },
+ "seconds": 122.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8667124
+}

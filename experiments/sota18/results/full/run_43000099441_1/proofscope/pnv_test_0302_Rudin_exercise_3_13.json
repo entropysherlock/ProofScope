@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0302:Rudin|exercise_3_13",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.3
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "ref",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0302_Rudin_exercise_3_13/print.lean:12:34: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0302_Rudin_exercise_3_13/print.lean:25:119: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0302_Rudin_exercise_3_13/print.lean:30:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0302_Rudin_exercise_3_13/print.lean:36:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 8980648
+}

@@ -1,0 +1,1 @@
+{"case_id": "epla:ProofNet:108:0", "record": {"candidate": {"errors": [], "ok": true, "supersetEnv": false}, "context": {"candErrors": ["<branch.cand.preamble>:6:0: error: unexpected end of input\n"], "importErrors": [], "refErrors": []}, "elapsedMs": 56, "id": "epla:ProofNet:108:0", "reference": {"errors": [], "ok": true, "supersetEnv": false}, "verdict": "ContextMergeError"}}

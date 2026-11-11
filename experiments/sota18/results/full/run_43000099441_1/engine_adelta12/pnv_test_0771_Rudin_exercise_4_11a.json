@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0771_Rudin_exercise_4_11a",
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] {Y : Type u_2} [inst_1 : MetricSpace Y] (f : X → Y),   UniformContinuous f → ∀ (x : ℕ → X), CauchySeq x → CauchySeq fun (n : ℕ) => f (x n)",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : MetricSpace X] [inst_1 : MetricSpace Y] {f : X → Y},   UniformContinuous f → ∀ {x_n : ℕ → X}, CauchySeq x_n → CauchySeq (f ∘ x_n)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Assumptions_input.lean:4:77: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Assumptions_input.lean:4:220: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Assumptions_input.lean:4:235: error: unknown universe level `u_2`\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

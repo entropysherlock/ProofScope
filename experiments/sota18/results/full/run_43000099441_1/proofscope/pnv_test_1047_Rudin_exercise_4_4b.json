@@ -1,0 +1,56 @@
+{
+ "case_id": "pnv:test:1047:Rudin|exercise_4_4b",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "act/Drift_input.lean:4:203: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1047_Rudin_exercise_4_4b/extract/Drift_input.lean:4:218: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1047_Rudin_exercise_4_4b/extract/Drift_input.lean:4:0: error: unexpected bound variable #7\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {α : Type} [inst : MetricSpace α] {β : Type} [inst_1 : MetricSpace β] (f g : α → β) (s : Set α),   Continuous f → Continuous g → Dense s → (∀ x ∈ s, f x = g x) → f = g",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [T2Space Y] {f g : X → Y}   {x : X}, f =ᶠ[nhds x] g ↔ ContinuousAt f x ∧ g =ᶠ[nhds x] f",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {α : Type}'",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 19.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619268
+}

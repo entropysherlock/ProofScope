@@ -1,0 +1,56 @@
+{
+ "case_id": "epla:miniF2F:125:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 15.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "",
+   "certificates": [
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_125_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f : ℤ → ℤ), (∀ (n : ℤ), 1000 ≤ n → f n = n - 3) → (∀ n < 1000, f n = f (f (n + 5))) → f 84 = 997",
+ "lean": "∀ (f : ℤ → ℤ), f 84 = 997",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f : ℤ → ℤ'",
+  "cand": "unsupported: cannot tokenize at '∀ (f : ℤ → ℤ'"
+ },
+ "seconds": 29.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7617124
+}

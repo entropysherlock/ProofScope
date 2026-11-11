@@ -1,0 +1,30 @@
+{
+ "case_id": "pnv:test:0359:Axler|exercise_1_2",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.2
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0359_Axler_exercise_1_2/check.lean:26:11: error: invalid {...} notation, structure type expected",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0359_Axler_exercise_1_2/check.lean:28:11: error: invalid {...} notation, structure type expected"
+ ],
+ "children_maxrss_kb_so_far": 8667124
+}

@@ -1,0 +1,125 @@
+{
+ "id": "epla_miniF2F_517_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720",
+ "lean": "∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c",
+   "to": "(0 : ℝ) < a"
+  },
+  {
+   "from": "a * (b + c) = (152 : ℝ)",
+   "to": "(0 : ℝ) < b"
+  },
+  {
+   "from": "b * (c + a) = (162 : ℝ)",
+   "to": "(0 : ℝ) < c"
+  },
+  {
+   "from": "c * (a + b) = (170 : ℝ)",
+   "to": "a * (b + c) = (152 : ℝ)"
+  },
+  {
+   "from": "a * b * c = (720 : ℝ)",
+   "to": "b * (c + a) = (162 : ℝ) → c * (a + b) = (170 : ℝ) → a * b * c = (720 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c",
+   "to": "(0 : ℝ) < a",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_517_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ)) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c →\n    x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "a * (b + c) = (152 : ℝ)",
+   "to": "(0 : ℝ) < b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "b * (c + a) = (162 : ℝ)",
+   "to": "(0 : ℝ) < c",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 4,
+   "from": "c * (a + b) = (170 : ℝ)",
+   "to": "a * (b + c) = (152 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 5,
+   "from": "a * b * c = (720 : ℝ)",
+   "to": "b * (c + a) = (162 : ℝ) → c * (a + b) = (170 : ℝ) → a * b * c = (720 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e5": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_517_0.fwd_e5",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (a b c : ℝ), (0 : ℝ) < a → (0 : ℝ) < b → (0 : ℝ) < c → x1 a (b + c) = (152 : ℝ) → x1 (x1 a b) c = (720 : ℝ)) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (0 : ℝ) < b →\n      (0 : ℝ) < c →\n        x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_517_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c →\n    x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ)) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (0 : ℝ) < b →\n      (0 : ℝ) < c →\n        x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_517_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (0 : ℝ) < b →\n      (0 : ℝ) < c →\n        x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ)) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c →\n    x1 a (b + c) = (152 : ℝ) → x1 b (c + a) = (162 : ℝ) → x1 c (a + b) = (170 : ℝ) → x1 (x1 a b) c = (720 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

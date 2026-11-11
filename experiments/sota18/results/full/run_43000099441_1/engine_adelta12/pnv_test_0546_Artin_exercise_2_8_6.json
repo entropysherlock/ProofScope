@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0546_Artin_exercise_2_8_6",
+ "reference": "∀ {G : Type u_1} {H : Type u_2} [inst : Group G] [inst_1 : Group H],   Nonempty (↥(Subgroup.center (G × H)) ≃* ↥(Subgroup.center G) × ↥(Subgroup.center H))",
+ "lean": "∀ {G : Type u_1} {H : Type u_2} [inst : Group G] [inst_1 : Group H],   SetLike.coe (Subgroup.center (G × H)) = SetLike.coe (Subgroup.center G) ×ˢ SetLike.coe (Subgroup.center H)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "ssumptions_input.lean:4:54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0546_Artin_exercise_2_8_6/extract/Assumptions_input.lean:4:197: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0546_Artin_exercise_2_8_6/extract/Assumptions_input.lean:4:212: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0546_Artin_exercise_2_8_6/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

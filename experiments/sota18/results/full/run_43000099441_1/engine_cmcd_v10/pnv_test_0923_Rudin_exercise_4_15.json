@@ -1,0 +1,46 @@
+{
+ "id": "pnv_test_0923_Rudin_exercise_4_15",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℝ → ℝ}, Continuous f → IsOpenMap f → Monotone f",
+ "lean": "∀ (f : ℝ → ℝ), Continuous f → IsOpenMap f → StrictMono f ∨ StrictAnti f",
+ "symbols": [
+  {
+   "symbol": "Continuous",
+   "type": "(ℝ → ℝ) → Prop"
+  },
+  {
+   "symbol": "IsOpenMap",
+   "type": "(ℝ → ℝ) → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "Monotone f",
+   "to": "StrictMono f ∨ StrictAnti f"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "Monotone f",
+   "to": "StrictMono f ∨ StrictAnti f",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

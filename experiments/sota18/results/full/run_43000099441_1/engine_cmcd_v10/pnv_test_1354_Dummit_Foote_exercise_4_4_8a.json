@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1354_Dummit_Foote_exercise_4_4_8a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Group G] (H K : Subgroup G),   H ≤ K → ∀ [hHK1 : (H.subgroupOf K).Characteristic] [hK : K.Normal], H.Normal",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {H K : Subgroup G},   H ≤ K → ∀ [hKG : K.Normal] [hHKchar : (Subgroup.comap K.subtype H).Characteristic], H.Normal",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1354_Dummit_Foote_exercise_4_4_8a/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1354_Dummit_Foote_exercise_4_4_8a/extract/Drift_input.lean:4:166: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1354_Dummit_Foote_exercise_4_4_8a/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,32 @@
+{
+ "case_id": "epla:miniF2F:42:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.5
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_42_0/check.lean:28:79: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_42_0/check.lean:30:11: error: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_42_0/check.lean:30:78: error: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_42_0/check.lean:30:142: error: Invalid `⟨...⟩` notation: The expected type of this term could not be determined"
+ ],
+ "children_maxrss_kb_so_far": 7618804
+}

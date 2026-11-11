@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:493:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.8,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.6,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (b : ZMod (11 ^ 2)), b = 24⁻¹ → b = 116",
+ "lean": "∃ b < 11 ^ 2, 24 * b % 11 ^ 2 = 1 ∧ b = 116",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (b : ZMod '",
+  "cand": "unsupported: cannot tokenize at '∃ b < 11 ^ 2'"
+ },
+ "seconds": 18.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618400
+}

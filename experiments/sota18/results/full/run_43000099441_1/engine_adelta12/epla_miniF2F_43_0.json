@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_43_0",
+ "reference": "∀ (a b : NNReal), 0 < a ∧ 0 < b → a ^ 2 = 6 * b → a ^ 2 = 54 / b → a = 3 * NNReal.sqrt 2",
+ "lean": "∀ (a b : ℝ), a > 0 → b > 0 → a ^ 2 = 6 * b → a ^ 2 = 1 / b * 54 → a = 3 * √2",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (a b : ℝ),\n  a > (0 : ℝ) → b > (0 : ℝ) → a ^ (2 : ℕ) = (6 : ℝ) * b → a ^ (2 : ℕ) = (1 : ℝ) / b * (54 : ℝ) → a = (3 : ℝ) * √(2 : ℝ)",
+  "conclusion_ref": "∀ (a b : NNReal),\n  (0 : NNReal) < a ∧ (0 : NNReal) < b →\n    a ^ (2 : ℕ) = (6 : NNReal) * b →\n      a ^ (2 : ℕ) = (54 : NNReal) / b → a = HMul.hMul (β := NNReal) (3 : NNReal) (NNReal.sqrt (2 : NNReal) : NNReal)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

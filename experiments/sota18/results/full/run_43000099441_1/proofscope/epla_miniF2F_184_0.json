@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:184:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 112.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 628.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y z : ℝ), x ≠ 0 → 2 * x = 5 * y → 7 * y = 10 * z → z / x = 7 / 25",
+ "lean": "∀ (x y z : ℝ), 2 * x = 5 * y → 7 * y = 10 * z → z / x = 7 / 25",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y z : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (x y z : ℝ'"
+ },
+ "seconds": 749.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8651104
+}

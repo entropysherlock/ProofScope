@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0364_Axler_exercise_1_4",
+ "reference": "∀ {F : Type u_1} {V : Type u_2} [inst : AddCommGroup V] [inst_1 : Field F] [inst_2 : _root_.Module F V] (v : V) (a : F),   a • v = 0 → a = 0 ∨ v = 0",
+ "lean": "∀ {F : Type u_1} [inst : Field F] {V : Type u_2} [inst_1 : AddCommGroup V] [inst_2 : _root_.Module F V] (a : F) (v : V),   a • v = 0 → a = 0 ∨ v = 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

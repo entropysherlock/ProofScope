@@ -1,0 +1,62 @@
+{
+ "case_id": "pnv:test:1346:Rudin|exercise_1_18b",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 26.1,
+   "verdict": "LEAN_STRONGER_BY_ASSUMPTION",
+   "reason": "",
+   "certificates": [
+    "drop0_restrictive",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 24.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ), x ≠ 0 → ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0",
+ "lean": "∀ (x : ℝ), ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ), x'",
+  "cand": "unsupported: cannot tokenize at '∀ (x : ℝ), ¬'"
+ },
+ "seconds": 57.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7620096
+}

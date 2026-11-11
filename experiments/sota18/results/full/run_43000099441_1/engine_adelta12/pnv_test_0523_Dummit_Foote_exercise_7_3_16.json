@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0523_Dummit_Foote_exercise_7_3_16",
+ "reference": "∀ {R : Type u_1} {S : Type u_2} [inst : Ring R] [inst_1 : Ring S] {φ : R →+* S},   Function.Surjective ⇑φ → ⇑φ '' Set.center R ⊆ Set.center S",
+ "lean": "∀ {R : Type u_1} {S : Type u_2} [inst : Ring R] [inst_1 : Ring S] (ϕ : R →+* S),   Function.Surjective ⇑ϕ → ⇑ϕ '' Set.center R ⊆ Set.center S",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0523_Dummit_Foote_exercise_7_3_16/extract/Assumptions_input.lean:4:183: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0523_Dummit_Foote_exercise_7_3_16/extract/Assumptions_input.lean:4:198: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0523_Dummit_Foote_exercise_7_3_16/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,58 @@
+{
+ "case_id": "epla:miniF2F:597:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.9,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "lean": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b c : ℝ'"
+ },
+ "seconds": 19.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619268
+}

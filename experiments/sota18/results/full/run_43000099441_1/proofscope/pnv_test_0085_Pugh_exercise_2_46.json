@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0085:Pugh|exercise_2_46",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 2.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 2.8
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "n:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0085_Pugh_exercise_2_46/extract/Assumptions_input.lean:4:285: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0085_Pugh_exercise_2_46/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ft_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0085_Pugh_exercise_2_46/extract/Drift_input.lean:4:277: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0085_Pugh_exercise_2_46/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {M : Type u_1} [inst : MetricSpace M] {A B : Set M},   IsCompact A →     IsCompact B →       Disjoint A B →         A ≠ ∅ →           B ≠ ∅ → ∃ (a₀ : M) (b₀ : M), a₀ ∈ A ∧ b₀ ∈ B ∧ ∀ (a b : M), a ∈ A → b ∈ B → Dist.dist a₀ b₀ ≤ Dist.dist a b",
+ "lean": "∀ {M : Type u_1} [inst : MetricSpace M] {A B : Set M},   IsCompact A →     IsCompact B →       Disjoint A B →         A.Nonempty ∧ B.Nonempty →           ∃ (a₀ : M) (b₀ : M), a₀ ∈ A ∧ b₀ ∈ B ∧ ∀ (a b : M), a ∈ A → b ∈ B → Dist.dist a₀ b₀ ≤ Dist.dist a b",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {M : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {M : Type '"
+ },
+ "seconds": 14.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7652960
+}

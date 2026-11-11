@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0780_Munkres_exercise_24_3a",
+ "reference": "∀ (f : ↑(Set.Icc 0 1) → ↑(Set.Icc 0 1)), Continuous f → ∃ (x : ↑(Set.Icc 0 1)), f x = x",
+ "lean": "∀ {f : ℝ → ℝ}, Continuous f → (∀ (x : ℕ), 0 ≤ x ∧ x ≤ 1) → ∃ x ∈ Set.Icc 0 1, f x = x",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ {f : ℝ → ℝ}, Continuous f → (∀ (x : ℕ), (0 : ℕ) ≤ x ∧ x ≤ (1 : ℕ)) → ∃ x ∈ Set.Icc (0 : ℝ) (1 : ℝ), f x = x",
+  "conclusion_ref": "∀ (f : ↑(Set.Icc (0 : ℕ) (1 : ℕ)) → ↑(Set.Icc (0 : ℕ) (1 : ℕ))),\n  Continuous f → ∃ (x : ↑(Set.Icc (0 : ℕ) (1 : ℕ))), f x = x",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

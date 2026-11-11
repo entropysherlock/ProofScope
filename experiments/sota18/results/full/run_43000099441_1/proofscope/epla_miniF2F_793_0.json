@@ -1,0 +1,63 @@
+{
+ "case_id": "epla:miniF2F:793:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 88.4,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 30.0,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : ℝ) (n : ℕ), 0 < a ∧ 0 < b → 0 < n → ((a + b) / 2) ^ n ≤ (a ^ n + b ^ n) / 2",
+ "lean": "∀ (a b : ℝ), 0 < a → 0 < b → ∀ (n : ℕ), 0 < n → ((a + b) / 2) ^ n ≤ (a ^ n + b ^ n) / 2",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : ℝ) '",
+  "cand": "unsupported: cannot tokenize at '∀ (a b : ℝ),'"
+ },
+ "seconds": 126.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 9435160
+}

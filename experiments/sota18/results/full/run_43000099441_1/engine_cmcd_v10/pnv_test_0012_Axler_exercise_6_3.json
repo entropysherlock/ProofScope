@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0012_Axler_exercise_6_3",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {n : ℕ} (a b : Fin n → ℝ),   (∑ i : Fin n, a i * b i) ^ 2 ≤ (∑ i : Fin n, (↑↑i + 1) * a i ^ 2) * ∑ i : Fin n, b i ^ 2 / (↑↑i + 1)",
+ "lean": "∀ {n : ℕ} {a b : Fin n → ℝ}, ∑ j : Fin n, a j * b j ^ 2 ≤ (∑ j : Fin n, ↑↑j * a j ^ 2) * ∑ j : Fin n, b j ^ 2 / ↑↑j",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0012_Axler_exercise_6_3/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

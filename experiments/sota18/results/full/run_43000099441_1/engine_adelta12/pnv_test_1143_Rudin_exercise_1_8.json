@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1143_Rudin_exercise_1_8",
+ "reference": "¬∃ (r : ℂ → ℂ → Prop), IsLinearOrder ℂ r",
+ "lean": "¬∃ (lt : ℂ → ℂ → Prop), IsStrictTotalOrder ℂ lt ∧ ∀ (a b c : ℂ), lt a b → lt (a + c) (b + c) ∧ lt 0 a → lt 0 (a * a)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "¬∃ (lt : ℂ → ℂ → Prop),\n    IsStrictTotalOrder ℂ lt ∧ ∀ (a b c : ℂ), lt a b → lt (a + c) (b + c) ∧ lt (0 : ℂ) a → lt (0 : ℂ) (a * a)",
+  "conclusion_ref": "¬∃ (r : ℂ → ℂ → Prop), IsLinearOrder ℂ r",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

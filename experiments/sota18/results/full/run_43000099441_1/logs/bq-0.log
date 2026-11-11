@@ -1,0 +1,106 @@
+Downloading cpython-3.11.18-linux-x86_64-gnu (download) (29.2MiB)
+ Downloaded cpython-3.11.18-linux-x86_64-gnu (download)
+   Building lean-interact @ file:///home/runner/work/_temp/li
+Downloading hf-xet (4.1MiB)
+Downloading pygments (1.2MiB)
+Downloading pyarrow (52.5MiB)
+Downloading numpy (16.1MiB)
+Downloading scipy (33.7MiB)
+Downloading pydantic-core (2.1MiB)
+Downloading pandas (11.8MiB)
+Downloading scikit-learn (8.9MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded hf-xet
+ Downloaded scikit-learn
+ Downloaded pandas
+ Downloaded numpy
+ Downloaded scipy
+      Built lean-interact @ file:///home/runner/work/_temp/li
+ Downloaded pyarrow
+Installed 47 packages in 38ms
+info: downloading https://releases.lean-lang.org/lean4/v4.8.0/lean-4.8.0-linux.tar.zst
+info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.8.0
+[10:02:00] INFO     Preparing Lean environment with dependencies  project.py:330
+                    (may take a while the first time)...                        
+Lake version 5.0.0-df668f0 (Lean version 4.8.0)
+✔ [1/10] Fetched proofwidgets:optRelease
+✔ [2/10] Built Cache.IO
+✔ [3/10] Built Cache.Hashing
+✔ [4/10] Built Cache.Hashing:c.o
+✔ [5/10] Built Cache.Requests
+✔ [6/10] Built Cache.Main
+✔ [7/10] Built Cache.IO:c.o
+✔ [8/10] Built Cache.Main:c.o
+✔ [9/10] Built Cache.Requests:c.o
+✔ [10/10] Built cache
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1906k  100 1906k    0     0  5928k      0 --:--:-- --:--:-- --:--:-- 5928k
+
+installing leantar 0.1.11
+Attempting to download 4608 file(s)
+Downloaded: 1 file(s) [attempted 1/4608 = 0%]Downloaded: 619 file(s) [attempted 619/4608 = 13%]Downloaded: 1247 file(s) [attempted 1247/4608 = 27%]Downloaded: 1858 file(s) [attempted 1858/4608 = 40%]Downloaded: 2362 file(s) [attempted 2362/4608 = 51%]Downloaded: 2869 file(s) [attempted 2869/4608 = 62%]Downloaded: 3415 file(s) [attempted 3415/4608 = 74%]Downloaded: 3964 file(s) [attempted 3964/4608 = 86%]Downloaded: 4527 file(s) [attempted 4527/4608 = 98%]Downloaded: 4608 file(s) [attempted 4608/4608 = 100%] (100% success)
+Decompressing 4608 file(s)
+Unpacked in 11566 ms
+Completed successfully!
+info: dummy: no previous manifest, creating one from scratch
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git to '././.lake/packages/mathlib'
+info: batteries: cloning https://github.com/leanprover-community/batteries to '././.lake/packages/batteries'
+info: Qq: cloning https://github.com/leanprover-community/quote4 to '././.lake/packages/Qq'
+info: aesop: cloning https://github.com/leanprover-community/aesop to '././.lake/packages/aesop'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4 to '././.lake/packages/proofwidgets'
+info: Cli: cloning https://github.com/leanprover/lean4-cli to '././.lake/packages/Cli'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph.git to '././.lake/packages/importGraph'
+info: mathlib: running post-update hooks
+No files to download
+Decompressing 4608 file(s)
+Unpacked in 239 ms
+Completed successfully!
+✔ [2/4] Built dummy
+✔ [3/4] Built dummy:c.o
+✔ [4/4] Built dummy
+Build completed successfully.
+[10:02:52] INFO     Updated version-specific REPL cache to commit  config.py:388
+                    43a6f7954501b893df8ed04e87bac3e924ea4d74                    
+epla:ProofNet:104:0 False {'ref': True, 'cand': True} 11.3 
+epla:ProofNet:151:0 False {'ref': True, 'cand': True} 7.6 
+epla:ProofNet:244:0 True {'ref': True, 'cand': True} 0.1 
+epla:ProofNet:342:0 False {'ref': True, 'cand': True} 25.1 
+epla:ProofNet:49:0 False {'ref': True, 'cand': True} 2.3 
+epla:miniF2F:125:0 True {'ref': True, 'cand': True} 0.1 
+epla:miniF2F:196:0 False {'ref': True, 'cand': True} 8.3 
+epla:miniF2F:237:0 False {'ref': True, 'cand': True} 7.2 
+epla:miniF2F:298:0 False {'ref': True, 'cand': True} 13.1 
+epla:miniF2F:369:0 True {'ref': True, 'cand': True} 7.6 
+epla:miniF2F:429:0 True {'ref': True, 'cand': True} 0.2 
+epla:miniF2F:489:0 True {'ref': True, 'cand': True} 0.2 
+epla:miniF2F:54:0 False {'ref': True, 'cand': True} 25.6 
+epla:miniF2F:59:0 True {'ref': True, 'cand': True} 9.9 
+epla:miniF2F:675:0 True {'ref': True, 'cand': True} 7.2 
+epla:miniF2F:753:0 False {'ref': True, 'cand': True} 28.8 
+epla:miniF2F:802:0 False {'ref': True, 'cand': True} 11.7 
+epla:miniF2F:94:0 True {'ref': True, 'cand': True} 38.6 
+pnv:test:0052:Herstein|exercise_2_2_6c True {'ref': True, 'cand': True} 10.1 
+pnv:test:0115:Ireland-Rosen|exercise_4_6 False {'ref': True, 'cand': True} 2.2 
+pnv:test:0214:Pugh|exercise_2_26 False {'ref': True, 'cand': True} 3.6 
+pnv:test:0291:Artin|exercise_10_4_7a False {'ref': True, 'cand': True} 5.6 
+pnv:test:0319:Axler|exercise_5_13 False {'ref': True, 'cand': True} 19.7 
+pnv:test:0369:Artin|exercise_13_6_10 False {'ref': True, 'cand': True} 34.6 
+pnv:test:0432:Axler|exercise_5_1 False {'ref': True, 'cand': True} 12.7 
+pnv:test:0474:Dummit-Foote|exercise_9_4_2a True {'ref': True, 'cand': True} 0.3 
+pnv:test:0555:Munkres|exercise_31_1 False {'ref': True, 'cand': True} 9.7 
+pnv:test:0640:Ireland-Rosen|exercise_4_11 False {'ref': True, 'cand': True} 23.7 
+pnv:test:0706:Axler|exercise_6_3 False {'ref': True, 'cand': True} 19.3 
+pnv:test:0772:Munkres|exercise_18_8a True {'ref': True, 'cand': True} 0.3 
+pnv:test:0833:Pugh|exercise_2_26 False {'ref': True, 'cand': True} 3.0 
+pnv:test:0890:Dummit-Foote|exercise_3_1_22a True {'ref': True, 'cand': True} 0.5 
+pnv:test:0981:Munkres|exercise_34_9 False {'ref': True, 'cand': True} 6.8 
+pnv:test:1049:Dummit-Foote|exercise_9_4_9 False {'ref': True, 'cand': True} 17.4 
+pnv:test:1113:Ireland-Rosen|exercise_4_6 False {'ref': True, 'cand': True} 2.8 
+pnv:test:1163:Dummit-Foote|exercise_7_4_27 False {'ref': True, 'cand': True} 7.9 
+pnv:test:1219:Putnam|exercise_1999_b4 False {'ref': True, 'cand': True} 29.4 
+pnv:test:1272:Dummit-Foote|exercise_9_4_2c False {'ref': True, 'cand': True} 21.3 
+pnv:test:1354:Dummit-Foote|exercise_4_4_8a True {'ref': True, 'cand': True} 0.4 
+pnv:test:1416:Munkres|exercise_29_4 False {'ref': True, 'cand': True} 2.9 

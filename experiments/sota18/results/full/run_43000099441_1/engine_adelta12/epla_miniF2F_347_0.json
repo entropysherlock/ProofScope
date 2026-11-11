@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_347_0",
+ "reference": "∀ (y : ℝ), y + 6 + y = 2 * 12 → y = 9",
+ "lean": "∀ (y : ℕ), y + 6 = 12 → y = 9",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (y : ℕ), y + (6 : ℕ) = (12 : ℕ) → y = (9 : ℕ)",
+  "conclusion_ref": "∀ (y : ℝ), y + (6 : ℝ) + y = (2 : ℝ) * (12 : ℝ) → y = (9 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}
