@@ -215,7 +215,7 @@ jobs:
           find shards -name '*.log' -exec cp {} "$d/logs/" \;
           find shards -name 'provenance-*.txt' -exec cp {} "$d/logs/" \;
           echo '{"jobs": {"proofscope": "${{ needs.proofscope.result }}", "semanteq": "${{ needs.semanteq.result }}", "beqplus": "${{ needs.beqplus.result }}"}}' > "$d/job_results.json"
-          ls "$d"/* | head -50
+          for t in proofscope semanteq beqplus engine_adelta12 engine_cmcd_v10; do echo "$t $(ls "$d/$t" | wc -l)"; done
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add experiments/sota18/results
