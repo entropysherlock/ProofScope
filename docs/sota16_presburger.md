@@ -59,6 +59,29 @@ The first evaluation attempt was stopped by the 30-minute job limit during the Z
 query) before results were written; the runner was made resumable and rerun. Engine and cases were
 not changed between those two attempts.
 
+## Reproduction on GitHub Actions
+
+Workflow *SOTA-16 Reproduce Presburger Evaluation*, run 42947662384 on commit `c1448cf`
+(GitHub-hosted runner, Lean 4.34.1, z3-solver 5.4.0.0, cvc5 1.4.2). Cases regenerated bit-for-bit;
+the frozen engine and cases match `FREEZE.txt`.
+
+| Stage | Engine | v1.3 portfolio | SOTA-16 | Verdicts (SOTA-16) |
+|---|---|---|---|---|
+| frozen | `86e62a3`, 150 s limit per Lean call | 178 / 240 | 211 / 240 | 104 / 120 |
+| corrected | `c1448cf` | 178 / 240 | 231 / 240 | 111 / 120 |
+
+The corrected stage reproduces the local numbers exactly, including the list of nine open
+directions. The frozen stage gives 211 instead of the local 209: its losses come from Lean being
+killed, which depends on the machine (memory locally, the time limit in CI).
+
+Independent labels in the same run: 237 of 240 directions. Corrected SOTA-16: 230 certified
+directions carry a label, 0 contradictions; `fl105` fwd is certified without an independent label.
+Frozen SOTA-16: 210 labelled, 0 contradictions. v1.3 portfolio: 178 labelled, 0 contradictions.
+
+The first CI attempt of the frozen stage failed with a Python `TypeError`: `Toolchain.run` returned
+bytes for a timed-out process. That bug predates SOTA-16 (any Lean timeout crashed the engine
+instead of yielding INFRASTRUCTURE_ERROR); it is fixed on this branch with a test.
+
 ## Independent labels (`experiments/sota16/labels.py`)
 
 Labels are computed without the engine, Lean or Theorem B: ENTAILS when Z3 or cvc5 refutes
