@@ -3,6 +3,12 @@
 Research director: Caleb J. Westfall. Executed by Claude (Anthropic), 2026-11-11.
 Report: [`docs/sota18_competitive_evaluation.md`](../../docs/sota18_competitive_evaluation.md).
 
+## Result
+
+Pre-registered gate: **PIVOT** under both readings (frozen engine H0 and fail-closed H1). Summaries:
+`summary_H0.json`, `summary_H1.json`; raw records `results/full/run_42969440169_1/`. Full report:
+`docs/sota18_competitive_evaluation.md`.
+
 ## Order of events (each step is a commit on `research/sota18-independent-evaluation`)
 
 1. `PROTOCOL.md`, `competitors.json`, `ENGINE_HASHES.txt`: pre-registration, before any case was selected
@@ -14,7 +20,9 @@ Report: [`docs/sota18_competitive_evaluation.md`](../../docs/sota18_competitive_
    (BEq+ toolchain default, artifact paths, adapter universe names). It exposed soundness finding F1
    (`SOUNDNESS.md`), recorded as amendment 2 before the headline run.
 4. `RUN_FREEZE.txt`: harness hashes; then the headline run (`RUN_STAGE` = `full`).
-5. `results/full/run_<id>_<attempt>/`: raw per-pair records committed by the `collect` job.
+5. `results/full/run_42969440169_1/`: raw per-pair records of headline run 42969440169. Its own `collect`
+   step failed (`ls | head` under `pipefail`); `sota18-collect.yml` (run 42977127138) re-collected the same
+   run's artifacts. Every tool job of the headline run succeeded (48/48).
 6. `score.py`: the pre-registered scoring; `summary_H0.json` and `summary_H1.json`.
 
 ## Files
