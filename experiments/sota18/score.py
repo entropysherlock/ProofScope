@@ -266,6 +266,22 @@ def main():
                                           "semanteq": res[c["case_id"]]["semanteq"].get("verdict"),
                                           "beqplus": res[c["case_id"]]["beqplus"].get("verdict")}
                            for c in allc if res[c["case_id"]]["proofscope"]["cls"] in ("EQUIV", "NONEQUIV", "INCONSISTENT")}
+    # T2: pairs with at least one machine-checked one-way implication between R and L
+    eng = {e: load(rd / f"engine_{e}") for e in ("adelta12", "cmcd_v10")}
+    def ps_one_way(cid):
+        r = eng["cmcd_v10"].get(safe(cid)) or {}
+        g = set((r.get("global_certificates") or {}).keys())
+        dirs = {"R=>L" for k in g if k.startswith("fwd")} | {"L=>R" for k in g if k.startswith("bwd")}
+        v = (eng["adelta12"].get(safe(cid)) or {}).get("verdict")
+        if v in ("LEAN_WEAKER_BY_ASSUMPTION", "ASSUMPTION_EQUIVALENT"):
+            dirs.add("R=>L")
+        if v in ("LEAN_STRONGER_BY_ASSUMPTION", "ASSUMPTION_EQUIVALENT"):
+            dirs.add("L=>R")
+        return dirs
+    t2 = {c["case_id"]: ps_one_way(c["case_id"]) for c in allc}
+    d["T2_pairs_with_certified_one_way_implication"] = sum(1 for v in t2.values() if v)
+    d["T2_pairs_with_both_directions"] = sum(1 for v in t2.values() if len(v) == 2)
+    d["T2_one_way_only_and_gold_unfaithful"] = sum(1 for c in allc if len(t2[c["case_id"]]) == 1 and gold_of(c, "G1") is False)
     # T2 / T3 counts
     d["T3_concrete_or_conditional_inequivalence"] = sum(1 for c in allc if "LEAN_CLAIM_FALSE" in (res[c["case_id"]]["proofscope"].get("verdicts") or {}).values()
                                                         or "BOTH_CLAIMS_FALSE" in (res[c["case_id"]]["proofscope"].get("verdicts") or {}).values())
