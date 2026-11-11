@@ -13,6 +13,7 @@ import json
 import re
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 FC_URL = "https://github.com/google-deepmind/formal-conjectures"
@@ -168,8 +169,10 @@ def stage1(case: dict, fc: str, oai: str) -> dict:
                   "statement_sha256": sha(st), "body_sha256": sha(cr), "answer_wrapper": wrapped,
                   "polarity": pol}
     r["B"] = B
-    first = sh("git", "-C", fc, "log", "--diff-filter=A", "--format=%H %cI %an", "--", f).strip().split("\n")[-1]
-    r["B_file_first_commit"] = first
+    first = sh("git", "-C", fc, "log", FC_HEAD, "--diff-filter=A", "--format=%H %ct %an", "--", f
+               ).strip().split("\n")[-1].split(" ", 2)
+    when = datetime.fromtimestamp(int(first[1]), tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    r["B_file_first_commit"] = f"{first[0]} {when} {first[2]}"
     r["B_theorem_existed_before_release"] = B["pre"]["statement"] is not None
     r["B_body_changed_pre_to_link"] = (B["pre"]["body_sha256"] != B["link"]["body_sha256"]
                                        if B["pre"]["statement"] and B["link"]["statement"] else None)

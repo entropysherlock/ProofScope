@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "cba707c6db68dae481de4f51371212f1898cc2a1 2026-03-16T07:38:25+01:00 Daniel Chin",
+  "B_file_first_commit": "cba707c6db68dae481de4f51371212f1898cc2a1 2026-03-16T06:38:25Z Daniel Chin",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E184-erdos_184",
   "certifies": "nothing; deterministic text and provenance observations only",

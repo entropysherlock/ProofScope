@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "cc4526f914db6e4a68980eb1959282a5324f1c48 2026-01-20T10:24:09+00:00 Yongxi (Aaron) Lin",
+  "B_file_first_commit": "cc4526f914db6e4a68980eb1959282a5324f1c48 2026-01-20T10:24:09Z Yongxi (Aaron) Lin",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E978-erdos_978.parts.iii",
   "certifies": "nothing; deterministic text and provenance observations only",

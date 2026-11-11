@@ -71,7 +71,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "b212d70d9e681cd3545a1e6fb18c83e0eaccaef1 2025-10-21T09:38:47+00:00 Ed Wagstaff",
+  "B_file_first_commit": "b212d70d9e681cd3545a1e6fb18c83e0eaccaef1 2025-10-21T09:38:47Z Ed Wagstaff",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E371-erdos_371",
   "certifies": "nothing; deterministic text and provenance observations only",

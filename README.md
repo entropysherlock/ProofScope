@@ -83,7 +83,9 @@ BEq+ adapters, any human review, any de-duplication beyond the record types.
 Protocol v1.0 with amendment 1: [experiments/SL-001/PROTOCOL.md](experiments/SL-001/PROTOCOL.md).
 Source audit: [experiments/SL-001/SOURCE_AUDIT.md](experiments/SL-001/SOURCE_AUDIT.md).
 Per-case data: [experiments/SL-001/results/stage1/](experiments/SL-001/results/stage1/).
-The first execution was invalid and is kept in `results/stage1_run0_invalid/`.
+The first execution was invalid and is kept in `results/stage1_run0_invalid/`. Two later CI runs failed the
+byte-for-byte reproduction check because of a git date-format difference; both are kept in the Actions
+history and explained in amendment 2.
 
 Subject: the 18 Erdős-problem theorems in Formal Conjectures that are marked as formally proved by a
 declaration in `openai/math` (13 problems). Stage 1 reads pinned commits; it runs no prover and no model.

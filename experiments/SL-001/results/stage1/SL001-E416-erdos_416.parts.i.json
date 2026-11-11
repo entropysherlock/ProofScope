@@ -72,7 +72,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "5ff9bc0374b72a98a74a3e9756446f92aaacd2ff 2025-07-29T17:11:56+00:00 Paul Lezeau",
+  "B_file_first_commit": "5ff9bc0374b72a98a74a3e9756446f92aaacd2ff 2025-07-29T17:11:56Z Paul Lezeau",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E416-erdos_416.parts.i",
   "certifies": "nothing; deterministic text and provenance observations only",

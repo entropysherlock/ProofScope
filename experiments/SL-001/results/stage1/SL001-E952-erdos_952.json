@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "bed0441320e389dc6064a5448f04886d605e74c0 2025-11-21T18:43:34+00:00 Malhar A. Patel",
+  "B_file_first_commit": "bed0441320e389dc6064a5448f04886d605e74c0 2025-11-21T18:43:34Z Malhar A. Patel",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E952-erdos_952",
   "certifies": "nothing; deterministic text and provenance observations only",

@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": null,
-  "B_file_first_commit": "c892fcbc758f2d978f0f66dbad124bd454b2d619 2026-09-07T14:37:09+00:00 Tom Adamczewski",
+  "B_file_first_commit": "c892fcbc758f2d978f0f66dbad124bd454b2d619 2026-09-07T14:37:09Z Tom Adamczewski",
   "B_theorem_existed_before_release": false,
   "case_id": "SL001-E970-erdos_970.variants.iterated_log",
   "certifies": "nothing; deterministic text and provenance observations only",

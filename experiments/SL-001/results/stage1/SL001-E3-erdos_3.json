@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "2c7f1578e5be9355a485e8889c8619275c3295bc 2025-08-14T10:23:59+00:00 Moritz Firsching",
+  "B_file_first_commit": "2c7f1578e5be9355a485e8889c8619275c3295bc 2025-08-14T10:23:59Z Moritz Firsching",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E3-erdos_3",
   "certifies": "nothing; deterministic text and provenance observations only",

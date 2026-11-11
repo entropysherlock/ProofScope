@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": null,
-  "B_file_first_commit": "17180b36cbd5d56df7f6dbd62cb555db16731647 2025-12-09T16:17:44+00:00 Julian Kemp",
+  "B_file_first_commit": "17180b36cbd5d56df7f6dbd62cb555db16731647 2025-12-09T16:17:44Z Julian Kemp",
   "B_theorem_existed_before_release": false,
   "case_id": "SL001-E508-HadwigerNelsonAtLeastSix",
   "certifies": "nothing; deterministic text and provenance observations only",

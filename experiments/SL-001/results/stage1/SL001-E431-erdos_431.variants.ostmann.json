@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": null,
-  "B_file_first_commit": "3a7a4d2b08ad54f3b7274d9f8bfe5a7edcef850a 2026-09-02T18:32:47+00:00 putonthetableacat55",
+  "B_file_first_commit": "3a7a4d2b08ad54f3b7274d9f8bfe5a7edcef850a 2026-09-02T18:32:47Z putonthetableacat55",
   "B_theorem_existed_before_release": false,
   "case_id": "SL001-E431-erdos_431.variants.ostmann",
   "certifies": "nothing; deterministic text and provenance observations only",

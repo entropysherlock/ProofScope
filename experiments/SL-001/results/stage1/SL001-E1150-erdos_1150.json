@@ -69,7 +69,7 @@
   },
   "B_body_changed_link_to_head": false,
   "B_body_changed_pre_to_link": false,
-  "B_file_first_commit": "18146fcf5a824a75329e6b51a29abfab2d3e813f 2026-02-06T12:11:46+01:00 Karanjot Singh",
+  "B_file_first_commit": "18146fcf5a824a75329e6b51a29abfab2d3e813f 2026-02-06T11:11:46Z Karanjot Singh",
   "B_theorem_existed_before_release": true,
   "case_id": "SL001-E1150-erdos_1150",
   "certifies": "nothing; deterministic text and provenance observations only",

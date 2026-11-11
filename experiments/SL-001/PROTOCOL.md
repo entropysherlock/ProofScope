@@ -153,3 +153,11 @@ of unrelated configs. (b) Statement bodies are compared on their *core*: the pro
 one outer negation removed, with polarity (`open`, `pos`, `neg`) recorded separately. Formal Conjectures
 resolved `answer(sorry) ↔ P` to `answer(False) ↔ P` and later rewrote it as `¬ P` (PR #6762); these
 share the core `P` and are no longer reported as a changed statement. Raw statement text and hashes at each commit are still recorded unmodified.
+
+**Amendment 2, 2026-11-11, after CI run 43017405870 failed the reproduction check.** Implementation only.
+Git 2.43 (local) prints `%cI` for UTC commits as `+00:00`; the git on GitHub's runner prints `Z`. The
+first-commit date is now taken from `%ct` and formatted by Python in UTC with `Z`, and the query is bounded
+to `FC_HEAD` so later commits upstream cannot change it. Only the `B_file_first_commit` field is affected.
+Results were regenerated; no class, count or threshold changed. The 68 ledger records published
+from the earlier output were **not** rewritten (records are immutable); their `B_file_first_commit`
+strings use `+00:00` and denote the same instants.
