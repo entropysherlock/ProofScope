@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   SEMANTEQ_REV: f92767000e14d11744580946980cf874324f5d19
@@ -22,8 +22,6 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -39,10 +37,14 @@ jobs:
             test "$(git -C "$RUNNER_TEMP/$1" rev-parse HEAD)" = "$3"
           done
       - name: Select and freeze
-        run: python experiments/sota18/make_selection.py "$RUNNER_TEMP/semanteq" "$RUNNER_TEMP/assess" frozen | tee selection.log
-      - uses: actions/upload-artifact@v4
-        with:
-          name: sota18-frozen
-          path: |
-            frozen/
-            selection.log
+        run: python experiments/sota18/make_selection.py "$RUNNER_TEMP/semanteq" "$RUNNER_TEMP/assess" experiments/sota18/frozen | tee experiments/sota18/frozen_selection.log
+      - name: Commit the frozen manifest to the branch (before any tool is run)
+        shell: bash
+        run: |
+          set -euo pipefail
+          sed -i 's/^[0-9T:.Z-]* //' experiments/sota18/frozen_selection.log
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/sota18/frozen experiments/sota18/frozen_selection.log
+          git commit -m "SOTA-18: frozen manifest and cases, written by run ${{ github.run_id }} (no tool run yet)"
+          git push origin HEAD:${{ github.ref_name }}
