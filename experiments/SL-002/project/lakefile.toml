@@ -1,3 +1,5 @@
+# Reference layout only. CI compiles these files with plain `lean` against a Mathlib-only
+# project (experiments/SL-002/build.py); see the workflow sl002-bridges.yml.
 # SL-002 build: only Mathlib (the revision pinned by openai/math/lean) plus copied source files.
 name = "sl002"
 defaultTargets = []

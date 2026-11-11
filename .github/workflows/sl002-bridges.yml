@@ -40,26 +40,34 @@ jobs:
         run: |
           python experiments/SL-002/check.py verbatim "$RUNNER_TEMP/oai" "$RUNNER_TEMP/fc"
           python experiments/SL-002/check.py scan
-      - name: Mathlib (pinned) from cache
+      - name: Mathlib (pinned) from cache, in a Mathlib-only project
         shell: bash
         run: |
-          set -euo pipefail
-          cp -r experiments/SL-002/project "$RUNNER_TEMP/p"
-          cd "$RUNNER_TEMP/p"
-          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          set -uo pipefail
+          mkdir -p "$RUNNER_TEMP/ml"; cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "slml"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' 'rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"' > lakefile.toml
+          t=$(date +%s)
+          for i in 1 2 3; do timeout 20m lake update > "$RUNNER_TEMP/lake-update.log" 2>&1 && break || { echo "::warning::lake update attempt $i failed: $(tail -c 300 "$RUNNER_TEMP/lake-update.log" | tr '\n' ' ')"; sleep 30; }; done
+          ok=0
+          for i in 1 2 3; do timeout 20m lake exe cache get > "$RUNNER_TEMP/cache.log" 2>&1 && { ok=1; break; } || { echo "::warning::cache get attempt $i failed: $(tail -c 300 "$RUNNER_TEMP/cache.log" | tr '\n' ' ')"; sleep 60; }; done
+          echo "::notice title=SL-002 Mathlib::cache ok=$ok after $(( $(date +%s) - t ))s"
+          [ $ok = 1 ] || exit 75
       - name: Build bridges, print axioms, replay with leanchecker
         shell: bash
         run: |
           set +e
-          cd "$RUNNER_TEMP/p"; mkdir -p out
-          lake build SL002.E952 SL002.E1150 > out/build.log 2>&1; echo "build exit $?" | tee -a out/build.log
-          lake env lean AuditBridges.lean > out/axioms.log 2>&1; echo "audit exit $?" >> out/axioms.log
-          cat out/build.log out/axioms.log > out/combined.log
-          python "$GITHUB_WORKSPACE/experiments/SL-002/check.py" audit out/combined.log \
-            ScopeLedger.SL002.E952.fc_iff_main ScopeLedger.SL002.E1150.main_implies_fc; ok=$?
+          out="$RUNNER_TEMP/out"; mkdir -p "$out"
+          src="$GITHUB_WORKSPACE/experiments/SL-002/project"
+          python experiments/SL-002/build.py "$RUNNER_TEMP/ml" "$src" "$out" SL002.E952 SL002.E1150; ok=$?
+          export LEAN_PATH="$out/lib:$(cd "$RUNNER_TEMP/ml" && lake env printenv LEAN_PATH)"
+          lean "$src/AuditBridges.lean" > "$out/axioms.log" 2>&1
+          python experiments/SL-002/check.py audit "$out/axioms.log" \
+            ScopeLedger.SL002.E952.fc_iff_main ScopeLedger.SL002.E1150.main_implies_fc || ok=1
           for m in SL002.E952 SL002.E1150; do
-            timeout 30m lake env leanchecker "$m" > "out/leanchecker_$m.log" 2>&1; rc=$?
-            echo "::notice title=SL-002 leanchecker $m::exit $rc $(tail -c 300 out/leanchecker_$m.log | tr '\n' ' ')"
+            timeout 30m leanchecker "$m" > "$out/leanchecker_$m.log" 2>&1; rc=$?
+            echo "::notice title=SL-002 leanchecker $m::exit $rc $(tail -c 200 "$out/leanchecker_$m.log" | tr '\n' ' ')"
             [ $rc = 0 ] || ok=1
           done
           exit $ok
@@ -67,7 +75,7 @@ jobs:
         if: always()
         with:
           name: sl002-bridges
-          path: ${{ runner.temp }}/p/out/
+          path: ${{ runner.temp }}/out/
 
   assemble:
     name: "Assembly: Formal Conjectures statements from OpenAI's proofs (65 OpenAI files)"
@@ -81,7 +89,7 @@ jobs:
         with: { python-version: "3.12" }
       - name: Install Lean 4.34.1 (pinned SHA-256)
         uses: ./.github/actions/setup-lean
-      - name: Project, Mathlib cache, verbatim OpenAI sources
+      - name: Verbatim OpenAI sources (65 files at the frozen commit)
         shell: bash
         run: |
           set -euo pipefail
@@ -90,38 +98,50 @@ jobs:
           git -C "$RUNNER_TEMP/oai" fetch -q --filter=blob:none --depth 1 origin "$OAI_HEAD"
           python experiments/SL-002/fetch_oai.py "$RUNNER_TEMP/oai" "$RUNNER_TEMP/p"
           echo "::notice title=SL-002 OpenAI sources::$(python -c "import json;m=json.load(open('$RUNNER_TEMP/p/oai_files.json'));print(m['n_files'],'files at',m['commit'])")"
-          cd "$RUNNER_TEMP/p"
-          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
-      - name: Build OpenAI modules and assemblies (timed)
+      - name: Mathlib (pinned) from cache, in a Mathlib-only project
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p "$RUNNER_TEMP/ml"; cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "slml"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' 'rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"' > lakefile.toml
+          t=$(date +%s)
+          for i in 1 2 3; do timeout 20m lake update > "$RUNNER_TEMP/lake-update.log" 2>&1 && break || { echo "::warning::lake update attempt $i failed: $(tail -c 300 "$RUNNER_TEMP/lake-update.log" | tr '\n' ' ')"; sleep 30; }; done
+          ok=0
+          for i in 1 2 3; do timeout 20m lake exe cache get > "$RUNNER_TEMP/cache.log" 2>&1 && { ok=1; break; } || { echo "::warning::cache get attempt $i failed: $(tail -c 300 "$RUNNER_TEMP/cache.log" | tr '\n' ' ')"; sleep 60; }; done
+          echo "::notice title=SL-002 Mathlib::cache ok=$ok after $(( $(date +%s) - t ))s"
+          [ $ok = 1 ] || exit 75
+      - name: Build OpenAI modules and assemblies, print axioms
         shell: bash
         run: |
           set +e
-          cd "$RUNNER_TEMP/p"; mkdir -p out
-          cp oai_files.json out/
-          start=$(date +%s)
-          timeout 280m lake build SL002.Assembly952 SL002.Assembly1150 > out/build.log 2>&1; rc=$?
-          echo "::notice title=SL-002 assembly build::exit $rc after $(( $(date +%s) - start ))s"
-          lake env lean AuditAssembly.lean > out/axioms.log 2>&1
-          cat out/build.log out/axioms.log > out/combined.log
-          python "$GITHUB_WORKSPACE/experiments/SL-002/check.py" audit out/combined.log \
+          out="$RUNNER_TEMP/out"; mkdir -p "$out"; cp "$RUNNER_TEMP/p/oai_files.json" "$out/"
+          timeout 290m python experiments/SL-002/build.py "$RUNNER_TEMP/ml" "$RUNNER_TEMP/p" "$out" \
+            SL002.Assembly952 SL002.Assembly1150; ok=$?
+          export LEAN_PATH="$out/lib:$(cd "$RUNNER_TEMP/ml" && lake env printenv LEAN_PATH)"
+          lean "$RUNNER_TEMP/p/AuditAssembly.lean" > "$out/axioms.log" 2>&1
+          python experiments/SL-002/check.py audit "$out/axioms.log" \
             ScopeLedger.SL002.E952.erdos_952 ScopeLedger.SL002.E1150.erdos_1150 \
-            OAI.GaussianMoat.fullMain OAI.AsymptoticallyMinimalLittlewood.main; ok=$?
+            OAI.GaussianMoat.fullMain OAI.AsymptoticallyMinimalLittlewood.main || ok=1
           exit $ok
-      - name: Replay every module with leanchecker (SL-002 and all 65 OpenAI files)
+      - name: Replay every module with leanchecker (SL-002 and all OpenAI files)
+        if: always()
         shell: bash
         run: |
           set +e
-          cd "$RUNNER_TEMP/p"
-          mods="SL002.E952 SL002.E1150 SL002.Assembly952 SL002.Assembly1150 $(python -c "import json;print(' '.join(json.load(open('oai_files.json'))['files']))")"
+          out="$RUNNER_TEMP/out"
+          export LEAN_PATH="$out/lib:$(cd "$RUNNER_TEMP/ml" && lake env printenv LEAN_PATH)"
+          mods=$(python -c "import json;print(' '.join(k for k,v in json.load(open('$out/build.json'))['status'].items() if v=='ok'))")
           n=0; bad=0
           for m in $mods; do
             n=$((n+1))
-            timeout 30m lake env leanchecker "$m" > "out/leanchecker_$m.log" 2>&1 || { bad=$((bad+1)); echo "::error title=leanchecker::$m failed: $(tail -c 300 "out/leanchecker_$m.log" | tr '\n' ' ')"; }
+            timeout 30m leanchecker "$m" > "$out/leanchecker_$m.log" 2>&1 || { bad=$((bad+1)); echo "::error title=leanchecker::$m failed: $(tail -c 300 "$out/leanchecker_$m.log" | tr '\n' ' ')"; }
           done
-          echo "::notice title=SL-002 leanchecker replay::$((n-bad)) of $n modules replayed without error"
-          [ $bad = 0 ]
+          echo "::notice title=SL-002 leanchecker replay::$((n-bad)) of $n built modules replayed without error"
+          [ $bad = 0 ] && [ $n -gt 0 ]
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: sl002-assembly
-          path: ${{ runner.temp }}/p/out/
+          path: ${{ runner.temp }}/out/
