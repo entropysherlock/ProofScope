@@ -1,0 +1,1 @@
+{"family": "outside", "formal": {"body": "f (n + 6) = f n", "guard": "True", "var": "n"}, "id": "mo113", "kind": "multi", "meta": {}, "reference": {"body": "f (n + 3) = f n", "guard": "True", "var": "n"}}

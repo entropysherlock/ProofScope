@@ -1,0 +1,1 @@
+{"family": "lower", "formal": {"body": "((f n + 3 ≤ f (n + 3)) ∧ (f (2 * n) % 2 = f (n + 3) % 2)) ∧ (f (2 * n) + f (n + 3) ≤ 2 * f (n + 3) + 3)", "guard": "True", "var": "n"}, "id": "mo054", "kind": "multi", "meta": {"a": 1, "b": null}, "reference": {"body": "f n < f (n + 1)", "guard": "True", "var": "n"}}

@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "((f (n + 3) + f (n + 1) ≤ 2 * f (n + 3) + 4) ∨ (f (n + 1) ≤ f (n + 3) + 0)) ∨ (f (n + 1) % 2 = f (n + 3) % 2)", "guard": "n ≤ 6", "var": "n"}, "id": "mo017", "kind": "multi", "meta": {"a": 3, "b": 6}, "reference": {"body": "f (n + 1) ≤ f n + 6 ∧ f n + 3 ≤ f (n + 1)", "guard": "True", "var": "n"}}

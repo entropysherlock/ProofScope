@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "(f (n + 3) % 2 = f n % 2) ∨ (f n ≠ f (n + 3))", "guard": "n ≤ 6", "var": "n"}, "id": "mo008", "kind": "multi", "meta": {"a": 1, "b": 1}, "reference": {"body": "f (n + 1) = f n + 1", "guard": "True", "var": "n"}}

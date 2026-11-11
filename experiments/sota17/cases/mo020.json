@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "f (n + 1) + 2 ≤ f (n + 2)", "guard": "n % 2 = 0", "var": "n"}, "id": "mo020", "kind": "multi", "meta": {"a": 1, "b": 2}, "reference": {"body": "f (n + 1) ≤ f n + 2 ∧ f n + 1 ≤ f (n + 1)", "guard": "True", "var": "n"}}

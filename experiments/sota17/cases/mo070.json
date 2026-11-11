@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "f (n + 1) = f 0 + 1", "guard": "n ≤ 6", "var": "n"}, "id": "mo070", "kind": "multi", "meta": {"c": 1, "k": 3}, "reference": {"body": "f (3 * n + 1) ≤ n + 2", "guard": "1 ≤ n", "var": "n"}}

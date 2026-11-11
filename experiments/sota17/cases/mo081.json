@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "f 5 ≠ f (n + 3)", "guard": "1 ≤ n", "var": "n"}, "id": "mo081", "kind": "multi", "meta": {"c": 0, "k": 1}, "reference": {"body": "f (n) = n + 1", "guard": "n % 2 = 1", "var": "n"}}

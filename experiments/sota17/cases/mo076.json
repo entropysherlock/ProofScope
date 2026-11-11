@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "(f (n + 3) = f n + 0) ∨ (f (n + 3) + 3 ≤ f n)", "guard": "True", "var": "n"}, "id": "mo076", "kind": "multi", "meta": {"c": 0, "k": 2}, "reference": {"body": "f (2 * n) = n + 1", "guard": "1 ≤ n", "var": "n"}}

@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "(f (n + 1) < f n + 3) ∧ (f (n + 2) % 2 = f n % 2)", "guard": "True", "var": "n"}, "id": "mo090", "kind": "multi", "meta": {"c": 0, "k": 2}, "reference": {"body": "f (2 * n) = n + 1", "guard": "2 ≤ n", "var": "n"}}

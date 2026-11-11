@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "(f (n + 1) ≤ f n + 3) ∨ (f (2 * n) + f (n + 1) ≤ 2 * f (2 * n) + 3)", "guard": "1 ≤ n", "var": "n"}, "id": "mo010", "kind": "multi", "meta": {"a": 1, "b": 1}, "reference": {"body": "f (n + 1) ≤ f n + 1 ∧ f n + 1 ≤ f (n + 1)", "guard": "True", "var": "n"}}

@@ -276,6 +276,11 @@ theorem step_cons_of {a b : Nat} {f : Nat → Nat} (h : Step a b f) (z₁ z₂ :
   rw [e] at this
   exact this
 
+/-- `step_cons_of` with the pairs unfolded (the form used by generated certificates). -/
+theorem step_pair {a b : Nat} {f : Nat → Nat} (h : Step a b f) (z₁ z₂ : Nat) :
+    a * z₁ ≤ f z₁ ∧ (z₁ ≤ z₂ → f z₁ + a * (z₂ - z₁) ≤ f z₂ ∧ f z₂ ≤ f z₁ + b * (z₂ - z₁)) :=
+  step_cons_of h z₁ z₂
+
 /-- The canonical member of `Step a b` through two points. -/
 def stepFun (a b z₁ w₁ z₂ w₂ : Nat) (x : Nat) : Nat :=
   if x ≤ z₁ then w₁ - a * (z₁ - x)
@@ -435,6 +440,10 @@ theorem lower_cons_of {a : Nat} {f : Nat → Nat} (h : Lower a f) (z₁ z₂ : N
     rwa [e] at this
   · simp at e; subst e; rfl
 
+theorem lower_pair {a : Nat} {f : Nat → Nat} (h : Lower a f) (z₁ z₂ : Nat) :
+    a * z₁ ≤ f z₁ ∧ (z₁ ≤ z₂ → f z₁ + a * (z₂ - z₁) ≤ f z₂) :=
+  ⟨(lower_cons_of h z₁ z₂).1, (lower_cons_of h z₁ z₂).2.1⟩
+
 def LowerConsAll (a : Nat) (l : List (Nat × Nat)) : Prop :=
   ∀ p, p ∈ l → ∀ q, q ∈ l → LowerCons a p q
 
@@ -573,6 +582,8 @@ end ProofScope.MultiOcc
 #print axioms ProofScope.MultiOcc.step_E2
 #print axioms ProofScope.MultiOcc.step_points
 #print axioms ProofScope.MultiOcc.step_elim
+#print axioms ProofScope.MultiOcc.step_pair
+#print axioms ProofScope.MultiOcc.lower_pair
 #print axioms ProofScope.MultiOcc.step_unsat
 #print axioms ProofScope.MultiOcc.lower_E2
 #print axioms ProofScope.MultiOcc.lower_points

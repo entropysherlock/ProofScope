@@ -1,0 +1,1 @@
+{"family": "outside", "formal": {"body": "f (n + 3) ≤ f n + 1", "guard": "True", "var": "n"}, "id": "mo116", "kind": "multi", "meta": {}, "reference": {"body": "f (n + 1) = f n ∨ f n = 0 ∧ f (n + 2) = 1", "guard": "True", "var": "n"}}
