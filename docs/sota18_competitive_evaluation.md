@@ -4,6 +4,13 @@ Research director: Caleb J. Westfall. Executed by Claude (Anthropic), 2026-11-11
 Branch `research/sota18-independent-evaluation`. Pre-registration: `experiments/sota18/PROTOCOL.md`
 (commit `b766001`, before any case was selected). Raw data, scripts and summaries: `experiments/sota18/`.
 
+> **Erratum (2026-11-11, SOTA-19 audit).** The pre-registered mapping listed CMCD `IDENTICAL` among
+> kernel-certified verdicts, but `IDENTICAL` is an elaborator identity check with no certificate. Of the 75
+> fail-closed (H1) "equivalent" verdicts, **37 are backed by kernel certificates** (ASSUMPTION_EQUIVALENT
+> and/or SCHEMA_EQUIVALENT), **32 are `IDENTICAL`** (statements elaborate to the same term: correct, but not
+> a certificate) and **6 are structural `NO_ASSUMPTION_DELTA`**. Every "69 kernel" figure below should read
+> "37 certificate-backed + 32 identical-after-elaboration". No verdict, label or gate value changes.
+
 ## 1. Executive verdict
 
 **Decision: PIVOT** (the pre-registered gate, applied mechanically, gives PIVOT under both readings).
