@@ -41,11 +41,13 @@ Copied unchanged from SOTA-14 standalone branch:
 
 ## Merge gate
 
-- [ ] New Lean compilation and six fresh kernel replays pass.
-- [ ] Python regression suite passes, including cd009 false-reference test.
-- [ ] Frozen/post-fix/current benchmark job logs and artifacts inspected; case generation and original hashes verified.
-- [ ] No unexpected oracle or Z3 disagreements.
-- [ ] Evaluate changed label coverage from the conservative reference-validity rule.
-- [ ] Confirm that PR #5 is mergeable and no existing v1.2 functionality regressed.
+- [x] New Lean compilation and six fresh kernel replays pass.
+- [x] Python regression suite passes, including cd009 false-reference test.
+- [x] Frozen/post-fix/current benchmark job logs and artifacts inspected; case generation and original hashes verified.
+- [x] No unexpected oracle or Z3 disagreements.
+- [x] Evaluate changed label coverage from the conservative reference-validity rule.
+- [x] Confirm that PR #5 is mergeable and no existing v1.2 functionality regressed.
 
 **PR #5 remains draft until all relevant gates pass.** No Level 4 or independent state-of-the-art claim follows from this work.
+
+Gate evidence and the two defects found while closing these gates: `docs/v1.3_release.md`.
