@@ -1,0 +1,8 @@
+a7a905a65ce0329aed64b3f4341dc0c4310be5bc7afd394bb281ee4bfaa9766b  experiments/sota17/mathlib_pilot/extract.py
+133c740def7f1b46ad0a6eed267bd8954a96dbd2fbf2b7b3602fb49e9b271baf  experiments/sota17/mathlib_pilot/select.py
+83b69111d95aa67bcbed5793844ab910f7e32585ee91f2e979f3b86512fb6dbe  experiments/sota17/mathlib_pilot/pilot.py
+a9236218f8491b765033bd604be0886706c4bfd1bb263a7d969a69b20f425a90  experiments/sota17/mathlib_pilot/selection.json
+f00b68bd5d2cc809c43048b88386db22f39731f69a5d46c84bb5170fe53bb30f  proofscope/multiocc.py
+71f5ac7ca3804bec6c642093c27bca74cd9c042df5d21ff3ffb57a9a74fcdc76  lean/ProofScope/MultiOcc.lean
+Mathlib pin: v4.34.1 d13f23b723b8a846827a245b89c10fc7d3f11612; population 189240 declarations, sha256 3cd36c9e6472041df711376065494178abc319c9bcc07a45382609895e51bcfb
+frozen after development on C2_dev only (27 declarations), before any run or reading of C2_heldout (42) and C1 (200); 2026-11-11T04:06:38Z

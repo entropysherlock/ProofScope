@@ -33,7 +33,8 @@ from pathlib import Path
 from . import scope_smt
 from .certify import certify
 from .scope_expr import Unsupported, free_vars, opaque_head, parse, replace_node, subst, to_lean
-from .scopeelim import (FunClaim, _ident, _status, affine, build_lib as _build_base, func_residuals,
+from .scopeelim import (FunClaim, _ident, _period, _status, affine, bound_terms, build_lib as _build_base,
+                        func_residuals,
                         lib_toolchain, verdict, SRC)
 from .toolchain import Toolchain
 
@@ -100,16 +101,21 @@ def _contains_sym(a) -> bool:
 
 
 class Claim:
-    """`∀ var, guard → body` with `f` applied to the argument terms `sites`."""
+    """`∀ vars, guard → body` with `f` applied to the argument terms `sites`. The hypothesis side of a
+    direction must have one bound variable; the conclusion side may have several."""
 
-    def __init__(self, var: str, guard, body):
-        if var in ("w_", "z_", "x_", "y_", "v_", SYM) or re.fullmatch(r"w\d+_", var):
-            raise Unsupported("reserved variable name")
+    def __init__(self, var, guard, body):
+        self.vars = [var] if isinstance(var, str) else list(var)
+        for v in self.vars:
+            if v in ("w_", "z_", "x_", "y_", "v_", "hg_", "e_", SYM) or re.fullmatch(r"w\d+_", v):
+                raise Unsupported("reserved variable name")
+        if not self.vars or len(set(self.vars)) != len(self.vars):
+            raise Unsupported("bad binder list")
         if _contains_sym(guard):
             raise Unsupported("the symbol occurs in the guard")
-        if (free_vars(guard) | free_vars(body)) - {var}:
-            raise Unsupported("free variables other than the bound one")
-        self.var, self.guard, self.body = var, guard, body
+        if (free_vars(guard) | free_vars(body)) - set(self.vars):
+            raise Unsupported("free variables other than the bound ones")
+        self.var, self.guard, self.body = self.vars[0], guard, body
         occ = []
         _apps(guard, occ)
         _apps(body, occ)
@@ -122,13 +128,13 @@ class Claim:
 
     @classmethod
     def from_json(cls, d: dict) -> "Claim":
-        return cls(d.get("var", "n"), parse(d.get("guard", "True")), parse(d["body"]))
+        return cls(d.get("vars") or d.get("var", "n"), parse(d.get("guard", "True")), parse(d["body"]))
 
     def lean(self) -> str:
-        return f"∀ ({self.var} : Nat), {to_lean(self.guard)} → {to_lean(self.body)}"
+        return "∀ " + " ".join(f"({v} : Nat)" for v in self.vars) + f", {to_lean(self.guard)} → {to_lean(self.body)}"
 
-    def inst(self, a, n: int):
-        return subst(a, {self.var: ("num", n)})
+    def inst(self, a, ns):
+        return subst(a, {v: ("num", n) for v, n in zip(self.vars, ns)})
 
 
 def _z3_enc(a, env):
@@ -138,6 +144,8 @@ def _z3_enc(a, env):
 def classify(H: Claim) -> dict:
     """Class of a hypothesis-side claim. Raises `Unsupported` if it is in none of the three classes."""
     m = len(H.sites)
+    if len(H.vars) != 1:
+        raise Unsupported("hypothesis side with several bound variables")
     if m == 1:
         ka = affine(H.sites[0], H.var)
         if ka and ka[0] >= 1:
@@ -207,10 +215,11 @@ def _witnesses(cls: dict, C: Claim, count: int = 3) -> list[tuple[int, list[int]
         return []
     with scope_smt._LOCK:
         try:
-            n = z3.Int("n")
+            ns = [z3.Int(f"n{i}") for i in range(len(C.vars))]
             ws = [z3.Int(f"w{i}") for i in range(len(C.sites))]
-            env = {C.var: n, **{f"w{i}_": w for i, w in enumerate(ws)}}
-            zs = [_z3_enc(s, {C.var: n}) for s in C.sites]
+            nenv = dict(zip(C.vars, ns))
+            env = {**nenv, **{f"w{i}_": w for i, w in enumerate(ws)}}
+            zs = [_z3_enc(s, nenv) for s in C.sites]
             cons = []
             if cls["class"] in ("step", "lower"):
                 a, b = cls["a"], cls["b"]
@@ -233,10 +242,11 @@ def _witnesses(cls: dict, C: Claim, count: int = 3) -> list[tuple[int, list[int]
             core = z3.And(_z3_enc(C.guard, env), z3.Not(_z3_enc(C.body_w, env)), *cons)
             out = []
             for cap in (12, 60, None):                      # small witnesses first
-                extra = [] if cap is None else [n <= cap] + [w <= 8 * cap for w in ws]
-                for vals in scope_smt._models(z3.And(core, *extra), [n] + ws, count - len(out)):
-                    if (vals[0], vals[1:]) not in out:
-                        out.append((vals[0], vals[1:]))
+                extra = [] if cap is None else [n <= cap for n in ns] + [w <= 8 * cap for w in ws]
+                for vals in scope_smt._models(z3.And(core, *extra), ns + ws, count - len(out)):
+                    k = len(ns)
+                    if (vals[:k], vals[k:]) not in out:
+                        out.append((vals[:k], vals[k:]))
                 if len(out) >= count:
                     break
             return out
@@ -250,7 +260,7 @@ def direction(H: Claim, C: Claim, hname: str, cname: str) -> dict:
     m = len(C.sites)
     ent_stmt = f"∀ (f : Nat → Nat), {hname} f → {cname} f"
     nent_stmt = f"¬ ∀ (f : Nat → Nat), {hname} f → {cname} f"
-    v = C.var
+    v = " ".join(C.vars)
     ent, nent, extra = [], [], {}
     wits = _witnesses(cls, C)
     kind = cls["class"]
@@ -286,7 +296,7 @@ def direction(H: Claim, C: Claim, hname: str, cname: str) -> dict:
             else:
                 ext = f"lower_points {a} {lst} (by unfold LowerConsAll; decide)"
             nent.append(f"intro h; obtain ⟨f, hS, hT⟩ := {ext}; {evals(n0, vals)}; "
-                        f"have hC := h f {back} {n0} (by ps_triv); {close}")
+                        f"have hC := h f {back} {' '.join(map(str, n0))} (by ps_triv); {close}")
     else:
         fc, k, c = cls["fc"], cls["k"], cls["c"]
         lam = fc.lambdas()
@@ -295,14 +305,32 @@ def direction(H: Claim, C: Claim, hname: str, cname: str) -> dict:
         vac_stmt, nvac_stmt = res["vac"][0], res["nvac"][0]
         extra["vac"] = (vac_stmt, [res0["vac"][1], res["vac"][1]])
         extra["nvac"] = (nvac_stmt, [res0["nvac"][1], res["nvac"][1]])
+        # direct value terms: residues and bound terms of the relation at the solved instance
+        xs = "z_" if (k, c) == (1, 0) else f"((z_ - {c}) / {k})"
+        per = _period(fc.rel, fc.guard)
+        cand = [f"(({xs} + {j}) % {per})" for j in range(per)] + [f"({xs} + {j})" for j in range(4)]
+        cand += [f"({bt} + {j})" for bt in bound_terms(subst(fc.rel, {fc.var: ("raw", xs)}), "w_")[:6] for j in range(per)]
+        direct = "intro z_; first | " + " | ".join(
+            f"exact ⟨{w}, (by intro x_ hA hs; omega)⟩" for w in dict.fromkeys(cand))
+        extra["nvac"][1][1] = f"first | ({direct}) | ({res['nvac'][1]})"       # cheap alternatives first
         show = lambda key: "(show %s from by first | (%s) | (%s))" % (extra[key][0], extra[key][1][0], extra[key][1][1])
         insts = []
+        triv = fc.guard == ("true",)                      # omega does not look under `True →`
         for i in range(m):
             t = _site(C, i)
             x = t if (k, c) == (1, 0) else f"(({t} - {c}) / {k})"
             g, s, r = (to_lean(subst(e, {fc.var: ("raw", x)})) for e in (fc.guard, fc.arg, fc.rel))
             r = r.replace("w_", f"(f {t})")
-            insts.append(f"have a{i} : {g} → {s} = {t} → {r} := adm_of_ref {lam} hR {t} {x}")
+            pf = f"adm_of_ref {lam} hR {t} {x}"
+            if (k, c) == (1, 0):
+                insts.append(f"have a{i} : {r} := {pf} trivial rfl" if triv
+                             else f"have a{i} : {g} → {r} := fun hg_ => {pf} hg_ rfl")
+            else:
+                insts.append(f"have a{i} : {s} = {t} → {r} := {pf} trivial" if triv
+                             else f"have a{i} : {g} → {s} = {t} → {r} := {pf}")
+        # coinciding sites carry one value (omega does not know congruence)
+        insts += [f"have q{i}_{j} : {_site(C, i)} = {_site(C, j)} → f {_site(C, i)} = f {_site(C, j)} := fun e_ => congrArg f e_"
+                  for i in range(m) for j in range(i + 1, m)]
         ent.append(f"intro f hR {v} hg; " + "; ".join(insts) + "; omega")
         ent.append(f"exact vacuous_entails {lam} {show('vac')} _")
         for n0, vals in wits:
@@ -311,17 +339,17 @@ def direction(H: Claim, C: Claim, hname: str, cname: str) -> dict:
             alts = " | ".join(["rfl"] * len(pts))
             adm = (f"(by intro p hp; simp only [List.mem_cons, List.not_mem_nil, or_false] at hp; "
                    f"rcases hp with {alts} <;> (show ∀ (x_ : Nat), _ → _ → _; intro x_ hA hs; "
-                   f"dsimp only at hA hs ⊢; omega))")
+                   f"(try dsimp only at hA hs ⊢) <;> omega))")
             ext = f"pointwise_points {lam} {show('nvac')} {lst} ⟨{adm}, by decide⟩"
             nent.append(f"intro h; obtain ⟨f, hS, hT⟩ := {ext}; {evals(n0, vals)}; "
-                        f"have hC := h f hS {n0} (by ps_triv); {close}")
+                        f"have hC := h f hS {' '.join(map(str, n0))} (by ps_triv); {close}")
     return {"class": {k_: v_ for k_, v_ in cls.items() if k_ != "fc"}, "entails_stmt": ent_stmt,
             "nent_stmt": nent_stmt, "entails": ent, "nent": nent, "witnesses": wits, "sites": m}
 
 
-def _eval_site(C: Claim, i: int, n0: int) -> int:
+def _eval_site(C: Claim, i: int, n0) -> int:
     from .scope_expr import evaluate
-    return evaluate(C.sites[i], {C.var: n0})
+    return evaluate(C.sites[i], dict(zip(C.vars, n0)))
 
 
 # --------------------------------------------------------------------------------------------------
