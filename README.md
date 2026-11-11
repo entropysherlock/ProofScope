@@ -2,6 +2,42 @@
 ### by Caleb J. Westfall
 **Verify the proof. Validate the claim.**
 
+## Current research engine — technical reviewers start here
+
+> **Important:** This default `main` branch presents an earlier prototype. The latest **merged, CI-validated** ProofScope mathematical comparison engine is on **[`v1.2-review`](https://github.com/entropysherlock/ProofScope/tree/v1.2-review)**, at verified SOTA-16 merge commit **[`198e17c`](https://github.com/entropysherlock/ProofScope/commit/198e17c313e0752e948ce2f2bc32d74aa7c7cdc5). The advanced engine has **not** yet been promoted to `main`.
+
+**[Read the technical reviewer guide](docs/REVIEWER_GUIDE.md)** · **[See the advanced source](https://github.com/entropysherlock/ProofScope/tree/v1.2-review)** · **[See SOTA-16 validation](https://github.com/entropysherlock/ProofScope/actions/runs/42950230245)** · **[See benchmark reproduction](https://github.com/entropysherlock/ProofScope/actions/runs/42950230302)**
+
+ProofScope's research goal is **certified, explainable mathematical statement-drift analysis**: determine when a Lean formalization expresses an equivalent, stronger, weaker, or incomparable claim under a specified abstraction policy, and verify formal evidence with Lean.
+
+### Verified development milestone (SOTA-16)
+
+| Capability / evidence | Verified development status |
+| --- | --- |
+| ClaimDelta and Assumption Delta | Implemented on advanced branch; restricted mathematical fragments |
+| Lean-checked comparisons and countermodel certificates | Implemented; scope and axioms disclosed |
+| Horn and restricted single-occurrence function elimination | Implemented with Lean theorems |
+| Affine Presburger certificate search integrated with ClaimDelta | Implemented and CI-tested on advanced branch |
+| Lean compilation and fresh kernel replay | [GitHub Actions validation passed](https://github.com/entropysherlock/ProofScope/actions/runs/42950230245) |
+| Frozen 120-case, 240-direction comparison | [GitHub Actions reproduced](https://github.com/entropysherlock/ProofScope/actions/runs/42950230302): **178 → 231** certified directions; **68 → 111** decisive cases |
+
+**Evaluation scope:** author-generated cases, not an independent real-world benchmark. Separately computed solver/function labels agreed with **230/230 labelled certified directions**; one certified direction had no independent label. The engine is an experimental research prototype, **not** an unrestricted mathematical fidelity verifier and **not** demonstrated state of the art. See [methods, nine open directions, and limits](https://github.com/entropysherlock/ProofScope/blob/v1.2-review/docs/sota16_presburger.md).
+
+To reproduce from the latest merged development source:
+
+```bash
+git clone https://github.com/entropysherlock/ProofScope.git
+cd ProofScope
+git switch v1.2-review
+# Lean 4.34.1 required for pinned proof checks
+python3 -m unittest discover -s tests/v02 -v
+python3 -m proofscope.claimdelta --help
+```
+
+The advanced branch has fuller workflows and documentation. **Older historical sections below describe earlier releases and should not be mistaken for the current development version.**
+
+---
+
 ProofScope is an experimental open-source proof-scope auditing project for AI-assisted mathematics.
 
 ## One-click live prototype
