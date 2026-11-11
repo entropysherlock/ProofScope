@@ -113,22 +113,36 @@ jobs:
           git checkout -q "$OAI_HEAD"
           df -h . | tail -1
       - name: Mathlib cache, then build one linked module (timed)
+        shell: bash
         run: |
-          set -uo pipefail
-          cd "$RUNNER_TEMP/oai/lean"
-          start=$(date +%s)
-          status=ok
-          (for i in 1 2 3; do lake exe cache get && break || sleep 60; done) || status=cache_failed
+          # Fail-safe harness (lesson of probe run 43015699424, which exited without recording why):
+          # every stage reports itself as a public annotation, and the result file is written on exit.
+          set -u
+          out="$GITHUB_WORKSPACE/probe-out"; mkdir -p "$out"
+          status=started; start=$(date +%s); t_cache=-1
+          finish() {
+            t_total=$(( $(date +%s) - start ))
+            printf '{"module":"OAI.NumberTheory.Jacobsthal.Conclusions.QuadraticBound","status":"%s","seconds_cache":%s,"seconds_total":%s,"disk_free":"%s","note":"infrastructure measurement only; certifies nothing"}\n' \
+              "$status" "$t_cache" "$t_total" "$(df -h "$RUNNER_TEMP" | tail -1 | awk '{print $4}')" > "$out/probe.json"
+            echo "::notice title=SL-001 probe result::$(cat "$out/probe.json")"
+          }
+          trap finish EXIT
+          note() { echo "::notice title=SL-001 probe::$1"; }
+          cd "$RUNNER_TEMP/oai/lean" || { status=no_lean_dir; exit 1; }
+          note "lean $(lean --version | head -1); lake $(lake --version 2>&1 | head -1); disk $(df -h . | tail -1 | awk '{print $4}') free"
+          ok=0
+          for i in 1 2 3; do
+            if lake exe cache get > "$out/cache.log" 2>&1; then ok=1; break; fi
+            note "cache attempt $i failed: $(tail -3 "$out/cache.log" | tr '\n' ' ' | cut -c1-300)"; sleep 60
+          done
           t_cache=$(( $(date +%s) - start ))
-          if [ "$status" = ok ]; then
-            timeout 285m lake build OAI.NumberTheory.Jacobsthal.Conclusions.QuadraticBound 2>&1 | tail -40
-            rc=${PIPESTATUS[0]}
-            [ "$rc" = 0 ] || status="build_exit_$rc"
-          fi
-          t_total=$(( $(date +%s) - start ))
-          mkdir -p "$GITHUB_WORKSPACE/probe-out"
-          printf '{"module":"OAI.NumberTheory.Jacobsthal.Conclusions.QuadraticBound","status":"%s","seconds_cache":%s,"seconds_total":%s,"note":"infrastructure measurement only; certifies nothing"}\n' \
-            "$status" "$t_cache" "$t_total" | tee "$GITHUB_WORKSPACE/probe-out/probe.json"
+          if [ $ok != 1 ]; then status=cache_failed; exit 1; fi
+          note "Mathlib cache ready after ${t_cache}s; building"
+          timeout 285m lake build OAI.NumberTheory.Jacobsthal.Conclusions.QuadraticBound > "$out/build.log" 2>&1
+          rc=$?
+          if [ $rc = 0 ]; then status=built; elif [ $rc = 124 ]; then status=build_timeout_285m
+          else status="build_exit_$rc"; note "build failed: $(grep -m3 -E 'error|Error' "$out/build.log" | tr '\n' ' ' | cut -c1-400)"; fi
+          [ $status = built ]
       - uses: actions/upload-artifact@v4
         if: always()
         with:

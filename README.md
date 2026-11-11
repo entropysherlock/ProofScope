@@ -117,11 +117,17 @@ statement is faithful to Erdős's problem.
 | Certified one-way implications | 0 |
 | Certified separating witnesses | 0 |
 | Inconclusive | 0 (Stage 2 not run) |
-| Blocked by infrastructure | 0 in Stage 1; Stage 2 feasibility unmeasured |
+| Blocked by infrastructure | 0 in Stage 1; Stage 2 build probe failed once, cause unrecorded (relaunched) |
 | Independently reviewed | 0 |
 
 Smoke tests 1–4 of the kernel pipeline pass on synthetic statements; they are harness tests, not results.
-Workflow runs: https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml
+| CI run | Result |
+|---|---|
+| [43015699424](https://github.com/entropysherlock/ProofScope/actions/runs/43015699424) | smoke tests passed; Stage 1 ran; build probe failed after 12 min without recording a reason (harness defect, fixed) |
+| [43016379474](https://github.com/entropysherlock/ProofScope/actions/runs/43016379474), [43017405870](https://github.com/entropysherlock/ProofScope/actions/runs/43017405870) | reproduction check failed: date-format difference between git versions (amendment 2) |
+| [43018353868](https://github.com/entropysherlock/ProofScope/actions/runs/43018353868) | smoke tests passed; **Stage 1 reproduced byte for byte** on a GitHub-hosted runner |
+
+All runs: https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml
 
 ## Reproducibility
 
