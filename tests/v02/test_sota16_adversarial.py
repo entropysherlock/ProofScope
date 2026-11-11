@@ -33,6 +33,15 @@ class TestAbstention(unittest.TestCase):
             self.assertEqual(se.presburger_tactics(R, R), {}, arg)
 
 
+class TestToolchainTimeout(unittest.TestCase):
+    def test_timeout_is_a_result_not_a_crash(self):
+        # found by the SOTA-16 CI reproduction: a timed-out process returned bytes and raised TypeError
+        r = Toolchain(lean="lean").run(["python3", "-c", "import time; print('x', flush=True); time.sleep(5)"], timeout=0.5)
+        self.assertEqual(r.returncode, -9)
+        self.assertIn("TIMEOUT", r.output)
+        self.assertIsInstance(r.as_dict()["output_tail"], str)
+
+
 @unittest.skipUnless(shutil.which("lean"), "Lean not on PATH")
 class TestAdversarial(unittest.TestCase):
     @classmethod

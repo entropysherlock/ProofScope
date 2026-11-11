@@ -24,6 +24,26 @@ import z3_check  # noqa: E402
 
 def main(out: Path, jobs: int):
     if ARGS.lean_timeout:
+        # The frozen engine's Toolchain.run raises on a timeout (bytes/str bug, fixed on the branch).
+        # Patch the runner's view of it so a timed-out Lean call is the INFRASTRUCTURE_ERROR the
+        # engine intends; the frozen files themselves stay untouched.
+        import subprocess
+        import time as _t
+        from proofscope import toolchain as _tcm
+
+        def _run(self, cmd, cwd=None, extra_path=None, timeout=None):
+            import os
+            env = dict(os.environ)
+            env.update(self.env)
+            if extra_path:
+                env["LEAN_PATH"] = os.pathsep.join(p for p in [str(extra_path), env.get("LEAN_PATH", "")] if p)
+            t0 = _t.time()
+            try:
+                r = subprocess.run(cmd, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
+                return _tcm.CmdResult(cmd, r.returncode, r.stdout, r.stderr, _t.time() - t0)
+            except subprocess.TimeoutExpired:
+                return _tcm.CmdResult(cmd, -9, "", "TIMEOUT", _t.time() - t0)
+        _tcm.Toolchain.run = _run
         orig = se.certify
         se.certify = lambda *a, **k: orig(*a, **{**k, "timeout": ARGS.lean_timeout})
     base = Toolchain.find()
