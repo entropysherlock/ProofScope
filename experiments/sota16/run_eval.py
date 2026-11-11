@@ -4,8 +4,18 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+import argparse
+
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parents[1]))
+_ap = argparse.ArgumentParser()
+_ap.add_argument("out", type=Path)
+_ap.add_argument("jobs", type=int, nargs="?", default=2)
+_ap.add_argument("--engine-root", type=Path, default=HERE.parents[1],
+                 help="checkout whose `proofscope` package is evaluated (cases and runner stay from this tree)")
+_ap.add_argument("--lean-timeout", type=float, default=None,
+                 help="per-Lean-call limit in seconds; stands in for the memory kill of the first frozen run")
+ARGS = _ap.parse_args()
+sys.path.insert(0, str(ARGS.engine_root.resolve()))
 sys.path.insert(0, str(HERE.parents[0] / "sota15"))
 from proofscope import scopeelim as se  # noqa: E402
 from proofscope.toolchain import Toolchain  # noqa: E402
@@ -13,6 +23,9 @@ import z3_check  # noqa: E402
 
 
 def main(out: Path, jobs: int):
+    if ARGS.lean_timeout:
+        orig = se.certify
+        se.certify = lambda *a, **k: orig(*a, **{**k, "timeout": ARGS.lean_timeout})
     base = Toolchain.find()
     assert se.build_lib(base, out / "lib")["ok"]
     tc = se.lib_toolchain(base, out / "lib")
@@ -35,7 +48,8 @@ def main(out: Path, jobs: int):
         except Exception as e:  # noqa: BLE001
             z.append({"error": str(e)[:100]})
     st = lambda r, d: (r.get("directions") or {}).get(d, "UNKNOWN")
-    summ = {"cases": len(specs), "directions": 2 * len(specs)}
+    summ = {"cases": len(specs), "directions": 2 * len(specs), "engine_root": str(ARGS.engine_root),
+            "lean_timeout": ARGS.lean_timeout}
     for label, rows in res.items():
         dirs = [(r, zz, d) for r, zz in zip(rows, z) for d in ("fwd", "bwd")]
         summ[label] = {
@@ -57,4 +71,4 @@ def main(out: Path, jobs: int):
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]).resolve(), int(sys.argv[2]) if len(sys.argv) > 2 else 2)
+    main(ARGS.out.resolve(), ARGS.jobs)

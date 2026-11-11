@@ -967,7 +967,7 @@ def detect(spec: dict) -> dict:
     return info
 
 
-def claimdelta_obligations(spec: dict) -> tuple[dict, str, dict]:
+def claimdelta_obligations(spec: dict, pres: bool = False) -> tuple[dict, str, dict]:
     """ClaimDelta-shaped obligations (`link*`, `fwd`, `bwd`, `sepW`, `sepS` at tag `s1`) proved through
     the fragment criteria. Statements are exactly those `proofscope.claimdelta` would certify."""
     d = detect(spec)
@@ -982,7 +982,7 @@ def claimdelta_obligations(spec: dict) -> tuple[dict, str, dict]:
     header = HEADER
     if d["fragment"] == "func":
         for tag, (a, b) in {"fwd": (d["R"], d["F"]), "bwd": (d["F"], d["R"])}.items():
-            fd = func_direction(a, b, "_", "_")
+            fd = func_direction(a, b, "_", "_", pres=pres)
             spec_f = f"(fun z_ => {d['spec_of']('z_')})"
             ob[f"{tag}_s1"] = (ent[tag], [f"intro x1 h; {t} {spec_f} h" for t in fd["entails"]])
             name, stmt, P, Q = sep[tag]
@@ -1026,6 +1026,22 @@ def compare_claimdelta(spec: dict, tc: Toolchain, work: Path) -> dict:
     linked = {"linkR_s1", "linkL_s1"} <= certs
     v = relation(certs, "s1") if linked else "INCONCLUSIVE"
     src = r.get("certificate_source", "")
+    if PRESBURGER and linked and v == "INCONCLUSIVE" and meta["fragment"] == "func":
+        # SOTA-16: same isolated second pass as `compare`, only for the directions still open.
+        # Statements are unchanged (ClaimDelta's own obligation shapes), so the merge and the
+        # INCONSISTENT check below work exactly as for first-pass certificates.
+        ob2, _, _ = claimdelta_obligations(spec, pres=True)
+        open_ = {"fwd_s1", "sepS_s1"} if not {"fwd_s1", "sepS_s1"} & certs else set()
+        open_ |= {"bwd_s1", "sepW_s1"} if not {"bwd_s1", "sepW_s1"} & certs else set()
+        ob2 = {k: x for k, x in ob2.items() if k in open_}
+        r2 = certify(_ident(spec) + "_P", header.replace("maxHeartbeats 1000000", "maxHeartbeats 200000"),
+                     ob2, tc, work / "certify_presburger")
+        out["presburger_pass"] = {"status": r2["status"], "certificates": sorted(r2["certificates"])}
+        r["certificates"].update(r2["certificates"])
+        r["rejected"] = {k: x for k, x in {**r["rejected"], **r2["rejected"]}.items() if k not in r["certificates"]}
+        src += r2.get("certificate_source", "")
+        certs = set(r["certificates"])
+        v = relation(certs, "s1")
     out.update(meta, verdict=v, linked=linked, certify_status=r["status"], certificates=sorted(certs),
                axioms={k: c["axioms"] for k, c in r["certificates"].items()}, rejected=r["rejected"],
                certificate_bytes=len(src.encode()), seconds=round(time.time() - t0, 2))

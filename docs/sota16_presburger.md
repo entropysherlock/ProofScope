@@ -59,8 +59,54 @@ The first evaluation attempt was stopped by the 30-minute job limit during the Z
 query) before results were written; the runner was made resumable and rerun. Engine and cases were
 not changed between those two attempts.
 
+## Independent labels (`experiments/sota16/labels.py`)
+
+Labels are computed without the engine, Lean or Theorem B: ENTAILS when Z3 or cvc5 refutes
+`R(f) ∧ ¬F(f)` with `f` uninterpreted; SEPARATED when a solver returns a model, or when an explicit
+function `f z = if z = z0 then v else a * q(z) + b` is found for which Z3 proves, as Presburger
+sentences without uninterpreted symbols, that the reference holds and the formal claim fails.
+
+Local run: 237 of 240 directions labelled (97 by Z3 model, 69 by explicit function, 68 by Z3
+refutation, 3 by cvc5). Of the 231 directions certified after the fix, 230 carry a label and all
+230 agree; one certified direction (`fl105` fwd, SEPARATED) has no independent label. The frozen
+first run and the v1.3 configuration also have no contradiction.
+
+## Integration
+
+`compare_claimdelta` (and therefore `python3 -m proofscope.claimdelta --scopeelim`) runs the same
+isolated second pass for the once-occurring fragment, only for directions still open after the v1.3
+obligations, with ClaimDelta's own statement shapes. The reference guard, the law check and the
+INCONSISTENT merge are unchanged.
+
+## Adversarial tests (`tests/v02/test_sota16_adversarial.py`)
+
+Slope-3 congruences (one decided, one open case that must never be wrong); constant arguments
+including a jointly unsatisfiable reference; repeated and nested symbols (must abstain); non-affine
+arguments (no Presburger tactics); truncated subtraction, division by zero and literals beyond
+64 bits; a heavy congruence case that must finish, must not be killed, and must keep every
+certificate the v1.3 portfolio finds; the adapter with and without the pass; a false reference
+through the fallback (stays `REFERENCE_REFUTED`).
+
+## Open directions after the fix (all 9)
+
+| Case | Direction | Reference (guard; argument; relation) | Formal | Independent label |
+|---|---|---|---|---|
+| fl026 | fwd | `True`; `3 * n + 2`; `w / 2 = n` | `True`; `n + 3`; `w + n ≥ 5` | SEPARATED (explicit-function) |
+| fl028 | bwd | `3 ≤ n`; `4`; `n ≤ w ∧ w % 2 = 0` | `n ≠ 2`; `3 * n + 2`; `w / 2 = n ∨ w % 2 = 0` | ENTAILS (z3) |
+| fl047 | fwd | `3 ≤ n`; `n + 3`; `w % 3 = n % 3 ∧ 3 * n ≤ w` | `True`; `3 * n`; `w % 3 = n % 3` | none (-) |
+| fl049 | fwd | `2 ≤ n ∧ n % 2 = 1`; `4`; `n + 2 < w ∨ w = n` | `True`; `4`; `n + 2 < w ∨ w = n` | ENTAILS (z3) |
+| fl061 | fwd | `3 ≤ n`; `2 * n + 1`; `w ≤ 2 * n + 1 ∧ w % 3 = n % 3` | `True`; `0`; `w = n` | SEPARATED (explicit-function) |
+| fl067 | fwd | `n % 3 = 1`; `4`; `w < 7 ∧ 3 * n ≤ w` | `True`; `0`; `w = n ∧ n < w` | ENTAILS (z3) |
+| fl070 | fwd | `3 ≤ n`; `3 * n`; `2 * w ≤ n ∧ w % 3 = n % 3` | `3 ≤ n`; `3 * n`; `n < w` | none (-) |
+| fl101 | fwd | `2 ≤ n ∧ n % 2 = 1`; `0`; `n ≤ w` | `True`; `4`; `w < n` | ENTAILS (cvc5) |
+| fl117 | fwd | `n % 3 = 1`; `n`; `n ≤ 2 * w ∧ 3 * n ≤ w` | `n % 3 = 1`; `n`; `2 * w ≤ n` | SEPARATED (explicit-function) |
+
+Each of these is an abstention, not a wrong answer. By the independent labels four are true
+entailments, three are separations and two are unlabelled. They involve modulus-3 or slope-3
+relations, or a constant argument, where the instantiation and candidate sets are truncated or not
+known to be complete.
+
 ## Limits
 
-* Not wired into the ClaimDelta adapter yet: `--scopeelim` still uses the v1.3 portfolio.
 * 9 directions remain open; all involve congruence relations with slope 3 or constant arguments.
-* Same author for engine, cases and oracle encoding; Z3 is the only independent check.
+* Same author for engine, cases and labeller. The labels are independent of the engine's method, not of its author.
