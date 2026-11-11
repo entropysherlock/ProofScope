@@ -42,7 +42,9 @@ jobs:
           for i in 1 2 3; do lake exe cache get && break || sleep 60; done
           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
       - name: Ablation shard ${{ matrix.shard }}
-        run: python experiments/sota19/ablation_g.py "$RUN" ev/g --shard ${{ matrix.shard }}/12 | tee ev/g-${{ matrix.shard }}.log
+        run: |
+          mkdir -p ev/g
+          python experiments/sota19/ablation_g.py "$RUN" ev/g --shard ${{ matrix.shard }}/12 | tee ev/g-${{ matrix.shard }}.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:

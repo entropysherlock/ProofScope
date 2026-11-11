@@ -34,3 +34,13 @@ Same Lean 4.34.1 / Mathlib v4.34.1, 100,000 heartbeats per theorem, 600 s per pa
 * In between: reported as mixed.
 
 Also reported: pairs G certifies that none of ProofScope, SemantEq or BEq+ certified.
+
+## Amendment 1 (2026-11-11, after run 43001388917; protocol unchanged, harness repaired)
+
+Run 43001388917 is **invalid**. Its harness accepted a direction when `#print axioms` listed only standard
+axioms. For Munkres 34.9 it reported a proof of `R → L` although `L` is false (both sets empty) and `R` is
+a theorem. Probe run 43006408019 showed why: the statement's elaboration hit `maxHeartbeats`, Lean added
+`theorem p_fwd_0 : sorry := sorry`, and `#print axioms` printed "does not depend on any axioms".
+Repair: a theorem counts only if no error is reported on any of its lines; heartbeats raised from 100,000
+to 400,000 so statements elaborate. Closers, pairs and the pre-registered reading are unchanged. The
+invalid records are kept in `results/a0_run_43001388917/` and marked invalid there.

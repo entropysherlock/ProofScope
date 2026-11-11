@@ -30,16 +30,18 @@ def lean_file(row, cl):
     lv = sorted({x for v in (row.get("levels") or {}).values() for x in v} | {f"u_{k}" for k in range(1, 10)})
     src = "import Mathlib\n\nuniverse " + " ".join(lv) + "\n\n"
     R, L = row["reference"], row["lean"]
-    names = []
+    names, spans = [], {}
     for d, (a, b) in (("fwd", (R, L)), ("bwd", (L, R))):
         for k, t in enumerate(cl):
             n = f"g_{d}_{k}"
             names.append(n)
             body = "assumption" if t == "assumption" else f"first | assumption | {t}"
-            src += (f"set_option maxHeartbeats 100000 in\ntheorem {n} : ({a}) → ({b}) := by\n"
+            start = src.count("\n") + 1
+            src += (f"set_option maxHeartbeats 400000 in\ntheorem {n} : ({a}) → ({b}) := by\n"
                     f"  intro hR; intros; apply hR <;> {body}\n\n")
+            spans[n] = (start, src.count("\n"))
     src += "".join(f"#print axioms {n}\n" for n in names)
-    return src, names
+    return src, names, spans
 
 
 def main():
@@ -54,7 +56,7 @@ def main():
     lean = subprocess.run(["which", "lean"], capture_output=True, text=True).stdout.strip()
     for r in rows:
         safe = re.sub(r"[^A-Za-z0-9_]", "_", r["case_id"])
-        src, names = lean_file(r, cl)
+        src, names, spans = lean_file(r, cl)
         f = out / f"{safe}.lean"
         f.write_text(src)
         t0 = time.time()
@@ -63,12 +65,18 @@ def main():
             txt, to = p.stdout + p.stderr, False
         except subprocess.TimeoutExpired as e:
             txt, to = (e.stdout or b"").decode("utf-8", "replace") if isinstance(e.stdout, bytes) else (e.stdout or ""), True
+        # A theorem counts only if no error is reported on any of its lines. Run 43001388917 showed that a
+        # statement whose elaboration hits maxHeartbeats can be added as `theorem t : sorry := sorry` with
+        # `#print axioms` reporting no axioms (probe run 43006408019); axioms alone are not evidence.
+        err_lines = {int(m.group(1)) for m in re.finditer(r"\.lean:(\d+):\d+: error", txt)}
+        bad = {n for n, (a0, b0) in spans.items() if any(a0 <= ln <= b0 for ln in err_lines)}
         proved = {}
         for m in re.finditer(r"'(g_(fwd|bwd)_(\d+))' (depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", txt):
             ax = set(a.strip() for a in (m.group(5) or "").split(",") if a.strip())
-            if ax <= OK_AX:
+            if ax <= OK_AX and m.group(1) not in bad:
                 proved.setdefault(m.group(2), []).append(cl[int(m.group(3))])
         row = {"case_id": r["case_id"], "fwd": proved.get("fwd", []), "bwd": proved.get("bwd", []),
+               "theorems_with_errors": len(bad), "statement_timeouts": txt.count("maximum number of heartbeats"),
                "equiv": bool(proved.get("fwd")) and bool(proved.get("bwd")), "timeout": to,
                "seconds": round(time.time() - t0, 1)}
         (out / f"{safe}.json").write_text(json.dumps(row, ensure_ascii=False))

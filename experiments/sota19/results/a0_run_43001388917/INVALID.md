@@ -1,0 +1,1 @@
+Invalid: harness accepted theorems with errors whose `#print axioms` showed no axioms (statement-elaboration timeout produced `theorem t : sorry := sorry`). See ../../ABLATION_PROTOCOL.md amendment 1. Do not use.
