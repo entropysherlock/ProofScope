@@ -1,1 +1,1 @@
-launch 2 2026-11-11 plain-lean build driver on Mathlib-only project (run 43024368984 was rebuilding Mathlib)
+launch 3 2026-11-11 build.py runs lean from the source root (run 43024708516 assembly: 'must be contained in root directory')

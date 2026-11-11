@@ -26,7 +26,7 @@ def deps(root: Path, mod: str) -> list[str]:
 
 
 def main(ml, root, out, *targets):
-    root, out = Path(root), Path(out)
+    root, out = Path(root).resolve(), Path(out).resolve()
     lib = out / "lib"
     lib.mkdir(parents=True, exist_ok=True)
     ml_path = subprocess.run(["lake", "env", "printenv", "LEAN_PATH"], cwd=ml, check=True,
@@ -44,12 +44,17 @@ def main(ml, root, out, *targets):
         rel = m.replace(".", "/")
         (lib / rel).parent.mkdir(parents=True, exist_ok=True)
         t = time.time()
-        p = subprocess.run(["lean", "-DautoImplicit=false", "-o", str(lib / f"{rel}.olean"),
-                            "-i", str(lib / f"{rel}.ilean"), str(root / f"{rel}.lean")],
-                           env=env, capture_output=True, text=True, timeout=3600)
-        (out / f"build_{m}.log").write_text(p.stdout + p.stderr)
-        bad = p.returncode != 0 or re.search(r'\berror\b', p.stdout + p.stderr)
-        return m, ("failed" if bad else "ok"), time.time() - t, p.stdout + p.stderr
+        try:
+            p = subprocess.run(["lean", "-DautoImplicit=false", "-o", str(lib / f"{rel}.olean"),
+                                "-i", str(lib / f"{rel}.ilean"), f"{rel}.lean"],
+                               cwd=root, env=env, capture_output=True, text=True, timeout=3600,
+                               stdin=subprocess.DEVNULL)
+            log, rc = p.stdout + p.stderr, p.returncode
+        except Exception as e:  # noqa: BLE001 - recorded, never hidden
+            log, rc = f"driver exception: {e!r}", -1
+        (out / f"build_{m}.log").write_text(f"exit {rc}\n" + log)
+        bad = rc != 0 or re.search(r':\d+:\d+: error', log)
+        return m, ("failed" if bad else "ok"), time.time() - t, f"exit {rc}\n" + log
 
     start = time.time()
     with ThreadPoolExecutor(4) as pool:
@@ -73,6 +78,7 @@ def main(ml, root, out, *targets):
                 m, st, dt, log = f.result()
                 status[m], times[m] = st, round(dt, 1)
                 if st == "failed":
+                    print(f"::error title=build {m} (first lines)::{' | '.join(log.splitlines()[:6])[:900]}")
                     for line in [l for l in log.splitlines() if "error" in l][:15]:
                         mm = re.search(r'([\w./-]+\.lean):(\d+):(\d+):\s*error:?\s*(.*)', line)
                         if mm and "SL002/" in mm.group(1):
