@@ -19,9 +19,15 @@ def main(out: Path, jobs: int):
     specs = [json.loads(p.read_text()) for p in sorted((HERE / "cases" / "func_lin").glob("*.json"))]
     res = {}
     for label, flag in (("sota15", False), ("sota16", True)):
+        f = out / f"rows_{label}.json"              # stage results are saved so a killed run can resume
+        if f.exists():
+            res[label] = json.loads(f.read_text())
+            continue
         se.PRESBURGER = flag
         with ThreadPoolExecutor(max_workers=jobs) as ex:
             res[label] = list(ex.map(lambda s: se.compare(s, tc, out / "lib", out / label / s["id"]), specs))
+        f.write_text(json.dumps(res[label], indent=1, ensure_ascii=False, default=str))
+    z3_check.TIMEOUT_MS = 2000                      # the first run was killed in this stage at 8 s per query
     z = []
     for s in specs:
         try:

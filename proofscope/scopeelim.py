@@ -38,6 +38,7 @@ HEADER = ("import ProofScope.ScopeCert\nopen ProofScope.ScopeElim ProofScope.Sco
           "set_option linter.unusedVariables false\n")
 MAX_GROUND = 4000          # ground rule instances per schema (bounded fragment)
 MAX_LEAVES = 400           # case-split leaves per formal clause
+_SERIAL = __import__("threading").Lock()
 PRESBURGER = True          # SOTA-16 instantiation certificates for the linear one-occurrence fragment
 
 
@@ -676,7 +677,7 @@ def presburger_tactics(R: "FunClaim", F: "FunClaim") -> dict:
         # terms of x in `A ∧ ρ` (they may mention w_). Complete only when these cover Cooper's test
         # points, which is not proved here; the engine abstains if Lean rejects the result.
         body = subst(("and", R.guard, R.rel), {R.var: ("var", "x_")})
-        xs = [f"({b} + {j})" for b in bound_terms(body, "x_") for j in range(per)][:12]
+        xs = [f"({b} + {j})" for b in bound_terms(body, "x_") for j in range(per)][:8]
         solve = lambda z: xs
     triv = " trivial" if R.guard == ("true",) else ""       # omega does not look under `True →`
     inst = lambda z: "; ".join(f"have i{n} := hadm {x}{triv}" for n, x in enumerate(solve(z)))
@@ -691,7 +692,7 @@ def presburger_tactics(R: "FunClaim", F: "FunClaim") -> dict:
     else:
         gx = bound_terms(subst(R.guard, {R.var: ("var", "x_")}), "x_")[:3]
         rels = [subst(R.rel, {R.var: ("raw", g)}) for g in gx]
-    cands = list(dict.fromkeys(f"({b} + {j})" for r in rels for b in bound_terms(r, "w_") for j in range(per)))[:24]
+    cands = list(dict.fromkeys(f"({b} + {j})" for r in rels for b in bound_terms(r, "w_") for j in range(per)))[:8]
     adm = lambda w: f"(∀ (x_ : Nat), {A} → {s} = z_ → {to_lean(subst(subst(R.rel, {R.var: ('var', 'x_')}), {'w_': ('raw', w)}))})"
     steps = [f"have n{i} : ¬ {adm(w)} := fun h => hne ⟨_, h⟩" for i, w in enumerate(cands)]
     steps += [f"obtain ⟨x{i}, h{i}⟩ := Classical.not_forall.1 n{i}" for i in range(len(cands))]
@@ -702,7 +703,7 @@ def presburger_tactics(R: "FunClaim", F: "FunClaim") -> dict:
 _OFFS = ["y_", "(y_ + 1)", "(y_ + 2)", "(y_ + 3)", "(y_ - 1)", "(y_ - 2)", "(y_ - 3)", "0", "1", "2", "3"]
 
 
-def func_residuals(R: FunClaim, F: FunClaim) -> dict:
+def func_residuals(R: FunClaim, F: FunClaim, pres: bool = False) -> dict:
     """The four symbol-free obligations of Theorem B for 'R entails F', each with a tactic portfolio."""
     A, s, rho = R.at("x_")
     B, t, theta = F.at("y_")
@@ -730,16 +731,15 @@ def func_residuals(R: FunClaim, F: FunClaim) -> dict:
                  for z in range(3) for x in range(4) for x2 in range(x + 1, 5)]
     vac_tac = "first | " + " | ".join(vac_alts)
     res = {"fib": (fib, fib_tac), "nfib": (nfib, nfib_tac), "vac": (vac, vac_tac), "nvac": (nvac, nvac_tac)}
-    if PRESBURGER:
-        for key, tacs in presburger_tactics(R, F).items():
-            if tacs:                                    # exact instantiation certificates go first
-                stmt, old = res[key]
-                res[key] = (stmt, "first | " + " | ".join(f"({t})" for t in tacs) + f" | ({old})")
+    if pres:                                            # SOTA-16 pass: instantiation certificates only
+        pt = presburger_tactics(R, F)
+        res = {key: (res[key][0], "first | " + " | ".join(f"({t})" for t in pt[key]) if pt.get(key) else "fail")
+               for key in res}
     return res
 
 
-def func_direction(R: FunClaim, F: FunClaim, rname: str, fname: str) -> dict:
-    res = func_residuals(R, F)
+def func_direction(R: FunClaim, F: FunClaim, rname: str, fname: str, pres: bool = False) -> dict:
+    res = func_residuals(R, F, pres)
     show = lambda k: f"(show {res[k][0]} from by {res[k][1]})"
     lam = f"{R.lambdas()} {F.lambdas()}"
     ent_stmt = f"∀ (f : Nat → Nat), {rname} f → {fname} f"
@@ -820,14 +820,42 @@ def compare(spec: dict, tc: Toolchain, lib: Path, work: Path) -> dict:
         out.update(verdict="INCONCLUSIVE", reason=f"unsupported: {e}", seconds=round(time.time() - t0, 2))
         return out
     r = certify(_ident(spec), header, ob, tc, work / "certify")
+    if r["status"] == "INFRASTRUCTURE_ERROR":
+        # Lean was killed (memory pressure under parallel runs, observed in the first SOTA-16 run).
+        # Retry alone; the gate is unchanged, so this can only recover certificates, not invent them.
+        with _SERIAL:
+            r = certify(_ident(spec), header, ob, tc, work / "certify_retry")
+        out["infrastructure_retry"] = r["status"]
     certs = set(r["certificates"])
     st = {tag: _status(certs, e, s) for tag, (e, s) in pairs.items()}
+    src2 = ""
+    if spec["kind"] == "func" and PRESBURGER and "UNKNOWN" in st.values():
+        # SOTA-16 second pass, in its own Lean process and with the default heartbeat budget, so an
+        # expensive arithmetic goal can cost only the additional certificates (the first SOTA-16 run
+        # lost whole cases when Lean ran out of memory inside one module).
+        ob2 = {}
+        for tag, (a, b, an, bn) in {"fwd": (R, F, "Ref", "Frm"), "bwd": (F, R, "Frm", "Ref")}.items():
+            if st[tag] != "UNKNOWN":
+                continue
+            d = func_direction(a, b, an, bn, pres=True)
+            ob2[tag] = (d["entails_stmt"], d["entails"])
+            ob2["n" + tag] = (d["nent_stmt"], d["nent"])
+            for k, (stmt, tac) in d["residuals"].items():
+                ob2[f"{tag}_{k}"] = (stmt, [tac])
+        r2 = certify(_ident(spec) + "_P", header.replace("maxHeartbeats 1000000", "maxHeartbeats 200000"),
+                     ob2, tc, work / "certify_presburger")
+        out["presburger_pass"] = {"status": r2["status"], "certificates": sorted(r2["certificates"])}
+        r["certificates"].update(r2["certificates"])
+        r["rejected"] = {k: v for k, v in {**r["rejected"], **r2["rejected"]}.items() if k not in r["certificates"]}
+        src2 = r2.get("certificate_source", "")
+        certs = set(r["certificates"])
+        st = {tag: _status(certs, e, s) for tag, (e, s) in pairs.items()}
     v = "INCONSISTENT" if "INCONSISTENT" in st.values() else verdict(st["fwd"], st["bwd"])
     if spec["kind"] == "func":
         out["reference_vacuous"] = "fwd_vac" in certs
         out["formal_vacuous"] = "bwd_vac" in certs
         out["residuals_certified"] = sorted(k for k in certs if "_" in k)
-    src = r.get("certificate_source", "")
+    src = r.get("certificate_source", "") + src2
     out.update(verdict=v, directions=st, notes=notes, certify_status=r["status"], certificates=sorted(certs),
                axioms={k: c["axioms"] for k, c in r["certificates"].items()}, rejected=r["rejected"],
                certificate_bytes=len(src.encode()), seconds=round(time.time() - t0, 2))
