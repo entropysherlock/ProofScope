@@ -1,0 +1,1424 @@
+{
+ "summary": {
+  "split": "C1",
+  "mathlib_rev": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "declarations": 200,
+  "reached": {
+   "extracted": 200,
+   "binders": 0,
+   "abstracted": 0,
+   "in_fragment": 0,
+   "certified": 0
+  },
+  "failure_reasons": {
+   "failed_at_binders: no function symbol in the binders": 136,
+   "failed_at_binders: variables of another type": 32,
+   "failed_at_binders: typeclass binder": 29,
+   "failed_at_binders: untyped binder": 3
+  },
+  "certified": [],
+  "seconds_total": 0
+ },
+ "rows": [
+  {
+   "name": "setOfPred_isUnit_inter_mul_comm",
+   "file": "Mathlib/Algebra/Algebra/Spectrum/Basic.lean",
+   "line": 267,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "one_smul",
+   "file": "Mathlib/Algebra/Category/Grp/EpiMono.lean",
+   "line": 122,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "forget₂_bialgebra_map",
+   "file": "Mathlib/Algebra/Category/HopfAlgCat/Basic.lean",
+   "line": 122,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "add_pow_char",
+   "file": "Mathlib/Algebra/CharP/Lemmas.lean",
+   "line": 176,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "smul_inv",
+   "file": "Mathlib/Algebra/Group/Action/Defs.lean",
+   "line": 535,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "coe_sum",
+   "file": "Mathlib/Algebra/Group/AddChar.lean",
+   "line": 282,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "inv_apply",
+   "file": "Mathlib/Algebra/Group/End.lean",
+   "line": 692,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "toEquiv_symm",
+   "file": "Mathlib/Algebra/Group/Equiv/Defs.lean",
+   "line": 299,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "units_inv_right_iff",
+   "file": "Mathlib/Algebra/Group/Semiconj/Units.lean",
+   "line": 54,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "mem_square",
+   "file": "Mathlib/Algebra/Group/Subgroup/Even.lean",
+   "line": 36,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "comp_assoc",
+   "file": "Mathlib/Algebra/Homology/HomotopyCategory/HomComplex.lean",
+   "line": 253,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "homologyMap'_sub",
+   "file": "Mathlib/Algebra/Homology/ShortComplex/Preadditive.lean",
+   "line": 329,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "apply_lie_eq_add",
+   "file": "Mathlib/Algebra/Lie/Derivation/Basic.lean",
+   "line": 107,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "mono_lie_right",
+   "file": "Mathlib/Algebra/Lie/IdealOperations.lean",
+   "line": 172,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "map_inf",
+   "file": "Mathlib/Algebra/Module/Submodule/Map.lean",
+   "line": 125,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "prod_lt_prod₀",
+   "file": "Mathlib/Algebra/Order/BigOperators/GroupWithZero/Finset.lean",
+   "line": 161,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "fract_sub_one",
+   "file": "Mathlib/Algebra/Order/Floor/Ring.lean",
+   "line": 368,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "preimage_mul_const_Iic_of_neg",
+   "file": "Mathlib/Algebra/Order/Group/Pointwise/Interval.lean",
+   "line": 758,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "oneLePart_def",
+   "file": "Mathlib/Algebra/Order/Group/PosPart.lean",
+   "line": 287,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "zpow_le_one_of_nonpos₀",
+   "file": "Mathlib/Algebra/Order/GroupWithZero/Basic.lean",
+   "line": 999,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "le_tsub_iff_left",
+   "file": "Mathlib/Algebra/Order/Sub/Unbundled/Basic.lean",
+   "line": 94,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "toIcoDiv_sub'",
+   "file": "Mathlib/Algebra/Order/ToIntervalMod.lean",
+   "line": 334,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "evalEval_surjective",
+   "file": "Mathlib/Algebra/Polynomial/Bivariate.lean",
+   "line": 95,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "trailingDegree_C_mul_X_pow",
+   "file": "Mathlib/Algebra/Polynomial/Degree/TrailingDegree.lean",
+   "line": 210,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Monic.irreducible_iff_degree_lt",
+   "file": "Mathlib/Algebra/Polynomial/Roots.lean",
+   "line": 894,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "untrop_one",
+   "file": "Mathlib/Algebra/Tropical/Basic.lean",
+   "line": 418,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "isAffineOpen_top",
+   "file": "Mathlib/AlgebraicGeometry/AffineScheme.lean",
+   "line": 267,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "map_nonsingular",
+   "file": "Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Basic.lean",
+   "line": 292,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "mem_support_iff_of_mem",
+   "file": "Mathlib/AlgebraicGeometry/IdealSheaf/Basic.lean",
+   "line": 341,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "equivOfIsAffine_apply",
+   "file": "Mathlib/AlgebraicGeometry/IdealSheaf/Basic.lean",
+   "line": 497,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "QuasiCompact.of_comp",
+   "file": "Mathlib/AlgebraicGeometry/Morphisms/QuasiSeparated.lean",
+   "line": 250,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "_root_.AlgebraicGeometry.IsOpenImmersion.of_isLocalization",
+   "file": "Mathlib/AlgebraicGeometry/OpenImmersion.lean",
+   "line": 341,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "homotopy_extension",
+   "file": "Mathlib/AlgebraicTopology/ModelCategory/RightHomotopy.lean",
+   "line": 183,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "ext",
+   "file": "Mathlib/AlgebraicTopology/SimplicialSet/CompStruct.lean",
+   "line": 222,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "HasFPowerSeriesWithinOnBall.add",
+   "file": "Mathlib/Analysis/Analytic/Constructions.lean",
+   "line": 80,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "IsLittleO.sum_congr",
+   "file": "Mathlib/Analysis/Asymptotics/Arith.lean",
+   "line": 422,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "quasispectrum_imaginaryPart",
+   "file": "Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/RealImaginaryPart.lean",
+   "line": 48,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "cfc_smul_id",
+   "file": "Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Unital.lean",
+   "line": 554,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "contDiffOn_const",
+   "file": "Mathlib/Analysis/Calculus/ContDiff/Basic.lean",
+   "line": 107,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "ContDiffOn.snd",
+   "file": "Mathlib/Analysis/Calculus/ContDiff/Comp.lean",
+   "line": 362,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "norm_compAlongOrderedFinpartition_le",
+   "file": "Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+   "line": 801,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "tan_inv_eq_cot",
+   "file": "Mathlib/Analysis/Complex/Trigonometric.lean",
+   "line": 649,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "convexHull_pi",
+   "file": "Mathlib/Analysis/Convex/Combination.lean",
+   "line": 606,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "ConvexOn.locallyLipschitzOn",
+   "file": "Mathlib/Analysis/Convex/Continuous.lean",
+   "line": 186,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "inter_left",
+   "file": "Mathlib/Analysis/Convex/Exposed.lean",
+   "line": 152,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "convexOn_iff_div",
+   "file": "Mathlib/Analysis/Convex/Function.lean",
+   "line": 1005,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "IsOpen.convexHull",
+   "file": "Mathlib/Analysis/Convex/Topology.lean",
+   "line": 209,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "norm_fourier_Lp_top_leq_toLp_one",
+   "file": "Mathlib/Analysis/Distribution/SchwartzSpace/Fourier.lean",
+   "line": 290,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "injective_toBoundedContinuousFunctionCLM",
+   "file": "Mathlib/Analysis/Distribution/TestFunction.lean",
+   "line": 417,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "gramSchmidt_inv_triangular",
+   "file": "Mathlib/Analysis/InnerProductSpace/GramSchmidtOrtho.lean",
+   "line": 115,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "card_support_singularValues",
+   "file": "Mathlib/Analysis/InnerProductSpace/SingularValues.lean",
+   "line": 173,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "IsSymmetric.coe_re_inner_apply_self",
+   "file": "Mathlib/Analysis/InnerProductSpace/Symmetric.lean",
+   "line": 157,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "nnnorm_def",
+   "file": "Mathlib/Analysis/Matrix/Normed.lean",
+   "line": 91,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Bornology.IsBounded.exists_pos_norm_le'",
+   "file": "Mathlib/Analysis/Normed/Group/Bounded.lean",
+   "line": 82,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "singleton_mul_sphere",
+   "file": "Mathlib/Analysis/Normed/Group/Pointwise.lean",
+   "line": 172,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "coe_comp",
+   "file": "Mathlib/Analysis/Normed/Group/SemiNormedGrp.lean",
+   "line": 133,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "isLeast_opNNNorm",
+   "file": "Mathlib/Analysis/Normed/Module/Multilinear/Basic.lean",
+   "line": 533,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "norm_inf_sub_inf_le_norm",
+   "file": "Mathlib/Analysis/Normed/Order/Lattice.lean",
+   "line": 157,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "lipschitzWith_sup_right",
+   "file": "Mathlib/Analysis/Normed/Order/Lattice.lean",
+   "line": 160,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "cantorFunction_le",
+   "file": "Mathlib/Analysis/Real/Cardinality.lean",
+   "line": 99,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "stdAddChar_coe",
+   "file": "Mathlib/Analysis/SpecialFunctions/Complex/CircleAddChar.lean",
+   "line": 86,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "le_rpow_inv_iff",
+   "file": "Mathlib/Analysis/SpecialFunctions/Pow/NNReal.lean",
+   "line": 277,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "abs_toReal_add_abs_toReal_eq_pi_of_two_nsmul_add_eq_zero_of_sign_eq",
+   "file": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Angle.lean",
+   "line": 875,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "sin_nonneg_of_nonneg_of_le_pi",
+   "file": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Basic.lean",
+   "line": 424,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "exp_int_mul_two_pi_mul_I",
+   "file": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Basic.lean",
+   "line": 1241,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "id_apex",
+   "file": "Mathlib/CategoryTheory/Bicategory/Span/Basic.lean",
+   "line": 163,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "iteratedSliceForward_forget",
+   "file": "Mathlib/CategoryTheory/Comma/Over/Basic.lean",
+   "line": 383,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mk_surjective",
+   "file": "Mathlib/CategoryTheory/Comma/Over/Basic.lean",
+   "line": 761,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "fourδ₄Toδ₃_app_zero",
+   "file": "Mathlib/CategoryTheory/ComposableArrows/Four.lean",
+   "line": 62,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "effectiveEpiFamilyStructOfEquivalence_aux",
+   "file": "Mathlib/CategoryTheory/EffectiveEpi/Preserves.lean",
+   "line": 39,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "reflectsLimits_rightOp",
+   "file": "Mathlib/CategoryTheory/Limits/Preserves/Opposites.lean",
+   "line": 817,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "isSiftedOrEmpty_of_colim_preservesBinaryProducts",
+   "file": "Mathlib/CategoryTheory/Limits/Sifted.lean",
+   "line": 230,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "fac",
+   "file": "Mathlib/CategoryTheory/Limits/Types/ColimitType.lean",
+   "line": 217,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "δ_of_cartesianMonoidalCategory",
+   "file": "Mathlib/CategoryTheory/Monoidal/Cartesian/Basic.lean",
+   "line": 872,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "id_tensor_pre_app_comp_ev",
+   "file": "Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean",
+   "line": 246,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Discrete.monoidalFunctor_obj",
+   "file": "Mathlib/CategoryTheory/Monoidal/Discrete.lean",
+   "line": 55,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "iso_iff",
+   "file": "Mathlib/CategoryTheory/Preadditive/Injective/Basic.lean",
+   "line": 102,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "expansion_smul_finset",
+   "file": "Mathlib/Combinatorics/Additive/VerySmallDoubling.lean",
+   "line": 531,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "IsTrivial.not_mem_edgeSet",
+   "file": "Mathlib/Combinatorics/Hypergraph/Basic.lean",
+   "line": 253,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "map_emptyOn",
+   "file": "Mathlib/Combinatorics/Matroid/Map.lean",
+   "line": 449,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mapEmbedding_ground_eq",
+   "file": "Mathlib/Combinatorics/Matroid/Map.lean",
+   "line": 523,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "isIndepSet_iff_isAntichain_adj",
+   "file": "Mathlib/Combinatorics/SimpleGraph/Clique.lean",
+   "line": 913,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "coe_neighborFinset",
+   "file": "Mathlib/Combinatorics/SimpleGraph/Finite.lean",
+   "line": 176,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "IsPath.dropUntil",
+   "file": "Mathlib/Combinatorics/SimpleGraph/Paths.lean",
+   "line": 608,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "IsRegular_compl",
+   "file": "Mathlib/Computability/DFA.lean",
+   "line": 385,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "option_some_iff",
+   "file": "Mathlib/Computability/Partrec.lean",
+   "line": 682,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "exists_mem_list",
+   "file": "Mathlib/Computability/Primrec/List.lean",
+   "line": 487,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "zipWith_single_single",
+   "file": "Mathlib/Data/DFinsupp/Defs.lean",
+   "line": 553,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "succAbove_ne_zero",
+   "file": "Mathlib/Data/Fin/SuccPred.lean",
+   "line": 596,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "Iio_eq_ssubsets",
+   "file": "Mathlib/Data/Finset/Interval.lean",
+   "line": 70,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "sup'_insert",
+   "file": "Mathlib/Data/Finset/Lattice/Fold.lean",
+   "line": 548,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "hasFiniteSupport",
+   "file": "Mathlib/Data/Finsupp/Defs.lean",
+   "line": 194,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Finsupp.toDFinsupp_toFinsupp",
+   "file": "Mathlib/Data/Finsupp/ToDFinsupp.lean",
+   "line": 124,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mem_pair",
+   "file": "Mathlib/Data/List/Basic.lean",
+   "line": 70,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "mem_argmax_iff",
+   "file": "Mathlib/Data/List/MinMax.lean",
+   "line": 166,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Perm.foldr_op_eq",
+   "file": "Mathlib/Data/List/Perm/Basic.lean",
+   "line": 203,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "card_Ioo",
+   "file": "Mathlib/Data/Multiset/Interval.lean",
+   "line": 71,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Nat.cast_withBot",
+   "file": "Mathlib/Data/Nat/Cast/WithTop.lean",
+   "line": 24,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "eleven_dvd_of_palindrome",
+   "file": "Mathlib/Data/Nat/Digits/Div.lean",
+   "line": 63,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "isPrimePow_of_minFac_pow_factorization_eq",
+   "file": "Mathlib/Data/Nat/Factorization/PrimePow.lean",
+   "line": 28,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mod_modEq",
+   "file": "Mathlib/Data/Nat/ModEq.lean",
+   "line": 129,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "size_toOrdNode",
+   "file": "Mathlib/Data/Ordmap/Ordnode.lean",
+   "line": 179,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "cast_inj",
+   "file": "Mathlib/Data/Rat/Cast/CharZero.lean",
+   "line": 37,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "map_id",
+   "file": "Mathlib/Data/Seq/Basic.lean",
+   "line": 363,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "get?_set_of_ne",
+   "file": "Mathlib/Data/Seq/Basic.lean",
+   "line": 722,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "pmap_eq_map",
+   "file": "Mathlib/Data/Sym/Sym2.lean",
+   "line": 457,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "omegaLimit_eq_iInter",
+   "file": "Mathlib/Dynamics/OmegaLimit.lean",
+   "line": 182,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "eval₂",
+   "file": "Mathlib/FieldTheory/Fixed.lean",
+   "line": 196,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "restrictScalars_injective",
+   "file": "Mathlib/FieldTheory/IntermediateField/Basic.lean",
+   "line": 733,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "elemExponent_def'",
+   "file": "Mathlib/FieldTheory/PurelyInseparable/Exponent.lean",
+   "line": 173,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "lift_rank_comap",
+   "file": "Mathlib/FieldTheory/Relrank.lean",
+   "line": 157,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "X_sub_C_mul_removeFactor",
+   "file": "Mathlib/FieldTheory/SplittingField/Construction.lean",
+   "line": 92,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "contMDiffAt_finsetProd",
+   "file": "Mathlib/Geometry/Manifold/Algebra/Monoid.lean",
+   "line": 391,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "ContMDiff.continuous_tangentMap",
+   "file": "Mathlib/Geometry/Manifold/ContMDiffMFDeriv.lean",
+   "line": 313,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "smoothSheafCommRing.nonunits_stalk",
+   "file": "Mathlib/Geometry/Manifold/Sheaf/LocallyRingedSpace.lean",
+   "line": 118,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "exists_orderOf_eq_prime_pow_iff",
+   "file": "Mathlib/GroupTheory/OrderOfElement.lean",
+   "line": 548,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "map_span",
+   "file": "Mathlib/LinearAlgebra/AffineSpace/AffineSubspace/Basic.lean",
+   "line": 590,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "centroid_eq_of_inj_on_of_image_eq",
+   "file": "Mathlib/LinearAlgebra/AffineSpace/Centroid.lean",
+   "line": 204,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "card_fintype",
+   "file": "Mathlib/LinearAlgebra/Basis/Basic.lean",
+   "line": 327,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "toLinearMap_injective",
+   "file": "Mathlib/LinearAlgebra/BilinearForm/Isometry.lean",
+   "line": 63,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "G₂_off_diag_nonpos",
+   "file": "Mathlib/LinearAlgebra/Matrix/Cartan/Basic.lean",
+   "line": 280,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "Matrix.square_of_invertible",
+   "file": "Mathlib/LinearAlgebra/Matrix/InvariantBasisNumber.lean",
+   "line": 91,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mkPiRing_apply_one_eq_self",
+   "file": "Mathlib/LinearAlgebra/Multilinear/Basic.lean",
+   "line": 1264,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "exists_mem_span_pairingIn_ne_zero_and_pairwise_ne",
+   "file": "Mathlib/LinearAlgebra/RootSystem/CartanMatrix.lean",
+   "line": 304,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "posRootForm_posForm_apply_apply",
+   "file": "Mathlib/LinearAlgebra/RootSystem/Finite/CanonicalBilinear.lean",
+   "line": 376,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "coe_inv",
+   "file": "Mathlib/LinearAlgebra/SymplecticGroup.lean",
+   "line": 192,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "measure_univ_unique",
+   "file": "Mathlib/MeasureTheory/Constructions/Projective.lean",
+   "line": 145,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "condExpL1_undef",
+   "file": "Mathlib/MeasureTheory/Function/ConditionalExpectation/CondexpL1.lean",
+   "line": 454,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "smul_Lp_val",
+   "file": "Mathlib/MeasureTheory/Function/LpSpace/DomAct/Basic.lean",
+   "line": 40,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "HasCompactSupport.exists_simpleFunc_approx_of_prod",
+   "file": "Mathlib/MeasureTheory/Function/SimpleFuncDense.lean",
+   "line": 199,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "IsBigO.integrable",
+   "file": "Mathlib/MeasureTheory/Integral/Asymptotics.lean",
+   "line": 54,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "enorm_setToFun_le",
+   "file": "Mathlib/MeasureTheory/Integral/SetToL1/DominatedConvergence.lean",
+   "line": 69,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "is_mul_left_invariant_outerMeasure",
+   "file": "Mathlib/MeasureTheory/Measure/Content.lean",
+   "line": 292,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "toMeasure_mk",
+   "file": "Mathlib/MeasureTheory/Measure/FiniteMeasure.lean",
+   "line": 150,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "tendsto_lintegral_nn_filter_of_le_const",
+   "file": "Mathlib/MeasureTheory/Measure/HasOuterApproxClosed.lean",
+   "line": 61,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "tendsto_addHaar_inter_smul_one_of_density_one",
+   "file": "Mathlib/MeasureTheory/Measure/Lebesgue/EqHaar.lean",
+   "line": 810,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "nonempty_inter_of_measureReal_lt_add'",
+   "file": "Mathlib/MeasureTheory/Measure/Real.lean",
+   "line": 470,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "ae_eq_set_biInter",
+   "file": "Mathlib/MeasureTheory/OuterMeasure/AE.lean",
+   "line": 292,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "ofPowerSeries_apply_zero",
+   "file": "Mathlib/NumberTheory/ArithmeticFunction/LFunction.lean",
+   "line": 143,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "odd_fermatNumber",
+   "file": "Mathlib/NumberTheory/Fermat.lean",
+   "line": 53,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mulHeight_eq_one_of_subsingleton",
+   "file": "Mathlib/NumberTheory/Height/Basic.lean",
+   "line": 434,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "mulHeight₁_add_le",
+   "file": "Mathlib/NumberTheory/Height/Basic.lean",
+   "line": 903,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "jacobiTheta₂''_add_left",
+   "file": "Mathlib/NumberTheory/LSeries/HurwitzZetaOdd.lean",
+   "line": 70,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "gammaSet_one_mem_iff",
+   "file": "Mathlib/NumberTheory/ModularForms/EisensteinSeries/Defs.lean",
+   "line": 63,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "zero_at_infty_comp_ofComplex",
+   "file": "Mathlib/NumberTheory/ModularForms/QExpansion.lean",
+   "line": 371,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "hasFiniteMulSupport_norm",
+   "file": "Mathlib/NumberTheory/NumberField/FiniteAdeleRing.lean",
+   "line": 50,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "lt_of_le_of_ne",
+   "file": "Mathlib/Order/Defs/PartialOrder.lean",
+   "line": 200,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "eventually_imp_distrib_right",
+   "file": "Mathlib/Order/Filter/Basic.lean",
+   "line": 869,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "map₂_map_right",
+   "file": "Mathlib/Order/Filter/NAry.lean",
+   "line": 154,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "pi_mono",
+   "file": "Mathlib/Order/Filter/Pi.lean",
+   "line": 54,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mem_Ico_of_Ioo",
+   "file": "Mathlib/Order/Interval/Set/Basic.lean",
+   "line": 371,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Icc_subset_Icc_union_Icc",
+   "file": "Mathlib/Order/Interval/Set/LinearOrder.lean",
+   "line": 419,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Nat.rel_of_forall_rel_succ_of_lt",
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 522,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "bijective",
+   "file": "Mathlib/Order/RelIso/Basic.lean",
+   "line": 743,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "fromListIsChain_cons",
+   "file": "Mathlib/Order/RelSeries.lean",
+   "line": 476,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "pi_top",
+   "file": "Mathlib/Order/Sublattice.lean",
+   "line": 381,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Icc_succ_right",
+   "file": "Mathlib/Order/SuccPred/Basic.lean",
+   "line": 485,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "StrictAnti.range_inj_of_wellFoundedGT",
+   "file": "Mathlib/Order/WellFounded.lean",
+   "line": 255,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "measure_limsup_eq_one",
+   "file": "Mathlib/Probability/BorelCantelli.lean",
+   "line": 69,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "gaussianReal_absolutelyContinuous'",
+   "file": "Mathlib/Probability/Distributions/Gaussian/Real.lean",
+   "line": 259,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "iIndepFun.charFunDual_map_fun_finsetSum_eq_prod",
+   "file": "Mathlib/Probability/Independence/CharacteristicFunction.lean",
+   "line": 167,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "coboundariesToCocycles₂_apply",
+   "file": "Mathlib/RepresentationTheory/Homological/GroupCohomology/LowDegree.lean",
+   "line": 480,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "homEquiv_def",
+   "file": "Mathlib/RepresentationTheory/Rep/Basic.lean",
+   "line": 808,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "AlgEquiv.adjoinSingletonEquivAdjoinRootMinpoly_symm_toAlgHom",
+   "file": "Mathlib/RingTheory/Adjoin/Field.lean",
+   "line": 46,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "orderTop_one",
+   "file": "Mathlib/RingTheory/HahnSeries/Multiplication.lean",
+   "line": 90,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "add_pow_add_pred_mem_of_pow_mem_of_commute",
+   "file": "Mathlib/RingTheory/Ideal/Basic.lean",
+   "line": 97,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mk_mem_cotangentIdeal",
+   "file": "Mathlib/RingTheory/Ideal/Cotangent.lean",
+   "line": 129,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "orbit_eq_primesOver",
+   "file": "Mathlib/RingTheory/Invariant/Basic.lean",
+   "line": 166,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "coe_algebraMap",
+   "file": "Mathlib/RingTheory/LaurentSeries.lean",
+   "line": 288,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "coeff_prod_sum_degree",
+   "file": "Mathlib/RingTheory/MvPolynomial/MonomialOrder.lean",
+   "line": 672,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "X_pow_eq",
+   "file": "Mathlib/RingTheory/MvPowerSeries/Basic.lean",
+   "line": 410,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "coeff_eq_zero_of_constantCoeff_nilpotent",
+   "file": "Mathlib/RingTheory/MvPowerSeries/Basic.lean",
+   "line": 734,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "frobenius_pthRoot",
+   "file": "Mathlib/RingTheory/Perfection.lean",
+   "line": 287,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Etale.of_formallyUnramified_of_flat",
+   "file": "Mathlib/RingTheory/Smooth/Fiber.lean",
+   "line": 246,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "mapRingHom_tmul",
+   "file": "Mathlib/RingTheory/TensorProduct/Maps.lean",
+   "line": 518,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "map_restrictScalars_comp_includeRight",
+   "file": "Mathlib/RingTheory/TensorProduct/Maps.lean",
+   "line": 575,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "productMap_left_apply",
+   "file": "Mathlib/RingTheory/TensorProduct/Maps.lean",
+   "line": 814,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "preimage_symm",
+   "file": "Mathlib/Topology/Algebra/ContinuousAffineEquiv.lean",
+   "line": 231,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "coe_contLinear_eq_linear",
+   "file": "Mathlib/Topology/Algebra/ContinuousAffineMap.lean",
+   "line": 198,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Topology.IsInducing.continuousInv",
+   "file": "Mathlib/Topology/Algebra/Group/ContinuousInv.lean",
+   "line": 271,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "continuous_mapGL",
+   "file": "Mathlib/Topology/Algebra/Group/Matrix.lean",
+   "line": 176,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "coe_symm_comp_coe",
+   "file": "Mathlib/Topology/Algebra/Module/Equiv.lean",
+   "line": 563,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "sub_prod_sub",
+   "file": "Mathlib/Topology/Algebra/Module/Multilinear/Basic.lean",
+   "line": 505,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "tendsto_mul_nhds_zero_of_disjoint_cocompact",
+   "file": "Mathlib/Topology/Algebra/Monoid.lean",
+   "line": 498,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "adic_basis",
+   "file": "Mathlib/Topology/Algebra/Nonarchimedean/AdicTopology.lean",
+   "line": 62,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "topologicalClosure_toSubalgebra_comm",
+   "file": "Mathlib/Topology/Algebra/StarSubalgebra.lean",
+   "line": 71,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "smul_infty_eq_ite",
+   "file": "Mathlib/Topology/Compactification/OnePoint/ProjectiveLine.lean",
+   "line": 140,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "coe_smul'",
+   "file": "Mathlib/Topology/ContinuousMap/Algebra.lean",
+   "line": 814,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "Inseparable.prod",
+   "file": "Mathlib/Topology/Inseparable.lean",
+   "line": 501,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "continuousOn_lift₂",
+   "file": "Mathlib/Topology/Inseparable.lean",
+   "line": 791,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "iSup_pow_of_ne_zero",
+   "file": "Mathlib/Topology/Instances/NNReal/Lemmas.lean",
+   "line": 250,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "dist_eq",
+   "file": "Mathlib/Topology/Instances/Nat.lean",
+   "line": 28,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "isClosed_iff_preimage_isClosed",
+   "file": "Mathlib/Topology/Maps/Basic.lean",
+   "line": 841,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "NNReal.closedBall_zero_eq_Icc'",
+   "file": "Mathlib/Topology/MetricSpace/Pseudo/Constructions.lean",
+   "line": 146,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "trans_source'",
+   "file": "Mathlib/Topology/OpenPartialHomeomorph/Composition.lean",
+   "line": 78,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "replacePartialEquiv_eq_self",
+   "file": "Mathlib/Topology/OpenPartialHomeomorph/Defs.lean",
+   "line": 225,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "ofUpper_toUpper",
+   "file": "Mathlib/Topology/Order/LowerUpperTopology.lean",
+   "line": 148,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "PredOrder.nhdsLT",
+   "file": "Mathlib/Topology/Order/OrderClosed.lean",
+   "line": 294,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "coe_comp_continuousMap'",
+   "file": "Mathlib/Topology/Spectral/Hom.lean",
+   "line": 176,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "hasBasis_uniformity_of_basis_aux₂",
+   "file": "Mathlib/Topology/UniformSpace/UniformConvergenceTopology.lean",
+   "line": 639,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  }
+ ]
+}

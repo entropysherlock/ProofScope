@@ -21,21 +21,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         1
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         4
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         0,
         3
@@ -59,7 +65,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1782,
-   "seconds": 1.44,
+   "seconds": 1.51,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -101,7 +107,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1223,
-   "seconds": 1.53,
+   "seconds": 1.54,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -129,21 +135,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         2,
         1
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         1,
         0
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         3,
         2
@@ -167,7 +179,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1705,
-   "seconds": 1.64,
+   "seconds": 1.53,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -209,7 +221,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1233,
-   "seconds": 1.75,
+   "seconds": 1.85,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -237,21 +249,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         3,
         3
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         4,
         4
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         5,
         5
@@ -317,7 +335,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1052,
-   "seconds": 1.5,
+   "seconds": 1.4,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -345,7 +363,9 @@
      "sites": 4,
      "witnesses": [
       [
-       4,
+       [
+        4
+       ],
        [
         0,
         0,
@@ -354,21 +374,25 @@
        ]
       ],
       [
-       2,
        [
-        1,
-        1,
-        1,
+        0
+       ],
+       [
+        2,
+        2,
+        2,
         2
        ]
       ],
       [
-       0,
        [
-        0,
-        0,
-        0,
         0
+       ],
+       [
+        1,
+        1,
+        1,
+        1
        ]
       ]
      ]
@@ -388,8 +412,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 2020,
-   "seconds": 1.63,
+   "certificate_bytes": 2012,
+   "seconds": 1.56,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -417,7 +441,9 @@
      "sites": 4,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         3,
         1,
@@ -426,7 +452,9 @@
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         4,
         2,
@@ -435,7 +463,9 @@
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         5,
         3,
@@ -461,7 +491,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 2095,
-   "seconds": 1.42,
+   "seconds": 1.74,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -503,7 +533,7 @@
    },
    "rejected": {},
    "certificate_bytes": 894,
-   "seconds": 1.47,
+   "seconds": 1.51,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -545,7 +575,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1488,
-   "seconds": 3.93,
+   "seconds": 4.44,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -587,7 +617,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1165,
-   "seconds": 1.6,
+   "seconds": 2.01,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -615,21 +645,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         6,
         0
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         5,
         1
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         4,
         0
@@ -653,7 +689,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1769,
-   "seconds": 1.4,
+   "seconds": 1.47,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -681,7 +717,9 @@
      "sites": 4,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         0,
         0,
@@ -690,7 +728,9 @@
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         0,
         0,
@@ -699,7 +739,9 @@
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         1,
         1,
@@ -725,7 +767,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 2038,
-   "seconds": 3.39,
+   "seconds": 3.43,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -767,7 +809,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1020,
-   "seconds": 1.65,
+   "seconds": 1.62,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -809,7 +851,7 @@
    },
    "rejected": {},
    "certificate_bytes": 962,
-   "seconds": 1.39,
+   "seconds": 1.63,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -837,27 +879,33 @@
      "sites": 3,
      "witnesses": [
       [
-       1,
        [
-        7,
-        12,
-        12
+        1
+       ],
+       [
+        8,
+        13,
+        13
        ]
       ],
       [
-       1,
        [
-        6,
-        11,
-        11
-       ]
-      ],
-      [
-       2,
+        2
+       ],
        [
         12,
         15,
-        20
+        18
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        18,
+        21,
+        27
        ]
       ]
      ]
@@ -877,8 +925,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1940,
-   "seconds": 1.72,
+   "certificate_bytes": 1952,
+   "seconds": 1.8,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -906,21 +954,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         3,
         0
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         5,
         1
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         5,
         0
@@ -944,7 +998,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1727,
-   "seconds": 1.46,
+   "seconds": 1.47,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -986,7 +1040,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1038,
-   "seconds": 1.09,
+   "seconds": 1.56,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1028,7 +1082,7 @@
    },
    "rejected": {},
    "certificate_bytes": 966,
-   "seconds": 1.58,
+   "seconds": 2.05,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1056,24 +1110,30 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         0
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         1
        ]
       ],
       [
-       2,
        [
-        0,
-        0
+        1
+       ],
+       [
+        2,
+        2
        ]
       ]
      ]
@@ -1094,7 +1154,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1731,
-   "seconds": 1.35,
+   "seconds": 1.41,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1122,21 +1182,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         1,
         2
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         3,
         4
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         5,
         6
@@ -1160,7 +1226,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1710,
-   "seconds": 1.37,
+   "seconds": 1.68,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1202,7 +1268,7 @@
    },
    "rejected": {},
    "certificate_bytes": 906,
-   "seconds": 1.23,
+   "seconds": 1.41,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1230,7 +1296,9 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         3,
         3,
@@ -1238,7 +1306,9 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         4,
         4,
@@ -1246,7 +1316,9 @@
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         9,
         15,
@@ -1271,7 +1343,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1923,
-   "seconds": 1.42,
+   "seconds": 1.84,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1299,7 +1371,9 @@
      "sites": 3,
      "witnesses": [
       [
-       5,
+       [
+        5
+       ],
        [
         0,
         0,
@@ -1307,7 +1381,9 @@
        ]
       ],
       [
-       3,
+       [
+        6
+       ],
        [
         1,
         1,
@@ -1315,11 +1391,13 @@
        ]
       ],
       [
-       5,
        [
-        2,
-        2,
-        2
+        7
+       ],
+       [
+        1,
+        1,
+        1
        ]
       ]
      ]
@@ -1339,8 +1417,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1891,
-   "seconds": 1.48,
+   "certificate_bytes": 1893,
+   "seconds": 1.64,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1368,24 +1446,30 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         4,
         10
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         3,
         11
        ]
       ],
       [
-       0,
        [
-        2,
-        10
+        4
+       ],
+       [
+        12,
+        12
        ]
       ]
      ]
@@ -1405,8 +1489,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1756,
-   "seconds": 1.73,
+   "certificate_bytes": 1750,
+   "seconds": 1.57,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1434,7 +1518,9 @@
      "sites": 4,
      "witnesses": [
       [
-       4,
+       [
+        4
+       ],
        [
         9,
         12,
@@ -1443,7 +1529,9 @@
        ]
       ],
       [
-       3,
+       [
+        3
+       ],
        [
         7,
         9,
@@ -1452,12 +1540,14 @@
        ]
       ],
       [
-       3,
        [
-        8,
+        4
+       ],
+       [
         10,
-        6,
-        6
+        13,
+        5,
+        7
        ]
       ]
      ]
@@ -1477,8 +1567,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 2130,
-   "seconds": 2.08,
+   "certificate_bytes": 2143,
+   "seconds": 2.1,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1506,7 +1596,9 @@
      "sites": 4,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         6,
@@ -1515,7 +1607,9 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         1,
         7,
@@ -1524,7 +1618,9 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         2,
         8,
@@ -1550,7 +1646,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 2080,
-   "seconds": 1.95,
+   "seconds": 1.82,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1578,7 +1674,9 @@
      "sites": 4,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         28,
         12,
@@ -1587,7 +1685,9 @@
        ]
       ],
       [
-       3,
+       [
+        3
+       ],
        [
         29,
         13,
@@ -1596,12 +1696,14 @@
        ]
       ],
       [
-       3,
        [
-        31,
+        3
+       ],
+       [
+        30,
         13,
-        17,
-        17
+        16,
+        16
        ]
       ]
      ]
@@ -1622,7 +1724,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 2128,
-   "seconds": 1.96,
+   "seconds": 1.81,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1650,24 +1752,30 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         0
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         1
        ]
       ],
       [
-       2,
        [
-        0,
         0
+       ],
+       [
+        2,
+        2
        ]
       ]
      ]
@@ -1688,7 +1796,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1735,
-   "seconds": 1.13,
+   "seconds": 1.28,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1772,7 +1880,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1145,
-   "seconds": 2.09,
+   "seconds": 2.05,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1814,7 +1922,7 @@
    },
    "rejected": {},
    "certificate_bytes": 915,
-   "seconds": 1.27,
+   "seconds": 1.44,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1842,7 +1950,9 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         9,
         4,
@@ -1850,7 +1960,9 @@
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         12,
         5,
@@ -1858,7 +1970,9 @@
        ]
       ],
       [
-       3,
+       [
+        3
+       ],
        [
         11,
         6,
@@ -1883,7 +1997,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1924,
-   "seconds": 1.71,
+   "seconds": 1.59,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1925,7 +2039,7 @@
    },
    "rejected": {},
    "certificate_bytes": 967,
-   "seconds": 1.6,
+   "seconds": 1.2,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -1967,7 +2081,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1187,
-   "seconds": 1.72,
+   "seconds": 1.86,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2009,7 +2123,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1306,
-   "seconds": 1.08,
+   "seconds": 1.46,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2051,7 +2165,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1147,
-   "seconds": 2.26,
+   "seconds": 2.4,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2079,27 +2193,33 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
+       [
+        0
+       ],
        [
         10,
-        12,
-        14
+        6,
+        2
        ]
       ],
       [
-       1,
        [
-        11,
-        9,
-        7
-       ]
-      ],
-      [
-       0,
-       [
-        11,
-        7,
         3
+       ],
+       [
+        11,
+        13,
+        15
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        14,
+        12,
+        10
        ]
       ]
      ]
@@ -2119,8 +2239,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1987,
-   "seconds": 1.76,
+   "certificate_bytes": 1993,
+   "seconds": 1.93,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2148,27 +2268,33 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
        [
+        0
+       ],
+       [
+        0,
         1,
-        2,
+        1
+       ]
+      ],
+      [
+       [
         2
-       ]
-      ],
-      [
-       2,
+       ],
        [
         0,
-        1,
+        0,
         0
        ]
       ],
       [
-       3,
+       [
+        1
+       ],
        [
         0,
         1,
-        0
+        1
        ]
       ]
      ]
@@ -2188,8 +2314,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1967,
-   "seconds": 1.73,
+   "certificate_bytes": 1959,
+   "seconds": 1.6,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2217,7 +2343,9 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         5,
         0,
@@ -2225,7 +2353,9 @@
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         10,
         5,
@@ -2233,10 +2363,12 @@
        ]
       ],
       [
-       4,
        [
-        14,
-        8,
+        2
+       ],
+       [
+        9,
+        4,
         0
        ]
       ]
@@ -2257,8 +2389,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1884,
-   "seconds": 1.44,
+   "certificate_bytes": 1881,
+   "seconds": 1.76,
    "family": "step",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2286,27 +2418,33 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         0,
-        5,
+        4,
+        5
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        3,
         6
-       ]
-      ],
-      [
-       3,
-       [
-        1,
-        4,
-        5
-       ]
-      ],
-      [
-       3,
-       [
-        0,
-        4,
-        5
        ]
       ]
      ]
@@ -2327,7 +2465,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1752,
-   "seconds": 1.85,
+   "seconds": 1.8,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2369,7 +2507,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1090,
-   "seconds": 1.75,
+   "seconds": 1.86,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2397,21 +2535,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         6
        ]
       ],
       [
-       1,
        [
-        3,
-        8
+        1
+       ],
+       [
+        0,
+        5
        ]
       ],
       [
-       2,
+       [
+        1
+       ],
        [
         1,
         8
@@ -2435,7 +2579,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1642,
-   "seconds": 1.76,
+   "seconds": 1.71,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2463,24 +2607,30 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         9,
         4
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         13,
         8
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         14,
-        9
+        8
        ]
       ]
      ]
@@ -2501,7 +2651,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1602,
-   "seconds": 1.38,
+   "seconds": 1.64,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2543,7 +2693,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1437,
-   "seconds": 2.08,
+   "seconds": 2.15,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2571,21 +2721,27 @@
      "sites": 2,
      "witnesses": [
       [
-       4,
+       [
+        4
+       ],
        [
         8,
         5
        ]
       ],
       [
-       6,
+       [
+        6
+       ],
        [
         9,
         6
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         10,
         7
@@ -2609,7 +2765,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1573,
-   "seconds": 1.43,
+   "seconds": 1.8,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2637,24 +2793,30 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
+       [
+        1,
+        6
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        0,
+        7
+       ]
+      ],
+      [
+       [
+        0
+       ],
        [
         0,
         5
-       ]
-      ],
-      [
-       2,
-       [
-        4,
-        5
-       ]
-      ],
-      [
-       4,
-       [
-        12,
-        11
        ]
       ]
      ]
@@ -2674,8 +2836,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1665,
-   "seconds": 1.71,
+   "certificate_bytes": 1659,
+   "seconds": 1.93,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2703,7 +2865,9 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         3,
         0,
@@ -2711,7 +2875,9 @@
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         4,
         1,
@@ -2719,7 +2885,9 @@
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         4,
         0,
@@ -2744,7 +2912,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1816,
-   "seconds": 1.48,
+   "seconds": 1.76,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2772,7 +2940,9 @@
      "sites": 3,
      "witnesses": [
       [
-       5,
+       [
+        5
+       ],
        [
         3,
         0,
@@ -2780,7 +2950,9 @@
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         4,
         0,
@@ -2788,7 +2960,9 @@
        ]
       ],
       [
-       1,
+       [
+        2
+       ],
        [
         3,
         0,
@@ -2813,7 +2987,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1747,
-   "seconds": 1.38,
+   "seconds": 1.54,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2854,7 +3028,7 @@
    },
    "rejected": {},
    "certificate_bytes": 960,
-   "seconds": 1.33,
+   "seconds": 1.58,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2882,7 +3056,9 @@
      "sites": 4,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         2,
         0,
@@ -2891,18 +3067,22 @@
        ]
       ],
       [
-       4,
        [
-        3,
+        4
+       ],
+       [
         1,
-        2,
-        2
+        0,
+        0,
+        0
        ]
       ],
       [
-       4,
        [
-        4,
+        4
+       ],
+       [
+        2,
         0,
         1,
         1
@@ -2926,7 +3106,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1938,
-   "seconds": 1.47,
+   "seconds": 1.64,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -2967,7 +3147,7 @@
    },
    "rejected": {},
    "certificate_bytes": 893,
-   "seconds": 1.54,
+   "seconds": 1.49,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3009,7 +3189,7 @@
    },
    "rejected": {},
    "certificate_bytes": 981,
-   "seconds": 1.41,
+   "seconds": 1.32,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3037,7 +3217,9 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         0,
@@ -3045,7 +3227,9 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         1,
         1,
@@ -3053,7 +3237,9 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         0,
@@ -3078,7 +3264,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1822,
-   "seconds": 1.67,
+   "seconds": 1.41,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3106,27 +3292,33 @@
      "sites": 3,
      "witnesses": [
       [
-       2,
+       [
+        4
+       ],
+       [
+        4,
+        7,
+        12
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        12,
+        16,
+        13
+       ]
+      ],
+      [
+       [
+        1
+       ],
        [
         3,
-        7,
-        6
-       ]
-      ],
-      [
-       1,
-       [
-        1,
-        10,
-        7
-       ]
-      ],
-      [
-       0,
-       [
-        1,
-        4,
-        1
+        14,
+        11
        ]
       ]
      ]
@@ -3146,8 +3338,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 1828,
-   "seconds": 2.37,
+   "certificate_bytes": 1851,
+   "seconds": 1.94,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3175,7 +3367,9 @@
      "sites": 4,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         0,
         1,
@@ -3184,7 +3378,9 @@
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         1,
@@ -3193,7 +3389,9 @@
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         1,
@@ -3219,7 +3417,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1990,
-   "seconds": 1.78,
+   "seconds": 1.51,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3261,7 +3459,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1113,
-   "seconds": 1.85,
+   "seconds": 1.35,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3289,21 +3487,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         0
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         6,
         4
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         7,
         5
@@ -3327,7 +3531,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1658,
-   "seconds": 1.67,
+   "seconds": 1.68,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3368,7 +3572,7 @@
    },
    "rejected": {},
    "certificate_bytes": 1466,
-   "seconds": 1.74,
+   "seconds": 1.68,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3396,7 +3600,9 @@
      "sites": 4,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         4,
         0,
@@ -3405,7 +3611,9 @@
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         5,
         1,
@@ -3414,9 +3622,11 @@
        ]
       ],
       [
-       4,
        [
-        4,
+        3
+       ],
+       [
+        5,
         0,
         4,
         0
@@ -3440,7 +3650,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 2034,
-   "seconds": 2.15,
+   "seconds": 1.64,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3468,24 +3678,30 @@
      "sites": 2,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         0,
         1
        ]
       ],
       [
-       3,
        [
-        0,
+        3
+       ],
+       [
+        1,
+        2
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
         0
-       ]
-      ],
-      [
-       4,
-       [
-        0,
-        1
        ]
       ]
      ]
@@ -3506,7 +3722,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1593,
-   "seconds": 1.44,
+   "seconds": 1.28,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3534,29 +3750,35 @@
      "sites": 4,
      "witnesses": [
       [
-       2,
+       [
+        4
+       ],
        [
         0,
         1,
-        0,
+        2,
         0
        ]
       ],
       [
-       4,
        [
+        2
+       ],
+       [
+        1,
         2,
-        2,
-        3,
+        1,
         1
        ]
       ],
       [
-       4,
        [
+        2
+       ],
+       [
+        0,
         1,
-        1,
-        2,
+        0,
         0
        ]
       ]
@@ -3577,8 +3799,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 2000,
-   "seconds": 4.52,
+   "certificate_bytes": 1992,
+   "seconds": 3.54,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3606,30 +3828,36 @@
      "sites": 4,
      "witnesses": [
       [
-       2,
        [
-        2,
-        0,
-        1,
-        1
-       ]
-      ],
-      [
-       3,
+        0
+       ],
        [
-        2,
         1,
         1,
-        2
-       ]
-      ],
-      [
-       3,
-       [
         4,
-        1,
-        1,
         4
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0,
+        3,
+        5
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        3,
+        2,
+        3,
+        3
        ]
       ]
      ]
@@ -3649,8 +3877,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 2003,
-   "seconds": 2.01,
+   "certificate_bytes": 1987,
+   "seconds": 1.56,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3678,21 +3906,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         0,
         0
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         1,
         1
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         0,
         0
@@ -3716,7 +3950,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1656,
-   "seconds": 1.98,
+   "seconds": 1.53,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3744,21 +3978,27 @@
      "sites": 2,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         6,
         3
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         7,
         4
        ]
       ],
       [
-       5,
+       [
+        5
+       ],
        [
         8,
         5
@@ -3782,7 +4022,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1560,
-   "seconds": 2.15,
+   "seconds": 1.44,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3810,21 +4050,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         0,
         1
        ]
       ],
       [
-       6,
+       [
+        6
+       ],
        [
         1,
         0
        ]
       ],
       [
-       6,
+       [
+        6
+       ],
        [
         2,
         1
@@ -3848,7 +4094,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1580,
-   "seconds": 1.61,
+   "seconds": 1.41,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3876,30 +4122,36 @@
      "sites": 4,
      "witnesses": [
       [
-       2,
        [
-        14,
-        8,
-        6,
-        17
+        6
+       ],
+       [
+        10,
+        17,
+        15,
+        38
        ]
       ],
       [
-       0,
        [
-        10,
+        2
+       ],
+       [
+        11,
+        9,
+        7,
+        13
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        11,
         4,
         2,
         0
-       ]
-      ],
-      [
-       0,
-       [
-        11,
-        5,
-        3,
-        1
        ]
       ]
      ]
@@ -3919,8 +4171,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 2008,
-   "seconds": 1.61,
+   "certificate_bytes": 2019,
+   "seconds": 1.76,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -3948,21 +4200,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         2,
         3
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         3,
         4
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         4,
         5
@@ -3986,7 +4244,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1632,
-   "seconds": 1.44,
+   "seconds": 1.33,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4014,21 +4272,27 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         2,
         3
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         3,
         4
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         3,
         5
@@ -4052,7 +4316,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 1592,
-   "seconds": 1.45,
+   "seconds": 1.48,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4093,7 +4357,7 @@
    },
    "rejected": {},
    "certificate_bytes": 896,
-   "seconds": 1.59,
+   "seconds": 1.72,
    "family": "lower",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4121,24 +4385,30 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         3,
-        1
+        4
        ]
       ],
       [
-       0,
+       [
+        2
+       ],
        [
         2,
         0
        ]
       ],
       [
-       2,
        [
-        3,
         1
+       ],
+       [
+        0,
+        0
        ]
       ]
      ]
@@ -4159,7 +4429,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8716,
-   "seconds": 2.26,
+   "seconds": 2.03,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4187,27 +4457,33 @@
      "sites": 3,
      "witnesses": [
       [
-       4,
+       [
+        4
+       ],
        [
         3,
-        2,
-        0
-       ]
-      ],
-      [
-       6,
-       [
-        4,
-        1,
-        2
-       ]
-      ],
-      [
-       6,
-       [
-        4,
         0,
-        1
+        4
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        7,
+        5
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        4,
+        6,
+        4
        ]
       ]
      ]
@@ -4227,8 +4503,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 12643,
-   "seconds": 2.66,
+   "certificate_bytes": 12639,
+   "seconds": 2.81,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4256,7 +4532,9 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         1,
         0,
@@ -4264,7 +4542,9 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         2,
         1,
@@ -4272,11 +4552,13 @@
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         3,
-        1,
-        1
+        0,
+        0
        ]
       ]
      ]
@@ -4297,7 +4579,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 11480,
-   "seconds": 2.07,
+   "seconds": 2.41,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4325,24 +4607,30 @@
      "sites": 2,
      "witnesses": [
       [
-       2,
        [
-        5,
-        0
+        1
+       ],
+       [
+        0,
+        3
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         1,
         0
        ]
       ],
       [
-       2,
        [
-        3,
-        0
+        4
+       ],
+       [
+        1,
+        2
        ]
       ]
      ]
@@ -4363,7 +4651,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 12761,
-   "seconds": 2.62,
+   "seconds": 2.66,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4391,7 +4679,9 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         4,
         4,
@@ -4399,19 +4689,23 @@
        ]
       ],
       [
-       1,
+       [
+        8
+       ],
        [
         6,
-        0,
+        8,
         2
        ]
       ],
       [
-       4,
        [
-        6,
-        2,
-        0
+        10
+       ],
+       [
+        8,
+        10,
+        4
        ]
       ]
      ]
@@ -4431,8 +4725,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 6800,
-   "seconds": 1.78,
+   "certificate_bytes": 6817,
+   "seconds": 2.22,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4473,7 +4767,7 @@
    },
    "rejected": {},
    "certificate_bytes": 7406,
-   "seconds": 1.77,
+   "seconds": 1.65,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4501,24 +4795,30 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         3,
         2
        ]
       ],
       [
-       0,
        [
-        4,
-        3
+        6
+       ],
+       [
+        2,
+        4
        ]
       ],
       [
-       0,
        [
-        4,
-        2
+        0
+       ],
+       [
+        1,
+        3
        ]
       ]
      ]
@@ -4539,7 +4839,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8595,
-   "seconds": 2.37,
+   "seconds": 2.55,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4567,21 +4867,27 @@
      "sites": 2,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         3,
         0
        ]
       ],
       [
-       5,
+       [
+        5
+       ],
        [
         4,
         1
        ]
       ],
       [
-       5,
+       [
+        5
+       ],
        [
         4,
         0
@@ -4605,7 +4911,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8567,
-   "seconds": 2.09,
+   "seconds": 2.2,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4633,23 +4939,29 @@
      "sites": 3,
      "witnesses": [
       [
-       4,
        [
-        2,
-        9,
-        6
+        9
+       ],
+       [
+        3,
+        6,
+        7
        ]
       ],
       [
-       3,
        [
-        0,
-        0,
+        3
+       ],
+       [
+        1,
+        1,
+        5
+       ]
+      ],
+      [
+       [
         4
-       ]
-      ],
-      [
-       4,
+       ],
        [
         0,
         1,
@@ -4673,8 +4985,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 14237,
-   "seconds": 2.27,
+   "certificate_bytes": 14239,
+   "seconds": 2.69,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4715,7 +5027,7 @@
    },
    "rejected": {},
    "certificate_bytes": 7666,
-   "seconds": 1.68,
+   "seconds": 1.93,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4756,7 +5068,7 @@
    },
    "rejected": {},
    "certificate_bytes": 7564,
-   "seconds": 1.5,
+   "seconds": 1.75,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4784,21 +5096,27 @@
      "sites": 2,
      "witnesses": [
       [
-       2,
+       [
+        3
+       ],
        [
         6,
         6
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         6,
         6
        ]
       ],
       [
-       3,
+       [
+        2
+       ],
        [
         6,
         6
@@ -4822,7 +5140,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 11265,
-   "seconds": 2.17,
+   "seconds": 2.4,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4850,24 +5168,30 @@
      "sites": 2,
      "witnesses": [
       [
-       6,
+       [
+        4
+       ],
        [
         1,
         3
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         0,
-        1
+        0
        ]
       ],
       [
-       2,
        [
-        1,
-        2
+        1
+       ],
+       [
+        0,
+        1
        ]
       ]
      ]
@@ -4888,7 +5212,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 7011,
-   "seconds": 2.3,
+   "seconds": 2.56,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4916,26 +5240,32 @@
      "sites": 3,
      "witnesses": [
       [
-       6,
        [
-        6,
+        6
+       ],
+       [
         7,
-        7
+        3,
+        8
        ]
       ],
       [
-       1,
        [
+        2
+       ],
+       [
+        0,
         1,
-        2,
         0
        ]
       ],
       [
-       2,
        [
-        0,
+        1
+       ],
+       [
         1,
+        0,
         1
        ]
       ]
@@ -4957,7 +5287,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 11802,
-   "seconds": 2.29,
+   "seconds": 2.3,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -4985,27 +5315,33 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
        [
-        3,
-        0,
         0
+       ],
+       [
+        6,
+        3,
+        3
        ]
       ],
       [
-       2,
        [
-        7,
-        2,
+        2
+       ],
+       [
+        8,
+        3,
         4
        ]
       ],
       [
-       0,
        [
-        5,
-        0,
         0
+       ],
+       [
+        4,
+        1,
+        1
        ]
       ]
      ]
@@ -5026,7 +5362,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8767,
-   "seconds": 2.71,
+   "seconds": 2.61,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5054,24 +5390,30 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
        [
-        0,
-        5
-       ]
-      ],
-      [
-       0,
+        0
+       ],
        [
         1,
         0
        ]
       ],
       [
-       3,
+       [
+        1
+       ],
        [
         0,
         1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        0
        ]
       ]
      ]
@@ -5092,7 +5434,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 13948,
-   "seconds": 2.94,
+   "seconds": 2.74,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5120,24 +5462,30 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
        [
-        5,
-        10
-       ]
-      ],
-      [
-       0,
+        0
+       ],
        [
         0,
         4
        ]
       ],
       [
-       4,
        [
-        0,
-        4
+        0
+       ],
+       [
+        1,
+        5
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        6
        ]
       ]
      ]
@@ -5157,8 +5505,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 13955,
-   "seconds": 2.72,
+   "certificate_bytes": 13952,
+   "seconds": 2.69,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5186,21 +5534,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         0,
         0
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         2,
         1
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         1,
         0
@@ -5224,7 +5578,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8381,
-   "seconds": 2.45,
+   "seconds": 1.92,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5252,21 +5606,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         6,
         6
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         6,
         6
        ]
       ],
       [
-       2,
+       [
+        2
+       ],
        [
         6,
         6
@@ -5290,7 +5650,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8026,
-   "seconds": 1.79,
+   "seconds": 1.78,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5318,27 +5678,33 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
        [
-        3,
-        4,
+        3
+       ],
+       [
+        1,
+        2,
+        4
+       ]
+      ],
+      [
+       [
+        12
+       ],
+       [
+        1,
+        0,
         6
        ]
       ],
       [
-       1,
+       [
+        6
+       ],
        [
         0,
         1,
         3
-       ]
-      ],
-      [
-       3,
-       [
-        0,
-        2,
-        2
        ]
       ]
      ]
@@ -5358,8 +5724,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 8806,
-   "seconds": 2.53,
+   "certificate_bytes": 8820,
+   "seconds": 3.1,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5387,7 +5753,9 @@
      "sites": 3,
      "witnesses": [
       [
-       1,
+       [
+        0
+       ],
        [
         0,
         0,
@@ -5395,18 +5763,22 @@
        ]
       ],
       [
-       0,
        [
-        1,
+        7
+       ],
+       [
+        5,
         1,
         0
        ]
       ],
       [
-       1,
+       [
+        3
+       ],
        [
         3,
-        0,
+        1,
         0
        ]
       ]
@@ -5428,7 +5800,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8785,
-   "seconds": 2.26,
+   "seconds": 2.5,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5456,21 +5828,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         2,
         0
        ]
       ],
       [
-       1,
+       [
+        1
+       ],
        [
         3,
         1
        ]
       ],
       [
-       0,
+       [
+        0
+       ],
        [
         3,
         0
@@ -5494,7 +5872,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8147,
-   "seconds": 2.09,
+   "seconds": 2.19,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5522,27 +5900,33 @@
      "sites": 3,
      "witnesses": [
       [
-       0,
        [
-        3,
-        0,
-        5
-       ]
-      ],
-      [
-       3,
+        0
+       ],
        [
         0,
-        1,
-        2
-       ]
-      ],
-      [
-       1,
-       [
-        1,
         0,
         1
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        1,
+        4,
+        3
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        5,
+        4
        ]
       ]
      ]
@@ -5562,8 +5946,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 12807,
-   "seconds": 2.6,
+   "certificate_bytes": 12821,
+   "seconds": 2.82,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5591,7 +5975,9 @@
      "sites": 3,
      "witnesses": [
       [
-       3,
+       [
+        1
+       ],
        [
         3,
         0,
@@ -5599,19 +5985,23 @@
        ]
       ],
       [
-       6,
        [
-        5,
-        0,
         0
+       ],
+       [
+        4,
+        1,
+        7
        ]
       ],
       [
-       6,
        [
-        4,
+        4
+       ],
+       [
+        3,
         0,
-        0
+        2
        ]
       ]
      ]
@@ -5631,8 +6021,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 12575,
-   "seconds": 2.69,
+   "certificate_bytes": 12571,
+   "seconds": 2.67,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5660,24 +6050,30 @@
      "sites": 2,
      "witnesses": [
       [
-       4,
+       [
+        4
+       ],
        [
         0,
         0
        ]
       ],
       [
-       4,
+       [
+        4
+       ],
        [
         2,
         2
        ]
       ],
       [
-       5,
        [
-        4,
         4
+       ],
+       [
+        1,
+        1
        ]
       ]
      ]
@@ -5697,8 +6093,8 @@
    "rejected": {
     "fwd": "no tactic alternative closed the goal"
    },
-   "certificate_bytes": 12101,
-   "seconds": 2.64,
+   "certificate_bytes": 12099,
+   "seconds": 3.01,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5726,21 +6122,27 @@
      "sites": 2,
      "witnesses": [
       [
-       0,
+       [
+        0
+       ],
        [
         2,
         0
        ]
       ],
       [
-       3,
+       [
+        3
+       ],
        [
         3,
         1
        ]
       ],
       [
-       3,
+       [
+        3
+       ],
        [
         3,
         0
@@ -5764,7 +6166,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 12209,
-   "seconds": 2.2,
+   "seconds": 2.29,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5792,24 +6194,30 @@
      "sites": 2,
      "witnesses": [
       [
-       1,
+       [
+        1
+       ],
        [
         0,
-        2
+        1
        ]
       ],
       [
-       2,
        [
-        3,
+        2
+       ],
+       [
+        1,
         3
        ]
       ],
       [
-       1,
        [
-        1,
-        0
+        3
+       ],
+       [
+        0,
+        1
        ]
       ]
      ]
@@ -5858,23 +6266,29 @@
      "sites": 2,
      "witnesses": [
       [
-       3,
+       [
+        3
+       ],
        [
         3,
         0
        ]
       ],
       [
-       4,
        [
-        4,
+        4
+       ],
+       [
+        9,
         1
        ]
       ],
       [
-       4,
        [
-        4,
+        4
+       ],
+       [
+        9,
         0
        ]
       ]
@@ -5896,7 +6310,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 11351,
-   "seconds": 2.21,
+   "seconds": 2.52,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5924,27 +6338,33 @@
      "sites": 3,
      "witnesses": [
       [
-       1,
        [
-        6,
-        0,
-        2
-       ]
-      ],
-      [
-       4,
+        4
+       ],
        [
-        0,
+        5,
         2,
         1
        ]
       ],
       [
-       4,
        [
-        1,
+        4
+       ],
+       [
+        4,
         1,
         0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        5,
+        0,
+        1
        ]
       ]
      ]
@@ -5965,7 +6385,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8575,
-   "seconds": 1.99,
+   "seconds": 2.23,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -5993,23 +6413,29 @@
      "sites": 2,
      "witnesses": [
       [
-       4,
+       [
+        4
+       ],
        [
         1,
         0
        ]
       ],
       [
-       0,
+       [
+        1
+       ],
        [
         2,
         1
        ]
       ],
       [
-       1,
        [
-        1,
+        0
+       ],
+       [
+        2,
         0
        ]
       ]
@@ -6031,7 +6457,7 @@
     "fwd": "no tactic alternative closed the goal"
    },
    "certificate_bytes": 8124,
-   "seconds": 2.08,
+   "seconds": 1.91,
    "family": "pointwise",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -6122,7 +6548,7 @@
    "axioms": {},
    "rejected": {},
    "certificate_bytes": 0,
-   "seconds": 0.49,
+   "seconds": 0.44,
    "family": "outside",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -6163,7 +6589,7 @@
    "axioms": {},
    "rejected": {},
    "certificate_bytes": 0,
-   "seconds": 0.36,
+   "seconds": 0.48,
    "family": "outside",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -6263,7 +6689,7 @@
    "axioms": {},
    "rejected": {},
    "certificate_bytes": 0,
-   "seconds": 0.43,
+   "seconds": 0.33,
    "family": "outside",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -6288,7 +6714,7 @@
    "axioms": {},
    "rejected": {},
    "certificate_bytes": 0,
-   "seconds": 0.21,
+   "seconds": 0.37,
    "family": "outside",
    "baseline": {
     "fwd": "UNSUPPORTED",
@@ -6313,7 +6739,7 @@
    "axioms": {},
    "rejected": {},
    "certificate_bytes": 0,
-   "seconds": 0.32,
+   "seconds": 0.49,
    "family": "outside",
    "baseline": {
     "fwd": "UNSUPPORTED",
