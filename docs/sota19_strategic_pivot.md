@@ -1,5 +1,14 @@
 # SOTA-19: the true pivot
 
+> **Status note (2026-11-11, later the same day).** After this document was drafted, a novelty check found
+> that ProofPatch (arXiv 2611.01357, §4.1, §7.3) already performs mutation challenges on elaborated Lean
+> statements (strengthened conclusions, removed disjuncts, dropped hypotheses) with 0.88–0.96 precision
+> and 5–8 % recall on 1,527 labelled statements, and that Beyond LLM Judge (arXiv 2610.20573, §3.3)
+> implements vacuity checks. The self-relational vacuity idea discussed afterwards in conversation is
+> therefore **not** a new capability and is not pursued. Gap certification (SOTA-19A) must take ProofPatch,
+> atp-checkers and Lean Disprove as mandatory baselines before it can claim anything; its expected margin
+> is small. The roadmap below is kept for the record, not as a recommendation to execute.
+
 Research director: Caleb J. Westfall. Written by Claude (Anthropic), 2026-11-11, from the SOTA-18 records,
 a new pre-registered ablation (pilot A0) and a literature check. Branch `research/sota19-strategic-pivot`.
 
@@ -68,7 +77,11 @@ proved the easy direction and failed exactly on the side goal ProofScope isolate
 ProofScope's extraction and alignment and keeps only its tactic portfolio:
 `intro hR; intros; apply hR <;> first | assumption | T`.
 
-{{A0_RESULT}}
+**Result (run 43006906965; the first run was invalid, see `experiments/sota19/A0_RESULT.md`):** G
+reproduces 2 of the 4 wins (68, 237) and 50 of ProofScope's 75 equivalences (12 of the 37
+certificate-backed ones). Pre-registered reading: **H_struct** — ProofScope's hypothesis alignment does
+real work that "apply + portfolio" cannot (split, merged and generalized hypotheses). But only two pairs in
+477 (miniF2F 430 and 298) are certified by ProofScope and by nothing else tested. Real, and narrow.
 
 Three of the four wins also rest on Lean encoding hazards (division by zero, truncated subtraction,
 zero factors) that are catalogued as a defect class, with static checkers, by Ammanamanchi, Bhat and
