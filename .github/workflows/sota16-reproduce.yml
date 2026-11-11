@@ -1,0 +1,171 @@
+name: SOTA-16 Reproduce Presburger Evaluation
+
+on:
+  pull_request:
+    branches: [v1.2-review]
+    paths:
+      - ".github/workflows/sota16-reproduce.yml"
+      - "proofscope/**"
+      - "lean/ProofScope/**"
+      - "experiments/sota16/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FROZEN_COMMIT: 86e62a3
+  SOLVERS: "z3-solver==5.4.0.0 cvc5==1.4.2"
+
+jobs:
+  labels:
+    name: Independent labels (Z3, cvc5, explicit functions)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install $SOLVERS
+      - name: Regenerate cases and verify bit-for-bit identity
+        run: |
+          python experiments/sota16/gen_cases.py
+          git diff --exit-code -- experiments/sota16/cases
+      - name: Label every direction without the engine
+        run: |
+          mkdir -p evidence
+          python experiments/sota16/labels.py evidence/labels.json | tee evidence/labels.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sota16-labels
+          path: evidence/
+
+  evaluate:
+    name: Evaluate ${{ matrix.stage }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - stage: frozen
+          - stage: corrected
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - run: python -m pip install $SOLVERS
+      - name: Provenance and frozen hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          git rev-parse HEAD | tee evidence/commit.txt
+          lean --version | tee evidence/lean-version.txt
+          python --version | tee evidence/python-version.txt
+          python -m pip freeze | grep -i -E "z3|cvc5" | tee evidence/solver-versions.txt
+          git worktree add ../frozen "$FROZEN_COMMIT"
+          git -C ../frozen rev-parse HEAD | tee evidence/frozen-commit.txt
+          # the frozen engine and cases must match FREEZE.txt exactly
+          ( cd ../frozen/experiments/sota16 && python - <<'PY'
+          import hashlib, subprocess
+          from pathlib import Path
+          bad = []
+          for line in Path("FREEZE.txt").read_text().splitlines():
+              f = line.split("  ", 1)
+              if len(f) != 2 or len(f[0]) != 64:
+                  continue
+              if f[1].startswith("cases "):
+                  listing = subprocess.run("find cases -name '*.json' | sort | xargs sha256sum", shell=True,
+                                           capture_output=True, text=True).stdout
+                  actual = hashlib.sha256(listing.encode()).hexdigest()
+              else:
+                  actual = hashlib.sha256(Path(f[1]).read_bytes()).hexdigest()
+              print("MATCH" if actual == f[0] else "DIFF", f[1])
+              if actual != f[0]:
+                  bad.append(f[1])
+          if bad:
+              raise SystemExit("frozen files differ from FREEZE.txt: %r" % bad)
+          PY
+          ) | tee evidence/frozen-hashes.txt
+          # the cases evaluated below are the frozen ones
+          diff -r ../frozen/experiments/sota16/cases experiments/sota16/cases
+      - name: Run the 120-case evaluation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ matrix.stage }}" = "frozen" ]; then
+            python -X faulthandler experiments/sota16/run_eval.py out 4 --engine-root ../frozen --lean-timeout 150 2>&1 | tee evidence/run.log
+          else
+            python -X faulthandler experiments/sota16/run_eval.py out 4 2>&1 | tee evidence/run.log
+          fi
+          cp out/summary.json out/results.json out/rows_sota15.json out/rows_sota16.json evidence/
+          tar czf evidence/certificates.tgz --exclude='*.olean' -C out sota15 sota16
+      - name: Compare with the archived local results
+        shell: bash
+        run: |
+          STAGE="${{ matrix.stage }}" python - <<'PY' | tee evidence/comparison.txt
+          import json, os
+          new = json.load(open("out/summary.json"))
+          stage = os.environ["STAGE"]
+          old = json.load(open("experiments/sota16/results/%s_summary.json" % ("first_run" if stage == "frozen" else "postfix")))
+          for cfg in ("sota15", "sota16"):
+              for k in ("directions_certified", "decisive_verdicts", "inconsistent"):
+                  print(stage, cfg, k, "archived", old[cfg][k], "reproduced", new[cfg][k])
+              assert not new[cfg]["z3_disagreements"], new[cfg]["z3_disagreements"]
+              assert new[cfg]["inconsistent"] == 0
+          assert not new["engines_disagree"], new["engines_disagree"]
+          assert new["sota15"]["directions_certified"] == 178, new["sota15"]["directions_certified"]
+          if stage == "corrected":
+              assert new["sota16"]["directions_certified"] == 231, new["sota16"]["directions_certified"]
+              assert new["sota16"]["decisive_verdicts"] == 111, new["sota16"]["decisive_verdicts"]
+              assert sorted(map(tuple, new["sota16"]["abstained"])) == sorted(map(tuple, old["sota16"]["abstained"]))
+          else:
+              # the frozen run lost cases to resource kills; the exact count depends on the machine
+              print("frozen sota16 archived 209 (13 cases killed for memory); reproduced",
+                    new["sota16"]["directions_certified"], "with a 150 s limit per Lean call")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota16-evaluation-${{ matrix.stage }}
+          path: evidence/
+
+  verify:
+    name: Certified results against independent labels
+    needs: [labels, evaluate]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: No certified direction may contradict an independent label
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          rc=0
+          for stage in frozen corrected; do
+            for cfg in sota15 sota16; do
+              python experiments/sota16/check_labels.py artifacts/sota16-evaluation-$stage/rows_$cfg.json \
+                artifacts/sota16-labels/labels.json "$stage/$cfg" evidence/labels_${stage}_${cfg}.json || rc=1
+            done
+          done
+          exit $rc
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota16-label-verification
+          path: evidence/

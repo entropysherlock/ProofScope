@@ -1,0 +1,14 @@
+SOTA-16 freeze: engine and cases hashed before the first run on these cases (seed 20261111).
+Same author as the engine. Success criteria fixed in advance: 0 disagreements with Z3, 0 disagreements between
+the two engine configurations, and more certified directions than the SOTA-15 configuration.
+
+3abee47feba459ff11c4e535348aef500111292e5616a9da127f7509c453d629  ../../proofscope/scopeelim.py
+b866d12cf62a62d40d8576af0f0e42d4ce50e6e63e5ea78ab27552be2690a2a7  ../../proofscope/scope_smt.py
+5315d3912b9e7890e10669704fffcbf526718c87c0ee93ee55745c0e57e8bcbe  ../../proofscope/scope_expr.py
+9aa1339272f221fd43141da5d27999eef900a3243eac0c9de28161ea6d4db2c9  gen_cases.py
+45f2caeb215cc402f6ba831bcd9b9f17d43a7fcbe8753b91a623414f01ac9a81  run_eval.py
+cd5dbdd4dbf22e0643e4f27e6aad0bdf1e5e85d8e9422a534321d2efab647742  cases (sha256 of the sorted sha256sum listing)
+
+Post-freeze changes (results/first_run_* were produced by the frozen files above):
+- run_eval.py made resumable; Z3 timeout 8 s -> 2 s (first attempt killed by the job time limit).
+- scopeelim.py: Presburger certificates moved to an isolated second pass, candidate caps 24/12 -> 8.

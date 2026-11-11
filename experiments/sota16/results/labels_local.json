@@ -1,0 +1,1997 @@
+{
+ "fl000": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl001": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl002": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 1,
+    "z0": 1,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl003": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 1,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl004": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 2,
+    "z0": 6,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl005": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl006": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "cvc5",
+   "z3": "unknown",
+   "cvc5": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 7,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl007": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl008": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl009": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl010": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 20,
+    "v": 14
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl011": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl012": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 0,
+    "z0": 6,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 1,
+    "z0": 2,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl013": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 0,
+    "z0": 3,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl014": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl015": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 2,
+    "z0": 0,
+    "v": 7
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 0,
+    "z0": 0,
+    "v": 5
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl016": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl017": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 1,
+    "z0": 3,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl018": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 0,
+    "b": 6,
+    "z0": 4,
+    "v": 7
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl019": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl020": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 8,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl021": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl022": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl023": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl024": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl025": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl026": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 0,
+    "z0": 4,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl027": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl028": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl029": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 15,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 1,
+    "z0": 4,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl030": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 1,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 1,
+    "z0": 0,
+    "v": 4
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl031": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 0,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl032": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl033": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl034": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl035": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 4
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl036": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl037": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 1,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl038": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 0,
+    "z0": 5,
+    "v": 5
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl039": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl040": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 2,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl041": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl042": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl043": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 0,
+    "z0": 4,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl044": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl045": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 5,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 4
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl046": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 5
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl047": {
+  "fwd": {
+   "label": null,
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 2,
+    "v": 7
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl048": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl049": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl050": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 1,
+    "z0": 1,
+    "v": 17
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 15,
+    "v": 15
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl051": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl052": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl053": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl054": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 4,
+    "z0": 7,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl055": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 0,
+    "b": 2,
+    "z0": 4,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl056": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 0,
+    "z0": 4,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl057": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl058": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl059": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 4,
+    "z0": 3,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl060": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl061": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl062": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl063": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 18,
+    "z0": 20,
+    "v": 22
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl064": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 2,
+    "z0": 0,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 7,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl065": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl066": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 0,
+    "v": 9
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl067": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl068": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 1,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl069": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl070": {
+  "fwd": {
+   "label": null,
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 2,
+    "z0": 1,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl071": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 2,
+    "z0": 1,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl072": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl073": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 12,
+    "z0": 47,
+    "v": 11
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl074": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl075": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl076": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl077": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 2,
+    "v": 5
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl078": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 0,
+    "b": 0,
+    "z0": 0,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl079": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl080": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl081": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 4,
+    "z0": 2,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl082": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 3,
+    "v": 4
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl083": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl084": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 1,
+    "z0": 0,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl085": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl086": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl087": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl088": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 3,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "sat"
+  }
+ },
+ "fl089": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 0,
+    "b": 0,
+    "z0": 0,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl090": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl091": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl092": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl093": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl094": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl095": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 2,
+    "v": 4
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl096": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 1,
+    "z0": 6,
+    "v": 6
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 9,
+    "z0": 7,
+    "v": 8
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl097": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 6,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl098": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl099": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 4,
+    "z0": 4,
+    "v": 4
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 0,
+    "z0": 0,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl100": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 3,
+    "z0": 3,
+    "v": 5
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 4,
+    "z0": 2,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl101": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "cvc5",
+   "z3": "unknown",
+   "cvc5": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl102": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl103": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 1,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl104": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl105": {
+  "fwd": {
+   "label": null,
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl106": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 2,
+    "z0": 3,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 0,
+    "z0": 2,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl107": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 0,
+    "v": 1
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl108": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl109": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 0,
+    "z0": 5,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl110": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 2,
+    "z0": 3,
+    "v": 3
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  }
+ },
+ "fl111": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 2,
+    "b": 1,
+    "z0": 4,
+    "v": 0
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "cvc5",
+   "z3": "unknown",
+   "cvc5": "unsat"
+  }
+ },
+ "fl112": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl113": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  }
+ },
+ "fl114": {
+  "fwd": {
+   "label": "ENTAILS",
+   "by": "z3",
+   "z3": "unsat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl115": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl116": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 1,
+    "b": 5,
+    "z0": 0,
+    "v": 5
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl117": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "explicit-function",
+   "witness": {
+    "q": 0,
+    "a": 3,
+    "b": 0,
+    "z0": 3,
+    "v": 2
+   },
+   "z3": "unknown",
+   "cvc5": "unknown"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl118": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ },
+ "fl119": {
+  "fwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  },
+  "bwd": {
+   "label": "SEPARATED",
+   "by": "z3-model",
+   "z3": "sat"
+  }
+ }
+}

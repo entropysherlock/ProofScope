@@ -38,6 +38,8 @@ HEADER = ("import ProofScope.ScopeCert\nopen ProofScope.ScopeElim ProofScope.Sco
           "set_option linter.unusedVariables false\n")
 MAX_GROUND = 4000          # ground rule instances per schema (bounded fragment)
 MAX_LEAVES = 400           # case-split leaves per formal clause
+_SERIAL = __import__("threading").Lock()
+PRESBURGER = True          # SOTA-16 instantiation certificates for the linear one-occurrence fragment
 
 
 def build_lib(tc: Toolchain, out: Path) -> dict:
@@ -564,10 +566,144 @@ class FunClaim:
         return f"∀ ({self.var} : Nat), {g} → {r}"
 
 
+def affine(a, var: str):
+    """(k, c) with `a = k * var + c` by literal arithmetic only, else None."""
+    t = a[0]
+    if t == "num":
+        return 0, a[1]
+    if t == "var":
+        return (1, 0) if a[1] == var else None
+    if t == "bin" and a[1] == "+":
+        l, r = affine(a[2], var), affine(a[3], var)
+        return (l[0] + r[0], l[1] + r[1]) if l and r else None
+    if t == "bin" and a[1] == "*":
+        for n, o in ((a[2], a[3]), (a[3], a[2])):
+            if n[0] == "num":
+                r = affine(o, var)
+                return (n[1] * r[0], n[1] * r[1]) if r else None
+    return None
+
+
+def _linform(a):
+    """({atom: coef}, const) treating everything outside `+` and literal `*` as an opaque atom."""
+    t = a[0]
+    if t == "num":
+        return {}, a[1]
+    if t == "bin" and a[1] == "+":
+        (l, lc), (r, rc) = _linform(a[2]), _linform(a[3])
+        return {k: l.get(k, 0) + r.get(k, 0) for k in set(l) | set(r)}, lc + rc
+    if t == "bin" and a[1] == "*":
+        for n, o in ((a[2], a[3]), (a[3], a[2])):
+            if n[0] == "num":
+                d, c = _linform(o)
+                return {k: n[1] * v for k, v in d.items()}, n[1] * c
+    return {to_lean(a): 1}, 0
+
+
+def _sum(d: dict, c: int) -> str:
+    parts = [(k if v == 1 else f"{v} * {k}") for k, v in sorted(d.items()) if v] + ([str(c)] if c or not any(d.values()) else [])
+    return "(" + " + ".join(parts) + ")"
+
+
+def bound_terms(prop, var: str) -> list[str]:
+    """Candidate values for `var` read off the comparison atoms of `prop`: for an atom that bounds
+    `k * var` against the rest, the rounded quotient and its successor. Cooper's test points for the
+    atom and for its negation are among them; extra candidates are harmless."""
+    out = []
+
+    def walk(a):
+        if a[0] == "cmp":
+            (l, lc), (r, rc) = _linform(a[2]), _linform(a[3])
+            k = l.get(var, 0) - r.get(var, 0)
+            l = {x: v for x, v in l.items() if x != var}
+            r = {x: v for x, v in r.items() if x != var}
+            ls, rs = _sum(l, lc), _sum(r, rc)
+            if k > 0:
+                out.extend([f"(({rs} + {k - 1} - {ls}) / {k})", f"(({rs} + {k - 1} - {ls}) / {k} + 1)", f"(({rs} - {ls}) / {k})"])
+            elif k < 0:
+                out.extend([f"(({ls} - {rs}) / {-k})", f"(({ls} - {rs}) / {-k} + 1)", f"(({ls} + {-k - 1} - {rs}) / {-k})"])
+        elif a[0] == "not":
+            walk(a[1])
+        elif a[0] in ("and", "or", "imp"):
+            walk(a[1]), walk(a[2])
+    walk(prop)
+    seen, uniq = set(), []
+    for t in ["0"] + out:
+        if t not in seen:
+            seen.add(t)
+            uniq.append(t)
+    return uniq
+
+
+def _period(*props) -> int:
+    """lcm of the literal divisors and moduli, capped."""
+    import math
+    d = 1
+
+    def walk(a):
+        nonlocal d
+        if a[0] == "bin":
+            if a[1] in "/%" and a[3][0] == "num" and a[3][1] > 0:
+                d = math.lcm(d, a[3][1])
+            walk(a[2]), walk(a[3])
+        elif a[0] == "cmp":
+            walk(a[2]), walk(a[3])
+        elif a[0] == "not":
+            walk(a[1])
+        elif a[0] in ("and", "or", "imp"):
+            walk(a[1]), walk(a[2])
+    for p in props:
+        walk(p)
+    return min(d, 12)
+
+
+def presburger_tactics(R: "FunClaim", F: "FunClaim") -> dict:
+    """SOTA-16: instantiation certificates for the residual obligations when the reference argument
+    is `k * x + c`. For `k ≥ 1` the inner `∀ x` has the single relevant instance
+    `x = (z - c) / k`, so each obligation reduces to quantifier-free linear arithmetic plus witnesses.
+    Witness integers come from Z3 (untrusted) and from Cooper-style bound terms; Lean checks all."""
+    from . import scope_smt
+    ka = affine(R.arg, R.var)
+    if not ka:
+        return {}
+    k, c = ka
+    A, s, rho = R.at("x_")
+    _, t, _ = F.at("y_")
+    per = _period(R.rel, R.guard)
+    if k >= 1:
+        solve = lambda z: [z if (k, c) == (1, 0) else f"(({z} - {c}) / {k})"]
+    else:
+        # constant argument: every x lands on z = c, so x ranges freely; instantiate at the bound
+        # terms of x in `A ∧ ρ` (they may mention w_). Complete only when these cover Cooper's test
+        # points, which is not proved here; the engine abstains if Lean rejects the result.
+        body = subst(("and", R.guard, R.rel), {R.var: ("var", "x_")})
+        xs = [f"({b} + {j})" for b in bound_terms(body, "x_") for j in range(per)][:8]
+        solve = lambda z: xs
+    triv = " trivial" if R.guard == ("true",) else ""       # omega does not look under `True →`
+    inst = lambda z: "; ".join(f"have i{n} := hadm {x}{triv}" for n, x in enumerate(solve(z)))
+    out = {"fib": [f"intro y_ w_ hB hadm; {inst(t)}; omega"]}
+    out["nfib"] = [f"exact ⟨{y}, {w}, by ps_triv, (by intro x_ hA hs; omega), by omega⟩"
+                   for y, w in scope_smt.nfib_witnesses(R, F)]
+    zs = scope_smt.vac_witnesses(R) + ([c] if k == 0 else list(range(4)))
+    out["vac"] = [f"exact ⟨{z}, fun w_ hadm => by {inst(str(z))}; omega⟩" for z in dict.fromkeys(zs)]
+    # ∀ z, ∃ w: refute "no candidate works" with one bad x per candidate
+    if k >= 1:
+        rels = [subst(R.rel, {R.var: ("raw", solve("z_")[0])})]
+    else:
+        gx = bound_terms(subst(R.guard, {R.var: ("var", "x_")}), "x_")[:3]
+        rels = [subst(R.rel, {R.var: ("raw", g)}) for g in gx]
+    cands = list(dict.fromkeys(f"({b} + {j})" for r in rels for b in bound_terms(r, "w_") for j in range(per)))[:8]
+    adm = lambda w: f"(∀ (x_ : Nat), {A} → {s} = z_ → {to_lean(subst(subst(R.rel, {R.var: ('var', 'x_')}), {'w_': ('raw', w)}))})"
+    steps = [f"have n{i} : ¬ {adm(w)} := fun h => hne ⟨_, h⟩" for i, w in enumerate(cands)]
+    steps += [f"obtain ⟨x{i}, h{i}⟩ := Classical.not_forall.1 n{i}" for i in range(len(cands))]
+    out["nvac"] = ["intro z_; refine Classical.byContradiction fun hne => ?_; " + "; ".join(steps) + "; omega"]
+    return out
+
+
 _OFFS = ["y_", "(y_ + 1)", "(y_ + 2)", "(y_ + 3)", "(y_ - 1)", "(y_ - 2)", "(y_ - 3)", "0", "1", "2", "3"]
 
 
-def func_residuals(R: FunClaim, F: FunClaim) -> dict:
+def func_residuals(R: FunClaim, F: FunClaim, pres: bool = False) -> dict:
     """The four symbol-free obligations of Theorem B for 'R entails F', each with a tactic portfolio."""
     A, s, rho = R.at("x_")
     B, t, theta = F.at("y_")
@@ -594,11 +730,16 @@ def func_residuals(R: FunClaim, F: FunClaim) -> dict:
                  f"have h2 := hadm {x2} (by ps_triv) (by ps_triv); omega⟩"
                  for z in range(3) for x in range(4) for x2 in range(x + 1, 5)]
     vac_tac = "first | " + " | ".join(vac_alts)
-    return {"fib": (fib, fib_tac), "nfib": (nfib, nfib_tac), "vac": (vac, vac_tac), "nvac": (nvac, nvac_tac)}
+    res = {"fib": (fib, fib_tac), "nfib": (nfib, nfib_tac), "vac": (vac, vac_tac), "nvac": (nvac, nvac_tac)}
+    if pres:                                            # SOTA-16 pass: instantiation certificates only
+        pt = presburger_tactics(R, F)
+        res = {key: (res[key][0], "first | " + " | ".join(f"({t})" for t in pt[key]) if pt.get(key) else "fail")
+               for key in res}
+    return res
 
 
-def func_direction(R: FunClaim, F: FunClaim, rname: str, fname: str) -> dict:
-    res = func_residuals(R, F)
+def func_direction(R: FunClaim, F: FunClaim, rname: str, fname: str, pres: bool = False) -> dict:
+    res = func_residuals(R, F, pres)
     show = lambda k: f"(show {res[k][0]} from by {res[k][1]})"
     lam = f"{R.lambdas()} {F.lambdas()}"
     ent_stmt = f"∀ (f : Nat → Nat), {rname} f → {fname} f"
@@ -679,14 +820,42 @@ def compare(spec: dict, tc: Toolchain, lib: Path, work: Path) -> dict:
         out.update(verdict="INCONCLUSIVE", reason=f"unsupported: {e}", seconds=round(time.time() - t0, 2))
         return out
     r = certify(_ident(spec), header, ob, tc, work / "certify")
+    if r["status"] == "INFRASTRUCTURE_ERROR":
+        # Lean was killed (memory pressure under parallel runs, observed in the first SOTA-16 run).
+        # Retry alone; the gate is unchanged, so this can only recover certificates, not invent them.
+        with _SERIAL:
+            r = certify(_ident(spec), header, ob, tc, work / "certify_retry")
+        out["infrastructure_retry"] = r["status"]
     certs = set(r["certificates"])
     st = {tag: _status(certs, e, s) for tag, (e, s) in pairs.items()}
+    src2 = ""
+    if spec["kind"] == "func" and PRESBURGER and "UNKNOWN" in st.values():
+        # SOTA-16 second pass, in its own Lean process and with the default heartbeat budget, so an
+        # expensive arithmetic goal can cost only the additional certificates (the first SOTA-16 run
+        # lost whole cases when Lean ran out of memory inside one module).
+        ob2 = {}
+        for tag, (a, b, an, bn) in {"fwd": (R, F, "Ref", "Frm"), "bwd": (F, R, "Frm", "Ref")}.items():
+            if st[tag] != "UNKNOWN":
+                continue
+            d = func_direction(a, b, an, bn, pres=True)
+            ob2[tag] = (d["entails_stmt"], d["entails"])
+            ob2["n" + tag] = (d["nent_stmt"], d["nent"])
+            for k, (stmt, tac) in d["residuals"].items():
+                ob2[f"{tag}_{k}"] = (stmt, [tac])
+        r2 = certify(_ident(spec) + "_P", header.replace("maxHeartbeats 1000000", "maxHeartbeats 200000"),
+                     ob2, tc, work / "certify_presburger")
+        out["presburger_pass"] = {"status": r2["status"], "certificates": sorted(r2["certificates"])}
+        r["certificates"].update(r2["certificates"])
+        r["rejected"] = {k: v for k, v in {**r["rejected"], **r2["rejected"]}.items() if k not in r["certificates"]}
+        src2 = r2.get("certificate_source", "")
+        certs = set(r["certificates"])
+        st = {tag: _status(certs, e, s) for tag, (e, s) in pairs.items()}
     v = "INCONSISTENT" if "INCONSISTENT" in st.values() else verdict(st["fwd"], st["bwd"])
     if spec["kind"] == "func":
         out["reference_vacuous"] = "fwd_vac" in certs
         out["formal_vacuous"] = "bwd_vac" in certs
         out["residuals_certified"] = sorted(k for k in certs if "_" in k)
-    src = r.get("certificate_source", "")
+    src = r.get("certificate_source", "") + src2
     out.update(verdict=v, directions=st, notes=notes, certify_status=r["status"], certificates=sorted(certs),
                axioms={k: c["axioms"] for k, c in r["certificates"].items()}, rejected=r["rejected"],
                certificate_bytes=len(src.encode()), seconds=round(time.time() - t0, 2))
@@ -798,7 +967,7 @@ def detect(spec: dict) -> dict:
     return info
 
 
-def claimdelta_obligations(spec: dict) -> tuple[dict, str, dict]:
+def claimdelta_obligations(spec: dict, pres: bool = False) -> tuple[dict, str, dict]:
     """ClaimDelta-shaped obligations (`link*`, `fwd`, `bwd`, `sepW`, `sepS` at tag `s1`) proved through
     the fragment criteria. Statements are exactly those `proofscope.claimdelta` would certify."""
     d = detect(spec)
@@ -813,7 +982,7 @@ def claimdelta_obligations(spec: dict) -> tuple[dict, str, dict]:
     header = HEADER
     if d["fragment"] == "func":
         for tag, (a, b) in {"fwd": (d["R"], d["F"]), "bwd": (d["F"], d["R"])}.items():
-            fd = func_direction(a, b, "_", "_")
+            fd = func_direction(a, b, "_", "_", pres=pres)
             spec_f = f"(fun z_ => {d['spec_of']('z_')})"
             ob[f"{tag}_s1"] = (ent[tag], [f"intro x1 h; {t} {spec_f} h" for t in fd["entails"]])
             name, stmt, P, Q = sep[tag]
@@ -857,6 +1026,22 @@ def compare_claimdelta(spec: dict, tc: Toolchain, work: Path) -> dict:
     linked = {"linkR_s1", "linkL_s1"} <= certs
     v = relation(certs, "s1") if linked else "INCONCLUSIVE"
     src = r.get("certificate_source", "")
+    if PRESBURGER and linked and v == "INCONCLUSIVE" and meta["fragment"] == "func":
+        # SOTA-16: same isolated second pass as `compare`, only for the directions still open.
+        # Statements are unchanged (ClaimDelta's own obligation shapes), so the merge and the
+        # INCONSISTENT check below work exactly as for first-pass certificates.
+        ob2, _, _ = claimdelta_obligations(spec, pres=True)
+        open_ = {"fwd_s1", "sepS_s1"} if not {"fwd_s1", "sepS_s1"} & certs else set()
+        open_ |= {"bwd_s1", "sepW_s1"} if not {"bwd_s1", "sepW_s1"} & certs else set()
+        ob2 = {k: x for k, x in ob2.items() if k in open_}
+        r2 = certify(_ident(spec) + "_P", header.replace("maxHeartbeats 1000000", "maxHeartbeats 200000"),
+                     ob2, tc, work / "certify_presburger")
+        out["presburger_pass"] = {"status": r2["status"], "certificates": sorted(r2["certificates"])}
+        r["certificates"].update(r2["certificates"])
+        r["rejected"] = {k: x for k, x in {**r["rejected"], **r2["rejected"]}.items() if k not in r["certificates"]}
+        src += r2.get("certificate_source", "")
+        certs = set(r["certificates"])
+        v = relation(certs, "s1")
     out.update(meta, verdict=v, linked=linked, certify_status=r["status"], certificates=sorted(certs),
                axioms={k: c["axioms"] for k, c in r["certificates"].items()}, rejected=r["rejected"],
                certificate_bytes=len(src.encode()), seconds=round(time.time() - t0, 2))
