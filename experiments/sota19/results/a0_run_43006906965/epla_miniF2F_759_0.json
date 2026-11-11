@@ -1,0 +1,1 @@
+{"case_id": "epla:miniF2F:759:0", "fwd": [], "bwd": ["(intros; positivity)", "(intros; nlinarith)", "(intros; linarith)", "(intros; norm_num)", "(intros; simp_all)", "(intros; continuity)", "(intros; aesop)", "(intros; simp [mul_comm])"], "theorems_with_errors": 82, "statement_timeouts": 0, "equiv": false, "timeout": false, "seconds": 6.1}

@@ -1,0 +1,1 @@
+{"case_id": "epla:miniF2F:47:0", "fwd": ["(intros; nlinarith)", "(intros; linarith)", "(intros; omega)", "(intros; grind)"], "bwd": ["(intros; nlinarith)", "(intros; linarith)", "(intros; omega)", "(intros; grind)"], "theorems_with_errors": 82, "statement_timeouts": 0, "equiv": true, "timeout": false, "seconds": 8.6}

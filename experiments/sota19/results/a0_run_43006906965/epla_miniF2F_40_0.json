@@ -1,0 +1,1 @@
+{"case_id": "epla:miniF2F:40:0", "fwd": ["(intros; grind)"], "bwd": [], "theorems_with_errors": 89, "statement_timeouts": 0, "equiv": false, "timeout": false, "seconds": 9.9}

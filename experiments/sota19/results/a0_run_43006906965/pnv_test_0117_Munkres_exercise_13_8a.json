@@ -1,0 +1,1 @@
+{"case_id": "pnv:test:0117:Munkres|exercise_13_8a", "fwd": [], "bwd": ["(intros; continuity)", "(intros; aesop)", "(intros; trivial)"], "theorems_with_errors": 87, "statement_timeouts": 1, "equiv": false, "timeout": false, "seconds": 59.2}
