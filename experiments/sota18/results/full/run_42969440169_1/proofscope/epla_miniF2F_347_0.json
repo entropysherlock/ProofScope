@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:347:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.9,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (y : ℝ), y + 6 + y = 2 * 12 → y = 9",
+ "lean": "∀ (y : ℕ), y + 6 = 12 → y = 9",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (y : ℝ), y'",
+  "cand": "unsupported: cannot tokenize at '∀ (y : ℕ), y'"
+ },
+ "seconds": 17.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618584
+}

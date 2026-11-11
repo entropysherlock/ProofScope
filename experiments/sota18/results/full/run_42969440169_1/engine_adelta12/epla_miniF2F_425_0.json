@@ -1,0 +1,69 @@
+{
+ "id": "epla_miniF2F_425_0",
+ "reference": "∀ (n : ℕ), 0 < n → (21 * n + 4).gcd (14 * n + 3) = 1",
+ "lean": "∀ (n : ℕ), (21 * n + 4).Coprime (14 * n + 3)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "Nat.Coprime ((21 : ℕ) * n + (4 : ℕ)) ((14 : ℕ) * n + (3 : ℕ))",
+  "conclusion_ref": "Nat.gcd ((21 : ℕ) * n + (4 : ℕ)) ((14 : ℕ) * n + (3 : ℕ)) = (1 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < n"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "drop0_restrictive": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_425_0.drop0_restrictive",
+   "statement": "∃ (n : ℕ), ¬ ((0 : ℕ) < n) ∧ True",
+   "axioms": []
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_425_0.link_L",
+   "statement": "(∀ (n : ℕ), (21 * n + 4).Coprime (14 * n + 3)) ↔ (∀ (n : ℕ), Nat.gcd ((21 : ℕ) * n + (4 : ℕ)) ((14 : ℕ) * n + (3 : ℕ)) = (1 : ℕ))",
+   "axioms": []
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_425_0.link_R",
+   "statement": "(∀ (n : ℕ), 0 < n → (21 * n + 4).gcd (14 * n + 3) = 1) ↔ (∀ (n : ℕ), ((0 : ℕ) < n) → Nat.gcd ((21 : ℕ) * n + (4 : ℕ)) ((14 : ℕ) * n + (3 : ℕ)) = (1 : ℕ))",
+   "axioms": []
+  }
+ },
+ "assumptions": [
+  {
+   "side": "dropped",
+   "assumption": "(0 : ℕ) < n",
+   "class": "RESTRICTIVE",
+   "witness_model": [
+    "0"
+   ],
+   "witness_statement": "∃ (n : ℕ), ¬ ((0 : ℕ) < n) ∧ True"
+  }
+ ],
+ "verdict": "LEAN_STRONGER_BY_ASSUMPTION",
+ "theorem": "restrictive_iff_strictly_weaker",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

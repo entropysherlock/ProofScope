@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_425_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 0 < n → (21 * n + 4).gcd (14 * n + 3) = 1",
+ "lean": "∀ (n : ℕ), (21 * n + 4).Coprime (14 * n + 3)",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "(0 : ℕ) < n → Nat.gcd ((21 : ℕ) * n + (4 : ℕ)) ((14 : ℕ) * n + (3 : ℕ)) = (1 : ℕ)",
+   "to": "Nat.Coprime ((21 : ℕ) * n + (4 : ℕ)) ((14 : ℕ) * n + (3 : ℕ))"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,166 @@
+{
+ "id": "epla_miniF2F_557_0",
+ "reference": "∀ (a b : ℝ), 0 < a ∧ 0 < b → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5",
+ "lean": "∀ (a b : ℝ), a > 0 → b > 0 → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "a > (0 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "b > (0 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "a ≠ b"
+   },
+   {
+    "dependent": false,
+    "prop": "|a - (1 : ℝ) / a| = (1 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "|b - (1 : ℝ) / b| = (1 : ℝ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "conclusion_lean": "a + b = √(5 : ℝ)",
+  "conclusion_ref": "a + b = √(5 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a ∧ (0 : ℝ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "a ≠ b"
+   },
+   {
+    "dependent": false,
+    "prop": "|a - (1 : ℝ) / a| = (1 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "|b - (1 : ℝ) / b| = (1 : ℝ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_557_0.link_R",
+   "statement": "(∀ (a b : ℝ), 0 < a ∧ 0 < b → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5) ↔ (∀ (a : ℝ) (b : ℝ), ((0 : ℝ) < a ∧ (0 : ℝ) < b) → (a ≠ b) → (|a - (1 : ℝ) / a| = (1 : ℝ)) → (|b - (1 : ℝ) / b| = (1 : ℝ)) → a + b = √(5 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_557_0.d_implies_a",
+   "statement": "∀ (a : ℝ) (b : ℝ), (((0 : ℝ) < a ∧ (0 : ℝ) < b) ∧ (a ≠ b) ∧ (|a - (1 : ℝ) / a| = (1 : ℝ)) ∧ (|b - (1 : ℝ) / b| = (1 : ℝ))) → (a > (0 : ℝ)) ∧ (b > (0 : ℝ)) ∧ (a ≠ b) ∧ (|a - (1 : ℝ) / a| = (1 : ℝ)) ∧ (|b - (1 : ℝ) / b| = (1 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_557_0.link_L",
+   "statement": "(∀ (a b : ℝ), a > 0 → b > 0 → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5) ↔ (∀ (a : ℝ) (b : ℝ), (a > (0 : ℝ)) → (b > (0 : ℝ)) → (a ≠ b) → (|a - (1 : ℝ) / a| = (1 : ℝ)) → (|b - (1 : ℝ) / b| = (1 : ℝ)) → a + b = √(5 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_557_0.a_implies_d",
+   "statement": "∀ (a : ℝ) (b : ℝ), ((a > (0 : ℝ)) ∧ (b > (0 : ℝ)) ∧ (a ≠ b) ∧ (|a - (1 : ℝ) / a| = (1 : ℝ)) ∧ (|b - (1 : ℝ) / b| = (1 : ℝ))) → ((0 : ℝ) < a ∧ (0 : ℝ) < b) ∧ (a ≠ b) ∧ (|a - (1 : ℝ) / a| = (1 : ℝ)) ∧ (|b - (1 : ℝ) / b| = (1 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "a > (0 : ℝ)",
+  "b > (0 : ℝ)",
+  "a ≠ b",
+  "|a - (1 : ℝ) / a| = (1 : ℝ)",
+  "|b - (1 : ℝ) / b| = (1 : ℝ)"
+ ],
+ "dropped": [
+  "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+  "a ≠ b",
+  "|a - (1 : ℝ) / a| = (1 : ℝ)",
+  "|b - (1 : ℝ) / b| = (1 : ℝ)"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

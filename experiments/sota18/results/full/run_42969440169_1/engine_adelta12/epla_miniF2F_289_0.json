@@ -1,0 +1,69 @@
+{
+ "id": "epla_miniF2F_289_0",
+ "reference": "∀ (z : ℂ), 12 * Complex.normSq z = 2 * Complex.normSq (z + 2) + Complex.normSq (z ^ 2 + 1) + 31 → z + 6 / z = -2",
+ "lean": "∀ (z : ℂ), 12 * sorry ^ 2 = 2 * sorry ^ 2 + sorry ^ 2 + 31 → z + 6 / z = -2",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(12 : ℕ) * HPow.hPow (α := ℕ) sorry (2 : ℕ) =\n  (2 : ℕ) * HPow.hPow (α := ℕ) sorry (2 : ℕ) + HPow.hPow (α := ℕ) sorry (2 : ℕ) + (31 : ℕ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "z + (6 : ℂ) / z = (-2 : ℂ)",
+  "conclusion_ref": "z + (6 : ℂ) / z = (-2 : ℂ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "HMul.hMul (β := ℝ) (12 : ℝ) (Complex.normSq z : ℝ) =\n  HAdd.hAdd (β := ℝ) (HMul.hMul (β := ℝ) (2 : ℝ) (Complex.normSq (z + (2 : ℂ)) : ℝ))\n      (Complex.normSq (z ^ (2 : ℕ) + (1 : ℂ)) : ℝ) +\n    (31 : ℝ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "z",
+    "type": "ℂ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_289_0.link_R",
+   "statement": "(∀ (z : ℂ), 12 * Complex.normSq z = 2 * Complex.normSq (z + 2) + Complex.normSq (z ^ 2 + 1) + 31 → z + 6 / z = -2) ↔ (∀ (z : ℂ), (HMul.hMul (β := ℝ) (12 : ℝ) (Complex.normSq z : ℝ) =\n  HAdd.hAdd (β := ℝ) (HMul.hMul (β := ℝ) (2 : ℝ) (Complex.normSq (z + (2 : ℂ)) : ℝ))\n      (Complex.normSq (z ^ (2 : ℕ) + (1 : ℂ)) : ℝ) +\n    (31 : ℝ)) → z + (6 : ℂ) / z = (-2 : ℂ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(12 : ℕ) * HPow.hPow (α := ℕ) sorry (2 : ℕ) =\n  (2 : ℕ) * HPow.hPow (α := ℕ) sorry (2 : ℕ) + HPow.hPow (α := ℕ) sorry (2 : ℕ) + (31 : ℕ)"
+ ],
+ "dropped": [
+  "HMul.hMul (β := ℝ) (12 : ℝ) (Complex.normSq z : ℝ) =\n  HAdd.hAdd (β := ℝ) (HMul.hMul (β := ℝ) (2 : ℝ) (Complex.normSq (z + (2 : ℂ)) : ℝ))\n      (Complex.normSq (z ^ (2 : ℕ) + (1 : ℂ)) : ℝ) +\n    (31 : ℝ)"
+ ],
+ "verdict": "INCONCLUSIVE",
+ "reason": "canonical telescope not linked to the elaborated statements",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

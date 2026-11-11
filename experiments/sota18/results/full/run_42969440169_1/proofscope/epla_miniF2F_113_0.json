@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:113:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_113_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (c : ℝ) (f : ℝ → ℝ), (∀ (x : ℝ), f x = c * x ^ 3 - 9 * x + 3) → f 2 = 9 → c = 3",
+ "lean": "∀ (c : ℝ), c * 2 ^ 3 - 9 * 2 + 3 = 9 → c = 3",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (c : ℝ) (f'",
+  "cand": "unsupported: cannot tokenize at '∀ (c : ℝ), c'"
+ },
+ "seconds": 16.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618584
+}

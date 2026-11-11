@@ -1,0 +1,55 @@
+{
+ "case_id": "pnv:test:1148:Rudin|exercise_4_3",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1148_Rudin_exercise_4_3/extract/Assumptions_input.lean:4:147: error: unknown universe level `u_1`\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1148_Rudin_exercise_4_3/extract/Drift_input.lean:4:139: error: unknown universe level `u_1`\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {α : Type} [inst : MetricSpace α] (f : α → ℝ), Continuous f → ∀ (z : Set α), z = f ⁻¹' {0} → IsClosed z",
+ "lean": "∀ {X : Type u_1} [MetricSpace X] [inst : TopologicalSpace X] (f : X → ℝ), Continuous f → IsClosed (f ⁻¹' {0})",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {α : Type}'",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 23.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618748
+}

@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:0348:Rudin|exercise_5_3",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0348_Rudin_exercise_5_3/extract/Drift_input.lean:4:0: error: unexpected bound variable #7\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {g : ℝ → ℝ},   Continuous g →     (∃ (M : ℝ), ∀ (x : ℝ), |deriv g x| ≤ M) → ∃ (N : ℝ), ∀ ε > 0, ε < N → Function.Injective fun (x : ℝ) => x + ε * g x",
+ "lean": "∀ {ε : ℝ} (g : ℝ → ℝ),   (∀ (x : ℝ), ‖deriv g x‖ ≤ 1) →     0 < ε → (∀ (x y : ℝ), x ≠ y → ‖g x - g y‖ ≥ ε * ‖x - y‖) → Function.Injective fun (x : ℝ) => x + ε * g x",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {g : ℝ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ {ε : ℝ} (g'"
+ },
+ "seconds": 16.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8631964
+}

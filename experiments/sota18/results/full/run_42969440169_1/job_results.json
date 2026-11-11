@@ -1,0 +1,1 @@
+{"jobs": {"proofscope": "success x24", "semanteq": "success x12", "beqplus": "success x12", "collect_original": "failure (ls broken pipe)"}, "source_run": "42969440169"}

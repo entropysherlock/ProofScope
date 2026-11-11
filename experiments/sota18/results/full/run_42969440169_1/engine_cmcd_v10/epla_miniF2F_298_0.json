@@ -1,0 +1,84 @@
+{
+ "id": "epla_miniF2F_298_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (i m o : ℕ), i ≠ m ∧ m ≠ o ∧ o ≠ i → i * m * o = 2001 → i + m + o ≤ 671",
+ "lean": "∀ (i m o : ℕ), 0 < i ∧ 0 < m ∧ 0 < o → i ≠ m → i ≠ o → m ≠ o → i * m * o = 2001 → i + m + o ≤ 671",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "i ≠ m ∧ m ≠ o ∧ o ≠ i",
+   "to": "(0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o"
+  },
+  {
+   "from": "i * m * o = (2001 : ℕ)",
+   "to": "i ≠ m"
+  },
+  {
+   "from": "i + m + o ≤ (671 : ℕ)",
+   "to": "i ≠ o → m ≠ o → i * m * o = (2001 : ℕ) → i + m + o ≤ (671 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "i ≠ m ∧ m ≠ o ∧ o ≠ i",
+   "to": "(0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 2,
+   "from": "i * m * o = (2001 : ℕ)",
+   "to": "i ≠ m",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "i + m + o ≤ (671 : ℕ)",
+   "to": "i ≠ o → m ≠ o → i * m * o = (2001 : ℕ) → i + m + o ≤ (671 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_298_0.fwd_e3",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (i m o : ℕ), (0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o → i ≠ m → i + m + o ≤ (671 : ℕ)) → (∀ (i m o : ℕ),\n  (0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o → i ≠ m → i ≠ o → m ≠ o → x1 (x1 i m) o = (2001 : ℕ) → i + m + o ≤ (671 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_298_0.fwd_g",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (i m o : ℕ), i ≠ m ∧ m ≠ o ∧ o ≠ i → x1 (x1 i m) o = (2001 : ℕ) → i + m + o ≤ (671 : ℕ)) → (∀ (i m o : ℕ),\n  (0 : ℕ) < i ∧ (0 : ℕ) < m ∧ (0 : ℕ) < o → i ≠ m → i ≠ o → m ≠ o → x1 (x1 i m) o = (2001 : ℕ) → i + m + o ≤ (671 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,81 @@
+{
+ "id": "pnv_test_1346_Rudin_exercise_1_18b",
+ "reference": "∀ (x : ℝ), x ≠ 0 → ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0",
+ "lean": "∀ (x : ℝ), ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "¬∃ (y : ℝ), y ≠ (0 : ℝ) ∧ x * y = (0 : ℝ)",
+  "conclusion_ref": "¬∃ (y : ℝ), y ≠ (0 : ℝ) ∧ x * y = (0 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "x ≠ (0 : ℝ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_pnv_test_1346_Rudin_exercise_1_18b.link_R",
+   "statement": "(∀ (x : ℝ), x ≠ 0 → ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0) ↔ (∀ (x : ℝ), (x ≠ (0 : ℝ)) → ¬∃ (y : ℝ), y ≠ (0 : ℝ) ∧ x * y = (0 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "drop0_restrictive": {
+   "declaration": "ProofScopeCert.AD_pnv_test_1346_Rudin_exercise_1_18b.drop0_restrictive",
+   "statement": "∃ (x : ℝ), ¬ (x ≠ (0 : ℝ)) ∧ True",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_pnv_test_1346_Rudin_exercise_1_18b.link_L",
+   "statement": "(∀ (x : ℝ), ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0) ↔ (∀ (x : ℝ), ¬∃ (y : ℝ), y ≠ (0 : ℝ) ∧ x * y = (0 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "assumptions": [
+  {
+   "side": "dropped",
+   "assumption": "x ≠ (0 : ℝ)",
+   "class": "RESTRICTIVE",
+   "witness_model": [
+    "0"
+   ],
+   "witness_statement": "∃ (x : ℝ), ¬ (x ≠ (0 : ℝ)) ∧ True"
+  }
+ ],
+ "verdict": "LEAN_STRONGER_BY_ASSUMPTION",
+ "theorem": "restrictive_iff_strictly_weaker",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

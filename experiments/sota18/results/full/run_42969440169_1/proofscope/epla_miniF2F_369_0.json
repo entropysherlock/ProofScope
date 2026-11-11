@@ -1,0 +1,71 @@
+{
+ "case_id": "epla:miniF2F:369:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 70.8,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 512.6,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.sin",
+     "type": "ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.cos",
+     "type": "ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (k m n : ℕ) (t : ℝ),   0 < k ∧ 0 < m ∧ 0 < n →     m.gcd n = 1 →       (1 + Real.sin t) * (1 + Real.cos t) = 5 / 4 → (1 - Real.sin t) * (1 - Real.cos t) = ↑m / ↑n - √↑k → k + m + n = 27",
+ "lean": "∀ (k m n : ℕ) (t : ℝ),   (1 + Real.sin t) * (1 + Real.cos t) = 5 / 4 →     (1 - Real.sin t) * (1 - Real.cos t) = ↑m / ↑n - √↑k → 0 < k → 0 < m → 0 < n → m.Coprime n → k + m + n = 27",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (k m n : ℕ'",
+  "cand": "unsupported: cannot tokenize at '∀ (k m n : ℕ'"
+ },
+ "seconds": 590.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14006072
+}

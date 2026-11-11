@@ -1,0 +1,17 @@
+{
+ "id": "epla_ProofNet_164_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] (A B : Set X), IsClosed A → IsClosed B → Disjoint A B → SeparatedNhds A B",
+ "lean": "∀ {X : Type u_1} [inst : MetricSpace X] {A B : Set X}, Disjoint A B → IsClosed A → IsClosed B → SeparatedNhds A B",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_164_0/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_164_0/extract/Drift_input.lean:4:147: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_164_0/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

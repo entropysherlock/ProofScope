@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0086_Dummit_Foote_exercise_7_1_12",
+ "reference": "∀ {F : Type u_1} [inst : Field F] {K : Subring F}, 1 ∈ K → IsDomain ↥K",
+ "lean": "∀ {R : Type u_1} [inst : CommRing R] [inst_1 : Field R] {S : Subring R}, 1 ∈ S → IsDomain ↥S",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0086_Dummit_Foote_exercise_7_1_12/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0086_Dummit_Foote_exercise_7_1_12/extract/Assumptions_input.lean:4:112: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0086_Dummit_Foote_exercise_7_1_12/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

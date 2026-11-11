@@ -1,0 +1,32 @@
+{
+ "id": "pnv_test_0313_Dummit_Foote_exercise_3_2_16",
+ "reference": "∀ (p : ℕ), Nat.Prime p → ∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+ "lean": "∀ {p : ℕ}, Nat.Prime p → ∀ (a : ℕ), a ^ p % p = a % p",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (a : ℕ), a ^ p % p = a % p",
+  "conclusion_ref": "∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "Nat.Prime p"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "p",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

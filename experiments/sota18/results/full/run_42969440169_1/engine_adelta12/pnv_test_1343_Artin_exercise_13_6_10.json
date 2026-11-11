@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_1343_Artin_exercise_13_6_10",
+ "reference": "∀ {K : Type u_1} [inst : Field K] [inst_1 : Fintype Kˣ], ∏ x : Kˣ, x = -1",
+ "lean": "∀ {K : Type u_1} [inst : Field K] [inst_1 : Fintype K] [inst_2 : Fintype Kˣ], Fintype.card K > 2 → ∏ x : Kˣ, x = -1",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1343_Artin_exercise_13_6_10/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1343_Artin_exercise_13_6_10/extract/Assumptions_input.lean:4:115: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1343_Artin_exercise_13_6_10/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

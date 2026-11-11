@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_658_0",
+ "reference": "∀ (a b c d : ℝ), b = a ^ 2 → a + b = 1 → d = c ^ 2 → c + d = 1 → a ≠ c → √((a - c) ^ 2 + (b - d) ^ 2) = √10",
+ "lean": "have f := fun (x : ℝ × ℝ) =>   match x with   | (x, y) => y = x ^ 2 ∧ x + y = 1; ∃ (p : ℝ × ℝ) (q : ℝ × ℝ), f p ∧ f q ∧ p ≠ q ∧ (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 = 10",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ (p : ℝ × ℝ) (q : ℝ × ℝ),\n  (fun (x : ℝ × ℝ) =>\n        (match x with\n          | (x, y) => y = x ^ (2 : ℕ) ∧ x + y = (1 : ℝ) :\n          Prop))\n      p ∧\n    (fun (x : ℝ × ℝ) =>\n          (match x with\n            | (x, y) => y = x ^ (2 : ℕ) ∧ x + y = (1 : ℝ) :\n            Prop))\n        q ∧\n      p ≠ q ∧ (Prod.fst p - Prod.fst q) ^ (2 : ℕ) + (Prod.snd p - Prod.snd q) ^ (2 : ℕ) = (10 : ℝ)",
+  "conclusion_ref": "∀ (a b c d : ℝ),\n  b = a ^ (2 : ℕ) →\n    a + b = (1 : ℝ) → d = c ^ (2 : ℕ) → c + d = (1 : ℝ) → a ≠ c → √((a - c) ^ (2 : ℕ) + (b - d) ^ (2 : ℕ)) = √(10 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

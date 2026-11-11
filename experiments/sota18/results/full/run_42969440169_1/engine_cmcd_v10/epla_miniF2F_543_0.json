@@ -1,0 +1,18 @@
+{
+ "id": "epla_miniF2F_543_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a d : ℝ), a + 6 * d = 30 → a + 10 * d = 60 → a + 20 * d = 135",
+ "lean": "∀ (a d : ℝ), a + 6 * d = 30 → a + 10 * d = 60 → a + 20 * d = 135",
+ "symbols": [],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

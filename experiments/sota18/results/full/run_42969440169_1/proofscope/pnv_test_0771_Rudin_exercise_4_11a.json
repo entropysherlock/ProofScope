@@ -1,0 +1,59 @@
+{
+ "case_id": "pnv:test:0771:Rudin|exercise_4_11a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ".lean:4:77: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Assumptions_input.lean:4:220: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Assumptions_input.lean:4:235: error: unknown universe level `u_2`\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/Drift_input.lean:4:69: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Drift_input.lean:4:212: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0771_Rudin_exercise_4_11a/extract/Drift_input.lean:4:227: error: unknown universe level `u_2`\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] {Y : Type u_2} [inst_1 : MetricSpace Y] (f : X → Y),   UniformContinuous f → ∀ (x : ℕ → X), CauchySeq x → CauchySeq fun (n : ℕ) => f (x n)",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : MetricSpace X] [inst_1 : MetricSpace Y] {f : X → Y},   UniformContinuous f → ∀ {x_n : ℕ → X}, CauchySeq x_n → CauchySeq (f ∘ x_n)",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 22.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618844
+}

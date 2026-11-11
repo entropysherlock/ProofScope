@@ -1,0 +1,76 @@
+{
+ "case_id": "pnv:test:1225:Munkres|exercise_23_11",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.5
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 30.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2",
+   "u_3",
+   "u_4"
+  ],
+  "cand": [
+   "u_1",
+   "u_2",
+   "u_3",
+   "u_4"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {x : Sort u_3} {QuotientMap : x} {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X]   [inst_1 : TopologicalSpace Y] (p : X → Y) (hq : sorry),   ConnectedSpace Y → (∀ (y : Y), IsConnected (p ⁻¹' {y})) → ConnectedSpace X",
+ "lean": "∀ {x : Sort u_3} {QuotientMap : x} {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [TopologicalSpace Y]   (f : X → Y) (hf : sorry) {C : Set X}, IsConnected C → ∀ {y : Y}, y ∈ f '' C → IsConnected (f ⁻¹' {y})",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {x : Sort '",
+  "cand": "unsupported: cannot tokenize at '∀ {x : Sort '"
+ },
+ "seconds": 44.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7651108
+}

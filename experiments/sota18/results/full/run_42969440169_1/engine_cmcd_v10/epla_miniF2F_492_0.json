@@ -1,0 +1,92 @@
+{
+ "id": "epla_miniF2F_492_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ), 0 < x ∧ 0 < y ∧ 0 < z → 9 / (x + y + z) ≤ 2 / (x + y) + 2 / (y + z) + 2 / (z + x)",
+ "lean": "∀ (x y z : ℝ), 0 < x → 0 < y → 0 < z → 9 / (x + y + z) ≤ 2 / (x + y) + 2 / (y + z) + 2 / (z + x)",
+ "symbols": [
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z",
+   "to": "(0 : ℝ) < x"
+  },
+  {
+   "from": "(9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x)",
+   "to": "(0 : ℝ) < y → (0 : ℝ) < z → (9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z",
+   "to": "(0 : ℝ) < x",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_492_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ), (0 : ℝ) < x → x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z →\n    x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x)",
+   "to": "(0 : ℝ) < y → (0 : ℝ) < z → (9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_492_0.fwd_e2",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ), (0 : ℝ) < x → x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    (0 : ℝ) < y → (0 : ℝ) < z → x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_492_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z →\n    x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    (0 : ℝ) < y → (0 : ℝ) < z → x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_492_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    (0 : ℝ) < y → (0 : ℝ) < z → x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z →\n    x1 (9 : ℝ) (x + y + z) ≤ x1 (2 : ℝ) (x + y) + x1 (2 : ℝ) (y + z) + x1 (2 : ℝ) (z + x))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

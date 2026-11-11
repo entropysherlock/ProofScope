@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_279_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℚ → ℝ), (∀ x > 0, ∀ y > 0, f (x * y) = f x + f y) → (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11) < 0",
+ "lean": "∀ (f : ℚ → ℚ),   (∀ (a b : ℚ), 0 < a ∧ 0 < b → f (a * b) = f a + f b) → (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11) < 0",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_279_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #4\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

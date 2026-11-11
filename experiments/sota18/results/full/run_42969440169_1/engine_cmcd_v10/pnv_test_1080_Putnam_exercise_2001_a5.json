@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_1080_Putnam_exercise_2001_a5",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∃! p : ℕ × ℕ, p.1 > 0 ∧ p.2 > 0 ∧ p.1 ^ (p.2 + 1) - (p.1 + 1) ^ p.2 = 2001",
+ "lean": "∀ {a : ℕ}, a > 0 → a ^ 2 = 2001 → ∃ (a' : ℕ) (n : ℕ), a ^ (n + 1) = a'.succ ^ n ∧ a' > 0",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∃! p : ℕ × ℕ,\n  Prod.fst p > (0 : ℕ) ∧\n    Prod.snd p > (0 : ℕ) ∧ Prod.fst p ^ (Prod.snd p + (1 : ℕ)) - (Prod.fst p + (1 : ℕ)) ^ Prod.snd p = (2001 : ℕ)",
+   "to": "∀ {a : ℕ},\n  a > (0 : ℕ) → a ^ (2 : ℕ) = (2001 : ℕ) → ∃ (a' : ℕ) (n : ℕ), a ^ (n + (1 : ℕ)) = Nat.succ a' ^ n ∧ a' > (0 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∃! p : ℕ × ℕ,\n  Prod.fst p > (0 : ℕ) ∧\n    Prod.snd p > (0 : ℕ) ∧ Prod.fst p ^ (Prod.snd p + (1 : ℕ)) - (Prod.fst p + (1 : ℕ)) ^ Prod.snd p = (2001 : ℕ)",
+   "to": "∀ {a : ℕ},\n  a > (0 : ℕ) → a ^ (2 : ℕ) = (2001 : ℕ) → ∃ (a' : ℕ) (n : ℕ), a ^ (n + (1 : ℕ)) = Nat.succ a' ^ n ∧ a' > (0 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

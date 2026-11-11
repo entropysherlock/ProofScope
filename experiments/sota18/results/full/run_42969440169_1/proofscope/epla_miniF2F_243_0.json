@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:243:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 23.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 27.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ), 0 < n → Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "lean": "∀ {n : ℕ}, Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ), 0'",
+  "cand": "unsupported: cannot tokenize at '∀ {n : ℕ}, N'"
+ },
+ "seconds": 59.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618420
+}

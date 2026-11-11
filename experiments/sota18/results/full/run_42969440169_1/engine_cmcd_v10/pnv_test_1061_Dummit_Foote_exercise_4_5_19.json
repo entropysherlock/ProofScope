@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1061_Dummit_Foote_exercise_4_5_19",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Fintype G] [inst_1 : Group G], Fintype.card G = 6545 → ¬IsSimpleGroup G",
+ "lean": "∀ (G : Type u_1) [inst : Group G] [inst_1 : Fintype G] [DecidableEq G], Fintype.card G = 6545 → ¬IsSimpleGroup G",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1061_Dummit_Foote_exercise_4_5_19/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1061_Dummit_Foote_exercise_4_5_19/extract/Drift_input.lean:4:130: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1061_Dummit_Foote_exercise_4_5_19/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,32 @@
+{
+ "id": "epla_miniF2F_53_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (A M C : ℕ),   A ≤ 9 ∧ M ≤ 9 ∧ C ≤ 9 → Nat.ofDigits 10 [0, 1, C, M, A] + Nat.ofDigits 10 [2, 1, C, M, A] = 123422 → A + M + C = 14",
+ "lean": "∀ (A M C : ℕ),   1 ≤ A ∧ A ≤ 9 →     M ≤ 9 →       C ≤ 9 → A * 10000 + M * 1000 + C * 100 + 10 + (A * 10000 + M * 1000 + C * 100 + 12) = 123422 → A + M + C = 14",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "A ≤ (9 : ℕ) ∧ M ≤ (9 : ℕ) ∧ C ≤ (9 : ℕ)",
+   "to": "(1 : ℕ) ≤ A ∧ A ≤ (9 : ℕ)"
+  },
+  {
+   "from": "Nat.ofDigits (10 : ℕ) [(0 : ℕ), (1 : ℕ), C, M, A] + Nat.ofDigits (10 : ℕ) [(2 : ℕ), (1 : ℕ), C, M, A] = (123422 : ℕ)",
+   "to": "M ≤ (9 : ℕ)"
+  },
+  {
+   "from": "A + M + C = (14 : ℕ)",
+   "to": "C ≤ (9 : ℕ) →\n  A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (10 : ℕ) +\n        (A * (10000 : ℕ) + M * (1000 : ℕ) + C * (100 : ℕ) + (12 : ℕ)) =\n      (123422 : ℕ) →\n    A + M + C = (14 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

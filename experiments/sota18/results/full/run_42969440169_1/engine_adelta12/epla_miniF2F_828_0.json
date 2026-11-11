@@ -1,0 +1,32 @@
+{
+ "id": "epla_miniF2F_828_0",
+ "reference": "∀ (n : ℕ), n % 5 = 3 → 2 * n % 5 = 1",
+ "lean": "∀ (n : ℕ), n % 5 = 3 → 2 * n % 5 = 1",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(2 : ℕ) * n % (5 : ℕ) = (1 : ℕ)",
+  "conclusion_ref": "(2 : ℕ) * n % (5 : ℕ) = (1 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "n % (5 : ℕ) = (3 : ℕ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

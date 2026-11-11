@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_144_0",
+ "reference": "∀ (a b c : ℝ),   a ≤ b ∧ b ≤ c → a + b + c = 2 → a * b + b * c + c * a = 1 → 0 ≤ a ∧ a ≤ 1 / 3 ∧ 1 / 3 ≤ b ∧ b ≤ 1 ∧ 1 ≤ c ∧ c ≤ 4 / 3",
+ "lean": "∀ (a b c : ℝ),   a ≤ b ∧ b ≤ c → a + b + c = 2 → a * b + b * c + c * a = 1 → 0 ≤ a ∧ a ≤ 1 / 3 ∧ 1 / 3 ≤ b ∧ b ≤ 1 ∧ 1 ≤ c ∧ c ≤ 4 / 3",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(0 : ℝ) ≤ a ∧ a ≤ (1 / 3 : ℝ) ∧ (1 / 3 : ℝ) ≤ b ∧ b ≤ (1 : ℝ) ∧ (1 : ℝ) ≤ c ∧ c ≤ (4 / 3 : ℝ)",
+  "conclusion_ref": "(0 : ℝ) ≤ a ∧ a ≤ (1 / 3 : ℝ) ∧ (1 / 3 : ℝ) ≤ b ∧ b ≤ (1 : ℝ) ∧ (1 : ℝ) ≤ c ∧ c ≤ (4 / 3 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "a ≤ b ∧ b ≤ c",
+   "a + b + c = (2 : ℝ)",
+   "a * b + b * c + c * a = (1 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

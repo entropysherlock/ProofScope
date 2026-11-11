@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:0856:Rudin|exercise_4_1a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.7,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0856_Rudin_exercise_4_1a/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∃ (f : ℝ → ℝ), (∀ (x : ℝ), Filter.Tendsto (fun (y : ℝ) => f (x + y) - f (x - y)) (nhds 0) (nhds 0)) ∧ ¬Continuous f",
+ "lean": "∀ {f : ℝ → ℝ}, (∀ (x : ℝ), Filter.Tendsto (fun (h : ℝ) => f (x + h) - f (x - h)) (nhds 0) (nhds 0)) → ¬Continuous f",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∃ (f : ℝ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ {f : ℝ → ℝ'"
+ },
+ "seconds": 22.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11626684
+}

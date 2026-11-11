@@ -1,0 +1,66 @@
+{
+ "case_id": "pnv:test:1064:Dummit-Foote|exercise_2_1_13",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 26.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Membership.mem",
+     "type": "AddSubgroup ℚ → ℚ → Prop"
+    },
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℚ → ℚ → ℚ"
+    },
+    {
+     "symbol": "⊥",
+     "type": "AddSubgroup ℚ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (H : AddSubgroup ℚ) {x : ℚ}, (x ∈ H ∧ x ≠ 0 → 1 / x ∈ H) → H = ⊥ ∨ H = ⊤",
+ "lean": "∀ (H : AddSubgroup ℚ), (∀ x ∈ H, 1 / x ∈ H) → H = ⊥ ∨ H = ⊤",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (H : AddSu'",
+  "cand": "unsupported: cannot tokenize at '∀ (H : AddSu'"
+ },
+ "seconds": 37.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8615156
+}

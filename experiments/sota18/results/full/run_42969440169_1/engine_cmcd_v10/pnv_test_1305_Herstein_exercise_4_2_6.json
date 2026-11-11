@@ -1,0 +1,87 @@
+{
+ "id": "pnv_test_1305_Herstein_exercise_4_2_6",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {R : Type u_1} [inst : Ring R] (a x : R), a ^ 2 = 0 → a * (a * x + x * a) = (a * x + x * a) * a",
+ "lean": "∀ {R : Type u_1} [inst : CommSemiring R] {a x : R}, a ^ 2 = 0 → Commute a (x + x * a)",
+ "symbols": [
+  {
+   "symbol": "sorryAx",
+   "type": "(α : Type) → Bool → α"
+  },
+  {
+   "symbol": "Function.const",
+   "type": "(β : Type) → Unit → β → Unit"
+  },
+  {
+   "symbol": "Lean.Name.num",
+   "type": "Lean.Name → ℕ → Lean.Name"
+  }
+ ],
+ "edits": [
+  {
+   "from": "`Drift_input.4.19.4.116.19.116._sorry._@.Drift_input.663141997._hygCtx._hyg.13",
+   "to": "`Drift_input.4.119.4.204.119.204._sorry._@.Drift_input.663141997._hygCtx._hyg.24"
+  }
+ ],
+ "symbols_truncated": true,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "`Drift_input.4.19.4.116.19.116._sorry._@.Drift_input.663141997._hygCtx._hyg.13",
+   "to": "`Drift_input.4.119.4.204.119.204._sorry._@.Drift_input.663141997._hygCtx._hyg.24",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_1305_Herstein_exercise_4_2_6.fwd_e1",
+     "statement": "∀ (x1 : (α : Type) → Bool → α) (x2 : (β : Type) → Unit → β → Unit) (x3 : Lean.Name → ℕ → Lean.Name), (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (19 : ℕ)) (4 : ℕ)) (116 : ℕ)) (19 : ℕ)) (116 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (13 : ℕ)))) → (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (119 : ℕ)) (4 : ℕ)) (204 : ℕ)) (119 : ℕ)) (204 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (24 : ℕ))))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_1305_Herstein_exercise_4_2_6.bwd_e1",
+     "statement": "∀ (x1 : (α : Type) → Bool → α) (x2 : (β : Type) → Unit → β → Unit) (x3 : Lean.Name → ℕ → Lean.Name), (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (119 : ℕ)) (4 : ℕ)) (204 : ℕ)) (119 : ℕ)) (204 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (24 : ℕ)))) → (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (19 : ℕ)) (4 : ℕ)) (116 : ℕ)) (19 : ℕ)) (116 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (13 : ℕ))))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_pnv_test_1305_Herstein_exercise_4_2_6.fwd_e1",
+   "statement": "∀ (x1 : (α : Type) → Bool → α) (x2 : (β : Type) → Unit → β → Unit) (x3 : Lean.Name → ℕ → Lean.Name), (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (19 : ℕ)) (4 : ℕ)) (116 : ℕ)) (19 : ℕ)) (116 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (13 : ℕ)))) → (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (119 : ℕ)) (4 : ℕ)) (204 : ℕ)) (119 : ℕ)) (204 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (24 : ℕ))))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_pnv_test_1305_Herstein_exercise_4_2_6.bwd_e1",
+   "statement": "∀ (x1 : (α : Type) → Bool → α) (x2 : (β : Type) → Unit → β → Unit) (x3 : Lean.Name → ℕ → Lean.Name), (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (119 : ℕ)) (4 : ℕ)) (204 : ℕ)) (119 : ℕ)) (204 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (24 : ℕ)))) → (x1 (Unit → Prop) true\n  (x2 Lean.Name ()\n    (x3\n      (Lean.Name.str\n        (Lean.Name.str\n          (x3\n            (Lean.Name.str\n              (Lean.Name.str\n                (Lean.Name.str\n                  (x3 (x3 (x3 (x3 (x3 (x3 `Drift_input (4 : ℕ)) (19 : ℕ)) (4 : ℕ)) (116 : ℕ)) (19 : ℕ)) (116 : ℕ))\n                  \"_sorry\")\n                \"_@\")\n              \"Drift_input\")\n            (663141997 : ℕ))\n          \"_hygCtx\")\n        \"_hyg\")\n      (13 : ℕ))))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

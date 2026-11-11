@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0601_Herstein_exercise_5_1_8",
+ "reference": "∀ {p m n : ℕ} {F : Type u_1} [inst : Field F],   p ≠ 0 → n > 0 → CharP F p → ∀ (a b : F), m = p ^ n → (a + b) ^ m = a ^ m + b ^ m",
+ "lean": "∀ {p n : ℕ} {F : Type u_1} [inst : Field F] [CharP F p] {m : ℕ},   m = p ^ n → ∀ (a b : F) (n : ℕ), (a + b) ^ m = a ^ m + b ^ m",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Assumptions_input.lean:4:51: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Assumptions_input.lean:4:181: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

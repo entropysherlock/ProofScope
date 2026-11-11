@@ -1,0 +1,66 @@
+{
+ "case_id": "pnv:test:0640:Ireland-Rosen|exercise_4_11",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 6.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 5.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 25.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    },
+    {
+     "symbol": "Nat.ModEq",
+     "type": "ℕ → ℕ → ℕ → Prop"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 1,
+  "cand": 0
+ },
+ "reference": "∀ {p : ℕ},   Nat.Prime p →     ∀ (k s : ℕ),       s = ∑ n : Fin (p - OfNat.ofNat (nat_lit 1)), (n.val + OfNat.ofNat (nat_lit 1)) ^ k →         (¬p - OfNat.ofNat (nat_lit 1) ∣ k → s ≡ OfNat.ofNat (nat_lit 0) [MOD p]) ∧           (p - OfNat.ofNat (nat_lit 1) ∣ k → s.cast ≡ -OfNat.ofNat (nat_lit 1) [ZMOD p.cast])",
+ "lean": "∀ {p : ℕ} [Fact (Nat.Prime p)] {k : ℕ}, k % (p - 1) = 0 → ∑ i ∈ Finset.range (p - 1), Nat.fib (i + 1) ^ k ≡ 0 [MOD p]",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {p : ℕ},  '",
+  "cand": "unsupported: cannot tokenize at '∀ {p : ℕ} [F'"
+ },
+ "seconds": 40.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14006072
+}

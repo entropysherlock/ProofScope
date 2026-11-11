@@ -1,0 +1,17 @@
+{
+ "id": "epla_ProofNet_328_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Group G] {p : ℕ}, Nat.Prime p → ∀ {P : Sylow p G}, P.Normal → P.Characteristic",
+ "lean": "∀ (G : Type u_1) [inst : Group G] (p : ℕ) [Fact (Nat.Prime p)] (P : Sylow p G),   P.Normal → ∀ (varphi : G ≃* G), DFunLike.coe varphi '' SetLike.coe P = SetLike.coe P",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_328_0/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_328_0/extract/Drift_input.lean:4:137: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_328_0/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

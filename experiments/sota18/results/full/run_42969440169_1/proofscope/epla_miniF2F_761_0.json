@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:761:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.1,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "(239 + 174 + 83) % 10 = 6",
+ "lean": "have sally_marbles := 239; have wei_hwa_marbles := 174; have zoe_marbles := 83; have total_marbles := sally_marbles + wei_hwa_marbles + zoe_marbles; have marbles_to_remove := total_marbles % 10; marbles_to_remove = 6",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "parses",
+  "cand": "unsupported: cannot tokenize at ' := 239; hav'"
+ },
+ "seconds": 20.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8615156
+}

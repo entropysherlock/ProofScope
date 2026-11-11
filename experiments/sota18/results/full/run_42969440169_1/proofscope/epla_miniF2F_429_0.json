@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:429:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.4,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.6,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Dvd.dvd",
+     "type": "ℤ → ℤ → Prop"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℤ → ℤ → ℤ"
+    },
+    {
+     "symbol": "Prod.mk",
+     "type": "ℤ → ℤ × ℤ → ℤ × ℤ × ℤ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (p q r : ℤ),   1 < p ∧ p < q ∧ q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → (p, q, r) = (2, 4, 8) ∨ (p, q, r) = (3, 5, 15)",
+ "lean": "∀ (p q r : ℤ),   1 < p ∧ p < q ∧ q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → (p, q, r) = (2, 4, 8) ∨ (p, q, r) = (3, 5, 15)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (p q r : ℤ'",
+  "cand": "unsupported: cannot tokenize at '∀ (p q r : ℤ'"
+ },
+ "seconds": 21.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 9186724
+}

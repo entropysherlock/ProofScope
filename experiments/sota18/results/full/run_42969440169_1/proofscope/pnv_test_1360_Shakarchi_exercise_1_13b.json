@@ -1,0 +1,55 @@
+{
+ "case_id": "pnv:test:1360:Shakarchi|exercise_1_13b",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1360_Shakarchi_exercise_1_13b/extract/Assumptions_input.lean:4:166: error: unknown universe level `u_1`\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1360_Shakarchi_exercise_1_13b/extract/Drift_input.lean:4:158: error: unknown universe level `u_1`\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {f : ℂ → ℂ} (Ω : Set ℂ) (a b : ↑Ω),   IsOpen Ω → DifferentiableOn ℂ f Ω → (∃ (c : ℝ), ∀ z ∈ Ω, (f z).im = c) → f ↑a = f ↑b",
+ "lean": "∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℂ E] {U : Set E},   IsOpen U → ∀ {f : E → ℂ}, AnalyticOn ℂ f U → (∀ z ∈ U, f z = f z) → ∀ z ∈ U, f z = f 0",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {f : ℂ → ℂ'",
+  "cand": "unsupported: cannot tokenize at '∀ {E : Type '"
+ },
+ "seconds": 18.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14049596
+}

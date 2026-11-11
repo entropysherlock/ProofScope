@@ -1,0 +1,30 @@
+{
+ "id": "pnv_test_1284_Dummit_Foote_exercise_1_1_4",
+ "reference": "∀ (n : ℕ) (a b c : ZMod n), a * b * c = a * (b * c)",
+ "lean": "∀ (n : ℕ) (a b c : ℤ), a * b * c = a * (b * c)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (a b c : ℤ), a * b * c = a * (b * c)",
+  "conclusion_ref": "∀ (a b c : ZMod n), a * b * c = a * (b * c)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

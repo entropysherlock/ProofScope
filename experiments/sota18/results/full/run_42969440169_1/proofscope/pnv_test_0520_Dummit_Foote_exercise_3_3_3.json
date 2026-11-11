@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0520:Dummit-Foote|exercise_3_3_3",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "nown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0520_Dummit_Foote_exercise_3_3_3/extract/Assumptions_input.lean:4:193: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0520_Dummit_Foote_exercise_3_3_3/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ": error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0520_Dummit_Foote_exercise_3_3_3/extract/Drift_input.lean:4:185: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0520_Dummit_Foote_exercise_3_3_3/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {p : Nat.Primes} {G : Type u_1} [inst : Group G] {H : Subgroup G} [hH : H.Normal],   H.index = ↑p → ∀ (K : Subgroup G), K ≤ H ∨ H ⊔ K = ⊤ ∧ sorry = p",
+ "lean": "∀ {G : Type u_1} [inst : Group G] (H : Subgroup G) [Fact (Nat.Prime H.index)] (K : Subgroup G),   K ≤ H ∨ G = ↥(H ⊔ K) ∧ K.index = sorry",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {p : Nat.P'",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 18.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8664088
+}

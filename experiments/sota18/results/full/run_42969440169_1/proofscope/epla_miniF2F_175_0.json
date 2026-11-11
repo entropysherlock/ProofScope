@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:175:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.9,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "lean": "∀ (a b c : ℤ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b c : ℤ'"
+ },
+ "seconds": 17.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618888
+}

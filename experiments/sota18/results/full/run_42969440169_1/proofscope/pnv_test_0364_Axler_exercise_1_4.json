@@ -1,0 +1,72 @@
+{
+ "case_id": "pnv:test:0364:Axler|exercise_1_4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 30.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {F : Type u_1} {V : Type u_2} [inst : AddCommGroup V] [inst_1 : Field F] [inst_2 : _root_.Module F V] (v : V) (a : F),   a • v = 0 → a = 0 ∨ v = 0",
+ "lean": "∀ {F : Type u_1} [inst : Field F] {V : Type u_2} [inst_1 : AddCommGroup V] [inst_2 : _root_.Module F V] (a : F) (v : V),   a • v = 0 → a = 0 ∨ v = 0",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {F : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {F : Type '"
+ },
+ "seconds": 42.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618844
+}

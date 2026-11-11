@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:0012:Axler|exercise_6_3",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.1,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0012_Axler_exercise_6_3/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {n : ℕ} (a b : Fin n → ℝ),   (∑ i : Fin n, a i * b i) ^ 2 ≤ (∑ i : Fin n, (↑↑i + 1) * a i ^ 2) * ∑ i : Fin n, b i ^ 2 / (↑↑i + 1)",
+ "lean": "∀ {n : ℕ} {a b : Fin n → ℝ}, ∑ j : Fin n, a j * b j ^ 2 ≤ (∑ j : Fin n, ↑↑j * a j ^ 2) * ∑ j : Fin n, b j ^ 2 / ↑↑j",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {n : ℕ} (a'",
+  "cand": "unsupported: cannot tokenize at '∀ {n : ℕ} {a'"
+ },
+ "seconds": 20.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8615156
+}

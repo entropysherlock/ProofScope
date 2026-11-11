@@ -1,0 +1,59 @@
+{
+ "case_id": "epla:ProofNet:397:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "97_0/extract/Assumptions_input.lean:4:54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_397_0/extract/Assumptions_input.lean:4:250: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_397_0/extract/Assumptions_input.lean:4:265: error: unknown universe level `u_2`\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "rk/epla_ProofNet_397_0/extract/Drift_input.lean:4:46: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_397_0/extract/Drift_input.lean:4:242: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_397_0/extract/Drift_input.lean:4:257: error: unknown universe level `u_2`\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [inst_2 : LinearOrder Y]   [OrderTopology Y] {f g : X → Y}, Continuous f → Continuous g → IsClosed {x : X | f x ≤ g x}",
+ "lean": "∀ (X : Type u_1) (Y : Type u_2) [inst : TopologicalSpace X] [inst_1 : LinearOrder Y] [inst_2 : TopologicalSpace Y]   (f g : X → Y), Continuous f → Continuous g → IsClosed {x : X | f x ≤ g x}",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ (X : Type '"
+ },
+ "seconds": 16.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619732
+}

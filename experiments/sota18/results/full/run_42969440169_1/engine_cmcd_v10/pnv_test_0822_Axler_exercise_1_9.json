@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0822_Axler_exercise_1_9",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {F : Type u_1} {V : Type u_2} [inst : AddCommGroup V] [inst_1 : Field F] [inst_2 : _root_.Module F V]   (U W : Submodule F V), (∃ (U' : Submodule F V), U'.carrier = ↑U ∪ ↑W) ↔ U ≤ W ∨ W ≤ U",
+ "lean": "∀ {R : Type u_1} {M : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup M] [inst_2 : _root_.Module R M]   (X Y : Submodule R M), X ≤ Y → X ⊔ Y = Y",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:46: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:225: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:240: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0822_Axler_exercise_1_9/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

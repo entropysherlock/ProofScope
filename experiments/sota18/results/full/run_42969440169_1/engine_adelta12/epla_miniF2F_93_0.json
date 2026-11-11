@@ -1,0 +1,39 @@
+{
+ "id": "epla_miniF2F_93_0",
+ "reference": "∀ (x y : ℝ), 3 * y = x → 2 * x + 5 * y = 11 → x + y = 4",
+ "lean": "∀ (x y : ℝ), 3 * y = x → 2 * x + 5 * y = 11 → x + y = 4",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "x + y = (4 : ℝ)",
+  "conclusion_ref": "x + y = (4 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "(3 : ℝ) * y = x",
+   "(2 : ℝ) * x + (5 : ℝ) * y = (11 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

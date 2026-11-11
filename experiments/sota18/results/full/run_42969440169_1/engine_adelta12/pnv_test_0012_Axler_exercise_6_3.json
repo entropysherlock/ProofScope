@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_0012_Axler_exercise_6_3",
+ "reference": "∀ {n : ℕ} (a b : Fin n → ℝ),   (∑ i : Fin n, a i * b i) ^ 2 ≤ (∑ i : Fin n, (↑↑i + 1) * a i ^ 2) * ∑ i : Fin n, b i ^ 2 / (↑↑i + 1)",
+ "lean": "∀ {n : ℕ} {a b : Fin n → ℝ}, ∑ j : Fin n, a j * b j ^ 2 ≤ (∑ j : Fin n, ↑↑j * a j ^ 2) * ∑ j : Fin n, b j ^ 2 / ↑↑j",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∑ j : Fin n, a j * b j ^ (2 : ℕ) ≤\n  HMul.hMul (α := ℝ) (∑ j : Fin n, ↑↑j * a j ^ (2 : ℕ)) (∑ j : Fin n, b j ^ (2 : ℕ) / ↑↑j)",
+  "conclusion_ref": "HPow.hPow (α := ℝ) (∑ i : Fin n, a i * b i) (2 : ℕ) ≤\n  HMul.hMul (α := ℝ) (∑ i : Fin n, (↑↑i + (1 : ℝ)) * a i ^ (2 : ℕ)) (∑ i : Fin n, b i ^ (2 : ℕ) / (↑↑i + (1 : ℝ)))",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "a",
+    "type": "Fin n → ℝ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "b",
+    "type": "Fin n → ℝ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,39 @@
+{
+ "id": "epla_miniF2F_528_0",
+ "reference": "∀ (c : ℝ) (f : ℝ → ℝ), (∀ (x : ℝ), f x = c * x ^ 3 - 9 * x + 3) → f 2 = 9 → c = 3",
+ "lean": "∀ (c : ℝ) (f : ℝ → ℝ), (∀ (x : ℝ), f x = c * x ^ 3 - 9 * x + 3) → f 2 = 9 → c = 3",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "c = (3 : ℝ)",
+  "conclusion_ref": "c = (3 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "∀ (x : ℝ), f x = c * x ^ (3 : ℕ) - (9 : ℝ) * x + (3 : ℝ)",
+   "f (2 : ℝ) = (9 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

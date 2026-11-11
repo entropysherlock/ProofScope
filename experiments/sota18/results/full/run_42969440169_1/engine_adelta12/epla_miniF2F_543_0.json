@@ -1,0 +1,39 @@
+{
+ "id": "epla_miniF2F_543_0",
+ "reference": "∀ (a d : ℝ), a + 6 * d = 30 → a + 10 * d = 60 → a + 20 * d = 135",
+ "lean": "∀ (a d : ℝ), a + 6 * d = 30 → a + 10 * d = 60 → a + 20 * d = 135",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "a + (20 : ℝ) * d = (135 : ℝ)",
+  "conclusion_ref": "a + (20 : ℝ) * d = (135 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "a + (6 : ℝ) * d = (30 : ℝ)",
+   "a + (10 : ℝ) * d = (60 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "d",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

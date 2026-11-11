@@ -1,0 +1,124 @@
+{
+ "id": "epla_miniF2F_171_0",
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → (∃ k > 0, 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1",
+ "lean": "∀ (a b : ℕ), 0 < a → 0 < b → (∃ (k : ℕ), 0 < k ∧ 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < a"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "∃ (k : ℕ), (0 : ℕ) < k ∧ (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))"
+   }
+  ],
+  "added_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "conclusion_lean": "a = (1 : ℕ)",
+  "conclusion_ref": "a = (1 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < a ∧ (0 : ℕ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_171_0.a_implies_d",
+   "statement": "∀ (a : ℕ) (b : ℕ), (((0 : ℕ) < a) ∧ ((0 : ℕ) < b) ∧ (∃ (k : ℕ), (0 : ℕ) < k ∧ (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ)))) → ((0 : ℕ) < a ∧ (0 : ℕ) < b) ∧ (∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ)))",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_171_0.d_implies_a",
+   "statement": "∀ (a : ℕ) (b : ℕ), (((0 : ℕ) < a ∧ (0 : ℕ) < b) ∧ (∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ)))) → ((0 : ℕ) < a) ∧ ((0 : ℕ) < b) ∧ (∃ (k : ℕ), (0 : ℕ) < k ∧ (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ)))",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_171_0.link_L",
+   "statement": "(∀ (a b : ℕ), 0 < a → 0 < b → (∃ (k : ℕ), 0 < k ∧ 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1) ↔ (∀ (a : ℕ) (b : ℕ), ((0 : ℕ) < a) → ((0 : ℕ) < b) → (∃ (k : ℕ), (0 : ℕ) < k ∧ (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))) → a = (1 : ℕ))",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_171_0.link_R",
+   "statement": "(∀ (a b : ℕ), 0 < a ∧ 0 < b → (∃ k > 0, 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1) ↔ (∀ (a : ℕ) (b : ℕ), ((0 : ℕ) < a ∧ (0 : ℕ) < b) → (∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))) → a = (1 : ℕ))",
+   "axioms": [
+    "propext"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℕ) < a",
+  "(0 : ℕ) < b",
+  "∃ (k : ℕ), (0 : ℕ) < k ∧ (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))"
+ ],
+ "dropped": [
+  "(0 : ℕ) < a ∧ (0 : ℕ) < b",
+  "∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

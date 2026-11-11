@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0804:Rudin|exercise_4_21a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0804_Rudin_exercise_4_21a/extract/Assumptions_input.lean:4:196: error: unknown universe level `u`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0804_Rudin_exercise_4_21a/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0804_Rudin_exercise_4_21a/extract/Drift_input.lean:4:188: error: unknown universe level `u`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0804_Rudin_exercise_4_21a/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] (K F : Set X),   IsCompact K → IsClosed F → Disjoint K F → ∃ δ > 0, ∀ (p q : X), p ∈ K → q ∈ F → Dist.dist p q > δ",
+ "lean": "∀ {X : Type u} [inst : MetricSpace X] [Nonempty X] {K F : Set X},   IsCompact K → IsClosed F → K ∩ F = ∅ → ∃ δ > 0, ∀ (p q : X), p ∈ K → q ∈ F → Dist.dist p q ≥ δ",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 17.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8664088
+}

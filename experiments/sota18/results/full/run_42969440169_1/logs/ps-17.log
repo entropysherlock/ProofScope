@@ -1,0 +1,20 @@
+epla:ProofNet:197:0 ENGINES_RAN NO_ASSUMPTION_DELTA INCONCLUSIVE 47.2 
+epla:ProofNet:376:0 NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+epla:miniF2F:163:0 ENGINES_RAN ASSUMPTION_EQUIVALENT SCHEMA_EQUIVALENT 311.6 
+epla:miniF2F:278:0 ENGINES_RAN NO_ASSUMPTION_DELTA IDENTICAL 21.1 
+epla:miniF2F:39:0 ENGINES_RAN INCONCLUSIVE SCHEMA_EQUIVALENT 44.0 
+epla:miniF2F:512:0 ENGINES_RAN NO_ASSUMPTION_DELTA NO_SHARED_SYMBOLS 21.0 
+epla:miniF2F:623:0 ENGINES_RAN CONCLUSION_ONLY_CHANGE INCONCLUSIVE 44.8 
+epla:miniF2F:763:0 ENGINES_RAN CONCLUSION_ONLY_CHANGE INCONCLUSIVE 20.9 
+pnv:test:0028:Dummit-Foote|exercise_4_4_2 ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 21.3 
+pnv:test:0134:Putnam|exercise_1998_b6 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:0302:Rudin|exercise_3_13 NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+pnv:test:0392:Rudin|exercise_4_1a ENGINES_RAN CONCLUSION_ONLY_CHANGE INCONCLUSIVE 21.1 
+pnv:test:0502:Rudin|exercise_3_7 NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+pnv:test:0674:Munkres|exercise_22_2a ENGINES_RAN CONCLUSION_ONLY_CHANGE INCONCLUSIVE 29.8 
+pnv:test:0799:Dummit-Foote|exercise_2_4_16a ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 21.2 
+pnv:test:0952:Rudin|exercise_1_8 ENGINES_RAN CONCLUSION_ONLY_CHANGE NO_SHARED_SYMBOLS 20.8 
+pnv:test:1071:Dummit-Foote|exercise_9_4_9 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:1187:Dummit-Foote|exercise_1_1_17 ENGINES_RAN NO_ASSUMPTION_DELTA INCONCLUSIVE 42.5 
+pnv:test:1309:Dummit-Foote|exercise_3_4_5b NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+pnv:test:1437:Herstein|exercise_2_3_16 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)

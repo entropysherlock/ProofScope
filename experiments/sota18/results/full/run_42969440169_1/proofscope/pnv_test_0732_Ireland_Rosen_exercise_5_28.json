@@ -1,0 +1,62 @@
+{
+ "case_id": "pnv:test:0732:Ireland-Rosen|exercise_5_28",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 31.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {p : ℕ}, Nat.Prime p → p ≡ 1 [MOD 4] → ((∃ (x : ℕ), x ^ 4 ≡ 2 [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ 2 + 64 * B ^ 2)",
+ "lean": "∀ {p : ℕ}, Nat.Prime p → p % 4 = 1 → ((∃ (n : ℕ), p = n ^ 2 + 64 * n ^ 2) ↔ ∃ (x : ℤ), 2 * x = 1 ∧ x ^ 4 = ↑p)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {p : ℕ}, N'",
+  "cand": "unsupported: cannot tokenize at '∀ {p : ℕ}, N'"
+ },
+ "seconds": 44.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7651108
+}

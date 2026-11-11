@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0214:Pugh|exercise_2_26",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0214_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:154: error: unknown universe level `u`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0214_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "rift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0214_Pugh_exercise_2_26/extract/Drift_input.lean:4:146: error: unknown universe level `u`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0214_Pugh_exercise_2_26/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M), IsOpen U ↔ ∀ x ∈ U, ¬ClusterPt x (Filter.principal Uᶜ)",
+ "lean": "∀ {α : Type u} [inst : TopologicalSpace α] {s : Set α}, IsOpen s ↔ ∀ (x : α), x ∉ closure sᶜ",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {M : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {α : Type '"
+ },
+ "seconds": 21.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11645476
+}

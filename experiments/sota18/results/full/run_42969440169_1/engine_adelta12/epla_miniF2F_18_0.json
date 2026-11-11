@@ -1,0 +1,30 @@
+{
+ "id": "epla_miniF2F_18_0",
+ "reference": "∀ (n : ℕ), 12 ∣ 4 ^ (n + 1) + 20",
+ "lean": "∀ (n : ℕ), 12 ∣ 4 ^ (n + 1) + 20",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(12 : ℕ) ∣ (4 : ℕ) ^ (n + (1 : ℕ)) + (20 : ℕ)",
+  "conclusion_ref": "(12 : ℕ) ∣ (4 : ℕ) ^ (n + (1 : ℕ)) + (20 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

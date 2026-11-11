@@ -1,0 +1,18 @@
+{
+ "id": "epla_miniF2F_640_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "(2000 + 2001 + 2002 + 2003 + 2004 + 2005 + 2006) % 7 = 0",
+ "lean": "(2000 + 2001 + 2002 + 2003 + 2004 + 2005 + 2006) % 7 = 0",
+ "symbols": [],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

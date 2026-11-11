@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:1143:Rudin|exercise_1_8",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1143_Rudin_exercise_1_8/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "¬∃ (r : ℂ → ℂ → Prop), IsLinearOrder ℂ r",
+ "lean": "¬∃ (lt : ℂ → ℂ → Prop), IsStrictTotalOrder ℂ lt ∧ ∀ (a b c : ℂ), lt a b → lt (a + c) (b + c) ∧ lt 0 a → lt 0 (a * a)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∃ (r : ℂ → ℂ'",
+  "cand": "unsupported: cannot tokenize at '∃ (lt : ℂ → '"
+ },
+ "seconds": 21.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8139816
+}

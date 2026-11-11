@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0618:Herstein|exercise_2_11_7",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.0
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 5.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "r: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Assumptions_input.lean:4:145: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 10.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "n:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Drift_input.lean:4:137: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 1,
+  "cand": 0
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] {p : ℕ}, Nat.Prime p → ∀ {P : Sylow p G}, P.Normal → P.Characteristic",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {p : ℕ} {P : Sylow p G} (φ : G →* G), ∀ g ∈ P, φ g ∈ P",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 25.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8671168
+}

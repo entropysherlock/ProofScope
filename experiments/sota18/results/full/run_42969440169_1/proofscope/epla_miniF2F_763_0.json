@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:763:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_763_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f : ℕ → ℕ → ℝ),   (∀ (x : ℕ), 0 < x → f x x = ↑x) →     (∀ (x y : ℕ), 0 < x ∧ 0 < y → f x y = f y x) →       (∀ (x y : ℕ), 0 < x ∧ 0 < y → (↑x + ↑y) * f x y = ↑y * f x (x + y)) → f 14 52 = 364",
+ "lean": "∀ (f : ℕ+ → ℕ+ → ℕ+),   (∀ (x : ℕ+), f x x = x) →     (∀ (x y : ℕ+), f x y = f y x) → (∀ (x y : ℕ+), (x + y) * f x y = y * f x (x + y)) → f 14 52 = 364",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f : ℕ → ℕ'",
+  "cand": "unsupported: cannot tokenize at '∀ (f : ℕ+ → '"
+ },
+ "seconds": 20.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8981308
+}
