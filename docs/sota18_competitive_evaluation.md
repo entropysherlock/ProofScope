@@ -247,6 +247,22 @@ The pivot: ProofScope becomes a certified *explanation and assumption-redundancy
 equivalence checker, built on an `Expr`-level input pipeline. Re-evaluate on these same frozen
 pairs: the data and harness are reusable as-is.
 
+## 17a. Independent reproduction (run #5, 43000099441)
+
+A second full run with the fixed workflow ([43000099441](https://github.com/entropysherlock/ProofScope/actions/runs/43000099441),
+all 48 tool jobs and its own collect step green; records in `experiments/sota18/results/full/run_43000099441_1/`)
+reproduces every gate quantity exactly under both readings (S = 47; H0: U_A 13.7 %, U_B 36.5 %, X = 11;
+H1: U_A 10.3 %, U_B 25.0 %, X = 4; P_N 0.33 on 3 outputs). Per pair:
+
+* BEq+: 0 of 478 records differ.
+* ProofScope: 1 of 477 differs (CMCD returned no verdict on one pair that adelta12 already decided as
+  `ASSUMPTION_EQUIVALENT`); no scored outcome changes.
+* SemantEq: 10 of 477 differ, all involving its 300 s timeout (7 Timeout → Inconclusive, one each
+  Timeout → EquivalentRestricted, Timeout → LikelyTooStrong, LikelyTooStrong → Timeout). SemantEq's
+  certified correct count on Track B moves from 85 to 86; nothing else changes.
+
+The decision (PIVOT) is unchanged.
+
 ## 17. Reproduce
 
 See `experiments/sota18/README.md`. Scoring of the committed records:

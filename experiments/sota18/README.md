@@ -7,7 +7,8 @@ Report: [`docs/sota18_competitive_evaluation.md`](../../docs/sota18_competitive_
 
 Pre-registered gate: **PIVOT** under both readings (frozen engine H0 and fail-closed H1). Summaries:
 `summary_H0.json`, `summary_H1.json`; raw records `results/full/run_42969440169_1/`. Full report:
-`docs/sota18_competitive_evaluation.md`.
+`docs/sota18_competitive_evaluation.md`. Reproduced by a second full run, 43000099441 (`results/full/run_43000099441_1/`):
+identical gate values, BEq+ identical per pair, ProofScope 1 and SemantEq 10 (timeout-related) pairs differ.
 
 ## Order of events (each step is a commit on `research/sota18-independent-evaluation`)
 
