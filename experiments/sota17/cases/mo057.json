@@ -1,0 +1,1 @@
+{"family": "lower", "formal": {"body": "((f (3 * n) ≠ f (2 * n)) ∧ (f (3 * n) + 3 ≤ f (2 * n))) ∨ (f (2 * n) + 3 ≤ f (3 * n))", "guard": "n % 2 = 0", "var": "n"}, "id": "mo057", "kind": "multi", "meta": {"a": 1, "b": null}, "reference": {"body": "f n < f (n + 1)", "guard": "True", "var": "n"}}

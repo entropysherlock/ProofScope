@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "(f 5 % 2 = f n % 2) ∨ (f (3 * n) + f 5 ≤ 2 * f (3 * n) + 2)", "guard": "n % 2 = 0", "var": "n"}, "id": "mo084", "kind": "multi", "meta": {"c": 1, "k": 3}, "reference": {"body": "f (3 * n + 1) = 2 * n", "guard": "True", "var": "n"}}

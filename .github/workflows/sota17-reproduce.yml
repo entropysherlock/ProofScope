@@ -1,0 +1,163 @@
+name: SOTA-17 Reproduce Multi-Occurrence Evaluation
+
+on:
+  pull_request:
+    branches: [v1.2-review]
+    paths:
+      - ".github/workflows/sota17-reproduce.yml"
+      - "proofscope/**"
+      - "lean/ProofScope/**"
+      - "experiments/sota17/**"
+      - "tests/v02/test_sota17_multiocc.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOLVERS: "z3-solver==5.4.1.0 cvc5==1.4.2"
+  MATHLIB_TAG: v4.34.1
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+
+jobs:
+  lean:
+    name: MultiOcc.lean (compile, axioms, fresh replay)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - name: Compile, check axioms, replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence build/ProofScope
+          cd lean
+          lean -o ../build/ProofScope/ScopeElim.olean ProofScope/ScopeElim.lean > ../evidence/ScopeElim.log
+          LEAN_PATH=../build lean -o ../build/ProofScope/MultiOcc.olean ProofScope/MultiOcc.lean | tee ../evidence/MultiOcc.log
+          cd ..
+          if grep -q "sorryAx" evidence/MultiOcc.log; then echo "sorryAx found"; exit 1; fi
+          if grep -E "error|warning" evidence/MultiOcc.log; then echo "diagnostics found"; exit 1; fi
+          python3 - <<'PY'
+          import re
+          ok = {"propext", "Classical.choice", "Quot.sound"}
+          n = 0
+          for line in open("evidence/MultiOcc.log"):
+              m = re.search(r"depends on axioms: \[([^\]]*)\]", line)
+              if m:
+                  n += 1
+                  assert {a.strip() for a in m.group(1).split(",")} <= ok, line
+              elif "does not depend on any axioms" in line:
+                  n += 1
+          assert n == 26, n
+          print("axiom reports:", n)
+          PY
+          ( cd build && LEAN_PATH=. leanchecker --fresh ProofScope.MultiOcc ) | tee evidence/replay.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota17-lean
+          path: evidence/
+
+  tests:
+    name: Python regression suite (all of tests/)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - run: python -m pip install $SOLVERS pytest
+      - run: python -m pytest tests -q
+
+  track-b:
+    name: Track B (frozen multi-occurrence cases, independent labels)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - run: python -m pip install $SOLVERS
+      - name: Regenerate cases and verify bit-for-bit identity
+        run: |
+          python experiments/sota17/gen_cases.py
+          git diff --exit-code -- experiments/sota17/cases
+      - name: Label every direction without the engine
+        run: |
+          mkdir -p evidence
+          python experiments/sota17/labels.py evidence/labels.json | tee evidence/labels.log
+      - name: Run the engine and the SOTA-16 baseline
+        run: python experiments/sota17/run_eval.py evidence 2 | tee evidence/eval.log
+      - name: Gates (no certified direction contradicts a label; totals as reported)
+        run: |
+          python - <<'PY'
+          import json
+          s = json.load(open("evidence/summary.json"))
+          ref = json.load(open("experiments/sota17/results/postfix_summary.json"))
+          print(json.dumps(s["total"], indent=1))
+          assert s["wrong"] == [], s["wrong"]
+          for k in ("certified", "entails", "separated", "unsupported", "abstained", "baseline_certified"):
+              assert s["total"][k] == ref["total"][k], (k, s["total"][k], ref["total"][k])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota17-track-b
+          path: |
+            evidence/*.json
+            evidence/*.log
+
+  track-c:
+    name: Track C (Mathlib pilot at the pinned revision)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Lean 4.34.1
+        uses: ./.github/actions/setup-lean
+      - run: python -m pip install $SOLVERS
+      - name: Check out Mathlib at the pin (sources only, no build)
+        run: |
+          git clone --depth 1 --branch "$MATHLIB_TAG" https://github.com/leanprover-community/mathlib4.git ../mathlib4
+          test "$(git -C ../mathlib4 rev-parse HEAD)" = "$MATHLIB_REV"
+      - name: Re-extract, re-select and verify the frozen selection
+        run: |
+          mkdir -p evidence
+          python experiments/sota17/mathlib_pilot/extract.py ../mathlib4 > evidence/population.json
+          python experiments/sota17/mathlib_pilot/make_selection.py evidence/population.json
+          git diff --exit-code -- experiments/sota17/mathlib_pilot/selection.json
+      - name: Run the pilot on all three splits and compare with the committed results
+        run: |
+          for s in C2_dev C2_heldout C1; do python experiments/sota17/mathlib_pilot/pilot.py $s evidence/pilot; done
+          python - <<'PY'
+          import json
+          for s in ("C2_dev", "C2_heldout", "C1"):
+              a = json.load(open(f"evidence/pilot/{s}_results.json"))["summary"]
+              b = json.load(open(f"experiments/sota17/mathlib_pilot/results/{s}_results.json"))["summary"]
+              assert a["reached"] == b["reached"] and a["certified"] == b["certified"], (s, a["reached"], b["reached"])
+              print(s, a["reached"])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota17-track-c
+          path: evidence/pilot/*.json

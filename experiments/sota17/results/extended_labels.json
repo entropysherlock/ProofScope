@@ -1,0 +1,13 @@
+{
+ "note": "stopped after two directions (60 s limit per solver each; cvc5 did not honour the limit and ran for minutes). Incomplete: 11 of 13 directions not attempted.",
+ "mo001:fwd": {
+  "engine": "ENTAILS",
+  "label": null,
+  "method": null
+ },
+ "mo013:fwd": {
+  "engine": "ENTAILS",
+  "label": null,
+  "method": null
+ }
+}

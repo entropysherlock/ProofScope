@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "((f 5 + f (n + 3) ≤ 2 * f (n + 3) + 2) ∧ (f (n + 3) = f (2 * n + 1) + 4)) ∧ (f (n + 3) + 4 ≤ f 5)", "guard": "n ≤ 6", "var": "n"}, "id": "mo037", "kind": "multi", "meta": {"a": 2, "b": 2}, "reference": {"body": "f (n + 1) ≤ f n + 2 ∧ f n + 2 ≤ f (n + 1)", "guard": "True", "var": "n"}}

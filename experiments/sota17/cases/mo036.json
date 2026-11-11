@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "(f (2 * n) + 3 ≤ f 0) ∨ (f (2 * n) % 2 = f (3 * n) % 2)", "guard": "3 ≤ n", "var": "n"}, "id": "mo036", "kind": "multi", "meta": {"a": 0, "b": 0}, "reference": {"body": "f n + 0 ≤ f (n + 1) ∧ f (n + 1) ≤ f n + 0", "guard": "True", "var": "n"}}

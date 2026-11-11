@@ -1,0 +1,1 @@
+{"family": "lower", "formal": {"body": "((f 0 < f (n + 1) + 2) ∧ (f 0 ≤ f (n + 1) + 1)) ∧ (f (n + 1) % 2 = f 0 % 2)", "guard": "1 ≤ n", "var": "n"}, "id": "mo042", "kind": "multi", "meta": {"a": 2, "b": null}, "reference": {"body": "f n + 2 ≤ f (n + 1)", "guard": "True", "var": "n"}}

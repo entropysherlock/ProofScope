@@ -1,0 +1,326 @@
+{
+ "summary": {
+  "split": "C2_heldout",
+  "mathlib_rev": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "declarations": 42,
+  "reached": {
+   "extracted": 42,
+   "binders": 24,
+   "abstracted": 0,
+   "in_fragment": 0,
+   "certified": 0
+  },
+  "failure_reasons": {
+   "failed_at_abstracted: several hypotheses on the function": 9,
+   "failed_at_abstracted: no hypothesis on the function": 6,
+   "failed_at_binders: several function symbols": 5,
+   "failed_at_binders: no function symbol in the binders": 4,
+   "failed_at_abstracted: hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law": 4,
+   "failed_at_binders: typeclass binder": 4,
+   "failed_at_binders: untyped binder": 3,
+   "failed_at_binders: variables of another type": 2,
+   "failed_at_abstracted: conclusion does not mention the function": 2,
+   "failed_at_abstracted: outside the claim grammar: cannot tokenize at 'μ 1 ≤ 1) ∧ ('": 1,
+   "failed_at_abstracted: outside the claim grammar: cannot tokenize at 'ℝ) ∧ (1 < m)'": 1,
+   "failed_at_abstracted: outside the claim grammar: cannot tokenize at ' α) ∧ (ℕ → S'": 1
+  },
+  "certified": [],
+  "seconds_total": 0
+ },
+ "rows": [
+  {
+   "name": "floor_nat",
+   "file": "Mathlib/Algebra/Order/Floor/Defs.lean",
+   "line": 125,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "pow_left_strictMono",
+   "file": "Mathlib/Algebra/Order/Group/Nat.lean",
+   "line": 49,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "mono_map_natDegree_eq",
+   "file": "Mathlib/Algebra/Polynomial/EraseLead.lean",
+   "line": 354,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "isBoundedUnder",
+   "file": "Mathlib/Analysis/Normed/Unbundled/RingSeminorm.lean",
+   "line": 205,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "μ_bddBelow",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 303,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "μ_nonempty",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 338,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "limsup_mu_le",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 383,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "tendsto_smoothingFun_comp",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 421,
+   "stage": "failed_at_abstracted",
+   "reason": "outside the claim grammar: cannot tokenize at 'μ 1 ≤ 1) ∧ ('"
+  },
+  {
+   "name": "summable_schlomilch_iff",
+   "file": "Mathlib/Analysis/PSeries.lean",
+   "line": 187,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "summable_schlomilch_iff_of_nonneg",
+   "file": "Mathlib/Analysis/PSeries.lean",
+   "line": 220,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "summable_one_div_pow_of_le",
+   "file": "Mathlib/Analysis/SpecificLimits/Basic.lean",
+   "line": 580,
+   "stage": "failed_at_abstracted",
+   "reason": "outside the claim grammar: cannot tokenize at 'ℝ) ∧ (1 < m)'"
+  },
+  {
+   "name": "exists_lt_ack_of_nat_primrec",
+   "file": "Mathlib/Computability/Ackermann.lean",
+   "line": 267,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "of_primrec",
+   "file": "Mathlib/Computability/Partrec.lean",
+   "line": 179,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "of_eq",
+   "file": "Mathlib/Computability/Primrec/Basic.lean",
+   "line": 72,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "prim_iff₁",
+   "file": "Mathlib/Computability/Primrec/List.lean",
+   "line": 766,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "of_eq_tot",
+   "file": "Mathlib/Computability/RecursiveIn.lean",
+   "line": 113,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "Nat.Primrec.recursiveIn",
+   "file": "Mathlib/Computability/RecursiveIn.lean",
+   "line": 158,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "isDvdSequence",
+   "file": "Mathlib/Data/Nat/DvdSequence.lean",
+   "line": 86,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "nth_le_of_strictMonoOn_of_mapsTo",
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 293,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "le_nth_of_monotoneOn_of_surjOn",
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 310,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "eq_nth_of_strictMonoOn_of_mapsTo_of_surjOn",
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 334,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "nth_comp_of_strictMono",
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 345,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "HasAntitoneBasis.comp_strictMono",
+   "file": "Mathlib/Order/Filter/AtTopBot/Basic.lean",
+   "line": 391,
+   "stage": "failed_at_abstracted",
+   "reason": "outside the claim grammar: cannot tokenize at ' α) ∧ (ℕ → S'"
+  },
+  {
+   "name": "Nat.cauchy_induction",
+   "file": "Mathlib/Order/Interval/Finset/Nat.lean",
+   "line": 279,
+   "stage": "failed_at_abstracted",
+   "reason": "conclusion does not mention the function"
+  },
+  {
+   "name": "Nat.stabilises_of_monotone",
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 707,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "Nat.stabilises_of_antitone",
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 728,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "converges_of_monotone_of_bounded",
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 745,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "mkStrictMonoAux_strictMono",
+   "file": "Mathlib/Probability/Process/LocalProperty.lean",
+   "line": 266,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "isPreLocalizingSequence_of_isLocalizingSequence_aux",
+   "file": "Mathlib/Probability/Process/LocalProperty.lean",
+   "line": 273,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "IsHausdorff.StrictMono.funext'",
+   "file": "Mathlib/RingTheory/AdicCompletion/Basic.lean",
+   "line": 131,
+   "stage": "failed_at_binders",
+   "reason": "variables of another type"
+  },
+  {
+   "name": "degBound_zero",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 601,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "numBound_zero",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 602,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "numBound_succ",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 610,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "degBound_casesOn_succ",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 616,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "numBound_casesOn_succ",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 625,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "degBound_le_degBound",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 640,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "totallyBounded",
+   "file": "Mathlib/Topology/MetricSpace/GromovHausdorff.lean",
+   "line": 735,
+   "stage": "failed_at_abstracted",
+   "reason": "conclusion does not mention the function"
+  },
+  {
+   "name": "isClosed_iUnion_closure_singleton_of_not_tendsto",
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 177,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "SeqCompactSpace.tendsto_subseq",
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 277,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "CompactSpace.tendsto_subseq",
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 307,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "Function.Bijective.cauchySeq_comp_iff",
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 222,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "isCompact_closure_interUnionBalls",
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 801,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  }
+ ]
+}

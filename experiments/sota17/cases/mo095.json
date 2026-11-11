@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "f 5 < f (2 * n + 1) + 2", "guard": "True", "var": "n"}, "id": "mo095", "kind": "multi", "meta": {"c": 0, "k": 2}, "reference": {"body": "n ≤ f (2 * n) ∧ f (2 * n) ≤ 2 * n + 1", "guard": "True", "var": "n"}}
