@@ -51,6 +51,27 @@ class TestExpr(unittest.TestCase):
         self.assertEqual((h["fragment"], h["position"], h["const"]), ("horn", 0, 1))
 
 
+class TestFallbackGuard(unittest.TestCase):
+    """The ClaimDelta fallback must apply the v1.3 reference guard to its own law verdicts."""
+
+    def _run(self, status):
+        orig = se.compare_claimdelta
+        se.compare_claimdelta = lambda spec, tc, work: {"verdict": "LEAN_STRONGER", "certificates": ["bwd_s1", "sepS_s1"]}
+        try:
+            row = {"verdict": "INCONCLUSIVE", "subsets": {}, "law_certificates": {"lawS": {}}, "reference_status": status}
+            return se.fallback({"id": "g"}, row, Toolchain(lean="lean"), Path("/nonexistent"))
+        finally:
+            se.compare_claimdelta = orig
+
+    def test_unverified_reference_is_not_equivalent_by_laws(self):
+        r = self._run("UNVERIFIED")
+        self.assertEqual(r["verdict"], "CLAIM_LEAN_STRONGER")
+        self.assertEqual(r["law_status"], "IMPLICATION_PROVED_REFERENCE_UNVERIFIED")
+
+    def test_verified_reference_keeps_law_label(self):
+        self.assertEqual(self._run("VERIFIED")["verdict"], "EQUIVALENT_BY_LAWS")
+
+
 @unittest.skipUnless(shutil.which("lean"), "Lean not on PATH")
 class TestEngine(unittest.TestCase):
     @classmethod

@@ -890,8 +890,11 @@ def fallback(spec: dict, row: dict, tc: Toolchain, out: Path) -> dict:
     elif rel in ("LEAN_WEAKER", "LEAN_STRONGER", "INCOMPARABLE"):
         need = {"LEAN_WEAKER": ["lawW"], "LEAN_STRONGER": ["lawS"], "INCOMPARABLE": ["lawW", "lawS"]}[rel]
         laws = row.get("law_certificates") or {}
-        row.update(verdict="EQUIVALENT_BY_LAWS" if all(k in laws for k in need) else "CLAIM_" + rel,
-                   verdict_source="scopeelim")
+        # v1.3 guard: a law implication is harmless rewriting only for a kernel-verified reference
+        by_laws = all(k in laws for k in need) and row.get("reference_status") == "VERIFIED"
+        if all(k in laws for k in need) and not by_laws:
+            row["law_status"] = "IMPLICATION_PROVED_REFERENCE_UNVERIFIED"
+        row.update(verdict="EQUIVALENT_BY_LAWS" if by_laws else "CLAIM_" + rel, verdict_source="scopeelim")
     return row
 
 

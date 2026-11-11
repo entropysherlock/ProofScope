@@ -170,7 +170,7 @@ class Case:
             if len(self.names) != 1:
                 continue
             for hyp in ("(by omega)", "(by decide)", "trivial"):
-                for close in ("simp at hbad", "simp_all", "omega", "decide at hbad"):
+                for close in ("simp at hbad", "simp_all", "omega", "exact absurd hbad (by decide)", "(revert hbad; decide)"):
                     out.append(f"intro h; have hbad := h {k} {hyp}; {close}")
         return out
 
@@ -179,7 +179,16 @@ class Case:
         # harmless rewriting. Absence of a refutation is NOT evidence of validity.
         names = " ".join(self.names)
         return [f"intro {names} hyp; {t}" for t in
-                ("omega", "simp_all", "simp", "decide", "exact hyp", "trivial")]
+                ("omega", "simp_all", "simp", "decide", "exact hyp", "trivial", "grind",
+                 # core-library facts about the operators ClaimDelta abstracts (a proof portfolio:
+                 # failure leaves the reference UNVERIFIED, it never refutes it)
+                 "exact Nat.lt_two_pow_self", "exact Nat.lt_pow_self (by decide)", "exact Nat.pow_pos (by decide)",
+                 "exact Nat.mod_lt _ hyp", "exact Nat.gcd_dvd_right _ _", "exact Nat.gcd_dvd_left _ _",
+                 "exact ⟨Nat.gcd_dvd_left _ _, Nat.gcd_dvd_right _ _⟩", "exact Nat.le_mul_of_pos_right _ hyp",
+                 "exact ⟨Nat.lt_two_pow_self, Nat.pow_pos (by decide)⟩", "(simp [Nat.pow_two])",
+                 "(simp [Nat.pow_succ]; omega)", "(rw [Nat.pow_two]; exact Nat.le_mul_of_pos_right _ hyp)",
+                 "(obtain ⟨h1, h2⟩ := hyp; exact (Nat.lt_mul_iff_one_lt_right (by omega)).2 h2)",
+                 "exact (Nat.lt_mul_iff_one_lt_right (by omega)).2 (by omega)")]
 
     def obligations(self, ab: dict) -> tuple[dict, dict]:
         syms = ab["symbols"]
