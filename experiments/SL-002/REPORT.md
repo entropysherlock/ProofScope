@@ -31,8 +31,8 @@ Patel; until PR #4992 of 2026-08-16 it wrongly asserted the positive statement);
 | **952: the two statements are equivalent** | `ScopeLedger.SL002.E952.fc_iff_main : FCStatement ↔ MainEndpoint` | Mathlib only | kernel-checked; axioms `propext, Classical.choice, Quot.sound`; `leanchecker` replay exit 0 (run 43024368984) |
 | **1150: OpenAI's statement implies Formal Conjectures'** | `ScopeLedger.SL002.E1150.main_implies_fc : MainStatement → FCStatement` | Mathlib only | same (run 43024368984) |
 | 1150 reverse direction | — | — | **undecided**; not attempted, and not expected to be easy: the FC statement only asks for infinitely many good degrees, OpenAI's gives all large lengths |
-| **952 FC statement from OpenAI's proof** | `ScopeLedger.SL002.E952.erdos_952` | Mathlib + 41 OpenAI files | pending: assembly build in progress |
-| **1150 FC statement from OpenAI's proof** | `ScopeLedger.SL002.E1150.erdos_1150` | Mathlib + 24 OpenAI files | pending: assembly build in progress |
+| **952 FC statement from OpenAI's proof** | `ScopeLedger.SL002.E952.erdos_952` | Mathlib + 41 OpenAI files | kernel-checked; axioms `propext, Classical.choice, Quot.sound`; built in 272 s; all 69 modules, including OpenAI's 65, replayed by `leanchecker` (run 43024368984) |
+| **1150 FC statement from OpenAI's proof** | `ScopeLedger.SL002.E1150.erdos_1150` | Mathlib + 24 OpenAI files | kernel-checked; axioms `propext, Classical.choice, Quot.sound`; built in 272 s; all 69 modules, including OpenAI's 65, replayed by `leanchecker` (run 43024368984) |
 
 Why the 952 equivalence is not vacuous: two proved closed propositions are trivially equivalent. Here
 the equivalence is proved in a context that contains a proof of *neither* side (Mathlib only; the
@@ -46,6 +46,15 @@ infinitely many good degrees; OpenAI proved the stronger "all large lengths" for
 a re-indexing (length `n + 1` versus degree `n`), the construction of a `Polynomial` with prescribed
 coefficients and its degree, a supremum over the sphere, and an ε-argument
 (`(1 + c/2)√(n+1) ≤ (1+c)√n` once `n ≥ (1 + c/2)²/c`).
+
+Runs: bridges in 43024368984 (Lake build), 43024708516 and 43025657829 (plain `lean`); assembly in
+43024368984. The plain-`lean` assembly in 43024708516 failed in 2 s for an infrastructure reason
+(Lean refuses a source file outside its root directory); it is recorded as `blocked_infrastructure`,
+not as a mathematical result, and was relaunched in 43025657829.
+
+Side result: OpenAI's two proofs themselves (65 files, about 22,000 lines) compile from verbatim
+sources against pinned Lean and Mathlib, and every module replays under `leanchecker`, with only the
+three standard axioms. This is a replay by this project's own pipeline, not an independent review.
 
 ## 4. Method and soundness
 

@@ -1,0 +1,22 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-002 (experiments/SL-002), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T13:00:00Z",
+  "id": "statement:oai.challenge.OAI.GaussianMoat.MainEndpoint",
+  "identifier": "OAI.GaussianMoat.MainEndpoint",
+  "language": "lean4",
+  "note": "Definition (a Prop) from OpenAI's Comparator challenge, distinct from the theorem record.",
+  "schema": "0.1",
+  "source": {
+    "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "locator": "https://github.com/openai/math",
+    "path": "lean/ComparatorChallenges/GaussianMoat.lean"
+  },
+  "text": ": Prop := ∀ (D : ℝ) (z : ℕ → GaussianInt), (∀ t, Irreducible (z t)) → Function.Injective z → (∀ t, dist (z (t + 1) : ℂ) (z t : ℂ) ≤ D) → False",
+  "text_sha256": "5692968cb873a2f0386b1e4053430c55d5fc9d778040cca0f537bb6bd9f3d322",
+  "type": "statement"
+}

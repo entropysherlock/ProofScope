@@ -1,0 +1,62 @@
+{
+  "allowed_steps": "any Mathlib lemma; the proof context contains no proof of either side (Mathlib-only import, both statements are definitions), so the equivalence is not the trivial one between two proved closed propositions",
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-002 (experiments/SL-002), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "basis": "kernel",
+  "certificates": {
+    "backward": {
+      "artifact_sha256": "8f871d0b4346e0dd7943cb7a0cd59ff5c12bd8a0a27993e7ad37f0bda4b4030f",
+      "axiom_source": "print_axioms+statement_verbatim_check+leanchecker",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "checker": "Lean 4.34.1 kernel (lean -o) + leanchecker replay of the module",
+      "dependencies": "Mathlib d13f23b723b8a846827a245b89c10fc7d3f11612 only",
+      "elaborated_without_error": true,
+      "kernel_replay": true,
+      "proposition_sha256": "9f566daf88398faed5073d12fa74fd66b5494137a18aa90e609188fad566675a",
+      "replay_log": "https://github.com/entropysherlock/ProofScope/actions/runs/43024368984",
+      "replayed_at": "2026-11-11T13:00:00Z",
+      "sorry_free": true,
+      "toolchain": "leanprover/lean4:v4.34.1 (archive SHA-256 47bf4bbd…e4e4)"
+    },
+    "forward": {
+      "artifact_sha256": "8f871d0b4346e0dd7943cb7a0cd59ff5c12bd8a0a27993e7ad37f0bda4b4030f",
+      "axiom_source": "print_axioms+statement_verbatim_check+leanchecker",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "checker": "Lean 4.34.1 kernel (lean -o) + leanchecker replay of the module",
+      "dependencies": "Mathlib d13f23b723b8a846827a245b89c10fc7d3f11612 only",
+      "elaborated_without_error": true,
+      "kernel_replay": true,
+      "proposition_sha256": "9f566daf88398faed5073d12fa74fd66b5494137a18aa90e609188fad566675a",
+      "replay_log": "https://github.com/entropysherlock/ProofScope/actions/runs/43024368984",
+      "replayed_at": "2026-11-11T13:00:00Z",
+      "sorry_free": true,
+      "toolchain": "leanprover/lean4:v4.34.1 (archive SHA-256 47bf4bbd…e4e4)"
+    }
+  },
+  "created": "2026-11-11T13:00:00Z",
+  "declaration": "ScopeLedger.SL002.E952.fc_iff_main",
+  "faithfulness": "unassessed",
+  "id": "relation:sl002.E952.equivalent",
+  "kind": "equivalent",
+  "known_limitations": [
+    "Produced and checked only by the project's own AI-assisted pipeline; no independent review.",
+    "Says nothing about whether either formal statement is faithful to Erdős's problem.",
+    "Comparator, SemantEq and BEq+ were not run."
+  ],
+  "note": "One theorem (an iff) certifies both directions.",
+  "object": "statement:fc.erdos952.erdos_952",
+  "outcome": "certified",
+  "schema": "0.1",
+  "subject": "statement:oai.challenge.OAI.GaussianMoat.MainEndpoint",
+  "type": "relation"
+}

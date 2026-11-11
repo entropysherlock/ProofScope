@@ -1,0 +1,22 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-002 (experiments/SL-002), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T13:00:00Z",
+  "id": "statement:oai.challenge.OAI.AsymptoticallyMinimalLittlewood.MainStatement",
+  "identifier": "OAI.AsymptoticallyMinimalLittlewood.MainStatement",
+  "language": "lean4",
+  "note": "Definition (a Prop) from OpenAI's Comparator challenge, distinct from the theorem record.",
+  "schema": "0.1",
+  "source": {
+    "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "locator": "https://github.com/openai/math",
+    "path": "lean/ComparatorChallenges/AsymptoticallyMinimalLittlewood.lean"
+  },
+  "text": ": Prop := ∀ η : ℝ, 0 < η → ∃ N₀ : ℕ, 1 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → ∃ ε : Fin N → ℝ, IsRealSigning ε ∧ ∀ z : ℂ, ‖z‖ = 1 → ‖littlewoodValue ε z‖ ≤ (1 + η) * Real.sqrt N",
+  "text_sha256": "9e2d6bc733279d2cf810f83885ea1bae3ce162ed37b215c88b660d7edf2a810e",
+  "type": "statement"
+}

@@ -1,0 +1,38 @@
+{
+  "about": "statement:fc.erdos1150.erdos_1150",
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-002 (experiments/SL-002), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "basis": "kernel",
+  "certificate": {
+    "artifact_sha256": "db8aff2ea1a75e6257c4d4fc45717492cf7118ace397a5e722a9041e90879e9f",
+    "axiom_source": "print_axioms+statement_verbatim_check+leanchecker",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "checker": "Lean 4.34.1 kernel (lean -o) + leanchecker replay of the module",
+    "dependencies": "Mathlib d13f23b723b8a846827a245b89c10fc7d3f11612 only; 24 openai/math source files at 4eaee87548250b2682affda7d05d947c05554bae, verbatim, hashes in oai_files.json",
+    "elaborated_without_error": true,
+    "kernel_replay": true,
+    "proposition_sha256": "c22d4954c18eed5fefc555f4e5b2942453419389bbb5ba41ecc4cf9795224344",
+    "replay_log": "https://github.com/entropysherlock/ProofScope/actions/runs/43024368984",
+    "replayed_at": "2026-11-11T13:00:00Z",
+    "sorry_free": true,
+    "toolchain": "leanprover/lean4:v4.34.1 (archive SHA-256 47bf4bbd…e4e4)"
+  },
+  "created": "2026-11-11T13:00:00Z",
+  "declaration": "ScopeLedger.SL002.E1150.erdos_1150",
+  "id": "evidence:sl002.E1150.fc_statement_from_openai",
+  "known_limitations": [
+    "Produced and checked only by the project's own AI-assisted pipeline; no independent review.",
+    "Says nothing about whether either formal statement is faithful to Erdős's problem.",
+    "Comparator, SemantEq and BEq+ were not run."
+  ],
+  "level": "machine_checked",
+  "note": "The Formal Conjectures statement, verbatim, proved from OpenAI's theorem via the SL-002 bridge. Not 'reproduced': built by this project's own pipeline.",
+  "schema": "0.1",
+  "type": "evidence"
+}

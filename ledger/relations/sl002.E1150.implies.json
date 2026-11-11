@@ -1,0 +1,41 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-002 (experiments/SL-002), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "basis": "kernel",
+  "certificate": {
+    "artifact_sha256": "cd7e2aed132180e19e510b32bc31068151112292c535a8b5090efa7c70c5137f",
+    "axiom_source": "print_axioms+statement_verbatim_check+leanchecker",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "checker": "Lean 4.34.1 kernel (lean -o) + leanchecker replay of the module",
+    "dependencies": "Mathlib d13f23b723b8a846827a245b89c10fc7d3f11612 only",
+    "elaborated_without_error": true,
+    "kernel_replay": true,
+    "proposition_sha256": "1b7b4abe03dae870896cb6edc4a60b5e098dbb97630461c27e57036eb698b7f8",
+    "replay_log": "https://github.com/entropysherlock/ProofScope/actions/runs/43024368984",
+    "replayed_at": "2026-11-11T13:00:00Z",
+    "sorry_free": true,
+    "toolchain": "leanprover/lean4:v4.34.1 (archive SHA-256 47bf4bbd…e4e4)"
+  },
+  "created": "2026-11-11T13:00:00Z",
+  "declaration": "ScopeLedger.SL002.E1150.main_implies_fc",
+  "faithfulness": "unassessed",
+  "id": "relation:sl002.E1150.implies",
+  "kind": "implies",
+  "known_limitations": [
+    "Produced and checked only by the project's own AI-assisted pipeline; no independent review.",
+    "Says nothing about whether either formal statement is faithful to Erdős's problem.",
+    "Comparator, SemantEq and BEq+ were not run."
+  ],
+  "object": "statement:fc.erdos1150.erdos_1150",
+  "outcome": "certified",
+  "reverse": "not_attempted",
+  "schema": "0.1",
+  "subject": "statement:oai.challenge.OAI.AsymptoticallyMinimalLittlewood.MainStatement",
+  "type": "relation"
+}
