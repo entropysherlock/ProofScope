@@ -1,0 +1,70 @@
+{
+ "case_id": "synth:c05_universe_unsound_probe",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.9,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 27.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] (a b : G), a * b = b * a",
+ "lean": "∀ {G : Type u_1} [inst : CommGroup G] (a b : G), a * b = b * a",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 38.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618468
+}
