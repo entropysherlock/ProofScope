@@ -1,0 +1,81 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "main",
+      "file_exists": true,
+      "file_sha256": "ef8357d0a5720fec3aa6af5a912f1081a53336ccba415e1098985aa7d4b71729",
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → Set.Infinite ((A + B) ∆ {n : ℕ | Nat.Prime n})",
+      "statement_sha256": "e124b249dd2f06610ac46308db40f541cc9a27f0d6c04d91a334803b9d2ec12b"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "main",
+      "file_exists": true,
+      "file_sha256": "ef8357d0a5720fec3aa6af5a912f1081a53336ccba415e1098985aa7d4b71729",
+      "qualified_name": "OAI.Ostmann.main",
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → Set.Infinite ((A + B) ∆ {n : ℕ | Nat.Prime n})",
+      "statement_sha256": "e124b249dd2f06610ac46308db40f541cc9a27f0d6c04d91a334803b9d2ec12b"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "9599ed18eb09a00cc0bd83d56706b63cc3d9193b32a4dd262a155a29d5d7140d",
+      "config": "lean/ComparatorChallenges/OstmannPrimes.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Ostmann.main"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 4356,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": false,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "55c7b407fd106e2eb4879085dba223d2954249632f9e363423ea6b96de264662",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → ((A + B) ∆ {n | n.Prime}).Infinite",
+      "statement_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666"
+    },
+    "link": {
+      "answer_wrapper": false,
+      "body_sha256": "55c7b407fd106e2eb4879085dba223d2954249632f9e363423ea6b96de264662",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → ((A + B) ∆ {n | n.Prime}).Infinite",
+      "statement_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666"
+    },
+    "pre": {
+      "answer_wrapper": false,
+      "body_sha256": null,
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "polarity": null,
+      "statement": null,
+      "statement_sha256": null
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": null,
+  "B_file_first_commit": "3a7a4d2b08ad54f3b7274d9f8bfe5a7edcef850a 2026-09-02T18:32:47+00:00 putonthetableacat55",
+  "B_theorem_existed_before_release": false,
+  "case_id": "SL001-E431-erdos_431.variants.ostmann",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [],
+  "erdos_problem": 431,
+  "independence_class": "B_written_after_release",
+  "outcome": "observed",
+  "stage": 1
+}

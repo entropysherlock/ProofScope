@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.AsymptoticallyMinimalLittlewood.main",
+  "identifier": "OAI.AsymptoticallyMinimalLittlewood.main",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 187,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/Analysis/Littlewood/Main.lean",
+    "sha256": "7c7d54dd82a881bf5df78d9ea15973142066a60135031ad47b8d37d7fb5ebe96"
+  },
+  "text": ": MainStatement",
+  "text_sha256": "8a78916f21ff94f96a5dfccb615e1979a9445d9c941b311172976938d0f8d8ea",
+  "type": "statement"
+}

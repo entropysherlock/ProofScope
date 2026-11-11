@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.Ostmann.main",
+  "identifier": "OAI.Ostmann.main",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 14,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/Ostmann/Result.lean",
+    "sha256": "ef8357d0a5720fec3aa6af5a912f1081a53336ccba415e1098985aa7d4b71729"
+  },
+  "text": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → Set.Infinite ((A + B) ∆ {n : ℕ | Nat.Prime n})",
+  "text_sha256": "e124b249dd2f06610ac46308db40f541cc9a27f0d6c04d91a334803b9d2ec12b",
+  "type": "statement"
+}

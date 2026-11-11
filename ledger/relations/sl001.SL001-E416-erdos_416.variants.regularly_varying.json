@@ -1,0 +1,40 @@
+{
+  "asserted_by": "google-deepmind/formal-conjectures PR #6898 (formal_proof attribute)",
+  "assertion_source": {
+    "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+    "kind": "git",
+    "locator": "https://github.com/google-deepmind/formal-conjectures",
+    "path": "FormalConjectures/ErdosProblems/416.lean"
+  },
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "basis": "source_assertion",
+  "comparison_results": "none; no kernel bridge attempted (PROTOCOL.md Stage 2 not launched)",
+  "conditional": false,
+  "created": "2026-11-11T00:00:00Z",
+  "evidence_path": "experiments/SL-001/results/stage1/SL001-E416-erdos_416.variants.regularly_varying.json",
+  "faithfulness": "unassessed",
+  "id": "relation:sl001.SL001-E416-erdos_416.variants.regularly_varying",
+  "kind": "asserted_link",
+  "known_limitations": [
+    "Not replayed: ScopeLedger has not built the OpenAI library.",
+    "Statement text extracted by regular expression; hashes allow detection of truncation.",
+    "No human has reviewed this record."
+  ],
+  "object": "statement:fc.erdos416.erdos_416.variants.regularly_varying",
+  "outcome": "asserted",
+  "reviewer_status": "no human review",
+  "schema": "0.1",
+  "stage1": {
+    "A_and_B_statement_text_identical": false,
+    "A_import_closure_modules": 809,
+    "A_statement_is_named_proposition": false,
+    "B_file_first_commit": "5ff9bc0374b72a98a74a3e9756446f92aaacd2ff 2025-07-29T17:11:56+00:00 Paul Lezeau",
+    "independence_class": "B_written_after_release",
+    "shared_verbatim_definitions": []
+  },
+  "subject": "statement:oai.OAI.TotientAsymptotic.totient_asymptotic_formula",
+  "type": "relation"
+}

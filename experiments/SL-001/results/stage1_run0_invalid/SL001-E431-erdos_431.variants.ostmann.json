@@ -1,0 +1,989 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "main",
+      "file_exists": true,
+      "file_sha256": "ef8357d0a5720fec3aa6af5a912f1081a53336ccba415e1098985aa7d4b71729",
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → Set.Infinite ((A + B) ∆ {n : ℕ | Nat.Prime n})",
+      "statement_sha256": "e124b249dd2f06610ac46308db40f541cc9a27f0d6c04d91a334803b9d2ec12b"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "main",
+      "file_exists": true,
+      "file_sha256": "ef8357d0a5720fec3aa6af5a912f1081a53336ccba415e1098985aa7d4b71729",
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → Set.Infinite ((A + B) ∆ {n : ℕ | Nat.Prime n})",
+      "statement_sha256": "e124b249dd2f06610ac46308db40f541cc9a27f0d6c04d91a334803b9d2ec12b"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "fa10657ef13d9a869fb057e0a166b21fe24a538d02211b8b62c29bc7a03588bd",
+      "config": "lean/ComparatorChallenges/AmplitudeDamping.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.GAD.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "3f414804a720eb53310e3280e5d07e7a5c8511c56135d5228c0ee6ceb9bbab78",
+      "config": "lean/ComparatorChallenges/ArnoldCounterexample.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ArnoldCounterexample.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "81e60d5355278668a02d5a5b606867229e4ddf9b0abf2d060adf08b1f2af944e",
+      "config": "lean/ComparatorChallenges/ArtinCAT0.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ArtinCAT0.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "045e02714ed642444b9257f20f1ce65d68f00e63e914cc3aa7335f6ed5648a71",
+      "config": "lean/ComparatorChallenges/AsymptoticallyMinimalLittlewood.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.AsymptoticallyMinimalLittlewood.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "b716f2eee8443c065478c024edf5f2fc1dab0996a964a8149d77c6d9369af98f",
+      "config": "lean/ComparatorChallenges/AuslanderReiten.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ArExplicit.Statement.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "e5052fe2044dc8882827a4bc096b08fc997de3142d71f32e11414ae0e44c20e3",
+      "config": "lean/ComparatorChallenges/BarnetteHamiltonian.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Barnette.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "8b929009afeb82c0d78ab00f51b714b09e6bf925b8b85c85a52e652f2ff9f8ce",
+      "config": "lean/ComparatorChallenges/BooneHigman.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.FiniteAlgebraicEnvelopes.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "b58c11900fa0d3873614f086562b2d46acd5f8d47e67b7d79a1220a274ed9b3b",
+      "config": "lean/ComparatorChallenges/CHObstruction.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.CHObstruction.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "bca543a0526a28dd9c3466e5fcb1278436580a63f45320ab315f3b2a410866df",
+      "config": "lean/ComparatorChallenges/ChoicelessPolynomialTime.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.CPTSeparation.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "c2f5f88455b811eb6b56c1ae80ff91f4e398e18e7c7fbeee6daca8da4122d696",
+      "config": "lean/ComparatorChallenges/ClassicalON.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ClassicalON.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "f87bf19c4b03c311e54fdaca962da38475f088edd51a6c9d63164eb30dafef52",
+      "config": "lean/ComparatorChallenges/CoboundaryExpanders.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.CoboundaryExpanders.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "358a151d7684a0681e83111ebdf2c3a4f5f77eb253509a018422915c1711cb34",
+      "config": "lean/ComparatorChallenges/CompactBanach.json",
+      "permitted_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "theorem_names": [
+        "OAI.CompactBanach.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "6b63c6180f5507b341b323af4668050a32226526f56359563286efc509e8afbc",
+      "config": "lean/ComparatorChallenges/CompleteCrouzeix.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.CompleteCrouzeix.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "1c25be0bb2a81b32b787856546194c82dd11947efe765742d3d9c4b915f6f428",
+      "config": "lean/ComparatorChallenges/ComplexCancellation.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ComplexCancellation.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "b2fc1de28eb29eb1e8934f52978a64a1cd9fc13f3b4379e84171d4f8a106e3cd",
+      "config": "lean/ComparatorChallenges/DeligneDrinfeld.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.DeligneDrinfeld.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "f9c478730e4609f5ae2ad51ffac1e21f55c1391f41290664af7fe9eb4e7c1196",
+      "config": "lean/ComparatorChallenges/DepthFive.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Problem335.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "b39acb53f884f196d8faa3b68978808e0259ac390ae9849dcf031fdf9f09a375",
+      "config": "lean/ComparatorChallenges/DirectedFeedback.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.DirectedFeedback.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "f7f9b905f01b3333bec0f1164075949eba47b536af2b60daa29032a6796b2d8a",
+      "config": "lean/ComparatorChallenges/DoublingHilbert.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.DoublingHilbert.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "2f275332f0842bb846b3e557369f8bdd150d015617a5d14bddef6e7b9362767b",
+      "config": "lean/ComparatorChallenges/FiniteEntropySeparation.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.FiniteEntropySeparation.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "1c7c2b8f17e74a725a859dcdd19f4ee4da35c38230dde825cb257e78ea18c39b",
+      "config": "lean/ComparatorChallenges/FixedClauseThreshold.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.FixedClauseThreshold.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "795709e34771f1c786ecae7c123e8a586c426d8e93c8b5bc82f2904d5340556e",
+      "config": "lean/ComparatorChallenges/GeneralizedStarHeight.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.GeneralizedStarHeight.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "4100354a6076d4108fee4bb23e41fed8da04098510d5330e56f3508e446239ac",
+      "config": "lean/ComparatorChallenges/GroupRingDeterminant.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.GroupRingDeterminant.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "a540b81efec3853adc77301e6cb736a973e9557c6df2eca0099d4fcfee410ce5",
+      "config": "lean/ComparatorChallenges/HarmonicGrowth.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.HarmonicCounterexample.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "f136a867a33fa3dac21e614675a938f939711221431f67d474224bc01b319c29",
+      "config": "lean/ComparatorChallenges/HyperbolicObstruction.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.HyperbolicObstruction.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "802e9bf69b2c5d9be56f2899ef69f5470910cf059b419d3e8f770f1523cae3a7",
+      "config": "lean/ComparatorChallenges/InfiniteMatroid.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.InfiniteMatroidCounterexample.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "b162638c07040481a051d7e022965fba5f7181017d086f97735ed66477b9fc5b",
+      "config": "lean/ComparatorChallenges/KahlerSplitting.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.UniversalCoverSplitting.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "6cd6d20439f9433567e6b11781ec06fb4f5ef5c16b84808062b09af146232625",
+      "config": "lean/ComparatorChallenges/LipschitzEquivalence.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.LipschitzCounterexample.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "0f52347474ceb515213f6a8a05f46dc0d34001c8c7edea5af371b41752834c39",
+      "config": "lean/ComparatorChallenges/LipschitzHilbert.json",
+      "permitted_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "theorem_names": [
+        "OAI.LipschitzHilbert.main",
+        "OAI.LipschitzHilbert.uniform_truncation"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "06fc3e018ac481a8c7bcb5369bb67774ce717b318f20e2b82702f358a0f5f934",
+      "config": "lean/ComparatorChallenges/LittlewoodFiniteFlatness.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.AsymptoticallyMinimalLittlewoodFiniteFlatness.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "53931ed19a6491a1d07e43dcd7b2bc1930ed5484a0135b44778a886f4212510f",
+      "config": "lean/ComparatorChallenges/LogBrunnMinkowski.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.LogBrunnMinkowski.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "bca289a73746ce865ebe6d5162949fe0776cb5da307898a3f4056d8d987c4b9b",
+      "config": "lean/ComparatorChallenges/MatchingPSD.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.PerfectMatchingPSD.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "40651237473d67fdf4d48ac04f4a3294768cf75c867ee34334a96f9dfc293271",
+      "config": "lean/ComparatorChallenges/MemoryPrecision.json",
+      "permitted_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "theorem_names": [
+        "OAI.MemoryPrecision.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "92934869d5f570e8593a88eb8b6cb7ff0bc53876d4cdeda9c1e293283b9d9784",
+      "config": "lean/ComparatorChallenges/MinUncut.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.MinUncut.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "68b364f0998bd30cd0ebf8c87c591267df29b97f183204e93396bda7befe86e0",
+      "config": "lean/ComparatorChallenges/Naimark.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.NaimarkZFC.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "ff97e11a2813481158c64b0d6bddad9fc9c2a39a0260a408842b4da2c07b2406",
+      "config": "lean/ComparatorChallenges/NoiselessRegression.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.NoiselessRegression.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "a30ac1bd42af8f3602bbfb73c689c755fd2d8c74cae8fd58b63a8ed42c5e6b0d",
+      "config": "lean/ComparatorChallenges/OptimalMaxCut.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.OptimalMaxCut.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "9599ed18eb09a00cc0bd83d56706b63cc3d9193b32a4dd262a155a29d5d7140d",
+      "config": "lean/ComparatorChallenges/OstmannPrimes.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Ostmann.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "4760bb816d0b9c2e94c747dc3b4fe404f00a0a35671befe6bc11eecd1d72ca60",
+      "config": "lean/ComparatorChallenges/PerceptronFreeEnergy.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SphericalPerceptronFreeEnergy.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "6b50d65255870bd4e482b2e552640febe791397577bb7a87a8783c5544bd0b03",
+      "config": "lean/ComparatorChallenges/PiExponent.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.PiExponent.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "7af4512ae986b608a8d52712434df3e7bb1d4c2ed423624e5abffb8d5eb1da01",
+      "config": "lean/ComparatorChallenges/PinnedDistances.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.WeakPinned.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "53f3c2bcac83ead098019853e329f352cdbeaddbfbae82853607ad5cff93bb10",
+      "config": "lean/ComparatorChallenges/PlanarUnitDistances.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.PlanarUnitDistances.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "efa52293731b868a0fcec21797c68ed12578c2047492989781a6d43db6dd1fec",
+      "config": "lean/ComparatorChallenges/ProjectionMoments.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ProjectionMoments.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "cb34f454db432f46902a17036812adde4c73fe276d6d7a8a8b21797ace40d000",
+      "config": "lean/ComparatorChallenges/QuinticLienard.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.QuinticLienard.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "305e7a1b2a0cb643b5bc8667dca0e2f138b64c3b375b3f79ffe169103dc7e8ad",
+      "config": "lean/ComparatorChallenges/RadialTransition.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.RadialTransition.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "9c1d7199f41464d13e0f86715733990dc44b5b3002064ee2794ac5751a043918",
+      "config": "lean/ComparatorChallenges/RamseyFive.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SharpRamseyFive.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "c0fc0d9740d4ef195918447f4da9605e75760845cae1163c534d6299c6e4877f",
+      "config": "lean/ComparatorChallenges/RationalHitting.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.RationalHitting.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "c3e4d2184a101f7f73902b4ec23275077c612a0037c382ce1ee2d14cd3d48f9a",
+      "config": "lean/ComparatorChallenges/RecursivePotentials.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ComparatorModel.RecursivePotentials.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "0d9757c58aec5ba367553bcb5e5ec542bfe564191bc9c9c9a3bf402735556643",
+      "config": "lean/ComparatorChallenges/SATComputability.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.FixedClauseThreshold.Computability.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "70b833ec6c74952f52c215767593347afd89bfa8d668b0b57792f19c19cc515a",
+      "config": "lean/ComparatorChallenges/SKBarriers.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SK.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "a47b22011f304a35ccc9dac49ff7342c7f1312caa1860b7ca759ab4aeb6dda47",
+      "config": "lean/ComparatorChallenges/SharpLogRamsey.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SharpLogRamsey.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "9796ca70fdd0aa41186bed6f940a9e76c7081aa6bf89f9e7bfe6cd03e329541f",
+      "config": "lean/ComparatorChallenges/ShortEgyptianFractions.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ShortEgyptian.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "489688f5c4eb60c6dd8cfe0ef69663aaf11e795d6252e9626972764a50187de9",
+      "config": "lean/ComparatorChallenges/SidorenkoCounterexample.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SidorenkoCounterexample.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "ff02a2468a0567cf22ae5ac7a7f95360c8038ad79c1df0a2a100ee2b18d0beeb",
+      "config": "lean/ComparatorChallenges/SimpleAmenable.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SimpleAmenable.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "72d81cb8600211d955645ef46129f11b4c348bc0b9d18078270ab67e9511bb80",
+      "config": "lean/ComparatorChallenges/SimpleOvergroups.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SimpleFInftyOvergroups.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "a32b461c1dadec053dce0a3ddc101273021af51e987e949cac44dc5cd4012a98",
+      "config": "lean/ComparatorChallenges/SingleFold.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SingleFold.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "096a65243fb33f71fe673f9ccecc7ce8e73faa73b7b3e8a3a4f641838525c47b",
+      "config": "lean/ComparatorChallenges/SmoothObstruction.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SmoothObstruction.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "72f48e513f3159bf80d25c7ed5afee9f3224f5c09c672777ead3f1ec7309ac4f",
+      "config": "lean/ComparatorChallenges/SquareRootDegree.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.SquareRootDegree.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "c36334eff43ee1dc46d565c80a4a537fea67951e727ab7b88b5c64fca0dfe63d",
+      "config": "lean/ComparatorChallenges/SteinitzBergstrom.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.EuclideanSteinitzBergstrom.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "64ab7a216f4e12c8a54433a38082552e7c35af1631bdaefc3a9be99e7f30cfd0",
+      "config": "lean/ComparatorChallenges/StrictMeans.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.StrictInverseFirstPower.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "8930f17794dfd3ca55e5c238019e5ccecf8c189d2df87df83773d00d1f4d1d3a",
+      "config": "lean/ComparatorChallenges/Superstring.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Superstring.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "2d838d21d7431014cea2d5af5bc4b64121075333c5833b4cfc5efb73c4a1f1ce",
+      "config": "lean/ComparatorChallenges/SymmetricDomains.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Release061.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "aa3ffee573610e67b982792280731b8071a69294fef61e28835b6b19e913ac60",
+      "config": "lean/ComparatorChallenges/ThomasonModelStructures.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Thomason.main",
+        "OAI.Thomason.nerveDetection_allDimensions"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "0a6ffa20b5320721424301ba304090c5b7e01c08c25dac0f0ca3240c17591462",
+      "config": "lean/ComparatorChallenges/ThorpRouting.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ThorpNine.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "07a6d626a7698f4e5e1b5cc19326c7efaafd0addf336f27aa3a5c9ed115fe8a5",
+      "config": "lean/ComparatorChallenges/TorsionFreeHyperbolic.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Release075.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "f0fa4b50cb7bab116b37c75a74fdea60fb206a35f2b0590157468c054dfec3c2",
+      "config": "lean/ComparatorChallenges/TorsionFreeZeroDivisors.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.TorsionFreeZeroDivisors.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "4c9c1195d6f0a6981a8643e8fc9c864dd3e8384f86ddf512d3980ba32cd2c36f",
+      "config": "lean/ComparatorChallenges/TriangularCovering.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.TriangularCovering.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "1d0ec2d4a495ea93a8526aaf223ba12a0c1d0f4c0652d837954c206439d57020",
+      "config": "lean/ComparatorChallenges/UniformGamma.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.ComparatorModel.CurrentMain.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "8cd7aeaafa699101ecda4c8e6370ed8880528af193474872fc6ffc854c9ffaf7",
+      "config": "lean/ComparatorChallenges/VariableWL.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.VariableWL.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "1cbcd552d19be323e96af9cd141b4b5fcb9eb77145fe53f2acfe14c4525371e0",
+      "config": "lean/ComparatorChallenges/VertexAlgebraNet.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.MinimalVertex.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "cc619aecacac21039f401499acb37521312e262bd092d5e0d465950cb8276892",
+      "config": "lean/ComparatorChallenges/WLIdentification.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.WLIdentification.main"
+      ]
+    },
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "6297f602816521fd2736fffca11cbbc21c57f8ed7b887fa135bd553023726c26",
+      "config": "lean/ComparatorChallenges/WitnessedChoice.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.WitnessedChoice.main"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 4356,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": false,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → ((A + B) ∆ {n | n.Prime}).Infinite",
+      "statement_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666"
+    },
+    "link": {
+      "answer_wrapper": false,
+      "body_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "statement": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → ((A + B) ∆ {n | n.Prime}).Infinite",
+      "statement_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666"
+    },
+    "pre": {
+      "answer_wrapper": false,
+      "body_sha256": null,
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "statement": null,
+      "statement_sha256": null
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": null,
+  "B_file_first_commit": "3a7a4d2b08ad54f3b7274d9f8bfe5a7edcef850a 2026-09-02T18:32:47+00:00 putonthetableacat55",
+  "B_theorem_existed_before_release": false,
+  "case_id": "SL001-E431-erdos_431.variants.ostmann",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [],
+  "erdos_problem": 431,
+  "independence_class": "B_written_after_release",
+  "outcome": "observed",
+  "stage": 1
+}

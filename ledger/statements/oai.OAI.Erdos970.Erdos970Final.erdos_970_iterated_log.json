@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.Erdos970.Erdos970Final.erdos_970_iterated_log",
+  "identifier": "OAI.Erdos970.Erdos970Final.erdos_970_iterated_log",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 59,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/Jacobsthal/Conclusions/IteratedLogBound.lean",
+    "sha256": "9217886ffb5bc10b6d8f89d3ad51f67c21b36685144f7311ba8aec819cb2a11a"
+  },
+  "text": ": NumberTheoryLean.Targets.JacobsthalIteratedLog",
+  "text_sha256": "e3640b4bc4067410fd8758bb929e462eae529201bcbf07ff9f8f4c84e25af91f",
+  "type": "statement"
+}

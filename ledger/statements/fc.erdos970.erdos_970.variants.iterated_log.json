@@ -1,0 +1,39 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "history": {
+    "head": {
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "polarity": "pos",
+      "statement_sha256": "84a77216d2d799c97958ff732e90de15e3b1e34069f43937d6f9ff222a4e59f9"
+    },
+    "link": {
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "polarity": "pos",
+      "statement_sha256": "84a77216d2d799c97958ff732e90de15e3b1e34069f43937d6f9ff222a4e59f9"
+    },
+    "pre": {
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "polarity": null,
+      "statement_sha256": null
+    }
+  },
+  "id": "statement:fc.erdos970.erdos_970.variants.iterated_log",
+  "identifier": "erdos_970.variants.iterated_log",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "locator": "https://github.com/google-deepmind/formal-conjectures",
+    "path": "FormalConjectures/ErdosProblems/970.lean",
+    "sha256": "0f3655b0c32b9efee4f134e955e77be82ed4736037ca402ccc0874120b35e440"
+  },
+  "text": ": ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 / (Real.log (Real.log (3 * k))) ^ 2",
+  "text_sha256": "84a77216d2d799c97958ff732e90de15e3b1e34069f43937d6f9ff222a4e59f9",
+  "type": "statement"
+}

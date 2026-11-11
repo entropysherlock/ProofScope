@@ -1,0 +1,79 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "erdos_970_quadratic",
+      "file_exists": true,
+      "file_sha256": "220f638918ae457a2a61c8788b4f45606053ae62d541c2e5519013ce4c2fdea0",
+      "statement": ": NumberTheoryLean.Targets.JacobsthalQuadratic",
+      "statement_sha256": "6daf8eb7259e378de097c4b52dd471e00a9a69b8155697cf4c4319bc632fc4a8"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "erdos_970_quadratic",
+      "file_exists": true,
+      "file_sha256": "220f638918ae457a2a61c8788b4f45606053ae62d541c2e5519013ce4c2fdea0",
+      "statement": ": NumberTheoryLean.Targets.JacobsthalQuadratic",
+      "statement_sha256": "6daf8eb7259e378de097c4b52dd471e00a9a69b8155697cf4c4319bc632fc4a8"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "a2fe296ccf4e70242e6ce3db976d236525f7ca823e4a9a5c6fede1335ca0031e",
+      "config": "lean/ComparatorChallenges/Jacobsthal.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Erdos970.Erdos970Final.erdos_970_quadratic"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 813,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": true,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "a98ea29f230cc88daaf851a6a75c9ef75cf37fe9201ade33f22868cf5a734f9a",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "statement": ": ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2",
+      "statement_sha256": "a98ea29f230cc88daaf851a6a75c9ef75cf37fe9201ade33f22868cf5a734f9a"
+    },
+    "link": {
+      "answer_wrapper": true,
+      "body_sha256": "a98ea29f230cc88daaf851a6a75c9ef75cf37fe9201ade33f22868cf5a734f9a",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "statement": ": answer(True) ↔ ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2",
+      "statement_sha256": "e6f3166ec8b3352cf9e0b9819761672527ba26ca53565b532dd7ba160a29fe93"
+    },
+    "pre": {
+      "answer_wrapper": true,
+      "body_sha256": "a98ea29f230cc88daaf851a6a75c9ef75cf37fe9201ade33f22868cf5a734f9a",
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "statement": ": answer(sorry) ↔ ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2",
+      "statement_sha256": "2ea7c85b7845f6ef6157646a1194f6f82f764357823e0e2b73d6d78733a71cf1"
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": false,
+  "B_file_first_commit": "c892fcbc758f2d978f0f66dbad124bd454b2d619 2026-09-07T14:37:09+00:00 Tom Adamczewski",
+  "B_theorem_existed_before_release": true,
+  "case_id": "SL001-E970-erdos_970",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [
+    "IsJacobsthalBound"
+  ],
+  "erdos_problem": 970,
+  "independence_class": "B_predates_release_but_A_shares_verbatim_definitions",
+  "outcome": "observed",
+  "stage": 1
+}

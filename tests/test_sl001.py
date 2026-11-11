@@ -41,3 +41,13 @@ def test_frozen_cases_are_well_formed():
     cases = [json.loads(l) for l in (Path(sl.__file__).parent / "cases.jsonl").read_text().splitlines()]
     assert len(cases) == 18 and len({c["case_id"] for c in cases}) == 18
     assert all(c["oai_commit_linked"] == sl.OAI_LINKED for c in cases)
+
+
+def test_core_and_polarity_and_qualified_name():
+    assert sl.core(": answer(sorry) ↔ ∃ x, P x") == ("∃ x, P x", "open")
+    assert sl.core(": answer(False) ↔ ∃ x, P x") == ("∃ x, P x", "neg")
+    assert sl.core(": ¬ ∃ x, P x") == ("∃ x, P x", "neg")
+    assert sl.core(": ¬ (∃ x, P x)") == ("∃ x, P x", "neg")
+    assert sl.core(": ∃ x, P x") == ("∃ x, P x", "pos")
+    src = "namespace OAI\nnamespace A\nend A\nnamespace B\ntheorem main : T := by\n"
+    assert sl.qualified_name(src, 5, "main") == "OAI.B.main"

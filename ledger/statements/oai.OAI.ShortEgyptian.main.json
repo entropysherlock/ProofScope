@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.ShortEgyptian.main",
+  "identifier": "OAI.ShortEgyptian.main",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 33,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/ShortEgyptian/Main.lean",
+    "sha256": "c0adb4437c05ce81bbf670b91fc9c00baad5731446c7a47b879590d340fa129e"
+  },
+  "text": ": (∀ a b : ℕ, 1 ≤ a → a < b → ∃ ns : List ℕ, IsExpansion a b ns) ∧ ∃ c₁ c₂ : ℝ, 0 < c₁ ∧ 0 < c₂ ∧ ∃ b₀ : ℕ, 2 ≤ b₀ ∧ ∀ b : ℕ, b₀ ≤ b → c₁ * Real.log (Real.log (b : ℝ)) ≤ (maxMinLength b : ℝ) ∧ (maxMinLength b : ℝ) ≤ c₂ * Real.log (Real.log (b : ℝ))",
+  "text_sha256": "8f68f951184ce773bf510189ddd496ce61d583afaad157a0df0291a0bc4186df",
+  "type": "statement"
+}

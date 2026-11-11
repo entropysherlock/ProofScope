@@ -1,0 +1,22 @@
+{
+  "A_and_B_statement_text_identical": 0,
+  "A_import_closure_modules": {
+    "max": 4356,
+    "min": 8,
+    "sum": 17271
+  },
+  "A_link_resolves": 18,
+  "A_statement_changed_linked_to_head": 0,
+  "A_statement_is_named_proposition": 6,
+  "B_body_changed_link_to_head": 0,
+  "cases_with_openai_comparator_config": 18,
+  "independence_class": {
+    "B_predates_release_but_A_shares_verbatim_definitions": 1,
+    "B_predates_release_unchanged_no_verbatim_overlap_found": 13,
+    "B_written_after_release": 4
+  },
+  "n_cases": 18,
+  "outcome": {
+    "observed": 18
+  }
+}

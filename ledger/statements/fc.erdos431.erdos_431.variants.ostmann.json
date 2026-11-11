@@ -1,0 +1,39 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "history": {
+    "head": {
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "polarity": "pos",
+      "statement_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666"
+    },
+    "link": {
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "polarity": "pos",
+      "statement_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666"
+    },
+    "pre": {
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "polarity": null,
+      "statement_sha256": null
+    }
+  },
+  "id": "statement:fc.erdos431.erdos_431.variants.ostmann",
+  "identifier": "erdos_431.variants.ostmann",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "locator": "https://github.com/google-deepmind/formal-conjectures",
+    "path": "FormalConjectures/ErdosProblems/431.lean",
+    "sha256": "f039258cbd5936e9a40c3726fbd339f95412b9c4b7e9263807a7c13e2684fe6c"
+  },
+  "text": ": ∀ A B : Set ℕ, A.Nontrivial → B.Nontrivial → ((A + B) ∆ {n | n.Prime}).Infinite",
+  "text_sha256": "d6703a97ec8fb846e24c5e7d5198a992b9a979ba2105998ac7b65bccf740d666",
+  "type": "statement"
+}

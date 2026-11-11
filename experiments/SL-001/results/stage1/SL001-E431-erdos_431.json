@@ -1,0 +1,82 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "twoInfiniteSummandsImpossible",
+      "file_exists": true,
+      "file_sha256": "61b00c21f425fefedc89915624a782aedab8b31e0f90847fad5ff6349a3a34ef",
+      "statement": ": TwoInfiniteSummandsImpossible",
+      "statement_sha256": "891b3b81e9ea39f568f911bab4a46c673668db6ed0a5b5cdcf604fff5e09297a"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "twoInfiniteSummandsImpossible",
+      "file_exists": true,
+      "file_sha256": "61b00c21f425fefedc89915624a782aedab8b31e0f90847fad5ff6349a3a34ef",
+      "qualified_name": "OAI.Ostmann.twoInfiniteSummandsImpossible",
+      "statement": ": TwoInfiniteSummandsImpossible",
+      "statement_sha256": "891b3b81e9ea39f568f911bab4a46c673668db6ed0a5b5cdcf604fff5e09297a"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "3dad56c197ce1e3c68b4127f50864b4f6e53081469ba6f5ca4b028ef7fff05b5",
+      "config": "lean/ComparatorChallenges/OstmannComplete.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Ostmann.inverseGoldbach",
+        "OAI.Ostmann.twoInfiniteSummandsImpossible"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 3207,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": true,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "866f8fc6d519033e3c35048ba11baba7b7b588cea24e3f432ec70e14bd4083c1",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "polarity": "neg",
+      "statement": ": ¬ ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime}",
+      "statement_sha256": "435a5d97bc417c255e8ba6193ba53870e18b098c9ac2f08107441f20a9f9591d"
+    },
+    "link": {
+      "answer_wrapper": true,
+      "body_sha256": "866f8fc6d519033e3c35048ba11baba7b7b588cea24e3f432ec70e14bd4083c1",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "polarity": "neg",
+      "statement": ": answer(False) ↔ ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime}",
+      "statement_sha256": "bf2208ddfc77ac514d401891dd9d060904f1e58924593256222534a5413d627e"
+    },
+    "pre": {
+      "answer_wrapper": true,
+      "body_sha256": "866f8fc6d519033e3c35048ba11baba7b7b588cea24e3f432ec70e14bd4083c1",
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "polarity": "open",
+      "statement": ": answer(sorry) ↔ ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime}",
+      "statement_sha256": "7796be965a42f6176ab955cedf61a54a9dda8c08f86496c30515ff05dd641557"
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": false,
+  "B_file_first_commit": "3a7a4d2b08ad54f3b7274d9f8bfe5a7edcef850a 2026-09-02T18:32:47+00:00 putonthetableacat55",
+  "B_theorem_existed_before_release": true,
+  "case_id": "SL001-E431-erdos_431",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [],
+  "erdos_problem": 431,
+  "independence_class": "B_predates_release_unchanged_no_verbatim_overlap_found",
+  "outcome": "observed",
+  "stage": 1
+}

@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.Problem344.large_gaps_and_ratio_density",
+  "identifier": "OAI.Problem344.large_gaps_and_ratio_density",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 30,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/PrimeGaps/RatioCorollary.lean",
+    "sha256": "5ca73692e29a4e98045c871b7d9eefec6fad63b81b3eeb26105f238d83735a35"
+  },
+  "text": ": (∀ C : ℝ, 0 < C → ∃ c : ℝ, 0 < c ∧ ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → c * (N : ℝ) ≤ ((LargePrimeGaps.largeGapIndices C N).card : ℝ)) ∧ 0 < lowerAsymptoticDensity ratioIncreaseIndices",
+  "text_sha256": "59e8ffee39bda5ca761aa6547caada75e50e9c966630a86926a30c9d5f2ec2a2",
+  "type": "statement"
+}

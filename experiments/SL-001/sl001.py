@@ -62,6 +62,39 @@ def strip_answer(stmt: str) -> tuple[str, bool]:
     return (": " + stmt[m.end():], True) if m else (stmt, False)
 
 
+def core(stmt: str) -> tuple[str, str]:
+    """(core proposition text, polarity) with the answer wrapper and one outer negation removed.
+
+    Polarity is 'open' for answer(sorry), 'neg' for answer(False) or a leading ¬, else 'pos'.
+    Formal Conjectures resolved `answer(sorry) <-> P` to `answer(False) <-> P` and later rewrote
+    that as `¬ P` (PR #6762); all three have the same core P (amendment 1).
+    """
+    m = re.match(r'^:\s*answer\(\s*(sorry|True|False)\s*\)\s*↔\s*', stmt)
+    if m:
+        return stmt[m.end():].strip(), {"sorry": "open", "True": "pos", "False": "neg"}[m.group(1)]
+    n = re.match(r'^:\s*¬\s*(.*)$', stmt)
+    if n:
+        inner = n.group(1).strip()
+        if inner.startswith("(") and inner.endswith(")") and inner[1:-1].count("(") == inner[1:-1].count(")"):
+            inner = inner[1:-1].strip()
+        return inner, "neg"
+    return stmt.lstrip(":").strip(), "pos"
+
+
+def qualified_name(src: str, line: int, name: str) -> str:
+    """Fully qualified name of a declaration from the `namespace`/`end` lines above it."""
+    stack: list[str] = []
+    for l in src.split("\n")[:max(0, line - 1)]:
+        m = re.match(r'^\s*namespace\s+(\S+)', l)
+        if m:
+            stack.append(m.group(1))
+            continue
+        m = re.match(r'^\s*end\s+(\S+)\s*$', l)
+        if m and stack and stack[-1] == m.group(1):
+            stack.pop()
+    return ".".join(p for p in stack + [name] if p).replace("_root_.", "")
+
+
 def decl_at_line(src: str, line: int) -> tuple[str | None, str | None]:
     """(name, statement) of the theorem whose header is at or just before `line` (1-based)."""
     lines = src.split("\n")
@@ -130,8 +163,10 @@ def stage1(case: dict, fc: str, oai: str) -> dict:
         src = blob(fc, c, f)
         st = theorem_statement(src, name) if src else None
         body, wrapped = strip_answer(st) if st else (None, False)
+        cr, pol = core(st) if st else (None, None)
         B[tag] = {"commit": c, "file_exists": src is not None, "statement": st,
-                  "statement_sha256": sha(st), "body_sha256": sha(body), "answer_wrapper": wrapped}
+                  "statement_sha256": sha(st), "body_sha256": sha(cr), "answer_wrapper": wrapped,
+                  "polarity": pol}
     r["B"] = B
     first = sh("git", "-C", fc, "log", "--diff-filter=A", "--format=%H %cI %an", "--", f).strip().split("\n")[-1]
     r["B_file_first_commit"] = first
@@ -150,19 +185,24 @@ def stage1(case: dict, fc: str, oai: str) -> dict:
             nm, st = (A["linked"]["decl"], st2) if st2 else (nm, st)
         A[tag] = {"commit": c, "file_exists": src is not None, "file_sha256": sha(src),
                   "decl": nm, "statement": st, "statement_sha256": sha(st)}
+        if tag == "linked" and nm:
+            hdr = max([i for i, l in enumerate(src.split("\n"), 1)
+                       if re.search(r'\b(?:theorem|lemma)\s+' + re.escape(nm) + r'(?=[\s:({\[])', l)
+                       and i <= case["oai_line"]] or [case["oai_line"]])
+            A[tag]["qualified_name"] = qualified_name(src, hdr, nm)
     r["A"] = A
     r["A_link_resolves"] = A["linked"]["decl"] is not None
     r["A_statement_changed_linked_to_head"] = (A["linked"]["statement_sha256"] != A["head"]["statement_sha256"]
                                                if A["linked"]["statement"] and A["head"]["statement"] else None)
     # --- OpenAI's own Comparator challenge for A (if any)
     comps = []
-    decl = A["linked"]["decl"]
+    decl = A["linked"].get("qualified_name")
     if decl:
         listing = sh("git", "-C", oai, "ls-tree", "--name-only", OAI_HEAD, "lean/ComparatorChallenges/").split()
         for j in [x for x in listing if x.endswith(".json")]:
             txt = blob(oai, OAI_HEAD, j) or ""
-            if re.search(r'[."]' + re.escape(decl) + r'"', txt):
-                cfg = json.loads(txt)
+            cfg = json.loads(txt) if '"' + decl + '"' in txt else None
+            if cfg and decl in (cfg.get("theorem_names") or []):
                 ch = blob(oai, OAI_HEAD, j[:-5] + ".lean") or ""
                 comps.append({"config": j, "theorem_names": cfg.get("theorem_names"),
                               "permitted_axioms": cfg.get("permitted_axioms"),

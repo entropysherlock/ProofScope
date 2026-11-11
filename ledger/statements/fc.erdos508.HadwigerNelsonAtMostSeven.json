@@ -1,0 +1,39 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "history": {
+    "head": {
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "polarity": "pos",
+      "statement_sha256": "433e058ee4f6faf59879313b25b20d235c2787203879c4d21ef6da9bfefc9aa3"
+    },
+    "link": {
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "polarity": "pos",
+      "statement_sha256": "433e058ee4f6faf59879313b25b20d235c2787203879c4d21ef6da9bfefc9aa3"
+    },
+    "pre": {
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "polarity": "pos",
+      "statement_sha256": "433e058ee4f6faf59879313b25b20d235c2787203879c4d21ef6da9bfefc9aa3"
+    }
+  },
+  "id": "statement:fc.erdos508.HadwigerNelsonAtMostSeven",
+  "identifier": "HadwigerNelsonAtMostSeven",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "locator": "https://github.com/google-deepmind/formal-conjectures",
+    "path": "FormalConjectures/ErdosProblems/508.lean",
+    "sha256": "fee9fcfdffc1e7430230caf190d5d1d4a3ebb8805c70d40b3b13fb1b3f4a5c03"
+  },
+  "text": ": χ(ℝ²) ≤ 7",
+  "text_sha256": "433e058ee4f6faf59879313b25b20d235c2787203879c4d21ef6da9bfefc9aa3",
+  "type": "statement"
+}

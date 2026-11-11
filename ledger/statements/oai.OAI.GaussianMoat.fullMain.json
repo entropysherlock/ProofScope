@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.GaussianMoat.fullMain",
+  "identifier": "OAI.GaussianMoat.fullMain",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 102,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/GaussianMoat/Main.lean",
+    "sha256": "33d31a805d14d899ea5004004ffd9bb6021d877ccdc17322695360160914e3fd"
+  },
+  "text": ": MainEndpoint ∧ UniformEndpoint",
+  "text_sha256": "fb59e33b77a19b60055ca2704272fb8730f901739e32a9413377c62e3f194e79",
+  "type": "statement"
+}

@@ -1,0 +1,81 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "main",
+      "file_exists": true,
+      "file_sha256": "7c7d54dd82a881bf5df78d9ea15973142066a60135031ad47b8d37d7fb5ebe96",
+      "statement": ": MainStatement",
+      "statement_sha256": "8a78916f21ff94f96a5dfccb615e1979a9445d9c941b311172976938d0f8d8ea"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "main",
+      "file_exists": true,
+      "file_sha256": "7c7d54dd82a881bf5df78d9ea15973142066a60135031ad47b8d37d7fb5ebe96",
+      "qualified_name": "OAI.AsymptoticallyMinimalLittlewood.main",
+      "statement": ": MainStatement",
+      "statement_sha256": "8a78916f21ff94f96a5dfccb615e1979a9445d9c941b311172976938d0f8d8ea"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "045e02714ed642444b9257f20f1ce65d68f00e63e914cc3aa7335f6ed5648a71",
+      "config": "lean/ComparatorChallenges/AsymptoticallyMinimalLittlewood.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.AsymptoticallyMinimalLittlewood.main"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 24,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": true,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "d0e3f3baa720eadb3952993a7be077df3f8ccd205b316ab71a982d88792a9f34",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "polarity": "neg",
+      "statement": ": ¬ ∃ c > 0, ∀ᶠ n in Filter.atTop, ∀ P : ℂ[X], (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n → ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n",
+      "statement_sha256": "1c2d855486388ac01f4a4dead7c6127d68b58db1acb47ec2fae9130277a18f9d"
+    },
+    "link": {
+      "answer_wrapper": true,
+      "body_sha256": "d0e3f3baa720eadb3952993a7be077df3f8ccd205b316ab71a982d88792a9f34",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "polarity": "neg",
+      "statement": ": answer(False) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop, ∀ P : ℂ[X], (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n → ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n",
+      "statement_sha256": "2defa39a7d283bcae7b75c523cd57b799cff1216e0c87fd1628f3742457abaf4"
+    },
+    "pre": {
+      "answer_wrapper": true,
+      "body_sha256": "d0e3f3baa720eadb3952993a7be077df3f8ccd205b316ab71a982d88792a9f34",
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "polarity": "open",
+      "statement": ": answer(sorry) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop, ∀ P : ℂ[X], (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n → ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n",
+      "statement_sha256": "78500ef22c1688246c583a329aba0d2950bbc87b56cd1f0e5bb60e4d615315c9"
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": false,
+  "B_file_first_commit": "18146fcf5a824a75329e6b51a29abfab2d3e813f 2026-02-06T12:11:46+01:00 Karanjot Singh",
+  "B_theorem_existed_before_release": true,
+  "case_id": "SL001-E1150-erdos_1150",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [],
+  "erdos_problem": 1150,
+  "independence_class": "B_predates_release_unchanged_no_verbatim_overlap_found",
+  "outcome": "observed",
+  "stage": 1
+}

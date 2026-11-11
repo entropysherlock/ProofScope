@@ -145,4 +145,11 @@ review. The case list covers only links that Formal Conjectures chose to add.
 
 ## Amendments
 
-None.
+**Amendment 1, 2026-11-11, after the first full Stage 1 output had been seen** (run kept in
+`results/stage1_run0_invalid/`). Implementation only; no case, class rule, threshold or metric changed.
+(a) OpenAI Comparator configs are matched on the fully qualified declaration name, derived from the
+`namespace` lines of the source file, instead of the bare name; the bare name `main` had matched dozens
+of unrelated configs. (b) Statement bodies are compared on their *core*: the proposition with the `answer(...) ↔` wrapper and
+one outer negation removed, with polarity (`open`, `pos`, `neg`) recorded separately. Formal Conjectures
+resolved `answer(sorry) ↔ P` to `answer(False) ↔ P` and later rewrote it as `¬ P` (PR #6762); these
+share the core `P` and are no longer reported as a changed statement. Raw statement text and hashes at each commit are still recorded unmodified.

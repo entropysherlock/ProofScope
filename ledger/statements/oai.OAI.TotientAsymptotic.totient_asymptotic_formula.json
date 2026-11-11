@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.TotientAsymptotic.totient_asymptotic_formula",
+  "identifier": "OAI.TotientAsymptotic.totient_asymptotic_formula",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 12,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/TotientAsymptotic/UnconditionalMain.lean",
+    "sha256": "024b4b92fbc88a90d5b068121f72fc234d02d166a6ac6647a181a357f119c0a7"
+  },
+  "text": ": TendstoUniformlyOn (fun H => AH H (fun _ => 1)) (A (fun _ => 1)) atTop (Set.Ico (0 : ℝ) 1) ∧ (∃ cMinus cPlus : ℝ, 0 < cMinus ∧ ∀ s ∈ Set.Ico (0 : ℝ) 1, cMinus ≤ A (fun _ => 1) s ∧ A (fun _ => 1) s ≤ cPlus) ∧ Tendsto (fun x => V x/mainTerm x) atTop (nhds 1) ∧ ∀ c : ℝ, 0 < c → Tendsto (fun x => V (c*x)/V x) atTop (nhds c)",
+  "text_sha256": "d531e6e3a915defba236211ce81a18159dab218f780c46b105af637e303c670c",
+  "type": "statement"
+}

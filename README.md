@@ -71,16 +71,55 @@ Implemented and tested in this commit:
 * `scope-check` CLI: `add`, `check`, `validate`, `status`, `list`.
 * A fail-closed kernel checker for core-Lean files (`experiments/SL-001/kernel_check.py`): exit code,
   proposition re-check, axiom inventory, `leanchecker` replay, escape-hatch scan.
-* SL-001 Stage 1: a deterministic provenance audit of 18 real statement–proof links.
+* SL-001 Stage 1: a deterministic provenance audit of 18 real statement–proof links, and 68 ledger
+  records derived from it (34 statements, 16 source assertions, 18 asserted links; no certificates).
 
 Not implemented: Stage 2 kernel bridges against the OpenAI library, Comparator integration, SemantEq and
 BEq+ adapters, any human review, any de-duplication beyond the record types.
 
 ## Experimental results
 
-**SL-001 — Experimental Validation Pending.** Protocol frozen in this commit:
-[experiments/SL-001/PROTOCOL.md](experiments/SL-001/PROTOCOL.md). Source audit:
-[experiments/SL-001/SOURCE_AUDIT.md](experiments/SL-001/SOURCE_AUDIT.md).
+**SL-001, Stage 1 (provenance audit): complete. Stage 2 (kernel bridges): not launched.**
+Protocol v1.0 with amendment 1: [experiments/SL-001/PROTOCOL.md](experiments/SL-001/PROTOCOL.md).
+Source audit: [experiments/SL-001/SOURCE_AUDIT.md](experiments/SL-001/SOURCE_AUDIT.md).
+Per-case data: [experiments/SL-001/results/stage1/](experiments/SL-001/results/stage1/).
+The first execution was invalid and is kept in `results/stage1_run0_invalid/`.
+
+Subject: the 18 Erdős-problem theorems in Formal Conjectures that are marked as formally proved by a
+declaration in `openai/math` (13 problems). Stage 1 reads pinned commits; it runs no prover and no model.
+
+| Stage 1 observation | Count (of 18) |
+|---|---|
+| Link resolves to a theorem at the cited OpenAI commit | 18 |
+| OpenAI ships a Comparator config naming that theorem (standard axioms only) | 18 |
+| OpenAI statement unchanged between the cited commit and the frozen head | 18 |
+| Formal Conjectures statement existed before the release and its core is unchanged | 14 |
+| Formal Conjectures statement was written after the release (cannot be independent) | 4 |
+| Pre-release statement shares a verbatim definition with OpenAI's challenge file | 1 (Erdős 970) |
+| OpenAI statement is textually identical to the Formal Conjectures statement | 0 |
+| OpenAI statement is a project-local named proposition | 6 |
+
+What this shows: all 18 links are well-formed, and none is a literal match, so every one needs a bridge
+argument that, as far as the source audit found, has not been machine-checked for these statements.
+The import closure of the linked declarations ranges from 8 to 4,356 library modules.
+
+What this does not show: that any proof compiles, that any link is correct or incorrect, or that any
+statement is faithful to Erdős's problem.
+
+| Required reporting line | Value |
+|---|---|
+| Eligible research claims | 18 linked statements |
+| Successfully compiled by ScopeLedger | 0 (not attempted) |
+| Certificates replayed | 0 |
+| Certified equivalences | 0 |
+| Certified one-way implications | 0 |
+| Certified separating witnesses | 0 |
+| Inconclusive | 0 (Stage 2 not run) |
+| Blocked by infrastructure | 0 in Stage 1; Stage 2 feasibility unmeasured |
+| Independently reviewed | 0 |
+
+Smoke tests 1–4 of the kernel pipeline pass on synthetic statements; they are harness tests, not results.
+Workflow runs: https://github.com/entropysherlock/ProofScope/actions/workflows/sl001-audit.yml
 
 ## Reproducibility
 

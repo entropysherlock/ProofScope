@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.ErdosGallai.erdos_gallai",
+  "identifier": "OAI.ErdosGallai.erdos_gallai",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 207,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/Combinatorics/CycleDecomposition/Main.lean",
+    "sha256": "03edc7620d991daaa5629313c05395708b83ea44e5634a5ef69227ba2bcf77d9"
+  },
+  "text": ": MainStatement",
+  "text_sha256": "8a78916f21ff94f96a5dfccb615e1979a9445d9c941b311172976938d0f8d8ea",
+  "type": "statement"
+}

@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.EuclideanFiveColor.no_proper_five_coloring",
+  "identifier": "OAI.EuclideanFiveColor.no_proper_five_coloring",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 124,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/Geometry/PlaneColoring/Five.lean",
+    "sha256": "d08f426552d55e74f9e0328425748bd0172d95cadbad4cc900f43436337c2309"
+  },
+  "text": ": ¬ ∃ c : ℂ → Fin 5, ProperColoring 5 c",
+  "text_sha256": "8e95a46a1422f5f26bd8582ac0638adf9c915fab765205a63ae106cd6ec8ff4e",
+  "type": "statement"
+}

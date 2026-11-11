@@ -1,0 +1,24 @@
+{
+  "about": "statement:oai.OAI.ErdosGallai.erdos_gallai",
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "basis": "source_assertion",
+  "created": "2026-11-11T00:00:00Z",
+  "id": "evidence:oai.OAI.ErdosGallai.erdos_gallai.source",
+  "known_limitations": [
+    "Not replayed: ScopeLedger has not built the OpenAI library.",
+    "Statement text extracted by regular expression; hashes allow detection of truncation.",
+    "No human has reviewed this record."
+  ],
+  "level": "asserted",
+  "note": "openai/math presents this declaration as proved and ships a Comparator config for it: lean/ComparatorChallenges/CycleDecomposition.json. Not replayed here.",
+  "permitted_axioms_in_source_config": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "schema": "0.1",
+  "type": "evidence"
+}

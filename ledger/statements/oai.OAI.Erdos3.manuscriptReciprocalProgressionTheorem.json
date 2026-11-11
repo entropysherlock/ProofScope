@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.Erdos3.manuscriptReciprocalProgressionTheorem",
+  "identifier": "OAI.Erdos3.manuscriptReciprocalProgressionTheorem",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 38,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/Combinatorics/Progressions/Results/Conclusions.lean",
+    "sha256": "db1b84d9dfc899abaf754be06c83fe99bc999d29556b6d3ef431b3607c89d603"
+  },
+  "text": ": ReciprocalProgressionTheorem",
+  "text_sha256": "229cb8ffa8c01d8152b1cfb538d94ede011c23a8b605aad176b1d19cd2d3d65b",
+  "type": "statement"
+}

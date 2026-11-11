@@ -1,0 +1,84 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "totient_asymptotic_formula",
+      "file_exists": true,
+      "file_sha256": "024b4b92fbc88a90d5b068121f72fc234d02d166a6ac6647a181a357f119c0a7",
+      "statement": ": TendstoUniformlyOn (fun H => AH H (fun _ => 1)) (A (fun _ => 1)) atTop (Set.Ico (0 : ℝ) 1) ∧ (∃ cMinus cPlus : ℝ, 0 < cMinus ∧ ∀ s ∈ Set.Ico (0 : ℝ) 1, cMinus ≤ A (fun _ => 1) s ∧ A (fun _ => 1) s ≤ cPlus) ∧ Tendsto (fun x => V x/mainTerm x) atTop (nhds 1) ∧ ∀ c : ℝ, 0 < c → Tendsto (fun x => V (c*x)/V x) atTop (nhds c)",
+      "statement_sha256": "d531e6e3a915defba236211ce81a18159dab218f780c46b105af637e303c670c"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "totient_asymptotic_formula",
+      "file_exists": true,
+      "file_sha256": "024b4b92fbc88a90d5b068121f72fc234d02d166a6ac6647a181a357f119c0a7",
+      "qualified_name": "OAI.TotientAsymptotic.totient_asymptotic_formula",
+      "statement": ": TendstoUniformlyOn (fun H => AH H (fun _ => 1)) (A (fun _ => 1)) atTop (Set.Ico (0 : ℝ) 1) ∧ (∃ cMinus cPlus : ℝ, 0 < cMinus ∧ ∀ s ∈ Set.Ico (0 : ℝ) 1, cMinus ≤ A (fun _ => 1) s ∧ A (fun _ => 1) s ≤ cPlus) ∧ Tendsto (fun x => V x/mainTerm x) atTop (nhds 1) ∧ ∀ c : ℝ, 0 < c → Tendsto (fun x => V (c*x)/V x) atTop (nhds c)",
+      "statement_sha256": "d531e6e3a915defba236211ce81a18159dab218f780c46b105af637e303c670c"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "c0be7ff8588f6d0bbf4d0a0e4bb805c0d68e448008113eb4afa82b30580a735e",
+      "config": "lean/ComparatorChallenges/TotientAsymptotic.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.TotientAsymptotic.totient_asymptotic_formula",
+        "OAI.TotientAsymptotic.weighted_totient_asymptotic",
+        "OAI.TotientAsymptotic.weighted_totient_one_two",
+        "OAI.TotientAsymptotic.coefficient_nonnegative"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 809,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": false,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "2c987b24707d874cd7b99b1f6cbd134c0c81caf620a205e72cc602f11be3db57",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": "(c : ℝ) (hc : 0 < c) : Filter.Tendsto (fun x => V (c * x) / V x) Filter.atTop (𝓝 c)",
+      "statement_sha256": "2c987b24707d874cd7b99b1f6cbd134c0c81caf620a205e72cc602f11be3db57"
+    },
+    "link": {
+      "answer_wrapper": false,
+      "body_sha256": "2c987b24707d874cd7b99b1f6cbd134c0c81caf620a205e72cc602f11be3db57",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": "(c : ℝ) (hc : 0 < c) : Filter.Tendsto (fun x => V (c * x) / V x) Filter.atTop (𝓝 c)",
+      "statement_sha256": "2c987b24707d874cd7b99b1f6cbd134c0c81caf620a205e72cc602f11be3db57"
+    },
+    "pre": {
+      "answer_wrapper": false,
+      "body_sha256": null,
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "polarity": null,
+      "statement": null,
+      "statement_sha256": null
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": null,
+  "B_file_first_commit": "5ff9bc0374b72a98a74a3e9756446f92aaacd2ff 2025-07-29T17:11:56+00:00 Paul Lezeau",
+  "B_theorem_existed_before_release": false,
+  "case_id": "SL001-E416-erdos_416.variants.regularly_varying",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [],
+  "erdos_problem": 416,
+  "independence_class": "B_written_after_release",
+  "outcome": "observed",
+  "stage": 1
+}

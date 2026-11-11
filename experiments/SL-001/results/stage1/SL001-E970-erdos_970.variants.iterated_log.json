@@ -1,0 +1,83 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "erdos_970_iterated_log",
+      "file_exists": true,
+      "file_sha256": "9217886ffb5bc10b6d8f89d3ad51f67c21b36685144f7311ba8aec819cb2a11a",
+      "statement": ": NumberTheoryLean.Targets.JacobsthalIteratedLog",
+      "statement_sha256": "e3640b4bc4067410fd8758bb929e462eae529201bcbf07ff9f8f4c84e25af91f"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "erdos_970_iterated_log",
+      "file_exists": true,
+      "file_sha256": "9217886ffb5bc10b6d8f89d3ad51f67c21b36685144f7311ba8aec819cb2a11a",
+      "qualified_name": "OAI.Erdos970.Erdos970Final.erdos_970_iterated_log",
+      "statement": ": NumberTheoryLean.Targets.JacobsthalIteratedLog",
+      "statement_sha256": "e3640b4bc4067410fd8758bb929e462eae529201bcbf07ff9f8f4c84e25af91f"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "b1ca82177690ae1d9db59652ca64f126678f5fbe7c08b7a82243c07143f1e80a",
+      "config": "lean/ComparatorChallenges/JacobsthalImproved.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.Erdos970.Erdos970Final.erdos_970_iterated_log"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 817,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": true,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "f65ea9b611b3e1eb469f9c86dd25735d52732b80ddf1a1d1ed6d8195b1e50a2f",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": ": ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 / (Real.log (Real.log (3 * k))) ^ 2",
+      "statement_sha256": "84a77216d2d799c97958ff732e90de15e3b1e34069f43937d6f9ff222a4e59f9"
+    },
+    "link": {
+      "answer_wrapper": false,
+      "body_sha256": "f65ea9b611b3e1eb469f9c86dd25735d52732b80ddf1a1d1ed6d8195b1e50a2f",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": ": ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 / (Real.log (Real.log (3 * k))) ^ 2",
+      "statement_sha256": "84a77216d2d799c97958ff732e90de15e3b1e34069f43937d6f9ff222a4e59f9"
+    },
+    "pre": {
+      "answer_wrapper": false,
+      "body_sha256": null,
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "polarity": null,
+      "statement": null,
+      "statement_sha256": null
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": null,
+  "B_file_first_commit": "c892fcbc758f2d978f0f66dbad124bd454b2d619 2026-09-07T14:37:09+00:00 Tom Adamczewski",
+  "B_theorem_existed_before_release": false,
+  "case_id": "SL001-E970-erdos_970.variants.iterated_log",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [
+    "IsJacobsthalBound"
+  ],
+  "erdos_problem": 970,
+  "independence_class": "B_written_after_release",
+  "outcome": "observed",
+  "stage": 1
+}

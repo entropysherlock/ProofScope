@@ -1,0 +1,39 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "history": {
+    "head": {
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "polarity": "neg",
+      "statement_sha256": "192d7dfb2dd6e99d6711590d6542ce8dd1529c468e86bd61dbb35bc0b162a111"
+    },
+    "link": {
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "polarity": "neg",
+      "statement_sha256": "60f4d68c4ac8c077d9703d3c6e7746378cdd0e47386c55c0d5695b360c3d2312"
+    },
+    "pre": {
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "polarity": "open",
+      "statement_sha256": "7ba9881aedd393223fd99286710244496a03225e5538870485e145bb37ea8e46"
+    }
+  },
+  "id": "statement:fc.erdos952.erdos_952",
+  "identifier": "erdos_952",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "locator": "https://github.com/google-deepmind/formal-conjectures",
+    "path": "FormalConjectures/ErdosProblems/952.lean",
+    "sha256": "f65dedc76ad53fbe4a7afa507726e41eab27236584ef34f3edfc7120d75f7423"
+  },
+  "text": ": ¬ ∃ (x : ℕ → GaussianInt) (C : ℤ), Function.Injective x ∧ ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C",
+  "text_sha256": "192d7dfb2dd6e99d6711590d6542ce8dd1529c468e86bd61dbb35bc0b162a111",
+  "type": "statement"
+}

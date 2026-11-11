@@ -1,0 +1,81 @@
+{
+  "A": {
+    "head": {
+      "commit": "4eaee87548250b2682affda7d05d947c05554bae",
+      "decl": "no_proper_five_coloring",
+      "file_exists": true,
+      "file_sha256": "d08f426552d55e74f9e0328425748bd0172d95cadbad4cc900f43436337c2309",
+      "statement": ": ¬ ∃ c : ℂ → Fin 5, ProperColoring 5 c",
+      "statement_sha256": "8e95a46a1422f5f26bd8582ac0638adf9c915fab765205a63ae106cd6ec8ff4e"
+    },
+    "linked": {
+      "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "decl": "no_proper_five_coloring",
+      "file_exists": true,
+      "file_sha256": "d08f426552d55e74f9e0328425748bd0172d95cadbad4cc900f43436337c2309",
+      "qualified_name": "OAI.EuclideanFiveColor.no_proper_five_coloring",
+      "statement": ": ¬ ∃ c : ℂ → Fin 5, ProperColoring 5 c",
+      "statement_sha256": "8e95a46a1422f5f26bd8582ac0638adf9c915fab765205a63ae106cd6ec8ff4e"
+    }
+  },
+  "A_and_B_statement_text_identical": false,
+  "A_comparator_challenges": [
+    {
+      "challenge_imports_only_mathlib": true,
+      "challenge_sha256": "7055ba6ec44990ca1da798f3fab5db8398b58485e633102acf6732e5bbe957cd",
+      "config": "lean/ComparatorChallenges/EuclideanFiveColor.json",
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "theorem_names": [
+        "OAI.EuclideanFiveColor.no_proper_five_coloring"
+      ]
+    }
+  ],
+  "A_import_closure_modules_at_head": 70,
+  "A_link_resolves": true,
+  "A_statement_changed_linked_to_head": false,
+  "A_statement_is_named_proposition": false,
+  "B": {
+    "head": {
+      "answer_wrapper": false,
+      "body_sha256": "ae825f8255f916cd4f4e127a65869e3bc8ea38263e0ac2fd1713f9a6501ccd98",
+      "commit": "da703a5f239f734a47ede2f4e99b9ccc9e644cb5",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": ": 6 ≤ χ(ℝ²)",
+      "statement_sha256": "d0fd6ece6132cbe579d4402b9b40cb6cc6b7bff9b7a498b5471d17489ea2591a"
+    },
+    "link": {
+      "answer_wrapper": false,
+      "body_sha256": "ae825f8255f916cd4f4e127a65869e3bc8ea38263e0ac2fd1713f9a6501ccd98",
+      "commit": "3dfd999dfe5a3a1c739d362d3189daf9e08d9fa8",
+      "file_exists": true,
+      "polarity": "pos",
+      "statement": ": 6 ≤ χ(ℝ²)",
+      "statement_sha256": "d0fd6ece6132cbe579d4402b9b40cb6cc6b7bff9b7a498b5471d17489ea2591a"
+    },
+    "pre": {
+      "answer_wrapper": false,
+      "body_sha256": null,
+      "commit": "89294ea02bd7cd678d59984add52cb4baef3dbf4",
+      "file_exists": true,
+      "polarity": null,
+      "statement": null,
+      "statement_sha256": null
+    }
+  },
+  "B_body_changed_link_to_head": false,
+  "B_body_changed_pre_to_link": null,
+  "B_file_first_commit": "17180b36cbd5d56df7f6dbd62cb555db16731647 2025-12-09T16:17:44+00:00 Julian Kemp",
+  "B_theorem_existed_before_release": false,
+  "case_id": "SL001-E508-HadwigerNelsonAtLeastSix",
+  "certifies": "nothing; deterministic text and provenance observations only",
+  "defs_verbatim_identical_in_A_challenge_and_pre_release_B": [],
+  "erdos_problem": 508,
+  "independence_class": "B_written_after_release",
+  "outcome": "observed",
+  "stage": 1
+}

@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.QuantitativeVanDerWaerden.uniform_lower_bound",
+  "identifier": "OAI.QuantitativeVanDerWaerden.uniform_lower_bound",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 12,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/Combinatorics/ProgressionColoring/Main.lean",
+    "sha256": "631fc2737af9923814430ba8de89038abcd047a935a63dedccfb1f103ba4ed90"
+  },
+  "text": ": ∃ K : ℕ, ∀ k ≥ K, ∀ r ≥ 2, (k : ℝ) ^ ((1 / 100000 : ℝ) * k * (Nat.log 2 r : ℝ)) < (W r k : ℝ)",
+  "text_sha256": "9970e29a8bb94a7c17adb226752a21780ded21e94309c1fbc97e26e01f4233cc",
+  "type": "statement"
+}

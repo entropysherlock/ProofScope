@@ -1,0 +1,23 @@
+{
+  "author": {
+    "kind": "pipeline",
+    "name": "SL-001 Stage 1 (sl001.py), run by Claude (Anthropic) for Caleb J. Westfall"
+  },
+  "created": "2026-11-11T00:00:00Z",
+  "id": "statement:oai.OAI.Erdos970.Erdos970Final.erdos_970_quadratic",
+  "identifier": "OAI.Erdos970.Erdos970Final.erdos_970_quadratic",
+  "language": "lean4",
+  "schema": "0.1",
+  "source": {
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "kind": "git",
+    "license": "Apache-2.0",
+    "line": 13,
+    "locator": "https://github.com/openai/math",
+    "path": "lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean",
+    "sha256": "220f638918ae457a2a61c8788b4f45606053ae62d541c2e5519013ce4c2fdea0"
+  },
+  "text": ": NumberTheoryLean.Targets.JacobsthalQuadratic",
+  "text_sha256": "6daf8eb7259e378de097c4b52dd471e00a9a69b8155697cf4c4319bc632fc4a8",
+  "type": "statement"
+}
