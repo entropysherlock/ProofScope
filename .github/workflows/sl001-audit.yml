@@ -72,7 +72,18 @@ jobs:
       - name: Stage 1
         run: python experiments/SL-001/sl001.py stage1 --fc "$RUNNER_TEMP/fc" --oai "$RUNNER_TEMP/oai" --out stage1-out
       - name: Reproduction check (CI output must equal the committed results byte for byte)
-        run: diff -r stage1-out experiments/SL-001/results/stage1 && echo "Stage 1 reproduced exactly"
+        run: |
+          git --version
+          if diff -r stage1-out experiments/SL-001/results/stage1 > repro.diff; then
+            echo "Stage 1 reproduced exactly"
+          else
+            # Annotations are publicly readable, so the difference can be inspected without a login.
+            n=0
+            while IFS= read -r line && [ $n -lt 40 ]; do
+              echo "::warning title=SL-001 reproduction diff::$(printf '%s' "$line" | cut -c1-400)"; n=$((n+1))
+            done < repro.diff
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
