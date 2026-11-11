@@ -48,7 +48,8 @@ coefficients and its degree, a supremum over the sphere, and an ε-argument
 (`(1 + c/2)√(n+1) ≤ (1+c)√n` once `n ≥ (1 + c/2)²/c`).
 
 Runs: bridges in 43024368984 (Lake build), 43024708516 and 43025657829 (plain `lean`); assembly in
-43024368984. The plain-`lean` assembly in 43024708516 failed in 2 s for an infrastructure reason
+43024368984 (Lake build, 272 s) and reproduced in 43025657829 by the second build path (plain `lean`,
+69/69 modules in 344 s, same axioms, 69/69 `leanchecker` replays). The plain-`lean` assembly in 43024708516 failed in 2 s for an infrastructure reason
 (Lean refuses a source file outside its root directory); it is recorded as `blocked_infrastructure`,
 not as a mathematical result, and was relaunched in 43025657829.
 
