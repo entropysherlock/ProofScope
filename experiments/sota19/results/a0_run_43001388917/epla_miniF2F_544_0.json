@@ -1,0 +1,1 @@
+{"case_id": "epla:miniF2F:544:0", "fwd": [], "bwd": ["(intros; continuity)", "(intros; aesop)"], "equiv": false, "timeout": false, "seconds": 7.1}

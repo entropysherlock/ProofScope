@@ -1,0 +1,1 @@
+{"case_id": "pnv:test:0844:Munkres|exercise_34_9", "fwd": ["(intros; simp_all)", "(intros; continuity)", "(intros; aesop)"], "bwd": [], "equiv": false, "timeout": false, "seconds": 16.2}
