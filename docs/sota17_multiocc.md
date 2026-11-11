@@ -197,7 +197,30 @@ products); wrong class guess; wrong and inconsistent witnesses.
     python3 experiments/sota17/mathlib_pilot/pilot.py C2_heldout OUT/pilot
 
 Workflow `.github/workflows/sota17-reproduce.yml` runs all of this on a pull request to
-`v1.2-review`. It has not run yet; the numbers above are local.
+`v1.2-review`.
+
+## 7a. Reproduction on GitHub Actions
+
+Run 42959056396 on commit `eadec1a` (GitHub-hosted runner, Lean 4.34.1, Python 3.12,
+z3-solver 5.4.1.0, cvc5 1.4.2): all four jobs passed.
+
+| Job | What it checked |
+|---|---|
+| MultiOcc.lean | compiles without diagnostics, 26 axiom reports within the standard three, `leanchecker --fresh` |
+| Python regression suite | all of `tests/` |
+| Track B | cases regenerated bit-for-bit; labels recomputed; engine and baseline rerun; no certified direction contradicts a label; totals equal to `results/postfix_summary.json` (100 certified, 29 / 71, 140 unsupported, baseline 0) |
+| Track C | Mathlib at the pin; population re-extracted; `selection.json` reproduced; stage counts of all three splits equal to the committed results |
+
+The first CI attempt (run 42957915483, commit `841cac4`) failed in Track C: the script then named
+`select.py` shadowed Python's standard module `select` under Python 3.12 (it did not under the
+local 3.13). The file was renamed without changing its content; the selection is unchanged.
+
+The first-run (frozen) Track B numbers were not reproduced in CI; they are local only.
+
+On the same pull request the existing workflow *SOTA-16 Reproduce Presburger Evaluation* failed
+twice in its `Evaluate frozen` job: the runner was shut down about four minutes into the run of
+the frozen SOTA-16 engine (`86e62a3`), with no output. That job does not execute any file changed
+on this branch; the `Evaluate corrected` and label jobs passed. A re-run was started.
 
 ## 8. Limits and the next obstruction
 
