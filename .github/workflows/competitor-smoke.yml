@@ -1,0 +1,229 @@
+name: ProofScope External Competitor Smoke Tests
+# Availability verification only: no blind gold labels or leaderboard.
+on:
+  workflow_dispatch:
+  push:
+    branches: [competitor-benchmark-audit]
+    paths:
+      - '.github/workflows/competitor-smoke.yml'
+permissions:
+  contents: read
+concurrency:
+  group: competitor-smoke-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  semanteq:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      UPSTREAM: https://github.com/hlxr89/SemantEq.git
+      REV: f92767000e14d11744580946980cf874324f5d19
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch exact upstream and record provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p competitor-smoke
+          git init -q "$RUNNER_TEMP/semanteq"
+          cd "$RUNNER_TEMP/semanteq"
+          git remote add origin "$UPSTREAM"
+          git fetch -q --depth 1 origin "$REV"
+          git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$REV"
+          git rev-parse HEAD | tee "$GITHUB_WORKSPACE/competitor-smoke/commit.txt"
+          cat lean-toolchain | tee "$GITHUB_WORKSPACE/competitor-smoke/toolchain.txt"
+          sha256sum lake-manifest.json LICENSE > "$GITHUB_WORKSPACE/competitor-smoke/manifest_sha256.txt"
+      - name: Install Lean and build under native pin
+        shell: bash
+        run: |
+          set -o pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          cd "$RUNNER_TEMP/semanteq"
+          "$HOME/.elan/bin/lake" exe cache get 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/cache.log"
+          "$HOME/.elan/bin/lake" build semanteq 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
+      - name: Native pair smoke (not benchmark scoring)
+        shell: bash
+        run: |
+          set -o pipefail
+          cd "$RUNNER_TEMP/semanteq"
+          cat > "$RUNNER_TEMP/reference.lean" <<'EOF'
+          import Mathlib
+          theorem benchmark_reference (n : Nat) : n = n := by rfl
+          EOF
+          cat > "$RUNNER_TEMP/candidate.lean" <<'EOF'
+          import Mathlib
+          theorem benchmark_candidate (n : Nat) : n = n := by rfl
+          EOF
+          "$HOME/.elan/bin/lake" exe semanteq "$RUNNER_TEMP/reference.lean" "$RUNNER_TEMP/candidate.lean" 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log"
+      - name: Always upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semanteq-smoke
+          path: competitor-smoke/
+          if-no-files-found: warn
+  beqplus:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      UPSTREAM: https://github.com/augustepoiroux/LeanInteract.git
+      REV: 768e18ebcb5c7ec34d308768a785389eeac37798
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Fetch and install exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p competitor-smoke
+          git init -q "$RUNNER_TEMP/beq"
+          cd "$RUNNER_TEMP/beq"
+          git remote add origin "$UPSTREAM"
+          git fetch -q --depth 1 origin "$REV"
+          git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$REV"
+          git rev-parse HEAD > "$GITHUB_WORKSPACE/competitor-smoke/commit.txt"
+          sha256sum examples/beq_plus.py LICENSE > "$GITHUB_WORKSPACE/competitor-smoke/sha256.txt"
+          uv run --python 3.11 --with datasets --with rich --with tqdm --with scikit-learn --with . python -c "import lean_interact; print('lean_interact import OK')" 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/install.log"
+      - name: Native metric code syntax and callable smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          cd "$RUNNER_TEMP/beq"
+          uv run --python 3.11 --with datasets --with rich --with tqdm --with scikit-learn --with . python - <<'PY' 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log"
+          import importlib.util, inspect
+          spec=importlib.util.spec_from_file_location("beq_plus_mod","examples/beq_plus.py")
+          m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+          assert callable(m.beq_plus)
+          print("BEq+ import/callable passed; no Lean proposition evaluated; status SOURCE_INSTALL_SMOKE_ONLY")
+          print("Signature:",inspect.signature(m.beq_plus))
+          PY
+      - name: Always upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beqplus-smoke
+          path: competitor-smoke/
+          if-no-files-found: warn
+  machinechecked:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      UPSTREAM: https://github.com/cgarryZA/MachineChecked.git
+      REV: 47276b5309779497412ada208b2f630718ddcdc8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Pinned install and published CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p competitor-smoke
+          git init -q "$RUNNER_TEMP/mc"
+          cd "$RUNNER_TEMP/mc"
+          git remote add origin "$UPSTREAM"
+          git fetch -q --depth 1 origin "$REV"
+          git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$REV"
+          git rev-parse HEAD > "$GITHUB_WORKSPACE/competitor-smoke/commit.txt"
+          sha256sum pyproject.toml LICENSE > "$GITHUB_WORKSPACE/competitor-smoke/sha256.txt"
+          uv run --python 3.11 --with . machinechecked --help 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/help.log"
+      - name: Install required Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      # INFRASTRUCTURE: upstream MachineChecked CI packages at the pinned commit.
+      - name: Install TeX Live latexmk and Poppler
+        shell: bash
+        run: |
+          set -euo pipefail
+          PKGS="latexmk texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended poppler-utils"
+          NET="-o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 -o Acquire::Retries=3"
+          for i in 1 2 3; do sudo apt-get -q $NET update && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: apt-get update failed 3 times"; exit 1; }; sleep 20; done
+          for i in 1 2 3; do sudo apt-get -q $NET install -y --no-install-recommends $PKGS && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: apt-get install failed 3 times"; exit 1; }; sleep 30; done
+          dpkg-query -W -f='${Package} ${Version}\n' $PKGS texlive-base texlive-binaries texlive-latex-base | tee "$GITHUB_WORKSPACE/competitor-smoke/apt-packages.txt"
+      - name: Preflight required MachineChecked tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$GITHUB_WORKSPACE/competitor-smoke/preflight.txt"
+          : > "$out"
+          missing=0
+          for t in latexmk pdflatex synctex pdftohtml pdfinfo elan lake git uv; do
+            if p=$(command -v "$t"); then echo "OK $t $p" | tee -a "$out"; else echo "MISSING $t" | tee -a "$out"; missing=1; fi
+          done
+          for c in "latexmk -v" "pdflatex --version" "pdftohtml -v" "elan --version"; do
+            { $c 2>&1 | head -n 2 || true; } | tee -a "$out"
+          done
+          [ "$missing" = 0 ] || { echo "INFRASTRUCTURE_ERROR: a required executable is missing"; exit 1; }
+      - name: Native toy-paper Lean build
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/mc/examples/toy-paper/lean"
+          cat lean-toolchain | tee "$GITHUB_WORKSPACE/competitor-smoke/toolchain.txt"
+          lake build 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/build.log"
+      - name: Native toy-paper audit smoke
+        shell: bash
+        run: |
+          set -uo pipefail
+          cd "$RUNNER_TEMP/mc/examples/toy-paper"
+          uv run --project "$RUNNER_TEMP/mc" --python 3.11 --with "$RUNNER_TEMP/mc" machinechecked check --json \
+            > "$GITHUB_WORKSPACE/competitor-smoke/check.json" 2> >(tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log" >&2)
+          rc=$?
+          echo "$rc" > "$GITHUB_WORKSPACE/competitor-smoke/check_exit_code.txt"
+          echo "machinechecked check exit code: $rc"
+          head -c 4000 "$GITHUB_WORKSPACE/competitor-smoke/check.json" || true
+          exit "$rc"
+      - name: Always upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machinechecked-smoke
+          path: competitor-smoke/
+          if-no-files-found: warn
+  paperformalizer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      UPSTREAM: https://github.com/Jiyuan-Tan/PaperFormalizer.git
+      REV: 5e1f269bb1c19512e2bc8dde69119c2b7f667f74
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pinned source and install
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p competitor-smoke
+          git init -q "$RUNNER_TEMP/pf"
+          cd "$RUNNER_TEMP/pf"
+          git remote add origin "$UPSTREAM"
+          git fetch -q --depth 1 origin "$REV"
+          git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$REV"
+          git rev-parse HEAD > "$GITHUB_WORKSPACE/competitor-smoke/commit.txt"
+          sha256sum LICENSE tools/package.json > "$GITHUB_WORKSPACE/competitor-smoke/sha256.txt"
+          cd tools
+          npm ci 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/install.log"
+      - name: Native typecheck (does not invoke paid models)
+        shell: bash
+        run: |
+          set -o pipefail
+          cd "$RUNNER_TEMP/pf/tools"
+          npm run typecheck 2>&1 | tee "$GITHUB_WORKSPACE/competitor-smoke/smoke.log"
+      - name: Always upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperformalizer-smoke
+          path: competitor-smoke/
+          if-no-files-found: warn
