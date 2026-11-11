@@ -1,0 +1,6 @@
+attempt 1: rc=0 records=5 of 5 in 599s
+synth:c01_assumption_added LikelyTooWeak 31564 
+synth:c02_renamed_binders ExactMatch 187 
+synth:c03_conclusion_weakened LikelyTooWeak 13292 
+synth:c04_universe_typeclass Inconclusive 248867 
+synth:c05_universe_unsound_probe LikelyTooWeak 18089 

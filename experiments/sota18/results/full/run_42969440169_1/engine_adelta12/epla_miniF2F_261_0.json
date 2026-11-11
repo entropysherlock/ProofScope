@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_261_0",
+ "reference": "∀ (x : ℝ), (x + 3) * (2 * x - 6) = 2 * x ^ 2 - 18",
+ "lean": "∀ {x : ℕ}, (x + 3) * (2 * x - 6) = 2 * x ^ 2 - 18",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ {x : ℕ}, (x + (3 : ℕ)) * ((2 : ℕ) * x - (6 : ℕ)) = (2 : ℕ) * x ^ (2 : ℕ) - (18 : ℕ)",
+  "conclusion_ref": "∀ (x : ℝ), (x + (3 : ℝ)) * ((2 : ℝ) * x - (6 : ℝ)) = (2 : ℝ) * x ^ (2 : ℕ) - (18 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

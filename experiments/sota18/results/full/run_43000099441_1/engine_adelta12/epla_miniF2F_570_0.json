@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_570_0",
+ "reference": "∀ (b : ℕ), Nat.lcm 120 b = 3720 → Nat.gcd 120 b = 8 → b = 248",
+ "lean": "have a := 120; have lcm_ab := 3720; have gcd_ab := 8; ∃ (b : ℕ), a.lcm b = lcm_ab ∧ a.gcd b = gcd_ab ∧ b = 248",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ (b : ℕ), Nat.lcm (120 : ℕ) b = (3720 : ℕ) ∧ Nat.gcd (120 : ℕ) b = (8 : ℕ) ∧ b = (248 : ℕ)",
+  "conclusion_ref": "∀ (b : ℕ), Nat.lcm (120 : ℕ) b = (3720 : ℕ) → Nat.gcd (120 : ℕ) b = (8 : ℕ) → b = (248 : ℕ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

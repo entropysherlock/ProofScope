@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_586_0",
+ "reference": "∀ (s : ℝ → ℝ → ℝ), (∀ (x : ℝ), x ≠ 0 → ∀ (y : ℝ), y ≠ 0 → s x y = (1 / y - 1 / x) / (x - y)) → s 3 11 = 1 / 33",
+ "lean": "_root_.star 3 11 = 1 / 33",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry = (1 / 33 : ℕ)",
+  "conclusion_ref": "∀ (s : ℝ → ℝ → ℝ),\n  (∀ (x : ℝ), x ≠ (0 : ℝ) → ∀ (y : ℝ), y ≠ (0 : ℝ) → s x y = ((1 : ℝ) / y - (1 : ℝ) / x) / (x - y)) →\n    s (3 : ℝ) (11 : ℝ) = (1 / 33 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

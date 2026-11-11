@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0392_Rudin_exercise_4_1a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∃ (f : ℝ → ℝ), (∀ (x : ℝ), Filter.Tendsto (fun (y : ℝ) => f (x + y) - f (x - y)) (nhds 0) (nhds 0)) ∧ ¬Continuous f",
+ "lean": "∀ (f : ℝ → ℝ),   (∀ (x : ℝ), ∃ (h : ℝ), 0 < h → |f (x + h) - f x| < h) → ¬UniformContinuous f → ∃ (x : ℝ), ContinuousAt f x",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0392_Rudin_exercise_4_1a/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

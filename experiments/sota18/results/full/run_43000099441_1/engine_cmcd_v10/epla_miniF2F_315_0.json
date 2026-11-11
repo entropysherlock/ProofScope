@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_315_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℕ → ℕ → ℝ),   (∀ (x : ℕ), 0 < x → f x x = ↑x) →     (∀ (x y : ℕ), 0 < x ∧ 0 < y → f x y = f y x) →       (∀ (x y : ℕ), 0 < x ∧ 0 < y → (↑x + ↑y) * f x y = ↑y * f x (x + y)) → f 14 52 = 364",
+ "lean": "∀ (f : ℕ → ℕ → ℕ),   (∀ (x : ℕ), f x x = x) →     (∀ (x y : ℕ), f x y = f y x) → (∀ (x y : ℕ), (x + y) * f x y = y * f x (x + y)) → f 14 52 = 364",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_315_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

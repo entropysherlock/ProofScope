@@ -1,0 +1,106 @@
+{
+ "id": "epla_miniF2F_68_0",
+ "reference": "∀ (x : ℝ), x ≠ -1 → (x - 9) / (x + 1) = 2 → x = -11",
+ "lean": "∀ {x : ℝ}, (x - 9) / (x + 1) = 2 → x = -11",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "x = (-11 : ℝ)",
+  "conclusion_ref": "x = (-11 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "x ≠ (-1 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "(x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_68_0.a_implies_d",
+   "statement": "∀ (x : ℝ), (((x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ))) → (x ≠ (-1 : ℝ)) ∧ ((x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_68_0.d_implies_a",
+   "statement": "∀ (x : ℝ), ((x ≠ (-1 : ℝ)) ∧ ((x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ))) → ((x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_68_0.link_L",
+   "statement": "(∀ {x : ℝ}, (x - 9) / (x + 1) = 2 → x = -11) ↔ (∀ (x : ℝ), ((x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ)) → x = (-11 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_68_0.link_R",
+   "statement": "(∀ (x : ℝ), x ≠ -1 → (x - 9) / (x + 1) = 2 → x = -11) ↔ (∀ (x : ℝ), (x ≠ (-1 : ℝ)) → ((x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ)) → x = (-11 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ)"
+ ],
+ "dropped": [
+  "x ≠ (-1 : ℝ)",
+  "(x - (9 : ℝ)) / (x + (1 : ℝ)) = (2 : ℝ)"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

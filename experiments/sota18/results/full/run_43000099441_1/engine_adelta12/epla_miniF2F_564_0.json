@@ -1,0 +1,121 @@
+{
+ "id": "epla_miniF2F_564_0",
+ "reference": "∀ (a : ℝ) (f : ℝ → ℝ), 0 < a → (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ b > 0, ∀ (x : ℝ), f (x + b) = f x",
+ "lean": "∀ (a : ℝ),   0 < a →     ∀ (f : ℝ → ℝ), (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ (b : ℝ), 0 < b ∧ ∀ (x : ℝ), f (x + b) = f x",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ))"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "conclusion_lean": "∃ (b : ℝ), (0 : ℝ) < b ∧ ∀ (x : ℝ), f (x + b) = f x",
+  "conclusion_ref": "∃ b > (0 : ℝ), ∀ (x : ℝ), f (x + b) = f x",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ))"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_564_0.link_L",
+   "statement": "(∀ (a : ℝ),   0 < a →     ∀ (f : ℝ → ℝ), (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ (b : ℝ), 0 < b ∧ ∀ (x : ℝ), f (x + b) = f x) ↔ (∀ (a : ℝ) (f : ℝ → ℝ), ((0 : ℝ) < a) → (∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ))) → ∃ b > (0 : ℝ), ∀ (x : ℝ), f (x + b) = f x)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_564_0.a_implies_d",
+   "statement": "∀ (a : ℝ) (f : ℝ → ℝ), (((0 : ℝ) < a) ∧ (∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ)))) → ((0 : ℝ) < a) ∧ (∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_564_0.d_implies_a",
+   "statement": "∀ (a : ℝ) (f : ℝ → ℝ), (((0 : ℝ) < a) ∧ (∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ)))) → ((0 : ℝ) < a) ∧ (∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_564_0.link_R",
+   "statement": "(∀ (a : ℝ) (f : ℝ → ℝ), 0 < a → (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ b > 0, ∀ (x : ℝ), f (x + b) = f x) ↔ (∀ (a : ℝ) (f : ℝ → ℝ), ((0 : ℝ) < a) → (∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ))) → ∃ b > (0 : ℝ), ∀ (x : ℝ), f (x + b) = f x)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℝ) < a",
+  "∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ))"
+ ],
+ "dropped": [
+  "(0 : ℝ) < a",
+  "∀ (x : ℝ), f (x + a) = (1 / 2 : ℝ) + √(f x - f x ^ (2 : ℕ))"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

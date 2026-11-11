@@ -1,0 +1,223 @@
+name: SOTA-18 Competitive Evaluation
+
+# Runs ProofScope (frozen), SemantEq and BEq+ on the frozen SOTA-18 cases (PROTOCOL.md).
+# Stage is selected by experiments/sota18/RUN_STAGE: `smoke` (synthetic Track C pairs, infrastructure
+# check) or `full` (the 477 frozen pairs). Raw per-pair records are committed by the `collect` job.
+on:
+  push:
+    branches: [research/sota18-independent-evaluation]
+    paths:
+      - "experiments/sota18/RUN_STAGE"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sota18-evaluate
+  cancel-in-progress: false
+
+env:
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+  SEMANTEQ_REV: f92767000e14d11744580946980cf874324f5d19
+  LEANINTERACT_REV: 768e18ebcb5c7ec34d308768a785389eeac37798
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      stage: ${{ steps.p.outputs.stage }}
+      cases: ${{ steps.p.outputs.cases }}
+      ps: ${{ steps.p.outputs.ps }}
+      se: ${{ steps.p.outputs.se }}
+      bq: ${{ steps.p.outputs.bq }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: p
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage=$(head -1 experiments/sota18/RUN_STAGE | tr -d '[:space:]')
+          if [ "$stage" = full ]; then
+            sha256sum experiments/sota18/frozen/cases.jsonl
+            python3 -c "import json,hashlib;m=json.load(open('experiments/sota18/frozen/manifest.json'));assert hashlib.sha256(open('experiments/sota18/frozen/cases.jsonl','rb').read()).hexdigest()==m['cases_sha256']"
+            echo "cases=experiments/sota18/frozen/cases.jsonl" >> "$GITHUB_OUTPUT"
+            echo "ps=$(python3 -c 'print(list(range(24)))')" >> "$GITHUB_OUTPUT"
+            echo "se=$(python3 -c 'print(list(range(12)))')" >> "$GITHUB_OUTPUT"
+            echo "bq=$(python3 -c 'print(list(range(12)))')" >> "$GITHUB_OUTPUT"
+          else
+            echo "cases=experiments/sota18/trackC_smoke.jsonl" >> "$GITHUB_OUTPUT"
+            echo "ps=[0]" >> "$GITHUB_OUTPUT"; echo "se=[0]" >> "$GITHUB_OUTPUT"; echo "bq=[0]" >> "$GITHUB_OUTPUT"
+          fi
+          echo "stage=$stage" >> "$GITHUB_OUTPUT"
+
+  proofscope:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.ps) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Engine freeze check
+        run: sha256sum -c experiments/sota18/ENGINE_HASHES.txt
+      - name: Mathlib at the pinned revision (binary cache)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ml"; cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
+          for i in 1 2 3; do lake update && break || sleep 30; done
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Provenance
+        shell: bash
+        run: |
+          mkdir -p ev
+          { git rev-parse HEAD; lean --version; python --version; nproc; free -g | head -2; } | tee ev/provenance-ps-${{ matrix.shard }}.txt
+      - name: ProofScope shard ${{ matrix.shard }}
+        env:
+          PROOFSCOPE_IMPORTS: Mathlib
+        run: |
+          n=$(python3 -c "print(len(${{ needs.plan.outputs.ps }}))")
+          python experiments/sota18/run_proofscope.py ${{ needs.plan.outputs.cases }} ev/ps --shard ${{ matrix.shard }}/$n | tee ev/ps-${{ matrix.shard }}.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota18-ps-${{ matrix.shard }}
+          path: |
+            ev/*.txt
+            ev/*.log
+            ev/ps/rows/
+            ev/ps/engine_*/rows/
+          if-no-files-found: warn
+
+  semanteq:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.se) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Fetch pinned SemantEq, install its toolchain, Mathlib cache and build
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q "$RUNNER_TEMP/se"; cd "$RUNNER_TEMP/se"
+          git remote add origin https://github.com/hlxr89/SemantEq.git
+          git fetch -q --depth 1 origin "$SEMANTEQ_REV"; git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SEMANTEQ_REV"
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          lake build semanteq 2>&1 | tail -5
+          mkdir -p "$GITHUB_WORKSPACE/ev"
+          { cat lean-toolchain; git rev-parse HEAD; nproc; free -g | head -2; } | tee "$GITHUB_WORKSPACE/ev/provenance-se-${{ matrix.shard }}.txt"
+      - name: SemantEq shard ${{ matrix.shard }}
+        run: |
+          n=$(python3 -c "print(len(${{ needs.plan.outputs.se }}))")
+          python3 experiments/sota18/run_semanteq.py "$RUNNER_TEMP/se" ${{ needs.plan.outputs.cases }} ev/se --shard ${{ matrix.shard }}/$n | tee ev/se-${{ matrix.shard }}.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota18-se-${{ matrix.shard }}
+          path: |
+            ev/*.txt
+            ev/*.log
+            ev/se/*.json
+          if-no-files-found: warn
+
+  beqplus:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.bq) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+      - name: Fetch pinned LeanInteract and elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q "$RUNNER_TEMP/li"; cd "$RUNNER_TEMP/li"
+          git remote add origin https://github.com/augustepoiroux/LeanInteract.git
+          git fetch -q --depth 1 origin "$LEANINTERACT_REV"; git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$LEANINTERACT_REV"
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          # LeanInteract calls `lake` before selecting a project toolchain (failed in smoke run 42965562451)
+          "$HOME/.elan/bin/elan" default leanprover/lean4:v4.8.0
+          mkdir -p "$GITHUB_WORKSPACE/ev"
+          { git rev-parse HEAD; sha256sum examples/beq_plus.py; nproc; free -g | head -2; } | tee "$GITHUB_WORKSPACE/ev/provenance-bq-${{ matrix.shard }}.txt"
+      - name: BEq+ shard ${{ matrix.shard }}
+        shell: bash
+        run: |
+          set -o pipefail
+          n=$(python3 -c "print(len(${{ needs.plan.outputs.bq }}))")
+          uv run --python 3.11 --with datasets --with rich --with tqdm --with scikit-learn --with "$RUNNER_TEMP/li" \
+            python experiments/sota18/run_beqplus.py "$RUNNER_TEMP/li" ${{ needs.plan.outputs.cases }} ev/bq --shard ${{ matrix.shard }}/$n 2>&1 | tee ev/bq-${{ matrix.shard }}.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sota18-bq-${{ matrix.shard }}
+          path: |
+            ev/*.txt
+            ev/*.log
+            ev/bq/*.json
+          if-no-files-found: warn
+
+  collect:
+    needs: [plan, proofscope, semanteq, beqplus]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: sota18-*
+          path: shards
+      - name: Commit raw per-pair records
+        shell: bash
+        run: |
+          set -euo pipefail
+          d="experiments/sota18/results/${{ needs.plan.outputs.stage }}/run_${{ github.run_id }}_${{ github.run_attempt }}"
+          mkdir -p "$d"/{proofscope,semanteq,beqplus,logs}
+          find shards -path '*/ps/rows/*.json' -exec cp {} "$d/proofscope/" \;
+          for e in adelta12 cmcd_v10; do mkdir -p "$d/engine_$e"; find shards -path "*/engine_$e/rows/*.json" -exec cp {} "$d/engine_$e/" \; ; done
+          find shards -path '*/se/*.json' -exec cp {} "$d/semanteq/" \;
+          find shards -path '*/bq/*.json' -exec cp {} "$d/beqplus/" \;
+          find shards -name '*.log' -exec cp {} "$d/logs/" \;
+          find shards -name 'provenance-*.txt' -exec cp {} "$d/logs/" \;
+          echo '{"jobs": {"proofscope": "${{ needs.proofscope.result }}", "semanteq": "${{ needs.semanteq.result }}", "beqplus": "${{ needs.beqplus.result }}"}}' > "$d/job_results.json"
+          for t in proofscope semanteq beqplus engine_adelta12 engine_cmcd_v10; do echo "$t $(ls "$d/$t" | wc -l)"; done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/sota18/results
+          git commit -m "SOTA-18: raw records, stage ${{ needs.plan.outputs.stage }}, run ${{ github.run_id }} attempt ${{ github.run_attempt }}"
+          for i in 1 2 3 4 5; do git pull --rebase -q origin "${{ github.ref_name }}" && git push origin HEAD:${{ github.ref_name }} && break || sleep 15; done

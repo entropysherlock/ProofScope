@@ -1,0 +1,128 @@
+{
+ "id": "epla_miniF2F_184_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ), x ≠ 0 → 2 * x = 5 * y → 7 * y = 10 * z → z / x = 7 / 25",
+ "lean": "∀ (x y z : ℝ), 2 * x = 5 * y → 7 * y = 10 * z → z / x = 7 / 25",
+ "symbols": [
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "x ≠ (0 : ℝ)",
+   "to": "(2 : ℝ) * x = (5 : ℝ) * y"
+  },
+  {
+   "from": "(2 : ℝ) * x = (5 : ℝ) * y",
+   "to": "(7 : ℝ) * y = (10 : ℝ) * z"
+  },
+  {
+   "from": "(7 : ℝ) * y = (10 : ℝ) * z → z / x = (7 / 25 : ℝ)",
+   "to": "z / x = (7 / 25 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "x ≠ (0 : ℝ)",
+   "to": "(2 : ℝ) * x = (5 : ℝ) * y",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_184_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ)) → (∀ (x y z : ℝ), x ≠ (0 : ℝ) → (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(2 : ℝ) * x = (5 : ℝ) * y",
+   "to": "(7 : ℝ) * y = (10 : ℝ) * z",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "bwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_184_0.bwd_e2",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ)) → (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "fwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_184_0.fwd_e2",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ)) → (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 3,
+   "from": "(7 : ℝ) * y = (10 : ℝ) * z → z / x = (7 / 25 : ℝ)",
+   "to": "z / x = (7 / 25 : ℝ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "bwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_184_0.bwd_e3",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ), (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ)) → (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "fwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_184_0.fwd_e3",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ)) → (∀ (x y z : ℝ), (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_184_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ), (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ)) → (∀ (x y z : ℝ), x ≠ (0 : ℝ) → (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → x1 z x = (7 / 25 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {
+  "ℝ → ℝ → ℝ": [
+   "fun (b0 b1 : ℝ) => (7 / 25 : ℝ)",
+   "fun (b0 b1 : ℝ) => ((7 / 25 : ℝ)) + 1",
+   "fun (b0 b1 : ℝ) => ((7 / 25 : ℝ)) - 1"
+  ]
+ },
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

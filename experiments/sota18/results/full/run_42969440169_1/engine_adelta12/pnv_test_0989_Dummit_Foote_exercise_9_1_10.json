@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0989_Dummit_Foote_exercise_9_1_10",
+ "reference": "∀ {f : ℕ → MvPolynomial ℕ ℤ},   (f = fun (i : ℕ) => MvPolynomial.X (2 * i) * MvPolynomial.X (2 * i + 1)) →     Infinite ↑(minimalPrimes (MvPolynomial ℕ ℤ ⧸ Ideal.span (Set.range f)))",
+ "lean": "∀ (A : Type) [inst : CommRing A],   ∃ (s : Set (Ideal A)),     s.Infinite ∧ ∀ i ∈ s, ∃ (a : A) (b : A), Prime (Ideal.span {a * b}) ∧ ∀ j ∈ s, j ≠ i → ¬j ≤ Ideal.span {a * b}",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (A : Type) [inst : CommRing A],\n  ∃ (s : Set (Ideal A)),\n    Set.Infinite s ∧\n      ∀ i ∈ s, ∃ (a : A) (b : A), Prime (M := Ideal A) (Ideal.span {a * b}) ∧ ∀ j ∈ s, j ≠ i → ¬j ≤ Ideal.span {a * b}",
+  "conclusion_ref": "∀ {f : ℕ → MvPolynomial ℕ ℤ},\n  (f = fun (i : ℕ) =>\n      HMul.hMul (α := MvPolynomial ℕ ℤ) (MvPolynomial.X ((2 : ℕ) * i)) (MvPolynomial.X ((2 : ℕ) * i + (1 : ℕ)))) →\n    Infinite\n      ↑(minimalPrimes\n          (HasQuotient.Quotient (MvPolynomial ℕ ℤ) (B := Ideal (MvPolynomial ℕ ℤ)) (Ideal.span (Set.range f))))",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

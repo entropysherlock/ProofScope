@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_1226_Munkres_exercise_23_6",
+ "reference": "∀ {X : Type u_1} [inst : TopologicalSpace X] {A C : Set X}, IsConnected C → C ∩ A ≠ ∅ → C ∩ Aᶜ ≠ ∅ → C ∩ frontier A ≠ ∅",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] [T2Space X] {A C : Set X},   IsConnected C → C ∩ A ≠ ∅ → C ∩ frontier A ≠ ∅ → C ∩ frontier A ≠ ∅",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1226_Munkres_exercise_23_6/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1226_Munkres_exercise_23_6/extract/Assumptions_input.lean:4:161: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1226_Munkres_exercise_23_6/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

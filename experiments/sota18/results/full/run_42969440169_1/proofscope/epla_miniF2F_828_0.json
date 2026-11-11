@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:828:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.7,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.1,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ), n % 5 = 3 → 2 * n % 5 = 1",
+ "lean": "∀ (n : ℕ), n % 5 = 3 → 2 * n % 5 = 1",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ), n'",
+  "cand": "unsupported: cannot tokenize at '∀ (n : ℕ), n'"
+ },
+ "seconds": 22.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11626684
+}

@@ -1,0 +1,42 @@
+{
+ "id": "epla_ProofNet_7_0",
+ "reference": "∀ (n : ℕ) (x y : EuclideanSpace ℝ (Fin n)), ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * ‖x‖ ^ 2 + 2 * ‖y‖ ^ 2",
+ "lean": "∀ {k : ℕ} (x y : EuclideanSpace ℝ (Fin k)), ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * ‖x‖ ^ 2 + 2 * ‖y‖ ^ 2",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "‖x + y‖ ^ (2 : ℕ) + ‖x - y‖ ^ (2 : ℕ) = (2 : ℝ) * ‖x‖ ^ (2 : ℕ) + (2 : ℝ) * ‖y‖ ^ (2 : ℕ)",
+  "conclusion_ref": "‖x + y‖ ^ (2 : ℕ) + ‖x - y‖ ^ (2 : ℕ) = (2 : ℝ) * ‖x‖ ^ (2 : ℕ) + (2 : ℝ) * ‖y‖ ^ (2 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "x",
+    "type": "EuclideanSpace ℝ (Fin n)"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "y",
+    "type": "EuclideanSpace ℝ (Fin n)"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

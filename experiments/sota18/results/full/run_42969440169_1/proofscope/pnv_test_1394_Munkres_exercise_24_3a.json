@@ -1,0 +1,55 @@
+{
+ "case_id": "pnv:test:1394:Munkres|exercise_24_3a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1394_Munkres_exercise_24_3a/extract/Assumptions_input.lean:4:129: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1394_Munkres_exercise_24_3a/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1394_Munkres_exercise_24_3a/extract/Drift_input.lean:4:121: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1394_Munkres_exercise_24_3a/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f : ↑(Set.Icc 0 1) → ↑(Set.Icc 0 1)), Continuous f → ∃ (x : ↑(Set.Icc 0 1)), f x = x",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] [T2Space X] [CompactSpace X] [TopologicalSpace.MetrizableSpace X]   {f : C(X, X)}, Continuous ⇑f → ∃ (x : X), f x = x",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f : ↑(Set'",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 16.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8631964
+}

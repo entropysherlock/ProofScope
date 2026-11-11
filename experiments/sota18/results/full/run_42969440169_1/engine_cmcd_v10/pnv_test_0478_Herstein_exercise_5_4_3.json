@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0478_Herstein_exercise_5_4_3",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {a : ℂ} {p : ℂ → ℂ},   (p = fun (x : ℂ) => x ^ 5 + ↑√2 * x ^ 3 + ↑√5 * x ^ 2 + ↑√7 * x + ↑√11) →     p a = 0 →       ∃ (q : Polynomial ℂ),         q ≠ 0 ∧ q.degree ≤ 80 ∧ a ∈ q.roots ∧ ∀ (n : ↥q.support), ∃ (a : ℤ) (b : ℤ), q.coeff ↑n = ↑a / ↑b",
+ "lean": "∀ {a : ℚ} {p : Polynomial ℚ}, Polynomial.eval a p = 0 → p.natDegree ≤ 80 → IsAlgebraic ℚ a",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0478_Herstein_exercise_5_4_3/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

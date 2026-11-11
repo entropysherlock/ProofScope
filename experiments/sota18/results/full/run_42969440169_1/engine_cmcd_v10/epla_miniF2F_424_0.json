@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_424_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ x < 0, 24 * x % 1199 = 15 → x ≤ -449",
+ "lean": "IsGreatest {x : ℤ | x < 0 ∧ 24 * x ≡ 15 [ZMOD 1199]} (-449)",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ x < (0 : ℤ), (24 : ℤ) * x % (1199 : ℤ) = (15 : ℤ) → x ≤ (-449 : ℤ)",
+   "to": "IsGreatest {x : ℤ | x < (0 : ℤ) ∧ (24 : ℤ) * x ≡ (15 : ℤ) [ZMOD (1199 : ℤ)]} (-449 : ℤ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

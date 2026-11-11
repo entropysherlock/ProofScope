@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_597_0",
+ "reference": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "lean": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "a * b * c = (-56 : ℝ)",
+  "conclusion_ref": "a * b * c = (-56 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "(3 : ℝ) * a + b + c = (-3 : ℝ)",
+   "a + (3 : ℝ) * b + c = (9 : ℝ)",
+   "a + b + (3 : ℝ) * c = (19 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

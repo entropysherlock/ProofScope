@@ -1,0 +1,34 @@
+{
+ "case_id": "pnv:test:1372:Herstein|exercise_5_6_14",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.9
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1372_Herstein_exercise_5_6_14/check.lean:27:103: error(lean.invalidField): Invalid field notation: Type of",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1372_Herstein_exercise_5_6_14/check.lean:29:157: error(lean.invalidField): Invalid field notation: Type of"
+ ],
+ "children_maxrss_kb_so_far": 11626684
+}

@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:0955:Putnam|exercise_2018_b4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0955_Putnam_exercise_2018_b4/extract/Drift_input.lean:4:0: error: unexpected bound variable #0\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a : ℝ) (x : ℕ → ℝ),   x 0 = 1 →     x 1 = a →       x 2 = a →         (∀ n ≥ 2, x (n + 1) = 2 * x n * x (n - 1) - x (n - 2)) →           (∃ (n : ℕ), x n = 0) → ∃ (c : ℕ), c ≠ 0 ∧ Function.Periodic x c",
+ "lean": "∀ {a : ℝ} (x : ℕ → ℝ),   x 0 = 1 →     x 1 = a →       x 2 = a →         (∀ n ≥ 2, x (n + 1) = 2 * x n * x (n - 1) - x (n - 2)) →           (∃ (n : ℕ), x n = 0) → ∃ (p : ℕ), ∀ (m : ℕ), x (m + p) = x m",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a : ℝ) (x'",
+  "cand": "unsupported: cannot tokenize at '∀ {a : ℝ} (x'"
+ },
+ "seconds": 17.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7634888
+}

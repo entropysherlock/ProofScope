@@ -1,0 +1,38 @@
+{
+ "id": "epla_miniF2F_92_0",
+ "reference": "∀ (a b : ℝ), a ^ 2 + b ^ 2 = 1 → a * b + (a - b) ≤ 1",
+ "lean": "∀ (a b : ℝ), a ^ 2 + b ^ 2 = 1 → a * b + (a - b) ≤ 1",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "a * b + (a - b) ≤ (1 : ℝ)",
+  "conclusion_ref": "a * b + (a - b) ≤ (1 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "a ^ (2 : ℕ) + b ^ (2 : ℕ) = (1 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,31 @@
+{
+ "id": "epla_miniF2F_757_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y : ℝ), (x + y) / 2 = 7 → √(x * y) = √19 → x ^ 2 + y ^ 2 = 158",
+ "lean": "∀ (x y : ℝ), (x + y) / 2 = 7 → √(x * y) = √19 → x ^ 2 + y ^ 2 = 158",
+ "symbols": [
+  {
+   "symbol": "Real.sqrt",
+   "type": "ℝ → ℝ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

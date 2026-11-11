@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:39:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 31.0,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Dvd.dvd",
+     "type": "ℤ → ℤ → Prop"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℤ → ℤ → ℤ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (p q r : ℤ),   1 < p ∧ p < q ∧ q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → (p, q, r) = (2, 4, 8) ∨ (p, q, r) = (3, 5, 15)",
+ "lean": "∀ (p q r : ℤ),   1 < p → p < q → q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → p = 2 ∧ q = 4 ∧ r = 8 ∨ p = 3 ∧ q = 5 ∧ r = 15",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (p q r : ℤ'",
+  "cand": "unsupported: cannot tokenize at '∀ (p q r : ℤ'"
+ },
+ "seconds": 43.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8980648
+}

@@ -1,0 +1,30 @@
+{
+ "case_id": "pnv:test:1415:Munkres|exercise_29_4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.0
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1415_Munkres_exercise_29_4/check.lean:30:12: error: typeclass instance problem is stuck",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1415_Munkres_exercise_29_4/check.lean:32:12: error: typeclass instance problem is stuck"
+ ],
+ "children_maxrss_kb_so_far": 7619156
+}

@@ -1,0 +1,1 @@
+{"case_id": "synth:c05_universe_unsound_probe", "typechecks": {"ref": true, "cand": true}, "beq_plus": false, "seconds": 4.3}

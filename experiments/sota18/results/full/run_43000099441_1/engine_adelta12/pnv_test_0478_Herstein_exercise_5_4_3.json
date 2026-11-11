@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0478_Herstein_exercise_5_4_3",
+ "reference": "∀ {a : ℂ} {p : ℂ → ℂ},   (p = fun (x : ℂ) => x ^ 5 + ↑√2 * x ^ 3 + ↑√5 * x ^ 2 + ↑√7 * x + ↑√11) →     p a = 0 →       ∃ (q : Polynomial ℂ),         q ≠ 0 ∧ q.degree ≤ 80 ∧ a ∈ q.roots ∧ ∀ (n : ↥q.support), ∃ (a : ℤ) (b : ℤ), q.coeff ↑n = ↑a / ↑b",
+ "lean": "∀ {a : ℚ} {p : Polynomial ℚ}, Polynomial.eval a p = 0 → p.natDegree ≤ 80 → IsAlgebraic ℚ a",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ {a : ℚ} {p : Polynomial ℚ}, Polynomial.eval a p = (0 : ℚ) → Polynomial.natDegree p ≤ (80 : ℕ) → IsAlgebraic ℚ a",
+  "conclusion_ref": "∀ {a : ℂ} {p : ℂ → ℂ},\n  (p = fun (x : ℂ) => x ^ (5 : ℕ) + ↑√(2 : ℝ) * x ^ (3 : ℕ) + ↑√(5 : ℝ) * x ^ (2 : ℕ) + ↑√(7 : ℝ) * x + ↑√(11 : ℝ)) →\n    p a = (0 : ℂ) →\n      ∃ (q : Polynomial ℂ),\n        q ≠ (0 : Polynomial ℂ) ∧\n          Polynomial.degree q ≤ (80 : WithBot ℕ) ∧\n            a ∈ Polynomial.roots q ∧\n              ∀ (n : ↥(Polynomial.support q)), ∃ (a : ℤ) (b : ℤ), (Polynomial.coeff q) ↑n = HDiv.hDiv (α := ℂ) ↑a ↑b",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

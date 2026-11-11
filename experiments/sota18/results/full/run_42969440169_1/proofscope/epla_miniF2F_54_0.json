@@ -1,0 +1,64 @@
+{
+ "case_id": "epla:miniF2F:54:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 53.4,
+   "verdict": "CLAIM_LEAN_STRONGER",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": [
+    1
+   ],
+   "symbols": [
+    {
+     "symbol": "Nat.gcd",
+     "type": "ℕ → ℕ → ℕ"
+    },
+    {
+     "symbol": "Nat.lcm",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "lean": "(∃ (a : ℕ) (b : ℕ), 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ a.gcd b = 6 ∧ a.lcm b = 108) ∧   ∀ (a b : ℕ), 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ a.gcd b = 6 → 108 ≤ a.lcm b",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : ℕ),'",
+  "cand": "unsupported: cannot tokenize at '∃ (a : ℕ) (b'"
+ },
+ "seconds": 65.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 9186724
+}

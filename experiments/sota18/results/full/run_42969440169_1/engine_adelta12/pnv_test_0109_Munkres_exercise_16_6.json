@@ -1,0 +1,69 @@
+{
+ "id": "pnv_test_0109_Munkres_exercise_16_6",
+ "reference": "∀ (S : Set (Set (ℝ × ℝ))),   (∀ s ∈ S,       ∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),         rational a ∧           rational b ∧             rational c ∧               rational d ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}) →     TopologicalSpace.IsTopologicalBasis S",
+ "lean": "∀ (U : Set (Set (ℝ × ℝ))),   (∀ u ∈ U, ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ), a < b ∧ c < d ∧ u = Set.Ioo ↑a ↑b ×ˢ Set.Ioo ↑c ↑d) →     TopologicalSpace.IsTopologicalBasis U",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "∀ u ∈ S,\n  ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ),\n    a < b ∧ c < d ∧ u = SProd.sprod (α := Set ℝ) (β := Set ℝ) (Set.Ioo ↑a ↑b) (Set.Ioo ↑c ↑d)"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "TopologicalSpace.IsTopologicalBasis S",
+  "conclusion_ref": "TopologicalSpace.IsTopologicalBasis S",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "∀ s ∈ S,\n  ∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),\n    sorry ∧\n      sorry ∧ sorry ∧ sorry ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "S",
+    "type": "Set (Set (ℝ × ℝ))"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_pnv_test_0109_Munkres_exercise_16_6.link_L",
+   "statement": "(∀ (U : Set (Set (ℝ × ℝ))),   (∀ u ∈ U, ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ), a < b ∧ c < d ∧ u = Set.Ioo ↑a ↑b ×ˢ Set.Ioo ↑c ↑d) →     TopologicalSpace.IsTopologicalBasis U) ↔ (∀ (S : Set (Set (ℝ × ℝ))), (∀ u ∈ S,\n  ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ),\n    a < b ∧ c < d ∧ u = SProd.sprod (α := Set ℝ) (β := Set ℝ) (Set.Ioo ↑a ↑b) (Set.Ioo ↑c ↑d)) → TopologicalSpace.IsTopologicalBasis S)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "∀ u ∈ S,\n  ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ),\n    a < b ∧ c < d ∧ u = SProd.sprod (α := Set ℝ) (β := Set ℝ) (Set.Ioo ↑a ↑b) (Set.Ioo ↑c ↑d)"
+ ],
+ "dropped": [
+  "∀ s ∈ S,\n  ∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),\n    sorry ∧\n      sorry ∧ sorry ∧ sorry ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}"
+ ],
+ "verdict": "INCONCLUSIVE",
+ "reason": "canonical telescope not linked to the elaborated statements",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

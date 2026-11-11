@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:279:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_279_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #4\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f : ℚ → ℝ), (∀ x > 0, ∀ y > 0, f (x * y) = f x + f y) → (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11) < 0",
+ "lean": "∀ (f : ℚ → ℚ),   (∀ (a b : ℚ), 0 < a ∧ 0 < b → f (a * b) = f a + f b) → (∀ (p : ℕ), Nat.Prime p → f ↑p = ↑p) → f (25 / 11) < 0",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f : ℚ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (f : ℚ → ℚ'"
+ },
+ "seconds": 18.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619424
+}

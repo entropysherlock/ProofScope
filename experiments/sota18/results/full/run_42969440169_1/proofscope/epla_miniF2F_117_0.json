@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:117:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.1,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 10.0,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Real.sqrt",
+     "type": "ℝ → ℝ"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y : ℝ), (x + y) / 2 = 7 → √(x * y) = √19 → x ^ 2 + y ^ 2 = 158",
+ "lean": "∀ (x y : ℝ), (x + y) / 2 = 7 → √(x * y) = √19 → x ^ 2 + y ^ 2 = 158",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y : ℝ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (x y : ℝ),'"
+ },
+ "seconds": 24.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618744
+}

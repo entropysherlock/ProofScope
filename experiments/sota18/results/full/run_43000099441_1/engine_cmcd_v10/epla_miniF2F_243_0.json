@@ -1,0 +1,96 @@
+{
+ "id": "epla_miniF2F_243_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 0 < n → Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "lean": "∀ {n : ℕ}, Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℕ) < n",
+   "to": "Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ))"
+  },
+  {
+   "from": "Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n",
+   "to": "Nat.Prime n"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℕ) < n",
+   "to": "Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ))",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_243_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ (n : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ (n : ℕ), (0 : ℕ) < n → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n",
+   "to": "Nat.Prime n",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_243_0.fwd_e2",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ (n : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ (n : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_243_0.bwd_e2",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ (n : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ (n : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_243_0.bwd_g",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ (n : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ (n : ℕ), (0 : ℕ) < n → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

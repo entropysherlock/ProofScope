@@ -1,0 +1,19 @@
+{
+ "case_id": "epla:miniF2F:306:0",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.5
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "ref",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_306_0/print.lean:13:14: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_306_0/print.lean:22:51: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_306_0/print.lean:27:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_306_0/print.lean:33:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 7618716
+}

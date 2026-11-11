@@ -1,0 +1,36 @@
+{
+ "case_id": "pnv:test:0605:Dummit-Foote|exercise_9_4_9",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.3
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0605_Dummit_Foote_exercise_9_4_9/check.lean:26:11: error: don't know how to synthesize implicit argument",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0605_Dummit_Foote_exercise_9_4_9/check.lean:26:11: error: don't know how to synthesize implicit argument `M`",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0605_Dummit_Foote_exercise_9_4_9/check.lean:26:24: error: don't know how to synthesize implicit argument `self`",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0605_Dummit_Foote_exercise_9_4_9/check.lean:26:24: error: don't know how to synthesize implicit argument `γ`",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0605_Dummit_Foote_exercise_9_4_9/check.lean:26:24: error: don't know how to synthesize implicit argument `β`",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0605_Dummit_Foote_exercise_9_4_9/check.lean:26:24: error: don't know how to synthesize implicit argument `α`"
+ ],
+ "children_maxrss_kb_so_far": 8635668
+}

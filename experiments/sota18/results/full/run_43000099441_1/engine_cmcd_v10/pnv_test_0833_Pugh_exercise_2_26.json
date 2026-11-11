@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0833_Pugh_exercise_2_26",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M), IsOpen U ↔ ∀ x ∈ U, ¬ClusterPt x (Filter.principal Uᶜ)",
+ "lean": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M),   IsOpen U ↔ ∀ x ∈ U, ∀ (V : Set M), IsOpen V → x ∈ V → V ∩ Uᶜ = ∅",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0833_Pugh_exercise_2_26/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0833_Pugh_exercise_2_26/extract/Drift_input.lean:4:146: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0833_Pugh_exercise_2_26/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

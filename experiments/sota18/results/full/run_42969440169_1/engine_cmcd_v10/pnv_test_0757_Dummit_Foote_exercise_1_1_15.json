@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0757_Dummit_Foote_exercise_1_1_15",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Group G] (as : List G), as.prod⁻¹ = (List.map (fun (x : G) => x⁻¹) as.reverse).prod",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {n : ℕ} (l : List G),   l.length = n → l.prod⁻¹ = (List.map (Equiv.inv G).toFun l).reverse.prod",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0757_Dummit_Foote_exercise_1_1_15/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0757_Dummit_Foote_exercise_1_1_15/extract/Drift_input.lean:4:142: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0757_Dummit_Foote_exercise_1_1_15/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

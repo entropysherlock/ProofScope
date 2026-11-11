@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_580_0",
+ "reference": "∀ (x : ℝ),   0 < x →     x ^ 2 - 10 * x - 29 ≠ 0 →       x ^ 2 - 10 * x - 45 ≠ 0 →         x ^ 2 - 10 * x - 69 ≠ 0 →           1 / (x ^ 2 - 10 * x - 29) + 1 / (x ^ 2 - 10 * x - 45) - 2 / (x ^ 2 - 10 * x - 69) = 0 → x = 13",
+ "lean": "∃ (x : ℝ), 0 < x ∧ 1 / (x ^ 2 - 10 * x - 29) + 1 / (x ^ 2 - 10 * x - 45) - 2 / (x ^ 2 - 10 * x - 69) = 0 ∧ x = 13",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ (x : ℝ),\n  (0 : ℝ) < x ∧\n    (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ)) + (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ)) -\n          (2 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ)) =\n        (0 : ℝ) ∧\n      x = (13 : ℝ)",
+  "conclusion_ref": "∀ (x : ℝ),\n  (0 : ℝ) < x →\n    x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ) ≠ (0 : ℝ) →\n      x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ) ≠ (0 : ℝ) →\n        x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ) ≠ (0 : ℝ) →\n          (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ)) + (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ)) -\n                (2 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ)) =\n              (0 : ℝ) →\n            x = (13 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,66 @@
+{
+ "id": "epla_ProofNet_181_0",
+ "reference": "∀ {f : ℝ → ℝ},   Differentiable ℝ f →     Filter.Tendsto (deriv f) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop Filter.atTop",
+ "lean": "∀ (f : ℝ → ℝ),   (∀ x > 0, DifferentiableAt ℝ f x) →     Filter.Tendsto (deriv f) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop (nhds 0)",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "∀ x > (0 : ℝ), DifferentiableAt ℝ f x"
+   },
+   {
+    "dependent": false,
+    "prop": "Filter.Tendsto (deriv f) Filter.atTop (nhds (0 : ℝ))"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "Filter.Tendsto (fun (x : ℝ) => f (x + (1 : ℝ)) - f x) Filter.atTop (nhds (0 : ℝ))",
+  "conclusion_ref": "Filter.Tendsto (β := ℝ) (fun (x : ℝ) => f (x + (1 : ℝ)) - f x) Filter.atTop Filter.atTop",
+  "conclusion_same": false,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "Differentiable ℝ f"
+   },
+   {
+    "dependent": false,
+    "prop": "Filter.Tendsto (deriv f) Filter.atTop (nhds (0 : ℝ))"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "verdict": "INCONCLUSIVE",
+ "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:1095:Rudin|exercise_1_18b",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.5,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1095_Rudin_exercise_1_18b/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ), x ≠ 0 → ¬∃ (y : ℝ), y ≠ 0 ∧ x * y = 0",
+ "lean": "∀ {k : ℕ} {x : Fin k → ℝ}, ∑ a : Fin k, x a = 0 → ¬∃ (y : Fin k → ℝ), y ≠ 0 ∧ ∑ a : Fin k, x a * y a = 0",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ), x'",
+  "cand": "unsupported: cannot tokenize at '∀ {k : ℕ} {x'"
+ },
+ "seconds": 17.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7794340
+}

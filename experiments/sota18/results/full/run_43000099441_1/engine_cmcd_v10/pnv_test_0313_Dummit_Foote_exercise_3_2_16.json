@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_0313_Dummit_Foote_exercise_3_2_16",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (p : ℕ), Nat.Prime p → ∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+ "lean": "∀ {p : ℕ}, Nat.Prime p → ∀ (a : ℕ), a ^ p % p = a % p",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+   "to": "∀ (a : ℕ), a ^ p % p = a % p"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+   "to": "∀ (a : ℕ), a ^ p % p = a % p",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,57 @@
+{
+ "case_id": "epla:ProofNet:122:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 6.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_122_0/extract/Assumptions_input.lean:4:166: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_122_0/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 11.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ProofNet_122_0/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_122_0/extract/Drift_input.lean:4:158: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_122_0/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] (H K : Subgroup G),   H ≤ K → ∀ [hHK1 : (H.subgroupOf K).Normal] [hK : K.Normal], H.Normal",
+ "lean": "∀ {G : Type u_1} [inst : Group G] (H K : Subgroup G), H ≤ K → K.Normal → H.Normal",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 26.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7616792
+}

@@ -1,0 +1,70 @@
+{
+ "case_id": "pnv:test:1386:Artin|exercise_2_3_2",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.5,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 23.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] (a b : G), ∃ (g : G), b * a = g * a * b * g⁻¹",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {a b : G}, a * b = b * a → ∃ (x : G), x * a * x⁻¹ = b",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 34.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619128
+}

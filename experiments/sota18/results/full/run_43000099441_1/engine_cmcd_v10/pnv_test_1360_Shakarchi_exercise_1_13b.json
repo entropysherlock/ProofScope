@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1360_Shakarchi_exercise_1_13b",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℂ → ℂ} (Ω : Set ℂ) (a b : ↑Ω),   IsOpen Ω → DifferentiableOn ℂ f Ω → (∃ (c : ℝ), ∀ z ∈ Ω, (f z).im = c) → f ↑a = f ↑b",
+ "lean": "∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℂ E] {U : Set E},   IsOpen U → ∀ {f : E → ℂ}, AnalyticOn ℂ f U → (∀ z ∈ U, f z = f z) → ∀ z ∈ U, f z = f 0",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1360_Shakarchi_exercise_1_13b/extract/Drift_input.lean:4:158: error: unknown universe level `u_1`\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

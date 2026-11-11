@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_347_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (y : ℝ), y + 6 + y = 2 * 12 → y = 9",
+ "lean": "∀ (y : ℕ), y + 6 = 12 → y = 9",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (y : ℝ), y + (6 : ℝ) + y = (2 : ℝ) * (12 : ℝ) → y = (9 : ℝ)",
+   "to": "∀ (y : ℕ), y + (6 : ℕ) = (12 : ℕ) → y = (9 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

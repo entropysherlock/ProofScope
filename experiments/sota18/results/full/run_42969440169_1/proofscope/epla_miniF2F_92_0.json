@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:92:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.1,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 10.1,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : ℝ), a ^ 2 + b ^ 2 = 1 → a * b + (a - b) ≤ 1",
+ "lean": "∀ (a b : ℝ), a ^ 2 + b ^ 2 = 1 → a * b + (a - b) ≤ 1",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : ℝ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b : ℝ),'"
+ },
+ "seconds": 25.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8671168
+}

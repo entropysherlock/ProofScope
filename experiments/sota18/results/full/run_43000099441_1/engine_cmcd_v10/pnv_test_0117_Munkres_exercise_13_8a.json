@@ -1,0 +1,90 @@
+{
+ "id": "pnv_test_0117_Munkres_exercise_13_8a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+ "lean": "∀ (S : Set (Set ℝ)),   S = {s : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | ↑a < x ∧ x < ↑b}} → TopologicalSpace.IsTopologicalBasis S",
+ "symbols": [
+  {
+   "symbol": "TopologicalSpace.IsTopologicalBasis",
+   "type": "Set (Set ℝ) → Prop"
+  },
+  {
+   "symbol": "Set.ofPred",
+   "type": "(Set ℝ → Prop) → Set (Set ℝ)"
+  },
+  {
+   "symbol": "Rat.cast",
+   "type": "ℚ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+   "to": "∀ (S : Set (Set ℝ)),\n  S = {s : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | ↑a < x ∧ x < ↑b}} → TopologicalSpace.IsTopologicalBasis S"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+   "to": "∀ (S : Set (Set ℝ)),\n  S = {s : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | ↑a < x ∧ x < ↑b}} → TopologicalSpace.IsTopologicalBasis S",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0117_Munkres_exercise_13_8a.fwd_e1",
+     "statement": "∀ (x1 : Set (Set ℝ) → Prop) (x2 : (Set ℝ → Prop) → Set (Set ℝ)) (x3 : ℚ → ℝ), (x1 (x2 fun (S : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo (x3 a) (x3 b))) → (∀ (S : Set (Set ℝ)), (S = x2 fun (s : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | x3 a < x ∧ x < x3 b}) → x1 S)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0117_Munkres_exercise_13_8a.bwd_e1",
+     "statement": "∀ (x1 : Set (Set ℝ) → Prop) (x2 : (Set ℝ → Prop) → Set (Set ℝ)) (x3 : ℚ → ℝ), (∀ (S : Set (Set ℝ)), (S = x2 fun (s : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | x3 a < x ∧ x < x3 b}) → x1 S) → (x1 (x2 fun (S : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo (x3 a) (x3 b)))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_pnv_test_0117_Munkres_exercise_13_8a.fwd_e1",
+   "statement": "∀ (x1 : Set (Set ℝ) → Prop) (x2 : (Set ℝ → Prop) → Set (Set ℝ)) (x3 : ℚ → ℝ), (x1 (x2 fun (S : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo (x3 a) (x3 b))) → (∀ (S : Set (Set ℝ)), (S = x2 fun (s : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | x3 a < x ∧ x < x3 b}) → x1 S)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_pnv_test_0117_Munkres_exercise_13_8a.bwd_e1",
+   "statement": "∀ (x1 : Set (Set ℝ) → Prop) (x2 : (Set ℝ → Prop) → Set (Set ℝ)) (x3 : ℚ → ℝ), (∀ (S : Set (Set ℝ)), (S = x2 fun (s : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | x3 a < x ∧ x < x3 b}) → x1 S) → (x1 (x2 fun (S : Set ℝ) => ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo (x3 a) (x3 b)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,13 @@
+{
+ "id": "epla_ProofNet_254_0",
+ "reference": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [inst_2 : LinearOrder Y]   [OrderTopology Y] {f g : X → Y}, Continuous f → Continuous g → IsClosed {x : X | f x ≤ g x}",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] {Y : Type u_2} [inst_1 : LinearOrder Y] [inst_2 : TopologicalSpace Y]   [OrderTopology Y] (f g : X → Y), Continuous f → Continuous g → IsClosed {x : X | f x ≤ g x}",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/ps/engine_adelta12/work/epla_ProofNet_254_0/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_254_0/extract/Assumptions_input.lean:4:54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_254_0/extract/Assumptions_input.lean:4:250: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_254_0/extract/Assumptions_input.lean:4:293: error: unknown universe level `u_2`\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

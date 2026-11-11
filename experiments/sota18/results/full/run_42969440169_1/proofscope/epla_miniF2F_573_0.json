@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:573:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_573_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #0\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y z : ℝ) (a : ℕ → ℝ),   0 < a 0 ∧ 0 < a 4 ∧ 0 < a 8 →     a 1 < 0 ∧ a 2 < 0 →       a 3 < 0 ∧ a 5 < 0 →         a 6 < 0 ∧ a 7 < 0 →           0 < a 0 + a 1 + a 2 →             0 < a 3 + a 4 + a 5 →               0 < a 6 + a 7 + a 8 →                 a 0 * x + a 1 * y + a 2 * z = 0 →                   a 3 * x + a 4 * y + a 5 * z = 0 → a 6 * x + a 7 * y + a 8 * z = 0 → x = 0 ∧ y = 0 ∧ z = 0",
+ "lean": "∀ (a11 a22 a33 a12 a13 a21 a23 a31 a32 : ℝ),   a11 > 0 →     a22 > 0 →       a33 > 0 →         a12 < 0 →           a13 < 0 →             a21 < 0 →               a23 < 0 →                 a31 < 0 →                   a32 < 0 →                     a11 + a12 + a13 > 0 →                       a21 + a22 + a23 > 0 →                         a31 + a32 + a33 > 0 →                           ∀ (x1 x2 x3 : ℝ),                             a11 * x1 + a12 * x2 + a13 * x3 = 0 →                               a21 * x1 + a22 * x2 + a23 * x3 = 0 →                                 a31 * x1 + a32 * x2 + a33 * x3 = 0 → x1 = 0 ∧ x2 = 0 ∧ x3 = 0",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y z : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a11 a22 a'"
+ },
+ "seconds": 19.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8670820
+}

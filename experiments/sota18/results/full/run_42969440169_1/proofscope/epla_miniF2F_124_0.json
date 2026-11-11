@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:124:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_124_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a d : ℝ), a + 6 * d = 30 → a + 10 * d = 60 → a + 20 * d = 135",
+ "lean": "∀ (a : ℕ → ℚ), (∃ (d : ℚ), ∀ (n : ℕ), a (n + 1) = a n + d) → a 7 = 30 → a 11 = 60 → a 21 = 135",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a d : ℝ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (a : ℕ → ℚ'"
+ },
+ "seconds": 21.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618844
+}

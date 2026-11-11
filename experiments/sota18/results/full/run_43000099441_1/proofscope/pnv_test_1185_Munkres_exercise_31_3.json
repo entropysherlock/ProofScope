@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:1185:Munkres|exercise_31_3",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ": error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1185_Munkres_exercise_31_3/extract/Assumptions_input.lean:4:146: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1185_Munkres_exercise_31_3/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ut.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1185_Munkres_exercise_31_3/extract/Drift_input.lean:4:138: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1185_Munkres_exercise_31_3/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {α : Type u_1} [inst : PartialOrder α] [inst_1 : TopologicalSpace α], OrderTopology α → RegularSpace α",
+ "lean": "∀ (α : Type u_1) [inst : PartialOrder α] [inst_1 : TopologicalSpace α] [OrderTopology α], RegularSpace α",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {α : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ (α : Type '"
+ },
+ "seconds": 19.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8627320
+}

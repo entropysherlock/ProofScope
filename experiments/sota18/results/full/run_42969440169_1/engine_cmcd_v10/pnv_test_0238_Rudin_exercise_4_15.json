@@ -1,0 +1,86 @@
+{
+ "id": "pnv_test_0238_Rudin_exercise_4_15",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℝ → ℝ}, Continuous f → IsOpenMap f → Monotone f",
+ "lean": "∀ {f : ℝ → ℝ}, Continuous f → (∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)) → Monotone f",
+ "symbols": [
+  {
+   "symbol": "Continuous",
+   "type": "(ℝ → ℝ) → Prop"
+  },
+  {
+   "symbol": "Monotone",
+   "type": "(ℝ → ℝ) → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "IsOpenMap f",
+   "to": "∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "IsOpenMap f",
+   "to": "∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0238_Rudin_exercise_4_15.fwd_e1",
+     "statement": "∀ (x1 : (ℝ → ℝ) → Prop) (x2 : (ℝ → ℝ) → Prop), (∀ {f : ℝ → ℝ}, x1 f → IsOpenMap f → x2 f) → (∀ {f : ℝ → ℝ}, x1 f → (∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)) → x2 f)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0238_Rudin_exercise_4_15.bwd_e1",
+     "statement": "∀ (x1 : (ℝ → ℝ) → Prop) (x2 : (ℝ → ℝ) → Prop), (∀ {f : ℝ → ℝ}, x1 f → (∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)) → x2 f) → (∀ {f : ℝ → ℝ}, x1 f → IsOpenMap f → x2 f)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_pnv_test_0238_Rudin_exercise_4_15.fwd_e1",
+   "statement": "∀ (x1 : (ℝ → ℝ) → Prop) (x2 : (ℝ → ℝ) → Prop), (∀ {f : ℝ → ℝ}, x1 f → IsOpenMap f → x2 f) → (∀ {f : ℝ → ℝ}, x1 f → (∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)) → x2 f)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_pnv_test_0238_Rudin_exercise_4_15.bwd_e1",
+   "statement": "∀ (x1 : (ℝ → ℝ) → Prop) (x2 : (ℝ → ℝ) → Prop), (∀ {f : ℝ → ℝ}, x1 f → (∀ (U : Set ℝ), IsOpen U → IsOpen (f '' U)) → x2 f) → (∀ {f : ℝ → ℝ}, x1 f → IsOpenMap f → x2 f)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,5 @@
+leanprover/lean4:v4.30.0-rc1
+f92767000e14d11744580946980cf874324f5d19
+4
+               total        used        free      shared  buff/cache   available
+Mem:              15           1           2           0          11          14

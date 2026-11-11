@@ -1,0 +1,60 @@
+{
+ "id": "pnv_test_0104_Rudin_exercise_1_14",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (z : ℂ), sorry = 1 → sorry ^ 2 + sorry ^ 2 = 4",
+ "lean": "∀ (z : ℂ), sorry = 1 → sorry ^ 2 + sorry ^ 2 = 4",
+ "symbols": [
+  {
+   "symbol": "sorryAx",
+   "type": "(α : Type) → Bool → α"
+  },
+  {
+   "symbol": "Lean.Name.num",
+   "type": "Lean.Name → ℕ → Lean.Name"
+  },
+  {
+   "symbol": "Lean.Name.str",
+   "type": "Lean.Name → String → Lean.Name"
+  }
+ ],
+ "edits": [
+  {
+   "from": "`Drift_input.4.30.4.35.30.35._sorry._@.Drift_input.3362258789._hygCtx._hyg.15",
+   "to": "`Drift_input.4.81.4.86.81.86._sorry._@.Drift_input.3362258789._hygCtx._hyg.42"
+  },
+  {
+   "from": "sorry ^ (2 : ℕ) + sorry ^ (2 : ℕ)",
+   "to": "sorry ^ (2 : ℕ) + sorry ^ (2 : ℕ)"
+  }
+ ],
+ "symbols_truncated": true,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "`Drift_input.4.30.4.35.30.35._sorry._@.Drift_input.3362258789._hygCtx._hyg.15",
+   "to": "`Drift_input.4.81.4.86.81.86._sorry._@.Drift_input.3362258789._hygCtx._hyg.42",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 2,
+   "from": "sorry ^ (2 : ℕ) + sorry ^ (2 : ℕ)",
+   "to": "sorry ^ (2 : ℕ) + sorry ^ (2 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

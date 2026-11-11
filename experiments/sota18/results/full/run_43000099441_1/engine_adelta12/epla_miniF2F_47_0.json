@@ -1,0 +1,107 @@
+{
+ "id": "epla_miniF2F_47_0",
+ "reference": "∀ n ≤ 9, 11 ∣ 20 * 100 + 10 * n + 7 → n = 5",
+ "lean": "∀ d < 10, 11 ∣ 2000 + 10 * d + 7 → d = 5",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "n < (10 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "(11 : ℕ) ∣ (2000 : ℕ) + (10 : ℕ) * n + (7 : ℕ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "n = (5 : ℕ)",
+  "conclusion_ref": "n = (5 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "n ≤ (9 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "(11 : ℕ) ∣ (20 : ℕ) * (100 : ℕ) + (10 : ℕ) * n + (7 : ℕ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_47_0.a_implies_d",
+   "statement": "∀ (n : ℕ), ((n < (10 : ℕ)) ∧ ((11 : ℕ) ∣ (2000 : ℕ) + (10 : ℕ) * n + (7 : ℕ))) → (n ≤ (9 : ℕ)) ∧ ((11 : ℕ) ∣ (20 : ℕ) * (100 : ℕ) + (10 : ℕ) * n + (7 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_47_0.link_R",
+   "statement": "(∀ n ≤ 9, 11 ∣ 20 * 100 + 10 * n + 7 → n = 5) ↔ (∀ (n : ℕ), (n ≤ (9 : ℕ)) → ((11 : ℕ) ∣ (20 : ℕ) * (100 : ℕ) + (10 : ℕ) * n + (7 : ℕ)) → n = (5 : ℕ))",
+   "axioms": []
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_47_0.d_implies_a",
+   "statement": "∀ (n : ℕ), ((n ≤ (9 : ℕ)) ∧ ((11 : ℕ) ∣ (20 : ℕ) * (100 : ℕ) + (10 : ℕ) * n + (7 : ℕ))) → (n < (10 : ℕ)) ∧ ((11 : ℕ) ∣ (2000 : ℕ) + (10 : ℕ) * n + (7 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_47_0.link_L",
+   "statement": "(∀ d < 10, 11 ∣ 2000 + 10 * d + 7 → d = 5) ↔ (∀ (n : ℕ), (n < (10 : ℕ)) → ((11 : ℕ) ∣ (2000 : ℕ) + (10 : ℕ) * n + (7 : ℕ)) → n = (5 : ℕ))",
+   "axioms": []
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "n < (10 : ℕ)",
+  "(11 : ℕ) ∣ (2000 : ℕ) + (10 : ℕ) * n + (7 : ℕ)"
+ ],
+ "dropped": [
+  "n ≤ (9 : ℕ)",
+  "(11 : ℕ) ∣ (20 : ℕ) * (100 : ℕ) + (10 : ℕ) * n + (7 : ℕ)"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,30 @@
+{
+ "case_id": "pnv:test:1144:Ireland-Rosen|exercise_4_6",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 2.8
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1144_Ireland_Rosen_exercise_4_6/check.lean:26:120: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1144_Ireland_Rosen_exercise_4_6/check.lean:28:190: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 7652960
+}

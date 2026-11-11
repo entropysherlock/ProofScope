@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1102_Shakarchi_exercise_1_13b",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℂ → ℂ} (Ω : Set ℂ) (a b : ↑Ω),   IsOpen Ω → DifferentiableOn ℂ f Ω → (∃ (c : ℝ), ∀ z ∈ Ω, (f z).im = c) → f ↑a = f ↑b",
+ "lean": "∀ {Ω : Set ℂ}, IsOpen Ω → ∀ {f : ℂ → ℂ}, AnalyticOn ℂ f Ω → (∀ z ∈ Ω, (f z).im = (f 0).im) → ∀ z ∈ Ω, f z = f 0",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1102_Shakarchi_exercise_1_13b/extract/Drift_input.lean:4:0: error: unexpected bound variable #8\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

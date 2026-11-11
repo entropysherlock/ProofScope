@@ -1,0 +1,57 @@
+{
+ "case_id": "epla:miniF2F:425:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 33.7,
+   "verdict": "LEAN_STRONGER_BY_ASSUMPTION",
+   "reason": "",
+   "certificates": [
+    "drop0_restrictive",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.5,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ), 0 < n → (21 * n + 4).gcd (14 * n + 3) = 1",
+ "lean": "∀ (n : ℕ), (21 * n + 4).Coprime (14 * n + 3)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ), 0'",
+  "cand": "unsupported: cannot tokenize at '∀ (n : ℕ), ('"
+ },
+ "seconds": 50.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618140
+}

@@ -1,0 +1,69 @@
+{
+ "case_id": "epla:miniF2F:19:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 87.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 34.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    },
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.sqrt",
+     "type": "ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ) (a b c : ℕ),   0 < a ∧ 0 < b ∧ 0 < c ∧ 0 ≤ x → 2 * x ^ 2 = 4 * x + 9 → x = (↑a + √↑b) / ↑c → c = 2 → a + b + c = 26",
+ "lean": "∀ (x : ℝ),   0 < x →     2 * x ^ 2 = 4 * x + 9 → ∀ (a b c : ℕ), 0 < a → 0 < b → 0 < c → Squarefree b → x = (↑a + √↑b) / ↑c → a + b + c = 26",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ) (a'",
+  "cand": "unsupported: cannot tokenize at '∀ (x : ℝ),  '"
+ },
+ "seconds": 128.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8657000
+}

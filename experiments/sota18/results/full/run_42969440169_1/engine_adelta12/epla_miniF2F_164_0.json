@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_164_0",
+ "reference": "(Complex.I / 2) ^ 2 = -(1 / 4)",
+ "lean": "(Complex.I / 2) ^ 2 = -(1 / 4)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(Complex.I / (2 : ℂ)) ^ (2 : ℕ) = -(1 / 4 : ℂ)",
+  "conclusion_ref": "(Complex.I / (2 : ℂ)) ^ (2 : ℕ) = -(1 / 4 : ℂ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

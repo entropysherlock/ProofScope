@@ -1,0 +1,62 @@
+{
+ "case_id": "pnv:test:0807:Ireland-Rosen|exercise_3_10",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 22.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.ModEq",
+     "type": "ℕ → ℕ → ℕ → Prop"
+    },
+    {
+     "symbol": "Nat.factorial",
+     "type": "ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 1,
+  "cand": 0
+ },
+ "reference": "∀ {n : ℕ+},   ¬n.Prime →     ((n.val - OfNat.ofNat (nat_lit 1)).factorial ≡ OfNat.ofNat (nat_lit 0) [MOD n.val] ↔ n ≠ OfNat.ofNat (nat_lit 4))",
+ "lean": "∀ {n : ℕ}, ¬Nat.Prime n → n.factorial ≡ 0 [MOD n]",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {n : ℕ+}, '",
+  "cand": "unsupported: cannot tokenize at '∀ {n : ℕ}, ¬'"
+ },
+ "seconds": 32.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7634888
+}

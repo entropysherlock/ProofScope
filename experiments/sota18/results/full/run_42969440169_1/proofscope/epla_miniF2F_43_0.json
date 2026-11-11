@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:43:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.0,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : NNReal), 0 < a ∧ 0 < b → a ^ 2 = 6 * b → a ^ 2 = 54 / b → a = 3 * NNReal.sqrt 2",
+ "lean": "∀ (a b : ℝ), a > 0 → b > 0 → a ^ 2 = 6 * b → a ^ 2 = 1 / b * 54 → a = 3 * √2",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : NNR'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b : ℝ),'"
+ },
+ "seconds": 22.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7651108
+}

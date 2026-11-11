@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:570:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 5.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 35.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.lcm",
+     "type": "ℕ → ℕ → ℕ"
+    },
+    {
+     "symbol": "Nat.gcd",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (b : ℕ), Nat.lcm 120 b = 3720 → Nat.gcd 120 b = 8 → b = 248",
+ "lean": "have a := 120; have lcm_ab := 3720; have gcd_ab := 8; ∃ (b : ℕ), a.lcm b = lcm_ab ∧ a.gcd b = gcd_ab ∧ b = 248",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (b : ℕ), N'",
+  "cand": "unsupported: cannot tokenize at ' := 120; hav'"
+ },
+ "seconds": 50.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618660
+}

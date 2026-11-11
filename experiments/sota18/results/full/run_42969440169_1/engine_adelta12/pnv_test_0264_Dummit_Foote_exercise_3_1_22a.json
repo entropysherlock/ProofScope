@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0264_Dummit_Foote_exercise_3_1_22a",
+ "reference": "∀ (G : Type u_1) [inst : Group G] (H K : Subgroup G) [H.Normal] [K.Normal], (H ⊓ K).Normal",
+ "lean": "∀ {G : Type u_1} [inst : Group G] (H K : Subgroup G) [hH : H.Normal] [hK : K.Normal], (H ⊓ K).Normal",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0264_Dummit_Foote_exercise_3_1_22a/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0264_Dummit_Foote_exercise_3_1_22a/extract/Assumptions_input.lean:4:132: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0264_Dummit_Foote_exercise_3_1_22a/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

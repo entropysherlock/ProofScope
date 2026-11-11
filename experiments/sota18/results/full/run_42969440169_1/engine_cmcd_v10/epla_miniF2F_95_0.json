@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_95_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c : ℝ) (f : ℝ → ℝ),   (∀ (x : ℝ), f x = x ^ 3 + a * x ^ 2 + b * x + c) →     f ⁻¹' {0} = {Real.cos (2 * Real.pi / 7), Real.cos (4 * Real.pi / 7), Real.cos (6 * Real.pi / 7)} →       a * b * c = 1 / 32",
+ "lean": "∀ (a b c : ℝ),   (Polynomial.X ^ 3 + Polynomial.C a * Polynomial.X ^ 2 + Polynomial.C b * Polynomial.X + Polynomial.C c).roots =       {Real.cos (2 * Real.pi / 7), Real.cos (4 * Real.pi / 7), Real.cos (6 * Real.pi / 7)} →     a * b * c = 1 / 32",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_95_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

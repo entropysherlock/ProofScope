@@ -1,0 +1,67 @@
+{
+ "case_id": "epla:miniF2F:237:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 67.4,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 39.1,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.gcd",
+     "type": "ℕ → ℕ → ℕ"
+    },
+    {
+     "symbol": "Nat.lcm",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "lean": "∀ (a b : ℕ), a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : ℕ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b : ℕ),'"
+ },
+ "seconds": 113.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8530552
+}

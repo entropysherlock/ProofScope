@@ -1,0 +1,30 @@
+{
+ "case_id": "epla:miniF2F:28:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.0
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_28_0/check.lean:30:99: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_28_0/check.lean:32:193: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 7618140
+}

@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_537_0",
+ "reference": "∀ (p q : ℕ), Nat.Prime p ∧ Nat.Prime q → 4 ≤ p ∧ p ≤ 18 → 4 ≤ q ∧ q ≤ 18 → p * q - (p + q) ≠ 194",
+ "lean": "∃ (p : ℕ) (q : ℕ), Nat.Prime p ∧ Nat.Prime q ∧ p ≠ q ∧ 4 < p ∧ p < 18 ∧ 4 < q ∧ q < 18 ∧ p * q - (p + q) = 119",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ (p : ℕ) (q : ℕ),\n  Nat.Prime p ∧\n    Nat.Prime q ∧ p ≠ q ∧ (4 : ℕ) < p ∧ p < (18 : ℕ) ∧ (4 : ℕ) < q ∧ q < (18 : ℕ) ∧ p * q - (p + q) = (119 : ℕ)",
+  "conclusion_ref": "∀ (p q : ℕ),\n  Nat.Prime p ∧ Nat.Prime q → (4 : ℕ) ≤ p ∧ p ≤ (18 : ℕ) → (4 : ℕ) ≤ q ∧ q ≤ (18 : ℕ) → p * q - (p + q) ≠ (194 : ℕ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

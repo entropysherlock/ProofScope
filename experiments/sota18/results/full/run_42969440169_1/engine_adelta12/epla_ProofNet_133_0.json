@@ -1,0 +1,13 @@
+{
+ "id": "epla_ProofNet_133_0",
+ "reference": "∀ [inst : TopologicalSpace (Lex (ℝ × ℝ))] [OrderTopology (Lex (ℝ × ℝ))], TopologicalSpace.MetrizableSpace (Lex (ℝ × ℝ))",
+ "lean": "∀ {α : Type u_1} [inst : TopologicalSpace α] [inst_1 : LinearOrder α] [OrderTopology α],   TopologicalSpace.MetrizableSpace α",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_133_0/extract/Assumptions_input.lean:4:161: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_133_0/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

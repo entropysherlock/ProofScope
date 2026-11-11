@@ -1,0 +1,39 @@
+{
+ "id": "epla_miniF2F_783_0",
+ "reference": "∀ (a b : ℝ), a ^ 2 * b ^ 3 = 32 / 27 → a / b ^ 3 = 27 / 4 → a + b = 8 / 3",
+ "lean": "∀ (a b : ℝ), a ^ 2 * b ^ 3 = 32 / 27 → a / b ^ 3 = 27 / 4 → a + b = 8 / 3",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "a + b = (8 / 3 : ℝ)",
+  "conclusion_ref": "a + b = (8 / 3 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "a ^ (2 : ℕ) * b ^ (3 : ℕ) = (32 / 27 : ℝ)",
+   "a / b ^ (3 : ℕ) = (27 / 4 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,20 @@
+epla:ProofNet:151:0 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+epla:ProofNet:342:0 ENGINES_RAN CONCLUSION_ONLY_CHANGE INCONCLUSIVE 21.3 
+epla:miniF2F:125:0 ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 29.3 
+epla:miniF2F:237:0 ENGINES_RAN ASSUMPTION_EQUIVALENT SCHEMA_EQUIVALENT 142.0 
+epla:miniF2F:369:0 ENGINES_RAN ASSUMPTION_EQUIVALENT None 900.2 
+epla:miniF2F:489:0 ENGINES_RAN NO_ASSUMPTION_DELTA IDENTICAL 35.0 
+epla:miniF2F:59:0 NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+epla:miniF2F:753:0 ENGINES_RAN INCONCLUSIVE None 900.1 
+epla:miniF2F:94:0 NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+pnv:test:0115:Ireland-Rosen|exercise_4_6 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:0291:Artin|exercise_10_4_7a ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 31.6 
+pnv:test:0369:Artin|exercise_13_6_10 NON_ELABORATING None None None declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1
+pnv:test:0474:Dummit-Foote|exercise_9_4_2a UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:0640:Ireland-Rosen|exercise_4_11 ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 47.2 
+pnv:test:0772:Munkres|exercise_18_8a ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 18.1 
+pnv:test:0890:Dummit-Foote|exercise_3_1_22a ENGINES_RAN INCONCLUSIVE INCONCLUSIVE 17.8 
+pnv:test:1049:Dummit-Foote|exercise_9_4_9 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:1163:Dummit-Foote|exercise_7_4_27 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:1272:Dummit-Foote|exercise_9_4_2c UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)
+pnv:test:1416:Munkres|exercise_29_4 UNSUPPORTED_INPUT None None None printed statement does not round-trip (adapter limitation)

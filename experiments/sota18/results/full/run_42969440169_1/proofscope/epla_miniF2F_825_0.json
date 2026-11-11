@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:825:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 29.4,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → (∃ k > 0, 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1",
+ "lean": "∀ (a b k : ℕ), 0 < a → 0 < b → 0 < k → 2 ^ k = (a + b ^ 2) * (b + a ^ 2) → a = 1",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : ℕ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b k : ℕ'"
+ },
+ "seconds": 42.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8139816
+}

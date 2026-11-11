@@ -1,0 +1,36 @@
+{
+ "case_id": "pnv:test:1437:Herstein|exercise_2_3_16",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.8
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1437_Herstein_exercise_2_3_16/check.lean:23:104: error(lean.unknownIdentifier): Unknown constant `FiniteDimensional.finrank`",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1437_Herstein_exercise_2_3_16/check.lean:31:154: error(lean.invalidField): Invalid field notation: Type of",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1437_Herstein_exercise_2_3_16/check.lean:33:176: error(lean.invalidField): Invalid field notation: Type of"
+ ],
+ "children_maxrss_kb_so_far": 8980648
+}

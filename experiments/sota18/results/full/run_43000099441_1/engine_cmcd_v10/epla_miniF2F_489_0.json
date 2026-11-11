@@ -1,0 +1,18 @@
+{
+ "id": "epla_miniF2F_489_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ), 3 * x + y = 17 → 5 * y + z = 14 → 3 * x + 5 * z = 41 → x + y + z = 12",
+ "lean": "∀ (x y z : ℝ), 3 * x + y = 17 → 5 * y + z = 14 → 3 * x + 5 * z = 41 → x + y + z = 12",
+ "symbols": [],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

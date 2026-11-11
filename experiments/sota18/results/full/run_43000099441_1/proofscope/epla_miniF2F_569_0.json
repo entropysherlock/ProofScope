@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:569:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.7,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 25.2,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Odd",
+     "type": "ℤ → Prop"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℤ → ℕ → ℤ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a : ℤ) (b : ℕ), Odd a → 4 ∣ b → (a ^ 2 + ↑b ^ 2) % 8 = 1",
+ "lean": "∀ (a : ℤ) (b : ℕ), Odd a → 4 ∣ b → a ^ 2 + ↑b ^ 2 ≡ 1 [ZMOD 8]",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a : ℤ) (b'",
+  "cand": "unsupported: cannot tokenize at '∀ (a : ℤ) (b'"
+ },
+ "seconds": 36.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11729952
+}

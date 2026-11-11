@@ -1,0 +1,32 @@
+{
+"provenance": {
+ "pnv_dataset": "PAug/ProofNetVerif",
+ "pnv_revision": "91183e5b12d64374827bf2782db629b5b0f8f319",
+ "pnv_license": "mit",
+ "semanteq_labels": "hlxr89/SemantEq@f92767000e14 test/pnv_test_adjudicated_labels.jsonl",
+ "epla": "XiaoyangLiu-sjtu/ASSESS@bc7933547d8a benchmark/EPLA-*.json (compiler_check == success)"
+},
+"population": {
+ "PNV_test_rows": 1452,
+ "PNV_rows_with_G2": 1303,
+ "EPLA_rows": 1247,
+ "signature_unparsed": 8,
+ "track_b_qualifying": {
+  "B1": 321,
+  "B2": 0,
+  "by_source": {
+   "PNV": 146,
+   "EPLA": 175
+  }
+ },
+ "track_b_scarce": false
+},
+"seeds": {
+ "A_PNV": 20261118,
+ "A_EPLA": 20261119,
+ "B": 20261120
+},
+"cases_sha256": "a90f00aed36ba677fe6ddc354dc710dff6c6ed6615732e884522c24755936817",
+"population_sha256": "918dfe33f5727cd3614f51dcfc1013ac59ee1c7168a33b5c3357d8af94d87fa3"
+}
+track A 300 track B 200 union 477

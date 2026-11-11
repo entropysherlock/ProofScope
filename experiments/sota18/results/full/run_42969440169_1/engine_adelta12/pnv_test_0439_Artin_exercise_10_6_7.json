@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0439_Artin_exercise_10_6_7",
+ "reference": "∀ {I : Ideal GaussianInt}, I ≠ ⊥ → ∃ (z : ↥I), z ≠ OfNat.ofNat (nat_lit 0) ∧ z.val.im = OfNat.ofNat (nat_lit 0)",
+ "lean": "∀ {I : Ideal ℤ}, I ≠ ⊥ → ∃ (n : ℤ), n ≠ 0 ∧ n ∈ I",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ {I : Ideal ℤ}, I ≠ ⊥ → ∃ (n : ℤ), n ≠ (0 : ℤ) ∧ n ∈ I",
+  "conclusion_ref": "∀ {I : Ideal GaussianInt}, I ≠ ⊥ → ∃ (z : ↥I), z ≠ (0 : ↥I) ∧ Zsqrtd.im ↑z = (0 : ℤ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

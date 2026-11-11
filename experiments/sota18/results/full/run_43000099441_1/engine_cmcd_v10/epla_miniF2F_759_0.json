@@ -1,0 +1,66 @@
+{
+ "id": "epla_miniF2F_759_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : NNReal), √(60 * ↑x) * √(12 * ↑x) * √(63 * ↑x) = 36 * ↑x * √(35 * ↑x)",
+ "lean": "∀ x ≥ 0, √(60 * x) * √(12 * x) * √(63 * x) = 36 * x * √(35 * x)",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "Real.sqrt",
+   "type": "ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (x : NNReal), √((60 : ℝ) * ↑x) * √((12 : ℝ) * ↑x) * √((63 : ℝ) * ↑x) = (36 : ℝ) * ↑x * √((35 : ℝ) * ↑x)",
+   "to": "∀ x ≥ (0 : ℝ), √((60 : ℝ) * x) * √((12 : ℝ) * x) * √((63 : ℝ) * x) = (36 : ℝ) * x * √((35 : ℝ) * x)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (x : NNReal), √((60 : ℝ) * ↑x) * √((12 : ℝ) * ↑x) * √((63 : ℝ) * ↑x) = (36 : ℝ) * ↑x * √((35 : ℝ) * ↑x)",
+   "to": "∀ x ≥ (0 : ℝ), √((60 : ℝ) * x) * √((12 : ℝ) * x) * √((63 : ℝ) * x) = (36 : ℝ) * x * √((35 : ℝ) * x)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_759_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ x ≥ (0 : ℝ),\n  x1 (x1 (x2 ((60 : ℝ) * x)) (x2 ((12 : ℝ) * x))) (x2 ((63 : ℝ) * x)) = x1 ((36 : ℝ) * x) (x2 ((35 : ℝ) * x))) → (∀ (x : NNReal),\n  x1 (x1 (x2 ((60 : ℝ) * ↑x)) (x2 ((12 : ℝ) * ↑x))) (x2 ((63 : ℝ) * ↑x)) = x1 ((36 : ℝ) * ↑x) (x2 ((35 : ℝ) * ↑x)))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_759_0.bwd_e1",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ x ≥ (0 : ℝ),\n  x1 (x1 (x2 ((60 : ℝ) * x)) (x2 ((12 : ℝ) * x))) (x2 ((63 : ℝ) * x)) = x1 ((36 : ℝ) * x) (x2 ((35 : ℝ) * x))) → (∀ (x : NNReal),\n  x1 (x1 (x2 ((60 : ℝ) * ↑x)) (x2 ((12 : ℝ) * ↑x))) (x2 ((63 : ℝ) * ↑x)) = x1 ((36 : ℝ) * ↑x) (x2 ((35 : ℝ) * ↑x)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

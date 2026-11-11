@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1219_Putnam_exercise_1999_b4",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℝ → ℝ),   ContDiff ℝ 3 f →     (∀ n ≤ 3, ∀ (x : ℝ), iteratedDeriv n f x > 0) →       (∀ (x : ℝ), iteratedDeriv 3 f x ≤ f x) → ∀ (x : ℝ), deriv f x < 2 * f x",
+ "lean": "∀ {f : ℝ → ℝ},   (∀ (x : ℝ), 0 ≤ f x) →     (∀ (x : ℝ), 0 < deriv f x) →       Continuous (deriv^[2] f) → (∀ (x : ℝ), deriv^[3] f x ≤ f x) → ∀ (x : ℝ), deriv f x < 2 * f x",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1219_Putnam_exercise_1999_b4/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

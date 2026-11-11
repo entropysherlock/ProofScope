@@ -1,0 +1,129 @@
+{
+ "id": "epla_miniF2F_333_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℝ), 0 < a ∧ 0 < b → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5",
+ "lean": "∀ (a b : ℝ), a ≠ b → a > 0 ∧ b > 0 → a - 1 = 1 / a → b - 1 = 1 / b → a + b = √5",
+ "symbols": [
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "Real.sqrt",
+   "type": "ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+   "to": "a ≠ b"
+  },
+  {
+   "from": "a ≠ b",
+   "to": "a > (0 : ℝ) ∧ b > (0 : ℝ)"
+  },
+  {
+   "from": "|a - (1 : ℝ) / a| = (1 : ℝ)",
+   "to": "a - (1 : ℝ) = (1 : ℝ) / a"
+  },
+  {
+   "from": "|b - (1 : ℝ) / b| = (1 : ℝ)",
+   "to": "b - (1 : ℝ) = (1 : ℝ) / b"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+   "to": "a ≠ b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_333_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ (a b : ℝ), a ≠ b → a ≠ b → |a - x1 (1 : ℝ) a| = (1 : ℝ) → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ)) → (∀ (a b : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b → a ≠ b → |a - x1 (1 : ℝ) a| = (1 : ℝ) → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "a ≠ b",
+   "to": "a > (0 : ℝ) ∧ b > (0 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_333_0.fwd_e2",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ (a b : ℝ), a ≠ b → a ≠ b → |a - x1 (1 : ℝ) a| = (1 : ℝ) → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ)) → (∀ (a b : ℝ),\n  a ≠ b → a > (0 : ℝ) ∧ b > (0 : ℝ) → |a - x1 (1 : ℝ) a| = (1 : ℝ) → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 3,
+   "from": "|a - (1 : ℝ) / a| = (1 : ℝ)",
+   "to": "a - (1 : ℝ) = (1 : ℝ) / a",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_333_0.fwd_e3",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ (a b : ℝ),\n  a ≠ b → a > (0 : ℝ) ∧ b > (0 : ℝ) → |a - x1 (1 : ℝ) a| = (1 : ℝ) → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ)) → (∀ (a b : ℝ),\n  a ≠ b → a > (0 : ℝ) ∧ b > (0 : ℝ) → a - (1 : ℝ) = x1 (1 : ℝ) a → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 4,
+   "from": "|b - (1 : ℝ) / b| = (1 : ℝ)",
+   "to": "b - (1 : ℝ) = (1 : ℝ) / b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e4": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_333_0.fwd_e4",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ (a b : ℝ),\n  a ≠ b → a > (0 : ℝ) ∧ b > (0 : ℝ) → a - (1 : ℝ) = x1 (1 : ℝ) a → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ)) → (∀ (a b : ℝ),\n  a ≠ b → a > (0 : ℝ) ∧ b > (0 : ℝ) → a - (1 : ℝ) = x1 (1 : ℝ) a → b - (1 : ℝ) = x1 (1 : ℝ) b → a + b = x2 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_333_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ), (∀ (a b : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b → a ≠ b → |a - x1 (1 : ℝ) a| = (1 : ℝ) → |b - x1 (1 : ℝ) b| = (1 : ℝ) → a + b = x2 (5 : ℝ)) → (∀ (a b : ℝ),\n  a ≠ b → a > (0 : ℝ) ∧ b > (0 : ℝ) → a - (1 : ℝ) = x1 (1 : ℝ) a → b - (1 : ℝ) = x1 (1 : ℝ) b → a + b = x2 (5 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

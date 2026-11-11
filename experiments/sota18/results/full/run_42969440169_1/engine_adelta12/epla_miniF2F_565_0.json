@@ -1,0 +1,53 @@
+{
+ "id": "epla_miniF2F_565_0",
+ "reference": "∀ (a b x y : ℝ),   a * x + b * y = 3 →     a * x ^ 2 + b * y ^ 2 = 7 → a * x ^ 3 + b * y ^ 3 = 16 → a * x ^ 4 + b * y ^ 4 = 42 → a * x ^ 5 + b * y ^ 5 = 20",
+ "lean": "∀ (a b x y : ℝ),   a * x + b * y = 3 →     a * x ^ 2 + b * y ^ 2 = 7 → a * x ^ 3 + b * y ^ 3 = 16 → a * x ^ 4 + b * y ^ 4 = 42 → a * x ^ 5 + b * y ^ 5 = 20",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "a * x ^ (5 : ℕ) + b * y ^ (5 : ℕ) = (20 : ℝ)",
+  "conclusion_ref": "a * x ^ (5 : ℕ) + b * y ^ (5 : ℕ) = (20 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "a * x + b * y = (3 : ℝ)",
+   "a * x ^ (2 : ℕ) + b * y ^ (2 : ℕ) = (7 : ℝ)",
+   "a * x ^ (3 : ℕ) + b * y ^ (3 : ℕ) = (16 : ℝ)",
+   "a * x ^ (4 : ℕ) + b * y ^ (4 : ℕ) = (42 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

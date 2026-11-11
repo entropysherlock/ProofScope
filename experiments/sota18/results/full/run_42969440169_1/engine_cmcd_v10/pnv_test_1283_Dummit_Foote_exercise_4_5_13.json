@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1283_Dummit_Foote_exercise_4_5_13",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Group G] [inst_1 : Fintype G],   Fintype.card G = OfNat.ofNat (nat_lit 56) → ∃ (p : ℕ) (P : Sylow p G), Nat.Prime p ∧ p ∣ Fintype.card G ∧ P.Normal",
+ "lean": "∀ {G : Type u_1} [inst : Group G] [inst_1 : Fintype G],   Fintype.card G = OfNat.ofNat (nat_lit 56) → ∃ (p : ℕ) (_ : Nat.Prime p) (H : Sylow p G), H.Normal",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1283_Dummit_Foote_exercise_4_5_13/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1283_Dummit_Foote_exercise_4_5_13/extract/Drift_input.lean:4:206: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1283_Dummit_Foote_exercise_4_5_13/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

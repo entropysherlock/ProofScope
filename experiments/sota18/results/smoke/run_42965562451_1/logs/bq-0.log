@@ -1,0 +1,45 @@
+Downloading cpython-3.11.18-linux-x86_64-gnu (download) (29.2MiB)
+ Downloaded cpython-3.11.18-linux-x86_64-gnu (download)
+   Building lean-interact @ file:///home/runner/work/_temp/li
+Downloading scipy (33.7MiB)
+Downloading pydantic-core (2.1MiB)
+Downloading pyarrow (52.5MiB)
+Downloading pandas (11.8MiB)
+Downloading scikit-learn (8.9MiB)
+Downloading numpy (16.1MiB)
+Downloading hf-xet (4.1MiB)
+Downloading pygments (1.2MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded hf-xet
+ Downloaded scikit-learn
+ Downloaded pandas
+ Downloaded numpy
+ Downloaded scipy
+ Downloaded pyarrow
+      Built lean-interact @ file:///home/runner/work/_temp/li
+Installed 47 packages in 35ms
+info: downloading https://releases.lean-lang.org/lean4/v4.8.0/lean-4.8.0-linux.tar.zst
+info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.8.0
+[05:24:55] INFO     Preparing Lean environment with dependencies  project.py:330
+                    (may take a while the first time)...                        
+error: no default toolchain configured. run `elan default stable` to install & configure the latest Lean 4 stable release.
+Traceback (most recent call last):
+  File "/home/runner/work/ProofScope/ProofScope/experiments/sota18/run_beqplus.py", line 78, in <module>
+    main()
+  File "/home/runner/work/ProofScope/ProofScope/experiments/sota18/run_beqplus.py", line 47, in main
+    server = AutoLeanServer(config=LeanREPLConfig(project=TempRequireProject(lean_version="v4.8.0", require="mathlib")))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 9, in __init__
+  File "/home/runner/work/_temp/setup-uv-cache/archive-v0/0Kp0JM85O1ToqWn6/lib/python3.11/site-packages/lean_interact/project.py", line 335, in __post_init__
+    self.build(verbose=self.verbose, update=True, _lock=False)
+  File "/home/runner/work/_temp/setup-uv-cache/archive-v0/0Kp0JM85O1ToqWn6/lib/python3.11/site-packages/lean_interact/project.py", line 66, in build
+    check_lake(self.lake_path, verbose=verbose)
+  File "/home/runner/work/_temp/setup-uv-cache/archive-v0/0Kp0JM85O1ToqWn6/lib/python3.11/site-packages/lean_interact/utils.py", line 108, in check_lake
+    raise RuntimeError(
+RuntimeError: Lean 4 build system (`lake`) failed with exit code 1.
+stdout:
+None
+
+stderr:
+None

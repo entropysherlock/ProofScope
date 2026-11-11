@@ -1,0 +1,1 @@
+{"case_id": "epla:miniF2F:802:0", "record": {"candidate": {"errors": [], "ok": true, "supersetEnv": true}, "elapsedMs": 39, "id": "epla:miniF2F:802:0", "reference": {"errors": ["<epla:miniF2F:802:0.reference>:9:14: error: unexpected token 'in'; expected ','\n"], "ok": false, "supersetEnv": true}, "verdict": "ReferenceCompileError"}}

@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_658_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c d : ℝ), b = a ^ 2 → a + b = 1 → d = c ^ 2 → c + d = 1 → a ≠ c → √((a - c) ^ 2 + (b - d) ^ 2) = √10",
+ "lean": "have f := fun (x : ℝ × ℝ) =>   match x with   | (x, y) => y = x ^ 2 ∧ x + y = 1; ∃ (p : ℝ × ℝ) (q : ℝ × ℝ), f p ∧ f q ∧ p ≠ q ∧ (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 = 10",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_658_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

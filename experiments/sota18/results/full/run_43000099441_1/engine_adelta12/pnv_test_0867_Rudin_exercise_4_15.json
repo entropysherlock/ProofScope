@@ -1,0 +1,33 @@
+{
+ "id": "pnv_test_0867_Rudin_exercise_4_15",
+ "reference": "∀ {f : ℝ → ℝ}, Continuous f → IsOpenMap f → Monotone f",
+ "lean": "∀ (f : ℝ → ℝ), Continuous f → IsOpenMap f → Monotone f",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "Monotone f",
+  "conclusion_ref": "Monotone f",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "Continuous f",
+   "IsOpenMap f"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

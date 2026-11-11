@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0833:Pugh|exercise_2_26",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "n:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0833_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:154: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0833_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ft_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0833_Pugh_exercise_2_26/extract/Drift_input.lean:4:146: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0833_Pugh_exercise_2_26/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M), IsOpen U ↔ ∀ x ∈ U, ¬ClusterPt x (Filter.principal Uᶜ)",
+ "lean": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M),   IsOpen U ↔ ∀ x ∈ U, ∀ (V : Set M), IsOpen V → x ∈ V → V ∩ Uᶜ = ∅",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {M : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {M : Type '"
+ },
+ "seconds": 19.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11726600
+}

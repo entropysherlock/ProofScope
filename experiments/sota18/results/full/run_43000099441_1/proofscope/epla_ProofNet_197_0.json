@@ -1,0 +1,71 @@
+{
+ "case_id": "epla:ProofNet:197:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 6.1,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 32.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {K : Type u_1} [inst : Field K] {F : Subfield K} {a : K}, IsAlgebraic (↥F) (a ^ 2) → IsAlgebraic (↥F) a",
+ "lean": "∀ {F : Type u_1} {K : Type u_2} [inst : Field F] [inst_1 : Field K] [inst_2 : Algebra F K] (a : K),   IsAlgebraic F (a ^ 2) → IsAlgebraic F a",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {K : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {F : Type '"
+ },
+ "seconds": 46.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7617964
+}

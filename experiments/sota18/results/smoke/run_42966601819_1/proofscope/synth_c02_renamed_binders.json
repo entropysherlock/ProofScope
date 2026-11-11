@@ -1,0 +1,54 @@
+{
+ "case_id": "synth:c02_renamed_binders",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.7,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.4,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ), 2 ≤ n → n < 2 ^ n",
+ "lean": "∀ (m : ℕ), 2 ≤ m → m < 2 ^ m",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ), 2'",
+  "cand": "unsupported: cannot tokenize at '∀ (m : ℕ), 2'"
+ },
+ "seconds": 23.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7616548
+}

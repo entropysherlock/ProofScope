@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_564_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a : ℝ) (f : ℝ → ℝ), 0 < a → (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ b > 0, ∀ (x : ℝ), f (x + b) = f x",
+ "lean": "∀ (a : ℝ),   0 < a →     ∀ (f : ℝ → ℝ), (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ (b : ℝ), 0 < b ∧ ∀ (x : ℝ), f (x + b) = f x",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_564_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0301_Artin_exercise_3_2_7",
+ "reference": "∀ {F : Type u_1} [inst : Field F] {G : Type u_2} [inst_1 : Field G] (φ : F →+* G), Function.Injective ⇑φ",
+ "lean": "∀ (F : Type u_1) (E : Type u_2) [inst : Field F] [inst_1 : Field E] (f : F →+* E), Function.Injective ⇑f",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "ssumptions_input.lean:4:71: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0301_Artin_exercise_3_2_7/extract/Assumptions_input.lean:4:146: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0301_Artin_exercise_3_2_7/extract/Assumptions_input.lean:4:161: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0301_Artin_exercise_3_2_7/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

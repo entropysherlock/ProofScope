@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:586:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_586_0/extract/Drift_input.lean:4:132: error(lean.unknownIdentifier): Unknown identifier `_root_.star`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_586_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #4\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (s : ℝ → ℝ → ℝ), (∀ (x : ℝ), x ≠ 0 → ∀ (y : ℝ), y ≠ 0 → s x y = (1 / y - 1 / x) / (x - y)) → s 3 11 = 1 / 33",
+ "lean": "_root_.star 3 11 = 1 / 33",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (s : ℝ → ℝ'",
+  "cand": "parses"
+ },
+ "seconds": 16.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619224
+}

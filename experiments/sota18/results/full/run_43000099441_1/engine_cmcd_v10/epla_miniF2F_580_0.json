@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_580_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : ℝ),   0 < x →     x ^ 2 - 10 * x - 29 ≠ 0 →       x ^ 2 - 10 * x - 45 ≠ 0 →         x ^ 2 - 10 * x - 69 ≠ 0 →           1 / (x ^ 2 - 10 * x - 29) + 1 / (x ^ 2 - 10 * x - 45) - 2 / (x ^ 2 - 10 * x - 69) = 0 → x = 13",
+ "lean": "∃ (x : ℝ), 0 < x ∧ 1 / (x ^ 2 - 10 * x - 29) + 1 / (x ^ 2 - 10 * x - 45) - 2 / (x ^ 2 - 10 * x - 69) = 0 ∧ x = 13",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (x : ℝ),\n  (0 : ℝ) < x →\n    x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ) ≠ (0 : ℝ) →\n      x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ) ≠ (0 : ℝ) →\n        x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ) ≠ (0 : ℝ) →\n          (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ)) + (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ)) -\n                (2 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ)) =\n              (0 : ℝ) →\n            x = (13 : ℝ)",
+   "to": "∃ (x : ℝ),\n  (0 : ℝ) < x ∧\n    (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ)) + (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ)) -\n          (2 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ)) =\n        (0 : ℝ) ∧\n      x = (13 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (x : ℝ),\n  (0 : ℝ) < x →\n    x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ) ≠ (0 : ℝ) →\n      x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ) ≠ (0 : ℝ) →\n        x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ) ≠ (0 : ℝ) →\n          (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ)) + (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ)) -\n                (2 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ)) =\n              (0 : ℝ) →\n            x = (13 : ℝ)",
+   "to": "∃ (x : ℝ),\n  (0 : ℝ) < x ∧\n    (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (29 : ℝ)) + (1 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (45 : ℝ)) -\n          (2 : ℝ) / (x ^ (2 : ℕ) - (10 : ℝ) * x - (69 : ℝ)) =\n        (0 : ℝ) ∧\n      x = (13 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

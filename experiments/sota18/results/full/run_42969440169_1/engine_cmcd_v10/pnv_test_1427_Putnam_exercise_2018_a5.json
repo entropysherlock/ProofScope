@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1427_Putnam_exercise_2018_a5",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℝ → ℝ),   ContDiff ℝ ⊤ f → f 0 = 0 → f 1 = 1 → (∀ (x : ℝ), f x ≥ 0) → ∃ (n : ℕ+) (x : ℝ), iteratedDeriv (↑n) f x < 0",
+ "lean": "∀ {f : ℝ → ℝ}, ContDiff ℝ ⊤ f → f 0 = 0 → f 1 = 1 → (∀ (x : ℝ), 0 ≤ f x) → ∃ (n : ℕ) (x : ℝ), f^[n] x < 0",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1427_Putnam_exercise_2018_a5/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

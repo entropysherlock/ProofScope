@@ -1,0 +1,13 @@
+{
+ "id": "epla_ProofNet_115_0",
+ "reference": "Infinite (Equiv.Perm ℕ)",
+ "lean": "∀ {Ω : Type u_1} [Infinite Ω], Infinite (Equiv.Perm Ω)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_115_0/extract/Assumptions_input.lean:4:65: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_115_0/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

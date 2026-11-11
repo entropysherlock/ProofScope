@@ -1,0 +1,63 @@
+{
+ "id": "epla_miniF2F_232_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 10 ≤ n → (∃ (x : ℕ), x ^ 2 = n) → (∃ (t : ℕ), t ^ 3 = n) → 64 ≤ n",
+ "lean": "∀ (n : ℕ), 10 < n → (∃ (k : ℕ), k ^ 2 = n) → (∃ (k : ℕ), k ^ 3 = n) → n = 64",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(10 : ℕ) ≤ n",
+   "to": "(10 : ℕ) < n"
+  },
+  {
+   "from": "(64 : ℕ) ≤ n",
+   "to": "n = (64 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(10 : ℕ) ≤ n",
+   "to": "(10 : ℕ) < n",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 2,
+   "from": "(64 : ℕ) ≤ n",
+   "to": "n = (64 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_232_0.bwd_e2",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (n : ℕ), (10 : ℕ) < n → (∃ (x : ℕ), x1 x (2 : ℕ) = n) → (∃ (t : ℕ), x1 t (3 : ℕ) = n) → n = (64 : ℕ)) → (∀ (n : ℕ), (10 : ℕ) < n → (∃ (x : ℕ), x1 x (2 : ℕ) = n) → (∃ (t : ℕ), x1 t (3 : ℕ) = n) → (64 : ℕ) ≤ n)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

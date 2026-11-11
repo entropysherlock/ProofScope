@@ -1,0 +1,145 @@
+{
+ "id": "epla_miniF2F_675_0",
+ "reference": "∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+ "lean": "∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < c"
+   },
+   {
+    "dependent": false,
+    "prop": "(3 : ℝ) ≤ a * b + b * c + c * a"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "(3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+  "conclusion_ref": "(3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c"
+   },
+   {
+    "dependent": false,
+    "prop": "(3 : ℝ) ≤ a * b + b * c + c * a"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_675_0.d_implies_a",
+   "statement": "∀ (a : ℝ) (b : ℝ) (c : ℝ), (((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c) ∧ ((3 : ℝ) ≤ a * b + b * c + c * a)) → ((0 : ℝ) < a) ∧ ((0 : ℝ) < b) ∧ ((0 : ℝ) < c) ∧ ((3 : ℝ) ≤ a * b + b * c + c * a)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_675_0.link_L",
+   "statement": "(∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)) ↔ (∀ (a : ℝ) (b : ℝ) (c : ℝ), ((0 : ℝ) < a) → ((0 : ℝ) < b) → ((0 : ℝ) < c) → ((3 : ℝ) ≤ a * b + b * c + c * a) → (3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_675_0.a_implies_d",
+   "statement": "∀ (a : ℝ) (b : ℝ) (c : ℝ), (((0 : ℝ) < a) ∧ ((0 : ℝ) < b) ∧ ((0 : ℝ) < c) ∧ ((3 : ℝ) ≤ a * b + b * c + c * a)) → ((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c) ∧ ((3 : ℝ) ≤ a * b + b * c + c * a)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_675_0.link_R",
+   "statement": "(∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)) ↔ (∀ (a : ℝ) (b : ℝ) (c : ℝ), ((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c) → ((3 : ℝ) ≤ a * b + b * c + c * a) → (3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℝ) < a",
+  "(0 : ℝ) < b",
+  "(0 : ℝ) < c",
+  "(3 : ℝ) ≤ a * b + b * c + c * a"
+ ],
+ "dropped": [
+  "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c",
+  "(3 : ℝ) ≤ a * b + b * c + c * a"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

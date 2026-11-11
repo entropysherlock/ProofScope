@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0426_Munkres_exercise_13_8a",
+ "reference": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+ "lean": "∀ (U : Set ℝ), IsOpen U ↔ ∀ x ∈ U, ∃ (a : ℚ) (b : ℚ), a < b ∧ ↑a < x ∧ x < ↑b",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (U : Set ℝ), IsOpen U ↔ ∀ x ∈ U, ∃ (a : ℚ) (b : ℚ), a < b ∧ ↑a < x ∧ x < ↑b",
+  "conclusion_ref": "TopologicalSpace.IsTopologicalBasis (α := ℝ) {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

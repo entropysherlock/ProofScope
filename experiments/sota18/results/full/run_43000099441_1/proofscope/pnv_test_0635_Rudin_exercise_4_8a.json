@@ -1,0 +1,58 @@
+{
+ "case_id": "pnv:test:0635:Rudin|exercise_4_8a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 26.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Set.image",
+     "type": "(ℝ → ℝ) → Set ℝ → Set ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (E : Set ℝ) (f : ℝ → ℝ), UniformContinuousOn f E → Bornology.IsBounded E → Bornology.IsBounded (f '' E)",
+ "lean": "∀ {E : Set ℝ}, BddAbove E → ∀ {f : ℝ → ℝ}, UniformContinuous f → BddAbove (f '' E)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (E : Set ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ {E : Set ℝ'"
+ },
+ "seconds": 38.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619268
+}

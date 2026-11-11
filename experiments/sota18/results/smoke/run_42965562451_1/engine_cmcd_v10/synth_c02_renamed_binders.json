@@ -1,0 +1,23 @@
+{
+ "id": "synth_c02_renamed_binders",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 2 ≤ n → n < 2 ^ n",
+ "lean": "∀ (m : ℕ), 2 ≤ m → m < 2 ^ m",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

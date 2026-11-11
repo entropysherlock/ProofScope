@@ -1,0 +1,39 @@
+{
+ "id": "epla_miniF2F_117_0",
+ "reference": "∀ (x y : ℝ), (x + y) / 2 = 7 → √(x * y) = √19 → x ^ 2 + y ^ 2 = 158",
+ "lean": "∀ (x y : ℝ), (x + y) / 2 = 7 → √(x * y) = √19 → x ^ 2 + y ^ 2 = 158",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "x ^ (2 : ℕ) + y ^ (2 : ℕ) = (158 : ℝ)",
+  "conclusion_ref": "x ^ (2 : ℕ) + y ^ (2 : ℕ) = (158 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "(x + y) / (2 : ℝ) = (7 : ℝ)",
+   "√(x * y) = √(19 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,82 @@
+{
+ "id": "epla_miniF2F_753_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y : ℝ),   x ≠ 1 ∧ y ≠ 1 →     Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20",
+ "lean": "∀ (x y : ℝ),   0 < x →     0 < y →       x ≠ 1 →         y ≠ 1 →           Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20",
+ "symbols": [
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "Real.log",
+   "type": "ℝ → ℝ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "x ≠ (1 : ℝ) ∧ y ≠ (1 : ℝ)",
+   "to": "(0 : ℝ) < x"
+  },
+  {
+   "from": "Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y",
+   "to": "(0 : ℝ) < y"
+  },
+  {
+   "from": "x * y = (64 : ℝ)",
+   "to": "x ≠ (1 : ℝ)"
+  },
+  {
+   "from": "(Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ)",
+   "to": "y ≠ (1 : ℝ) →\n  Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y →\n    x * y = (64 : ℝ) → (Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ)"
+  }
+ ],
+ "symbols_truncated": true,
+ "certify_status": "INFRASTRUCTURE_ERROR",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "x ≠ (1 : ℝ) ∧ y ≠ (1 : ℝ)",
+   "to": "(0 : ℝ) < x",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 2,
+   "from": "Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y",
+   "to": "(0 : ℝ) < y",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "x * y = (64 : ℝ)",
+   "to": "x ≠ (1 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 4,
+   "from": "(Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ)",
+   "to": "y ≠ (1 : ℝ) →\n  Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y →\n    x * y = (64 : ℝ) → (Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

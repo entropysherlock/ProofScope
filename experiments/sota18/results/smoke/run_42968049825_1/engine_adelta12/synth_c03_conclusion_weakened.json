@@ -1,0 +1,30 @@
+{
+ "id": "synth_c03_conclusion_weakened",
+ "reference": "∀ (n : ℕ), n < 2 ^ n",
+ "lean": "∀ (n : ℕ), n ≤ 2 ^ n",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "n ≤ (2 : ℕ) ^ n",
+  "conclusion_ref": "n < (2 : ℕ) ^ n",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

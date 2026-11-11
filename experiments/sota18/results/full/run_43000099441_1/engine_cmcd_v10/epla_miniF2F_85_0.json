@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_85_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 2 * n % 47 = 15 → n % 47 = 31",
+ "lean": "∀ (n : ℤ), 2 * n ≡ 15 [ZMOD 47] ↔ n ≡ 31 [ZMOD 47]",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (n : ℕ), (2 : ℕ) * n % (47 : ℕ) = (15 : ℕ) → n % (47 : ℕ) = (31 : ℕ)",
+   "to": "∀ (n : ℤ), (2 : ℤ) * n ≡ (15 : ℤ) [ZMOD (47 : ℤ)] ↔ n ≡ (31 : ℤ) [ZMOD (47 : ℤ)]"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

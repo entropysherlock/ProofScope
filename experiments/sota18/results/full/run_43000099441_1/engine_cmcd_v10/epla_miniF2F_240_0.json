@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_240_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f z : ℂ), f + 3 * z = 11 → 3 * (f - 1) - 5 * z = -68 → f = -10 ∧ z = 7",
+ "lean": "∀ (f z : ℤ), f + 3 * z = 11 → 3 * (f - 1) - 5 * z = -68 → f = -10 ∧ z = 7",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (f z : ℂ),\n  f + (3 : ℂ) * z = (11 : ℂ) → (3 : ℂ) * (f - (1 : ℂ)) - (5 : ℂ) * z = (-68 : ℂ) → f = (-10 : ℂ) ∧ z = (7 : ℂ)",
+   "to": "∀ (f z : ℤ),\n  f + (3 : ℤ) * z = (11 : ℤ) → (3 : ℤ) * (f - (1 : ℤ)) - (5 : ℤ) * z = (-68 : ℤ) → f = (-10 : ℤ) ∧ z = (7 : ℤ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

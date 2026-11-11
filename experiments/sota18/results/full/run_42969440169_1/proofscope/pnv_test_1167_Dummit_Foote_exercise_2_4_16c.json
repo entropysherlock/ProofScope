@@ -1,0 +1,70 @@
+{
+ "case_id": "pnv:test:1167:Dummit-Foote|exercise_2_4_16c",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 31.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {n : ℕ+} {G : Type u_1} [inst : Group G] {x : G},   orderOf x = ↑n →     G = ↥(Subgroup.closure {x}) →       ∀ (H : Subgroup G),         (∃ (p : ℕ), Prime p ∧ p ∣ ↑n ∧ H = Subgroup.closure {x ^ p}) ↔ H ≠ ⊤ ∧ ∀ (K : Subgroup G), H ≤ K → K = H ∨ K = ⊤",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {x : G} {n : ℕ},   x ^ n = 1 →     ∀ (H : Subgroup G),       (∃ (k : ℕ), k ∣ n ∧ H = Subgroup.closure {x ^ k} ∧ ∀ (N : Subgroup G), H ≤ N → N = ⊤ ∨ N = H) ↔         ∃ (p : ℕ), Nat.Prime p ∧ p ∣ n ∧ H = Subgroup.closure {x ^ (n / p)}",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {n : ℕ+} {'",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 45.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8873440
+}

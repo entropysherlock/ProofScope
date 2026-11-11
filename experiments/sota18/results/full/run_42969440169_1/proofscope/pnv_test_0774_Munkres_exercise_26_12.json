@@ -1,0 +1,59 @@
+{
+ "case_id": "pnv:test:0774:Munkres|exercise_26_12",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "n:4:54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0774_Munkres_exercise_26_12/extract/Assumptions_input.lean:4:274: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0774_Munkres_exercise_26_12/extract/Assumptions_input.lean:4:289: error: unknown universe level `u_2`\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ft_input.lean:4:46: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0774_Munkres_exercise_26_12/extract/Drift_input.lean:4:266: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0774_Munkres_exercise_26_12/extract/Drift_input.lean:4:281: error: unknown universe level `u_2`\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] (p : X → Y),   Function.Surjective p →     Continuous p → IsClosedMap p → (∀ (y : Y), IsCompact (p ⁻¹' {y})) → CompactSpace Y → CompactSpace X",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [CompactSpace Y] (f : X → Y),   Continuous f → Function.Surjective f → (∀ (y : Y), IsCompact (f ⁻¹' {y})) → CompactSpace X",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 23.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8873440
+}

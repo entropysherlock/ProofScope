@@ -1,0 +1,64 @@
+{
+ "case_id": "pnv:test:0109:Munkres|exercise_16_6",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 2.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 20.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "canonical telescope not linked to the elaborated statements",
+   "certificates": [
+    "link_L"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 27.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Membership.mem",
+     "type": "Set (Set (ℝ × ℝ)) → Set (ℝ × ℝ) → Prop"
+    },
+    {
+     "symbol": "TopologicalSpace.IsTopologicalBasis",
+     "type": "Set (Set (ℝ × ℝ)) → Prop"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (S : Set (Set (ℝ × ℝ))),   (∀ s ∈ S,       ∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),         rational a ∧           rational b ∧             rational c ∧               rational d ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}) →     TopologicalSpace.IsTopologicalBasis S",
+ "lean": "∀ (U : Set (Set (ℝ × ℝ))),   (∀ u ∈ U, ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ), a < b ∧ c < d ∧ u = Set.Ioo ↑a ↑b ×ˢ Set.Ioo ↑c ↑d) →     TopologicalSpace.IsTopologicalBasis U",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (S : Set ('",
+  "cand": "unsupported: cannot tokenize at '∀ (U : Set ('"
+ },
+ "seconds": 54.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8667124
+}

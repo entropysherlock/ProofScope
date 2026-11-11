@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:ProofNet:7:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.7,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.2,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    },
+    {
+     "symbol": "@norm",
+     "type": "{E : Type} → [self : Norm E] → E → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ) (x y : EuclideanSpace ℝ (Fin n)), ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * ‖x‖ ^ 2 + 2 * ‖y‖ ^ 2",
+ "lean": "∀ {k : ℕ} (x y : EuclideanSpace ℝ (Fin k)), ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * ‖x‖ ^ 2 + 2 * ‖y‖ ^ 2",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ) (x'",
+  "cand": "unsupported: cannot tokenize at '∀ {k : ℕ} (x'"
+ },
+ "seconds": 18.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618368
+}

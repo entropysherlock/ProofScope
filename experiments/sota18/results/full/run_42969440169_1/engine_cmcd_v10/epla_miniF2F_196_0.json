@@ -1,0 +1,50 @@
+{
+ "id": "epla_miniF2F_196_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : ℝ) (a b c : ℕ),   0 < a ∧ 0 < b ∧ 0 < c ∧ 0 ≤ x → 2 * x ^ 2 = 4 * x + 9 → x = (↑a + √↑b) / ↑c → c = 2 → a + b + c = 26",
+ "lean": "∀ (x : ℝ) (a b c : ℤ), 2 * x ^ 2 = 4 * x + 9 → x = (↑a + √↑b) / ↑c → 0 < a → 0 < b → 0 < c → a + b + c = 26",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "Real.sqrt",
+   "type": "ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (a b c : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ (0 : ℕ) < c ∧ (0 : ℝ) ≤ x →\n    (2 : ℝ) * x ^ (2 : ℕ) = (4 : ℝ) * x + (9 : ℝ) → x = (↑a + √↑b) / ↑c → c = (2 : ℕ) → a + b + c = (26 : ℕ)",
+   "to": "∀ (a b c : ℤ),\n  (2 : ℝ) * x ^ (2 : ℕ) = (4 : ℝ) * x + (9 : ℝ) →\n    x = (↑a + √↑b) / ↑c → (0 : ℤ) < a → (0 : ℤ) < b → (0 : ℤ) < c → a + b + c = (26 : ℤ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (a b c : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ (0 : ℕ) < c ∧ (0 : ℝ) ≤ x →\n    (2 : ℝ) * x ^ (2 : ℕ) = (4 : ℝ) * x + (9 : ℝ) → x = (↑a + √↑b) / ↑c → c = (2 : ℕ) → a + b + c = (26 : ℕ)",
+   "to": "∀ (a b c : ℤ),\n  (2 : ℝ) * x ^ (2 : ℕ) = (4 : ℝ) * x + (9 : ℝ) →\n    x = (↑a + √↑b) / ↑c → (0 : ℤ) < a → (0 : ℤ) < b → (0 : ℤ) < c → a + b + c = (26 : ℤ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

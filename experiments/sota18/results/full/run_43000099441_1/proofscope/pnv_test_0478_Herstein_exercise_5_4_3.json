@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:0478:Herstein|exercise_5_4_3",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0478_Herstein_exercise_5_4_3/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {a : ℂ} {p : ℂ → ℂ},   (p = fun (x : ℂ) => x ^ 5 + ↑√2 * x ^ 3 + ↑√5 * x ^ 2 + ↑√7 * x + ↑√11) →     p a = 0 →       ∃ (q : Polynomial ℂ),         q ≠ 0 ∧ q.degree ≤ 80 ∧ a ∈ q.roots ∧ ∀ (n : ↥q.support), ∃ (a : ℤ) (b : ℤ), q.coeff ↑n = ↑a / ↑b",
+ "lean": "∀ {a : ℚ} {p : Polynomial ℚ}, Polynomial.eval a p = 0 → p.natDegree ≤ 80 → IsAlgebraic ℚ a",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {a : ℂ} {p'",
+  "cand": "unsupported: cannot tokenize at '∀ {a : ℚ} {p'"
+ },
+ "seconds": 19.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8760620
+}

@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0369:Artin|exercise_13_6_10",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 7.2
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "cand",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0369_Artin_exercise_13_6_10/print.lean:21:76: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0369_Artin_exercise_13_6_10/print.lean:43:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0369_Artin_exercise_13_6_10/print.lean:49:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0369_Artin_exercise_13_6_10/print.lean:55:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 14006072
+}

@@ -1,0 +1,2239 @@
+{
+ "provenance": {
+  "pnv_dataset": "PAug/ProofNetVerif",
+  "pnv_revision": "91183e5b12d64374827bf2782db629b5b0f8f319",
+  "pnv_license": "mit",
+  "semanteq_labels": "hlxr89/SemantEq@f92767000e14 test/pnv_test_adjudicated_labels.jsonl",
+  "epla": "XiaoyangLiu-sjtu/ASSESS@bc7933547d8a benchmark/EPLA-*.json (compiler_check == success)"
+ },
+ "population": {
+  "PNV_test_rows": 1452,
+  "PNV_rows_with_G2": 1303,
+  "EPLA_rows": 1247,
+  "signature_unparsed": 8,
+  "track_b_qualifying": {
+   "B1": 321,
+   "B2": 0,
+   "by_source": {
+    "PNV": 146,
+    "EPLA": 175
+   }
+  },
+  "track_b_scarce": false
+ },
+ "seeds": {
+  "A_PNV": 20261118,
+  "A_EPLA": 20261119,
+  "B": 20261120
+ },
+ "track_A": [
+  "pnv:test:0001:Putnam|exercise_1998_b6",
+  "pnv:test:0007:Dummit-Foote|exercise_8_3_6b",
+  "pnv:test:0012:Axler|exercise_6_3",
+  "pnv:test:0036:Axler|exercise_1_2",
+  "pnv:test:0037:Ireland-Rosen|exercise_4_11",
+  "pnv:test:0047:Artin|exercise_13_6_10",
+  "pnv:test:0052:Herstein|exercise_2_2_6c",
+  "pnv:test:0058:Munkres|exercise_23_3",
+  "pnv:test:0085:Pugh|exercise_2_46",
+  "pnv:test:0086:Dummit-Foote|exercise_7_1_12",
+  "pnv:test:0093:Dummit-Foote|exercise_2_4_16a",
+  "pnv:test:0104:Rudin|exercise_1_14",
+  "pnv:test:0109:Munkres|exercise_16_6",
+  "pnv:test:0115:Ireland-Rosen|exercise_4_6",
+  "pnv:test:0116:Putnam|exercise_2018_a5",
+  "pnv:test:0117:Munkres|exercise_13_8a",
+  "pnv:test:0129:Artin|exercise_10_1_13",
+  "pnv:test:0134:Putnam|exercise_1998_b6",
+  "pnv:test:0152:Dummit-Foote|exercise_9_4_2a",
+  "pnv:test:0190:Pugh|exercise_3_1",
+  "pnv:test:0195:Herstein|exercise_2_1_18",
+  "pnv:test:0197:Munkres|exercise_29_4",
+  "pnv:test:0214:Pugh|exercise_2_26",
+  "pnv:test:0215:Munkres|exercise_31_1",
+  "pnv:test:0219:Herstein|exercise_2_1_18",
+  "pnv:test:0226:Pugh|exercise_3_1",
+  "pnv:test:0234:Herstein|exercise_2_5_23",
+  "pnv:test:0248:Ireland-Rosen|exercise_2_27a",
+  "pnv:test:0286:Munkres|exercise_26_12",
+  "pnv:test:0295:Herstein|exercise_2_11_7",
+  "pnv:test:0296:Herstein|exercise_4_6_2",
+  "pnv:test:0298:Munkres|exercise_32_2c",
+  "pnv:test:0301:Artin|exercise_3_2_7",
+  "pnv:test:0302:Rudin|exercise_3_13",
+  "pnv:test:0306:Dummit-Foote|exercise_4_4_6b",
+  "pnv:test:0309:Herstein|exercise_2_2_6c",
+  "pnv:test:0313:Dummit-Foote|exercise_3_2_16",
+  "pnv:test:0319:Axler|exercise_5_13",
+  "pnv:test:0323:Ireland-Rosen|exercise_4_11",
+  "pnv:test:0324:Putnam|exercise_2018_b4",
+  "pnv:test:0330:Rudin|exercise_1_8",
+  "pnv:test:0338:Dummit-Foote|exercise_4_4_6b",
+  "pnv:test:0347:Ireland-Rosen|exercise_3_10",
+  "pnv:test:0348:Rudin|exercise_5_3",
+  "pnv:test:0355:Dummit-Foote|exercise_1_1_17",
+  "pnv:test:0359:Axler|exercise_1_2",
+  "pnv:test:0364:Axler|exercise_1_4",
+  "pnv:test:0369:Artin|exercise_13_6_10",
+  "pnv:test:0373:Herstein|exercise_2_7_7",
+  "pnv:test:0384:Dummit-Foote|exercise_9_4_2a",
+  "pnv:test:0387:Rudin|exercise_4_3",
+  "pnv:test:0392:Rudin|exercise_4_1a",
+  "pnv:test:0402:Dummit-Foote|exercise_1_1_4",
+  "pnv:test:0417:Dummit-Foote|exercise_9_1_10",
+  "pnv:test:0426:Munkres|exercise_13_8a",
+  "pnv:test:0432:Axler|exercise_5_1",
+  "pnv:test:0439:Artin|exercise_10_6_7",
+  "pnv:test:0442:Rudin|exercise_3_7",
+  "pnv:test:0445:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:0453:Axler|exercise_1_9",
+  "pnv:test:0461:Putnam|exercise_1998_b6",
+  "pnv:test:0463:Ireland-Rosen|exercise_4_4",
+  "pnv:test:0464:Dummit-Foote|exercise_4_5_33",
+  "pnv:test:0469:Rudin|exercise_4_1a",
+  "pnv:test:0473:Dummit-Foote|exercise_1_1_15",
+  "pnv:test:0474:Dummit-Foote|exercise_9_4_2a",
+  "pnv:test:0478:Herstein|exercise_5_4_3",
+  "pnv:test:0494:Herstein|exercise_4_6_2",
+  "pnv:test:0502:Rudin|exercise_3_7",
+  "pnv:test:0520:Dummit-Foote|exercise_3_3_3",
+  "pnv:test:0523:Dummit-Foote|exercise_7_3_16",
+  "pnv:test:0542:Pugh|exercise_3_1",
+  "pnv:test:0546:Artin|exercise_2_8_6",
+  "pnv:test:0551:Pugh|exercise_3_1",
+  "pnv:test:0552:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:0555:Munkres|exercise_31_1",
+  "pnv:test:0564:Pugh|exercise_2_92",
+  "pnv:test:0565:Rudin|exercise_5_5",
+  "pnv:test:0569:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:0585:Rudin|exercise_4_11a",
+  "pnv:test:0601:Herstein|exercise_5_1_8",
+  "pnv:test:0605:Dummit-Foote|exercise_9_4_9",
+  "pnv:test:0618:Herstein|exercise_2_11_7",
+  "pnv:test:0635:Rudin|exercise_4_8a",
+  "pnv:test:0640:Ireland-Rosen|exercise_4_11",
+  "pnv:test:0647:Artin|exercise_11_4_6a",
+  "pnv:test:0650:Dummit-Foote|exercise_1_1_20",
+  "pnv:test:0656:Putnam|exercise_2018_a5",
+  "pnv:test:0664:Herstein|exercise_2_1_26",
+  "pnv:test:0674:Munkres|exercise_22_2a",
+  "pnv:test:0679:Herstein|exercise_2_5_52",
+  "pnv:test:0689:Herstein|exercise_4_2_6",
+  "pnv:test:0691:Dummit-Foote|exercise_2_4_16a",
+  "pnv:test:0700:Dummit-Foote|exercise_7_1_2",
+  "pnv:test:0702:Shakarchi|exercise_1_19c",
+  "pnv:test:0706:Axler|exercise_6_3",
+  "pnv:test:0715:Dummit-Foote|exercise_11_1_13",
+  "pnv:test:0728:Dummit-Foote|exercise_8_3_6b",
+  "pnv:test:0732:Ireland-Rosen|exercise_5_28",
+  "pnv:test:0739:Munkres|exercise_26_12",
+  "pnv:test:0757:Dummit-Foote|exercise_1_1_15",
+  "pnv:test:0769:Dummit-Foote|exercise_1_1_22b",
+  "pnv:test:0770:Dummit-Foote|exercise_3_2_16",
+  "pnv:test:0771:Rudin|exercise_4_11a",
+  "pnv:test:0774:Munkres|exercise_26_12",
+  "pnv:test:0780:Munkres|exercise_24_3a",
+  "pnv:test:0784:Pugh|exercise_2_46",
+  "pnv:test:0789:Ireland-Rosen|exercise_3_10",
+  "pnv:test:0799:Dummit-Foote|exercise_2_4_16a",
+  "pnv:test:0804:Rudin|exercise_4_21a",
+  "pnv:test:0807:Ireland-Rosen|exercise_3_10",
+  "pnv:test:0809:Rudin|exercise_5_5",
+  "pnv:test:0815:Ireland-Rosen|exercise_4_4",
+  "pnv:test:0822:Axler|exercise_1_9",
+  "pnv:test:0828:Munkres|exercise_13_4b2",
+  "pnv:test:0833:Pugh|exercise_2_26",
+  "pnv:test:0841:Rudin|exercise_5_1",
+  "pnv:test:0847:Herstein|exercise_2_3_16",
+  "pnv:test:0856:Rudin|exercise_4_1a",
+  "pnv:test:0859:Munkres|exercise_23_3",
+  "pnv:test:0860:Putnam|exercise_1998_b6",
+  "pnv:test:0861:Herstein|exercise_2_3_16",
+  "pnv:test:0867:Rudin|exercise_4_15",
+  "pnv:test:0874:Rudin|exercise_5_1",
+  "pnv:test:0888:Dummit-Foote|exercise_11_1_13",
+  "pnv:test:0906:Munkres|exercise_13_4b2",
+  "pnv:test:0923:Rudin|exercise_4_15",
+  "pnv:test:0952:Rudin|exercise_1_8",
+  "pnv:test:0953:Pugh|exercise_2_46",
+  "pnv:test:0955:Putnam|exercise_2018_b4",
+  "pnv:test:0965:Pugh|exercise_3_1",
+  "pnv:test:0967:Herstein|exercise_2_2_6c",
+  "pnv:test:0972:Artin|exercise_11_4_6c",
+  "pnv:test:0983:Artin|exercise_10_1_13",
+  "pnv:test:0989:Dummit-Foote|exercise_9_1_10",
+  "pnv:test:1001:Rudin|exercise_3_7",
+  "pnv:test:1011:Rudin|exercise_4_4b",
+  "pnv:test:1013:Herstein|exercise_4_6_2",
+  "pnv:test:1030:Rudin|exercise_1_14",
+  "pnv:test:1047:Rudin|exercise_4_4b",
+  "pnv:test:1049:Dummit-Foote|exercise_9_4_9",
+  "pnv:test:1061:Dummit-Foote|exercise_4_5_19",
+  "pnv:test:1071:Dummit-Foote|exercise_9_4_9",
+  "pnv:test:1080:Putnam|exercise_2001_a5",
+  "pnv:test:1087:Herstein|exercise_2_1_26",
+  "pnv:test:1095:Rudin|exercise_1_18b",
+  "pnv:test:1102:Shakarchi|exercise_1_13b",
+  "pnv:test:1104:Herstein|exercise_2_7_7",
+  "pnv:test:1112:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:1113:Ireland-Rosen|exercise_4_6",
+  "pnv:test:1125:Artin|exercise_10_6_7",
+  "pnv:test:1143:Rudin|exercise_1_8",
+  "pnv:test:1144:Ireland-Rosen|exercise_4_6",
+  "pnv:test:1147:Artin|exercise_3_7_2",
+  "pnv:test:1148:Rudin|exercise_4_3",
+  "pnv:test:1155:Artin|exercise_2_3_2",
+  "pnv:test:1159:Munkres|exercise_13_4b2",
+  "pnv:test:1163:Dummit-Foote|exercise_7_4_27",
+  "pnv:test:1167:Dummit-Foote|exercise_2_4_16c",
+  "pnv:test:1184:Herstein|exercise_4_6_2",
+  "pnv:test:1187:Dummit-Foote|exercise_1_1_17",
+  "pnv:test:1194:Munkres|exercise_31_1",
+  "pnv:test:1208:Putnam|exercise_1999_b4",
+  "pnv:test:1219:Putnam|exercise_1999_b4",
+  "pnv:test:1221:Rudin|exercise_1_4",
+  "pnv:test:1222:Dummit-Foote|exercise_4_5_19",
+  "pnv:test:1225:Munkres|exercise_23_11",
+  "pnv:test:1247:Pugh|exercise_2_32a",
+  "pnv:test:1256:Herstein|exercise_2_5_23",
+  "pnv:test:1260:Herstein|exercise_4_2_6",
+  "pnv:test:1262:Ireland-Rosen|exercise_5_28",
+  "pnv:test:1272:Dummit-Foote|exercise_9_4_2c",
+  "pnv:test:1278:Herstein|exercise_4_2_6",
+  "pnv:test:1283:Dummit-Foote|exercise_4_5_13",
+  "pnv:test:1305:Herstein|exercise_4_2_6",
+  "pnv:test:1309:Dummit-Foote|exercise_3_4_5b",
+  "pnv:test:1310:Herstein|exercise_2_1_26",
+  "pnv:test:1319:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:1323:Shakarchi|exercise_2_13",
+  "pnv:test:1343:Artin|exercise_13_6_10",
+  "pnv:test:1346:Rudin|exercise_1_18b",
+  "pnv:test:1353:Rudin|exercise_4_21a",
+  "pnv:test:1354:Dummit-Foote|exercise_4_4_8a",
+  "pnv:test:1358:Munkres|exercise_13_5b",
+  "pnv:test:1360:Shakarchi|exercise_1_13b",
+  "pnv:test:1372:Herstein|exercise_5_6_14",
+  "pnv:test:1386:Artin|exercise_2_3_2",
+  "pnv:test:1391:Munkres|exercise_32_2c",
+  "pnv:test:1394:Munkres|exercise_24_3a",
+  "pnv:test:1396:Rudin|exercise_5_3",
+  "pnv:test:1409:Dummit-Foote|exercise_9_4_9",
+  "pnv:test:1415:Munkres|exercise_29_4",
+  "pnv:test:1416:Munkres|exercise_29_4",
+  "pnv:test:1427:Putnam|exercise_2018_a5",
+  "pnv:test:1430:Herstein|exercise_3_2_21",
+  "pnv:test:1431:Munkres|exercise_18_13",
+  "pnv:test:1435:Rudin|exercise_2_19a",
+  "pnv:test:1437:Herstein|exercise_2_3_16",
+  "pnv:test:1440:Axler|exercise_6_3",
+  "pnv:test:1447:Rudin|exercise_3_7",
+  "epla:ProofNet:104:0",
+  "epla:ProofNet:107:0",
+  "epla:ProofNet:113:0",
+  "epla:ProofNet:115:0",
+  "epla:ProofNet:120:0",
+  "epla:ProofNet:126:0",
+  "epla:ProofNet:133:0",
+  "epla:ProofNet:13:0",
+  "epla:ProofNet:151:0",
+  "epla:ProofNet:176:0",
+  "epla:ProofNet:181:0",
+  "epla:ProofNet:200:0",
+  "epla:ProofNet:262:0",
+  "epla:ProofNet:27:0",
+  "epla:ProofNet:286:0",
+  "epla:ProofNet:319:0",
+  "epla:ProofNet:328:0",
+  "epla:ProofNet:342:0",
+  "epla:ProofNet:363:0",
+  "epla:ProofNet:369:0",
+  "epla:ProofNet:374:0",
+  "epla:ProofNet:43:0",
+  "epla:ProofNet:49:0",
+  "epla:ProofNet:57:0",
+  "epla:ProofNet:7:0",
+  "epla:ProofNet:89:0",
+  "epla:miniF2F:105:0",
+  "epla:miniF2F:124:0",
+  "epla:miniF2F:125:0",
+  "epla:miniF2F:141:0",
+  "epla:miniF2F:147:0",
+  "epla:miniF2F:164:0",
+  "epla:miniF2F:185:0",
+  "epla:miniF2F:18:0",
+  "epla:miniF2F:198:0",
+  "epla:miniF2F:204:0",
+  "epla:miniF2F:219:0",
+  "epla:miniF2F:228:0",
+  "epla:miniF2F:232:0",
+  "epla:miniF2F:233:0",
+  "epla:miniF2F:243:0",
+  "epla:miniF2F:261:0",
+  "epla:miniF2F:281:0",
+  "epla:miniF2F:28:0",
+  "epla:miniF2F:306:0",
+  "epla:miniF2F:326:0",
+  "epla:miniF2F:378:0",
+  "epla:miniF2F:393:0",
+  "epla:miniF2F:39:0",
+  "epla:miniF2F:409:0",
+  "epla:miniF2F:419:0",
+  "epla:miniF2F:424:0",
+  "epla:miniF2F:425:0",
+  "epla:miniF2F:42:0",
+  "epla:miniF2F:430:0",
+  "epla:miniF2F:43:0",
+  "epla:miniF2F:454:0",
+  "epla:miniF2F:462:0",
+  "epla:miniF2F:466:0",
+  "epla:miniF2F:47:0",
+  "epla:miniF2F:486:0",
+  "epla:miniF2F:493:0",
+  "epla:miniF2F:49:0",
+  "epla:miniF2F:502:0",
+  "epla:miniF2F:512:0",
+  "epla:miniF2F:537:0",
+  "epla:miniF2F:544:0",
+  "epla:miniF2F:54:0",
+  "epla:miniF2F:564:0",
+  "epla:miniF2F:565:0",
+  "epla:miniF2F:569:0",
+  "epla:miniF2F:570:0",
+  "epla:miniF2F:573:0",
+  "epla:miniF2F:580:0",
+  "epla:miniF2F:581:0",
+  "epla:miniF2F:586:0",
+  "epla:miniF2F:59:0",
+  "epla:miniF2F:601:0",
+  "epla:miniF2F:614:0",
+  "epla:miniF2F:623:0",
+  "epla:miniF2F:640:0",
+  "epla:miniF2F:642:0",
+  "epla:miniF2F:647:0",
+  "epla:miniF2F:658:0",
+  "epla:miniF2F:680:0",
+  "epla:miniF2F:685:0",
+  "epla:miniF2F:714:0",
+  "epla:miniF2F:734:0",
+  "epla:miniF2F:743:0",
+  "epla:miniF2F:754:0",
+  "epla:miniF2F:757:0",
+  "epla:miniF2F:761:0",
+  "epla:miniF2F:787:0",
+  "epla:miniF2F:802:0",
+  "epla:miniF2F:807:0",
+  "epla:miniF2F:826:0",
+  "epla:miniF2F:828:0",
+  "epla:miniF2F:830:0",
+  "epla:miniF2F:85:0",
+  "epla:miniF2F:8:0"
+ ],
+ "track_B": [
+  "epla:ProofNet:108:0",
+  "epla:ProofNet:116:0",
+  "epla:ProofNet:121:0",
+  "epla:ProofNet:122:0",
+  "epla:ProofNet:164:0",
+  "epla:ProofNet:191:0",
+  "epla:ProofNet:197:0",
+  "epla:ProofNet:209:0",
+  "epla:ProofNet:210:0",
+  "epla:ProofNet:21:0",
+  "epla:ProofNet:231:0",
+  "epla:ProofNet:239:0",
+  "epla:ProofNet:244:0",
+  "epla:ProofNet:254:0",
+  "epla:ProofNet:264:0",
+  "epla:ProofNet:270:0",
+  "epla:ProofNet:277:0",
+  "epla:ProofNet:329:0",
+  "epla:ProofNet:336:0",
+  "epla:ProofNet:370:0",
+  "epla:ProofNet:374:0",
+  "epla:ProofNet:376:0",
+  "epla:ProofNet:384:0",
+  "epla:ProofNet:386:0",
+  "epla:ProofNet:387:0",
+  "epla:ProofNet:38:0",
+  "epla:ProofNet:397:0",
+  "epla:ProofNet:94:0",
+  "epla:ProofNet:98:0",
+  "epla:miniF2F:100:0",
+  "epla:miniF2F:105:0",
+  "epla:miniF2F:109:0",
+  "epla:miniF2F:113:0",
+  "epla:miniF2F:117:0",
+  "epla:miniF2F:144:0",
+  "epla:miniF2F:146:0",
+  "epla:miniF2F:163:0",
+  "epla:miniF2F:171:0",
+  "epla:miniF2F:175:0",
+  "epla:miniF2F:184:0",
+  "epla:miniF2F:196:0",
+  "epla:miniF2F:19:0",
+  "epla:miniF2F:200:0",
+  "epla:miniF2F:210:0",
+  "epla:miniF2F:219:0",
+  "epla:miniF2F:221:0",
+  "epla:miniF2F:231:0",
+  "epla:miniF2F:237:0",
+  "epla:miniF2F:240:0",
+  "epla:miniF2F:243:0",
+  "epla:miniF2F:272:0",
+  "epla:miniF2F:278:0",
+  "epla:miniF2F:279:0",
+  "epla:miniF2F:280:0",
+  "epla:miniF2F:281:0",
+  "epla:miniF2F:284:0",
+  "epla:miniF2F:289:0",
+  "epla:miniF2F:298:0",
+  "epla:miniF2F:315:0",
+  "epla:miniF2F:319:0",
+  "epla:miniF2F:321:0",
+  "epla:miniF2F:329:0",
+  "epla:miniF2F:333:0",
+  "epla:miniF2F:337:0",
+  "epla:miniF2F:347:0",
+  "epla:miniF2F:348:0",
+  "epla:miniF2F:34:0",
+  "epla:miniF2F:369:0",
+  "epla:miniF2F:376:0",
+  "epla:miniF2F:384:0",
+  "epla:miniF2F:40:0",
+  "epla:miniF2F:420:0",
+  "epla:miniF2F:429:0",
+  "epla:miniF2F:430:0",
+  "epla:miniF2F:438:0",
+  "epla:miniF2F:452:0",
+  "epla:miniF2F:480:0",
+  "epla:miniF2F:489:0",
+  "epla:miniF2F:492:0",
+  "epla:miniF2F:517:0",
+  "epla:miniF2F:528:0",
+  "epla:miniF2F:53:0",
+  "epla:miniF2F:543:0",
+  "epla:miniF2F:555:0",
+  "epla:miniF2F:557:0",
+  "epla:miniF2F:597:0",
+  "epla:miniF2F:600:0",
+  "epla:miniF2F:609:0",
+  "epla:miniF2F:645:0",
+  "epla:miniF2F:66:0",
+  "epla:miniF2F:675:0",
+  "epla:miniF2F:676:0",
+  "epla:miniF2F:680:0",
+  "epla:miniF2F:68:0",
+  "epla:miniF2F:693:0",
+  "epla:miniF2F:702:0",
+  "epla:miniF2F:72:0",
+  "epla:miniF2F:734:0",
+  "epla:miniF2F:739:0",
+  "epla:miniF2F:753:0",
+  "epla:miniF2F:759:0",
+  "epla:miniF2F:763:0",
+  "epla:miniF2F:770:0",
+  "epla:miniF2F:778:0",
+  "epla:miniF2F:77:0",
+  "epla:miniF2F:783:0",
+  "epla:miniF2F:793:0",
+  "epla:miniF2F:815:0",
+  "epla:miniF2F:825:0",
+  "epla:miniF2F:828:0",
+  "epla:miniF2F:88:0",
+  "epla:miniF2F:92:0",
+  "epla:miniF2F:93:0",
+  "epla:miniF2F:94:0",
+  "epla:miniF2F:95:0",
+  "pnv:test:0028:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:0034:Artin|exercise_10_4_7a",
+  "pnv:test:0041:Munkres|exercise_26_12",
+  "pnv:test:0050:Munkres|exercise_23_11",
+  "pnv:test:0080:Herstein|exercise_5_3_7",
+  "pnv:test:0082:Artin|exercise_10_1_13",
+  "pnv:test:0094:Ireland-Rosen|exercise_4_4",
+  "pnv:test:0096:Herstein|exercise_5_3_7",
+  "pnv:test:0110:Rudin|exercise_4_15",
+  "pnv:test:0120:Rudin|exercise_4_15",
+  "pnv:test:0169:Herstein|exercise_2_7_7",
+  "pnv:test:0192:Artin|exercise_10_4_7a",
+  "pnv:test:0232:Munkres|exercise_34_9",
+  "pnv:test:0238:Rudin|exercise_4_15",
+  "pnv:test:0262:Dummit-Foote|exercise_4_4_8a",
+  "pnv:test:0264:Dummit-Foote|exercise_3_1_22a",
+  "pnv:test:0286:Munkres|exercise_26_12",
+  "pnv:test:0287:Rudin|exercise_4_15",
+  "pnv:test:0291:Artin|exercise_10_4_7a",
+  "pnv:test:0303:Herstein|exercise_3_2_21",
+  "pnv:test:0311:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:0318:Munkres|exercise_26_12",
+  "pnv:test:0334:Ireland-Rosen|exercise_4_4",
+  "pnv:test:0342:Munkres|exercise_32_2a",
+  "pnv:test:0381:Munkres|exercise_34_9",
+  "pnv:test:0404:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:0406:Herstein|exercise_5_3_7",
+  "pnv:test:0408:Dummit-Foote|exercise_3_2_8",
+  "pnv:test:0445:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:0459:Herstein|exercise_3_2_21",
+  "pnv:test:0463:Ireland-Rosen|exercise_4_4",
+  "pnv:test:0471:Herstein|exercise_3_2_21",
+  "pnv:test:0480:Munkres|exercise_23_11",
+  "pnv:test:0493:Munkres|exercise_34_9",
+  "pnv:test:0552:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:0558:Munkres|exercise_32_2c",
+  "pnv:test:0582:Dummit-Foote|exercise_8_2_4",
+  "pnv:test:0608:Herstein|exercise_3_2_21",
+  "pnv:test:0650:Dummit-Foote|exercise_1_1_20",
+  "pnv:test:0690:Dummit-Foote|exercise_3_2_8",
+  "pnv:test:0700:Dummit-Foote|exercise_7_1_2",
+  "pnv:test:0715:Dummit-Foote|exercise_11_1_13",
+  "pnv:test:0726:Rudin|exercise_4_15",
+  "pnv:test:0737:Herstein|exercise_3_2_21",
+  "pnv:test:0766:Ireland-Rosen|exercise_4_4",
+  "pnv:test:0772:Munkres|exercise_18_8a",
+  "pnv:test:0774:Munkres|exercise_26_12",
+  "pnv:test:0844:Munkres|exercise_34_9",
+  "pnv:test:0849:Artin|exercise_10_1_13",
+  "pnv:test:0890:Dummit-Foote|exercise_3_1_22a",
+  "pnv:test:0897:Herstein|exercise_5_3_7",
+  "pnv:test:0919:Munkres|exercise_23_11",
+  "pnv:test:0974:Rudin|exercise_4_15",
+  "pnv:test:0981:Munkres|exercise_34_9",
+  "pnv:test:0982:Munkres|exercise_23_11",
+  "pnv:test:0984:Munkres|exercise_26_12",
+  "pnv:test:1021:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:1040:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:1052:Munkres|exercise_23_11",
+  "pnv:test:1058:Dummit-Foote|exercise_3_2_8",
+  "pnv:test:1064:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:1112:Dummit-Foote|exercise_2_1_13",
+  "pnv:test:1119:Munkres|exercise_34_9",
+  "pnv:test:1152:Dummit-Foote|exercise_3_4_5b",
+  "pnv:test:1153:Munkres|exercise_26_12",
+  "pnv:test:1154:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:1169:Ireland-Rosen|exercise_4_4",
+  "pnv:test:1185:Munkres|exercise_31_3",
+  "pnv:test:1199:Munkres|exercise_34_9",
+  "pnv:test:1212:Munkres|exercise_18_8a",
+  "pnv:test:1215:Artin|exercise_10_1_13",
+  "pnv:test:1216:Munkres|exercise_33_7",
+  "pnv:test:1222:Dummit-Foote|exercise_4_5_19",
+  "pnv:test:1224:Artin|exercise_10_4_7a",
+  "pnv:test:1226:Munkres|exercise_23_6",
+  "pnv:test:1228:Munkres|exercise_34_9",
+  "pnv:test:1241:Dummit-Foote|exercise_3_2_8",
+  "pnv:test:1278:Herstein|exercise_4_2_6",
+  "pnv:test:1284:Dummit-Foote|exercise_1_1_4",
+  "pnv:test:1309:Dummit-Foote|exercise_3_4_5b",
+  "pnv:test:1343:Artin|exercise_13_6_10",
+  "pnv:test:1363:Dummit-Foote|exercise_4_4_2",
+  "pnv:test:1364:Munkres|exercise_31_1",
+  "pnv:test:1435:Rudin|exercise_2_19a",
+  "pnv:test:1439:Munkres|exercise_23_11"
+ ],
+ "gold": {
+  "pnv:test:0001:Putnam|exercise_1998_b6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0007:Dummit-Foote|exercise_8_3_6b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0012:Axler|exercise_6_3": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0028:Dummit-Foote|exercise_4_4_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0034:Artin|exercise_10_4_7a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0036:Axler|exercise_1_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0037:Ireland-Rosen|exercise_4_11": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0041:Munkres|exercise_26_12": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0047:Artin|exercise_13_6_10": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0050:Munkres|exercise_23_11": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0052:Herstein|exercise_2_2_6c": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0058:Munkres|exercise_23_3": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0080:Herstein|exercise_5_3_7": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0082:Artin|exercise_10_1_13": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0085:Pugh|exercise_2_46": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0086:Dummit-Foote|exercise_7_1_12": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0093:Dummit-Foote|exercise_2_4_16a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0094:Ireland-Rosen|exercise_4_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0096:Herstein|exercise_5_3_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0104:Rudin|exercise_1_14": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0109:Munkres|exercise_16_6": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0110:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0115:Ireland-Rosen|exercise_4_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0116:Putnam|exercise_2018_a5": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0117:Munkres|exercise_13_8a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0120:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0129:Artin|exercise_10_1_13": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0134:Putnam|exercise_1998_b6": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0152:Dummit-Foote|exercise_9_4_2a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0169:Herstein|exercise_2_7_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0190:Pugh|exercise_3_1": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0192:Artin|exercise_10_4_7a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0195:Herstein|exercise_2_1_18": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0197:Munkres|exercise_29_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0214:Pugh|exercise_2_26": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0215:Munkres|exercise_31_1": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0219:Herstein|exercise_2_1_18": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0226:Pugh|exercise_3_1": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0232:Munkres|exercise_34_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0234:Herstein|exercise_2_5_23": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0238:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0248:Ireland-Rosen|exercise_2_27a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0262:Dummit-Foote|exercise_4_4_8a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0264:Dummit-Foote|exercise_3_1_22a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0286:Munkres|exercise_26_12": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0287:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0291:Artin|exercise_10_4_7a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0295:Herstein|exercise_2_11_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0296:Herstein|exercise_4_6_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0298:Munkres|exercise_32_2c": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0301:Artin|exercise_3_2_7": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0302:Rudin|exercise_3_13": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0303:Herstein|exercise_3_2_21": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0306:Dummit-Foote|exercise_4_4_6b": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0309:Herstein|exercise_2_2_6c": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0311:Dummit-Foote|exercise_2_1_13": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0313:Dummit-Foote|exercise_3_2_16": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0318:Munkres|exercise_26_12": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0319:Axler|exercise_5_13": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0323:Ireland-Rosen|exercise_4_11": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0324:Putnam|exercise_2018_b4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0330:Rudin|exercise_1_8": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0334:Ireland-Rosen|exercise_4_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0338:Dummit-Foote|exercise_4_4_6b": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0342:Munkres|exercise_32_2a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0347:Ireland-Rosen|exercise_3_10": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0348:Rudin|exercise_5_3": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0355:Dummit-Foote|exercise_1_1_17": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0359:Axler|exercise_1_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0364:Axler|exercise_1_4": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0369:Artin|exercise_13_6_10": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0373:Herstein|exercise_2_7_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0381:Munkres|exercise_34_9": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0384:Dummit-Foote|exercise_9_4_2a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0387:Rudin|exercise_4_3": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0392:Rudin|exercise_4_1a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0402:Dummit-Foote|exercise_1_1_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0404:Dummit-Foote|exercise_2_1_13": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0406:Herstein|exercise_5_3_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0408:Dummit-Foote|exercise_3_2_8": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0417:Dummit-Foote|exercise_9_1_10": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0426:Munkres|exercise_13_8a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0432:Axler|exercise_5_1": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0439:Artin|exercise_10_6_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0442:Rudin|exercise_3_7": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0445:Dummit-Foote|exercise_4_4_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0453:Axler|exercise_1_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0459:Herstein|exercise_3_2_21": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0461:Putnam|exercise_1998_b6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0463:Ireland-Rosen|exercise_4_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0464:Dummit-Foote|exercise_4_5_33": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0469:Rudin|exercise_4_1a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0471:Herstein|exercise_3_2_21": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0473:Dummit-Foote|exercise_1_1_15": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0474:Dummit-Foote|exercise_9_4_2a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0478:Herstein|exercise_5_4_3": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0480:Munkres|exercise_23_11": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0493:Munkres|exercise_34_9": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0494:Herstein|exercise_4_6_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0502:Rudin|exercise_3_7": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0520:Dummit-Foote|exercise_3_3_3": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0523:Dummit-Foote|exercise_7_3_16": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0542:Pugh|exercise_3_1": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0546:Artin|exercise_2_8_6": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0551:Pugh|exercise_3_1": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0552:Dummit-Foote|exercise_4_4_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0555:Munkres|exercise_31_1": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0558:Munkres|exercise_32_2c": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0564:Pugh|exercise_2_92": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0565:Rudin|exercise_5_5": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0569:Dummit-Foote|exercise_2_1_13": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0582:Dummit-Foote|exercise_8_2_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0585:Rudin|exercise_4_11a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0601:Herstein|exercise_5_1_8": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0605:Dummit-Foote|exercise_9_4_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0608:Herstein|exercise_3_2_21": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0618:Herstein|exercise_2_11_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0635:Rudin|exercise_4_8a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0640:Ireland-Rosen|exercise_4_11": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0647:Artin|exercise_11_4_6a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0650:Dummit-Foote|exercise_1_1_20": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0656:Putnam|exercise_2018_a5": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0664:Herstein|exercise_2_1_26": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0674:Munkres|exercise_22_2a": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0679:Herstein|exercise_2_5_52": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0689:Herstein|exercise_4_2_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0690:Dummit-Foote|exercise_3_2_8": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0691:Dummit-Foote|exercise_2_4_16a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0700:Dummit-Foote|exercise_7_1_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0702:Shakarchi|exercise_1_19c": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:0706:Axler|exercise_6_3": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0715:Dummit-Foote|exercise_11_1_13": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0726:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0728:Dummit-Foote|exercise_8_3_6b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0732:Ireland-Rosen|exercise_5_28": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0737:Herstein|exercise_3_2_21": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0739:Munkres|exercise_26_12": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0757:Dummit-Foote|exercise_1_1_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0766:Ireland-Rosen|exercise_4_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0769:Dummit-Foote|exercise_1_1_22b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0770:Dummit-Foote|exercise_3_2_16": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0771:Rudin|exercise_4_11a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0772:Munkres|exercise_18_8a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0774:Munkres|exercise_26_12": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0780:Munkres|exercise_24_3a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0784:Pugh|exercise_2_46": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0789:Ireland-Rosen|exercise_3_10": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0799:Dummit-Foote|exercise_2_4_16a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0804:Rudin|exercise_4_21a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0807:Ireland-Rosen|exercise_3_10": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0809:Rudin|exercise_5_5": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0815:Ireland-Rosen|exercise_4_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0822:Axler|exercise_1_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0828:Munkres|exercise_13_4b2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0833:Pugh|exercise_2_26": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0841:Rudin|exercise_5_1": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0844:Munkres|exercise_34_9": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0847:Herstein|exercise_2_3_16": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0849:Artin|exercise_10_1_13": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0856:Rudin|exercise_4_1a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0859:Munkres|exercise_23_3": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0860:Putnam|exercise_1998_b6": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0861:Herstein|exercise_2_3_16": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0867:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0874:Rudin|exercise_5_1": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0888:Dummit-Foote|exercise_11_1_13": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0890:Dummit-Foote|exercise_3_1_22a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0897:Herstein|exercise_5_3_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0906:Munkres|exercise_13_4b2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0919:Munkres|exercise_23_11": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0923:Rudin|exercise_4_15": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0952:Rudin|exercise_1_8": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0953:Pugh|exercise_2_46": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:0955:Putnam|exercise_2018_b4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0965:Pugh|exercise_3_1": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0967:Herstein|exercise_2_2_6c": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0972:Artin|exercise_11_4_6c": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0974:Rudin|exercise_4_15": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0981:Munkres|exercise_34_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:0982:Munkres|exercise_23_11": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:0983:Artin|exercise_10_1_13": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0984:Munkres|exercise_26_12": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:0989:Dummit-Foote|exercise_9_1_10": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1001:Rudin|exercise_3_7": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:1011:Rudin|exercise_4_4b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1013:Herstein|exercise_4_6_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1021:Dummit-Foote|exercise_4_4_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1030:Rudin|exercise_1_14": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:1040:Dummit-Foote|exercise_2_1_13": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1047:Rudin|exercise_4_4b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1049:Dummit-Foote|exercise_9_4_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1052:Munkres|exercise_23_11": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:1058:Dummit-Foote|exercise_3_2_8": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1061:Dummit-Foote|exercise_4_5_19": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1064:Dummit-Foote|exercise_2_1_13": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1071:Dummit-Foote|exercise_9_4_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1080:Putnam|exercise_2001_a5": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1087:Herstein|exercise_2_1_26": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1095:Rudin|exercise_1_18b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1102:Shakarchi|exercise_1_13b": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1104:Herstein|exercise_2_7_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1112:Dummit-Foote|exercise_2_1_13": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1113:Ireland-Rosen|exercise_4_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1119:Munkres|exercise_34_9": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1125:Artin|exercise_10_6_7": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1143:Rudin|exercise_1_8": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1144:Ireland-Rosen|exercise_4_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1147:Artin|exercise_3_7_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1148:Rudin|exercise_4_3": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1152:Dummit-Foote|exercise_3_4_5b": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1153:Munkres|exercise_26_12": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1154:Dummit-Foote|exercise_4_4_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1155:Artin|exercise_2_3_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1159:Munkres|exercise_13_4b2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1163:Dummit-Foote|exercise_7_4_27": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1167:Dummit-Foote|exercise_2_4_16c": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1169:Ireland-Rosen|exercise_4_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1184:Herstein|exercise_4_6_2": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1185:Munkres|exercise_31_3": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1187:Dummit-Foote|exercise_1_1_17": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1194:Munkres|exercise_31_1": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1199:Munkres|exercise_34_9": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1208:Putnam|exercise_1999_b4": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1212:Munkres|exercise_18_8a": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1215:Artin|exercise_10_1_13": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1216:Munkres|exercise_33_7": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1219:Putnam|exercise_1999_b4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1221:Rudin|exercise_1_4": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1222:Dummit-Foote|exercise_4_5_19": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1224:Artin|exercise_10_4_7a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1225:Munkres|exercise_23_11": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:1226:Munkres|exercise_23_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1228:Munkres|exercise_34_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1241:Dummit-Foote|exercise_3_2_8": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1247:Pugh|exercise_2_32a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1256:Herstein|exercise_2_5_23": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1260:Herstein|exercise_4_2_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1262:Ireland-Rosen|exercise_5_28": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1272:Dummit-Foote|exercise_9_4_2c": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1278:Herstein|exercise_4_2_6": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1283:Dummit-Foote|exercise_4_5_13": {
+   "G1": true,
+   "G2": false
+  },
+  "pnv:test:1284:Dummit-Foote|exercise_1_1_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1305:Herstein|exercise_4_2_6": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1309:Dummit-Foote|exercise_3_4_5b": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1310:Herstein|exercise_2_1_26": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1319:Dummit-Foote|exercise_4_4_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1323:Shakarchi|exercise_2_13": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:1343:Artin|exercise_13_6_10": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1346:Rudin|exercise_1_18b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1353:Rudin|exercise_4_21a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1354:Dummit-Foote|exercise_4_4_8a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1358:Munkres|exercise_13_5b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1360:Shakarchi|exercise_1_13b": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1363:Dummit-Foote|exercise_4_4_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1364:Munkres|exercise_31_1": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1372:Herstein|exercise_5_6_14": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1386:Artin|exercise_2_3_2": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1391:Munkres|exercise_32_2c": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1394:Munkres|exercise_24_3a": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1396:Rudin|exercise_5_3": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1409:Dummit-Foote|exercise_9_4_9": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1415:Munkres|exercise_29_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1416:Munkres|exercise_29_4": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1427:Putnam|exercise_2018_a5": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1430:Herstein|exercise_3_2_21": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1431:Munkres|exercise_18_13": {
+   "G1": false,
+   "G2": false
+  },
+  "pnv:test:1435:Rudin|exercise_2_19a": {
+   "G1": true,
+   "G2": true
+  },
+  "pnv:test:1437:Herstein|exercise_2_3_16": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:1439:Munkres|exercise_23_11": {
+   "G1": true,
+   "G2": null
+  },
+  "pnv:test:1440:Axler|exercise_6_3": {
+   "G1": false,
+   "G2": null
+  },
+  "pnv:test:1447:Rudin|exercise_3_7": {
+   "G1": false,
+   "G2": null
+  },
+  "epla:ProofNet:7:0": {
+   "G3": true
+  },
+  "epla:ProofNet:13:0": {
+   "G3": true
+  },
+  "epla:ProofNet:21:0": {
+   "G3": true
+  },
+  "epla:ProofNet:27:0": {
+   "G3": true
+  },
+  "epla:ProofNet:38:0": {
+   "G3": true
+  },
+  "epla:ProofNet:43:0": {
+   "G3": true
+  },
+  "epla:ProofNet:49:0": {
+   "G3": false
+  },
+  "epla:ProofNet:57:0": {
+   "G3": true
+  },
+  "epla:ProofNet:89:0": {
+   "G3": false
+  },
+  "epla:ProofNet:94:0": {
+   "G3": false
+  },
+  "epla:ProofNet:98:0": {
+   "G3": true
+  },
+  "epla:ProofNet:104:0": {
+   "G3": true
+  },
+  "epla:ProofNet:107:0": {
+   "G3": false
+  },
+  "epla:ProofNet:108:0": {
+   "G3": true
+  },
+  "epla:ProofNet:113:0": {
+   "G3": true
+  },
+  "epla:ProofNet:115:0": {
+   "G3": true
+  },
+  "epla:ProofNet:116:0": {
+   "G3": true
+  },
+  "epla:ProofNet:120:0": {
+   "G3": true
+  },
+  "epla:ProofNet:121:0": {
+   "G3": true
+  },
+  "epla:ProofNet:122:0": {
+   "G3": true
+  },
+  "epla:ProofNet:126:0": {
+   "G3": false
+  },
+  "epla:ProofNet:133:0": {
+   "G3": true
+  },
+  "epla:ProofNet:151:0": {
+   "G3": true
+  },
+  "epla:ProofNet:164:0": {
+   "G3": true
+  },
+  "epla:ProofNet:176:0": {
+   "G3": true
+  },
+  "epla:ProofNet:181:0": {
+   "G3": false
+  },
+  "epla:ProofNet:191:0": {
+   "G3": true
+  },
+  "epla:ProofNet:197:0": {
+   "G3": true
+  },
+  "epla:ProofNet:200:0": {
+   "G3": true
+  },
+  "epla:ProofNet:209:0": {
+   "G3": true
+  },
+  "epla:ProofNet:210:0": {
+   "G3": true
+  },
+  "epla:ProofNet:231:0": {
+   "G3": true
+  },
+  "epla:ProofNet:239:0": {
+   "G3": true
+  },
+  "epla:ProofNet:244:0": {
+   "G3": true
+  },
+  "epla:ProofNet:254:0": {
+   "G3": true
+  },
+  "epla:ProofNet:262:0": {
+   "G3": true
+  },
+  "epla:ProofNet:264:0": {
+   "G3": true
+  },
+  "epla:ProofNet:270:0": {
+   "G3": true
+  },
+  "epla:ProofNet:277:0": {
+   "G3": true
+  },
+  "epla:ProofNet:286:0": {
+   "G3": true
+  },
+  "epla:ProofNet:319:0": {
+   "G3": true
+  },
+  "epla:ProofNet:328:0": {
+   "G3": true
+  },
+  "epla:ProofNet:329:0": {
+   "G3": true
+  },
+  "epla:ProofNet:336:0": {
+   "G3": true
+  },
+  "epla:ProofNet:342:0": {
+   "G3": true
+  },
+  "epla:ProofNet:363:0": {
+   "G3": true
+  },
+  "epla:ProofNet:369:0": {
+   "G3": false
+  },
+  "epla:ProofNet:370:0": {
+   "G3": true
+  },
+  "epla:ProofNet:374:0": {
+   "G3": true
+  },
+  "epla:ProofNet:376:0": {
+   "G3": true
+  },
+  "epla:ProofNet:384:0": {
+   "G3": true
+  },
+  "epla:ProofNet:386:0": {
+   "G3": true
+  },
+  "epla:ProofNet:387:0": {
+   "G3": true
+  },
+  "epla:ProofNet:397:0": {
+   "G3": true
+  },
+  "epla:miniF2F:8:0": {
+   "G3": true
+  },
+  "epla:miniF2F:18:0": {
+   "G3": true
+  },
+  "epla:miniF2F:19:0": {
+   "G3": true
+  },
+  "epla:miniF2F:28:0": {
+   "G3": true
+  },
+  "epla:miniF2F:34:0": {
+   "G3": true
+  },
+  "epla:miniF2F:39:0": {
+   "G3": true
+  },
+  "epla:miniF2F:40:0": {
+   "G3": true
+  },
+  "epla:miniF2F:42:0": {
+   "G3": true
+  },
+  "epla:miniF2F:43:0": {
+   "G3": true
+  },
+  "epla:miniF2F:47:0": {
+   "G3": true
+  },
+  "epla:miniF2F:49:0": {
+   "G3": true
+  },
+  "epla:miniF2F:53:0": {
+   "G3": true
+  },
+  "epla:miniF2F:54:0": {
+   "G3": true
+  },
+  "epla:miniF2F:59:0": {
+   "G3": true
+  },
+  "epla:miniF2F:66:0": {
+   "G3": true
+  },
+  "epla:miniF2F:68:0": {
+   "G3": true
+  },
+  "epla:miniF2F:72:0": {
+   "G3": true
+  },
+  "epla:miniF2F:77:0": {
+   "G3": true
+  },
+  "epla:miniF2F:85:0": {
+   "G3": true
+  },
+  "epla:miniF2F:88:0": {
+   "G3": true
+  },
+  "epla:miniF2F:92:0": {
+   "G3": true
+  },
+  "epla:miniF2F:93:0": {
+   "G3": true
+  },
+  "epla:miniF2F:94:0": {
+   "G3": true
+  },
+  "epla:miniF2F:95:0": {
+   "G3": true
+  },
+  "epla:miniF2F:100:0": {
+   "G3": true
+  },
+  "epla:miniF2F:105:0": {
+   "G3": true
+  },
+  "epla:miniF2F:109:0": {
+   "G3": true
+  },
+  "epla:miniF2F:113:0": {
+   "G3": true
+  },
+  "epla:miniF2F:117:0": {
+   "G3": true
+  },
+  "epla:miniF2F:124:0": {
+   "G3": true
+  },
+  "epla:miniF2F:125:0": {
+   "G3": true
+  },
+  "epla:miniF2F:141:0": {
+   "G3": true
+  },
+  "epla:miniF2F:144:0": {
+   "G3": true
+  },
+  "epla:miniF2F:146:0": {
+   "G3": true
+  },
+  "epla:miniF2F:147:0": {
+   "G3": true
+  },
+  "epla:miniF2F:163:0": {
+   "G3": true
+  },
+  "epla:miniF2F:164:0": {
+   "G3": true
+  },
+  "epla:miniF2F:171:0": {
+   "G3": true
+  },
+  "epla:miniF2F:175:0": {
+   "G3": true
+  },
+  "epla:miniF2F:184:0": {
+   "G3": true
+  },
+  "epla:miniF2F:185:0": {
+   "G3": true
+  },
+  "epla:miniF2F:196:0": {
+   "G3": true
+  },
+  "epla:miniF2F:198:0": {
+   "G3": false
+  },
+  "epla:miniF2F:200:0": {
+   "G3": true
+  },
+  "epla:miniF2F:204:0": {
+   "G3": false
+  },
+  "epla:miniF2F:210:0": {
+   "G3": true
+  },
+  "epla:miniF2F:219:0": {
+   "G3": true
+  },
+  "epla:miniF2F:221:0": {
+   "G3": true
+  },
+  "epla:miniF2F:228:0": {
+   "G3": true
+  },
+  "epla:miniF2F:231:0": {
+   "G3": true
+  },
+  "epla:miniF2F:232:0": {
+   "G3": true
+  },
+  "epla:miniF2F:233:0": {
+   "G3": true
+  },
+  "epla:miniF2F:237:0": {
+   "G3": true
+  },
+  "epla:miniF2F:240:0": {
+   "G3": true
+  },
+  "epla:miniF2F:243:0": {
+   "G3": true
+  },
+  "epla:miniF2F:261:0": {
+   "G3": true
+  },
+  "epla:miniF2F:272:0": {
+   "G3": true
+  },
+  "epla:miniF2F:278:0": {
+   "G3": true
+  },
+  "epla:miniF2F:279:0": {
+   "G3": true
+  },
+  "epla:miniF2F:280:0": {
+   "G3": true
+  },
+  "epla:miniF2F:281:0": {
+   "G3": true
+  },
+  "epla:miniF2F:284:0": {
+   "G3": false
+  },
+  "epla:miniF2F:289:0": {
+   "G3": true
+  },
+  "epla:miniF2F:298:0": {
+   "G3": true
+  },
+  "epla:miniF2F:306:0": {
+   "G3": true
+  },
+  "epla:miniF2F:315:0": {
+   "G3": true
+  },
+  "epla:miniF2F:319:0": {
+   "G3": true
+  },
+  "epla:miniF2F:321:0": {
+   "G3": true
+  },
+  "epla:miniF2F:326:0": {
+   "G3": true
+  },
+  "epla:miniF2F:329:0": {
+   "G3": true
+  },
+  "epla:miniF2F:333:0": {
+   "G3": true
+  },
+  "epla:miniF2F:337:0": {
+   "G3": true
+  },
+  "epla:miniF2F:347:0": {
+   "G3": true
+  },
+  "epla:miniF2F:348:0": {
+   "G3": true
+  },
+  "epla:miniF2F:369:0": {
+   "G3": true
+  },
+  "epla:miniF2F:376:0": {
+   "G3": false
+  },
+  "epla:miniF2F:378:0": {
+   "G3": true
+  },
+  "epla:miniF2F:384:0": {
+   "G3": true
+  },
+  "epla:miniF2F:393:0": {
+   "G3": true
+  },
+  "epla:miniF2F:409:0": {
+   "G3": true
+  },
+  "epla:miniF2F:419:0": {
+   "G3": true
+  },
+  "epla:miniF2F:420:0": {
+   "G3": true
+  },
+  "epla:miniF2F:424:0": {
+   "G3": true
+  },
+  "epla:miniF2F:425:0": {
+   "G3": true
+  },
+  "epla:miniF2F:429:0": {
+   "G3": true
+  },
+  "epla:miniF2F:430:0": {
+   "G3": true
+  },
+  "epla:miniF2F:438:0": {
+   "G3": true
+  },
+  "epla:miniF2F:452:0": {
+   "G3": true
+  },
+  "epla:miniF2F:454:0": {
+   "G3": true
+  },
+  "epla:miniF2F:462:0": {
+   "G3": true
+  },
+  "epla:miniF2F:466:0": {
+   "G3": true
+  },
+  "epla:miniF2F:480:0": {
+   "G3": true
+  },
+  "epla:miniF2F:486:0": {
+   "G3": true
+  },
+  "epla:miniF2F:489:0": {
+   "G3": true
+  },
+  "epla:miniF2F:492:0": {
+   "G3": true
+  },
+  "epla:miniF2F:493:0": {
+   "G3": true
+  },
+  "epla:miniF2F:502:0": {
+   "G3": true
+  },
+  "epla:miniF2F:512:0": {
+   "G3": true
+  },
+  "epla:miniF2F:517:0": {
+   "G3": true
+  },
+  "epla:miniF2F:528:0": {
+   "G3": true
+  },
+  "epla:miniF2F:537:0": {
+   "G3": true
+  },
+  "epla:miniF2F:543:0": {
+   "G3": true
+  },
+  "epla:miniF2F:544:0": {
+   "G3": true
+  },
+  "epla:miniF2F:555:0": {
+   "G3": true
+  },
+  "epla:miniF2F:557:0": {
+   "G3": true
+  },
+  "epla:miniF2F:564:0": {
+   "G3": true
+  },
+  "epla:miniF2F:565:0": {
+   "G3": true
+  },
+  "epla:miniF2F:569:0": {
+   "G3": true
+  },
+  "epla:miniF2F:570:0": {
+   "G3": true
+  },
+  "epla:miniF2F:573:0": {
+   "G3": true
+  },
+  "epla:miniF2F:580:0": {
+   "G3": true
+  },
+  "epla:miniF2F:581:0": {
+   "G3": true
+  },
+  "epla:miniF2F:586:0": {
+   "G3": false
+  },
+  "epla:miniF2F:597:0": {
+   "G3": true
+  },
+  "epla:miniF2F:600:0": {
+   "G3": true
+  },
+  "epla:miniF2F:601:0": {
+   "G3": true
+  },
+  "epla:miniF2F:609:0": {
+   "G3": true
+  },
+  "epla:miniF2F:614:0": {
+   "G3": true
+  },
+  "epla:miniF2F:623:0": {
+   "G3": true
+  },
+  "epla:miniF2F:640:0": {
+   "G3": true
+  },
+  "epla:miniF2F:642:0": {
+   "G3": true
+  },
+  "epla:miniF2F:645:0": {
+   "G3": true
+  },
+  "epla:miniF2F:647:0": {
+   "G3": false
+  },
+  "epla:miniF2F:658:0": {
+   "G3": false
+  },
+  "epla:miniF2F:675:0": {
+   "G3": true
+  },
+  "epla:miniF2F:676:0": {
+   "G3": true
+  },
+  "epla:miniF2F:680:0": {
+   "G3": true
+  },
+  "epla:miniF2F:685:0": {
+   "G3": true
+  },
+  "epla:miniF2F:693:0": {
+   "G3": true
+  },
+  "epla:miniF2F:702:0": {
+   "G3": true
+  },
+  "epla:miniF2F:714:0": {
+   "G3": true
+  },
+  "epla:miniF2F:734:0": {
+   "G3": true
+  },
+  "epla:miniF2F:739:0": {
+   "G3": true
+  },
+  "epla:miniF2F:743:0": {
+   "G3": true
+  },
+  "epla:miniF2F:753:0": {
+   "G3": true
+  },
+  "epla:miniF2F:754:0": {
+   "G3": true
+  },
+  "epla:miniF2F:757:0": {
+   "G3": true
+  },
+  "epla:miniF2F:759:0": {
+   "G3": true
+  },
+  "epla:miniF2F:761:0": {
+   "G3": true
+  },
+  "epla:miniF2F:763:0": {
+   "G3": true
+  },
+  "epla:miniF2F:770:0": {
+   "G3": true
+  },
+  "epla:miniF2F:778:0": {
+   "G3": true
+  },
+  "epla:miniF2F:783:0": {
+   "G3": true
+  },
+  "epla:miniF2F:787:0": {
+   "G3": true
+  },
+  "epla:miniF2F:793:0": {
+   "G3": true
+  },
+  "epla:miniF2F:802:0": {
+   "G3": true
+  },
+  "epla:miniF2F:807:0": {
+   "G3": true
+  },
+  "epla:miniF2F:815:0": {
+   "G3": true
+  },
+  "epla:miniF2F:825:0": {
+   "G3": true
+  },
+  "epla:miniF2F:826:0": {
+   "G3": false
+  },
+  "epla:miniF2F:828:0": {
+   "G3": true
+  },
+  "epla:miniF2F:830:0": {
+   "G3": true
+  }
+ },
+ "cases_sha256": "a90f00aed36ba677fe6ddc354dc710dff6c6ed6615732e884522c24755936817",
+ "population_sha256": "918dfe33f5727cd3614f51dcfc1013ac59ee1c7168a33b5c3357d8af94d87fa3"
+}
