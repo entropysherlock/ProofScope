@@ -1,4 +1,17 @@
 # ProofScope
+
+<div align="center">
+
+### 🌐 ProofScope — Official Website
+
+## **[VISIT THE PROOFSCOPE WEBSITE →](https://entropysherlock.github.io/ProofScope/)**
+
+[https://entropysherlock.github.io/ProofScope/](https://entropysherlock.github.io/ProofScope/)
+
+</div>
+
+---
+
 ### Verify the proof. Validate the claim.
 
 **An open-source, Lean-backed research engine for certified mathematical statement comparison and proof-scope auditing.**
