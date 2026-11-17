@@ -1,0 +1,16 @@
+# ProofScope v1.2 freeze (Mon Nov  9 17:48:45 UTC 2026). Engine adelta12 (new); frozen adelta11/v1.1 files are hashed unchanged.
+# The evaluation split mathlib_v12_eval was written and hashed BEFORE any run of the v1.2 engine on it.
+# No v1.2 engine run on Mathlib was possible locally (Mathlib cache unreachable, HTTP 403); the first run is the GitHub workflow.
+# Any engine change after that run must be a new version with a new freeze; the eval split must then be reported as development data.
+# v12.py re-hashed after removing one unused import (pyflakes); still before any evaluation run.
+309c3cfc51d7250fb527b35afbabd7433ce1f55377ec24a5690ac8e6d6022eeb  proofscope/adelta12.py
+cc42440bfb88543e1ec2e470d6a8e73b7a74618dcdfeb955e1f44cd4e9778acc  proofscope/models.py
+a45feb323cb3c9ad190b11d0be65523f2dcfd3f772244c7352bf6bb5e72a25a4  proofscope/v12.py
+e84e6b668c9160ef9e709109f96e55f144c4338c4788d3cf4a0c35a674f855f4  lean/ProofScope/CompositionV12.lean
+f616fe54837d07f50d6e88b2ce45fdb8ed6841798aaccbb9391d8fd98246ffc0  lean/ProofScope/AssumptionExtract11.lean
+7c35f3b4f439f9e9df00b01593cc1c231dbc267eeb36c5fd1f6f2085051f4351  lean/ProofScope/Composition.lean
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+4478234fdb83f1f958445b53b4d9b5b9e5c430f3dd1aff655a32e8c582b55f32  proofscope/adelta11.py
+edc5a42580bddc4e03e906436f1240ce0f0d8e9e06c4dff5d929966cf73d1f30  mathlib_v12_eval suite
+eb5875e9f628ea3ebec94616e20834bb4022a80d607b1ce7e6798c452ef3d7ad  mathlib_v12_dev suite
+336621cb61f95e90864d15aa9ed3fbd3dadf1feee9e479912d5470f3860a83f7  v12_hostile suite

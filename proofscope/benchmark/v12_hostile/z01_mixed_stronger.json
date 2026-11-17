@@ -1,0 +1,19 @@
+{
+ "id": "z01_mixed_stronger",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (n : Nat), 2 ≤ n → n + 0 = n",
+ "lean": "∀ (n : Nat), 1 ≤ n → n + 0 = n",
+ "expected": "LEAN_STRONGER_BY_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_INCOMPARABLE",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "label_basis": "v1.1 says ASSUMPTION_INCOMPARABLE (unsound): both changes are restrictive alone, but 2 ≤ n implies 1 ≤ n",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

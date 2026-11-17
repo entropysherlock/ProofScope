@@ -1,0 +1,17 @@
+{
+ "id": "z05_mixed_lean_false",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (n : Nat), 1 ≤ n → n ≠ 0",
+ "lean": "∀ (n : Nat), n ≤ 3 → n ≠ 0",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_EQUIVALENT",
+  "LEAN_WEAKER_BY_ASSUMPTION"
+ ],
+ "label_basis": "n = 0 satisfies n ≤ 3; the reference is true",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

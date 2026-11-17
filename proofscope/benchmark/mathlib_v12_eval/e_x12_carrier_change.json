@@ -1,0 +1,23 @@
+{
+ "id": "e_x12_carrier_change",
+ "domain": "Adversarial",
+ "family": "same text, different carrier",
+ "reference": "∀ (a b : ℕ), a * b = b * a",
+ "lean": "∀ (a b : Multiplicative ℕ), a * b = b * a",
+ "expected": "INCONCLUSIVE",
+ "must_not_be": [
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_INCOMPARABLE"
+ ],
+ "label_basis": "different carriers; no assumption-level relation",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

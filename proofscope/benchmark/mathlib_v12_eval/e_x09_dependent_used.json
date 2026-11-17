@@ -1,0 +1,26 @@
+{
+ "id": "e_x09_dependent_used",
+ "domain": "Adversarial",
+ "family": "added binder used later (no common statement)",
+ "reference": "∀ (n : ℕ), n + 0 = n",
+ "lean": "∀ (n : ℕ) (h : 0 < n), (⟨0, h⟩ : Fin n).val + n = n",
+ "expected": "INCONCLUSIVE_DEPENDENT",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "the proof binder is used in the conclusion",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

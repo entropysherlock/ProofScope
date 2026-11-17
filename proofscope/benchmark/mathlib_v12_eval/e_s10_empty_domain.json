@@ -1,0 +1,25 @@
+{
+ "id": "e_s10_empty_domain",
+ "domain": "Sets / functions",
+ "family": "empty domain: vacuous added hypothesis",
+ "reference": "∀ (f : Empty → ℕ), Function.Injective f",
+ "lean": "∀ (f : Empty → ℕ), (∀ (x : Empty), f x = 0) → Function.Injective f",
+ "expected": "ASSUMPTION_EQUIVALENT",
+ "must_not_be": [
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_WEAKER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION"
+ ],
+ "label_basis": "every statement about elements of Empty holds",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

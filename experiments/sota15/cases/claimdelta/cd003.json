@@ -1,0 +1,15 @@
+{
+ "id": "cd003",
+ "family": "sota15",
+ "split": "sota15_eval",
+ "binders": [
+  [
+   "n",
+   "Nat"
+  ]
+ ],
+ "ref_hyp": "Nat.gcd (n) 6 = 1",
+ "ref_concl": "Nat.gcd (n + 1) 6 = 1",
+ "lean_hyp": "Nat.gcd (n + 2) 6 = 1",
+ "lean_concl": "Nat.gcd (n + 2) 6 = 1"
+}

@@ -1,0 +1,19 @@
+{
+ "id": "e_o10_min_not_lt",
+ "domain": "Order / lattices",
+ "family": "minimality",
+ "statement": "∀ (α : Type) [LinearOrder α] (a b : α), ¬ b < a → a ≤ b",
+ "expected": "INCLUSION_MINIMAL",
+ "must_not_be": [
+  "HAS_REDUNDANT_ASSUMPTIONS"
+ ],
+ "label_basis": "not_lt; removal fails for a = 1, b = 0",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

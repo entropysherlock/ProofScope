@@ -1,0 +1,19 @@
+{
+ "id": "e_r10_min_sq_mono",
+ "domain": "Real analysis",
+ "family": "minimality: implied hypothesis",
+ "statement": "∀ (x y : ℝ), 0 ≤ x → 0 ≤ y → x ≤ y → x ^ 2 ≤ y ^ 2",
+ "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+ "must_not_be": [
+  "INCLUSION_MINIMAL"
+ ],
+ "label_basis": "0 ≤ y follows from 0 ≤ x and x ≤ y",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

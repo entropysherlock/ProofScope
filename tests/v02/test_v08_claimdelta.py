@@ -32,6 +32,24 @@ class RelationTests(unittest.TestCase):
 
 @unittest.skipUnless(shutil.which("lean"), "Lean not on PATH")
 class EndToEnd(unittest.TestCase):
+    def test_false_reference_is_not_called_harmless_rewriting(self):
+        # cd009 from the frozen SOTA-15 suite: the reference is false at n = 1.
+        # Implication from a false reference is not evidence of faithful rewriting.
+        from proofscope.toolchain import Toolchain
+        tc = Toolchain.find()
+        with tempfile.TemporaryDirectory(prefix="ps_false_reference_") as d:
+            out = Path(d)
+            self.assertTrue(C.build_abstractor(tc, out / "build")["ok"])
+            case = spec("false_ref_sota15", "1 ≤ n", "2 ^ (2 * n) = 0",
+                        "n < 3", "2 ^ (n + 1) < n")
+            r = C.run_case(case, tc, out / "build", out / "case")
+            self.assertNotEqual(r["verdict"], "EQUIVALENT_BY_LAWS", r)
+            self.assertEqual(r["reference_status"], "REFUTED", r)
+            self.assertEqual(r["verdict"], "REFERENCE_REFUTED", r)
+            self.assertIn("refFalse", r["reference_certificates"])
+            self.assertTrue(set(r["reference_certificates"]["refFalse"]["axioms"]) <=
+                            {"propext", "Classical.choice", "Quot.sound"})
+
     def test_two_pow_weaker_and_harmless_rewrite(self):
         from proofscope.toolchain import Toolchain
         tc = Toolchain.find()
