@@ -1,0 +1,19 @@
+{
+ "id": "z07_mixed_shared",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (a b : Nat), a ≤ b → b ≤ 5 → a ≤ 5",
+ "lean": "∀ (a b : Nat), a ≤ b → b ≤ 4 → a ≤ 5",
+ "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_INCOMPARABLE",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_EQUIVALENT"
+ ],
+ "label_basis": "b ≤ 4 implies b ≤ 5; a = 0, b = 5 separates",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

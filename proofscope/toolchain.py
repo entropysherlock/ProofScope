@@ -76,7 +76,9 @@ class Toolchain:
             r = subprocess.run(cmd, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
             return CmdResult(cmd, r.returncode, r.stdout, r.stderr, time.time() - t0)
         except subprocess.TimeoutExpired as e:
-            return CmdResult(cmd, -9, e.stdout or "", (e.stderr or "") + "\nTIMEOUT", time.time() - t0)
+            # the partial output of a timed-out process is bytes even in text mode
+            txt = lambda b: b.decode("utf-8", "replace") if isinstance(b, bytes) else (b or "")
+            return CmdResult(cmd, -9, txt(e.stdout), txt(e.stderr) + "\nTIMEOUT", time.time() - t0)
 
     def compile(self, src: Path, olean: Path | None, root: Path, timeout: float | None = None) -> CmdResult:
         """Compile `src` (inside source root `root`) optionally writing an .olean."""

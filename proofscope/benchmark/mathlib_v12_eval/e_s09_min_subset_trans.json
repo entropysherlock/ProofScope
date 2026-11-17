@@ -1,0 +1,19 @@
+{
+ "id": "e_s09_min_subset_trans",
+ "domain": "Sets / functions",
+ "family": "minimality",
+ "statement": "∀ (A B C : Set ℕ), A ⊆ B → B ⊆ C → A ⊆ C",
+ "expected": "INCLUSION_MINIMAL",
+ "must_not_be": [
+  "HAS_REDUNDANT_ASSUMPTIONS"
+ ],
+ "label_basis": "Set.Subset.trans; A = {0}, B = C = ∅ and A = B = {0}, C = ∅",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

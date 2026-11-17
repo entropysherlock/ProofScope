@@ -1,0 +1,596 @@
+{
+ "status": "LOCAL (core Lean 4.34.1, sandbox). Mathlib: PENDING GitHub.",
+ "v12_hostile_adelta12": [
+  {
+   "id": "z01_mixed_stronger",
+   "split": "v12_hostile",
+   "expected": "LEAN_STRONGER_BY_ASSUMPTION",
+   "verdict": "LEAN_STRONGER_BY_ASSUMPTION",
+   "must_not_be": [
+    "ASSUMPTION_INCOMPARABLE",
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "mixed_strict",
+   "mode": "mixed"
+  },
+  {
+   "id": "z02_mixed_false_necessity",
+   "split": "v12_hostile",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_INCOMPARABLE",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "mixed_strict",
+   "mode": "mixed"
+  },
+  {
+   "id": "z03_mixed_incomparable",
+   "split": "v12_hostile",
+   "expected": "ASSUMPTION_INCOMPARABLE",
+   "verdict": "ASSUMPTION_INCOMPARABLE",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT",
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE"
+   ],
+   "theorem": "mixed_incomparable",
+   "mode": "mixed"
+  },
+  {
+   "id": "z04_defeq_hypotheses",
+   "split": "v12_hostile",
+   "expected": "NO_ASSUMPTION_DELTA",
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "must_not_be": [
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "ASSUMPTION_INCOMPARABLE",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE"
+   ],
+   "theorem": null,
+   "mode": null
+  },
+  {
+   "id": "z05_mixed_lean_false",
+   "split": "v12_hostile",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "must_not_be": [
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT",
+    "LEAN_WEAKER_BY_ASSUMPTION"
+   ],
+   "theorem": "mixed_ref_false",
+   "mode": "mixed"
+  },
+  {
+   "id": "z06_mixed_vacuous_ref",
+   "split": "v12_hostile",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "must_not_be": [
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT",
+    "LEAN_WEAKER_BY_ASSUMPTION"
+   ],
+   "theorem": "mixed_ref_false",
+   "mode": "mixed"
+  },
+  {
+   "id": "z07_mixed_shared",
+   "split": "v12_hostile",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [
+    "ASSUMPTION_INCOMPARABLE",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "mixed_strict",
+   "mode": "mixed"
+  }
+ ],
+ "v12_hostile_frozen_adelta11": [
+  {
+   "id": "z01_mixed_stronger",
+   "split": "v12_hostile",
+   "expected": "LEAN_STRONGER_BY_ASSUMPTION",
+   "verdict": "ASSUMPTION_INCOMPARABLE",
+   "must_not_be": [
+    "ASSUMPTION_INCOMPARABLE",
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": null,
+   "mode": null
+  },
+  {
+   "id": "z02_mixed_false_necessity",
+   "split": "v12_hostile",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "must_not_be": [
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_INCOMPARABLE",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "z03_mixed_incomparable",
+   "split": "v12_hostile",
+   "expected": "ASSUMPTION_INCOMPARABLE",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT",
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE"
+   ],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "z04_defeq_hypotheses",
+   "split": "v12_hostile",
+   "expected": "NO_ASSUMPTION_DELTA",
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "must_not_be": [
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "ASSUMPTION_INCOMPARABLE",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE"
+   ],
+   "theorem": null,
+   "mode": null
+  },
+  {
+   "id": "z05_mixed_lean_false",
+   "split": "v12_hostile",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "must_not_be": [
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT",
+    "LEAN_WEAKER_BY_ASSUMPTION"
+   ],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "z06_mixed_vacuous_ref",
+   "split": "v12_hostile",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "must_not_be": [
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT",
+    "LEAN_WEAKER_BY_ASSUMPTION"
+   ],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "z07_mixed_shared",
+   "split": "v12_hostile",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "INCONCLUSIVE",
+   "must_not_be": [
+    "ASSUMPTION_INCOMPARABLE",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "BOTH_CLAIMS_FALSE",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": null,
+   "mode": null
+  }
+ ],
+ "core_regression_adelta12": [
+  {
+   "id": "ad01_hidden_comm",
+   "split": "adelta_v10_dev",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "ad02_nonempty",
+   "split": "adelta_v10_dev",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "ad03_dependent_instance",
+   "split": "adelta_v10_dev",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "must_not_be": [],
+   "theorem": null,
+   "mode": null
+  },
+  {
+   "id": "ad04_redundant_comm",
+   "split": "adelta_v10_dev",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "ad05_needed_comm",
+   "split": "adelta_v10_dev",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "ad06_order_antisymm",
+   "split": "adelta_v10_dev",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "ad07_dropped_injectivity",
+   "split": "adelta_v10_dev",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "must_not_be": [],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "ad08_decidable_redundant",
+   "split": "adelta_v10_dev",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "ad09_domain_int",
+   "split": "adelta_v10_dev",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "ad10_redundant_nat",
+   "split": "adelta_v10_dev",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "ad11_negative_position",
+   "split": "adelta_v10_dev",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "must_not_be": [],
+   "theorem": null,
+   "mode": "mixed"
+  },
+  {
+   "id": "h01_empty_carrier_point",
+   "split": "v11_hostile",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "h02_redundant_data_class",
+   "split": "v11_hostile",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "h03_inconsistent_hypothesis",
+   "split": "v11_hostile",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "h04_swapped_structure",
+   "split": "v11_hostile",
+   "expected": "ASSUMPTION_INCOMPARABLE",
+   "verdict": "ASSUMPTION_INCOMPARABLE",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "mixed_incomparable",
+   "mode": "mixed"
+  },
+  {
+   "id": "h05_polarity",
+   "split": "v11_hostile",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE",
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": null,
+   "mode": "mixed"
+  },
+  {
+   "id": "h06_unrelated_true",
+   "split": "v11_hostile",
+   "expected": "INCONCLUSIVE",
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": null,
+   "mode": null
+  },
+  {
+   "id": "h07_false_reference",
+   "split": "v11_hostile",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "h08_instance_implies_nonempty",
+   "split": "v11_hostile",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE",
+    "ASSUMPTION_INCOMPARABLE"
+   ],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "h09_min_duplicate_rephrased",
+   "split": "v11_hostile",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "must_not_be": [
+    "INCLUSION_MINIMAL"
+   ],
+   "theorem": "redundant_drop",
+   "mode": "minimality"
+  },
+  {
+   "id": "h10_min_vacuous",
+   "split": "v11_hostile",
+   "expected": "INCLUSION_MINIMAL",
+   "verdict": "INCLUSION_MINIMAL",
+   "must_not_be": [],
+   "theorem": "inclusion_minimal",
+   "mode": "minimality"
+  },
+  {
+   "id": "l1_mul_hidden_comm",
+   "split": "v11_dev",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "l2_add_reference_needs",
+   "split": "v11_dev",
+   "expected": "REFERENCE_NEEDS_ASSUMPTION",
+   "verdict": "REFERENCE_NEEDS_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  },
+  {
+   "id": "l3_two_structures",
+   "split": "v11_dev",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "l4_redundant_class",
+   "split": "v11_dev",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "mn1_unneeded_assoc",
+   "split": "v11_dev",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "must_not_be": [],
+   "theorem": "redundant_drop",
+   "mode": "minimality"
+  },
+  {
+   "id": "mn2_bounds",
+   "split": "v11_dev",
+   "expected": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+   "verdict": "INCLUSION_MINIMAL_IF_THEOREM_HOLDS",
+   "must_not_be": [],
+   "theorem": "inclusion_minimal",
+   "mode": "minimality"
+  },
+  {
+   "id": "mn3_substitutable",
+   "split": "v11_dev",
+   "expected": "HAS_REDUNDANT_ASSUMPTIONS",
+   "verdict": "HAS_REDUNDANT_ASSUMPTIONS",
+   "must_not_be": [],
+   "theorem": "redundant_drop",
+   "mode": "minimality"
+  },
+  {
+   "id": "mn4_single_needed",
+   "split": "v11_dev",
+   "expected": "INCLUSION_MINIMAL",
+   "verdict": "INCLUSION_MINIMAL",
+   "must_not_be": [],
+   "theorem": "inclusion_minimal",
+   "mode": "minimality"
+  },
+  {
+   "id": "x01_point_makes_nonempty_redundant",
+   "split": "v10_adversarial",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE"
+   ],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "x02_dup_hypothesis",
+   "split": "v10_adversarial",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE"
+   ],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "x03_dropped_redundant",
+   "split": "v10_adversarial",
+   "expected": "ASSUMPTION_EQUIVALENT",
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "must_not_be": [
+    "LEAN_WEAKER_BY_ASSUMPTION",
+    "LEAN_STRONGER_BY_ASSUMPTION",
+    "REFERENCE_NEEDS_ASSUMPTION",
+    "LEAN_CLAIM_FALSE"
+   ],
+   "theorem": "redundant_schema_equiv",
+   "mode": null
+  },
+  {
+   "id": "x04_weaker_but_true_both",
+   "split": "v10_adversarial",
+   "expected": "LEAN_WEAKER_BY_ASSUMPTION",
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "restrictive_iff_strictly_weaker",
+   "mode": null
+  },
+  {
+   "id": "x05_conclusion_also_changed",
+   "split": "v10_adversarial",
+   "expected": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": null,
+   "mode": null
+  },
+  {
+   "id": "x06_lean_drops_needed",
+   "split": "v10_adversarial",
+   "expected": "LEAN_CLAIM_FALSE",
+   "verdict": "LEAN_CLAIM_FALSE",
+   "must_not_be": [
+    "ASSUMPTION_EQUIVALENT"
+   ],
+   "theorem": "necessary_refutes_reference",
+   "mode": null
+  }
+ ]
+}

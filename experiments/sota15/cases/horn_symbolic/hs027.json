@@ -1,0 +1,63 @@
+{
+ "id": "hs027",
+ "kind": "horn",
+ "symbols": {
+  "S": 1
+ },
+ "reference": [
+  {
+   "vars": [
+    [
+     "x",
+     null
+    ]
+   ],
+   "guard": "True",
+   "prems": [
+    [
+     "S",
+     [
+      "x + 2"
+     ]
+    ],
+    [
+     "S",
+     [
+      "1"
+     ]
+    ]
+   ],
+   "concl": [
+    "S",
+    [
+     "x + 2"
+    ]
+   ]
+  }
+ ],
+ "formal": [
+  {
+   "vars": [
+    [
+     "x",
+     null
+    ]
+   ],
+   "guard": "2 ≤ x",
+   "prems": [
+    [
+     "S",
+     [
+      "x"
+     ]
+    ]
+   ],
+   "concl": [
+    "S",
+    [
+     "x + 3"
+    ]
+   ]
+  }
+ ]
+}

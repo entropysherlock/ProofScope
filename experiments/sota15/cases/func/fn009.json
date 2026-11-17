@@ -1,0 +1,16 @@
+{
+ "id": "fn009",
+ "kind": "func",
+ "reference": {
+  "var": "n",
+  "guard": "n < 3",
+  "arg": "n",
+  "rel": "w ≤ n + 2"
+ },
+ "formal": {
+  "var": "n",
+  "guard": "True",
+  "arg": "n",
+  "rel": "w < n"
+ }
+}

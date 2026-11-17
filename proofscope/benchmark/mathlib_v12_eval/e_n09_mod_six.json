@@ -1,0 +1,24 @@
+{
+ "id": "e_n09_mod_six",
+ "domain": "Number theory",
+ "family": "countermodel: n = 3",
+ "reference": "∀ (n : ℕ), n % 3 = 0 → n % 6 = 0",
+ "lean": "∀ (n : ℕ), n % 2 = 0 → n % 3 = 0 → n % 6 = 0",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION"
+ ],
+ "label_basis": "n = 3",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

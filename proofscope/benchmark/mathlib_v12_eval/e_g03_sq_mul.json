@@ -1,0 +1,24 @@
+{
+ "id": "e_g03_sq_mul",
+ "domain": "Group theory / algebra",
+ "family": "countermodel: nonabelian group",
+ "reference": "∀ (G : Type) [Group G] (a b : G), (a * b) ^ 2 = a ^ 2 * b ^ 2",
+ "lean": "∀ (G : Type) [Group G], (∀ (x y : G), x * y = y * x) → ∀ (a b : G), (a * b) ^ 2 = a ^ 2 * b ^ 2",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "ASSUMPTION_INCOMPARABLE",
+  "BOTH_CLAIMS_FALSE",
+  "LEAN_CLAIM_FALSE",
+  "LEAN_STRONGER_BY_ASSUMPTION"
+ ],
+ "label_basis": "D3: a = r, b = s gives (rs)^2 = 1, r^2 s^2 = r^2 ≠ 1",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

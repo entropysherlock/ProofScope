@@ -1,0 +1,17 @@
+{
+ "id": "z06_mixed_vacuous_ref",
+ "domain": "Nat",
+ "family": "interacting assumption changes",
+ "reference": "∀ (n : Nat), n < 0 → n + 1 = 0",
+ "lean": "∀ (n : Nat), n < 1 → n + 1 = 0",
+ "expected": "LEAN_CLAIM_FALSE",
+ "must_not_be": [
+  "REFERENCE_NEEDS_ASSUMPTION",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_EQUIVALENT",
+  "LEAN_WEAKER_BY_ASSUMPTION"
+ ],
+ "label_basis": "the reference is vacuously true; n = 0 refutes the Lean statement",
+ "split": "v12_hostile",
+ "annotation": "Claude (Anthropic), 2026-11-09; written after observing frozen v1.1 behaviour on z01/z02 (development and regression, not blind); synthetic, same author"
+}

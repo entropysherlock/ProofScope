@@ -1,0 +1,24 @@
+{
+ "id": "e_g08_structure_change",
+ "domain": "Group theory / algebra",
+ "family": "different structure, same text",
+ "reference": "∀ (M : Type) [Monoid M] (a b : M), a * b = b * a",
+ "lean": "∀ (M : Type) [CommMonoid M] (a b : M), a * b = b * a",
+ "expected": "REFERENCE_NEEDS_ASSUMPTION",
+ "must_not_be": [
+  "ASSUMPTION_EQUIVALENT",
+  "LEAN_STRONGER_BY_ASSUMPTION",
+  "LEAN_CLAIM_FALSE",
+  "BOTH_CLAIMS_FALSE",
+  "ASSUMPTION_INCOMPARABLE"
+ ],
+ "label_basis": "the Monoid version is false (Equiv.Perm (Fin 3)); the CommMonoid version is mul_comm",
+ "split": "mathlib_v12_eval",
+ "annotation": "Claude (Anthropic), 2026-11-09; written for ProofScope v1.2 without a local Mathlib and frozen (SHA-256 in V12_FREEZE.txt) before any run of the v1.2 engine on it; synthetic, same author as the engine (not independent); labels are the author's mathematical judgement, PENDING GitHub elaboration",
+ "provenance": {
+  "author": "Claude (Anthropic) for Caleb J. Westfall",
+  "date": "2026-11-09",
+  "source": "synthetic",
+  "independent": false
+ }
+}

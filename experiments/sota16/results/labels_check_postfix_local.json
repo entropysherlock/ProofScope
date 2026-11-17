@@ -1,0 +1,57 @@
+{
+ "config": "rows16",
+ "labelled_directions": 237,
+ "certified_and_labelled": 230,
+ "label_sources": {
+  "z3-model": 97,
+  "z3": 65,
+  "explicit-function": 66,
+  "cvc5": 2
+ },
+ "contradictions": [],
+ "certified_without_independent_label": [
+  [
+   "fl105",
+   "fwd",
+   "SEPARATED"
+  ]
+ ],
+ "open_directions": [
+  [
+   "fl026",
+   "fwd"
+  ],
+  [
+   "fl028",
+   "bwd"
+  ],
+  [
+   "fl047",
+   "fwd"
+  ],
+  [
+   "fl049",
+   "fwd"
+  ],
+  [
+   "fl061",
+   "fwd"
+  ],
+  [
+   "fl067",
+   "fwd"
+  ],
+  [
+   "fl070",
+   "fwd"
+  ],
+  [
+   "fl101",
+   "fwd"
+  ],
+  [
+   "fl117",
+   "fwd"
+  ]
+ ]
+}

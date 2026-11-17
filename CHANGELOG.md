@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0 (unreleased)
+
+- Fixed (soundness, new engine): replaced assumptions (added and dropped in one statement) are decided jointly;
+  frozen v1.1 gives unsound verdicts on hostile cases z01, z02, z03, z06 (erratum; v1.1 left unmodified).
+- `lean/ProofScope/CompositionV12.lean` (14 theorems; 12 axiom-free, 2 standard axioms).
+- `proofscope/models.py` (countermodel registry, Mathlib proof portfolio), `proofscope/adelta12.py` (copy of frozen
+  adelta11 with the registry, round-robin witness search, literal point pools, joint mixed-change decision),
+  `proofscope/v12.py` (sharded runner, coverage matrix, unsound gate).
+- Suites `mathlib_v12_eval` (80, frozen, never run), `mathlib_v12_dev` (m05, m09, m10, m12, m13), `v12_hostile` (7);
+  `V12_FREEZE.txt`.
+- Workflows **ProofScope v1.2 Core**, **ProofScope v1.2 Mathlib Coverage**; `tests/v02/test_v12.py`; `docs/v1.2_coverage.md`.
+
 ## 1.1.0 (unreleased)
 
 - `lean/ProofScope/Composition.lean` (15 theorems: linking, polarity composition, strictness lifting,
