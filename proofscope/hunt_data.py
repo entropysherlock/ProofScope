@@ -54,9 +54,29 @@ def formalmath_rows(dataset: str = "SphereLab/FormalMATH-All") -> list[dict]:
     rows = []
     for i, r in enumerate(ds):
         rid = str(r[id_col]) if id_col else f"row{i}"
-        rows.append({"id": f"fm_{rid}", "source": dataset, "lean_code": r[lean_col],
-                     "informal": r[nl_col] if nl_col else ""})
+        code, notes = normalize_formalmath(r[lean_col])
+        rows.append({"id": f"fm_{rid}", "source": dataset, "lean_code": code,
+                     "informal": r[nl_col] if nl_col else "", "note": "; ".join(notes)})
     return rows
+
+
+_BIGOP_IN = re.compile(r"([∑∏⋃⋂]\s+[^,∈:=]+?)\s+in\s+")
+
+
+def normalize_formalmath(code: str) -> tuple[str, list[str]]:
+    """Two meaning-preserving fixes so FormalMATH statements compile on the pinned Mathlib: statements end in a bare
+    `:= by` (no proof; we add the `sorry` placeholder for the proof only), and the deprecated big-operator binder
+    `∑ x in s, f x` is now written `∑ x ∈ s, f x`. Every changed row records what was changed."""
+    notes = []
+    new = _BIGOP_IN.sub(lambda m: m.group(1) + " ∈ ", code)
+    if new != code:
+        notes.append("big-operator `in` → `∈` (syntax migration)")
+        code = new
+    t = code.rstrip()
+    if t.endswith(":= by") or t.endswith(":="):
+        code = t + (" sorry" if t.endswith(":= by") else " by sorry")
+        notes.append("proof placeholder added")
+    return code, notes
 
 
 def write_jsonl(rows: list[dict], path: Path) -> Path:
