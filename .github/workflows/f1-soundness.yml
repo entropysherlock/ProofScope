@@ -1,0 +1,69 @@
+name: F1 soundness repair (v1.2.1 fail-closed Assumption Delta)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [fix/f1-fail-closed, v1.2-review, main]
+    paths:
+      - ".github/workflows/f1-soundness.yml"
+      - "proofscope/adelta12.py"
+      - "proofscope/benchmark/f1_soundness/**"
+      - "proofscope/benchmark/V12_FREEZE.txt"
+      - "tests/v02/test_f1_fail_closed.py"
+
+permissions:
+  contents: read
+
+jobs:
+  f1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256, retries, cache; fails closed as INFRASTRUCTURE_ERROR)
+        uses: ./.github/actions/setup-lean
+      - name: Freeze check (v1.2.1 re-freeze)
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt > /tmp/f.sha
+          test "$(wc -l < /tmp/f.sha)" = 8
+          sha256sum -c /tmp/f.sha
+      - name: Unit tests (F1 fakes + v1.2 + v1.1)
+        run: python -m unittest tests.v02.test_f1_fail_closed tests.v02.test_v12 tests.v02.test_v11 -v
+      - name: F1 minimal counterexamples u3, u4 on real Lean (must be INCONCLUSIVE, never NO_ASSUMPTION_DELTA)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f1-evidence
+          PROOFSCOPE_IMPORTS= python -m proofscope.adelta12 proofscope/benchmark/f1_soundness/*.json \
+            --out f1-evidence/u34 | tee f1-evidence/u34.log
+          python - <<'PY'
+          import json
+          rows = json.load(open("f1-evidence/u34/adelta_results.json"))["rows"]
+          assert len(rows) == 2, rows
+          for r in rows:
+              print(r["id"], r["verdict"], "|", r.get("reason"))
+              assert r["verdict"] == "INCONCLUSIVE", r
+          print("F1 repaired: both counterexamples fail closed")
+          PY
+      - name: Assumption Delta v1.2.1 regression (v1.2 hostile + v1.1/v1.0 regression)
+        run: |
+          python -m proofscope.v12 run proofscope/benchmark/v12_hostile/*.json proofscope/benchmark/v11_dev/*.json \
+            proofscope/benchmark/v11_hostile/*.json proofscope/benchmark/adelta_v10_dev/*.json \
+            proofscope/benchmark/v10_adversarial/x*.json --out f1-evidence/core --jobs 4 | tee f1-evidence/core.log
+      - name: Coverage and soundness gate (fails on any must-not-be verdict)
+        run: |
+          python -m proofscope.v12 aggregate f1-evidence/core --out f1-evidence/core_coverage.json \
+            --markdown f1-evidence/core_coverage.md | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f1-soundness-evidence
+          path: f1-evidence

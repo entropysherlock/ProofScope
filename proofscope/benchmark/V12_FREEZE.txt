@@ -3,7 +3,11 @@
 # No v1.2 engine run on Mathlib was possible locally (Mathlib cache unreachable, HTTP 403); the first run is the GitHub workflow.
 # Any engine change after that run must be a new version with a new freeze; the eval split must then be reported as development data.
 # v12.py re-hashed after removing one unused import (pyflakes); still before any evaluation run.
-309c3cfc51d7250fb527b35afbabd7433ce1f55377ec24a5690ac8e6d6022eeb  proofscope/adelta12.py
+# v1.2.1 re-freeze (2026-11-17): adelta12.py changed for SOTA-18 soundness finding F1 (fail closed on statements that
+# did not elaborate; NO_ASSUMPTION_DELTA only with a kernel equivalence certificate). Frozen v1.2 hash was
+# 309c3cfc51d7250fb527b35afbabd7433ce1f55377ec24a5690ac8e6d6022eeb (commit b0519f8). Per the rule above, mathlib_v12_eval
+# results for v1.2.1 are development data, not a frozen evaluation.
+b57e44d2855658f17315a47fa01843af6e246f932f19b32ba0d1786972d5b62e  proofscope/adelta12.py
 cc42440bfb88543e1ec2e470d6a8e73b7a74618dcdfeb955e1f44cd4e9778acc  proofscope/models.py
 a45feb323cb3c9ad190b11d0be65523f2dcfd3f772244c7352bf6bb5e72a25a4  proofscope/v12.py
 e84e6b668c9160ef9e709109f96e55f144c4338c4788d3cf4a0c35a674f855f4  lean/ProofScope/CompositionV12.lean
