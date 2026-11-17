@@ -62,6 +62,9 @@ VERIFY_TIMEOUT_S = 900.0
 BUDGET = 200000              # S3.HEADER: maxHeartbeats 200000 per declaration
 
 
+MAX_RESPONSE_BYTES = int(os.environ.get("PROOFSCOPE_REPL_MAX_RESPONSE_MB", "64")) << 20
+
+
 class ReplError(RuntimeError):
     pass
 
@@ -82,7 +85,7 @@ class Repl:
         self.p.stdin.write((json.dumps(req, ensure_ascii=False) + "\n\n").encode())
         self.p.stdin.flush()
         self.requests += 1
-        buf, deadline = b"", time.monotonic() + (SEARCH_TIMEOUT_S if timeout is None else timeout)
+        buf, deadline = bytearray(), time.monotonic() + (SEARCH_TIMEOUT_S if timeout is None else timeout)
         fd = self.p.stdout.fileno()
         while True:
             left = deadline - time.monotonic()
@@ -97,8 +100,13 @@ class Repl:
             if not chunk:
                 raise ReplError(f"REPL closed its output (exit {self.p.poll()})")
             buf += chunk
-            if b"\n\n" in buf:
-                head = buf[:buf.rindex(b"\n\n")]
+            if len(buf) > MAX_RESPONSE_BYTES:
+                # a single response this large (e.g. an error message printing a gigantic term) would otherwise grow
+                # this process until the operating system kills it
+                self.close()
+                raise ReplError(f"REPL response exceeded {MAX_RESPONSE_BYTES >> 20} MB; process killed")
+            if b"\n\n" in buf[-(len(chunk) + 1):]:      # only the new bytes (plus one) can complete a response
+                head = bytes(buf[:buf.rindex(b"\n\n")])
                 try:
                     return json.loads(head.decode())
                 except json.JSONDecodeError:

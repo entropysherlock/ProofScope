@@ -90,7 +90,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p hunt-out; touch hunt-out/results.jsonl; (tail -F hunt-out/results.jsonl | cut -c1-200 &) ; (while sleep 20; do free -m | sed -n 2p; done &)
+          mkdir -p hunt-out; touch hunt-out/results.jsonl; (tail -F hunt-out/results.jsonl | cut -c1-200 &) ; (while sleep 10; do free -m | sed -n 2p; ps -eo rss,comm --sort=-rss | sed -n 2,4p | tr "\n" " "; echo; done &)
           # memory cap for the whole hunt (cgroup): the kernel then kills a runaway Lean REPL inside it instead of the runner
           sudo systemd-run --quiet --scope -p MemoryMax=13G -p MemorySwapMax=0 -p OOMPolicy=continue --uid="$(id -u)" --gid="$(id -g)" -- \
             env PATH="$PATH" HOME="$HOME" LEAN_PATH="$LEAN_PATH" PROOFSCOPE_REPL="$PROOFSCOPE_REPL" PYTHONPATH="$PWD" \
