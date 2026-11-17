@@ -12,7 +12,7 @@ on:
         default: "16"
   push:
     branches: [research/defect-hunt-ci]
-    paths: [".github/workflows/defect-hunt-putnamtail-tail.yml"]
+    paths: [".github/workflows/defect-hunt-putnam-tail.yml"]
 
 permissions:
   contents: write
