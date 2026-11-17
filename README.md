@@ -20,6 +20,8 @@ Developed by **Caleb J. Westfall** · Experimental research software · MIT lice
 
 [**Independent evaluation (SOTA-18)**](#independent-evaluation-sota-18) · [**Technical reviewer guide**](docs/REVIEWER_GUIDE.md) · [**Verified CI results**](https://github.com/entropysherlock/ProofScope/actions/runs/42950230245) · [**Benchmark reproduction**](https://github.com/entropysherlock/ProofScope/actions/runs/42950230302)
 
+> **New (November 2026): 111 certified defects in FormalMATH**. See the [discovery track](#discovery-track-certified-defects-in-public-benchmarks).
+>
 > **Status (November 2026).** `main` now carries the current engine (SOTA-16, merged from `v1.2-review`). An independently authored evaluation against two existing tools (**SOTA-18**, below) found ProofScope **substantially behind them on equivalence checking** and found one **soundness bug (F1)**. The F1 fail-closed repair is merged ([PR #11](https://github.com/entropysherlock/ProofScope/pull/11), engine v1.2.1). The project is pivoting toward what that evaluation showed it does uniquely: certified explanations of *how* two statements differ, including redundant assumptions both competitors missed.
 
 ## The problem ProofScope addresses
@@ -85,6 +87,31 @@ In November 2026 ProofScope was evaluated on **477 externally authored cases** f
 - **Decision: PIVOT.** The planned direction is an Expr-level input pipeline, fail-closed verdicts everywhere, and ProofScope as a **certified explanation and assumption-redundancy layer** running behind an equivalence checker, rather than a competing equivalence checker.
 
 Full report, protocol, raw records and erratum: [PR #8](https://github.com/entropysherlock/ProofScope/pull/8).
+
+## Discovery track: certified defects in public benchmarks
+
+ProofScope's defect hunter checks every statement of a public Lean benchmark for two kinds of defect:
+
+- **FALSE:** Lean proves the negation of the statement exactly as written.
+- **VACUOUS:** the statement's hypotheses contradict each other.
+
+A finding counts only after a clean module re-proves it, `#print axioms` shows only the standard axioms, and `leanchecker` replays it. Planted false, vacuous and true statements run alongside every scan as a check on the pipeline, and they pass.
+
+| Benchmark | Statements checked | Certified defects |
+| --- | ---: | ---: |
+| [FormalMATH](https://github.com/Sphere-AI-Lab/FormalMATH-Bench) | 5,560 | **111** (106 false, 5 vacuous; 29 with real or rational counterexamples) |
+| [PutnamBench](https://github.com/trishullab/PutnamBench) | 672 | 0 (the search did not find any) |
+
+Eight FormalMATH findings were hand-checked with exact arithmetic. Several show that the benchmark's **stated answer** is wrong, not just its Lean encoding. For example, problem `olymid-ref-base_1859` claims the system has no real solution, but (0, 1, 1) solves it, and `olymid-ref-base_918` omits the solution x = 0.
+
+- [Triage and hand checks](https://github.com/entropysherlock/ProofScope/blob/research/defect-hunt-ci/experiments/defect_hunt/formalmath/TRIAGE.md)
+- [All certified findings with their Lean proofs](https://github.com/entropysherlock/ProofScope/blob/research/defect-hunt-ci/experiments/defect_hunt/formalmath/findings.jsonl)
+- [PutnamBench summary](https://github.com/entropysherlock/ProofScope/blob/research/defect-hunt-ci/experiments/defect_hunt/putnam/SUMMARY.md)
+
+Two caveats:
+
+- A 2026 audit (Ammanamanchi, Bhat and Biderman, ICML 2026) also certified FormalMath issues, and its per-item list is not public, so overlap is still being checked.
+- Finding nothing in PutnamBench is not evidence that its statements are correct.
 
 ## Reproduce the engine
 
