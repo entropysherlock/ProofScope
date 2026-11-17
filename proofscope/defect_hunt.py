@@ -339,6 +339,8 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
     t_v = time.monotonic()
     verified = verify(tc, [{k: v for k, v in c.items()} for c in cands], out, mathlib, hb)
     verify_s = round(time.monotonic() - t_v, 1)
+    if cands and not verified:      # never let a broken verification step read as "no defects"
+        errors.append(f"verification certified none of {len(cands)} candidates; see {out / 'verify'}/*.log")
     findings = []
     for v in verified:
         f = {"id": v["id"], "source": v["row"].get("source"), "theorem": v["theorem"], "kind": v["kind"],
@@ -368,6 +370,7 @@ def main(argv=None) -> int:
     ap.add_argument("--core", action="store_true", help="core Lean only (no Mathlib)")
     a = ap.parse_args(argv)
     rows = [json.loads(l) for l in a.data.read_text().splitlines() if l.strip()]
+    a.out = a.out.resolve()     # verify() compiles with cwd inside the output directory: relative paths broke it
     s = run(rows, a.out, a.minutes, a.workers, not a.core)
     (a.out / "last_run_summary.json").write_text(json.dumps(s, ensure_ascii=False, indent=1, default=str))
     print(json.dumps({k: v for k, v in s.items() if k != "verified_findings"}, indent=1))
