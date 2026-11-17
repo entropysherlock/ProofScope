@@ -6,7 +6,7 @@
 #   3. `#print axioms` for the certificate lists only propext / Classical.choice / Quot.sound (no sorryAx),
 #   4. optionally, leanchecker replays the compiled module.
 set -uo pipefail
-D="$1"; OUT="$2"; CHECKER="${3:-}"
+D="$1"; OUT="$(realpath -m "$2")"; CHECKER="${3:-}"
 mkdir -p "$OUT/build"; : > "$OUT/summary.tsv"; fail=0
 python3 - "$D" <<'PY' || fail=1
 import hashlib, json, sys
