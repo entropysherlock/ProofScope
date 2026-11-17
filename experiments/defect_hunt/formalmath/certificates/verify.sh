@@ -30,6 +30,7 @@ for f in "$D"/*.lean; do
     ( cd "$OUT/build" && LEAN_PATH="$OUT/build:$LEAN_PATH" "$CHECKER" "$m" ) > "$OUT/$m.replay.log" 2>&1 && rep=ok || rep=FAIL
   fi
   status=PASS; { [ $rc -ne 0 ] || [ "$errs" != 0 ] || [ "$axok" != yes ] || [ "$rep" = FAIL ]; } && status=FAIL && fail=1
+  if [ "$status" = FAIL ] && [ "$i" -le 2 ]; then echo "--- $m compile log"; tail -c 1500 "$OUT/$m.log"; [ -f "$OUT/$m.replay.log" ] && { echo "--- $m replay log"; tail -c 1500 "$OUT/$m.replay.log"; }; fi
   printf "%s\t%s\tcompile_rc=%s\terrors=%s\taxioms=%s\treplay=%s\n" "$status" "$(basename "$f")" "$rc" "$errs" "${ax:-none}" "$rep" | tee -a "$OUT/summary.tsv"
 done
 exit $fail

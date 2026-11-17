@@ -37,7 +37,8 @@ jobs:
           lean --version
           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
       - name: Verify certificates
-        run: experiments/defect_hunt/formalmath/certificates/verify.sh experiments/defect_hunt/formalmath/certificates out-A | tee -a "$GITHUB_STEP_SUMMARY"
+        shell: bash
+        run: set -o pipefail; experiments/defect_hunt/formalmath/certificates/verify.sh experiments/defect_hunt/formalmath/certificates out-A | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -63,7 +64,8 @@ jobs:
           for i in 1 2 3; do lake exe cache get && break || sleep 30; done
           echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
       - name: Verify certificates (+ leanchecker replay)
-        run: experiments/defect_hunt/formalmath/certificates/verify.sh experiments/defect_hunt/formalmath/certificates out-B "$(dirname "$(which lean)")/leanchecker" | tee -a "$GITHUB_STEP_SUMMARY"
+        shell: bash
+        run: set -o pipefail; experiments/defect_hunt/formalmath/certificates/verify.sh experiments/defect_hunt/formalmath/certificates out-B "$(dirname "$(which lean)")/leanchecker" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
