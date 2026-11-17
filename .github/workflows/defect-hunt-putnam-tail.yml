@@ -91,7 +91,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p hunt-out; touch hunt-out/results.jsonl; (tail -F hunt-out/results.jsonl | cut -c1-200 &) ; (while sleep 20; do free -m | sed -n 2p; done &)
-          python -m proofscope.defect_hunt --data /tmp/shard.jsonl --out hunt-out --minutes 100 --workers 1 | tee hunt-out.log
+          # memory cap for the whole hunt (cgroup): the kernel then kills a runaway Lean REPL inside it instead of the runner
+          sudo systemd-run --quiet --scope -p MemoryMax=13G -p MemorySwapMax=0 --uid="$(id -u)" --gid="$(id -g)" -- \
+            env PATH="$PATH" HOME="$HOME" LEAN_PATH="$LEAN_PATH" PROOFSCOPE_REPL="$PROOFSCOPE_REPL" PYTHONPATH="$PWD" \
+            "$(which python)" -m proofscope.defect_hunt --data /tmp/shard.jsonl --out "$PWD/hunt-out" --minutes 100 --workers 2 | tee hunt-out.log
           mv hunt-out.log hunt-out/
           echo "$DATA_VERSION" > hunt-out/data_version.txt
       - name: Upload shard

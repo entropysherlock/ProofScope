@@ -165,6 +165,7 @@ class Worker:
         self.env0 = r["env"]
 
     def restart(self):
+        self.restarts = getattr(self, "restarts", 0) + 1
         if self.repl:
             self.repl.close()
         self.start()
@@ -337,7 +338,12 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
                 if row is None:
                     return
                 w.killed_for_memory = False
+                r0 = getattr(w, "restarts", 0)
                 res = w.check(row)
+                if getattr(w, "restarts", 0) > r0 and res["status"] == "NO_DEFECT_FOUND" and not w.killed_for_memory:
+                    # the REPL died mid-search (e.g. the kernel's out-of-memory killer inside the job's memory cap)
+                    res = {k: v for k, v in res.items() if k in ("id", "source", "theorem")}
+                    res.update(status="SEARCH_INCOMPLETE", detail="Lean REPL restarted during the search")
                 if w.killed_for_memory:     # the search was cut short: never report it as "nothing found"
                     res = {k: v for k, v in res.items() if k in ("id", "source", "theorem")}
                     res.update(status="RESOURCE_LIMIT", detail=f"Lean REPL killed: free memory below {MIN_FREE_MB:.0f} MB")
