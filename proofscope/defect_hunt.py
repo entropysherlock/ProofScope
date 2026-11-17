@@ -237,6 +237,7 @@ def verify(tc: Toolchain, cands: list[dict], work: Path, mathlib: bool, hb: int)
         f = root / f"{mod}.lean"
         f.write_text("\n".join(parts))
         cc = tc.compile(f, root / "build" / f"{mod}.olean", root, timeout=1200)
+        (root / f"compile_attempt{attempt}.log").write_text(f"returncode {cc.returncode}\n{cc.output[-20000:]}")
         ax = {}
         for m in re.finditer(r"'PSH(\d+)\.ps_cert' (?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", cc.output):
             ax[int(m.group(1))] = [a.strip() for a in (m.group(2) or "").split(",") if a.strip()]
@@ -252,6 +253,7 @@ def verify(tc: Toolchain, cands: list[dict], work: Path, mathlib: bool, hb: int)
         if errs:
             return []
         rp = tc.replay(mod, root / "build", timeout=1200)
+        (root / "replay.log").write_text(f"returncode {rp.returncode}\n{rp.output[-20000:]}")
         out = []
         for k, c in enumerate(cands):
             a = ax.get(k)

@@ -1,0 +1,84 @@
+name: Defect hunt — controls only (fast check of the certification pipeline)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/defect-hunt-ci]
+    paths: ["proofscope/defect_hunt.py", ".github/workflows/defect-hunt-controls.yml"]
+
+permissions:
+  contents: read
+
+env:
+  MATHLIB_SHA: d13f23b723b8a846827a245b89c10fc7d3f11612
+  REPL_SHA: 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+
+jobs:
+  controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Cache Lean REPL build
+        uses: actions/cache@v4
+        with:
+          path: ~/ps_cache/repl
+          key: hunt-repl-${{ env.REPL_SHA }}-lean4.34.1
+      - name: Lean REPL (pinned)
+        shell: bash
+        run: |
+          set -euo pipefail
+          R=~/ps_cache/repl
+          if [ ! -x "$R/.lake/build/bin/repl" ]; then
+            rm -rf "$R"; git clone -q https://github.com/leanprover-community/repl "$R"
+            (cd "$R" && git checkout -q "$REPL_SHA" && echo "leanprover/lean4:v4.34.1" > lean-toolchain && lake build repl)
+          fi
+          echo "PROOFSCOPE_REPL=$R/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Mathlib (pinned; precompiled cache, never `lake update`)
+        shell: bash
+        run: |
+          set -euo pipefail
+          M=~/ps_cache/mathlib4
+          if [ ! -s "$M/.lake/build/lib/lean/Mathlib.olean" ]; then
+            rm -rf "$M"; mkdir -p "$M"; cd "$M"
+            git init -q && git remote add origin https://github.com/leanprover-community/mathlib4
+            git fetch -q --depth 1 origin "$MATHLIB_SHA" && git checkout -q FETCH_HEAD
+            cp lake-manifest.json /tmp/manifest.lock
+            for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+            cmp lake-manifest.json /tmp/manifest.lock
+          fi
+          cd "$M"; test -s .lake/build/lib/lean/Mathlib.olean
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Positive and negative controls (planted defects must be certified; a true statement must not be)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m proofscope.defect_hunt --data experiments/defect_hunt/controls.jsonl --out ctrl-out --minutes 20 --workers 2 | tee ctrl.log || true
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          exp = {json.loads(l)["id"]: json.loads(l)["expect"] for l in open("experiments/defect_hunt/controls.jsonl")}
+          got = {}
+          f = Path("ctrl-out/findings.jsonl")
+          for l in (f.read_text().splitlines() if f.exists() else []):
+              d = json.loads(l); got.setdefault(d["id"], set()).add(d["kind"])
+          ok = all((e is None and k not in got) or (e is not None and e in got.get(k, set())) for k, e in exp.items())
+          lines = [f"{k}: expected {e}, certified {sorted(got.get(k, []))}" for k, e in exp.items()]
+          Path("ctrl-out").mkdir(exist_ok=True)
+          Path("ctrl-out/CONTROLS.txt").write_text(("PASS" if ok else "FAIL") + "\n" + "\n".join(lines) + "\n")
+          print(Path("ctrl-out/CONTROLS.txt").read_text())
+          PY
+          for f in ctrl-out/verify/*.log; do echo "=== $f"; tail -c 6000 "$f"; done || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hunt-controls-only
+          path: ctrl-out
+
