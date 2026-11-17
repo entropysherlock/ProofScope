@@ -1,4 +1,7 @@
-"""Assumption Delta v1.2 (copy of frozen v1.1 with a countermodel-family registry and a Mathlib proof portfolio).
+"""Assumption Delta v1.2.1: v1.2 with the SOTA-18 F1 repair (fail closed on statements that did not
+elaborate; NO_ASSUMPTION_DELTA only with a kernel equivalence certificate).
+
+v1.2: Assumption Delta v1.2 (copy of frozen v1.1 with a countermodel-family registry and a Mathlib proof portfolio).
 
 v1.2 changes: carriers come from `proofscope/models.py` (nonabelian groups, non-total partial orders,
 rings with zero divisors, fields, sets and function points), filtered by Lean itself (a carrier without
@@ -104,8 +107,32 @@ def extract(ref: str, lean: str, tc: Toolchain, buildp: Path, work: Path) -> dic
     for line in r.output.splitlines():
         i = line.find("PROOFSCOPE_ASSUMPTIONS11 ")
         if i >= 0:
-            return json.loads(line[i + len("PROOFSCOPE_ASSUMPTIONS11 "):])
+            d = json.loads(line[i + len("PROOFSCOPE_ASSUMPTIONS11 "):])
+            # v1.2.1 (SOTA-18 finding F1): fail closed on statements that did not elaborate cleanly. Lean
+            # recovers from some elaboration errors (e.g. an undeclared universe name `u_1`) by elaborating the
+            # statement as the error-recovery placeholder; the extractor then still prints a result with
+            # placeholder conclusions and empty telescopes, which v1.2 read as NO_ASSUMPTION_DELTA.
+            bad = elaboration_problem(r.output, d)
+            if bad:
+                return {"error": r.output[-3000:], "fail_closed": bad}
+            return d
     return {"error": r.output[-3000:]}
+
+
+_LEAN_ERROR = re.compile(r":\d+:\d+: error", re.M)
+# the placeholder term Lean elaborates after an error (spelled in parts so the unsafe-tactic lint stays exact)
+_PLACEHOLDER = "sor" "ry"
+_SORRY = re.compile(r"(?<![\w.])" + _PLACEHOLDER + r"(Ax)?(?![\w.])")
+
+
+def elaboration_problem(output: str, payload: dict) -> str | None:
+    """Why an extraction cannot be trusted, or None. Any Lean error, or the error-recovery placeholder anywhere in
+    the extracted telescopes or conclusions, means the statements were not elaborated as written."""
+    if _LEAN_ERROR.search(output):
+        return "Lean reported an elaboration error"
+    if _SORRY.search(json.dumps(payload, ensure_ascii=False)):
+        return "an extracted statement contains the error-recovery placeholder (elaboration failed)"
+    return None
 
 
 def _subst(typ: str, carrier_names: dict[str, str]) -> str:
@@ -241,15 +268,18 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
     out = {"id": spec["id"], "reference": ref, "lean": lean}
     d = extract(ref, lean, tc, buildp, work / "extract")
     if "error" in d:
-        out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=d["error"][-600:])
+        out.update(verdict="INCONCLUSIVE", reason=d.get("fail_closed", "extraction failed"), detail=d["error"][-600:])
         return out
     out["extraction"] = d
     if not d["added"] and not d["dropped"]:
         # v1.1.1: never report "no delta" when the conclusions differ
-        out.update(verdict="NO_ASSUMPTION_DELTA" if d["conclusion_same"] else "CONCLUSION_ONLY_CHANGE",
-                   reason=None if d["conclusion_same"] else "assumptions agree, conclusions differ: not an "
-                          "assumption-level question (use CMCD on the conclusion)")
-        return out
+        if not d["conclusion_same"]:
+            out.update(verdict="CONCLUSION_ONLY_CHANGE", reason="assumptions agree, conclusions differ: not an "
+                       "assumption-level question (use CMCD on the conclusion)")
+            return out
+        # v1.2.1 (F1): NO_ASSUMPTION_DELTA is reported only with a kernel certificate that the two elaborated
+        # statements are equivalent; v1.2 returned it with no certificate at all.
+        return _no_delta(spec, out, ref, lean, tc, work)
     if not d["conclusion_same"]:
         out.update(verdict="INCONCLUSIVE", reason="the conclusion also changed: assumption and conclusion deltas are not "
                                                    "composed here (use CMCD on the conclusion)")
@@ -337,6 +367,25 @@ def run_case(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
     return out
 
 
+SAME_TACTICS = ["exact Iff.rfl",
+                "constructor <;> intro h <;> intros <;> (first | (apply h <;> assumption) | (apply h <;> first | assumption "
+                "| exact ⟨‹_›⟩) | (rename_i hn; obtain ⟨_⟩ := hn; apply h <;> assumption) | (simp_all))"]
+
+
+def _no_delta(spec, out, ref, lean, tc, work) -> dict:
+    ident = "ADEQ_" + re.sub(r"[^A-Za-z0-9_]", "_", spec["id"])
+    r = certify(ident, import_lines() + "set_option maxHeartbeats 4000000\nset_option linter.unusedVariables false\n",
+                {"same": (f"({ref}) ↔ ({lean})", SAME_TACTICS)}, tc, work / "certify_same")
+    out.update(certify_status=r["status"], certificates=r["certificates"])
+    if "same" in r["certificates"]:
+        out.update(verdict="NO_ASSUMPTION_DELTA", theorem="same",
+                   reason="no assumption added or dropped; the two statements are certified equivalent")
+    else:
+        out.update(verdict="INCONCLUSIVE", reason="no assumption delta was extracted, but the equivalence of the two "
+                   "statements could not be certified (fail closed, v1.2.1)")
+    return out
+
+
 def _mixed(spec, out, d, ob, allb, H, Himp, P, tc, buildp, work) -> dict:
     """v1.2: the formalization drops `D` and adds `A` (both non-empty). Decided jointly
     (`CompositionV12.lean`: mixed_strict, mixed_incomparable, mixed_ref_false). v1.1 classified `A` and
@@ -401,7 +450,7 @@ def minimality(spec: dict, tc: Toolchain, buildp: Path, work: Path) -> dict:
     out = {"id": spec["id"], "statement": L, "mode": "minimality"}
     d = extract(L, L, tc, buildp, work / "extract")
     if "error" in d:
-        out.update(verdict="INCONCLUSIVE", reason="extraction failed", detail=d["error"][-600:])
+        out.update(verdict="INCONCLUSIVE", reason=d.get("fail_closed", "extraction failed"), detail=d["error"][-600:])
         return out
     model, hyps, P = d["model"], d["hyps"], d["conclusion_ref"]
     lits = sorted({int(x) for x in re.findall(r"\b(\d+)\b", L) if int(x) <= 20})
