@@ -1,0 +1,17 @@
+{
+ "dataset": "SphereLab/FormalMATH-All",
+ "revision": "8eea2550f174ce8b95444334da18a7473c2d169c",
+ "columns": [
+  "source",
+  "refined_statement",
+  "theorem_names",
+  "autoformalization",
+  "compiler_feedback_bool",
+  "compiler_feedback",
+  "domain",
+  "solution"
+ ],
+ "rows_total": 5560,
+ "rows_exported": 111,
+ "ids_wanted": 111
+}
