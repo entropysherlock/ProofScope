@@ -1,0 +1,227 @@
+name: Defect hunt — FormalMATH (sharded, certified)
+
+# Scans every PutnamBench statement for certified defects (FALSE: Lean proves the negation; VACUOUS: the hypotheses
+# contradict each other). A finding counts only after a clean module re-proves it, `#print axioms` is standard-only
+# and leanchecker replays it (proofscope/defect_hunt.py). Finding nothing is NOT evidence that statements are correct.
+
+on:
+  workflow_dispatch:
+    inputs:
+      shards:
+        description: "number of parallel shards"
+        default: "16"
+  push:
+    branches: [research/defect-hunt-ci]
+    paths: [".github/workflows/defect-hunt-formalmath.yml", "experiments/defect_hunt/controls.jsonl"]
+
+permissions:
+  contents: write
+
+env:
+  MATHLIB_SHA: d13f23b723b8a846827a245b89c10fc7d3f11612
+  REPL_SHA: 193cf4bb9a22bb3fc6d25774f0fe6a70db1fd6ee
+  NSHARDS: 20
+
+jobs:
+  hunt:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Cache Lean REPL build
+        uses: actions/cache@v4
+        with:
+          path: ~/ps_cache/repl
+          key: hunt-repl-${{ env.REPL_SHA }}-lean4.34.1
+      - name: Lean REPL (pinned)
+        shell: bash
+        run: |
+          set -euo pipefail
+          R=~/ps_cache/repl
+          if [ ! -x "$R/.lake/build/bin/repl" ]; then
+            rm -rf "$R"; git clone -q https://github.com/leanprover-community/repl "$R"
+            (cd "$R" && git checkout -q "$REPL_SHA" && echo "leanprover/lean4:v4.34.1" > lean-toolchain && lake build repl)
+          fi
+          echo "PROOFSCOPE_REPL=$R/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Mathlib (pinned; precompiled cache, never `lake update`)
+        shell: bash
+        run: |
+          set -euo pipefail
+          M=~/ps_cache/mathlib4
+          if [ ! -s "$M/.lake/build/lib/lean/Mathlib.olean" ]; then
+            rm -rf "$M"; mkdir -p "$M"; cd "$M"
+            git init -q && git remote add origin https://github.com/leanprover-community/mathlib4
+            git fetch -q --depth 1 origin "$MATHLIB_SHA" && git checkout -q FETCH_HEAD
+            cp lake-manifest.json /tmp/manifest.lock
+            for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+            cmp lake-manifest.json /tmp/manifest.lock
+          fi
+          cd "$M"; test -s .lake/build/lib/lean/Mathlib.olean
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: FormalMATH data (Hugging Face SphereLab/FormalMATH-All) → shard ${{ matrix.shard }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          pip -q install datasets
+          echo "DATA_VERSION=SphereLab/FormalMATH-All" >> "$GITHUB_ENV"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from proofscope.hunt_data import formalmath_rows, write_jsonl
+          rows = formalmath_rows()
+          n, k = int(os.environ["NSHARDS"]), int("${{ matrix.shard }}")
+          mine = [r for i, r in enumerate(rows) if i % n == k]
+          write_jsonl(mine, Path("/tmp/shard.jsonl"))
+          print(f"{len(rows)} statements, shard {k}/{n}: {len(mine)}")
+          PY
+      - name: Hunt shard ${{ matrix.shard }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m proofscope.defect_hunt --data /tmp/shard.jsonl --out hunt-out --minutes 170 --workers 3 | tee hunt-out.log
+          mv hunt-out.log hunt-out/
+          echo "$DATA_VERSION" > hunt-out/data_version.txt
+      - name: Upload shard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hunt-formalmath-shard${{ matrix.shard }}
+          path: hunt-out
+
+  controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256)
+        uses: ./.github/actions/setup-lean
+      - name: Cache Lean REPL build
+        uses: actions/cache@v4
+        with:
+          path: ~/ps_cache/repl
+          key: hunt-repl-${{ env.REPL_SHA }}-lean4.34.1
+      - name: Lean REPL (pinned)
+        shell: bash
+        run: |
+          set -euo pipefail
+          R=~/ps_cache/repl
+          if [ ! -x "$R/.lake/build/bin/repl" ]; then
+            rm -rf "$R"; git clone -q https://github.com/leanprover-community/repl "$R"
+            (cd "$R" && git checkout -q "$REPL_SHA" && echo "leanprover/lean4:v4.34.1" > lean-toolchain && lake build repl)
+          fi
+          echo "PROOFSCOPE_REPL=$R/.lake/build/bin/repl" >> "$GITHUB_ENV"
+      - name: Mathlib (pinned; precompiled cache, never `lake update`)
+        shell: bash
+        run: |
+          set -euo pipefail
+          M=~/ps_cache/mathlib4
+          if [ ! -s "$M/.lake/build/lib/lean/Mathlib.olean" ]; then
+            rm -rf "$M"; mkdir -p "$M"; cd "$M"
+            git init -q && git remote add origin https://github.com/leanprover-community/mathlib4
+            git fetch -q --depth 1 origin "$MATHLIB_SHA" && git checkout -q FETCH_HEAD
+            cp lake-manifest.json /tmp/manifest.lock
+            for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+            cmp lake-manifest.json /tmp/manifest.lock
+          fi
+          cd "$M"; test -s .lake/build/lib/lean/Mathlib.olean
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: Positive and negative controls (planted defects must be certified; a true statement must not be)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m proofscope.defect_hunt --data experiments/defect_hunt/controls.jsonl --out ctrl-out --minutes 20 --workers 2 | tee ctrl.log || true
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          exp = {json.loads(l)["id"]: json.loads(l)["expect"] for l in open("experiments/defect_hunt/controls.jsonl")}
+          got = {}
+          f = Path("ctrl-out/findings.jsonl")
+          for l in (f.read_text().splitlines() if f.exists() else []):
+              d = json.loads(l); got.setdefault(d["id"], set()).add(d["kind"])
+          ok = all((e is None and k not in got) or (e is not None and e in got.get(k, set())) for k, e in exp.items())
+          lines = [f"{k}: expected {e}, certified {sorted(got.get(k, []))}" for k, e in exp.items()]
+          Path("ctrl-out").mkdir(exist_ok=True)
+          Path("ctrl-out/CONTROLS.txt").write_text(("PASS" if ok else "FAIL") + "\n" + "\n".join(lines) + "\n")
+          print(Path("ctrl-out/CONTROLS.txt").read_text())
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hunt-formalmath-controls
+          path: ctrl-out
+
+  collect:
+    needs: [hunt, controls]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: hunt-formalmath-*
+          path: shards
+      - name: Merge, summarize, commit the record
+        shell: bash
+        run: |
+          set -euo pipefail
+          D=experiments/defect_hunt/formalmath
+          mkdir -p "$D"
+          python - <<'PY'
+          import json, glob, collections
+          from pathlib import Path
+          D = Path("experiments/defect_hunt/formalmath")
+          res, fnd, errs, missing = [], [], [], []
+          for k in range(20):
+              s = Path(f"shards/hunt-formalmath-shard{k}")
+              if not (s / "last_run_summary.json").exists():
+                  missing.append(k); continue
+              res += [json.loads(l) for l in (s / "results.jsonl").read_text().splitlines() if l.strip()] if (s / "results.jsonl").exists() else []
+              fnd += [json.loads(l) for l in (s / "findings.jsonl").read_text().splitlines() if l.strip()] if (s / "findings.jsonl").exists() else []
+              summ = json.loads((s / "last_run_summary.json").read_text())
+              errs += [f"shard {k}: {e}" for e in summ.get("errors", [])]
+              if summ.get("remaining"): errs.append(f"shard {k}: {summ['remaining']} statements not reached (time limit)")
+          commit = next((p.read_text().strip() for p in Path("shards").glob("*/data_version.txt")), "?")
+          ctl = Path("shards/hunt-formalmath-controls/CONTROLS.txt")
+          ctl = ctl.read_text() if ctl.exists() else "MISSING\n(controls job produced no result)"
+          (D / "results.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in sorted(res, key=lambda r: r["id"])))
+          (D / "findings.jsonl").write_text("".join(json.dumps(f, ensure_ascii=False) + "\n" for f in fnd))
+          c = collections.Counter(r["status"] for r in res)
+          L = [f"# FormalMATH defect hunt — {len(res)} statements checked", "",
+               "**Controls: " + ctl.splitlines()[0] + "** — " + "; ".join(ctl.splitlines()[1:]), "",
+               f"Data `{commit}` · Lean 4.34.1 · Mathlib `d13f23b` · engine `proofscope/defect_hunt.py`", "",
+               "| Outcome | Count |", "|---|---:|"]
+          L += [f"| {k} | {v} |" for k, v in sorted(c.items())]
+          L += ["", f"**Certified findings: {len(fnd)}** (each re-proved in a clean module, standard axioms only, leanchecker replay).", ""]
+          for f in fnd:
+              L += [f"## {f['id']} — {f['kind']}", f"- certificate: `{f['certificate_statement']}`", f"- proof: `{f['proof'][:400]}`",
+                    f"- novelty: {f['novelty']}", f"- autobound: {f.get('autobound')}", f"- informal: {f['informal'][:500]}", ""]
+          if missing: L.append(f"Shards without a summary (job failed): {missing}")
+          L += [f"- {e}" for e in errs]
+          L += ["", "Finding nothing is not evidence that a statement is correct; COMPILE_FAIL rows are version drift, not defects."]
+          (D / "SUMMARY.md").write_text("\n".join(L) + "\n")
+          print("\n".join(L))
+          PY
+          cat "$D/SUMMARY.md" >> "$GITHUB_STEP_SUMMARY"
+          git config user.name "entropysherlock"; git config user.email "entropysherlock@users.noreply.github.com"
+          git add "$D"
+          git commit -q -m "Defect hunt: FormalMATH results (run ${{ github.run_id }})" && (git pull -q --rebase && git push -q) || echo "nothing to commit or push failed"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hunt-formalmath-merged
+          path: experiments/defect_hunt/putnam
