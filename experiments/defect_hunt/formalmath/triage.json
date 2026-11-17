@@ -1,0 +1,668 @@
+[
+ {
+  "id": "fm_omni_theorem_2926",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2552",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_988",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_aime_all_1997_3",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_3929",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_4152",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_4006",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_1698",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_3699",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_701",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_DEMIMathAnalysis_55",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1245",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_3668",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_4753",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_9813",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1454",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_4276",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_72",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_462",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10079",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_3251",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_quantitative_reasoning_zh_blue_379",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_1615",
+  "kind": "VACUOUS",
+  "operations": "TOTALIZED_OP",
+  "witness": "contradiction found by `(intros; norm_num at *; done)`"
+ },
+ {
+  "id": "fm_omni_theorem_1576",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1269",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_506",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_aime_all_2007_II_4",
+  "kind": "VACUOUS",
+  "operations": "PURE",
+  "witness": "contradiction found by `(intros; linarith)`"
+ },
+ {
+  "id": "fm_olymid-ref-base_7189",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_364",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_omni_theorem_3473",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_9952",
+  "kind": "VACUOUS",
+  "operations": "TOTALIZED_OP",
+  "witness": "contradiction found by omega/simp"
+ },
+ {
+  "id": "fm_u-math_413",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_1435",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_684",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1183",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_896",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_aime_all_2020_II_5",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10839",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_5439",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_4351",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1176",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_382",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10819",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1022",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2558",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10794",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_1527",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_6296",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_81",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_679",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_2887",
+  "kind": "VACUOUS",
+  "operations": "TOTALIZED_OP",
+  "witness": "contradiction found by omega/simp"
+ },
+ {
+  "id": "fm_olymid-ref-base_7209",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_9798",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2721",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_64",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_918",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_theorem_proving_zh_blue_1350",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_omni_theorem_3873",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_4271",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_325",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_957",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2420",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2472",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_11810",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_4187",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_omni_theorem_1467",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_5988",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_1859",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_u-math_404",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_3815",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_1073",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10792",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_aime_all_2013_II_1",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_3647",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_aime_all_1995_2",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_515",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_aime_all_2014_II_4",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_quantitative_reasoning_zh_blue_368",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_1748",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_3054",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2124",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_3497",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_292",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_omni_theorem_4254",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_4635",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_3461",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_995",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_3256",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_919",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_omni_theorem_4047",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_9492",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_11002",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10553",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_quantitative_reasoning_zh_blue_208",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_820",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_8490",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_552",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_435",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_372",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_298",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2929",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_quantitative_reasoning_zh_blue_52",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_quantitative_reasoning_zh_blue_230",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_9254",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_2012",
+  "kind": "VACUOUS",
+  "operations": "TOTALIZED_OP",
+  "witness": "contradiction found by omega/simp"
+ },
+ {
+  "id": "fm_omni_theorem_745",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_omni_theorem_4220",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_u-math_291",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_u-math_1091",
+  "kind": "FALSE",
+  "operations": "TOTALIZED_OP",
+  "witness": "real/rational witness"
+ },
+ {
+  "id": "fm_omni_theorem_578",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ },
+ {
+  "id": "fm_olymid-ref-base_10823",
+  "kind": "FALSE",
+  "operations": "PURE",
+  "witness": "integer/natural witness"
+ }
+]
