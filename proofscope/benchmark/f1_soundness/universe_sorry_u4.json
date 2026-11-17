@@ -1,0 +1,1 @@
+{"id": "u4", "reference": "∀ {G : Type u_1} (a b : G), a = b", "lean": "∀ {G : Type u_1} (a : G), a = a"}

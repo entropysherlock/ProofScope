@@ -20,7 +20,7 @@ Developed by **Caleb J. Westfall** · Experimental research software · MIT lice
 
 [**Independent evaluation (SOTA-18)**](#independent-evaluation-sota-18) · [**Technical reviewer guide**](docs/REVIEWER_GUIDE.md) · [**Verified CI results**](https://github.com/entropysherlock/ProofScope/actions/runs/42950230245) · [**Benchmark reproduction**](https://github.com/entropysherlock/ProofScope/actions/runs/42950230302)
 
-> **Status (November 2026).** `main` now carries the current engine (SOTA-16, merged from `v1.2-review`). An independently authored evaluation against two existing tools (**SOTA-18**, below) found ProofScope **substantially behind them on equivalence checking** and found one **soundness bug (F1)**. The F1 fail-closed repair is in [PR #11](https://github.com/entropysherlock/ProofScope/pull/11). The project is pivoting toward what that evaluation showed it does uniquely: certified explanations of *how* two statements differ, including redundant assumptions both competitors missed.
+> **Status (November 2026).** `main` now carries the current engine (SOTA-16, merged from `v1.2-review`). An independently authored evaluation against two existing tools (**SOTA-18**, below) found ProofScope **substantially behind them on equivalence checking** and found one **soundness bug (F1)**. The F1 fail-closed repair is merged ([PR #11](https://github.com/entropysherlock/ProofScope/pull/11), engine v1.2.1). The project is pivoting toward what that evaluation showed it does uniquely: certified explanations of *how* two statements differ, including redundant assumptions both competitors missed.
 
 ## The problem ProofScope addresses
 
@@ -81,7 +81,7 @@ In November 2026 ProofScope was evaluated on **477 externally authored cases** f
 
 - **The competitors are significantly better on both tracks** (exact McNemar test, p < 10⁻⁶).
 - **ProofScope has 4 kernel-certified wins**: redundant assumptions that both competitors miss.
-- **Soundness finding F1.** On statements that failed to elaborate (mostly universe-polymorphic `Type*` statements), Assumption Delta reported "no assumption change" **with no certificate**. That happened 47 times, and 17 of those answers were wrong. The repair, [PR #11](https://github.com/entropysherlock/ProofScope/pull/11), fails closed: an elaboration error gives `INCONCLUSIVE`, and "no assumption change" now requires a kernel equivalence certificate.
+- **Soundness finding F1.** On statements that failed to elaborate (mostly universe-polymorphic `Type*` statements), Assumption Delta reported "no assumption change" **with no certificate**. That happened 47 times, and 17 of those answers were wrong. The repair (v1.2.1, merged in [PR #11](https://github.com/entropysherlock/ProofScope/pull/11), [CI evidence](https://github.com/entropysherlock/ProofScope/actions/runs/43984572106)) fails closed: an elaboration error gives `INCONCLUSIVE`, and "no assumption change" now requires a kernel equivalence certificate.
 - **Decision: PIVOT.** The planned direction is an Expr-level input pipeline, fail-closed verdicts everywhere, and ProofScope as a **certified explanation and assumption-redundancy layer** running behind an equivalence checker, rather than a competing equivalence checker.
 
 Full report, protocol, raw records and erratum: [PR #8](https://github.com/entropysherlock/ProofScope/pull/8).
