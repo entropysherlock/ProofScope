@@ -1,0 +1,7 @@
+name = "formalmath_1859_certificate"
+defaultTargets = []
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "8edf04f0977c3183d3b633792e03fd570be1777f"
