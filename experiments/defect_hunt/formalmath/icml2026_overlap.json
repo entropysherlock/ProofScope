@@ -1,0 +1,1226 @@
+{
+ "omni_theorem_2926": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_2552": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "theorem_proving_zh_blue_988": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "aime_all_1997_3": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_3929": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_4152": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_4006": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_1698": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_3699": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_701": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "DEMIMathAnalysis_55": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "theorem_proving_zh_blue_1245": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_3668": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_4753": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_9813": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "theorem_proving_zh_blue_1454": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_4276": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_72": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_462": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_10079": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_3251": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "quantitative_reasoning_zh_blue_379": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_1615": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "0-Indexed Range",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_1576": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "theorem_proving_zh_blue_1269": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_506": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "aime_all_2007_II_4": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_7189": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_364": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "0-Indexed Range",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_3473": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_9952": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "u-math_413": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_1435": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ]
+  ]
+ },
+ "u-math_684": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "theorem_proving_zh_blue_1183": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "theorem_proving_zh_blue_896": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "aime_all_2020_II_5": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_10839": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_5439": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "0-Indexed Range",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_4351": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "theorem_proving_zh_blue_1176": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "0-Indexed Range",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_382": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_10819": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Modulo Edge Case",
+    "maybe"
+   ],
+   [
+    "Modulo Edge Case",
+    "maybe"
+   ],
+   [
+    "Modulo Edge Case",
+    "maybe"
+   ]
+  ]
+ },
+ "theorem_proving_zh_blue_1022": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_2558": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_10794": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_1527": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_6296": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "theorem_proving_zh_blue_81": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "theorem_proving_zh_blue_679": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_2887": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Vacuous Theorem",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_7209": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_9798": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_2721": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_64": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_918": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "theorem_proving_zh_blue_1350": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_3873": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_4271": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_325": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_957": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_2420": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_2472": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_11810": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_4187": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ],
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ],
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_1467": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_5988": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_1859": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "u-math_404": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_3815": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_1073": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_10792": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "aime_all_2013_II_1": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_3647": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "aime_all_1995_2": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_515": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "aime_all_2014_II_4": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "quantitative_reasoning_zh_blue_368": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "0-Indexed Range",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_1748": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_3054": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_2124": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_3497": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_292": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_4254": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_4635": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_3461": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "olymid-ref-base_995": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_3256": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_919": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_4047": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_9492": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_11002": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_10553": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "quantitative_reasoning_zh_blue_208": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "Integer Division Truncation",
+    "proven"
+   ],
+   [
+    "0-Indexed Range",
+    "maybe"
+   ],
+   [
+    "0-Indexed Range",
+    "maybe"
+   ],
+   [
+    "Unused Quantified Variable",
+    "maybe"
+   ],
+   [
+    "Unused Quantified Variable",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "u-math_820": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_8490": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ],
+   [
+    "Integer Division Truncation",
+    "maybe"
+   ]
+  ]
+ },
+ "u-math_552": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_435": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "omni_theorem_372": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_298": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_2929": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "quantitative_reasoning_zh_blue_52": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "quantitative_reasoning_zh_blue_230": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ },
+ "olymid-ref-base_9254": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ],
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_2012": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_745": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "omni_theorem_4220": {
+  "icml": "ICML_NOTHING",
+  "icml_findings": []
+ },
+ "u-math_291": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ],
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ],
+   [
+    "Analytic Domain Totalization",
+    "maybe"
+   ]
+  ]
+ },
+ "u-math_1091": {
+  "icml": "ICML_FLAGGED_MAYBE",
+  "icml_findings": [
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ],
+   [
+    "Potential Division by Zero",
+    "maybe"
+   ]
+  ]
+ },
+ "omni_theorem_578": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ],
+   [
+    "Truncated Nat Subtraction",
+    "maybe"
+   ],
+   [
+    "0-Indexed Range",
+    "maybe"
+   ]
+  ]
+ },
+ "olymid-ref-base_10823": {
+  "icml": "ICML_PROVEN",
+  "icml_findings": [
+   [
+    "Counterexample Found",
+    "proven"
+   ]
+  ]
+ }
+}
