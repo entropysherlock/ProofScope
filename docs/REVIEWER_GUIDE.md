@@ -9,6 +9,8 @@
 
 **The most advanced merged and GitHub Actions-validated version at the time of this guide is on [`v1.2-review`](https://github.com/entropysherlock/ProofScope/tree/v1.2-review), commit [`198e17c`](https://github.com/entropysherlock/ProofScope/commit/198e17c313e0752e948ce2f2bc32d74aa7c7cdc5).**
 
+> **Update (November 2026).** The engine is now on `main` as well. **Read the independent SOTA-18 evaluation first** ([PR #8](https://github.com/entropysherlock/ProofScope/pull/8)): on 477 externally authored cases, SemantEq and BEq+ were significantly better than ProofScope at equivalence checking. ProofScope had 4 kernel-certified wins (redundant assumptions both competitors missed) and one soundness bug (F1), repaired fail-closed in [PR #11](https://github.com/entropysherlock/ProofScope/pull/11). The figures below are from the author-generated SOTA-16 set.
+
 The default branch (`main`) contains an earlier public prototype and workflow launchers. **Do not evaluate the current research engine from `main` alone.** The default branch has not been promoted to the advanced release, pending repository integration decisions. Branch and evidence links below are pinned to documented work; check the latest commits before relying on this guide as a current status report.
 
 ## What is ProofScope?
@@ -56,7 +58,6 @@ Prerequisites: Git, Python 3.12 (or a supported tested version), Lean **4.34.1**
 ```bash
 git clone https://github.com/entropysherlock/ProofScope.git
 cd ProofScope
-git switch v1.2-review
 git rev-parse HEAD
 lean --version
 python3 -m unittest discover -s tests/v02 -v
