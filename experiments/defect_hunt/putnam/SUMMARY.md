@@ -1,6 +1,6 @@
 # PutnamBench defect hunt — 630 statements checked
 
-**Controls: FAIL** — ctrl_false_real: expected FALSE, certified []; ctrl_false_int: expected FALSE, certified []; ctrl_vacuous: expected VACUOUS, certified []; ctrl_true: expected None, certified []
+**Controls: PASS** — ctrl_false_real: expected FALSE, certified ['FALSE']; ctrl_false_int: expected FALSE, certified ['FALSE']; ctrl_vacuous: expected VACUOUS, certified ['VACUOUS']; ctrl_true: expected None, certified []
 
 Data `PutnamBench@a635813f5edf297d928f9bd5ef8324a26bdde09c` · Lean 4.34.1 · Mathlib `d13f23b` · engine `proofscope/defect_hunt.py`
 
