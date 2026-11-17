@@ -35,7 +35,10 @@ jobs:
           grep -q 8edf04f0977c3183d3b633792e03fd570be1777f lake-manifest.json
           for i in 1 2 3; do lake exe cache get && break || sleep 30; done
           lean --version
-          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+          # Lake 4.11 prints relative entries (././.lake/...); make them absolute
+          LP=$(lake env printenv LEAN_PATH | tr ':' '\n' | while read -r p; do realpath -m "$p"; done | paste -sd:)
+          echo "$LP" | tr ':' '\n'; ls "$HOME/fm/.lake/packages/mathlib/.lake/build/lib/Mathlib.olean"
+          echo "LEAN_PATH=$LP" >> "$GITHUB_ENV"
       - name: Verify certificates
         shell: bash
         run: set -o pipefail; experiments/defect_hunt/formalmath/certificates/verify.sh experiments/defect_hunt/formalmath/certificates out-A | tee -a "$GITHUB_STEP_SUMMARY"
