@@ -1,0 +1,41 @@
+name: FormalMATH — export original rows of the certified findings
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/defect-hunt-ci]
+    paths: [".github/workflows/formalmath-originals.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Export every column of the 111 certified rows, verbatim, plus dataset revision
+        run: |
+          pip -q install datasets huggingface_hub
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from datasets import load_dataset
+          from huggingface_hub import HfApi
+          rev = HfApi().dataset_info("SphereLab/FormalMATH-All").sha
+          ds = load_dataset("SphereLab/FormalMATH-All", split="train")
+          D = Path("experiments/defect_hunt/formalmath")
+          ids = {json.loads(l)["id"][3:] for l in (D / "findings.jsonl").read_text().splitlines() if l.strip()}
+          col = "theorem_names" if "theorem_names" in ds.column_names else None
+          rows = [dict(r) for r in ds if str(r[col]) in ids]
+          (D / "originals.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False, default=str) + "\n" for r in rows))
+          (D / "originals_meta.json").write_text(json.dumps({"dataset": "SphereLab/FormalMATH-All", "revision": rev,
+              "columns": ds.column_names, "rows_total": len(ds), "rows_exported": len(rows), "ids_wanted": len(ids)}, indent=1))
+          print(rev, len(rows), "of", len(ids), ds.column_names)
+          PY
+          git config user.name "entropysherlock"; git config user.email "entropysherlock@users.noreply.github.com"
+          git add experiments/defect_hunt/formalmath/originals*
+          git commit -q -m "FormalMATH: verbatim original rows of the 111 certified findings (dataset revision recorded)" && git pull -q --rebase && git push -q
