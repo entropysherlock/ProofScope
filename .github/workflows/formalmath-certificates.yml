@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [research/defect-hunt-ci]
-    paths: ["experiments/defect_hunt/formalmath/certificates/**", ".github/workflows/formalmath-certificates.yml"]
+    paths: ["experiments/defect_hunt/formalmath/certificates/**", "experiments/defect_hunt/formalmath/demo_1859/**", ".github/workflows/formalmath-certificates.yml"]
 
 permissions:
   contents: read
@@ -74,3 +74,24 @@ jobs:
         with:
           name: certificates-B-lean4.34.1
           path: out-B
+
+  demo-reproduce:
+    name: "C: demo_1859/reproduce.sh exactly as a reviewer would run it"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install elan only (no toolchain); the demo's lean-toolchain selects Lean 4.11.0
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Run reproduce.sh and check its output
+        shell: bash
+        run: |
+          set -o pipefail
+          experiments/defect_hunt/formalmath/demo_1859/reproduce.sh 2>&1 | tee demo.log
+          grep -q "'olymid_ref_base_1859_is_false' depends on axioms: \[propext, Classical.choice, Quot.sound\]" demo.log
+          ! grep -q ": error" demo.log
+          echo "DEMO REPRODUCED" | tee -a "$GITHUB_STEP_SUMMARY"
