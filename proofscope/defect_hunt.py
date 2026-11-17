@@ -125,12 +125,36 @@ def _infos(resp: dict, tag: str) -> list[str]:
     return [l[len(tag) + 1:] for m in resp.get("messages", []) for l in m.get("data", "").splitlines() if l.startswith(tag + " ")]
 
 
+def _mem_available_mb() -> float:
+    try:
+        for l in open("/proc/meminfo"):
+            if l.startswith("MemAvailable:"):
+                return int(l.split()[1]) / 1024
+    except OSError:
+        pass
+    return float("inf")
+
+
+def _rss_mb(pid: int) -> float:
+    try:
+        for l in open(f"/proc/{pid}/status"):
+            if l.startswith("VmRSS:"):
+                return int(l.split()[1]) / 1024
+    except OSError:
+        pass
+    return 0.0
+
+
+MIN_FREE_MB = float(os.environ.get("PROOFSCOPE_HUNT_MIN_FREE_MB", "1500"))
+
+
 class Worker:
     def __init__(self, tc: Toolchain, work: Path, mathlib: bool, hb: int):
         self.work, self.mathlib, self.hb = work, mathlib, hb
         self.tac = Tactics(mathlib)
         self.repl = None
         self.env0 = None
+        self.killed_for_memory = False      # set by the memory watchdog; the current statement is then RESOURCE_LIMIT
 
     def start(self):
         self.work.mkdir(parents=True, exist_ok=True)
@@ -312,7 +336,18 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
                     row = next(it, None)
                 if row is None:
                     return
+                w.killed_for_memory = False
                 res = w.check(row)
+                if w.killed_for_memory:     # the search was cut short: never report it as "nothing found"
+                    res = {k: v for k, v in res.items() if k in ("id", "source", "theorem")}
+                    res.update(status="RESOURCE_LIMIT", detail=f"Lean REPL killed: free memory below {MIN_FREE_MB:.0f} MB")
+                    if w.repl is None or w.repl.p.poll() is not None:
+                        try:
+                            w.restart()
+                        except Exception as e:
+                            with lock:
+                                errors.append(f"worker restart after memory kill failed: {str(e)[:300]}")
+                            return
                 if res["status"] == "CANDIDATE":
                     for c in res["candidates"]:
                         c["alt"] = winning_alt("", c["proof"], c["stmt"], w, res["_env"])
@@ -327,10 +362,31 @@ def run(rows: list[dict], out: Path, minutes: float, workers: int, mathlib: bool
                 errors.append(f"worker crashed: {type(e).__name__}: {str(e)[:500]}")
 
     threads = [threading.Thread(target=loop, args=(w,), daemon=True) for w in ws]
+    stop = threading.Event()
+
+    def watchdog():
+        # A single statement can make Lean's memory explode (e.g. `decide` on a large polynomial). Without this,
+        # the operating system kills the whole run and every result of the shard is lost.
+        while not stop.wait(0.5):
+            if _mem_available_mb() >= MIN_FREE_MB:
+                continue
+            live = [w for w in ws if w.repl is not None and w.repl.p.poll() is None]
+            if not live:
+                continue
+            big = max(live, key=lambda w: _rss_mb(w.repl.p.pid))
+            big.killed_for_memory = True
+            try:
+                os.killpg(big.repl.p.pid, 9)
+            except OSError:
+                pass
+            time.sleep(2)
+    wd = threading.Thread(target=watchdog, daemon=True)
+    wd.start()
     for t in threads:
         t.start()
     for t in threads:
         t.join()
+    stop.set()
     for w in ws:
         if w.repl:
             w.repl.close()
