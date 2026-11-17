@@ -432,6 +432,9 @@ def main(argv=None) -> int:
     ap.add_argument("--core", action="store_true", help="core Lean only (no Mathlib)")
     a = ap.parse_args(argv)
     rows = [json.loads(l) for l in a.data.read_text().splitlines() if l.strip()]
+    if os.environ.get("PROOFSCOPE_HUNT_TRACE"):     # diagnostics: dump every thread's stack periodically
+        import faulthandler
+        faulthandler.dump_traceback_later(float(os.environ["PROOFSCOPE_HUNT_TRACE"]), repeat=True)
     a.out = a.out.resolve()     # verify() compiles with cwd inside the output directory: relative paths broke it
     s = run(rows, a.out, a.minutes, a.workers, not a.core)
     (a.out / "last_run_summary.json").write_text(json.dumps(s, ensure_ascii=False, indent=1, default=str))
