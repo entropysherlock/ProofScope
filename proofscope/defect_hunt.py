@@ -88,6 +88,28 @@ class Tactics:
             self.vacuous = ["(intros; omega)", "(intros; simp_all; done)", "(intros; contradiction)"]
 
 
+def smallest_combos(sizes: list[int], cap: int) -> list[tuple[int, ...]]:
+    """The first `cap` index tuples in (sum, lexicographic) order, generated lazily. Sorting the full product
+    (as before) needs memory exponential in the number of variables: 8^10 tuples took 12 GB and killed the run."""
+    out: list[tuple[int, ...]] = []
+
+    def parts(total: int, i: int):          # tuples for positions i.. with the given sum, in lexicographic order
+        if i == len(sizes):
+            if total == 0:
+                yield ()
+            return
+        rest_max = sum(n - 1 for n in sizes[i + 1:])
+        for v in range(max(0, total - rest_max), min(sizes[i] - 1, total) + 1):
+            for tail in parts(total - v, i + 1):
+                yield (v,) + tail
+    for total in range(sum(n - 1 for n in sizes) + 1):
+        for c in parts(total, 0):
+            out.append(c)
+            if len(out) >= cap:
+                return out
+    return out
+
+
 def grid_alts(binders: list[dict], tac: Tactics, cap: int = 40) -> list[str]:
     """`absurd (@h v₁ … ?_ …) ?_`: instantiate every numeric variable (smallest values first), then each
     hypothesis instance and the negated conclusion instance must close; only when every data binder is numeric."""
@@ -95,7 +117,7 @@ def grid_alts(binders: list[dict], tac: Tactics, cap: int = 40) -> list[str]:
     if not num or any(binders[i]["kind"] == "other" for i in num):
         return []
     pools = [VALUES[binders[i]["kind"]] for i in num]
-    combos = sorted(itertools.product(*[range(len(p)) for p in pools]), key=lambda c: (sum(c), c))[:cap]
+    combos = smallest_combos([len(p) for p in pools], cap)
     alts = []
     for c in combos:
         val = dict(zip(num, (f"(({pools[k][j]}) : {LEAN_TYPE[binders[num[k]]['kind']]})" for k, j in enumerate(c))))
