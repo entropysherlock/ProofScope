@@ -90,7 +90,7 @@ jobs:
         run: |
           set -euo pipefail
           # memory cap for the whole hunt (cgroup): the kernel then kills a runaway Lean REPL inside it instead of the runner
-          sudo systemd-run --quiet --scope -p MemoryMax=13G -p MemorySwapMax=0 --uid="$(id -u)" --gid="$(id -g)" -- \
+          sudo systemd-run --quiet --scope -p MemoryMax=13G -p MemorySwapMax=0 -p OOMPolicy=continue --uid="$(id -u)" --gid="$(id -g)" -- \
             env PATH="$PATH" HOME="$HOME" LEAN_PATH="$LEAN_PATH" PROOFSCOPE_REPL="$PROOFSCOPE_REPL" PYTHONPATH="$PWD" \
             "$(which python)" -m proofscope.defect_hunt --data /tmp/shard.jsonl --out "$PWD/hunt-out" --minutes 170 --workers 2 | tee hunt-out.log
           mv hunt-out.log hunt-out/
@@ -193,7 +193,10 @@ jobs:
           for k in range(16):
               s = Path(f"shards/hunt-putnam-shard{k}")
               if not (s / "last_run_summary.json").exists():
-                  missing.append(k); continue
+                  missing.append(k)       # the shard process died; keep whatever it had already recorded
+                  if (s / "results.jsonl").exists():
+                      res += [json.loads(l) for l in (s / "results.jsonl").read_text().splitlines() if l.strip()]
+                  continue
               res += [json.loads(l) for l in (s / "results.jsonl").read_text().splitlines() if l.strip()] if (s / "results.jsonl").exists() else []
               fnd += [json.loads(l) for l in (s / "findings.jsonl").read_text().splitlines() if l.strip()] if (s / "findings.jsonl").exists() else []
               summ = json.loads((s / "last_run_summary.json").read_text())
@@ -214,7 +217,7 @@ jobs:
           for f in fnd:
               L += [f"## {f['id']} — {f['kind']}", f"- certificate: `{f['certificate_statement']}`", f"- proof: `{f['proof'][:400]}`",
                     f"- novelty: {f['novelty']}", f"- autobound: {f.get('autobound')}", f"- informal: {f['informal'][:500]}", ""]
-          if missing: L.append(f"Shards without a summary (job failed): {missing}")
+          if missing: L.append(f"Shards whose hunt process died (results recorded before that are included; candidates there were not certified): {missing}")
           L += [f"- {e}" for e in errs]
           L += ["", "Finding nothing is not evidence that a statement is correct; COMPILE_FAIL rows are version drift, not defects."]
           (D / "SUMMARY.md").write_text("\n".join(L) + "\n")
