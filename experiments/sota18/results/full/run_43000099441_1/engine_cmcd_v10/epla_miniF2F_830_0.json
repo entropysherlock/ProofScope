@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_830_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 0 < n → 3 ∣ n → (n + 4 + (n + 6) + (n + 8)) % 9 = 0",
+ "lean": "∀ (n : ℤ), 3 ∣ n → 9 ∣ n + 4 + (n + 6) + (n + 8)",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (n : ℕ), (0 : ℕ) < n → (3 : ℕ) ∣ n → (n + (4 : ℕ) + (n + (6 : ℕ)) + (n + (8 : ℕ))) % (9 : ℕ) = (0 : ℕ)",
+   "to": "∀ (n : ℤ), (3 : ℤ) ∣ n → (9 : ℤ) ∣ n + (4 : ℤ) + (n + (6 : ℤ)) + (n + (8 : ℤ))"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

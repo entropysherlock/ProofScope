@@ -1,0 +1,30 @@
+{
+ "id": "epla_ProofNet_363_0",
+ "reference": "∀ (n a b c : ℕ), ↑a * ↑b * ↑c ≡ ↑a * (↑b * ↑c) [ZMOD ↑n]",
+ "lean": "∀ (n : ℕ) (a b c : ZMod n), a * b * c = a * (b * c)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (a b c : ZMod n), a * b * c = a * (b * c)",
+  "conclusion_ref": "∀ (a b c : ℕ), HMul.hMul (α := ℤ) ↑a ↑b * ↑c ≡ ↑a * HMul.hMul (α := ℤ) ↑b ↑c [ZMOD ↑n]",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

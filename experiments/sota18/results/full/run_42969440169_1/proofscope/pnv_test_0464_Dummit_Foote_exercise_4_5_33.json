@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0464:Dummit-Foote|exercise_4_5_33",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "wn universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Assumptions_input.lean:4:253: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Drift_input.lean:4:245: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 1,
+  "cand": 1
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] [Fintype G] {p : ℕ} (P : Sylow p G) [hP : P.Normal] (H : Subgroup G) [Fintype ↥H],   (∀ (R : Sylow p ↥H), R.toSubgroup = (H ⊓ P.toSubgroup).subgroupOf H) ∧ Nonempty (Sylow p ↥H)",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {p : ℕ} [hp : Fact (Nat.Prime p)] (P : Sylow p G),   P.Normal →     ∀ (H : Subgroup G),       ∃! Q : Sylow p ↥H, SetLike.coe Q.toSubgroup = DFunLike.coe H.subtype ⁻¹' SetLike.coe P.toSubgroup",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 17.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8631964
+}

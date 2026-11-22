@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:261:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.5,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.6,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ), (x + 3) * (2 * x - 6) = 2 * x ^ 2 - 18",
+ "lean": "∀ {x : ℕ}, (x + 3) * (2 * x - 6) = 2 * x ^ 2 - 18",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ), ('",
+  "cand": "unsupported: cannot tokenize at '∀ {x : ℕ}, ('"
+ },
+ "seconds": 21.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8547792
+}

@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_326_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : ℤ), x = 4 → (3 * x - 2) * (4 * x + 1) - (3 * x - 2) * (4 * x) + 1 = 11",
+ "lean": "∀ (x : ℕ), (3 * x - 2) * (4 * x + 1) - (3 * x - 2) * 4 * x + 1 = 11",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (x : ℤ),\n  x = (4 : ℤ) →\n    ((3 : ℤ) * x - (2 : ℤ)) * ((4 : ℤ) * x + (1 : ℤ)) - ((3 : ℤ) * x - (2 : ℤ)) * ((4 : ℤ) * x) + (1 : ℤ) = (11 : ℤ)",
+   "to": "∀ (x : ℕ),\n  ((3 : ℕ) * x - (2 : ℕ)) * ((4 : ℕ) * x + (1 : ℕ)) - ((3 : ℕ) * x - (2 : ℕ)) * (4 : ℕ) * x + (1 : ℕ) = (11 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

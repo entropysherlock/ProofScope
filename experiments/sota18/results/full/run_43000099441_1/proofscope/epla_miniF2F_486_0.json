@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:486:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.1,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 28.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Membership.mem",
+     "type": "List ℕ → ℕ → Prop"
+    },
+    {
+     "symbol": "Nat.digits",
+     "type": "ℕ → ℕ → List ℕ"
+    },
+    {
+     "symbol": "Finset.card",
+     "type": "Finset ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (S : Finset ℕ), (∀ (n : ℕ), n ∈ S ↔ 1000 ≤ n ∧ n ≤ 9999 ∧ (∀ d ∈ Nat.digits 10 n, Even d) ∧ 5 ∣ n) → S.card = 100",
+ "lean": "{n ∈ Finset.range 10000 | (1000 ≤ n ∧ n ≤ 9999) ∧ (∀ d ∈ Nat.digits 10 n, d % 2 = 0) ∧ n % 5 = 0}.card = 100",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (S : Finse'",
+  "cand": "unsupported: cannot tokenize at '{n ∈ Finset.'"
+ },
+ "seconds": 40.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619268
+}

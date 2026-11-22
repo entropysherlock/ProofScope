@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_376_0",
+ "reference": "∀ (x y z w : ℕ),   1 < x ∧ 1 < y ∧ 1 < z →     0 ≤ w →       Real.log ↑w / Real.log ↑x = 24 →         Real.log ↑w / Real.log ↑y = 40 → Real.log ↑w / Real.log (↑x * ↑y * ↑z) = 12 → Real.log ↑w / Real.log ↑z = 60",
+ "lean": "∀ (x y z w : ℝ),   1 < x →     1 < y →       1 < z →         0 < w →           Real.log w / Real.log x = 24 →             Real.log w / Real.log y = 40 → Real.log w / Real.log (x * y * z) = 12 → Real.log w / Real.log z = 60",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (x y z w : ℝ),\n  (1 : ℝ) < x →\n    (1 : ℝ) < y →\n      (1 : ℝ) < z →\n        (0 : ℝ) < w →\n          Real.log w / Real.log x = (24 : ℝ) →\n            Real.log w / Real.log y = (40 : ℝ) →\n              Real.log w / Real.log (x * y * z) = (12 : ℝ) → Real.log w / Real.log z = (60 : ℝ)",
+  "conclusion_ref": "∀ (x y z w : ℕ),\n  (1 : ℕ) < x ∧ (1 : ℕ) < y ∧ (1 : ℕ) < z →\n    (0 : ℕ) ≤ w →\n      Real.log ↑w / Real.log ↑x = (24 : ℝ) →\n        Real.log ↑w / Real.log ↑y = (40 : ℝ) →\n          Real.log ↑w / Real.log (HMul.hMul (α := ℝ) ↑x ↑y * ↑z) = (12 : ℝ) → Real.log ↑w / Real.log ↑z = (60 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

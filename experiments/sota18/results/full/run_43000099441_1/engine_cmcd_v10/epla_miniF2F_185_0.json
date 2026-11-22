@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_185_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : ℝ), 2 + 1 / (1 + 1 / (2 + 2 / (3 + x))) = 144 / 53 → x = 3 / 4",
+ "lean": "∀ (x : ℚ), 2 + 1 / (1 + 1 / (2 + 2 / (3 + x))) = 144 / 53 → x = 3 / 4",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (x : ℝ),\n  (2 : ℝ) + (1 : ℝ) / ((1 : ℝ) + (1 : ℝ) / ((2 : ℝ) + (2 : ℝ) / ((3 : ℝ) + x))) = (144 / 53 : ℝ) → x = (3 / 4 : ℝ)",
+   "to": "∀ (x : ℚ),\n  (2 : ℚ) + (1 : ℚ) / ((1 : ℚ) + (1 : ℚ) / ((2 : ℚ) + (2 : ℚ) / ((3 : ℚ) + x))) = (144 / 53 : ℚ) → x = (3 / 4 : ℚ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

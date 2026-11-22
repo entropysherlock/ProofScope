@@ -1,0 +1,62 @@
+{
+ "case_id": "pnv:test:0923:Rudin|exercise_4_15",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.8,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 26.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Continuous",
+     "type": "(ℝ → ℝ) → Prop"
+    },
+    {
+     "symbol": "IsOpenMap",
+     "type": "(ℝ → ℝ) → Prop"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {f : ℝ → ℝ}, Continuous f → IsOpenMap f → Monotone f",
+ "lean": "∀ (f : ℝ → ℝ), Continuous f → IsOpenMap f → StrictMono f ∨ StrictAnti f",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {f : ℝ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (f : ℝ → ℝ'"
+ },
+ "seconds": 37.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8627320
+}

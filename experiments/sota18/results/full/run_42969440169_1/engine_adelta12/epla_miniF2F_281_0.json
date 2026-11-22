@@ -1,0 +1,97 @@
+{
+ "id": "epla_miniF2F_281_0",
+ "reference": "∀ (p a : ℕ), 0 < a → Nat.Prime p → p ∣ a ^ p - a",
+ "lean": "∀ (p a : ℕ), Nat.Prime p → 0 < a → p ∣ a ^ p - a",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "Nat.Prime p"
+   }
+  ],
+  "added_prefix": [
+   [
+    2,
+    0
+   ]
+  ],
+  "conclusion_lean": "p ∣ a ^ p - a",
+  "conclusion_ref": "p ∣ a ^ p - a",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "Nat.Prime p"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    2,
+    1
+   ]
+  ],
+  "hyps": [
+   "(0 : ℕ) < a"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "p",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_281_0.d_implies_a",
+   "statement": "∀ (p : ℕ) (a : ℕ), ((0 : ℕ) < a) → ((Nat.Prime p)) → (Nat.Prime p)",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_281_0.link_R",
+   "statement": "(∀ (p a : ℕ), 0 < a → Nat.Prime p → p ∣ a ^ p - a) ↔ (∀ (p : ℕ) (a : ℕ), ((0 : ℕ) < a) → (Nat.Prime p) → p ∣ a ^ p - a)",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_281_0.link_L",
+   "statement": "(∀ (p a : ℕ), Nat.Prime p → 0 < a → p ∣ a ^ p - a) ↔ (∀ (p : ℕ) (a : ℕ), ((0 : ℕ) < a) → (Nat.Prime p) → p ∣ a ^ p - a)",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_281_0.a_implies_d",
+   "statement": "∀ (p : ℕ) (a : ℕ), ((0 : ℕ) < a) → ((Nat.Prime p)) → (Nat.Prime p)",
+   "axioms": [
+    "propext"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "Nat.Prime p"
+ ],
+ "dropped": [
+  "Nat.Prime p"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

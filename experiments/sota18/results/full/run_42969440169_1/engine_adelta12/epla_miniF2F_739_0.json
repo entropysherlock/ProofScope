@@ -1,0 +1,181 @@
+{
+ "id": "epla_miniF2F_739_0",
+ "reference": "∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720",
+ "lean": "∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < c"
+   },
+   {
+    "dependent": false,
+    "prop": "a * (b + c) = (152 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "b * (c + a) = (162 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "c * (a + b) = (170 : ℝ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "a * b * c = (720 : ℝ)",
+  "conclusion_ref": "a * b * c = (720 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c"
+   },
+   {
+    "dependent": false,
+    "prop": "a * (b + c) = (152 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "b * (c + a) = (162 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "c * (a + b) = (170 : ℝ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_739_0.link_L",
+   "statement": "(∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720) ↔ (∀ (a : ℝ) (b : ℝ) (c : ℝ), ((0 : ℝ) < a) → ((0 : ℝ) < b) → ((0 : ℝ) < c) → (a * (b + c) = (152 : ℝ)) → (b * (c + a) = (162 : ℝ)) → (c * (a + b) = (170 : ℝ)) → a * b * c = (720 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_739_0.link_R",
+   "statement": "(∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → a * (b + c) = 152 → b * (c + a) = 162 → c * (a + b) = 170 → a * b * c = 720) ↔ (∀ (a : ℝ) (b : ℝ) (c : ℝ), ((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c) → (a * (b + c) = (152 : ℝ)) → (b * (c + a) = (162 : ℝ)) → (c * (a + b) = (170 : ℝ)) → a * b * c = (720 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_739_0.a_implies_d",
+   "statement": "∀ (a : ℝ) (b : ℝ) (c : ℝ), (((0 : ℝ) < a) ∧ ((0 : ℝ) < b) ∧ ((0 : ℝ) < c) ∧ (a * (b + c) = (152 : ℝ)) ∧ (b * (c + a) = (162 : ℝ)) ∧ (c * (a + b) = (170 : ℝ))) → ((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c) ∧ (a * (b + c) = (152 : ℝ)) ∧ (b * (c + a) = (162 : ℝ)) ∧ (c * (a + b) = (170 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_739_0.d_implies_a",
+   "statement": "∀ (a : ℝ) (b : ℝ) (c : ℝ), (((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c) ∧ (a * (b + c) = (152 : ℝ)) ∧ (b * (c + a) = (162 : ℝ)) ∧ (c * (a + b) = (170 : ℝ))) → ((0 : ℝ) < a) ∧ ((0 : ℝ) < b) ∧ ((0 : ℝ) < c) ∧ (a * (b + c) = (152 : ℝ)) ∧ (b * (c + a) = (162 : ℝ)) ∧ (c * (a + b) = (170 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℝ) < a",
+  "(0 : ℝ) < b",
+  "(0 : ℝ) < c",
+  "a * (b + c) = (152 : ℝ)",
+  "b * (c + a) = (162 : ℝ)",
+  "c * (a + b) = (170 : ℝ)"
+ ],
+ "dropped": [
+  "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c",
+  "a * (b + c) = (152 : ℝ)",
+  "b * (c + a) = (162 : ℝ)",
+  "c * (a + b) = (170 : ℝ)"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

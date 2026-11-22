@@ -1,0 +1,106 @@
+Downloading cpython-3.11.18-linux-x86_64-gnu (download) (29.2MiB)
+ Downloaded cpython-3.11.18-linux-x86_64-gnu (download)
+   Building lean-interact @ file:///home/runner/work/_temp/li
+Downloading pyarrow (52.5MiB)
+Downloading numpy (16.1MiB)
+Downloading pydantic-core (2.1MiB)
+Downloading scikit-learn (8.9MiB)
+Downloading pygments (1.2MiB)
+Downloading scipy (33.7MiB)
+Downloading hf-xet (4.1MiB)
+Downloading pandas (11.8MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded hf-xet
+ Downloaded scikit-learn
+ Downloaded numpy
+ Downloaded pandas
+ Downloaded scipy
+ Downloaded pyarrow
+      Built lean-interact @ file:///home/runner/work/_temp/li
+Installed 47 packages in 64ms
+info: downloading https://releases.lean-lang.org/lean4/v4.8.0/lean-4.8.0-linux.tar.zst
+info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.8.0
+[10:02:03] INFO     Preparing Lean environment with dependencies  project.py:330
+                    (may take a while the first time)...                        
+Lake version 5.0.0-df668f0 (Lean version 4.8.0)
+✔ [1/10] Fetched proofwidgets:optRelease
+✔ [2/10] Built Cache.IO
+✔ [3/10] Built Cache.Hashing
+✔ [4/10] Built Cache.Requests
+✔ [5/10] Built Cache.Hashing:c.o
+✔ [6/10] Built Cache.Main
+✔ [7/10] Built Cache.IO:c.o
+✔ [8/10] Built Cache.Requests:c.o
+✔ [9/10] Built Cache.Main:c.o
+✔ [10/10] Built cache
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1906k  100 1906k    0     0  7125k      0 --:--:-- --:--:-- --:--:-- 7125k
+
+installing leantar 0.1.11
+Attempting to download 4608 file(s)
+Downloaded: 1 file(s) [attempted 1/4608 = 0%]Downloaded: 102 file(s) [attempted 102/4608 = 2%]Downloaded: 191 file(s) [attempted 191/4608 = 4%]Downloaded: 309 file(s) [attempted 309/4608 = 6%]Downloaded: 418 file(s) [attempted 418/4608 = 9%]Downloaded: 546 file(s) [attempted 546/4608 = 11%]Downloaded: 658 file(s) [attempted 658/4608 = 14%]Downloaded: 776 file(s) [attempted 776/4608 = 16%]Downloaded: 899 file(s) [attempted 899/4608 = 19%]Downloaded: 1016 file(s) [attempted 1016/4608 = 22%]Downloaded: 1139 file(s) [attempted 1139/4608 = 24%]Downloaded: 1255 file(s) [attempted 1255/4608 = 27%]Downloaded: 1375 file(s) [attempted 1375/4608 = 29%]Downloaded: 1499 file(s) [attempted 1499/4608 = 32%]Downloaded: 1622 file(s) [attempted 1622/4608 = 35%]Downloaded: 1740 file(s) [attempted 1740/4608 = 37%]Downloaded: 1858 file(s) [attempted 1858/4608 = 40%]Downloaded: 1982 file(s) [attempted 1982/4608 = 43%]Downloaded: 2102 file(s) [attempted 2102/4608 = 45%]Downloaded: 2225 file(s) [attempted 2225/4608 = 48%]Downloaded: 2341 file(s) [attempted 2341/4608 = 50%]Downloaded: 2462 file(s) [attempted 2462/4608 = 53%]Downloaded: 2585 file(s) [attempted 2585/4608 = 56%]Downloaded: 2701 file(s) [attempted 2701/4608 = 58%]Downloaded: 2824 file(s) [attempted 2824/4608 = 61%]Downloaded: 2940 file(s) [attempted 2940/4608 = 63%]Downloaded: 3063 file(s) [attempted 3063/4608 = 66%]Downloaded: 3187 file(s) [attempted 3187/4608 = 69%]Downloaded: 3298 file(s) [attempted 3298/4608 = 71%]Downloaded: 3421 file(s) [attempted 3421/4608 = 74%]Downloaded: 3540 file(s) [attempted 3540/4608 = 76%]Downloaded: 3660 file(s) [attempted 3660/4608 = 79%]Downloaded: 3781 file(s) [attempted 3781/4608 = 82%]Downloaded: 3902 file(s) [attempted 3902/4608 = 84%]Downloaded: 4022 file(s) [attempted 4022/4608 = 87%]Downloaded: 4138 file(s) [attempted 4138/4608 = 89%]Downloaded: 4257 file(s) [attempted 4257/4608 = 92%]Downloaded: 4377 file(s) [attempted 4377/4608 = 94%]Downloaded: 4493 file(s) [attempted 4493/4608 = 97%]Downloaded: 4607 file(s) [attempted 4607/4608 = 99%]Downloaded: 4608 file(s) [attempted 4608/4608 = 100%] (100% success)
+Decompressing 4608 file(s)
+Unpacked in 12302 ms
+Completed successfully!
+info: dummy: no previous manifest, creating one from scratch
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git to '././.lake/packages/mathlib'
+info: batteries: cloning https://github.com/leanprover-community/batteries to '././.lake/packages/batteries'
+info: Qq: cloning https://github.com/leanprover-community/quote4 to '././.lake/packages/Qq'
+info: aesop: cloning https://github.com/leanprover-community/aesop to '././.lake/packages/aesop'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4 to '././.lake/packages/proofwidgets'
+info: Cli: cloning https://github.com/leanprover/lean4-cli to '././.lake/packages/Cli'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph.git to '././.lake/packages/importGraph'
+info: mathlib: running post-update hooks
+No files to download
+Decompressing 4608 file(s)
+Unpacked in 223 ms
+Completed successfully!
+✔ [2/4] Built dummy
+✔ [3/4] Built dummy:c.o
+✔ [4/4] Built dummy
+Build completed successfully.
+[10:03:11] INFO     Updated version-specific REPL cache to commit  config.py:388
+                    43a6f7954501b893df8ed04e87bac3e924ea4d74                    
+epla:ProofNet:116:0 False {'ref': True, 'cand': True} 12.7 
+epla:ProofNet:197:0 False {'ref': True, 'cand': True} 4.8 
+epla:ProofNet:277:0 True {'ref': True, 'cand': True} 0.1 
+epla:ProofNet:376:0 True {'ref': True, 'cand': True} 10.5 
+epla:ProofNet:98:0 False {'ref': True, 'cand': True} 4.8 
+epla:miniF2F:163:0 True {'ref': True, 'cand': True} 7.5 
+epla:miniF2F:210:0 False {'ref': True, 'cand': True} 9.9 
+epla:miniF2F:278:0 True {'ref': True, 'cand': True} 0.2 
+epla:miniF2F:326:0 False {'ref': True, 'cand': True} 20.6 
+epla:miniF2F:39:0 True {'ref': True, 'cand': True} 3.0 
+epla:miniF2F:452:0 True {'ref': True, 'cand': True} 8.2 
+epla:miniF2F:512:0 True {'ref': True, 'cand': True} 4.2 
+epla:miniF2F:569:0 True {'ref': True, 'cand': True} 2.7 
+epla:miniF2F:623:0 False {'ref': True, 'cand': True} 45.9 
+epla:miniF2F:693:0 True {'ref': True, 'cand': True} 0.2 
+epla:miniF2F:763:0 False {'ref': True, 'cand': True} 54.2 
+epla:miniF2F:828:0 True {'ref': True, 'cand': True} 0.1 
+pnv:test:0028:Dummit-Foote|exercise_4_4_2 False {'ref': True, 'cand': True} 8.2 
+pnv:test:0086:Dummit-Foote|exercise_7_1_12 True {'ref': True, 'cand': True} 0.2 
+pnv:test:0134:Putnam|exercise_1998_b6 False {'ref': True, 'cand': True} 9.6 
+pnv:test:0234:Herstein|exercise_2_5_23 True {'ref': True, 'cand': True} 0.3 
+pnv:test:0302:Rudin|exercise_3_13 False {'ref': True, 'cand': True} 31.2 
+pnv:test:0338:Dummit-Foote|exercise_4_4_6b False {'ref': True, 'cand': True} 4.4 
+pnv:test:0392:Rudin|exercise_4_1a False {'ref': True, 'cand': True} 6.2 
+pnv:test:0459:Herstein|exercise_3_2_21 False {'ref': True, 'cand': True} 17.4 
+pnv:test:0502:Rudin|exercise_3_7 False {'ref': True, 'cand': True} 25.4 
+pnv:test:0582:Dummit-Foote|exercise_8_2_4 False {'ref': True, 'cand': True} 59.5 
+pnv:test:0674:Munkres|exercise_22_2a False {'ref': True, 'cand': True} 7.1 
+pnv:test:0737:Herstein|exercise_3_2_21 False {'ref': True, 'cand': True} 10.2 
+pnv:test:0799:Dummit-Foote|exercise_2_4_16a False {'ref': True, 'cand': True} 6.7 
+pnv:test:0856:Rudin|exercise_4_1a False {'ref': True, 'cand': True} 4.3 
+pnv:test:0952:Rudin|exercise_1_8 False {'ref': True, 'cand': True} 1.8 
+pnv:test:1001:Rudin|exercise_3_7 False {'ref': True, 'cand': True} 27.0 
+pnv:test:1071:Dummit-Foote|exercise_9_4_9 False {'ref': True, 'cand': True} 20.1 
+pnv:test:1147:Artin|exercise_3_7_2 False {'ref': True, 'cand': True} 19.0 
+pnv:test:1187:Dummit-Foote|exercise_1_1_17 False {'ref': True, 'cand': True} 6.1 
+pnv:test:1226:Munkres|exercise_23_6 False {'ref': True, 'cand': True} 39.4 
+pnv:test:1309:Dummit-Foote|exercise_3_4_5b True {'ref': True, 'cand': True} 0.1 
+pnv:test:1372:Herstein|exercise_5_6_14 False {'ref': True, 'cand': True} 27.0 
+pnv:test:1437:Herstein|exercise_2_3_16 False {'ref': True, 'cand': True} 11.1 

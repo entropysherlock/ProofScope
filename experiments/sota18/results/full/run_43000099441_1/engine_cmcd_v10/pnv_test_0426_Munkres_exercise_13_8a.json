@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_0426_Munkres_exercise_13_8a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+ "lean": "∀ (U : Set ℝ), IsOpen U ↔ ∀ x ∈ U, ∃ (a : ℚ) (b : ℚ), a < b ∧ ↑a < x ∧ x < ↑b",
+ "symbols": [
+  {
+   "symbol": "Rat.cast",
+   "type": "ℚ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+   "to": "∀ (U : Set ℝ), IsOpen U ↔ ∀ x ∈ U, ∃ (a : ℚ) (b : ℚ), a < b ∧ ↑a < x ∧ x < ↑b"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+   "to": "∀ (U : Set ℝ), IsOpen U ↔ ∀ x ∈ U, ∃ (a : ℚ) (b : ℚ), a < b ∧ ↑a < x ∧ x < ↑b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

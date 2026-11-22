@@ -1,0 +1,32 @@
+{
+ "case_id": "pnv:test:0384:Dummit-Foote|exercise_9_4_2a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.1
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0384_Dummit_Foote_exercise_9_4_2a/check.lean:25:24: error: typeclass instance problem is stuck",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0384_Dummit_Foote_exercise_9_4_2a/check.lean:27:26: error: typeclass instance problem is stuck"
+ ],
+ "children_maxrss_kb_so_far": 8547792
+}

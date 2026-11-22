@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0582:Dummit-Foote|exercise_8_2_4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "nown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Assumptions_input.lean:4:352: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ": error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Drift_input.lean:4:344: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {R : Type u_1} [inst : CommRing R] [IsDomain R] [inst_2 : GCDMonoid R],   (∀ (a b : R), a ≠ 0 → b ≠ 0 → ∃ (r : R) (s : R), GCDMonoid.gcd a b = r * a + s * b) →     (∀ (a : ℕ → R), (∀ (i : ℕ), a i ≠ 0 ∧ a (i + 1) ∣ a i) → ∃ (N : ℕ), ∀ n ≥ N, ∃ (u : R), IsUnit u ∧ a n = u * a N) →       IsPrincipalIdealRing R",
+ "lean": "∀ {R : Type u_1} [inst : CommRing R],   IsDomain R →     (∀ (a b : R), a ≠ 0 → b ≠ 0 → ∃ (d : R) (r : R) (s : R), d = r * a + s * b ∧ ∀ (t : R), t ∣ a → t ∣ b → t ∣ d) →       (∀ (a : ℕ → R), (∀ (n : ℕ), a (n + 1) ∣ a n) → ∃ (N : ℕ), ∀ n ≥ N, IsUnit (a n)) → IsPrincipalIdealRing R",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {R : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {R : Type '"
+ },
+ "seconds": 18.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11729952
+}

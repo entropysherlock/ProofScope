@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_570_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (b : ℕ), Nat.lcm 120 b = 3720 → Nat.gcd 120 b = 8 → b = 248",
+ "lean": "have a := 120; have lcm_ab := 3720; have gcd_ab := 8; ∃ (b : ℕ), a.lcm b = lcm_ab ∧ a.gcd b = gcd_ab ∧ b = 248",
+ "symbols": [
+  {
+   "symbol": "Nat.lcm",
+   "type": "ℕ → ℕ → ℕ"
+  },
+  {
+   "symbol": "Nat.gcd",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (b : ℕ), Nat.lcm (120 : ℕ) b = (3720 : ℕ) → Nat.gcd (120 : ℕ) b = (8 : ℕ) → b = (248 : ℕ)",
+   "to": "have a := (120 : ℕ);\nhave lcm_ab := (3720 : ℕ);\nhave gcd_ab := (8 : ℕ);\n∃ (b : ℕ), Nat.lcm a b = lcm_ab ∧ Nat.gcd a b = gcd_ab ∧ b = (248 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (b : ℕ), Nat.lcm (120 : ℕ) b = (3720 : ℕ) → Nat.gcd (120 : ℕ) b = (8 : ℕ) → b = (248 : ℕ)",
+   "to": "have a := (120 : ℕ);\nhave lcm_ab := (3720 : ℕ);\nhave gcd_ab := (8 : ℕ);\n∃ (b : ℕ), Nat.lcm a b = lcm_ab ∧ Nat.gcd a b = gcd_ab ∧ b = (248 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

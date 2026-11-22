@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:512:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.2,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.4,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "Real.log 27 / Real.log 3 = 3",
+ "lean": "Real.logb 3 27 = 3",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "parses",
+  "cand": "parses"
+ },
+ "seconds": 20.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8980648
+}

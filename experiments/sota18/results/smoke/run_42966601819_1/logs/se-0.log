@@ -1,0 +1,5 @@
+attempt 1: rc=0 records=4 of 4 in 355s
+synth:c01_assumption_added LikelyTooWeak 34942 
+synth:c02_renamed_binders ExactMatch 154 
+synth:c03_conclusion_weakened LikelyTooWeak 14642 
+synth:c04_universe_typeclass Inconclusive 264669 

@@ -1,0 +1,102 @@
+{
+ "id": "epla_miniF2F_54_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "lean": "(∃ (a : ℕ) (b : ℕ), 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ a.gcd b = 6 ∧ a.lcm b = 108) ∧   ∀ (a b : ℕ), 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ a.gcd b = 6 → 108 ≤ a.lcm b",
+ "symbols": [
+  {
+   "symbol": "Nat.gcd",
+   "type": "ℕ → ℕ → ℕ"
+  },
+  {
+   "symbol": "Nat.lcm",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b →\n    a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → Nat.gcd a b = (6 : ℕ) → (108 : ℕ) ≤ Nat.lcm a b",
+   "to": "(∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) ∧ Nat.lcm a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) →\n      (108 : ℕ) ≤ Nat.lcm a b"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b →\n    a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → Nat.gcd a b = (6 : ℕ) → (108 : ℕ) ≤ Nat.lcm a b",
+   "to": "(∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) ∧ Nat.lcm a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) →\n      (108 : ℕ) ≤ Nat.lcm a b",
+   "relation": "LEAN_STRONGER",
+   "certificates": {
+    "sepS_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_54_0.sepS_e1",
+     "statement": "∃ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b) ∧ ¬ ((∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) ∧ x2 a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b)",
+     "axioms": [
+      "propext",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_54_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), ((∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) ∧ x2 a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b) → (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "LEAN_STRONGER",
+ "global_certificates": {
+  "sepS_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_54_0.sepS_e1",
+   "statement": "∃ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b) ∧ ¬ ((∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) ∧ x2 a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b)",
+   "axioms": [
+    "propext",
+    "Quot.sound"
+   ]
+  },
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_54_0.bwd_e1",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), ((∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) ∧ x2 a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b) → (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "CLAIM_LEAN_STRONGER",
+ "theorem": "localize_stronger/monotone_strict",
+ "localized_at": [
+  1
+ ],
+ "harmless_edits": [],
+ "explanation": [
+  {
+   "edit": 1,
+   "from": "∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b →\n    a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → Nat.gcd a b = (6 : ℕ) → (108 : ℕ) ≤ Nat.lcm a b",
+   "to": "(∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) ∧ Nat.lcm a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ Nat.gcd a b = (6 : ℕ) →\n      (108 : ℕ) ≤ Nat.lcm a b",
+   "global_countermodel": "∃ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → a % (10 : ℕ) = (2 : ℕ) → b % (10 : ℕ) = (4 : ℕ) → x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b) ∧ ¬ ((∃ (a : ℕ) (b : ℕ),\n    (0 : ℕ) < a ∧\n      (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) ∧ x2 a b = (108 : ℕ)) ∧\n  ∀ (a b : ℕ),\n    (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ a % (10 : ℕ) = (2 : ℕ) ∧ b % (10 : ℕ) = (4 : ℕ) ∧ x1 a b = (6 : ℕ) → (108 : ℕ) ≤ x2 a b)"
+  }
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {
+  "ℕ → ℕ → ℕ": [
+   "fun (b0 b1 : ℕ) => (108 : ℕ)",
+   "fun (b0 b1 : ℕ) => ((108 : ℕ)) + 1",
+   "fun (b0 b1 : ℕ) => ((108 : ℕ)) - 1",
+   "fun (b0 b1 : ℕ) => (6 : ℕ)",
+   "fun (b0 b1 : ℕ) => ((6 : ℕ)) + 1",
+   "fun (b0 b1 : ℕ) => ((6 : ℕ)) - 1"
+  ]
+ },
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

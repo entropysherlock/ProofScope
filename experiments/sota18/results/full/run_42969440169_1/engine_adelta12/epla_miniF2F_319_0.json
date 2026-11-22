@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_319_0",
+ "reference": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = x + 1) → (∀ (x : ℝ), g x = x ^ 2 + 3) → f (g 2) = 8",
+ "lean": "∀ (f g : ℤ → ℤ), (∀ (x : ℤ), f x = x + 1) → (∀ (x : ℤ), g x = x ^ 2 + 3) → f (g 2) = 8",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (f g : ℤ → ℤ), (∀ (x : ℤ), f x = x + (1 : ℤ)) → (∀ (x : ℤ), g x = x ^ (2 : ℕ) + (3 : ℤ)) → f (g (2 : ℤ)) = (8 : ℤ)",
+  "conclusion_ref": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = x + (1 : ℝ)) → (∀ (x : ℝ), g x = x ^ (2 : ℕ) + (3 : ℝ)) → f (g (2 : ℝ)) = (8 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

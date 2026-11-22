@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_348_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y : ℝ) (n : NNReal), x < 0 ∧ y < 0 → |y| = 6 → √((x - 8) ^ 2 + (y - 3) ^ 2) = 15 → √(x ^ 2 + y ^ 2) = √↑n → n = 52",
+ "lean": "∀ (x y : ℝ) (n : ℕ), x < 0 ∧ y < 0 → |y| = 6 → |x - 8| + |y - 3| = 15 → x ^ 2 + y ^ 2 = ↑n → n = 52",
+ "symbols": [
+  {
+   "symbol": "abs",
+   "type": "ℝ → ℝ"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (n : NNReal),\n  x < (0 : ℝ) ∧ y < (0 : ℝ) →\n    |y| = (6 : ℝ) →\n      √((x - (8 : ℝ)) ^ (2 : ℕ) + (y - (3 : ℝ)) ^ (2 : ℕ)) = (15 : ℝ) →\n        √(x ^ (2 : ℕ) + y ^ (2 : ℕ)) = √↑n → n = (52 : NNReal)",
+   "to": "∀ (n : ℕ),\n  x < (0 : ℝ) ∧ y < (0 : ℝ) →\n    |y| = (6 : ℝ) → |x - (8 : ℝ)| + |y - (3 : ℝ)| = (15 : ℝ) → x ^ (2 : ℕ) + y ^ (2 : ℕ) = ↑n → n = (52 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (n : NNReal),\n  x < (0 : ℝ) ∧ y < (0 : ℝ) →\n    |y| = (6 : ℝ) →\n      √((x - (8 : ℝ)) ^ (2 : ℕ) + (y - (3 : ℝ)) ^ (2 : ℕ)) = (15 : ℝ) →\n        √(x ^ (2 : ℕ) + y ^ (2 : ℕ)) = √↑n → n = (52 : NNReal)",
+   "to": "∀ (n : ℕ),\n  x < (0 : ℝ) ∧ y < (0 : ℝ) →\n    |y| = (6 : ℝ) → |x - (8 : ℝ)| + |y - (3 : ℝ)| = (15 : ℝ) → x ^ (2 : ℕ) + y ^ (2 : ℕ) = ↑n → n = (52 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

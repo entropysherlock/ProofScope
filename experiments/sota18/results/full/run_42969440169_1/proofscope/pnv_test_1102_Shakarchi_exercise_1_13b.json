@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:1102:Shakarchi|exercise_1_13b",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.5,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1102_Shakarchi_exercise_1_13b/extract/Drift_input.lean:4:0: error: unexpected bound variable #8\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {f : ℂ → ℂ} (Ω : Set ℂ) (a b : ↑Ω),   IsOpen Ω → DifferentiableOn ℂ f Ω → (∃ (c : ℝ), ∀ z ∈ Ω, (f z).im = c) → f ↑a = f ↑b",
+ "lean": "∀ {Ω : Set ℂ}, IsOpen Ω → ∀ {f : ℂ → ℂ}, AnalyticOn ℂ f Ω → (∀ z ∈ Ω, (f z).im = (f 0).im) → ∀ z ∈ Ω, f z = f 0",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {f : ℂ → ℂ'",
+  "cand": "unsupported: cannot tokenize at '∀ {Ω : Set ℂ'"
+ },
+ "seconds": 17.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8892692
+}

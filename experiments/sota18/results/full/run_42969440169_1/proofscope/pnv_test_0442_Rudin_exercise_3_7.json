@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0442:Rudin|exercise_3_7",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 3.6
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "ref",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0442_Rudin_exercise_3_7/print.lean:13:33: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0442_Rudin_exercise_3_7/print.lean:24:92: error: Ambiguous term",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0442_Rudin_exercise_3_7/print.lean:29:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0442_Rudin_exercise_3_7/print.lean:35:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 14049596
+}

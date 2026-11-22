@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_0635_Rudin_exercise_4_8a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (E : Set ℝ) (f : ℝ → ℝ), UniformContinuousOn f E → Bornology.IsBounded E → Bornology.IsBounded (f '' E)",
+ "lean": "∀ {E : Set ℝ}, BddAbove E → ∀ {f : ℝ → ℝ}, UniformContinuous f → BddAbove (f '' E)",
+ "symbols": [
+  {
+   "symbol": "Set.image",
+   "type": "(ℝ → ℝ) → Set ℝ → Set ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (f : ℝ → ℝ), UniformContinuousOn f E → Bornology.IsBounded E → Bornology.IsBounded (f '' E)",
+   "to": "BddAbove E → ∀ {f : ℝ → ℝ}, UniformContinuous f → BddAbove (f '' E)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (f : ℝ → ℝ), UniformContinuousOn f E → Bornology.IsBounded E → Bornology.IsBounded (f '' E)",
+   "to": "BddAbove E → ∀ {f : ℝ → ℝ}, UniformContinuous f → BddAbove (f '' E)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

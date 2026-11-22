@@ -1,0 +1,66 @@
+{
+ "case_id": "pnv:test:0674:Munkres|exercise_22_2a",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 17.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    },
+    {
+     "symbol": "Lean.Name.str",
+     "type": "Lean.Name → String → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "sorry",
+ "lean": "sorry",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "parses",
+  "cand": "parses"
+ },
+ "seconds": 29.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8981308
+}

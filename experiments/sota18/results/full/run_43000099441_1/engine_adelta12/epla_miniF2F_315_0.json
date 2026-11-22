@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_315_0",
+ "reference": "∀ (f : ℕ → ℕ → ℝ),   (∀ (x : ℕ), 0 < x → f x x = ↑x) →     (∀ (x y : ℕ), 0 < x ∧ 0 < y → f x y = f y x) →       (∀ (x y : ℕ), 0 < x ∧ 0 < y → (↑x + ↑y) * f x y = ↑y * f x (x + y)) → f 14 52 = 364",
+ "lean": "∀ (f : ℕ → ℕ → ℕ),   (∀ (x : ℕ), f x x = x) →     (∀ (x y : ℕ), f x y = f y x) → (∀ (x y : ℕ), (x + y) * f x y = y * f x (x + y)) → f 14 52 = 364",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (f : ℕ → ℕ → ℕ),\n  (∀ (x : ℕ), f x x = x) →\n    (∀ (x y : ℕ), f x y = f y x) → (∀ (x y : ℕ), (x + y) * f x y = y * f x (x + y)) → f (14 : ℕ) (52 : ℕ) = (364 : ℕ)",
+  "conclusion_ref": "∀ (f : ℕ → ℕ → ℝ),\n  (∀ (x : ℕ), (0 : ℕ) < x → f x x = ↑x) →\n    (∀ (x y : ℕ), (0 : ℕ) < x ∧ (0 : ℕ) < y → f x y = f y x) →\n      (∀ (x y : ℕ), (0 : ℕ) < x ∧ (0 : ℕ) < y → HAdd.hAdd (α := ℝ) ↑x ↑y * f x y = ↑y * f x (x + y)) →\n        f (14 : ℕ) (52 : ℕ) = (364 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

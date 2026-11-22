@@ -1,0 +1,81 @@
+{
+ "id": "synth_c01_assumption_added",
+ "reference": "∀ (x : ℝ), 0 ≤ x ^ 2",
+ "lean": "∀ (x : ℝ), 0 < x → 0 ≤ x ^ 2",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < x"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "(0 : ℝ) ≤ x ^ (2 : ℕ)",
+  "conclusion_ref": "(0 : ℝ) ≤ x ^ (2 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_synth_c01_assumption_added.link_R",
+   "statement": "(∀ (x : ℝ), 0 ≤ x ^ 2) ↔ (∀ (x : ℝ), (0 : ℝ) ≤ x ^ (2 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_synth_c01_assumption_added.link_L",
+   "statement": "(∀ (x : ℝ), 0 < x → 0 ≤ x ^ 2) ↔ (∀ (x : ℝ), ((0 : ℝ) < x) → (0 : ℝ) ≤ x ^ (2 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "add0_restrictive": {
+   "declaration": "ProofScopeCert.AD_synth_c01_assumption_added.add0_restrictive",
+   "statement": "∃ (x : ℝ), ¬ ((0 : ℝ) < x) ∧ True",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "assumptions": [
+  {
+   "side": "added",
+   "assumption": "(0 : ℝ) < x",
+   "class": "RESTRICTIVE",
+   "witness_model": [
+    "-2"
+   ],
+   "witness_statement": "∃ (x : ℝ), ¬ ((0 : ℝ) < x) ∧ True"
+  }
+ ],
+ "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+ "theorem": "restrictive_iff_strictly_weaker",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

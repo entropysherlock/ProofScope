@@ -1,0 +1,100 @@
+{
+ "id": "epla_miniF2F_281_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (p a : ℕ), 0 < a → Nat.Prime p → p ∣ a ^ p - a",
+ "lean": "∀ (p a : ℕ), Nat.Prime p → 0 < a → p ∣ a ^ p - a",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "Dvd.dvd",
+   "type": "ℕ → ℕ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℕ) < a",
+   "to": "Nat.Prime p"
+  },
+  {
+   "from": "Nat.Prime p",
+   "to": "(0 : ℕ) < a"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℕ) < a",
+   "to": "Nat.Prime p",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_281_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → Prop) (x3 : ℕ → ℕ → ℕ), (∀ (p a : ℕ), x1 p → x1 p → x2 p (x3 a p - a)) → (∀ (p a : ℕ), (0 : ℕ) < a → x1 p → x2 p (x3 a p - a))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "Nat.Prime p",
+   "to": "(0 : ℕ) < a",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_281_0.fwd_e2",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → Prop) (x3 : ℕ → ℕ → ℕ), (∀ (p a : ℕ), x1 p → x1 p → x2 p (x3 a p - a)) → (∀ (p a : ℕ), x1 p → (0 : ℕ) < a → x2 p (x3 a p - a))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_281_0.fwd_g",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → Prop) (x3 : ℕ → ℕ → ℕ), (∀ (p a : ℕ), (0 : ℕ) < a → x1 p → x2 p (x3 a p - a)) → (∀ (p a : ℕ), x1 p → (0 : ℕ) < a → x2 p (x3 a p - a))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_281_0.bwd_g",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → Prop) (x3 : ℕ → ℕ → ℕ), (∀ (p a : ℕ), x1 p → (0 : ℕ) < a → x2 p (x3 a p - a)) → (∀ (p a : ℕ), (0 : ℕ) < a → x1 p → x2 p (x3 a p - a))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

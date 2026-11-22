@@ -1,0 +1,39 @@
+{
+ "id": "pnv_test_0815_Ireland_Rosen_exercise_4_4",
+ "reference": "∀ {p t : ℕ}, Nat.Prime p → p = 4 * t + 1 → ∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+ "lean": "∀ {p a : ℕ},   Nat.Prime p →     p = OfNat.ofNat (nat_lit 4) * a + OfNat.ofNat (nat_lit 1) → (IsPrimitiveRoot (-a.cast) p ↔ IsPrimitiveRoot a p)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "IsPrimitiveRoot (M := ℤ) (-↑t) p ↔ IsPrimitiveRoot t p",
+  "conclusion_ref": "∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "Nat.Prime p",
+   "p = (4 : ℕ) * t + (1 : ℕ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "p",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "t",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

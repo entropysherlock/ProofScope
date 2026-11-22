@@ -1,0 +1,31 @@
+{
+ "id": "epla_miniF2F_100_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (z : ℂ), 12 * Complex.normSq z = 2 * Complex.normSq (z + 2) + Complex.normSq (z ^ 2 + 1) + 31 → z + 6 / z = -2",
+ "lean": "∀ (z : ℂ), 12 * Complex.normSq z = 2 * Complex.normSq (z + 2) + Complex.normSq (z ^ 2 + 1) + 31 → z + 6 / z = -2",
+ "symbols": [
+  {
+   "symbol": "DFunLike.coe",
+   "type": "(ℂ →*₀ ℝ) → ℂ → ℝ"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℂ → ℕ → ℂ"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℂ → ℂ → ℂ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

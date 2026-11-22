@@ -1,0 +1,63 @@
+{
+ "case_id": "epla:miniF2F:298:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 96.5,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 32.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (i m o : ℕ), i ≠ m ∧ m ≠ o ∧ o ≠ i → i * m * o = 2001 → i + m + o ≤ 671",
+ "lean": "∀ (i m o : ℕ), 0 < i ∧ 0 < m ∧ 0 < o → i ≠ m → i ≠ o → m ≠ o → i * m * o = 2001 → i + m + o ≤ 671",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (i m o : ℕ'",
+  "cand": "unsupported: cannot tokenize at '∀ (i m o : ℕ'"
+ },
+ "seconds": 137.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 9186724
+}

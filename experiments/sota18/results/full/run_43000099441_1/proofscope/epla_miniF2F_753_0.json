@@ -1,0 +1,52 @@
+{
+ "case_id": "epla:miniF2F:753:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 70.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "a_implies_d",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": -9,
+   "s": 822.0,
+   "outcome": "TIMEOUT",
+   "tail": "\nTIMEOUT"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y : ℝ),   x ≠ 1 ∧ y ≠ 1 →     Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20",
+ "lean": "∀ (x y : ℝ),   0 < x →     0 < y →       x ≠ 1 →         y ≠ 1 →           Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y : ℝ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (x y : ℝ),'"
+ },
+ "seconds": 900.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8592588
+}

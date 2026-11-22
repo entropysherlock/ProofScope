@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_240_0",
+ "reference": "∀ (f z : ℂ), f + 3 * z = 11 → 3 * (f - 1) - 5 * z = -68 → f = -10 ∧ z = 7",
+ "lean": "∀ (f z : ℤ), f + 3 * z = 11 → 3 * (f - 1) - 5 * z = -68 → f = -10 ∧ z = 7",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (f z : ℤ),\n  f + (3 : ℤ) * z = (11 : ℤ) → (3 : ℤ) * (f - (1 : ℤ)) - (5 : ℤ) * z = (-68 : ℤ) → f = (-10 : ℤ) ∧ z = (7 : ℤ)",
+  "conclusion_ref": "∀ (f z : ℂ),\n  f + (3 : ℂ) * z = (11 : ℂ) → (3 : ℂ) * (f - (1 : ℂ)) - (5 : ℂ) * z = (-68 : ℂ) → f = (-10 : ℂ) ∧ z = (7 : ℂ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

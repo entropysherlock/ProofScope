@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0981:Munkres|exercise_34_9",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ": error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0981_Munkres_exercise_34_9/extract/Assumptions_input.lean:4:314: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0981_Munkres_exercise_34_9/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ut.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0981_Munkres_exercise_34_9/extract/Drift_input.lean:4:306: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0981_Munkres_exercise_34_9/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (X : Type u_1) [inst : TopologicalSpace X] [CompactSpace X] [T2Space X] (X1 X2 : Set X),   IsClosed X1 →     IsClosed X2 →       X1 ∪ X2 = Set.univ →         TopologicalSpace.MetrizableSpace ↑X1 → TopologicalSpace.MetrizableSpace ↑X2 → TopologicalSpace.MetrizableSpace X",
+ "lean": "∀ {X : Type u_1} [inst : MetricSpace X] [CompactSpace X] [T2Space X] {X1 X2 : Set X},   IsClosed X1 →     IsClosed X2 →       TopologicalSpace.MetrizableSpace ↑X1 →         TopologicalSpace.MetrizableSpace ↑X2 → X1 ∪ X2 = Set.univ → TopologicalSpace.MetrizableSpace X",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 22.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11645476
+}

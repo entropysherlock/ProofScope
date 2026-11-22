@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0324_Putnam_exercise_2018_b4",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a : ℝ) (x : ℕ → ℝ),   x 0 = 1 →     x 1 = a →       x 2 = a →         (∀ n ≥ 2, x (n + 1) = 2 * x n * x (n - 1) - x (n - 2)) →           (∃ (n : ℕ), x n = 0) → ∃ (c : ℕ), c ≠ 0 ∧ Function.Periodic x c",
+ "lean": "∀ {f : ℕ → ℤ},   f 0 = 1 →     f 1 = f 2 →       (∀ n ≥ 2, f n = 2 * f (n - 1) * f (n - 2) - f (n - 3)) →         (∃ (n : ℕ), f n = 0) → ∃ (m : ℕ) (n : ℕ), m ≠ 0 ∧ ∀ (k : ℕ), f (k * m) = f (n + k * m)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0324_Putnam_exercise_2018_b4/extract/Drift_input.lean:4:0: error: unexpected bound variable #0\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1148_Rudin_exercise_4_3",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {α : Type} [inst : MetricSpace α] (f : α → ℝ), Continuous f → ∀ (z : Set α), z = f ⁻¹' {0} → IsClosed z",
+ "lean": "∀ {X : Type u_1} [MetricSpace X] [inst : TopologicalSpace X] (f : X → ℝ), Continuous f → IsClosed (f ⁻¹' {0})",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1148_Rudin_exercise_4_3/extract/Drift_input.lean:4:139: error: unknown universe level `u_1`\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

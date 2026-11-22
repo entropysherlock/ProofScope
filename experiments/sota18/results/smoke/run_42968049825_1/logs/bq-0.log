@@ -1,0 +1,71 @@
+Downloading cpython-3.11.18-linux-x86_64-gnu (download) (29.2MiB)
+ Downloaded cpython-3.11.18-linux-x86_64-gnu (download)
+   Building lean-interact @ file:///home/runner/work/_temp/li
+Downloading pygments (1.2MiB)
+Downloading pyarrow (52.5MiB)
+Downloading scipy (33.7MiB)
+Downloading pydantic-core (2.1MiB)
+Downloading scikit-learn (8.9MiB)
+Downloading numpy (16.1MiB)
+Downloading hf-xet (4.1MiB)
+Downloading pandas (11.8MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded hf-xet
+ Downloaded scikit-learn
+ Downloaded pandas
+ Downloaded numpy
+ Downloaded scipy
+ Downloaded pyarrow
+      Built lean-interact @ file:///home/runner/work/_temp/li
+Installed 47 packages in 41ms
+info: downloading https://releases.lean-lang.org/lean4/v4.8.0/lean-4.8.0-linux.tar.zst
+info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.8.0
+[05:47:59] INFO     Preparing Lean environment with dependencies  project.py:330
+                    (may take a while the first time)...                        
+Lake version 5.0.0-df668f0 (Lean version 4.8.0)
+✔ [1/10] Fetched proofwidgets:optRelease
+✔ [2/10] Built Cache.IO
+✔ [3/10] Built Cache.Hashing
+✔ [4/10] Built Cache.Requests
+✔ [5/10] Built Cache.Hashing:c.o
+✔ [6/10] Built Cache.Main
+✔ [7/10] Built Cache.Main:c.o
+✔ [8/10] Built Cache.IO:c.o
+✔ [9/10] Built Cache.Requests:c.o
+✔ [10/10] Built cache
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1906k  100 1906k    0     0  9242k      0 --:--:-- --:--:-- --:--:-- 9242k
+
+installing leantar 0.1.11
+Attempting to download 4608 file(s)
+Downloaded: 1 file(s) [attempted 1/4608 = 0%]Downloaded: 285 file(s) [attempted 285/4608 = 6%]Downloaded: 788 file(s) [attempted 788/4608 = 17%]Downloaded: 1276 file(s) [attempted 1276/4608 = 27%]Downloaded: 1766 file(s) [attempted 1766/4608 = 38%]Downloaded: 2273 file(s) [attempted 2273/4608 = 49%]Downloaded: 2789 file(s) [attempted 2789/4608 = 60%]Downloaded: 3298 file(s) [attempted 3298/4608 = 71%]Downloaded: 3807 file(s) [attempted 3807/4608 = 82%]Downloaded: 4248 file(s) [attempted 4248/4608 = 92%]Downloaded: 4605 file(s) [attempted 4605/4608 = 99%]Downloaded: 4608 file(s) [attempted 4608/4608 = 100%] (100% success)
+Decompressing 4608 file(s)
+Unpacked in 11299 ms
+Completed successfully!
+info: dummy: no previous manifest, creating one from scratch
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git to '././.lake/packages/mathlib'
+info: batteries: cloning https://github.com/leanprover-community/batteries to '././.lake/packages/batteries'
+info: Qq: cloning https://github.com/leanprover-community/quote4 to '././.lake/packages/Qq'
+info: aesop: cloning https://github.com/leanprover-community/aesop to '././.lake/packages/aesop'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4 to '././.lake/packages/proofwidgets'
+info: Cli: cloning https://github.com/leanprover/lean4-cli to '././.lake/packages/Cli'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph.git to '././.lake/packages/importGraph'
+info: mathlib: running post-update hooks
+No files to download
+Decompressing 4608 file(s)
+Unpacked in 50 ms
+Completed successfully!
+✔ [2/4] Built dummy
+✔ [3/4] Built dummy:c.o
+✔ [4/4] Built dummy
+Build completed successfully.
+[05:48:48] INFO     Updated version-specific REPL cache to commit  config.py:388
+                    43a6f7954501b893df8ed04e87bac3e924ea4d74                    
+synth:c01_assumption_added False {'ref': True, 'cand': True} 12.2 
+synth:c02_renamed_binders True {'ref': True, 'cand': True} 0.0 
+synth:c03_conclusion_weakened False {'ref': True, 'cand': True} 6.7 
+synth:c04_universe_typeclass True {'ref': True, 'cand': True} 0.6 
+synth:c05_universe_unsound_probe False {'ref': True, 'cand': True} 4.3 

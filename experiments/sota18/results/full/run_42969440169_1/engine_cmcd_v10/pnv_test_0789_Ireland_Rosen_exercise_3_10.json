@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_0789_Ireland_Rosen_exercise_3_10",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {n : ℕ+},   ¬n.Prime →     ((n.val - OfNat.ofNat (nat_lit 1)).factorial ≡ OfNat.ofNat (nat_lit 0) [MOD n.val] ↔ n ≠ OfNat.ofNat (nat_lit 4))",
+ "lean": "∀ (n : ℕ), ¬Nat.Prime n → n.pred.factorial % n = 0 ∨ n = 4",
+ "symbols": [
+  {
+   "symbol": "Nat.factorial",
+   "type": "ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ {n : ℕ+}, ¬PNat.Prime n → (Nat.factorial (↑n - (1 : ℕ)) ≡ (0 : ℕ) [MOD ↑n] ↔ n ≠ (4 : ℕ+))",
+   "to": "∀ (n : ℕ), ¬Nat.Prime n → Nat.factorial (Nat.pred n) % n = (0 : ℕ) ∨ n = (4 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ {n : ℕ+}, ¬PNat.Prime n → (Nat.factorial (↑n - (1 : ℕ)) ≡ (0 : ℕ) [MOD ↑n] ↔ n ≠ (4 : ℕ+))",
+   "to": "∀ (n : ℕ), ¬Nat.Prime n → Nat.factorial (Nat.pred n) % n = (0 : ℕ) ∨ n = (4 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,91 @@
+{
+ "id": "epla_ProofNet_277_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {p n : ℕ}, Nat.Prime p → p = 2 ^ n + 1 → IsPrimitiveRoot 3 p",
+ "lean": "∀ (n p : ℕ), p = 2 ^ n + 1 → Nat.Prime p → IsPrimitiveRoot 3 p",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  },
+  {
+   "symbol": "IsPrimitiveRoot",
+   "type": "ℕ → ℕ → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "Nat.Prime p",
+   "to": "n = (2 : ℕ) ^ p + (1 : ℕ)"
+  },
+  {
+   "from": "p = (2 : ℕ) ^ n + (1 : ℕ)",
+   "to": "Nat.Prime n"
+  },
+  {
+   "from": "p",
+   "to": "n"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "Nat.Prime p",
+   "to": "n = (2 : ℕ) ^ p + (1 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 2,
+   "from": "p = (2 : ℕ) ^ n + (1 : ℕ)",
+   "to": "Nat.Prime n",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "p",
+   "to": "n",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_ProofNet_277_0.fwd_g",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ) (x3 : ℕ → ℕ → Prop), (∀ {p n : ℕ}, x1 p → p = x2 (2 : ℕ) n + (1 : ℕ) → x3 (3 : ℕ) p) → (∀ {p n : ℕ}, n = x2 (2 : ℕ) p + (1 : ℕ) → x1 n → x3 (3 : ℕ) n)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_ProofNet_277_0.bwd_g",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ) (x3 : ℕ → ℕ → Prop), (∀ {p n : ℕ}, n = x2 (2 : ℕ) p + (1 : ℕ) → x1 n → x3 (3 : ℕ) n) → (∀ {p n : ℕ}, x1 p → p = x2 (2 : ℕ) n + (1 : ℕ) → x3 (3 : ℕ) p)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

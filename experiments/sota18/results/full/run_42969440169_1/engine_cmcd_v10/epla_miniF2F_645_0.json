@@ -1,0 +1,90 @@
+{
+ "id": "epla_miniF2F_645_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c : ℚ) (m n : ℝ), 0 < m ∧ 0 < n → m ^ 3 = 2 → n ^ 3 = 4 → ↑a + ↑b * m + ↑c * n = 0 → a = 0 ∧ b = 0 ∧ c = 0",
+ "lean": "∀ (m n : ℝ), 0 < m → 0 < n → m ^ 3 = 2 → n ^ 3 = 4 → ∀ (a b c : ℚ), ↑a + ↑b * m + ↑c * n = 0 → a = 0 ∧ b = 0 ∧ c = 0",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  },
+  {
+   "symbol": "Rat.cast",
+   "type": "ℚ → ℝ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    m ^ (3 : ℕ) = (2 : ℝ) →\n      n ^ (3 : ℕ) = (4 : ℝ) → ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)",
+   "to": "∀ (m n : ℝ),\n  (0 : ℝ) < m →\n    (0 : ℝ) < n →\n      m ^ (3 : ℕ) = (2 : ℝ) →\n        n ^ (3 : ℕ) = (4 : ℝ) → ∀ (a b c : ℚ), ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    m ^ (3 : ℕ) = (2 : ℝ) →\n      n ^ (3 : ℕ) = (4 : ℝ) → ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)",
+   "to": "∀ (m n : ℝ),\n  (0 : ℝ) < m →\n    (0 : ℝ) < n →\n      m ^ (3 : ℕ) = (2 : ℝ) →\n        n ^ (3 : ℕ) = (4 : ℝ) → ∀ (a b c : ℚ), ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_645_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℕ → ℝ) (x2 : ℚ → ℝ) (x3 : ℝ → ℝ → ℝ), (∀ (m n : ℝ),\n  (0 : ℝ) < m →\n    (0 : ℝ) < n →\n      x1 m (3 : ℕ) = (2 : ℝ) →\n        x1 n (3 : ℕ) = (4 : ℝ) →\n          ∀ (a b c : ℚ), x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)) → (∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    x1 m (3 : ℕ) = (2 : ℝ) →\n      x1 n (3 : ℕ) = (4 : ℝ) → x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_645_0.fwd_e1",
+     "statement": "∀ (x1 : ℝ → ℕ → ℝ) (x2 : ℚ → ℝ) (x3 : ℝ → ℝ → ℝ), (∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    x1 m (3 : ℕ) = (2 : ℝ) →\n      x1 n (3 : ℕ) = (4 : ℝ) → x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)) → (∀ (m n : ℝ),\n  (0 : ℝ) < m →\n    (0 : ℝ) < n →\n      x1 m (3 : ℕ) = (2 : ℝ) →\n        x1 n (3 : ℕ) = (4 : ℝ) →\n          ∀ (a b c : ℚ), x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_645_0.bwd_e1",
+   "statement": "∀ (x1 : ℝ → ℕ → ℝ) (x2 : ℚ → ℝ) (x3 : ℝ → ℝ → ℝ), (∀ (m n : ℝ),\n  (0 : ℝ) < m →\n    (0 : ℝ) < n →\n      x1 m (3 : ℕ) = (2 : ℝ) →\n        x1 n (3 : ℕ) = (4 : ℝ) →\n          ∀ (a b c : ℚ), x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)) → (∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    x1 m (3 : ℕ) = (2 : ℝ) →\n      x1 n (3 : ℕ) = (4 : ℝ) → x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_645_0.fwd_e1",
+   "statement": "∀ (x1 : ℝ → ℕ → ℝ) (x2 : ℚ → ℝ) (x3 : ℝ → ℝ → ℝ), (∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    x1 m (3 : ℕ) = (2 : ℝ) →\n      x1 n (3 : ℕ) = (4 : ℝ) → x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)) → (∀ (m n : ℝ),\n  (0 : ℝ) < m →\n    (0 : ℝ) < n →\n      x1 m (3 : ℕ) = (2 : ℝ) →\n        x1 n (3 : ℕ) = (4 : ℝ) →\n          ∀ (a b c : ℚ), x2 a + x3 (x2 b) m + x3 (x2 c) n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,123 @@
+{
+ "source": "hlxr89/SemantEq@f92767000e14 test/results/pnv_test_verdicts.jsonl (published by the SemantEq authors; Lean v4.30.0-rc1, --timeout 0). Context only: not produced by SOTA-18.",
+ "track_A_PNV": {
+  "in_published": 178,
+  "total": 200,
+  "SemantEq|G1": {
+   "accepts": 33,
+   "correct_accepts": 33,
+   "false_accepts": 0,
+   "gold_true": 67,
+   "precision": 1.0,
+   "recall": 0.493
+  },
+  "SemantEq|G2": {
+   "accepts": 33,
+   "correct_accepts": 33,
+   "false_accepts": 0,
+   "gold_true": 53,
+   "precision": 1.0,
+   "recall": 0.623
+  },
+  "BEq+ v4.30 port|G1": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 67,
+   "precision": 1.0,
+   "recall": 0.448
+  },
+  "BEq+ v4.30 port|G2": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 53,
+   "precision": 1.0,
+   "recall": 0.566
+  },
+  "BEq+ v4.8|G1": {
+   "accepts": 32,
+   "correct_accepts": 32,
+   "false_accepts": 0,
+   "gold_true": 67,
+   "precision": 1.0,
+   "recall": 0.478
+  },
+  "BEq+ v4.8|G2": {
+   "accepts": 32,
+   "correct_accepts": 32,
+   "false_accepts": 0,
+   "gold_true": 53,
+   "precision": 1.0,
+   "recall": 0.604
+  },
+  "semanteq_verdicts": {
+   "Inconclusive": 113,
+   "DefEq": 6,
+   "EquivalentRestricted": 17,
+   "LikelyTooStrong": 16,
+   "ExactMatch": 10,
+   "LikelyTooWeak": 16
+  }
+ },
+ "track_B_PNV": {
+  "in_published": 78,
+  "total": 85,
+  "SemantEq|G1": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 42,
+   "precision": 1.0,
+   "recall": 0.714
+  },
+  "SemantEq|G2": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 33,
+   "precision": 1.0,
+   "recall": 0.909
+  },
+  "BEq+ v4.30 port|G1": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 42,
+   "precision": 1.0,
+   "recall": 0.714
+  },
+  "BEq+ v4.30 port|G2": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 33,
+   "precision": 1.0,
+   "recall": 0.909
+  },
+  "BEq+ v4.8|G1": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 42,
+   "precision": 1.0,
+   "recall": 0.714
+  },
+  "BEq+ v4.8|G2": {
+   "accepts": 30,
+   "correct_accepts": 30,
+   "false_accepts": 0,
+   "gold_true": 33,
+   "precision": 1.0,
+   "recall": 0.909
+  },
+  "semanteq_verdicts": {
+   "Inconclusive": 28,
+   "ExactMatch": 21,
+   "LikelyTooStrong": 9,
+   "LikelyTooWeak": 11,
+   "DefEq": 3,
+   "EquivalentRestricted": 6
+  }
+ }
+}

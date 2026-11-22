@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_319_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = x + 1) → (∀ (x : ℝ), g x = x ^ 2 + 3) → f (g 2) = 8",
+ "lean": "∀ (f g : ℤ → ℤ), (∀ (x : ℤ), f x = x + 1) → (∀ (x : ℤ), g x = x ^ 2 + 3) → f (g 2) = 8",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_319_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

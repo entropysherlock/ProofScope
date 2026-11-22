@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1241_Dummit_Foote_exercise_3_2_8",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Group G] (H K : Subgroup G) [inst_1 : Fintype ↥H] [inst_2 : Fintype ↥K],   (Fintype.card ↥H).Coprime (Fintype.card ↥K) → H ⊓ K = ⊥",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {H K : Subgroup G} [hH : Fintype (SetLike.coe H).Elem]   [hK : Fintype (SetLike.coe K).Elem],   Fintype.card (SetLike.coe H).Elem % Fintype.card (SetLike.coe K).Elem = OfNat.ofNat (nat_lit 1) → H ⊓ K = ⊥",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1241_Dummit_Foote_exercise_3_2_8/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1241_Dummit_Foote_exercise_3_2_8/extract/Drift_input.lean:4:189: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1241_Dummit_Foote_exercise_3_2_8/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

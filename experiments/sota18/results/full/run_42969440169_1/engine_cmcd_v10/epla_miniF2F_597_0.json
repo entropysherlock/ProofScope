@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_597_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "lean": "∀ (a b c : ℝ), 3 * a + b + c = -3 → a + 3 * b + c = 9 → a + b + 3 * c = 19 → a * b * c = -56",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

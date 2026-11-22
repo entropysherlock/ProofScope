@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:830:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.7,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ), 0 < n → 3 ∣ n → (n + 4 + (n + 6) + (n + 8)) % 9 = 0",
+ "lean": "∀ (n : ℤ), 3 ∣ n → 9 ∣ n + 4 + (n + 6) + (n + 8)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ), 0'",
+  "cand": "unsupported: cannot tokenize at '∀ (n : ℤ), 3'"
+ },
+ "seconds": 16.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619128
+}

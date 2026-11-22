@@ -1,0 +1,31 @@
+{
+ "id": "epla_miniF2F_555_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℝ), a ^ 2 * b ^ 3 = 32 / 27 → a / b ^ 3 = 27 / 4 → a + b = 8 / 3",
+ "lean": "∀ (a b : ℝ), a ^ 2 * b ^ 3 = 32 / 27 → a / b ^ 3 = 27 / 4 → a + b = 8 / 3",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

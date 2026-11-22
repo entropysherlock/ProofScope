@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_761_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "(239 + 174 + 83) % 10 = 6",
+ "lean": "have sally_marbles := 239; have wei_hwa_marbles := 174; have zoe_marbles := 83; have total_marbles := sally_marbles + wei_hwa_marbles + zoe_marbles; have marbles_to_remove := total_marbles % 10; marbles_to_remove = 6",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "((239 : ℕ) + (174 : ℕ) + (83 : ℕ)) % (10 : ℕ) = (6 : ℕ)",
+   "to": "have sally_marbles := (239 : ℕ);\nhave wei_hwa_marbles := (174 : ℕ);\nhave zoe_marbles := (83 : ℕ);\nhave total_marbles := sally_marbles + wei_hwa_marbles + zoe_marbles;\nhave marbles_to_remove := total_marbles % (10 : ℕ);\nmarbles_to_remove = (6 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

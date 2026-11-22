@@ -1,0 +1,56 @@
+{
+ "case_id": "epla:miniF2F:53:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 72.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.6,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (A M C : ℕ),   A ≤ 9 ∧ M ≤ 9 ∧ C ≤ 9 → Nat.ofDigits 10 [0, 1, C, M, A] + Nat.ofDigits 10 [2, 1, C, M, A] = 123422 → A + M + C = 14",
+ "lean": "∀ (A M C : ℕ),   1 ≤ A ∧ A ≤ 9 →     M ≤ 9 →       C ≤ 9 → A * 10000 + M * 1000 + C * 100 + 10 + (A * 10000 + M * 1000 + C * 100 + 12) = 123422 → A + M + C = 14",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (A M C : ℕ'",
+  "cand": "unsupported: cannot tokenize at '∀ (A M C : ℕ'"
+ },
+ "seconds": 87.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8687312
+}

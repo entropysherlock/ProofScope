@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0551:Pugh|exercise_3_1",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 3.2
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "cand",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0551_Pugh_exercise_3_1/print.lean:22:34: error: invalid binder annotation, type is not a class instance",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0551_Pugh_exercise_3_1/print.lean:44:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0551_Pugh_exercise_3_1/print.lean:50:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0551_Pugh_exercise_3_1/print.lean:56:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 7619748
+}

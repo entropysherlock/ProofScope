@@ -1,0 +1,67 @@
+{
+ "case_id": "epla:miniF2F:815:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 94.9,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 165.4,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y z : ℝ), 0 < x ∧ 0 < y ∧ 0 < z → x + 1 / y = 4 → y + 1 / z = 1 → z + 1 / x = 7 / 3 → x * y * z = 1",
+ "lean": "∀ (x y z : ℝ), 0 < x → 0 < y → 0 < z → x + 1 / y = 4 → y + 1 / z = 1 → z + 1 / x = 7 / 3 → x * y * z = 1",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y z : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (x y z : ℝ'"
+ },
+ "seconds": 267.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14049596
+}

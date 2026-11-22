@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0318_Munkres_exercise_26_12",
+ "reference": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] (p : X → Y),   Function.Surjective p →     Continuous p → IsClosedMap p → (∀ (y : Y), IsCompact (p ⁻¹' {y})) → CompactSpace Y → CompactSpace X",
+ "lean": "∀ (X : Type u_1) (Y : Type u_2) [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y],   T2Space X →     ∀ (p : X → Y),       Continuous p → Function.Surjective p → IsClosedMap p → (∀ (y : Y), IsCompact (p ⁻¹' {y})) → CompactSpace X",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "t/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0318_Munkres_exercise_26_12/extract/Assumptions_input.lean:4:54: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0318_Munkres_exercise_26_12/extract/Assumptions_input.lean:4:274: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0318_Munkres_exercise_26_12/extract/Assumptions_input.lean:4:289: error: unknown universe level `u_2`\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,30 @@
+{
+ "id": "epla_miniF2F_743_0",
+ "reference": "∀ (x : ℝ), x ^ 2 - 14 * x + 3 ≥ 7 ^ 2 - 14 * 7 + 3",
+ "lean": "∀ (y : ℝ), 7 ^ 2 - 14 * 7 + 3 ≤ y ^ 2 - 14 * y + 3",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)",
+  "conclusion_ref": "x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

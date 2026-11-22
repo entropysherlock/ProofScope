@@ -1,0 +1,55 @@
+{
+ "case_id": "pnv:test:1125:Artin|exercise_10_6_7",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.5
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1125_Artin_exercise_10_6_7/extract/Assumptions_input.lean:4:153: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1125_Artin_exercise_10_6_7/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1125_Artin_exercise_10_6_7/extract/Drift_input.lean:4:145: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1125_Artin_exercise_10_6_7/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 1,
+  "cand": 0
+ },
+ "reference": "∀ {I : Ideal GaussianInt}, I ≠ ⊥ → ∃ (z : ↥I), z ≠ OfNat.ofNat (nat_lit 0) ∧ z.val.im = OfNat.ofNat (nat_lit 0)",
+ "lean": "∀ {R : Type u_1} [inst : Ring R] [IsDomain R] (I : Ideal R), I ≠ ⊥ → ∃ (x : R), x ≠ 0 ∧ x ∈ I",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {I : Ideal'",
+  "cand": "unsupported: cannot tokenize at '∀ {R : Type '"
+ },
+ "seconds": 22.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14082520
+}

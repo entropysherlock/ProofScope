@@ -1,0 +1,46 @@
+name: SOTA-18 Collect Records of a Finished Run
+
+# Re-collects the per-pair records of an evaluation run whose own collect job failed
+# (run 42969440169: `ls | head` broken pipe under pipefail; every tool job succeeded).
+on:
+  push:
+    branches: [research/sota18-independent-evaluation]
+    paths:
+      - "experiments/sota18/COLLECT_RUN"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - id: r
+        run: echo "run=$(head -1 experiments/sota18/COLLECT_RUN | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: sota18-*
+          path: shards
+          run-id: ${{ steps.r.outputs.run }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit raw per-pair records
+        shell: bash
+        run: |
+          set -euo pipefail
+          d="experiments/sota18/results/full/run_${{ steps.r.outputs.run }}_1"
+          mkdir -p "$d"/{proofscope,semanteq,beqplus,logs}
+          find shards -path '*/ps/rows/*.json' -exec cp {} "$d/proofscope/" \;
+          for e in adelta12 cmcd_v10; do mkdir -p "$d/engine_$e"; find shards -path "*/engine_$e/rows/*.json" -exec cp {} "$d/engine_$e/" \; ; done
+          find shards -path '*/se/*.json' -exec cp {} "$d/semanteq/" \;
+          find shards -path '*/bq/*.json' -exec cp {} "$d/beqplus/" \;
+          find shards -name '*.log' -exec cp {} "$d/logs/" \;
+          find shards -name 'provenance-*.txt' -exec cp {} "$d/logs/" \;
+          echo '{"jobs": {"proofscope": "success x24", "semanteq": "success x12", "beqplus": "success x12", "collect_original": "failure (ls broken pipe)"}, "source_run": "${{ steps.r.outputs.run }}"}' > "$d/job_results.json"
+          for t in proofscope semanteq beqplus engine_adelta12 engine_cmcd_v10; do echo "$t $(ls "$d/$t" | wc -l)"; done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/sota18/results
+          git commit -m "SOTA-18: raw records of headline run ${{ steps.r.outputs.run }} (re-collected)"
+          for i in 1 2 3 4 5; do git pull --rebase -q origin "${{ github.ref_name }}" && git push origin HEAD:${{ github.ref_name }} && break || sleep 15; done

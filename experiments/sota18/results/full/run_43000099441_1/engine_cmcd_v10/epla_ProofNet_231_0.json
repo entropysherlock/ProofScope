@@ -1,0 +1,50 @@
+{
+ "id": "epla_ProofNet_231_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (H : AddSubgroup ℚ) {x : ℚ}, (x ∈ H → 1 / x ∈ H) → H = ⊥ ∨ H = ⊤",
+ "lean": "∀ (H : AddSubgroup ℚ), (∀ x ∈ H, x ≠ 0 → 1 / x ∈ H) → H = ⊥ ∨ H = ⊤",
+ "symbols": [
+  {
+   "symbol": "Membership.mem",
+   "type": "AddSubgroup ℚ → ℚ → Prop"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℚ → ℚ → ℚ"
+  },
+  {
+   "symbol": "⊥",
+   "type": "AddSubgroup ℚ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ {x : ℚ}, (x ∈ H → (1 : ℚ) / x ∈ H) → H = ⊥ ∨ H = ⊤",
+   "to": "(∀ x ∈ H, x ≠ (0 : ℚ) → (1 : ℚ) / x ∈ H) → H = ⊥ ∨ H = ⊤"
+  }
+ ],
+ "symbols_truncated": true,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ {x : ℚ}, (x ∈ H → (1 : ℚ) / x ∈ H) → H = ⊥ ∨ H = ⊤",
+   "to": "(∀ x ∈ H, x ≠ (0 : ℚ) → (1 : ℚ) / x ∈ H) → H = ⊥ ∨ H = ⊤",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

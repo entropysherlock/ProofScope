@@ -1,0 +1,49 @@
+{
+ "id": "pnv_test_0674_Munkres_exercise_22_2a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "sorry",
+ "lean": "sorry",
+ "symbols": [
+  {
+   "symbol": "sorryAx",
+   "type": "(α : Type) → Bool → α"
+  },
+  {
+   "symbol": "Lean.Name.num",
+   "type": "Lean.Name → ℕ → Lean.Name"
+  },
+  {
+   "symbol": "Lean.Name.str",
+   "type": "Lean.Name → String → Lean.Name"
+  }
+ ],
+ "edits": [
+  {
+   "from": "`Drift_input.4.19.4.24.19.24._sorry._@.Drift_input.1472491207._hygCtx._hyg.6",
+   "to": "`Drift_input.4.27.4.32.27.32._sorry._@.Drift_input.1472491207._hygCtx._hyg.10"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "`Drift_input.4.19.4.24.19.24._sorry._@.Drift_input.1472491207._hygCtx._hyg.6",
+   "to": "`Drift_input.4.27.4.32.27.32._sorry._@.Drift_input.1472491207._hygCtx._hyg.10",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

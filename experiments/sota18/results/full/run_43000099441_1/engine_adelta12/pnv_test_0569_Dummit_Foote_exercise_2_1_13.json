@@ -1,0 +1,40 @@
+{
+ "id": "pnv_test_0569_Dummit_Foote_exercise_2_1_13",
+ "reference": "∀ (H : AddSubgroup ℚ) {x : ℚ}, (x ∈ H ∧ x ≠ 0 → 1 / x ∈ H) → H = ⊥ ∨ H = ⊤",
+ "lean": "∀ (H : AddSubgroup ℚ), (∀ x ∈ H, x ≠ 0 → 1 / x ∈ H) → H = ⊥ ∨ H = ⊤",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "∀ x ∈ H, x ≠ (0 : ℚ) → (1 : ℚ) / x ∈ H"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "H = ⊥ ∨ H = ⊤",
+  "conclusion_ref": "∀ {x : ℚ}, (x ∈ H ∧ x ≠ (0 : ℚ) → (1 : ℚ) / x ∈ H) → H = ⊥ ∨ H = ⊤",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "H",
+    "type": "AddSubgroup ℚ"
+   }
+  ]
+ },
+ "verdict": "INCONCLUSIVE",
+ "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

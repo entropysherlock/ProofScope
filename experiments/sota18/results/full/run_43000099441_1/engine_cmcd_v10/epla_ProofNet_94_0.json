@@ -1,0 +1,17 @@
+{
+ "id": "epla_ProofNet_94_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {α : Type u_1} [Fintype α] {σ τ : Equiv.Perm α}, (∀ (a : α), σ a = a ↔ τ a ≠ a) → ⇑τ ∘ ⇑σ = id → σ = 1 ∧ τ = 1",
+ "lean": "∀ {α : Type u_1} {σ τ : Equiv.Perm α}, σ * τ = 1 → {x : α | σ x ≠ x} = ∅ → σ = 1 ∧ τ = 1",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_94_0/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_94_0/extract/Drift_input.lean:4:146: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_94_0/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

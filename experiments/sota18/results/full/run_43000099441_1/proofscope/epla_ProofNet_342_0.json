@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:ProofNet:342:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.9,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_342_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {f : ℝ → ℝ}, (∀ (x y : ℝ), |f x - f y| ≤ |x - y| ^ 2) → ∃ (c : ℝ), f = fun (x : ℝ) => c",
+ "lean": "∀ (f : ℝ → ℝ), (∀ (t x : ℝ), |f t - f x| ≤ |t - x| ^ 2) → ∃ (c : ℝ), ∀ (x : ℝ), f x = c",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {f : ℝ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (f : ℝ → ℝ'"
+ },
+ "seconds": 21.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7617020
+}

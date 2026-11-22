@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_573_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ) (a : ℕ → ℝ),   0 < a 0 ∧ 0 < a 4 ∧ 0 < a 8 →     a 1 < 0 ∧ a 2 < 0 →       a 3 < 0 ∧ a 5 < 0 →         a 6 < 0 ∧ a 7 < 0 →           0 < a 0 + a 1 + a 2 →             0 < a 3 + a 4 + a 5 →               0 < a 6 + a 7 + a 8 →                 a 0 * x + a 1 * y + a 2 * z = 0 →                   a 3 * x + a 4 * y + a 5 * z = 0 → a 6 * x + a 7 * y + a 8 * z = 0 → x = 0 ∧ y = 0 ∧ z = 0",
+ "lean": "∀ (a11 a22 a33 a12 a13 a21 a23 a31 a32 : ℝ),   a11 > 0 →     a22 > 0 →       a33 > 0 →         a12 < 0 →           a13 < 0 →             a21 < 0 →               a23 < 0 →                 a31 < 0 →                   a32 < 0 →                     a11 + a12 + a13 > 0 →                       a21 + a22 + a23 > 0 →                         a31 + a32 + a33 > 0 →                           ∀ (x1 x2 x3 : ℝ),                             a11 * x1 + a12 * x2 + a13 * x3 = 0 →                               a21 * x1 + a22 * x2 + a23 * x3 = 0 →                                 a31 * x1 + a32 * x2 + a33 * x3 = 0 → x1 = 0 ∧ x2 = 0 ∧ x3 = 0",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_573_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #0\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

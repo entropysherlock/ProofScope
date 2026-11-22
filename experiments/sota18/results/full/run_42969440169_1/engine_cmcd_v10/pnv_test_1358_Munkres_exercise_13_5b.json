@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1358_Munkres_exercise_13_5b",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {X : Type u_1} (A : Set (Set X)),   TopologicalSpace.generateFrom A = TopologicalSpace.generateFrom (⋂₀ {T : Set (Set X) | is_topology X T ∧ A ⊆ T})",
+ "lean": "∀ {X : Type u_1} (A : Set (Set X)),   TopologicalSpace.generateFrom A = ⨅ (T : TopologicalSpace X), ⨅ (_ : ∀ a ∈ A, IsOpen a), T",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1358_Munkres_exercise_13_5b/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1358_Munkres_exercise_13_5b/extract/Drift_input.lean:4:144: error(lean.unknownIdentifier): Unknown identifier `is_topology`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1358_Munkres_exercise_13_5b/extract/Drift_input.lean:4:184: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1358_Munkres_exercise_13_5b/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

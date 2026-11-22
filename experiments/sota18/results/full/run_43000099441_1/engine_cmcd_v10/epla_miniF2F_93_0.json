@@ -1,0 +1,18 @@
+{
+ "id": "epla_miniF2F_93_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y : ℝ), 3 * y = x → 2 * x + 5 * y = 11 → x + y = 4",
+ "lean": "∀ (x y : ℝ), 3 * y = x → 2 * x + 5 * y = 11 → x + y = 4",
+ "symbols": [],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

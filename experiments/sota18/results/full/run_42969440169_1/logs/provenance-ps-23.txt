@@ -1,0 +1,6 @@
+c28f8d6ea4f98414fafe6ee9a5e64f10fba2c85c
+Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)
+Python 3.12.16
+4
+               total        used        free      shared  buff/cache   available
+Mem:              15           1           1           0          13          14

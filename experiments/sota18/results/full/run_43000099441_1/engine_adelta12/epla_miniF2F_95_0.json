@@ -1,0 +1,52 @@
+{
+ "id": "epla_miniF2F_95_0",
+ "reference": "∀ (a b c : ℝ) (f : ℝ → ℝ),   (∀ (x : ℝ), f x = x ^ 3 + a * x ^ 2 + b * x + c) →     f ⁻¹' {0} = {Real.cos (2 * Real.pi / 7), Real.cos (4 * Real.pi / 7), Real.cos (6 * Real.pi / 7)} →       a * b * c = 1 / 32",
+ "lean": "∀ (a b c : ℝ),   (Polynomial.X ^ 3 + Polynomial.C a * Polynomial.X ^ 2 + Polynomial.C b * Polynomial.X + Polynomial.C c).roots =       {Real.cos (2 * Real.pi / 7), Real.cos (4 * Real.pi / 7), Real.cos (6 * Real.pi / 7)} →     a * b * c = 1 / 32",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "Polynomial.roots\n    (HAdd.hAdd (β := Polynomial ℝ)\n      (HPow.hPow (α := Polynomial ℝ) Polynomial.X (3 : ℕ) +\n          HMul.hMul (α := Polynomial ℝ) (Polynomial.C a : Polynomial ℝ)\n            (HPow.hPow (α := Polynomial ℝ) Polynomial.X (2 : ℕ)) +\n        HMul.hMul (α := Polynomial ℝ) (β := Polynomial ℝ) (Polynomial.C b : Polynomial ℝ) Polynomial.X)\n      (Polynomial.C c : Polynomial ℝ)) =\n  {Real.cos ((2 : ℝ) * Real.pi / (7 : ℝ)), Real.cos ((4 : ℝ) * Real.pi / (7 : ℝ)),\n    Real.cos ((6 : ℝ) * Real.pi / (7 : ℝ))}"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "a * b * c = (1 / 32 : ℝ)",
+  "conclusion_ref": "∀ (f : ℝ → ℝ),\n  (∀ (x : ℝ), f x = x ^ (3 : ℕ) + a * x ^ (2 : ℕ) + b * x + c) →\n    f ⁻¹' {(0 : ℝ)} =\n        {Real.cos ((2 : ℝ) * Real.pi / (7 : ℝ)), Real.cos ((4 : ℝ) * Real.pi / (7 : ℝ)),\n          Real.cos ((6 : ℝ) * Real.pi / (7 : ℝ))} →\n      a * b * c = (1 / 32 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "INCONCLUSIVE",
+ "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

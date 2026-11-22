@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_1364_Munkres_exercise_31_1",
+ "reference": "∀ {X : Type u_1} [inst : TopologicalSpace X],   RegularSpace X →     ∀ (x y : X), x ≠ y → ∃ (U : Set X) (V : Set X), IsOpen U ∧ IsOpen V ∧ x ∈ U ∧ y ∈ V ∧ closure U ∩ closure V = ∅",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] [RegularSpace X] (x y : X),   ∃ (U : Set X) (V : Set X), IsOpen U ∧ IsOpen V ∧ x ∈ U ∧ y ∈ V ∧ closure U ∩ closure V = ∅",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1364_Munkres_exercise_31_1/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1364_Munkres_exercise_31_1/extract/Assumptions_input.lean:4:222: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1364_Munkres_exercise_31_1/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

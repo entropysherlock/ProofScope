@@ -1,0 +1,30 @@
+{
+ "id": "epla_miniF2F_419_0",
+ "reference": "∀ (a : ℝ), a * (2 - a) ≤ 1",
+ "lean": "∀ (a : ℝ), a * (2 - a) ≤ 1",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "a * ((2 : ℝ) - a) ≤ (1 : ℝ)",
+  "conclusion_ref": "a * ((2 : ℝ) - a) ≤ (1 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

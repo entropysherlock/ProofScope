@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1167_Dummit_Foote_exercise_2_4_16c",
+ "reference": "∀ {n : ℕ+} {G : Type u_1} [inst : Group G] {x : G},   orderOf x = ↑n →     G = ↥(Subgroup.closure {x}) →       ∀ (H : Subgroup G),         (∃ (p : ℕ), Prime p ∧ p ∣ ↑n ∧ H = Subgroup.closure {x ^ p}) ↔ H ≠ ⊤ ∧ ∀ (K : Subgroup G), H ≤ K → K = H ∨ K = ⊤",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {x : G} {n : ℕ},   x ^ n = 1 →     ∀ (H : Subgroup G),       (∃ (k : ℕ), k ∣ n ∧ H = Subgroup.closure {x ^ k} ∧ ∀ (N : Subgroup G), H ≤ N → N = ⊤ ∨ N = H) ↔         ∃ (p : ℕ), Nat.Prime p ∧ p ∣ n ∧ H = Subgroup.closure {x ^ (n / p)}",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1087_Herstein_exercise_2_1_26",
+ "reference": "∀ {G : Type u_1} [inst : Group G] [Fintype G] (a : G), ∃ n > 0, a ^ n = 1",
+ "lean": "∀ {G : Type u_1} [inst : Group G] [Fintype G] (a : G), ∃ (n : ℕ), 0 < n ∧ a ^ n = 1",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

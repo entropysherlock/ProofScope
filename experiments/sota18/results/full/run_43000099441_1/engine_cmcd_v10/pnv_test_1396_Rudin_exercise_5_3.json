@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1396_Rudin_exercise_5_3",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {g : ℝ → ℝ},   Continuous g →     (∃ (M : ℝ), ∀ (x : ℝ), |deriv g x| ≤ M) → ∃ (N : ℝ), ∀ ε > 0, ε < N → Function.Injective fun (x : ℝ) => x + ε * g x",
+ "lean": "∀ {f : ℝ → ℝ},   Differentiable ℝ f →     ∀ {M : ℝ}, (∀ (x : ℝ), 0 ≤ x → 0 ≤ deriv f x ∧ deriv f x ≤ M) → ∃ (ε : ℕ), 0 < ε ∧ ∀ (x : ℕ), ε ≤ x → 0 ≤ x",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1396_Rudin_exercise_5_3/extract/Drift_input.lean:4:0: error: unexpected bound variable #7\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

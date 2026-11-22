@@ -1,0 +1,127 @@
+{
+ "id": "epla_miniF2F_492_0",
+ "reference": "∀ (x y z : ℝ), 0 < x ∧ 0 < y ∧ 0 < z → 9 / (x + y + z) ≤ 2 / (x + y) + 2 / (y + z) + 2 / (z + x)",
+ "lean": "∀ (x y z : ℝ), 0 < x → 0 < y → 0 < z → 9 / (x + y + z) ≤ 2 / (x + y) + 2 / (y + z) + 2 / (z + x)",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < x"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < y"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < z"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "(9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x)",
+  "conclusion_ref": "(9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    3,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "z",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_492_0.link_L",
+   "statement": "(∀ (x y z : ℝ), 0 < x → 0 < y → 0 < z → 9 / (x + y + z) ≤ 2 / (x + y) + 2 / (y + z) + 2 / (z + x)) ↔ (∀ (x : ℝ) (y : ℝ) (z : ℝ), ((0 : ℝ) < x) → ((0 : ℝ) < y) → ((0 : ℝ) < z) → (9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_492_0.d_implies_a",
+   "statement": "∀ (x : ℝ) (y : ℝ) (z : ℝ), (((0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z)) → ((0 : ℝ) < x) ∧ ((0 : ℝ) < y) ∧ ((0 : ℝ) < z)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_492_0.link_R",
+   "statement": "(∀ (x y z : ℝ), 0 < x ∧ 0 < y ∧ 0 < z → 9 / (x + y + z) ≤ 2 / (x + y) + 2 / (y + z) + 2 / (z + x)) ↔ (∀ (x : ℝ) (y : ℝ) (z : ℝ), ((0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z) → (9 : ℝ) / (x + y + z) ≤ (2 : ℝ) / (x + y) + (2 : ℝ) / (y + z) + (2 : ℝ) / (z + x))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_492_0.a_implies_d",
+   "statement": "∀ (x : ℝ) (y : ℝ) (z : ℝ), (((0 : ℝ) < x) ∧ ((0 : ℝ) < y) ∧ ((0 : ℝ) < z)) → ((0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℝ) < x",
+  "(0 : ℝ) < y",
+  "(0 : ℝ) < z"
+ ],
+ "dropped": [
+  "(0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

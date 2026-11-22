@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0298_Munkres_exercise_32_2c",
+ "reference": "∀ {ι : Type u_1} {X : ι → Type u_2} [inst : (i : ι) → TopologicalSpace (X i)],   (∀ (i : ι), Nonempty (X i)) → NormalSpace ((i : ι) → X i) → ∀ (i : ι), NormalSpace (X i)",
+ "lean": "∀ {X : Type u_1} [TopologicalSpace X] {ι : Type u_2} {π : ι → Type u_3} [inst : (i : ι) → TopologicalSpace (π i)],   NormalSpace ((i : ι) → π i) → ∀ (i : ι) [Nonempty (π i)], NormalSpace (π i)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

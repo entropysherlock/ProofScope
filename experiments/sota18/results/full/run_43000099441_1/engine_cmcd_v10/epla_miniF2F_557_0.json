@@ -1,0 +1,162 @@
+{
+ "id": "epla_miniF2F_557_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℝ), 0 < a ∧ 0 < b → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5",
+ "lean": "∀ (a b : ℝ), a > 0 → b > 0 → a ≠ b → |a - 1 / a| = 1 → |b - 1 / b| = 1 → a + b = √5",
+ "symbols": [
+  {
+   "symbol": "abs",
+   "type": "ℝ → ℝ"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "Real.sqrt",
+   "type": "ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+   "to": "a > (0 : ℝ)"
+  },
+  {
+   "from": "a ≠ b",
+   "to": "b > (0 : ℝ)"
+  },
+  {
+   "from": "|a - (1 : ℝ) / a| = (1 : ℝ)",
+   "to": "a ≠ b"
+  },
+  {
+   "from": "b - (1 : ℝ) / b",
+   "to": "a - (1 : ℝ) / a"
+  },
+  {
+   "from": "a + b = √(5 : ℝ)",
+   "to": "|b - (1 : ℝ) / b| = (1 : ℝ) → a + b = √(5 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b",
+   "to": "a > (0 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ),\n  a > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ)) → (∀ (a b : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b →\n    a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "a ≠ b",
+   "to": "b > (0 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "sepS_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.sepS_e2",
+     "statement": "∃ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ),\n  a > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ)) ∧ ¬ (∀ (a b : ℝ),\n  a > (0 : ℝ) → b > (0 : ℝ) → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 3,
+   "from": "|a - (1 : ℝ) / a| = (1 : ℝ)",
+   "to": "a ≠ b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 4,
+   "from": "b - (1 : ℝ) / b",
+   "to": "a - (1 : ℝ) / a",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e4": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.fwd_e4",
+     "statement": "∀ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ), a > (0 : ℝ) → b > (0 : ℝ) → a ≠ b → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ)) → (∀ (a b : ℝ), a > (0 : ℝ) → b > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e4": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.bwd_e4",
+     "statement": "∀ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ), a > (0 : ℝ) → b > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → a + b = x3 (5 : ℝ)) → (∀ (a b : ℝ), a > (0 : ℝ) → b > (0 : ℝ) → a ≠ b → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 5,
+   "from": "a + b = √(5 : ℝ)",
+   "to": "|b - (1 : ℝ) / b| = (1 : ℝ) → a + b = √(5 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e5": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.fwd_e5",
+     "statement": "∀ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ), a > (0 : ℝ) → b > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → a + b = x3 (5 : ℝ)) → (∀ (a b : ℝ),\n  a > (0 : ℝ) →\n    b > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ),\n  a > (0 : ℝ) →\n    b > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ)) → (∀ (a b : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b →\n    a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_557_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b →\n    a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ)) → (∀ (a b : ℝ),\n  a > (0 : ℝ) →\n    b > (0 : ℝ) → a ≠ b → x1 (a - x2 (1 : ℝ) a) = (1 : ℝ) → x1 (b - x2 (1 : ℝ) b) = (1 : ℝ) → a + b = x3 (5 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

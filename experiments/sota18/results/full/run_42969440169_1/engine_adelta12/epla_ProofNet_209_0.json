@@ -1,0 +1,23 @@
+{
+ "id": "epla_ProofNet_209_0",
+ "reference": "∀ {R : Type u_1} [inst : Ring R] {x : R}, IsNilpotent x → IsUnit (1 + x)",
+ "lean": "∀ {R : Type u_1} [inst : Ring R] (x : R), (∃ (n : ℕ), x ^ n = 0) → IsUnit (1 + x)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

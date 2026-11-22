@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0809_Rudin_exercise_5_5",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℝ → ℝ},   DifferentiableOn ℝ f (Set.Ioi 0) →     Filter.Tendsto (deriv f) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop (nhds 0)",
+ "lean": "∀ {f : ℝ → ℝ},   (∀ x > 0, DifferentiableAt ℝ f x) →     Filter.Tendsto (fun (x : ℝ) => deriv f x) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop (nhds 0)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0809_Rudin_exercise_5_5/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

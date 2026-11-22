@@ -1,0 +1,86 @@
+{
+ "id": "epla_miniF2F_825_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → (∃ k > 0, 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1",
+ "lean": "∀ (a b k : ℕ), 0 < a → 0 < b → 0 < k → 2 ^ k = (a + b ^ 2) * (b + a ^ 2) → a = 1",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℕ) < a ∧ (0 : ℕ) < b → (∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))) → a = (1 : ℕ)",
+   "to": "∀ (k : ℕ), (0 : ℕ) < a → (0 : ℕ) < b → (0 : ℕ) < k → (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ)) → a = (1 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℕ) < a ∧ (0 : ℕ) < b → (∃ k > (0 : ℕ), (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ))) → a = (1 : ℕ)",
+   "to": "∀ (k : ℕ), (0 : ℕ) < a → (0 : ℕ) < b → (0 : ℕ) < k → (2 : ℕ) ^ k = (a + b ^ (2 : ℕ)) * (b + a ^ (2 : ℕ)) → a = (1 : ℕ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_825_0.fwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → (∃ k > (0 : ℕ), x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ))) → a = (1 : ℕ)) → (∀ (a b k : ℕ),\n  (0 : ℕ) < a → (0 : ℕ) < b → (0 : ℕ) < k → x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ)) → a = (1 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_825_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b k : ℕ),\n  (0 : ℕ) < a → (0 : ℕ) < b → (0 : ℕ) < k → x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ)) → a = (1 : ℕ)) → (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → (∃ k > (0 : ℕ), x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ))) → a = (1 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_825_0.fwd_e1",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → (∃ k > (0 : ℕ), x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ))) → a = (1 : ℕ)) → (∀ (a b k : ℕ),\n  (0 : ℕ) < a → (0 : ℕ) < b → (0 : ℕ) < k → x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ)) → a = (1 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_825_0.bwd_e1",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ) (x2 : ℕ → ℕ → ℕ), (∀ (a b k : ℕ),\n  (0 : ℕ) < a → (0 : ℕ) < b → (0 : ℕ) < k → x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ)) → a = (1 : ℕ)) → (∀ (a b : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b → (∃ k > (0 : ℕ), x1 (2 : ℕ) k = x2 (a + x1 b (2 : ℕ)) (b + x1 a (2 : ℕ))) → a = (1 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,71 @@
+{
+ "case_id": "epla:miniF2F:675:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 108.9,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 492.3,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.sqrt",
+     "type": "ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+ "lean": "∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b c : ℝ'"
+ },
+ "seconds": 609.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11645476
+}

@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_1199_Munkres_exercise_34_9",
+ "reference": "∀ (X : Type u_1) [inst : TopologicalSpace X] [CompactSpace X] [T2Space X] (X1 X2 : Set X),   IsClosed X1 →     IsClosed X2 →       X1 ∪ X2 = Set.univ →         TopologicalSpace.MetrizableSpace ↑X1 → TopologicalSpace.MetrizableSpace ↑X2 → TopologicalSpace.MetrizableSpace X",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] [CompactSpace X] [T2Space X] {X1 X2 : Set X},   IsClosed X1 →     IsClosed X2 →       X = ↑(X1 ∪ X2) →         TopologicalSpace.MetrizableSpace ↑X1 → TopologicalSpace.MetrizableSpace ↑X2 → TopologicalSpace.MetrizableSpace X",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1199_Munkres_exercise_34_9/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1199_Munkres_exercise_34_9/extract/Assumptions_input.lean:4:314: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1199_Munkres_exercise_34_9/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

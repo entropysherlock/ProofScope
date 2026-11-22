@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0861_Herstein_exercise_2_3_16",
+ "reference": "∀ {G : Type u_1} [inst : Group G],   (∀ (H : Subgroup G), H = ⊤ ∨ H = ⊥) → IsCyclic G ∧ ∃ (p : ℕ) (Fin : Fintype G), Nat.Prime p ∧ Fintype.card G = p",
+ "lean": "∀ {G : Type u_1} [inst : Group G],   (∀ (H : Subgroup G), H = ⊥ ∨ H = ⊤) →     ∃ (p : ℕ), Nat.Prime p ∧ ∃ (g : G), orderOf g = p ∧ ∀ (h : G), h ∈ Subgroup.zpowers g",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0861_Herstein_exercise_2_3_16/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0861_Herstein_exercise_2_3_16/extract/Assumptions_input.lean:4:191: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0861_Herstein_exercise_2_3_16/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1102_Shakarchi_exercise_1_13b",
+ "reference": "∀ {f : ℂ → ℂ} (Ω : Set ℂ) (a b : ↑Ω),   IsOpen Ω → DifferentiableOn ℂ f Ω → (∃ (c : ℝ), ∀ z ∈ Ω, (f z).im = c) → f ↑a = f ↑b",
+ "lean": "∀ {Ω : Set ℂ}, IsOpen Ω → ∀ {f : ℂ → ℂ}, AnalyticOn ℂ f Ω → (∀ z ∈ Ω, (f z).im = (f 0).im) → ∀ z ∈ Ω, f z = f 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ {Ω : Set ℂ},\n  IsOpen Ω →\n    ∀ {f : ℂ → ℂ}, AnalyticOn ℂ f Ω → (∀ z ∈ Ω, Complex.im (f z) = Complex.im (f (0 : ℂ))) → ∀ z ∈ Ω, f z = f (0 : ℂ)",
+  "conclusion_ref": "∀ {f : ℂ → ℂ} (Ω : Set ℂ) (a b : ↑Ω),\n  IsOpen Ω → DifferentiableOn ℂ f Ω → (∃ (c : ℝ), ∀ z ∈ Ω, Complex.im (f z) = c) → f ↑a = f ↑b",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

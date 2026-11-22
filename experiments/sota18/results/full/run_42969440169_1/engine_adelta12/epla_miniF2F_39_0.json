@@ -1,0 +1,94 @@
+{
+ "id": "epla_miniF2F_39_0",
+ "reference": "∀ (p q r : ℤ),   1 < p ∧ p < q ∧ q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → (p, q, r) = (2, 4, 8) ∨ (p, q, r) = (3, 5, 15)",
+ "lean": "∀ (p q r : ℤ),   1 < p → p < q → q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → p = 2 ∧ q = 4 ∧ r = 8 ∨ p = 3 ∧ q = 5 ∧ r = 15",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(1 : ℤ) < p"
+   },
+   {
+    "dependent": false,
+    "prop": "p < q"
+   },
+   {
+    "dependent": false,
+    "prop": "q < r"
+   },
+   {
+    "dependent": false,
+    "prop": "(p - (1 : ℤ)) * (q - (1 : ℤ)) * (r - (1 : ℤ)) ∣ p * q * r - (1 : ℤ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "conclusion_lean": "p = (2 : ℤ) ∧ q = (4 : ℤ) ∧ r = (8 : ℤ) ∨ p = (3 : ℤ) ∧ q = (5 : ℤ) ∧ r = (15 : ℤ)",
+  "conclusion_ref": "(p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ))",
+  "conclusion_same": false,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(1 : ℤ) < p ∧ p < q ∧ q < r"
+   },
+   {
+    "dependent": false,
+    "prop": "(p - (1 : ℤ)) * (q - (1 : ℤ)) * (r - (1 : ℤ)) ∣ p * q * r - (1 : ℤ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "p",
+    "type": "ℤ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "q",
+    "type": "ℤ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "r",
+    "type": "ℤ"
+   }
+  ]
+ },
+ "verdict": "INCONCLUSIVE",
+ "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

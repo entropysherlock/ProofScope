@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0373_Herstein_exercise_2_7_7",
+ "reference": "∀ {G : Type u_1} [inst : Group G] {G' : Type u_2} [inst_1 : Group G'] (φ : G →* G') (N : Subgroup G) [N.Normal],   (Subgroup.map φ N).Normal",
+ "lean": "∀ {G : Type u_1} {G' : Type u_2} [inst : Group G] [inst_1 : Group G'] (N : Subgroup G) (φ : G →* G'),   Function.Surjective ⇑φ → N.Normal → φ.range.Normal",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "s_input.lean:4:72: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0373_Herstein_exercise_2_7_7/extract/Assumptions_input.lean:4:182: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0373_Herstein_exercise_2_7_7/extract/Assumptions_input.lean:4:198: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0373_Herstein_exercise_2_7_7/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

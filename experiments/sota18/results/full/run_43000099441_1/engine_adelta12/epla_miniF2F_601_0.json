@@ -1,0 +1,13 @@
+{
+ "id": "epla_miniF2F_601_0",
+ "reference": "{x ∈ Finset.range 10000 | ¬Even x}.prod id = Nat.factorial 10000 / (2 ^ 5000 * Nat.factorial 5000)",
+ "lean": "{n ∈ Finset.range 10000 | n % 2 = 1}.prod id = Nat.factorial 10000 / (2 ^ 5000 * Nat.factorial 5000)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_miniF2F_601_0/extract/Assumptions_input.lean:4:0: error: maximum recursion depth has been reached\nuse `set_option maxRecDepth <num>` to increase limit\nuse `set_option diagnostics true` to get diagnostic information\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

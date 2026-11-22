@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_493_0",
+ "reference": "∀ (b : ZMod (11 ^ 2)), b = 24⁻¹ → b = 116",
+ "lean": "∃ b < 11 ^ 2, 24 * b % 11 ^ 2 = 1 ∧ b = 116",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∃ b < (11 : ℕ) ^ (2 : ℕ), (24 : ℕ) * b % (11 : ℕ) ^ (2 : ℕ) = (1 : ℕ) ∧ b = (116 : ℕ)",
+  "conclusion_ref": "∀ (b : ZMod ((11 : ℕ) ^ (2 : ℕ))), b = (24 : ZMod ((11 : ℕ) ^ (2 : ℕ)))⁻¹ → b = (116 : ZMod ((11 : ℕ) ^ (2 : ℕ)))",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

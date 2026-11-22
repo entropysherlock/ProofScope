@@ -1,0 +1,66 @@
+{
+ "case_id": "pnv:test:0715:Dummit-Foote|exercise_11_1_13",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.7,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 18.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nonempty",
+     "type": "Type → Prop"
+    },
+    {
+     "symbol": "LinearEquiv",
+     "type": "(σ : ℚ →+* ℚ) →\n  {σ' : ℚ →+* ℚ} →\n    [RingHomInvPair σ σ'] →\n      [RingHomInvPair σ' σ] →\n        (M M₂ : Type) → [inst : AddCommMonoid M] → [inst_1 : AddCommMonoid M₂] → [Module ℚ M] → [Module ℚ M₂] → Type"
+    },
+    {
+     "symbol": "RingHom.id",
+     "type": "(α : Type) → [inst : NonAssocSemiring α] → α →+* α"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {n : ℕ+}, Nonempty ((Fin ↑n → ℝ) ≃ₗ[ℚ] ℝ)",
+ "lean": "∀ {n : ℕ}, Nonempty ((Fin n → ℝ) ≃ₗ[ℚ] ℝ)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {n : ℕ+}, '",
+  "cand": "unsupported: cannot tokenize at '∀ {n : ℕ}, N'"
+ },
+ "seconds": 32.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618716
+}

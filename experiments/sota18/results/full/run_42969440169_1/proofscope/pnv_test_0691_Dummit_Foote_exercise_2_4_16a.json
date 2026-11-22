@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0691:Dummit-Foote|exercise_2_4_16a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": " universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0691_Dummit_Foote_exercise_2_4_16a/extract/Assumptions_input.lean:4:195: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0691_Dummit_Foote_exercise_2_4_16a/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ror: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0691_Dummit_Foote_exercise_2_4_16a/extract/Drift_input.lean:4:187: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0691_Dummit_Foote_exercise_2_4_16a/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] [Fintype G] {H : Subgroup G},   H ≠ ⊤ → ∃ (M : Subgroup G), M ≠ ⊤ ∧ (∀ (K : Subgroup G), M ≤ K → K = M ∨ K = ⊤) ∧ H ≤ M",
+ "lean": "∀ {G : Type u_1} [inst : Group G] [Finite G] {H : Subgroup G},   H ≠ ⊤ → ∃ (M : Subgroup G), H ≤ M ∧ M ≠ ⊤ ∧ ∀ (K : Subgroup G), H ≤ K → M = K ∨ M = ⊤",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 17.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8687312
+}

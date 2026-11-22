@@ -1,0 +1,113 @@
+{
+ "id": "epla_miniF2F_581_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (m n : ℕ), 1 < m → 1 < n → m * n = 2005 → m + n = 406",
+ "lean": "∀ (a b : ℕ), a > 1 ∧ b > 1 ∧ a * b = 2005 → a + b = 406",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(1 : ℕ) < m",
+   "to": "m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ m * n = (2005 : ℕ)"
+  },
+  {
+   "from": "(1 : ℕ) < n → m * n = (2005 : ℕ) → m + n = (406 : ℕ)",
+   "to": "m + n = (406 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(1 : ℕ) < m",
+   "to": "m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ m * n = (2005 : ℕ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_581_0.fwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (m n : ℕ), (1 : ℕ) < m → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ)) → (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_581_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ)) → (∀ (m n : ℕ), (1 : ℕ) < m → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(1 : ℕ) < n → m * n = (2005 : ℕ) → m + n = (406 : ℕ)",
+   "to": "m + n = (406 : ℕ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "fwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_581_0.fwd_e2",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ)) → (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → m + n = (406 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e2": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_581_0.bwd_e2",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → m + n = (406 : ℕ)) → (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_581_0.fwd_g",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (m n : ℕ), (1 : ℕ) < m → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ)) → (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → m + n = (406 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_581_0.bwd_g",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ), (∀ (m n : ℕ), m > (1 : ℕ) ∧ n > (1 : ℕ) ∧ x1 m n = (2005 : ℕ) → m + n = (406 : ℕ)) → (∀ (m n : ℕ), (1 : ℕ) < m → (1 : ℕ) < n → x1 m n = (2005 : ℕ) → m + n = (406 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1,
+  2
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

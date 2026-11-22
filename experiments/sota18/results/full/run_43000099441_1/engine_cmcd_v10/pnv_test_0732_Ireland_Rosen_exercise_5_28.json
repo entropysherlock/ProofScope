@@ -1,0 +1,84 @@
+{
+ "id": "pnv_test_0732_Ireland_Rosen_exercise_5_28",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {p : ℕ}, Nat.Prime p → p ≡ 1 [MOD 4] → ((∃ (x : ℕ), x ^ 4 ≡ 2 [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ 2 + 64 * B ^ 2)",
+ "lean": "∀ {p : ℕ}, Nat.Prime p → p % 4 = 1 → ((∃ (n : ℕ), p = n ^ 2 + 64 * n ^ 2) ↔ ∃ (x : ℤ), 2 * x = 1 ∧ x ^ 4 = ↑p)",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "p ≡ (1 : ℕ) [MOD (4 : ℕ)]",
+   "to": "p % (4 : ℕ) = (1 : ℕ)"
+  },
+  {
+   "from": "(∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ)",
+   "to": "(∃ (n : ℕ), p = n ^ (2 : ℕ) + (64 : ℕ) * n ^ (2 : ℕ)) ↔ ∃ (x : ℤ), (2 : ℤ) * x = (1 : ℤ) ∧ x ^ (4 : ℕ) = ↑p"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "p ≡ (1 : ℕ) [MOD (4 : ℕ)]",
+   "to": "p % (4 : ℕ) = (1 : ℕ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "lawB_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0732_Ireland_Rosen_exercise_5_28.lawB_e1",
+     "statement": "(∀ {p : ℕ},\n  Nat.Prime p →\n    p % (4 : ℕ) = (1 : ℕ) →\n      ((∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ))) → (∀ {p : ℕ},\n  Nat.Prime p →\n    p ≡ (1 : ℕ) [MOD (4 : ℕ)] →\n      ((∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ)))",
+     "axioms": [
+      "propext",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0732_Ireland_Rosen_exercise_5_28.bwd_e1",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ {p : ℕ},\n  x1 p →\n    p % (4 : ℕ) = (1 : ℕ) →\n      ((∃ (x : ℕ), x2 x (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = x2 A (2 : ℕ) + (64 : ℕ) * x2 B (2 : ℕ))) → (∀ {p : ℕ},\n  x1 p →\n    p ≡ (1 : ℕ) [MOD (4 : ℕ)] →\n      ((∃ (x : ℕ), x2 x (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = x2 A (2 : ℕ) + (64 : ℕ) * x2 B (2 : ℕ)))",
+     "axioms": []
+    },
+    "lawF_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0732_Ireland_Rosen_exercise_5_28.lawF_e1",
+     "statement": "(∀ {p : ℕ},\n  Nat.Prime p →\n    p ≡ (1 : ℕ) [MOD (4 : ℕ)] →\n      ((∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ))) → (∀ {p : ℕ},\n  Nat.Prime p →\n    p % (4 : ℕ) = (1 : ℕ) →\n      ((∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ)))",
+     "axioms": [
+      "propext",
+      "Quot.sound"
+     ]
+    },
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_pnv_test_0732_Ireland_Rosen_exercise_5_28.fwd_e1",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ {p : ℕ},\n  x1 p →\n    p ≡ (1 : ℕ) [MOD (4 : ℕ)] →\n      ((∃ (x : ℕ), x2 x (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = x2 A (2 : ℕ) + (64 : ℕ) * x2 B (2 : ℕ))) → (∀ {p : ℕ},\n  x1 p →\n    p % (4 : ℕ) = (1 : ℕ) →\n      ((∃ (x : ℕ), x2 x (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = x2 A (2 : ℕ) + (64 : ℕ) * x2 B (2 : ℕ)))",
+     "axioms": []
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ)",
+   "to": "(∃ (n : ℕ), p = n ^ (2 : ℕ) + (64 : ℕ) * n ^ (2 : ℕ)) ↔ ∃ (x : ℤ), (2 : ℤ) * x = (1 : ℤ) ∧ x ^ (4 : ℕ) = ↑p",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

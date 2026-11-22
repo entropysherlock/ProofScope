@@ -1,0 +1,24 @@
+{
+ "id": "pnv_test_1284_Dummit_Foote_exercise_1_1_4",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ) (a b c : ZMod n), a * b * c = a * (b * c)",
+ "lean": "∀ (n : ℕ) (a b c : ℤ), a * b * c = a * (b * c)",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (a b c : ZMod n), a * b * c = a * (b * c)",
+   "to": "∀ (a b c : ℤ), a * b * c = a * (b * c)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

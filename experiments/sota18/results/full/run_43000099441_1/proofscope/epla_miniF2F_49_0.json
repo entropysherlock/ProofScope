@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:49:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_49_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a : ℕ → ℝ), (∀ (n : ℕ), a (n + 2) - a (n + 1) = a (n + 1) - a n) → a 1 = 2 / 3 → a 9 = 4 / 5 → a 5 = 11 / 15",
+ "lean": "∀ (a : ℕ → ℚ), (∃ (d : ℚ), ∀ (n : ℕ), a n = a 0 + ↑n * d) → a 0 = 2 / 3 → a 8 = 4 / 5 → a 4 = 11 / 15",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a : ℕ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a : ℕ → ℚ'"
+ },
+ "seconds": 21.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8547792
+}

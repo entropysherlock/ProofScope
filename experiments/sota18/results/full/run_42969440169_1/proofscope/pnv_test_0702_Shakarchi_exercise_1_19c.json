@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0702:Shakarchi|exercise_1_19c",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 3.9
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "ref",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0702_Shakarchi_exercise_1_19c/print.lean:11:24: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0702_Shakarchi_exercise_1_19c/print.lean:22:70: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0702_Shakarchi_exercise_1_19c/print.lean:27:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0702_Shakarchi_exercise_1_19c/print.lean:33:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 9396352
+}

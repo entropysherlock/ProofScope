@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_40_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℕ → ℕ),   (∀ (m n : ℕ), 0 < m ∧ 0 < n → f (m + n) - f m - f n = 0 ∨ f (m + n) - f m - f n = 1) →     f 2 = 0 → 0 < f 3 → f 9999 = 3333 → f 1982 = 660",
+ "lean": "∀ (f : ℕ → ℕ),   f 2 = 0 →     0 < f 3 →       f 9999 = 3333 → (∀ (m n : ℕ), 0 < m → 0 < n → f (m + n) = f m + f n ∨ f (m + n) = f m + f n + 1) → f 1982 = 660",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_40_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

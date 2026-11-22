@@ -1,0 +1,58 @@
+{
+ "case_id": "synth:c01_assumption_added",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 38.7,
+   "verdict": "LEAN_WEAKER_BY_ASSUMPTION",
+   "reason": "",
+   "certificates": [
+    "add0_restrictive",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 36.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ), 0 ≤ x ^ 2",
+ "lean": "∀ (x : ℝ), 0 < x → 0 ≤ x ^ 2",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ), 0'",
+  "cand": "unsupported: cannot tokenize at '∀ (x : ℝ), 0'"
+ },
+ "seconds": 84.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7614576
+}

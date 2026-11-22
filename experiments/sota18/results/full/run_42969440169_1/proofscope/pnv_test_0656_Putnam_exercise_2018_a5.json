@@ -1,0 +1,53 @@
+{
+ "case_id": "pnv:test:0656:Putnam|exercise_2018_a5",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.4,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0656_Putnam_exercise_2018_a5/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f : ℝ → ℝ),   ContDiff ℝ ⊤ f → f 0 = 0 → f 1 = 1 → (∀ (x : ℝ), f x ≥ 0) → ∃ (n : ℕ+) (x : ℝ), iteratedDeriv (↑n) f x < 0",
+ "lean": "∀ {f : ℝ → ℝ}, f 0 = 0 → f 1 = 1 → (∀ (x : ℝ), 0 ≤ f x) → ∃ (n : ℕ) (x : ℝ), f^[n] x < 0",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f : ℝ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ {f : ℝ → ℝ'"
+ },
+ "seconds": 21.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8595608
+}

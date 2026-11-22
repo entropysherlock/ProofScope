@@ -1,0 +1,1 @@
+{"case_id": "epla:ProofNet:113:0", "record": {"candidate": {"errors": ["<epla:ProofNet:113:0.candidate>:5:65: error: unexpected token 'in'; expected ','\n"], "ok": false, "supersetEnv": false}, "elapsedMs": 144, "id": "epla:ProofNet:113:0", "reference": {"errors": [], "ok": true, "supersetEnv": false}, "verdict": "CandidateCompileError"}}

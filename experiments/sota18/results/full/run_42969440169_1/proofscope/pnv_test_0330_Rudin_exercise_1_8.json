@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0330:Rudin|exercise_1_8",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 4.3
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "cand",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0330_Rudin_exercise_1_8/print.lean:20:44: error: invalid binder annotation, type is not a class instance",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0330_Rudin_exercise_1_8/print.lean:42:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0330_Rudin_exercise_1_8/print.lean:48:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0330_Rudin_exercise_1_8/print.lean:54:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 8139816
+}

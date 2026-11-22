@@ -1,0 +1,72 @@
+{
+ "case_id": "epla:ProofNet:270:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 2.8
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.1,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 19.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "abstraction not linked to the elaborated statements",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "sorryAx",
+     "type": "(α : Type) → Bool → α"
+    },
+    {
+     "symbol": "Function.const",
+     "type": "(β : Type) → Unit → β → Unit"
+    },
+    {
+     "symbol": "Lean.Name.num",
+     "type": "Lean.Name → ℕ → Lean.Name"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {ι : Type u_1} {X : ι → Type u_2} [inst : (i : ι) → TopologicalSpace (X i)],   (∀ (i : ι), Nonempty (X i)) → NormalSpace ((i : ι) → X i) → ∀ (i : ι), NormalSpace (X i)",
+ "lean": "∀ {ι : Type u_1} {X : ι → Type u_2} [inst : (i : ι) → TopologicalSpace (X i)],   Nonempty ((i : ι) → X i) → NormalSpace ((i : ι) → X i) → ∀ (i : ι), NormalSpace (X i)",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {ι : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {ι : Type '"
+ },
+ "seconds": 28.1,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7617996
+}

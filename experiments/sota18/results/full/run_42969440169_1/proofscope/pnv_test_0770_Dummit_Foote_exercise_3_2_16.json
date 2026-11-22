@@ -1,0 +1,55 @@
+{
+ "case_id": "pnv:test:0770:Dummit-Foote|exercise_3_2_16",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.1,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0770_Dummit_Foote_exercise_3_2_16/extract/Assumptions_input.lean:4:122: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0770_Dummit_Foote_exercise_3_2_16/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 10.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0770_Dummit_Foote_exercise_3_2_16/extract/Drift_input.lean:4:114: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0770_Dummit_Foote_exercise_3_2_16/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (p : ℕ), Nat.Prime p → ∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+ "lean": "∀ (p : ℕ), Nat.Prime p → ∀ {G : Type u_1} [inst : CommGroup G] [Fintype G], IsCyclic G → ∀ (a : G), a ^ p = a",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (p : ℕ), N'",
+  "cand": "unsupported: cannot tokenize at '∀ (p : ℕ), N'"
+ },
+ "seconds": 24.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8671168
+}

@@ -1,0 +1,67 @@
+{
+ "case_id": "epla:miniF2F:171:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.8
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 32.4,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 26.8,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → (∃ k > 0, 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1",
+ "lean": "∀ (a b : ℕ), 0 < a → 0 < b → (∃ (k : ℕ), 0 < k ∧ 2 ^ k = (a + b ^ 2) * (b + a ^ 2)) → a = 1",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b : ℕ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b : ℕ),'"
+ },
+ "seconds": 66.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7634888
+}

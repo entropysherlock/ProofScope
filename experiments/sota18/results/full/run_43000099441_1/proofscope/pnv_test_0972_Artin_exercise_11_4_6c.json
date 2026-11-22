@@ -1,0 +1,33 @@
+{
+ "case_id": "pnv:test:0972:Artin|exercise_11_4_6c",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 2.8
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref",
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0972_Artin_exercise_11_4_6c/check.lean:25:24: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0972_Artin_exercise_11_4_6c/check.lean:25:92: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0972_Artin_exercise_11_4_6c/check.lean:27:24: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0972_Artin_exercise_11_4_6c/check.lean:27:136: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0972_Artin_exercise_11_4_6c/check.lean:29:24: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0972_Artin_exercise_11_4_6c/check.lean:29:93: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 7620096
+}

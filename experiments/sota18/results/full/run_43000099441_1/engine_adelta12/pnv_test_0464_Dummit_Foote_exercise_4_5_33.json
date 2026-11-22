@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0464_Dummit_Foote_exercise_4_5_33",
+ "reference": "∀ {G : Type u_1} [inst : Group G] [Fintype G] {p : ℕ} (P : Sylow p G) [hP : P.Normal] (H : Subgroup G) [Fintype ↥H],   (∀ (R : Sylow p ↥H), R.toSubgroup = (H ⊓ P.toSubgroup).subgroupOf H) ∧ Nonempty (Sylow p ↥H)",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {p : ℕ} [hp : Fact (Nat.Prime p)] (P : Sylow p G),   P.Normal →     ∀ (H : Subgroup G),       ∃! Q : Sylow p ↥H, SetLike.coe Q.toSubgroup = DFunLike.coe H.subtype ⁻¹' SetLike.coe P.toSubgroup",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Assumptions_input.lean:4:253: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0464_Dummit_Foote_exercise_4_5_33/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

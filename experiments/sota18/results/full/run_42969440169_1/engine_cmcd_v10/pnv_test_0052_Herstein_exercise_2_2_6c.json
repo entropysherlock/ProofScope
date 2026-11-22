@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0052_Herstein_exercise_2_2_6c",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {G : Type u_1} [inst : Group G] {n : ℕ},   n > 1 → (∀ (a b : G), (a * b) ^ n = a ^ n * b ^ n) → ∀ (a b : G), (a * b * a⁻¹ * b⁻¹) ^ (n * (n - 1)) = 1",
+ "lean": "∀ {G : Type u_1} [inst : Group G] (n : ℕ),   1 < n → (∀ (a b : G), (a * b) ^ n = a ^ n * b ^ n) → ∀ (a b : G), (a * b * a⁻¹ * b⁻¹) ^ (n * (n - 1)) = 1",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0052_Herstein_exercise_2_2_6c/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0052_Herstein_exercise_2_2_6c/extract/Drift_input.lean:4:184: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0052_Herstein_exercise_2_2_6c/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

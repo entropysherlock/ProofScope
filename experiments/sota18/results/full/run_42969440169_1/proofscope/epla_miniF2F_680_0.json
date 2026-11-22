@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:680:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 22.5,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (n : ℕ), 0 < n → Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "lean": "∀ n > 0, Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (n : ℕ), 0'",
+  "cand": "unsupported: cannot tokenize at '∀ n > 0, Nat'"
+ },
+ "seconds": 35.0,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14049596
+}

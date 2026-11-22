@@ -1,0 +1,30 @@
+{
+ "id": "pnv_test_1247_Pugh_exercise_2_32a",
+ "reference": "∀ (A : Set ℕ), IsClopen A",
+ "lean": "∀ (A : Set ℕ), IsOpen A ∧ IsClosed A",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "IsOpen A ∧ IsClosed A",
+  "conclusion_ref": "IsClopen A",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "A",
+    "type": "Set ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

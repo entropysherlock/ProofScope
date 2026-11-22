@@ -1,0 +1,187 @@
+{
+ "id": "epla_miniF2F_369_0",
+ "reference": "∀ (k m n : ℕ) (t : ℝ),   0 < k ∧ 0 < m ∧ 0 < n →     m.gcd n = 1 →       (1 + Real.sin t) * (1 + Real.cos t) = 5 / 4 → (1 - Real.sin t) * (1 - Real.cos t) = ↑m / ↑n - √↑k → k + m + n = 27",
+ "lean": "∀ (k m n : ℕ) (t : ℝ),   (1 + Real.sin t) * (1 + Real.cos t) = 5 / 4 →     (1 - Real.sin t) * (1 - Real.cos t) = ↑m / ↑n - √↑k → 0 < k → 0 < m → 0 < n → m.Coprime n → k + m + n = 27",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < k"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < m"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < n"
+   },
+   {
+    "dependent": false,
+    "prop": "Nat.Coprime m n"
+   }
+  ],
+  "added_prefix": [
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ]
+  ],
+  "conclusion_lean": "k + m + n = (27 : ℕ)",
+  "conclusion_ref": "k + m + n = (27 : ℕ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < k ∧ (0 : ℕ) < m ∧ (0 : ℕ) < n"
+   },
+   {
+    "dependent": false,
+    "prop": "Nat.gcd m n = (1 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "k",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "m",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "t",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_369_0.link_L",
+   "statement": "(∀ (k m n : ℕ) (t : ℝ),   (1 + Real.sin t) * (1 + Real.cos t) = 5 / 4 →     (1 - Real.sin t) * (1 - Real.cos t) = ↑m / ↑n - √↑k → 0 < k → 0 < m → 0 < n → m.Coprime n → k + m + n = 27) ↔ (∀ (k : ℕ) (m : ℕ) (n : ℕ) (t : ℝ), (((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)) → (((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k) → ((0 : ℕ) < k) → ((0 : ℕ) < m) → ((0 : ℕ) < n) → (Nat.Coprime m n) → k + m + n = (27 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_369_0.a_implies_d",
+   "statement": "∀ (k : ℕ) (m : ℕ) (n : ℕ) (t : ℝ), ((((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)) ∧ (((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k) ∧ ((0 : ℕ) < k) ∧ ((0 : ℕ) < m) ∧ ((0 : ℕ) < n) ∧ (Nat.Coprime m n)) → ((0 : ℕ) < k ∧ (0 : ℕ) < m ∧ (0 : ℕ) < n) ∧ (Nat.gcd m n = (1 : ℕ)) ∧ (((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)) ∧ (((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_369_0.d_implies_a",
+   "statement": "∀ (k : ℕ) (m : ℕ) (n : ℕ) (t : ℝ), (((0 : ℕ) < k ∧ (0 : ℕ) < m ∧ (0 : ℕ) < n) ∧ (Nat.gcd m n = (1 : ℕ)) ∧ (((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)) ∧ (((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k)) → (((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)) ∧ (((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k) ∧ ((0 : ℕ) < k) ∧ ((0 : ℕ) < m) ∧ ((0 : ℕ) < n) ∧ (Nat.Coprime m n)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_369_0.link_R",
+   "statement": "(∀ (k m n : ℕ) (t : ℝ),   0 < k ∧ 0 < m ∧ 0 < n →     m.gcd n = 1 →       (1 + Real.sin t) * (1 + Real.cos t) = 5 / 4 → (1 - Real.sin t) * (1 - Real.cos t) = ↑m / ↑n - √↑k → k + m + n = 27) ↔ (∀ (k : ℕ) (m : ℕ) (n : ℕ) (t : ℝ), ((0 : ℕ) < k ∧ (0 : ℕ) < m ∧ (0 : ℕ) < n) → (Nat.gcd m n = (1 : ℕ)) → (((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)) → (((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k) → k + m + n = (27 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)",
+  "((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k",
+  "(0 : ℕ) < k",
+  "(0 : ℕ) < m",
+  "(0 : ℕ) < n",
+  "Nat.Coprime m n"
+ ],
+ "dropped": [
+  "(0 : ℕ) < k ∧ (0 : ℕ) < m ∧ (0 : ℕ) < n",
+  "Nat.gcd m n = (1 : ℕ)",
+  "((1 : ℝ) + Real.sin t) * ((1 : ℝ) + Real.cos t) = (5 / 4 : ℝ)",
+  "((1 : ℝ) - Real.sin t) * ((1 : ℝ) - Real.cos t) = HDiv.hDiv (α := ℝ) ↑m ↑n - √↑k"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

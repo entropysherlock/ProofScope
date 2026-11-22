@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0770_Dummit_Foote_exercise_3_2_16",
+ "reference": "∀ (p : ℕ), Nat.Prime p → ∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+ "lean": "∀ (p : ℕ), Nat.Prime p → ∀ {G : Type u_1} [inst : CommGroup G] [Fintype G], IsCyclic G → ∀ (a : G), a ^ p = a",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0770_Dummit_Foote_exercise_3_2_16/extract/Assumptions_input.lean:4:122: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0770_Dummit_Foote_exercise_3_2_16/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

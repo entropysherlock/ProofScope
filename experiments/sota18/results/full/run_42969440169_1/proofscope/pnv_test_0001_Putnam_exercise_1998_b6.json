@@ -1,0 +1,30 @@
+{
+ "case_id": "pnv:test:0001:Putnam|exercise_1998_b6",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 5.3
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0001_Putnam_exercise_1998_b6/check.lean:24:137: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0001_Putnam_exercise_1998_b6/check.lean:26:255: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 7618420
+}

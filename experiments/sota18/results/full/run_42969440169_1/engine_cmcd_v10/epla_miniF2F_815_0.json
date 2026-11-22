@@ -1,0 +1,129 @@
+{
+ "id": "epla_miniF2F_815_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ), 0 < x ∧ 0 < y ∧ 0 < z → x + 1 / y = 4 → y + 1 / z = 1 → z + 1 / x = 7 / 3 → x * y * z = 1",
+ "lean": "∀ (x y z : ℝ), 0 < x → 0 < y → 0 < z → x + 1 / y = 4 → y + 1 / z = 1 → z + 1 / x = 7 / 3 → x * y * z = 1",
+ "symbols": [
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z",
+   "to": "(0 : ℝ) < x"
+  },
+  {
+   "from": "x + (1 : ℝ) / y = (4 : ℝ)",
+   "to": "(0 : ℝ) < y"
+  },
+  {
+   "from": "y + (1 : ℝ) / z = (1 : ℝ)",
+   "to": "(0 : ℝ) < z"
+  },
+  {
+   "from": "z + (1 : ℝ) / x = (7 / 3 : ℝ)",
+   "to": "x + (1 : ℝ) / y = (4 : ℝ)"
+  },
+  {
+   "from": "x * y * z = (1 : ℝ)",
+   "to": "y + (1 : ℝ) / z = (1 : ℝ) → z + (1 : ℝ) / x = (7 / 3 : ℝ) → x * y * z = (1 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z",
+   "to": "(0 : ℝ) < x",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_815_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    x + x1 (1 : ℝ) y = (4 : ℝ) → y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z →\n    x + x1 (1 : ℝ) y = (4 : ℝ) → y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "x + (1 : ℝ) / y = (4 : ℝ)",
+   "to": "(0 : ℝ) < y",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "y + (1 : ℝ) / z = (1 : ℝ)",
+   "to": "(0 : ℝ) < z",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 4,
+   "from": "z + (1 : ℝ) / x = (7 / 3 : ℝ)",
+   "to": "x + (1 : ℝ) / y = (4 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 5,
+   "from": "x * y * z = (1 : ℝ)",
+   "to": "y + (1 : ℝ) / z = (1 : ℝ) → z + (1 : ℝ) / x = (7 / 3 : ℝ) → x * y * z = (1 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e5": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_815_0.fwd_e5",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ), (0 : ℝ) < x → (0 : ℝ) < y → (0 : ℝ) < z → x + x1 (1 : ℝ) y = (4 : ℝ) → x2 (x2 x y) z = (1 : ℝ)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    (0 : ℝ) < y →\n      (0 : ℝ) < z →\n        x + x1 (1 : ℝ) y = (4 : ℝ) →\n          y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_815_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    (0 : ℝ) < y →\n      (0 : ℝ) < z →\n        x + x1 (1 : ℝ) y = (4 : ℝ) →\n          y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z →\n    x + x1 (1 : ℝ) y = (4 : ℝ) → y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_815_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ), (∀ (x y z : ℝ),\n  (0 : ℝ) < x ∧ (0 : ℝ) < y ∧ (0 : ℝ) < z →\n    x + x1 (1 : ℝ) y = (4 : ℝ) → y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ)) → (∀ (x y z : ℝ),\n  (0 : ℝ) < x →\n    (0 : ℝ) < y →\n      (0 : ℝ) < z →\n        x + x1 (1 : ℝ) y = (4 : ℝ) →\n          y + x1 (1 : ℝ) z = (1 : ℝ) → z + x1 (1 : ℝ) x = (7 / 3 : ℝ) → x2 (x2 x y) z = (1 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

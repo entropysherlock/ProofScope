@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0564_Pugh_exercise_2_92",
+ "reference": "∀ {α : Type u_1} [inst : TopologicalSpace α] {s : ℕ → Set α},   (∀ (i : ℕ), IsCompact (s i)) → (∀ (i : ℕ), (s i).Nonempty) → (∀ (i : ℕ), s i ⊇ s (i + 1)) → (⋂ (i : ℕ), s i).Nonempty",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] {K : ℕ → Set X},   (∀ (n : ℕ), IsCompact (K n)) → (∀ (n : ℕ), K (n + 1) ⊆ K n) → (∀ (n : ℕ), (K n).Nonempty) → (⋂ (n : ℕ), K n).Nonempty",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0564_Pugh_exercise_2_92/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0564_Pugh_exercise_2_92/extract/Assumptions_input.lean:4:223: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0564_Pugh_exercise_2_92/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

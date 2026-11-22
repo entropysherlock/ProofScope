@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_614_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℕ → ℕ), (∀ (n : ℕ), 0 < f n) → (∀ (n : ℕ), 0 < n → f (f n) < f (n + 1)) → ∀ (n : ℕ), 0 < n → f n = n",
+ "lean": "∀ (f : ℕ+ → ℕ+), (∀ (n : ℕ+), f (n + 1) > f (f n)) → ∀ (n : ℕ+), f n = n",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_614_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0844_Munkres_exercise_34_9",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (X : Type u_1) [inst : TopologicalSpace X] [CompactSpace X] [T2Space X] (X1 X2 : Set X),   IsClosed X1 →     IsClosed X2 →       X1 ∪ X2 = Set.univ →         TopologicalSpace.MetrizableSpace ↑X1 → TopologicalSpace.MetrizableSpace ↑X2 → TopologicalSpace.MetrizableSpace X",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] [CompactSpace X] [T2Space X] {X1 X2 : Set X},   IsClosed X1 →     IsClosed X2 →       X1 ∪ X2 = Set.univ →         ∀ [TopologicalSpace.MetrizableSpace ↑X1] [TopologicalSpace.MetrizableSpace ↑X2],           TopologicalSpace.MetrizableSpace X",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0844_Munkres_exercise_34_9/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0844_Munkres_exercise_34_9/extract/Drift_input.lean:4:306: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0844_Munkres_exercise_34_9/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

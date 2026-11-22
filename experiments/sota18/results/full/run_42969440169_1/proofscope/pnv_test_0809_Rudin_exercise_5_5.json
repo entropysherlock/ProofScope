@@ -1,0 +1,56 @@
+{
+ "case_id": "pnv:test:0809:Rudin|exercise_5_5",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 29.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0809_Rudin_exercise_5_5/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {f : ℝ → ℝ},   DifferentiableOn ℝ f (Set.Ioi 0) →     Filter.Tendsto (deriv f) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop (nhds 0)",
+ "lean": "∀ {f : ℝ → ℝ},   (∀ x > 0, DifferentiableAt ℝ f x) →     Filter.Tendsto (fun (x : ℝ) => deriv f x) Filter.atTop (nhds 0) →       Filter.Tendsto (fun (x : ℝ) => f (x + 1) - f x) Filter.atTop (nhds 0)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {f : ℝ → ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ {f : ℝ → ℝ'"
+ },
+ "seconds": 42.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7794340
+}

@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_1125_Artin_exercise_10_6_7",
+ "reference": "∀ {I : Ideal GaussianInt}, I ≠ ⊥ → ∃ (z : ↥I), z ≠ OfNat.ofNat (nat_lit 0) ∧ z.val.im = OfNat.ofNat (nat_lit 0)",
+ "lean": "∀ {R : Type u_1} [inst : Ring R] [IsDomain R] (I : Ideal R), I ≠ ⊥ → ∃ (x : R), x ≠ 0 ∧ x ∈ I",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1125_Artin_exercise_10_6_7/extract/Assumptions_input.lean:4:153: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1125_Artin_exercise_10_6_7/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,70 @@
+{
+ "id": "epla_miniF2F_569_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a : ℤ) (b : ℕ), Odd a → 4 ∣ b → (a ^ 2 + ↑b ^ 2) % 8 = 1",
+ "lean": "∀ (a : ℤ) (b : ℕ), Odd a → 4 ∣ b → a ^ 2 + ↑b ^ 2 ≡ 1 [ZMOD 8]",
+ "symbols": [
+  {
+   "symbol": "Odd",
+   "type": "ℤ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℤ → ℕ → ℤ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(a ^ (2 : ℕ) + ↑b ^ (2 : ℕ)) % (8 : ℤ) = (1 : ℤ)",
+   "to": "a ^ (2 : ℕ) + ↑b ^ (2 : ℕ) ≡ (1 : ℤ) [ZMOD (8 : ℤ)]"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(a ^ (2 : ℕ) + ↑b ^ (2 : ℕ)) % (8 : ℤ) = (1 : ℤ)",
+   "to": "a ^ (2 : ℕ) + ↑b ^ (2 : ℕ) ≡ (1 : ℤ) [ZMOD (8 : ℤ)]",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_569_0.bwd_e1",
+     "statement": "∀ (x1 : ℤ → Prop) (x2 : ℤ → ℕ → ℤ), (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → x2 a (2 : ℕ) + x2 ↑b (2 : ℕ) ≡ (1 : ℤ) [ZMOD (8 : ℤ)]) → (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → (x2 a (2 : ℕ) + x2 ↑b (2 : ℕ)) % (8 : ℤ) = (1 : ℤ))",
+     "axioms": []
+    },
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_569_0.fwd_e1",
+     "statement": "∀ (x1 : ℤ → Prop) (x2 : ℤ → ℕ → ℤ), (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → (x2 a (2 : ℕ) + x2 ↑b (2 : ℕ)) % (8 : ℤ) = (1 : ℤ)) → (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → x2 a (2 : ℕ) + x2 ↑b (2 : ℕ) ≡ (1 : ℤ) [ZMOD (8 : ℤ)])",
+     "axioms": []
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_569_0.bwd_e1",
+   "statement": "∀ (x1 : ℤ → Prop) (x2 : ℤ → ℕ → ℤ), (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → x2 a (2 : ℕ) + x2 ↑b (2 : ℕ) ≡ (1 : ℤ) [ZMOD (8 : ℤ)]) → (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → (x2 a (2 : ℕ) + x2 ↑b (2 : ℕ)) % (8 : ℤ) = (1 : ℤ))",
+   "axioms": []
+  },
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_569_0.fwd_e1",
+   "statement": "∀ (x1 : ℤ → Prop) (x2 : ℤ → ℕ → ℤ), (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → (x2 a (2 : ℕ) + x2 ↑b (2 : ℕ)) % (8 : ℤ) = (1 : ℤ)) → (∀ (a : ℤ) (b : ℕ), x1 a → (4 : ℕ) ∣ b → x2 a (2 : ℕ) + x2 ↑b (2 : ℕ) ≡ (1 : ℤ) [ZMOD (8 : ℤ)])",
+   "axioms": []
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

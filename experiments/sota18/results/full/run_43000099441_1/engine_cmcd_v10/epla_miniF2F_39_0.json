@@ -1,0 +1,106 @@
+{
+ "id": "epla_miniF2F_39_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (p q r : ℤ),   1 < p ∧ p < q ∧ q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → (p, q, r) = (2, 4, 8) ∨ (p, q, r) = (3, 5, 15)",
+ "lean": "∀ (p q r : ℤ),   1 < p → p < q → q < r → (p - 1) * (q - 1) * (r - 1) ∣ p * q * r - 1 → p = 2 ∧ q = 4 ∧ r = 8 ∨ p = 3 ∧ q = 5 ∧ r = 15",
+ "symbols": [
+  {
+   "symbol": "Dvd.dvd",
+   "type": "ℤ → ℤ → Prop"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℤ → ℤ → ℤ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(1 : ℤ) < p ∧ p < q ∧ q < r",
+   "to": "(1 : ℤ) < p"
+  },
+  {
+   "from": "(p - (1 : ℤ)) * (q - (1 : ℤ)) * (r - (1 : ℤ)) ∣ p * q * r - (1 : ℤ)",
+   "to": "p < q"
+  },
+  {
+   "from": "(p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ))",
+   "to": "q < r →\n  (p - (1 : ℤ)) * (q - (1 : ℤ)) * (r - (1 : ℤ)) ∣ p * q * r - (1 : ℤ) →\n    p = (2 : ℤ) ∧ q = (4 : ℤ) ∧ r = (8 : ℤ) ∨ p = (3 : ℤ) ∧ q = (5 : ℤ) ∧ r = (15 : ℤ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(1 : ℤ) < p ∧ p < q ∧ q < r",
+   "to": "(1 : ℤ) < p",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_39_0.bwd_e1",
+     "statement": "∀ (x1 : ℤ → ℤ → Prop) (x2 : ℤ → ℤ → ℤ), (∀ (p q r : ℤ),\n  (1 : ℤ) < p →\n    x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n      (p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ))) → (∀ (p q r : ℤ),\n  (1 : ℤ) < p ∧ p < q ∧ q < r →\n    x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n      (p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ)))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(p - (1 : ℤ)) * (q - (1 : ℤ)) * (r - (1 : ℤ)) ∣ p * q * r - (1 : ℤ)",
+   "to": "p < q",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "(p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ))",
+   "to": "q < r →\n  (p - (1 : ℤ)) * (q - (1 : ℤ)) * (r - (1 : ℤ)) ∣ p * q * r - (1 : ℤ) →\n    p = (2 : ℤ) ∧ q = (4 : ℤ) ∧ r = (8 : ℤ) ∨ p = (3 : ℤ) ∧ q = (5 : ℤ) ∧ r = (15 : ℤ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_39_0.fwd_e3",
+     "statement": "∀ (x1 : ℤ → ℤ → Prop) (x2 : ℤ → ℤ → ℤ), (∀ (p q r : ℤ), (1 : ℤ) < p → p < q → (p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ))) → (∀ (p q r : ℤ),\n  (1 : ℤ) < p →\n    p < q →\n      q < r →\n        x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n          p = (2 : ℤ) ∧ q = (4 : ℤ) ∧ r = (8 : ℤ) ∨ p = (3 : ℤ) ∧ q = (5 : ℤ) ∧ r = (15 : ℤ))",
+     "axioms": [
+      "propext",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_39_0.fwd_g",
+   "statement": "∀ (x1 : ℤ → ℤ → Prop) (x2 : ℤ → ℤ → ℤ), (∀ (p q r : ℤ),\n  (1 : ℤ) < p ∧ p < q ∧ q < r →\n    x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n      (p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ))) → (∀ (p q r : ℤ),\n  (1 : ℤ) < p →\n    p < q →\n      q < r →\n        x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n          p = (2 : ℤ) ∧ q = (4 : ℤ) ∧ r = (8 : ℤ) ∨ p = (3 : ℤ) ∧ q = (5 : ℤ) ∧ r = (15 : ℤ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_39_0.bwd_g",
+   "statement": "∀ (x1 : ℤ → ℤ → Prop) (x2 : ℤ → ℤ → ℤ), (∀ (p q r : ℤ),\n  (1 : ℤ) < p →\n    p < q →\n      q < r →\n        x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n          p = (2 : ℤ) ∧ q = (4 : ℤ) ∧ r = (8 : ℤ) ∨ p = (3 : ℤ) ∧ q = (5 : ℤ) ∧ r = (15 : ℤ)) → (∀ (p q r : ℤ),\n  (1 : ℤ) < p ∧ p < q ∧ q < r →\n    x1 (x2 (x2 (p - (1 : ℤ)) (q - (1 : ℤ))) (r - (1 : ℤ))) (x2 (x2 p q) r - (1 : ℤ)) →\n      (p, q, r) = ((2 : ℤ), (4 : ℤ), (8 : ℤ)) ∨ (p, q, r) = ((3 : ℤ), (5 : ℤ), (15 : ℤ)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

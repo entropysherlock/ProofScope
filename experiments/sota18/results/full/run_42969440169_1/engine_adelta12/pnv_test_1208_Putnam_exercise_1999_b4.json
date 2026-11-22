@@ -1,0 +1,121 @@
+{
+ "id": "pnv_test_1208_Putnam_exercise_1999_b4",
+ "reference": "∀ (f : ℝ → ℝ),   ContDiff ℝ 3 f →     (∀ n ≤ 3, ∀ (x : ℝ), iteratedDeriv n f x > 0) →       (∀ (x : ℝ), iteratedDeriv 3 f x ≤ f x) → ∀ (x : ℝ), deriv f x < 2 * f x",
+ "lean": "∀ {f : ℝ → ℝ},   (∀ n ≤ 3, Continuous (deriv^[n] f)) →     (∀ (x : ℝ), ∀ n ≤ 3, deriv^[n] f x > 0) → (∀ (x : ℝ), deriv^[3] f x ≤ f x) → ∀ (x : ℝ), deriv f x < 2 * f x",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "∀ n ≤ (3 : ℕ), Continuous (deriv^[n] f)"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ (x : ℝ), ∀ n ≤ (3 : ℕ), deriv^[n] f x > (0 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ (x : ℝ), deriv^[(3 : ℕ)] f x ≤ f x"
+   }
+  ],
+  "added_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "conclusion_lean": "deriv f x < (2 : ℝ) * f x",
+  "conclusion_ref": "deriv f x < (2 : ℝ) * f x",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "ContDiff ℝ (3 : WithTop ℕ∞) f"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ n ≤ (3 : ℕ), ∀ (x : ℝ), iteratedDeriv n f x > (0 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ (x : ℝ), iteratedDeriv (3 : ℕ) f x ≤ f x"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_pnv_test_1208_Putnam_exercise_1999_b4.link_R",
+   "statement": "(∀ (f : ℝ → ℝ),   ContDiff ℝ 3 f →     (∀ n ≤ 3, ∀ (x : ℝ), iteratedDeriv n f x > 0) →       (∀ (x : ℝ), iteratedDeriv 3 f x ≤ f x) → ∀ (x : ℝ), deriv f x < 2 * f x) ↔ (∀ (f : ℝ → ℝ) (x : ℝ), (ContDiff ℝ (3 : WithTop ℕ∞) f) → (∀ n ≤ (3 : ℕ), ∀ (x : ℝ), iteratedDeriv n f x > (0 : ℝ)) → (∀ (x : ℝ), iteratedDeriv (3 : ℕ) f x ≤ f x) → deriv f x < (2 : ℝ) * f x)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_pnv_test_1208_Putnam_exercise_1999_b4.link_L",
+   "statement": "(∀ {f : ℝ → ℝ},   (∀ n ≤ 3, Continuous (deriv^[n] f)) →     (∀ (x : ℝ), ∀ n ≤ 3, deriv^[n] f x > 0) → (∀ (x : ℝ), deriv^[3] f x ≤ f x) → ∀ (x : ℝ), deriv f x < 2 * f x) ↔ (∀ (f : ℝ → ℝ) (x : ℝ), (∀ n ≤ (3 : ℕ), Continuous (deriv^[n] f)) → (∀ (x : ℝ), ∀ n ≤ (3 : ℕ), deriv^[n] f x > (0 : ℝ)) → (∀ (x : ℝ), deriv^[(3 : ℕ)] f x ≤ f x) → deriv f x < (2 : ℝ) * f x)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "∀ n ≤ (3 : ℕ), Continuous (deriv^[n] f)",
+  "∀ (x : ℝ), ∀ n ≤ (3 : ℕ), deriv^[n] f x > (0 : ℝ)",
+  "∀ (x : ℝ), deriv^[(3 : ℕ)] f x ≤ f x"
+ ],
+ "dropped": [
+  "ContDiff ℝ (3 : WithTop ℕ∞) f",
+  "∀ n ≤ (3 : ℕ), ∀ (x : ℝ), iteratedDeriv n f x > (0 : ℝ)",
+  "∀ (x : ℝ), iteratedDeriv (3 : ℕ) f x ≤ f x"
+ ],
+ "witnesses": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "no joint certificate for the mixed assumption change",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

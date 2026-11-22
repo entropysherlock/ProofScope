@@ -1,0 +1,58 @@
+{
+ "case_id": "epla:miniF2F:623:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.3,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 32.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c : ℕ),   1 ≤ a ∧ a ≤ 9 →     1 ≤ b ∧ b ≤ 9 →       1 ≤ c ∧ c ≤ 9 →         a ≠ b → a ≠ c → b ≠ c → a + b = c → 10 * a + a - b = 2 * c → c * b = 10 * a + a + a → a + b + c = 8",
+ "lean": "∃ (A : ℕ) (B : ℕ) (C : ℕ),   1 ≤ A ∧     A ≤ 9 ∧       1 ≤ B ∧         B ≤ 9 ∧           1 ≤ C ∧ C ≤ 9 ∧ A ≠ B ∧ B ≠ C ∧ A ≠ C ∧ A + B = C ∧ 11 * A - B = 2 * C ∧ C * B = 11 * A + A ∧ A + B + C = 8",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c : ℕ'",
+  "cand": "unsupported: cannot tokenize at '∃ (A : ℕ) (B'"
+ },
+ "seconds": 44.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8981308
+}

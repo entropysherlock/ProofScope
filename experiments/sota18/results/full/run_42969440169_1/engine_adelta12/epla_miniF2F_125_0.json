@@ -1,0 +1,76 @@
+{
+ "id": "epla_miniF2F_125_0",
+ "reference": "∀ (f : ℤ → ℤ), (∀ (n : ℤ), 1000 ≤ n → f n = n - 3) → (∀ n < 1000, f n = f (f (n + 5))) → f 84 = 997",
+ "lean": "∀ (f : ℤ → ℤ), f 84 = 997",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "f (84 : ℤ) = (997 : ℤ)",
+  "conclusion_ref": "f (84 : ℤ) = (997 : ℤ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "∀ (n : ℤ), (1000 : ℤ) ≤ n → f n = n - (3 : ℤ)"
+   },
+   {
+    "dependent": false,
+    "prop": "∀ n < (1000 : ℤ), f n = f (f (n + (5 : ℤ)))"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℤ → ℤ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_125_0.link_L",
+   "statement": "(∀ (f : ℤ → ℤ), f 84 = 997) ↔ (∀ (f : ℤ → ℤ), f (84 : ℤ) = (997 : ℤ))",
+   "axioms": []
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_125_0.link_R",
+   "statement": "(∀ (f : ℤ → ℤ), (∀ (n : ℤ), 1000 ≤ n → f n = n - 3) → (∀ n < 1000, f n = f (f (n + 5))) → f 84 = 997) ↔ (∀ (f : ℤ → ℤ), (∀ (n : ℤ), (1000 : ℤ) ≤ n → f n = n - (3 : ℤ)) → (∀ n < (1000 : ℤ), f n = f (f (n + (5 : ℤ)))) → f (84 : ℤ) = (997 : ℤ))",
+   "axioms": []
+  }
+ },
+ "assumptions": [
+  {
+   "side": "dropped",
+   "assumption": "∀ (n : ℤ), (1000 : ℤ) ≤ n → f n = n - (3 : ℤ)",
+   "class": "INCONCLUSIVE",
+   "witness_model": null,
+   "witness_statement": null
+  },
+  {
+   "side": "dropped",
+   "assumption": "∀ n < (1000 : ℤ), f n = f (f (n + (5 : ℤ)))",
+   "class": "INCONCLUSIVE",
+   "witness_model": null,
+   "witness_statement": null
+  }
+ ],
+ "verdict": "INCONCLUSIVE",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

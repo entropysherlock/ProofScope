@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0319_Axler_exercise_5_13",
+ "reference": "∀ {F : Type u_1} {V : Type u_2} [inst : AddCommGroup V] [inst_1 : Field F] [inst_2 : _root_.Module F V]   [FiniteDimensional F V] {T : Module.End F V},   (∀ (U : Submodule F V), Module.finrank F ↥U = Module.finrank F V - 1 → Submodule.map T U = U) →     ∃ (c : F), T = c • LinearMap.id",
+ "lean": "∀ {K : Type u_1} {V : Type u_2} [inst : Field K] [inst_1 : AddCommGroup V] [inst_2 : _root_.Module K V]   [FiniteDimensional K V] (T : Module.End K V),   (∀ (W : Submodule K V), sorry = sorry - 1 → ⇑T '' ↑W = ↑W) → ∃ (c : K), T = c • LinearMap.id",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

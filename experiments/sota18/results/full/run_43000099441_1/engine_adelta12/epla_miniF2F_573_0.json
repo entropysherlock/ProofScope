@@ -1,0 +1,42 @@
+{
+ "id": "epla_miniF2F_573_0",
+ "reference": "∀ (x y z : ℝ) (a : ℕ → ℝ),   0 < a 0 ∧ 0 < a 4 ∧ 0 < a 8 →     a 1 < 0 ∧ a 2 < 0 →       a 3 < 0 ∧ a 5 < 0 →         a 6 < 0 ∧ a 7 < 0 →           0 < a 0 + a 1 + a 2 →             0 < a 3 + a 4 + a 5 →               0 < a 6 + a 7 + a 8 →                 a 0 * x + a 1 * y + a 2 * z = 0 →                   a 3 * x + a 4 * y + a 5 * z = 0 → a 6 * x + a 7 * y + a 8 * z = 0 → x = 0 ∧ y = 0 ∧ z = 0",
+ "lean": "∀ (a11 a22 a33 a12 a13 a21 a23 a31 a32 : ℝ),   a11 > 0 →     a22 > 0 →       a33 > 0 →         a12 < 0 →           a13 < 0 →             a21 < 0 →               a23 < 0 →                 a31 < 0 →                   a32 < 0 →                     a11 + a12 + a13 > 0 →                       a21 + a22 + a23 > 0 →                         a31 + a32 + a33 > 0 →                           ∀ (x1 x2 x3 : ℝ),                             a11 * x1 + a12 * x2 + a13 * x3 = 0 →                               a21 * x1 + a22 * x2 + a23 * x3 = 0 →                                 a31 * x1 + a32 * x2 + a33 * x3 = 0 → x1 = 0 ∧ x2 = 0 ∧ x3 = 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (a12 a13 a21 a23 a31 a32 : ℝ),\n  x > (0 : ℝ) →\n    y > (0 : ℝ) →\n      z > (0 : ℝ) →\n        a12 < (0 : ℝ) →\n          a13 < (0 : ℝ) →\n            a21 < (0 : ℝ) →\n              a23 < (0 : ℝ) →\n                a31 < (0 : ℝ) →\n                  a32 < (0 : ℝ) →\n                    x + a12 + a13 > (0 : ℝ) →\n                      a21 + y + a23 > (0 : ℝ) →\n                        a31 + a32 + z > (0 : ℝ) →\n                          ∀ (x1 x2 x3 : ℝ),\n                            x * x1 + a12 * x2 + a13 * x3 = (0 : ℝ) →\n                              a21 * x1 + y * x2 + a23 * x3 = (0 : ℝ) →\n                                a31 * x1 + a32 * x2 + z * x3 = (0 : ℝ) → x1 = (0 : ℝ) ∧ x2 = (0 : ℝ) ∧ x3 = (0 : ℝ)",
+  "conclusion_ref": "∀ (a : ℕ → ℝ),\n  (0 : ℝ) < a (0 : ℕ) ∧ (0 : ℝ) < a (4 : ℕ) ∧ (0 : ℝ) < a (8 : ℕ) →\n    a (1 : ℕ) < (0 : ℝ) ∧ a (2 : ℕ) < (0 : ℝ) →\n      a (3 : ℕ) < (0 : ℝ) ∧ a (5 : ℕ) < (0 : ℝ) →\n        a (6 : ℕ) < (0 : ℝ) ∧ a (7 : ℕ) < (0 : ℝ) →\n          (0 : ℝ) < a (0 : ℕ) + a (1 : ℕ) + a (2 : ℕ) →\n            (0 : ℝ) < a (3 : ℕ) + a (4 : ℕ) + a (5 : ℕ) →\n              (0 : ℝ) < a (6 : ℕ) + a (7 : ℕ) + a (8 : ℕ) →\n                a (0 : ℕ) * x + a (1 : ℕ) * y + a (2 : ℕ) * z = (0 : ℝ) →\n                  a (3 : ℕ) * x + a (4 : ℕ) * y + a (5 : ℕ) * z = (0 : ℝ) →\n                    a (6 : ℕ) * x + a (7 : ℕ) * y + a (8 : ℕ) * z = (0 : ℝ) → x = (0 : ℝ) ∧ y = (0 : ℝ) ∧ z = (0 : ℝ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "z",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:580:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 36.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    },
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ),   0 < x →     x ^ 2 - 10 * x - 29 ≠ 0 →       x ^ 2 - 10 * x - 45 ≠ 0 →         x ^ 2 - 10 * x - 69 ≠ 0 →           1 / (x ^ 2 - 10 * x - 29) + 1 / (x ^ 2 - 10 * x - 45) - 2 / (x ^ 2 - 10 * x - 69) = 0 → x = 13",
+ "lean": "∃ (x : ℝ), 0 < x ∧ 1 / (x ^ 2 - 10 * x - 29) + 1 / (x ^ 2 - 10 * x - 45) - 2 / (x ^ 2 - 10 * x - 69) = 0 ∧ x = 13",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ),  '",
+  "cand": "unsupported: cannot tokenize at '∃ (x : ℝ), 0'"
+ },
+ "seconds": 49.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8635668
+}

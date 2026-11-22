@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0408:Dummit-Foote|exercise_3_2_8",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "nown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0408_Dummit_Foote_exercise_3_2_8/extract/Assumptions_input.lean:4:197: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0408_Dummit_Foote_exercise_3_2_8/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ": error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0408_Dummit_Foote_exercise_3_2_8/extract/Drift_input.lean:4:189: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0408_Dummit_Foote_exercise_3_2_8/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {G : Type u_1} [inst : Group G] (H K : Subgroup G) [inst_1 : Fintype ↥H] [inst_2 : Fintype ↥K],   (Fintype.card ↥H).Coprime (Fintype.card ↥K) → H ⊓ K = ⊥",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {H K : Subgroup G},   H.FiniteIndex → K.FiniteIndex → H.index.gcd K.index = 1 → H ⊓ K = ⊥",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {G : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {G : Type '"
+ },
+ "seconds": 22.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8651104
+}

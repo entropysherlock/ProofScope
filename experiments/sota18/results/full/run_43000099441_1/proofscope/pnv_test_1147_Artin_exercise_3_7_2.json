@@ -1,0 +1,60 @@
+{
+ "case_id": "pnv:test:1147:Artin|exercise_3_7_2",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.5
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "68: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Assumptions_input.lean:4:283: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "put.lean:4:260: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:275: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1",
+   "u_2",
+   "u_3"
+  ],
+  "cand": [
+   "u_1",
+   "u_2"
+  ]
+ },
+ "print_setting": {
+  "ref": 1,
+  "cand": 1
+ },
+ "reference": "∀ {K : Type u_1} {V : Type u_2} [inst : Field K] [Infinite K] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module K V]   {ι : Type u_3} [Fintype ι] (γ : ι → Submodule K V), (∀ (i : ι), γ i ≠ ⊤) → ⋃ (i : ι), SetLike.coe (γ i) ≠ ⊤",
+ "lean": "∀ {F : Type u_1} {V : Type u_2} [inst : Field F] [Infinite F] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module F V],   ¬∃ (n : ℕ) (f : Fin n → Submodule F V), ⋃ (i : Fin n), SetLike.coe (f i) = Set.univ",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {K : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {F : Type '"
+ },
+ "seconds": 18.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 11729952
+}

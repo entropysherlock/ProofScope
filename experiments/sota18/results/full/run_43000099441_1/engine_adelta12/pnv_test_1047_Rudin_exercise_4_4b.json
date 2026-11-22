@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1047_Rudin_exercise_4_4b",
+ "reference": "∀ {α : Type} [inst : MetricSpace α] {β : Type} [inst_1 : MetricSpace β] (f g : α → β) (s : Set α),   Continuous f → Continuous g → Dense s → (∀ x ∈ s, f x = g x) → f = g",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [T2Space Y] {f g : X → Y}   {x : X}, f =ᶠ[nhds x] g ↔ ContinuousAt f x ∧ g =ᶠ[nhds x] f",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "∀ {α : Type} [inst : MetricSpace α] {β : Type} [inst_1 : MetricSpace β] (f g : α → β) (s : Set α),\n  Continuous f → Continuous g → Dense s → (∀ x ∈ s, f x = g x) → f = g",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,33 @@
+{
+ "id": "pnv_test_0732_Ireland_Rosen_exercise_5_28",
+ "reference": "∀ {p : ℕ}, Nat.Prime p → p ≡ 1 [MOD 4] → ((∃ (x : ℕ), x ^ 4 ≡ 2 [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ 2 + 64 * B ^ 2)",
+ "lean": "∀ {p : ℕ}, Nat.Prime p → p % 4 = 1 → ((∃ (n : ℕ), p = n ^ 2 + 64 * n ^ 2) ↔ ∃ (x : ℤ), 2 * x = 1 ∧ x ^ 4 = ↑p)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "(∃ (n : ℕ), p = n ^ (2 : ℕ) + (64 : ℕ) * n ^ (2 : ℕ)) ↔ ∃ (x : ℤ), (2 : ℤ) * x = (1 : ℤ) ∧ x ^ (4 : ℕ) = ↑p",
+  "conclusion_ref": "(∃ (x : ℕ), x ^ (4 : ℕ) ≡ (2 : ℕ) [MOD p]) ↔ ∃ (A : ℕ) (B : ℕ), p = A ^ (2 : ℕ) + (64 : ℕ) * B ^ (2 : ℕ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "Nat.Prime p",
+   "p ≡ (1 : ℕ) [MOD (4 : ℕ)]"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "p",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1221_Rudin_exercise_1_4",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (α : Type u_1) [inst : PartialOrder α] (s : Set α) (x y : α),   s.Nonempty → x ∈ lowerBounds s → y ∈ upperBounds s → x ≤ y",
+ "lean": "∀ {α : Type u_1} [inst : PartialOrder α] {s : Set α},   s.Nonempty → ∀ {a b : α}, (∀ x ∈ s, a ≤ x) → (∀ x ∈ s, x < b) → a ≤ b",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1221_Rudin_exercise_1_4/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1221_Rudin_exercise_1_4/extract/Drift_input.lean:4:158: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1221_Rudin_exercise_1_4/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

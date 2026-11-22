@@ -1,0 +1,157 @@
+{
+ "id": "epla_miniF2F_753_0",
+ "reference": "∀ (x y : ℝ),   x ≠ 1 ∧ y ≠ 1 →     Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20",
+ "lean": "∀ (x y : ℝ),   0 < x →     0 < y →       x ≠ 1 →         y ≠ 1 →           Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < x"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < y"
+   },
+   {
+    "dependent": false,
+    "prop": "x ≠ (1 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "y ≠ (1 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y"
+   },
+   {
+    "dependent": false,
+    "prop": "x * y = (64 : ℝ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "conclusion_lean": "(Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ)",
+  "conclusion_ref": "(Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "x ≠ (1 : ℝ) ∧ y ≠ (1 : ℝ)"
+   },
+   {
+    "dependent": false,
+    "prop": "Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y"
+   },
+   {
+    "dependent": false,
+    "prop": "x * y = (64 : ℝ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_753_0.link_R",
+   "statement": "(∀ (x y : ℝ),   x ≠ 1 ∧ y ≠ 1 →     Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20) ↔ (∀ (x : ℝ) (y : ℝ), (x ≠ (1 : ℝ) ∧ y ≠ (1 : ℝ)) → (Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y) → (x * y = (64 : ℝ)) → (Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_753_0.link_L",
+   "statement": "(∀ (x y : ℝ),   0 < x →     0 < y →       x ≠ 1 →         y ≠ 1 →           Real.log x / Real.log 2 = Real.log 16 / Real.log y → x * y = 64 → (Real.log (x / y) / Real.log 2) ^ 2 = 20) ↔ (∀ (x : ℝ) (y : ℝ), ((0 : ℝ) < x) → ((0 : ℝ) < y) → (x ≠ (1 : ℝ)) → (y ≠ (1 : ℝ)) → (Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y) → (x * y = (64 : ℝ)) → (Real.log (x / y) / Real.log (2 : ℝ)) ^ (2 : ℕ) = (20 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_753_0.a_implies_d",
+   "statement": "∀ (x : ℝ) (y : ℝ), (((0 : ℝ) < x) ∧ ((0 : ℝ) < y) ∧ (x ≠ (1 : ℝ)) ∧ (y ≠ (1 : ℝ)) ∧ (Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y) ∧ (x * y = (64 : ℝ))) → (x ≠ (1 : ℝ) ∧ y ≠ (1 : ℝ)) ∧ (Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y) ∧ (x * y = (64 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℝ) < x",
+  "(0 : ℝ) < y",
+  "x ≠ (1 : ℝ)",
+  "y ≠ (1 : ℝ)",
+  "Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y",
+  "x * y = (64 : ℝ)"
+ ],
+ "dropped": [
+  "x ≠ (1 : ℝ) ∧ y ≠ (1 : ℝ)",
+  "Real.log x / Real.log (2 : ℝ) = Real.log (16 : ℝ) / Real.log y",
+  "x * y = (64 : ℝ)"
+ ],
+ "witnesses": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "no joint certificate for the mixed assumption change",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,27 @@
+{
+ "id": "epla_miniF2F_565_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b x y : ℝ),   a * x + b * y = 3 →     a * x ^ 2 + b * y ^ 2 = 7 → a * x ^ 3 + b * y ^ 3 = 16 → a * x ^ 4 + b * y ^ 4 = 42 → a * x ^ 5 + b * y ^ 5 = 20",
+ "lean": "∀ (a b x y : ℝ),   a * x + b * y = 3 →     a * x ^ 2 + b * y ^ 2 = 7 → a * x ^ 3 + b * y ^ 3 = 16 → a * x ^ 4 + b * y ^ 4 = 42 → a * x ^ 5 + b * y ^ 5 = 20",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

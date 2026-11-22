@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_759_0",
+ "reference": "∀ (x : NNReal), √(60 * ↑x) * √(12 * ↑x) * √(63 * ↑x) = 36 * ↑x * √(35 * ↑x)",
+ "lean": "∀ x ≥ 0, √(60 * x) * √(12 * x) * √(63 * x) = 36 * x * √(35 * x)",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ x ≥ (0 : ℝ), √((60 : ℝ) * x) * √((12 : ℝ) * x) * √((63 : ℝ) * x) = (36 : ℝ) * x * √((35 : ℝ) * x)",
+  "conclusion_ref": "∀ (x : NNReal), √((60 : ℝ) * ↑x) * √((12 : ℝ) * ↑x) * √((63 : ℝ) * ↑x) = (36 : ℝ) * ↑x * √((35 : ℝ) * ↑x)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

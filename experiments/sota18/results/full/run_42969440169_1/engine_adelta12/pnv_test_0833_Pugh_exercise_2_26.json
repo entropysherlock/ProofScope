@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0833_Pugh_exercise_2_26",
+ "reference": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M), IsOpen U ↔ ∀ x ∈ U, ¬ClusterPt x (Filter.principal Uᶜ)",
+ "lean": "∀ {M : Type u_1} [inst : TopologicalSpace M] (U : Set M),   IsOpen U ↔ ∀ x ∈ U, ∀ (V : Set M), IsOpen V → x ∈ V → V ∩ Uᶜ = ∅",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0833_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0833_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:154: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0833_Pugh_exercise_2_26/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,66 @@
+{
+ "id": "epla_miniF2F_642_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "5 ^ 999999 % 7 = 6",
+ "lean": "5 ^ 999999 ≡ 6 [MOD 7]",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(5 : ℕ) ^ (999999 : ℕ) % (7 : ℕ) = (6 : ℕ)",
+   "to": "(5 : ℕ) ^ (999999 : ℕ) ≡ (6 : ℕ) [MOD (7 : ℕ)]"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(5 : ℕ) ^ (999999 : ℕ) % (7 : ℕ) = (6 : ℕ)",
+   "to": "(5 : ℕ) ^ (999999 : ℕ) ≡ (6 : ℕ) [MOD (7 : ℕ)]",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_642_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (x1 (5 : ℕ) (999999 : ℕ) ≡ (6 : ℕ) [MOD (7 : ℕ)]) → (x1 (5 : ℕ) (999999 : ℕ) % (7 : ℕ) = (6 : ℕ))",
+     "axioms": []
+    },
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_642_0.fwd_e1",
+     "statement": "∀ (x1 : ℕ → ℕ → ℕ), (x1 (5 : ℕ) (999999 : ℕ) % (7 : ℕ) = (6 : ℕ)) → (x1 (5 : ℕ) (999999 : ℕ) ≡ (6 : ℕ) [MOD (7 : ℕ)])",
+     "axioms": []
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_642_0.bwd_e1",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ), (x1 (5 : ℕ) (999999 : ℕ) ≡ (6 : ℕ) [MOD (7 : ℕ)]) → (x1 (5 : ℕ) (999999 : ℕ) % (7 : ℕ) = (6 : ℕ))",
+   "axioms": []
+  },
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_642_0.fwd_e1",
+   "statement": "∀ (x1 : ℕ → ℕ → ℕ), (x1 (5 : ℕ) (999999 : ℕ) % (7 : ℕ) = (6 : ℕ)) → (x1 (5 : ℕ) (999999 : ℕ) ≡ (6 : ℕ) [MOD (7 : ℕ)])",
+   "axioms": []
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

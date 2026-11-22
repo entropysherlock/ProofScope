@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:221:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.9,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_221_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = 2 * x - 3) → (∀ (x : ℝ), g x = x + 1) → g (f 5 - 1) = 7",
+ "lean": "∀ (f g : ℝ → ℝ), (∀ (x : ℝ), f x = 2 * x - 3) → (∀ (x : ℝ), g x = x + 1) → g (f 5 - 1) = 7",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f g : ℝ →'",
+  "cand": "unsupported: cannot tokenize at '∀ (f g : ℝ →'"
+ },
+ "seconds": 18.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8670820
+}

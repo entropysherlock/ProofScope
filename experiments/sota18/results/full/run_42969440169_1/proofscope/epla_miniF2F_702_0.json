@@ -1,0 +1,33 @@
+{
+ "case_id": "epla:miniF2F:702:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.9
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.6
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref",
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_702_0/check.lean:34:28: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_702_0/check.lean:34:40: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_702_0/check.lean:34:52: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_702_0/check.lean:34:64: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_702_0/check.lean:34:144: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_miniF2F_702_0/check.lean:36:30: error(lean.synthInstanceFailed): failed to synthesize instance of type class"
+ ],
+ "children_maxrss_kb_so_far": 7618660
+}

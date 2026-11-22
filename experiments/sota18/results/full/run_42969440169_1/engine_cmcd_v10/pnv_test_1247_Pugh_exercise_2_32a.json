@@ -1,0 +1,24 @@
+{
+ "id": "pnv_test_1247_Pugh_exercise_2_32a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (A : Set ℕ), IsClopen A",
+ "lean": "∀ (A : Set ℕ), IsOpen A ∧ IsClosed A",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "IsClopen A",
+   "to": "IsOpen A ∧ IsClosed A"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,58 @@
+{
+ "case_id": "pnv:test:0313:Dummit-Foote|exercise_3_2_16",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 2.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.2,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 22.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (p : ℕ), Nat.Prime p → ∀ (a : ℤ), a ^ p ≡ a [ZMOD ↑p]",
+ "lean": "∀ {p : ℕ}, Nat.Prime p → ∀ (a : ℕ), a ^ p % p = a % p",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (p : ℕ), N'",
+  "cand": "unsupported: cannot tokenize at '∀ {p : ℕ}, N'"
+ },
+ "seconds": 31.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619748
+}

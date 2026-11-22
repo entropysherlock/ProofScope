@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1143_Rudin_exercise_1_8",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "¬∃ (r : ℂ → ℂ → Prop), IsLinearOrder ℂ r",
+ "lean": "¬∃ (lt : ℂ → ℂ → Prop), IsStrictTotalOrder ℂ lt ∧ ∀ (a b c : ℂ), lt a b → lt (a + c) (b + c) ∧ lt 0 a → lt 0 (a * a)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1143_Rudin_exercise_1_8/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

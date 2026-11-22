@@ -1,0 +1,58 @@
+{
+ "case_id": "epla:miniF2F:147:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 52.1,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.8,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_147_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a : ℝ) (f : ℝ → ℝ), 0 < a → (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ b > 0, ∀ (x : ℝ), f (x + b) = f x",
+ "lean": "∀ (a : ℝ),   0 < a →     ∀ (f : ℝ → ℝ), (∀ (x : ℝ), f (x + a) = 1 / 2 + √(f x - f x ^ 2)) → ∃ (b : ℝ), 0 < b ∧ ∀ (x : ℝ), f (x + b) = f x",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a : ℝ) (f'",
+  "cand": "unsupported: cannot tokenize at '∀ (a : ℝ),  '"
+ },
+ "seconds": 67.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8162384
+}

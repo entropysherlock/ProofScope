@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0226_Pugh_exercise_3_1",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℝ → ℝ}, (∀ (x y : ℝ), |f x - f y| ≤ |x - y| ^ 2) → ∃ (c : ℝ), f = fun (x : ℝ) => c",
+ "lean": "∀ {f : ℝ → ℝ}, (∀ (t x : ℝ), |f t - f x| ≤ |t - x| ^ 2) → ∀ (x y : ℝ), f x = f y",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0226_Pugh_exercise_3_1/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0608_Herstein_exercise_3_2_21",
+ "reference": "∀ {α : Type u_1} [Fintype α] {σ τ : Equiv.Perm α}, (∀ (a : α), σ a = a ↔ τ a ≠ a) → ⇑τ ∘ ⇑σ = id → σ = 1 ∧ τ = 1",
+ "lean": "∀ {α : Type u_1} [DecidableEq α] {σ τ : Equiv.Perm α}, (∀ (x : α), σ x ≠ τ x) → σ * τ = 1 → σ = 1 ∧ τ = 1",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0608_Herstein_exercise_3_2_21/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0608_Herstein_exercise_3_2_21/extract/Assumptions_input.lean:4:154: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0608_Herstein_exercise_3_2_21/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

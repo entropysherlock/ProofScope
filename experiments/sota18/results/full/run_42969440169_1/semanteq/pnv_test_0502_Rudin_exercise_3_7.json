@@ -1,0 +1,1 @@
+{"case_id": "pnv:test:0502:Rudin|exercise_3_7", "record": {"candidate": {"errors": [], "ok": true, "supersetEnv": false}, "elapsedMs": 81, "id": "pnv:test:0502:Rudin|exercise_3_7", "reference": {"errors": ["<pnv:test:0502:Rudin|exercise_3_7.reference>:9:33: error: unexpected token 'in'; expected ','\n"], "ok": false, "supersetEnv": false}, "verdict": "ReferenceCompileError"}}

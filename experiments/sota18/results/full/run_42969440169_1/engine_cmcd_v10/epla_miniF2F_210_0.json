@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_210_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c : ℚ) (m n : ℝ), 0 < m ∧ 0 < n → m ^ 3 = 2 → n ^ 3 = 4 → ↑a + ↑b * m + ↑c * n = 0 → a = 0 ∧ b = 0 ∧ c = 0",
+ "lean": "∀ (m n a b c : ℝ), m > 0 → n > 0 → m ^ 3 = 2 → n ^ 3 = 4 → a + b * m + c * n = 0 → a = 0 ∧ b = 0 ∧ c = 0",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    m ^ (3 : ℕ) = (2 : ℝ) →\n      n ^ (3 : ℕ) = (4 : ℝ) → ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)",
+   "to": "∀ (m n a b c : ℝ),\n  m > (0 : ℝ) →\n    n > (0 : ℝ) →\n      m ^ (3 : ℕ) = (2 : ℝ) →\n        n ^ (3 : ℕ) = (4 : ℝ) → a + b * m + c * n = (0 : ℝ) → a = (0 : ℝ) ∧ b = (0 : ℝ) ∧ c = (0 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    m ^ (3 : ℕ) = (2 : ℝ) →\n      n ^ (3 : ℕ) = (4 : ℝ) → ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)",
+   "to": "∀ (m n a b c : ℝ),\n  m > (0 : ℝ) →\n    n > (0 : ℝ) →\n      m ^ (3 : ℕ) = (2 : ℝ) →\n        n ^ (3 : ℕ) = (4 : ℝ) → a + b * m + c * n = (0 : ℝ) → a = (0 : ℝ) ∧ b = (0 : ℝ) ∧ c = (0 : ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

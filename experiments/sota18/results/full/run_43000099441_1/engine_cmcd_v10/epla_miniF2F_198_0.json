@@ -1,0 +1,32 @@
+{
+ "id": "epla_miniF2F_198_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (m n : ℕ), m.gcd n = 6 → m.lcm n = 126 → 60 ≤ m + n",
+ "lean": "∀ (m n : ℕ), m ≥ 1 ∧ n ≥ 1 → m + n ≥ 6 → m + n ≤ 126 → m + n ≠ 126 → m + n = 60",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "Nat.gcd m n = (6 : ℕ)",
+   "to": "m ≥ (1 : ℕ) ∧ n ≥ (1 : ℕ)"
+  },
+  {
+   "from": "Nat.lcm m n = (126 : ℕ)",
+   "to": "m + n ≥ (6 : ℕ)"
+  },
+  {
+   "from": "(60 : ℕ) ≤ m + n",
+   "to": "m + n ≤ (126 : ℕ) → m + n ≠ (126 : ℕ) → m + n = (60 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

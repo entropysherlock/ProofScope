@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0618_Herstein_exercise_2_11_7",
+ "reference": "∀ {G : Type u_1} [inst : Group G] {p : ℕ}, Nat.Prime p → ∀ {P : Sylow p G}, P.Normal → P.Characteristic",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {p : ℕ} {P : Sylow p G} (φ : G →* G), ∀ g ∈ P, φ g ∈ P",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Assumptions_input.lean:4:145: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0618_Herstein_exercise_2_11_7/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

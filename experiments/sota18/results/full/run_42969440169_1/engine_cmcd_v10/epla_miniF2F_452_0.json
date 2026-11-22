@@ -1,0 +1,111 @@
+{
+ "id": "epla_miniF2F_452_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c : ℝ), 0 < a ∧ 0 < b ∧ 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+ "lean": "∀ (a b c : ℝ), 0 < a → 0 < b → 0 < c → 3 ≤ a * b + b * c + c * a → 3 / √2 ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "HDiv.hDiv",
+   "type": "ℝ → ℝ → ℝ"
+  },
+  {
+   "symbol": "Real.sqrt",
+   "type": "ℝ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c",
+   "to": "(0 : ℝ) < a"
+  },
+  {
+   "from": "(3 : ℝ) ≤ a * b + b * c + c * a",
+   "to": "(0 : ℝ) < b"
+  },
+  {
+   "from": "(3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+   "to": "(0 : ℝ) < c → (3 : ℝ) ≤ a * b + b * c + c * a → (3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c",
+   "to": "(0 : ℝ) < a",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_452_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n      x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a))) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c →\n    (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n      x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a)))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  },
+  {
+   "edit": 2,
+   "from": "(3 : ℝ) ≤ a * b + b * c + c * a",
+   "to": "(0 : ℝ) < b",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 3,
+   "from": "(3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+   "to": "(0 : ℝ) < c → (3 : ℝ) ≤ a * b + b * c + c * a → (3 : ℝ) / √(2 : ℝ) ≤ a / √(a + b) + b / √(b + c) + c / √(c + a)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {
+    "fwd_e3": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_452_0.fwd_e3",
+     "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a → (0 : ℝ) < b → x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a))) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (0 : ℝ) < b →\n      (0 : ℝ) < c →\n        (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n          x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a)))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "fwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_452_0.fwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c →\n    (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n      x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a))) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (0 : ℝ) < b →\n      (0 : ℝ) < c →\n        (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n          x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_g": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_452_0.bwd_g",
+   "statement": "∀ (x1 : ℝ → ℝ → ℝ) (x2 : ℝ → ℝ → ℝ) (x3 : ℝ → ℝ), (∀ (a b c : ℝ),\n  (0 : ℝ) < a →\n    (0 : ℝ) < b →\n      (0 : ℝ) < c →\n        (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n          x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a))) → (∀ (a b c : ℝ),\n  (0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c →\n    (3 : ℝ) ≤ x1 a b + x1 b c + x1 c a →\n      x2 (3 : ℝ) (x3 (2 : ℝ)) ≤ x2 a (x3 (a + b)) + x2 b (x3 (b + c)) + x2 c (x3 (c + a)))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1147_Artin_exercise_3_7_2",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {K : Type u_1} {V : Type u_2} [inst : Field K] [Infinite K] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module K V]   {ι : Type u_3} [Fintype ι] (γ : ι → Submodule K V), (∀ (i : ι), γ i ≠ ⊤) → ⋃ (i : ι), SetLike.coe (γ i) ≠ ⊤",
+ "lean": "∀ {F : Type u_1} {V : Type u_2} [inst : Field F] [Infinite F] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module F V],   ¬∃ (n : ℕ) (f : Fin n → Submodule F V), ⋃ (i : Fin n), SetLike.coe (f i) = Set.univ",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:46: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:148: error: unknown universe level `u_3`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:260: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:275: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1147_Artin_exercise_3_7_2/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

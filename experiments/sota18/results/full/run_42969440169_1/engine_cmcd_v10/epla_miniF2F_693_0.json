@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_693_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ), 3 * x + 4 * y - 12 * z = 10 → -2 * x - 3 * y + 9 * z = -4 → x = 14",
+ "lean": "∀ (x y z : ℝ), 3 * x + 4 * y - 12 * z = 10 → -2 * x - 3 * y + 9 * z = -4 → x = 14",
+ "symbols": [
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℝ → ℝ → ℝ"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

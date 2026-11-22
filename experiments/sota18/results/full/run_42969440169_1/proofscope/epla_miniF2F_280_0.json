@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:280:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.5,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.0,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y : ℝ), 3 * y = x → 2 * x + 5 * y = 11 → x + y = 4",
+ "lean": "∀ (x y : ℝ), 3 * y = x → 2 * x + 5 * y = 11 → x + y = 4",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y : ℝ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (x y : ℝ),'"
+ },
+ "seconds": 17.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7649560
+}

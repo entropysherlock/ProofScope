@@ -1,0 +1,23 @@
+{
+ "id": "epla_miniF2F_210_0",
+ "reference": "∀ (a b c : ℚ) (m n : ℝ), 0 < m ∧ 0 < n → m ^ 3 = 2 → n ^ 3 = 4 → ↑a + ↑b * m + ↑c * n = 0 → a = 0 ∧ b = 0 ∧ c = 0",
+ "lean": "∀ (m n a b c : ℝ), m > 0 → n > 0 → m ^ 3 = 2 → n ^ 3 = 4 → a + b * m + c * n = 0 → a = 0 ∧ b = 0 ∧ c = 0",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (m n a b c : ℝ),\n  m > (0 : ℝ) →\n    n > (0 : ℝ) →\n      m ^ (3 : ℕ) = (2 : ℝ) →\n        n ^ (3 : ℕ) = (4 : ℝ) → a + b * m + c * n = (0 : ℝ) → a = (0 : ℝ) ∧ b = (0 : ℝ) ∧ c = (0 : ℝ)",
+  "conclusion_ref": "∀ (a b c : ℚ) (m n : ℝ),\n  (0 : ℝ) < m ∧ (0 : ℝ) < n →\n    m ^ (3 : ℕ) = (2 : ℝ) →\n      n ^ (3 : ℕ) = (4 : ℝ) → ↑a + ↑b * m + ↑c * n = (0 : ℝ) → a = (0 : ℚ) ∧ b = (0 : ℚ) ∧ c = (0 : ℚ)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

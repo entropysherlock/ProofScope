@@ -1,0 +1,13 @@
+{
+ "id": "pnv_test_0582_Dummit_Foote_exercise_8_2_4",
+ "reference": "∀ {R : Type u_1} [inst : CommRing R] [IsDomain R] [inst_2 : GCDMonoid R],   (∀ (a b : R), a ≠ 0 → b ≠ 0 → ∃ (r : R) (s : R), GCDMonoid.gcd a b = r * a + s * b) →     (∀ (a : ℕ → R), (∀ (i : ℕ), a i ≠ 0 ∧ a (i + 1) ∣ a i) → ∃ (N : ℕ), ∀ n ≥ N, ∃ (u : R), IsUnit u ∧ a n = u * a N) →       IsPrincipalIdealRing R",
+ "lean": "∀ {R : Type u_1} [inst : CommRing R],   IsDomain R →     (∀ (a b : R), a ≠ 0 → b ≠ 0 → ∃ (d : R) (r : R) (s : R), d = r * a + s * b ∧ ∀ (t : R), t ∣ a → t ∣ b → t ∣ d) →       (∀ (a : ℕ → R), (∀ (n : ℕ), a (n + 1) ∣ a n) → ∃ (N : ℕ), ∀ n ≥ N, IsUnit (a n)) → IsPrincipalIdealRing R",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Assumptions_input.lean:4:352: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0582_Dummit_Foote_exercise_8_2_4/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

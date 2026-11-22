@@ -1,0 +1,13 @@
+{
+ "id": "epla_ProofNet_200_0",
+ "reference": "∀ {M : Type u_1} [inst : MetricSpace M] {A B : Set M},   IsCompact A →     IsCompact B →       Disjoint A B →         A ≠ ∅ →           B ≠ ∅ → ∃ (a₀ : M) (b₀ : M), a₀ ∈ A ∧ b₀ ∈ B ∧ ∀ (a b : M), a ∈ A → b ∈ B → Dist.dist a₀ b₀ ≤ Dist.dist a b",
+ "lean": "∀ {M : Type u_1} [inst : MetricSpace M] {A B : Set M},   IsCompact A →     IsCompact B →       Disjoint A B → A.Nonempty → B.Nonempty → ∃ a₀ ∈ A, ∃ b₀ ∈ B, ∀ a ∈ A, ∀ b ∈ B, Dist.dist a₀ b₀ ≤ Dist.dist a b",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_200_0/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_200_0/extract/Assumptions_input.lean:4:285: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_200_0/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

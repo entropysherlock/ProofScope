@@ -1,0 +1,118 @@
+{
+ "id": "epla_miniF2F_743_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : ℝ), x ^ 2 - 14 * x + 3 ≥ 7 ^ 2 - 14 * 7 + 3",
+ "lean": "∀ (y : ℝ), 7 ^ 2 - 14 * 7 + 3 ≤ y ^ 2 - 14 * y + 3",
+ "symbols": [
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℝ → ℕ → ℝ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)",
+   "to": "(7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)",
+   "to": "(7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "lawF_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.lawF_e1",
+     "statement": "(∀ (x : ℝ), x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)) → (∀ (x : ℝ), (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "lawB_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.lawB_e1",
+     "statement": "(∀ (x : ℝ), (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)) → (∀ (x : ℝ), x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.bwd_e1",
+     "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (x : ℝ), x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)) → (∀ (x : ℝ), x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.fwd_e1",
+     "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (x : ℝ), x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)) → (∀ (x : ℝ), x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ))",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "lawF_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.lawF_e1",
+   "statement": "(∀ (x : ℝ), x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)) → (∀ (x : ℝ), (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "lawB_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.lawB_e1",
+   "statement": "(∀ (x : ℝ), (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)) → (∀ (x : ℝ), x ^ (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ (7 : ℝ) ^ (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.bwd_e1",
+   "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (x : ℝ), x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ)) → (∀ (x : ℝ), x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_743_0.fwd_e1",
+   "statement": "∀ (x1 : ℝ → ℕ → ℝ), (∀ (x : ℝ), x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ) ≥ x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ)) → (∀ (x : ℝ), x1 (7 : ℝ) (2 : ℕ) - (14 : ℝ) * (7 : ℝ) + (3 : ℝ) ≤ x1 x (2 : ℕ) - (14 : ℝ) * x + (3 : ℝ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

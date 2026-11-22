@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:100:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.6,
+   "verdict": "NO_ASSUMPTION_DELTA",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 9.3,
+   "verdict": "IDENTICAL",
+   "reason": "",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "DFunLike.coe",
+     "type": "(ℂ →*₀ ℝ) → ℂ → ℝ"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℂ → ℕ → ℂ"
+    },
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℂ → ℂ → ℂ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (z : ℂ), 12 * Complex.normSq z = 2 * Complex.normSq (z + 2) + Complex.normSq (z ^ 2 + 1) + 31 → z + 6 / z = -2",
+ "lean": "∀ (z : ℂ), 12 * Complex.normSq z = 2 * Complex.normSq (z + 2) + Complex.normSq (z ^ 2 + 1) + 31 → z + 6 / z = -2",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (z : ℂ), 1'",
+  "cand": "unsupported: cannot tokenize at '∀ (z : ℂ), 1'"
+ },
+ "seconds": 22.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618660
+}

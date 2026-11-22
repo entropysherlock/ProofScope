@@ -1,0 +1,31 @@
+{
+ "id": "pnv_test_0110_Rudin_exercise_4_15",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {f : ℝ → ℝ}, Continuous f → IsOpenMap f → Monotone f",
+ "lean": "∀ (f : ℝ → ℝ), Continuous f → IsOpenMap f → Monotone f",
+ "symbols": [
+  {
+   "symbol": "Continuous",
+   "type": "(ℝ → ℝ) → Prop"
+  },
+  {
+   "symbol": "IsOpenMap",
+   "type": "(ℝ → ℝ) → Prop"
+  },
+  {
+   "symbol": "Monotone",
+   "type": "(ℝ → ℝ) → Prop"
+  }
+ ],
+ "edits": [],
+ "symbols_truncated": false,
+ "verdict": "IDENTICAL",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

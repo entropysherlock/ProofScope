@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0601:Herstein|exercise_5_1_8",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.6,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ror: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Assumptions_input.lean:4:181: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ean:4:43: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Drift_input.lean:4:173: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0601_Herstein_exercise_5_1_8/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {p m n : ℕ} {F : Type u_1} [inst : Field F],   p ≠ 0 → n > 0 → CharP F p → ∀ (a b : F), m = p ^ n → (a + b) ^ m = a ^ m + b ^ m",
+ "lean": "∀ {p n : ℕ} {F : Type u_1} [inst : Field F] [CharP F p] {m : ℕ},   m = p ^ n → ∀ (a b : F) (n : ℕ), (a + b) ^ m = a ^ m + b ^ m",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {p m n : ℕ'",
+  "cand": "unsupported: cannot tokenize at '∀ {p n : ℕ} '"
+ },
+ "seconds": 18.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8671564
+}

@@ -1,0 +1,19 @@
+{
+ "case_id": "epla:ProofNet:57:0",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 3.7
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "cand",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_57_0/print.lean:21:5: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_57_0/print.lean:43:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_57_0/print.lean:49:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_57_0/print.lean:55:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 7618804
+}

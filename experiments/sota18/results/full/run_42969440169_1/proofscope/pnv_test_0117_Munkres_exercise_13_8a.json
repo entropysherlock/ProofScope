@@ -1,0 +1,66 @@
+{
+ "case_id": "pnv:test:0117:Munkres|exercise_13_8a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.1,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 27.8,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "TopologicalSpace.IsTopologicalBasis",
+     "type": "Set (Set ℝ) → Prop"
+    },
+    {
+     "symbol": "Set.ofPred",
+     "type": "(Set ℝ → Prop) → Set (Set ℝ)"
+    },
+    {
+     "symbol": "Rat.cast",
+     "type": "ℚ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "TopologicalSpace.IsTopologicalBasis {S : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ S = Set.Ioo ↑a ↑b}",
+ "lean": "∀ (S : Set (Set ℝ)),   S = {s : Set ℝ | ∃ (a : ℚ) (b : ℚ), a < b ∧ s = {x : ℝ | ↑a < x ∧ x < ↑b}} → TopologicalSpace.IsTopologicalBasis S",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at ' {S : Set ℝ '",
+  "cand": "unsupported: cannot tokenize at '∀ (S : Set ('"
+ },
+ "seconds": 39.6,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618420
+}

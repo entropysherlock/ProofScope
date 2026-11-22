@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_489_0",
+ "reference": "∀ (x y z : ℝ), 3 * x + y = 17 → 5 * y + z = 14 → 3 * x + 5 * z = 41 → x + y + z = 12",
+ "lean": "∀ (x y z : ℝ), 3 * x + y = 17 → 5 * y + z = 14 → 3 * x + 5 * z = 41 → x + y + z = 12",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "x + y + z = (12 : ℝ)",
+  "conclusion_ref": "x + y + z = (12 : ℝ)",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "(3 : ℝ) * x + y = (17 : ℝ)",
+   "(5 : ℝ) * y + z = (14 : ℝ)",
+   "(3 : ℝ) * x + (5 : ℝ) * z = (41 : ℝ)"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "z",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

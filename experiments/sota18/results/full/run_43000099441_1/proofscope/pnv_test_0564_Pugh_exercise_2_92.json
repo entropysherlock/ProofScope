@@ -1,0 +1,57 @@
+{
+ "case_id": "pnv:test:0564:Pugh|exercise_2_92",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "n:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0564_Pugh_exercise_2_92/extract/Assumptions_input.lean:4:223: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/pnv_test_0564_Pugh_exercise_2_92/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "ft_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0564_Pugh_exercise_2_92/extract/Drift_input.lean:4:215: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0564_Pugh_exercise_2_92/extract/Drift_input.lean:4:0: error: statement has unresolved metavariables\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {α : Type u_1} [inst : TopologicalSpace α] {s : ℕ → Set α},   (∀ (i : ℕ), IsCompact (s i)) → (∀ (i : ℕ), (s i).Nonempty) → (∀ (i : ℕ), s i ⊇ s (i + 1)) → (⋂ (i : ℕ), s i).Nonempty",
+ "lean": "∀ {X : Type u_1} [inst : TopologicalSpace X] {K : ℕ → Set X},   (∀ (n : ℕ), IsCompact (K n)) → (∀ (n : ℕ), K (n + 1) ⊆ K n) → (∀ (n : ℕ), (K n).Nonempty) → (⋂ (n : ℕ), K n).Nonempty",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {α : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 22.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 14082520
+}

@@ -1,0 +1,57 @@
+{
+ "case_id": "epla:miniF2F:40:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 25.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "no joint certificate for the mixed assumption change",
+   "certificates": [
+    "a_implies_d",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 7.2,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_40_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #3\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (f : ℕ → ℕ),   (∀ (m n : ℕ), 0 < m ∧ 0 < n → f (m + n) - f m - f n = 0 ∨ f (m + n) - f m - f n = 1) →     f 2 = 0 → 0 < f 3 → f 9999 = 3333 → f 1982 = 660",
+ "lean": "∀ (f : ℕ → ℕ),   f 2 = 0 →     0 < f 3 →       f 9999 = 3333 → (∀ (m n : ℕ), 0 < m → 0 < n → f (m + n) = f m + f n ∨ f (m + n) = f m + f n + 1) → f 1982 = 660",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (f : ℕ → ℕ'",
+  "cand": "unsupported: cannot tokenize at '∀ (f : ℕ → ℕ'"
+ },
+ "seconds": 39.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7634888
+}

@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:88:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.7,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c d k m : ℕ),   0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < d →     Odd a ∧ Odd b ∧ Odd c ∧ Odd d → a < b ∧ b < c ∧ c < d → a * d = b * c → a + d = 2 ^ k → b + c = 2 ^ m → a = 1",
+ "lean": "∀ (a b c d : ℤ),   Odd a →     Odd b →       Odd c →         Odd d →           0 < a ∧ a < b ∧ b < c ∧ c < d →             a * d = b * c → (∃ (k : ℕ), a + d = 2 ^ k) → (∃ (m : ℕ), b + c = 2 ^ m) → a = 1",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c d k'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b c d :'"
+ },
+ "seconds": 16.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8631964
+}

@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_261_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x : ℝ), (x + 3) * (2 * x - 6) = 2 * x ^ 2 - 18",
+ "lean": "∀ {x : ℕ}, (x + 3) * (2 * x - 6) = 2 * x ^ 2 - 18",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (x : ℝ), (x + (3 : ℝ)) * ((2 : ℝ) * x - (6 : ℝ)) = (2 : ℝ) * x ^ (2 : ℕ) - (18 : ℝ)",
+   "to": "∀ {x : ℕ}, (x + (3 : ℕ)) * ((2 : ℕ) * x - (6 : ℕ)) = (2 : ℕ) * x ^ (2 : ℕ) - (18 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

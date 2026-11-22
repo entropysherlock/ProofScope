@@ -1,0 +1,58 @@
+{
+ "case_id": "epla:miniF2F:47:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 38.0,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.6,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ n ≤ 9, 11 ∣ 20 * 100 + 10 * n + 7 → n = 5",
+ "lean": "∀ d < 10, 11 ∣ 2000 + 10 * d + 7 → d = 5",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ n ≤ 9, 11 '",
+  "cand": "unsupported: cannot tokenize at '∀ d < 10, 11'"
+ },
+ "seconds": 54.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7629448
+}

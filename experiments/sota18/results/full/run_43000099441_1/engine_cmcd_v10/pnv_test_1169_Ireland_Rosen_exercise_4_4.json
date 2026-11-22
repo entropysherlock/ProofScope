@@ -1,0 +1,42 @@
+{
+ "id": "pnv_test_1169_Ireland_Rosen_exercise_4_4",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {p t : ℕ}, Nat.Prime p → p = 4 * t + 1 → ∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+ "lean": "∀ {p : ℕ} [hp : Fact (Nat.Prime p)], p % 4 = 1 → ∀ (a : ℤ), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ {t : ℕ}, Nat.Prime p → p = (4 : ℕ) * t + (1 : ℕ) → ∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+   "to": "∀ [hp : Fact (Nat.Prime p)], p % (4 : ℕ) = (1 : ℕ) → ∀ (a : ℤ), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ {t : ℕ}, Nat.Prime p → p = (4 : ℕ) * t + (1 : ℕ) → ∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+   "to": "∀ [hp : Fact (Nat.Prime p)], p % (4 : ℕ) = (1 : ℕ) → ∀ (a : ℤ), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

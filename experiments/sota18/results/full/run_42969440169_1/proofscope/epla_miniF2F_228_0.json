@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:228:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.1
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 6.7,
+   "verdict": "NO_SHARED_SYMBOLS",
+   "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (s t : ℝ), s = 9 - 2 * t → t = 3 * s + 1 → s = 1 ∧ t = 4",
+ "lean": "∀ (s t : ℝ), s = 9 - 2 * t ∧ t = 3 * s + 1 ↔ s = 1 ∧ t = 4",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (s t : ℝ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (s t : ℝ),'"
+ },
+ "seconds": 16.5,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8631964
+}

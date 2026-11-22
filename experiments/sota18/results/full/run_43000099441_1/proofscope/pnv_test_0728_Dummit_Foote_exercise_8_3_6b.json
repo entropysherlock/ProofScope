@@ -1,0 +1,31 @@
+{
+ "case_id": "pnv:test:0728:Dummit-Foote|exercise_8_3_6b",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.6
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0728_Dummit_Foote_exercise_8_3_6b/check.lean:28:109: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0728_Dummit_Foote_exercise_8_3_6b/check.lean:28:245: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0728_Dummit_Foote_exercise_8_3_6b/check.lean:30:183: error: typeclass instance problem is stuck"
+ ],
+ "children_maxrss_kb_so_far": 8149900
+}

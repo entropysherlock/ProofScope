@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:348:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 5.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.0,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 34.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "abs",
+     "type": "ℝ → ℝ"
+    },
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y : ℝ) (n : NNReal), x < 0 ∧ y < 0 → |y| = 6 → √((x - 8) ^ 2 + (y - 3) ^ 2) = 15 → √(x ^ 2 + y ^ 2) = √↑n → n = 52",
+ "lean": "∀ (x y : ℝ) (n : ℕ), x < 0 ∧ y < 0 → |y| = 6 → |x - 8| + |y - 3| = 15 → x ^ 2 + y ^ 2 = ↑n → n = 52",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y : ℝ) '",
+  "cand": "unsupported: cannot tokenize at '∀ (x y : ℝ) '"
+ },
+ "seconds": 48.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618744
+}

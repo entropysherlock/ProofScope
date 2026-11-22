@@ -1,0 +1,114 @@
+{
+ "id": "epla_miniF2F_680_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (n : ℕ), 0 < n → Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "lean": "∀ n > 0, Nat.Prime (2 ^ n - 1) → Nat.Prime n",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "(0 : ℕ) < n",
+   "to": "n > (0 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "(0 : ℕ) < n",
+   "to": "n > (0 : ℕ)",
+   "relation": "SCHEMA_EQUIVALENT",
+   "certificates": {
+    "bwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.bwd_e1",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ n > (0 : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ (n : ℕ), (0 : ℕ) < n → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    },
+    "lawF_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.lawF_e1",
+     "statement": "(∀ (n : ℕ), (0 : ℕ) < n → Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n) → (∀ n > (0 : ℕ), Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n)",
+     "axioms": [
+      "propext"
+     ]
+    },
+    "lawB_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.lawB_e1",
+     "statement": "(∀ n > (0 : ℕ), Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n) → (∀ (n : ℕ), (0 : ℕ) < n → Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n)",
+     "axioms": [
+      "propext"
+     ]
+    },
+    "fwd_e1": {
+     "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.fwd_e1",
+     "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ (n : ℕ), (0 : ℕ) < n → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ n > (0 : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+     "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+     ]
+    }
+   }
+  }
+ ],
+ "global_relation": "SCHEMA_EQUIVALENT",
+ "global_certificates": {
+  "bwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.bwd_e1",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ n > (0 : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ (n : ℕ), (0 : ℕ) < n → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "lawF_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.lawF_e1",
+   "statement": "(∀ (n : ℕ), (0 : ℕ) < n → Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n) → (∀ n > (0 : ℕ), Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n)",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "lawB_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.lawB_e1",
+   "statement": "(∀ n > (0 : ℕ), Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n) → (∀ (n : ℕ), (0 : ℕ) < n → Nat.Prime ((2 : ℕ) ^ n - (1 : ℕ)) → Nat.Prime n)",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "fwd_e1": {
+   "declaration": "ProofScopeCert.CMCD_epla_miniF2F_680_0.fwd_e1",
+   "statement": "∀ (x1 : ℕ → Prop) (x2 : ℕ → ℕ → ℕ), (∀ (n : ℕ), (0 : ℕ) < n → x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n) → (∀ n > (0 : ℕ), x1 (x2 (2 : ℕ) n - (1 : ℕ)) → x1 n)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "verdict": "SCHEMA_EQUIVALENT",
+ "theorem": "equiv_trans",
+ "harmless_edits": [
+  1
+ ],
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

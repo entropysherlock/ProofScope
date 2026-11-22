@@ -1,0 +1,33 @@
+{
+ "id": "pnv_test_0923_Rudin_exercise_4_15",
+ "reference": "∀ {f : ℝ → ℝ}, Continuous f → IsOpenMap f → Monotone f",
+ "lean": "∀ (f : ℝ → ℝ), Continuous f → IsOpenMap f → StrictMono f ∨ StrictAnti f",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "StrictMono f ∨ StrictAnti f",
+  "conclusion_ref": "Monotone f",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "Continuous f",
+   "IsOpenMap f"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "f",
+    "type": "ℝ → ℝ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

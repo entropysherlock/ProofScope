@@ -1,0 +1,191 @@
+Downloading cpython-3.11.18-linux-x86_64-gnu (download) (29.2MiB)
+ Downloaded cpython-3.11.18-linux-x86_64-gnu (download)
+   Building lean-interact @ file:///home/runner/work/_temp/li
+Downloading hf-xet (4.1MiB)
+Downloading numpy (16.1MiB)
+Downloading scipy (33.7MiB)
+Downloading pygments (1.2MiB)
+Downloading scikit-learn (8.9MiB)
+Downloading pydantic-core (2.1MiB)
+Downloading pyarrow (52.5MiB)
+Downloading pandas (11.8MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded hf-xet
+ Downloaded scikit-learn
+ Downloaded pandas
+ Downloaded numpy
+ Downloaded scipy
+      Built lean-interact @ file:///home/runner/work/_temp/li
+ Downloaded pyarrow
+Installed 47 packages in 47ms
+info: downloading https://releases.lean-lang.org/lean4/v4.8.0/lean-4.8.0-linux.tar.zst
+info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.8.0
+[06:11:28] INFO     Preparing Lean environment with dependencies  project.py:330
+                    (may take a while the first time)...                        
+Lake version 5.0.0-df668f0 (Lean version 4.8.0)
+✔ [1/10] Fetched proofwidgets:optRelease
+✔ [2/10] Built Cache.IO
+✔ [3/10] Built Cache.Hashing
+✔ [4/10] Built Cache.Hashing:c.o
+✔ [5/10] Built Cache.Requests
+✔ [6/10] Built Cache.Main
+✔ [7/10] Built Cache.Main:c.o
+✔ [8/10] Built Cache.IO:c.o
+✔ [9/10] Built Cache.Requests:c.o
+✔ [10/10] Built cache
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1906k  100 1906k    0     0  7035k      0 --:--:-- --:--:-- --:--:-- 7035k
+
+installing leantar 0.1.11
+Attempting to download 4608 file(s)
+Downloaded: 1 file(s) [attempted 1/4608 = 0%]Downloaded: 113 file(s) [attempted 113/4608 = 2%]Downloaded: 238 file(s) [attempted 238/4608 = 5%]Downloaded: 373 file(s) [attempted 373/4608 = 8%]Downloaded: 518 file(s) [attempted 518/4608 = 11%]Downloaded: 667 file(s) [attempted 667/4608 = 14%]Downloaded: 805 file(s) [attempted 805/4608 = 17%]Downloaded: 945 file(s) [attempted 945/4608 = 20%]Downloaded: 1090 file(s) [attempted 1090/4608 = 23%]Downloaded: 1236 file(s) [attempted 1236/4608 = 26%]Downloaded: 1376 file(s) [attempted 1376/4608 = 29%]Downloaded: 1521 file(s) [attempted 1521/4608 = 33%]Downloaded: 1665 file(s) [attempted 1665/4608 = 36%]Downloaded: 1812 file(s) [attempted 1812/4608 = 39%]Downloaded: 1950 file(s) [attempted 1950/4608 = 42%]Downloaded: 2094 file(s) [attempted 2094/4608 = 45%]Downloaded: 2241 file(s) [attempted 2241/4608 = 48%]Downloaded: 2379 file(s) [attempted 2379/4608 = 51%]Downloaded: 2520 file(s) [attempted 2520/4608 = 54%]Downloaded: 2662 file(s) [attempted 2662/4608 = 57%]Downloaded: 2807 file(s) [attempted 2807/4608 = 60%]Downloaded: 2947 file(s) [attempted 2947/4608 = 63%]Downloaded: 3091 file(s) [attempted 3091/4608 = 67%]Downloaded: 3240 file(s) [attempted 3240/4608 = 70%]Downloaded: 3387 file(s) [attempted 3387/4608 = 73%]Downloaded: 3529 file(s) [attempted 3529/4608 = 76%]Downloaded: 3681 file(s) [attempted 3681/4608 = 79%]Downloaded: 3825 file(s) [attempted 3825/4608 = 83%]Downloaded: 3968 file(s) [attempted 3968/4608 = 86%]Downloaded: 4105 file(s) [attempted 4105/4608 = 89%]Downloaded: 4240 file(s) [attempted 4240/4608 = 92%]Downloaded: 4380 file(s) [attempted 4380/4608 = 95%]Downloaded: 4515 file(s) [attempted 4515/4608 = 97%]Downloaded: 4608 file(s) [attempted 4608/4608 = 100%] (100% success)
+Decompressing 4608 file(s)
+Unpacked in 12591 ms
+Completed successfully!
+info: dummy: no previous manifest, creating one from scratch
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git to '././.lake/packages/mathlib'
+info: batteries: cloning https://github.com/leanprover-community/batteries to '././.lake/packages/batteries'
+info: Qq: cloning https://github.com/leanprover-community/quote4 to '././.lake/packages/Qq'
+info: aesop: cloning https://github.com/leanprover-community/aesop to '././.lake/packages/aesop'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4 to '././.lake/packages/proofwidgets'
+info: Cli: cloning https://github.com/leanprover/lean4-cli to '././.lake/packages/Cli'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph.git to '././.lake/packages/importGraph'
+info: mathlib: running post-update hooks
+No files to download
+Decompressing 4608 file(s)
+Unpacked in 69 ms
+Completed successfully!
+✔ [2/4] Built dummy
+✔ [3/4] Built dummy:c.o
+✔ [4/4] Built dummy
+Build completed successfully.
+[06:12:30] INFO     Updated version-specific REPL cache to commit  config.py:388
+                    43a6f7954501b893df8ed04e87bac3e924ea4d74                    
+epla:ProofNet:113:0 False {'ref': True, 'cand': True} 38.0 
+epla:ProofNet:181:0 False {'ref': True, 'cand': True} 68.8 
+epla:ProofNet:264:0 True {'ref': True, 'cand': True} 0.7 
+epla:ProofNet:370:0 False {'ref': True, 'cand': True} 21.5 
+epla:ProofNet:89:0 False {'ref': True, 'cand': True} 13.4 
+epla:miniF2F:146:0 True {'ref': True, 'cand': True} 21.9 
+epla:miniF2F:200:0 True {'ref': True, 'cand': True} 12.0 
+epla:miniF2F:261:0 False {'ref': True, 'cand': True} 14.9 
+epla:miniF2F:319:0 False {'ref': True, 'cand': True} 30.5 
+epla:miniF2F:384:0 False {'ref': True, 'cand': True} 12.7 
+epla:miniF2F:438:0 False {'ref': True, 'cand': True} 9.6 
+epla:miniF2F:49:0 False {'ref': True, 'cand': True} 9.2 
+epla:miniF2F:564:0 True {'ref': True, 'cand': True} 0.3 
+epla:miniF2F:609:0 False {'ref': True, 'cand': True} 14.5 
+epla:miniF2F:685:0 False {'ref': True, 'cand': True} 23.4 
+epla:miniF2F:759:0 False {'ref': True, 'cand': True} 345.4 
+epla:miniF2F:825:0 False {'ref': True, 'cand': True} 32.9 
+pnv:test:0007:Dummit-Foote|exercise_8_3_6b False {'ref': True, 'cand': True} 27.4 
+pnv:test:0082:Artin|exercise_10_1_13 True {'ref': True, 'cand': True} 0.4 
+pnv:test:0120:Rudin|exercise_4_15 True {'ref': True, 'cand': True} 0.1 
+pnv:test:0226:Pugh|exercise_3_1 False {'ref': True, 'cand': True} 16.8 
+[06:25:32] Error during proof checking: The Lean server closed   beq_plus.py:117
+           unexpectedly.                                                        
+           --------------------------------------------------                   
+           stdout:                                                              
+                                                                                
+           --------------------------------------------------                   
+           stderr:                                                              
+                                                                                
+           Stack overflow detected. Aborting.                                   
+                                                                                
+           --------------------------------------------------                   
+           If stdout and stderr are empty or obscure, here is a                 
+           list of possible reasons (not exhaustive):                           
+           - Not enough memory and/or compute available                         
+           - The cached Lean REPL is corrupted. In this case,                   
+           clear the cache using the `clear-lean-cache` command.                
+           - An uncaught exception in the Lean REPL                             
+[06:25:36] Error during proof checking: The Lean server closed   beq_plus.py:117
+           unexpectedly.                                                        
+           --------------------------------------------------                   
+           stdout:                                                              
+                                                                                
+           --------------------------------------------------                   
+           stderr:                                                              
+                                                                                
+           Stack overflow detected. Aborting.                                   
+                                                                                
+           --------------------------------------------------                   
+           If stdout and stderr are empty or obscure, here is a                 
+           list of possible reasons (not exhaustive):                           
+           - Not enough memory and/or compute available                         
+           - The cached Lean REPL is corrupted. In this case,                   
+           clear the cache using the `clear-lean-cache` command.                
+           - An uncaught exception in the Lean REPL                             
+[06:25:40] Error during proof checking: The Lean server closed   beq_plus.py:117
+           unexpectedly.                                                        
+           --------------------------------------------------                   
+           stdout:                                                              
+                                                                                
+           --------------------------------------------------                   
+           stderr:                                                              
+                                                                                
+           Stack overflow detected. Aborting.                                   
+                                                                                
+           --------------------------------------------------                   
+           If stdout and stderr are empty or obscure, here is a                 
+           list of possible reasons (not exhaustive):                           
+           - Not enough memory and/or compute available                         
+           - The cached Lean REPL is corrupted. In this case,                   
+           clear the cache using the `clear-lean-cache` command.                
+           - An uncaught exception in the Lean REPL                             
+[06:25:44] Error during proof checking: The Lean server closed   beq_plus.py:117
+           unexpectedly.                                                        
+           --------------------------------------------------                   
+           stdout:                                                              
+                                                                                
+           --------------------------------------------------                   
+           stderr:                                                              
+                                                                                
+           Stack overflow detected. Aborting.                                   
+                                                                                
+           --------------------------------------------------                   
+           If stdout and stderr are empty or obscure, here is a                 
+           list of possible reasons (not exhaustive):                           
+           - Not enough memory and/or compute available                         
+           - The cached Lean REPL is corrupted. In this case,                   
+           clear the cache using the `clear-lean-cache` command.                
+           - An uncaught exception in the Lean REPL                             
+[06:25:48] Error during proof checking: The Lean server closed   beq_plus.py:117
+           unexpectedly.                                                        
+           --------------------------------------------------                   
+           stdout:                                                              
+                                                                                
+           --------------------------------------------------                   
+           stderr:                                                              
+                                                                                
+           Stack overflow detected. Aborting.                                   
+                                                                                
+           --------------------------------------------------                   
+           If stdout and stderr are empty or obscure, here is a                 
+           list of possible reasons (not exhaustive):                           
+           - Not enough memory and/or compute available                         
+           - The cached Lean REPL is corrupted. In this case,                   
+           clear the cache using the `clear-lean-cache` command.                
+           - An uncaught exception in the Lean REPL                             
+pnv:test:0298:Munkres|exercise_32_2c False {'ref': True, 'cand': True} 72.2 
+pnv:test:0330:Rudin|exercise_1_8 False {'ref': True, 'cand': True} 10.8 
+pnv:test:0384:Dummit-Foote|exercise_9_4_2a False {'ref': True, 'cand': True} 7.5 
+pnv:test:0445:Dummit-Foote|exercise_4_4_2 False {'ref': True, 'cand': True} 10.5 
+pnv:test:0493:Munkres|exercise_34_9 False {'ref': True, 'cand': True} 16.0 
+pnv:test:0565:Rudin|exercise_5_5 False {'ref': True, 'cand': True} 62.0 
+pnv:test:0656:Putnam|exercise_2018_a5 False {'ref': True, 'cand': True} 7.2 
+pnv:test:0728:Dummit-Foote|exercise_8_3_6b False {'ref': True, 'cand': True} 12.2 
+pnv:test:0784:Pugh|exercise_2_46 False {'ref': True, 'cand': True} 56.9 
+pnv:test:0847:Herstein|exercise_2_3_16 False {'ref': True, 'cand': True} 9.9 
+pnv:test:0919:Munkres|exercise_23_11 True {'ref': True, 'cand': True} 0.8 
+pnv:test:0984:Munkres|exercise_26_12 True {'ref': True, 'cand': True} 0.1 
+pnv:test:1061:Dummit-Foote|exercise_4_5_19 False {'ref': True, 'cand': True} 31.1 
+pnv:test:1143:Rudin|exercise_1_8 False {'ref': True, 'cand': True} 6.3 
+pnv:test:1184:Herstein|exercise_4_6_2 True {'ref': True, 'cand': True} 1.4 
+pnv:test:1224:Artin|exercise_10_4_7a True {'ref': True, 'cand': True} 0.4 
+pnv:test:1284:Dummit-Foote|exercise_1_1_4 False {'ref': True, 'cand': True} 4.1 
+pnv:test:1363:Dummit-Foote|exercise_4_4_2 False {'ref': True, 'cand': True} 10.4 
+pnv:test:1431:Munkres|exercise_18_13 False {'ref': True, 'cand': True} 43.6 

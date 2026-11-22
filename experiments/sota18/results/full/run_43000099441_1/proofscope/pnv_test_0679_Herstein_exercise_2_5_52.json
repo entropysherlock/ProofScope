@@ -1,0 +1,37 @@
+{
+ "case_id": "pnv:test:0679:Herstein|exercise_2_5_52",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.5
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.3
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "cand": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0679_Herstein_exercise_2_5_52/check.lean:28:124: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0679_Herstein_exercise_2_5_52/check.lean:28:276: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0679_Herstein_exercise_2_5_52/check.lean:30:200: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0679_Herstein_exercise_2_5_52/check.lean:30:224: error(lean.synthInstanceFailed): failed to synthesize instance of type class",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0679_Herstein_exercise_2_5_52/check.lean:30:372: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 8613000
+}

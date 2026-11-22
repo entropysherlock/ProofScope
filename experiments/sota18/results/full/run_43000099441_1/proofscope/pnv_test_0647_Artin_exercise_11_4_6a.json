@@ -1,0 +1,33 @@
+{
+ "case_id": "pnv:test:0647:Artin|exercise_11_4_6a",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.7
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": []
+ },
+ "print_setting": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref",
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0647_Artin_exercise_11_4_6a/check.lean:26:103: error: typeclass instance problem is stuck",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0647_Artin_exercise_11_4_6a/check.lean:28:129: error: typeclass instance problem is stuck",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0647_Artin_exercise_11_4_6a/check.lean:30:24: error: typeclass instance problem is stuck",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0647_Artin_exercise_11_4_6a/check.lean:32:24: error: typeclass instance problem is stuck"
+ ],
+ "children_maxrss_kb_so_far": 8760620
+}

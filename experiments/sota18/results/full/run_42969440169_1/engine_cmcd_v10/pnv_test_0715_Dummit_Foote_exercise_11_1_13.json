@@ -1,0 +1,49 @@
+{
+ "id": "pnv_test_0715_Dummit_Foote_exercise_11_1_13",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {n : ℕ+}, Nonempty ((Fin ↑n → ℝ) ≃ₗ[ℚ] ℝ)",
+ "lean": "∀ {n : ℕ}, Nonempty ((Fin n → ℝ) ≃ₗ[ℚ] ℝ)",
+ "symbols": [
+  {
+   "symbol": "Nonempty",
+   "type": "Type → Prop"
+  },
+  {
+   "symbol": "LinearEquiv",
+   "type": "(σ : ℚ →+* ℚ) →\n  {σ' : ℚ →+* ℚ} →\n    [RingHomInvPair σ σ'] →\n      [RingHomInvPair σ' σ] →\n        (M M₂ : Type) → [inst : AddCommMonoid M] → [inst_1 : AddCommMonoid M₂] → [Module ℚ M] → [Module ℚ M₂] → Type"
+  },
+  {
+   "symbol": "RingHom.id",
+   "type": "(α : Type) → [inst : NonAssocSemiring α] → α →+* α"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ {n : ℕ+}, Nonempty ((Fin ↑n → ℝ) ≃ₗ[ℚ] ℝ)",
+   "to": "∀ {n : ℕ}, Nonempty ((Fin n → ℝ) ≃ₗ[ℚ] ℝ)"
+  }
+ ],
+ "symbols_truncated": true,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ {n : ℕ+}, Nonempty ((Fin ↑n → ℝ) ≃ₗ[ℚ] ℝ)",
+   "to": "∀ {n : ℕ}, Nonempty ((Fin n → ℝ) ≃ₗ[ℚ] ℝ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

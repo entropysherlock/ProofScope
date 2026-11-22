@@ -1,0 +1,27 @@
+{
+ "case_id": "synth:c04_universe_typeclass",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.3
+  }
+ },
+ "print_setting": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref",
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/synth_c04_universe_typeclass/check.lean:23:147: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/synth_c04_universe_typeclass/check.lean:25:147: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/synth_c04_universe_typeclass/check.lean:27:121: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/synth_c04_universe_typeclass/check.lean:29:121: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 7618096
+}

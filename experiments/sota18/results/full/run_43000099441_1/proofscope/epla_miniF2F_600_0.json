@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:600:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.5,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 222.3,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.log",
+     "type": "ℝ → ℝ"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x y z w : ℕ),   1 < x ∧ 1 < y ∧ 1 < z →     0 ≤ w →       Real.log ↑w / Real.log ↑x = 24 →         Real.log ↑w / Real.log ↑y = 40 → Real.log ↑w / Real.log (↑x * ↑y * ↑z) = 12 → Real.log ↑w / Real.log ↑z = 60",
+ "lean": "∀ (x y z w : ℝ),   x > 1 →     y > 1 →       z > 1 →         w > 0 →           Real.log w / Real.log x = 24 →             Real.log w / Real.log y = 40 → Real.log w / Real.log (x * y * z) = 12 → Real.log w / Real.log z = 60",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x y z w :'",
+  "cand": "unsupported: cannot tokenize at '∀ (x y z w :'"
+ },
+ "seconds": 234.9,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8760620
+}

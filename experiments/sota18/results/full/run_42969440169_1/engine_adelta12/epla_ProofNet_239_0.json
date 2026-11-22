@@ -1,0 +1,13 @@
+{
+ "id": "epla_ProofNet_239_0",
+ "reference": "∀ {G : Type u_1} [inst : Fintype G] [inst_1 : Group G] {p q : Nat.Primes}, p ≠ q → Fintype.card G = ↑p * ↑q → IsCyclic G",
+ "lean": "∀ {G : Type u_1} [inst : CommGroup G] [inst_1 : Fintype G] (p q : ℕ),   Nat.Prime p → Nat.Prime q → p ≠ q → Fintype.card G = p * q → IsCyclic G",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_239_0/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_239_0/extract/Assumptions_input.lean:4:162: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_239_0/extract/Assumptions_input.lean:4:0: error: statement has unresolved metavariables\n",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,66 @@
+{
+ "case_id": "epla:miniF2F:196:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.9,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 27.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HPow.hPow",
+     "type": "ℝ → ℕ → ℝ"
+    },
+    {
+     "symbol": "HDiv.hDiv",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.sqrt",
+     "type": "ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : ℝ) (a b c : ℕ),   0 < a ∧ 0 < b ∧ 0 < c ∧ 0 ≤ x → 2 * x ^ 2 = 4 * x + 9 → x = (↑a + √↑b) / ↑c → c = 2 → a + b + c = 26",
+ "lean": "∀ (x : ℝ) (a b c : ℤ), 2 * x ^ 2 = 4 * x + 9 → x = (↑a + √↑b) / ↑c → 0 < a → 0 < b → 0 < c → a + b + c = 26",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : ℝ) (a'",
+  "cand": "unsupported: cannot tokenize at '∀ (x : ℝ) (a'"
+ },
+ "seconds": 39.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7619100
+}

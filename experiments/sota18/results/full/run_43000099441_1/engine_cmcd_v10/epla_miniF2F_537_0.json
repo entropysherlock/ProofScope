@@ -1,0 +1,46 @@
+{
+ "id": "epla_miniF2F_537_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (p q : ℕ), Nat.Prime p ∧ Nat.Prime q → 4 ≤ p ∧ p ≤ 18 → 4 ≤ q ∧ q ≤ 18 → p * q - (p + q) ≠ 194",
+ "lean": "∃ (p : ℕ) (q : ℕ), Nat.Prime p ∧ Nat.Prime q ∧ p ≠ q ∧ 4 < p ∧ p < 18 ∧ 4 < q ∧ q < 18 ∧ p * q - (p + q) = 119",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "HMul.hMul",
+   "type": "ℕ → ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (p q : ℕ),\n  Nat.Prime p ∧ Nat.Prime q → (4 : ℕ) ≤ p ∧ p ≤ (18 : ℕ) → (4 : ℕ) ≤ q ∧ q ≤ (18 : ℕ) → p * q - (p + q) ≠ (194 : ℕ)",
+   "to": "∃ (p : ℕ) (q : ℕ),\n  Nat.Prime p ∧\n    Nat.Prime q ∧ p ≠ q ∧ (4 : ℕ) < p ∧ p < (18 : ℕ) ∧ (4 : ℕ) < q ∧ q < (18 : ℕ) ∧ p * q - (p + q) = (119 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (p q : ℕ),\n  Nat.Prime p ∧ Nat.Prime q → (4 : ℕ) ≤ p ∧ p ≤ (18 : ℕ) → (4 : ℕ) ≤ q ∧ q ≤ (18 : ℕ) → p * q - (p + q) ≠ (194 : ℕ)",
+   "to": "∃ (p : ℕ) (q : ℕ),\n  Nat.Prime p ∧\n    Nat.Prime q ∧ p ≠ q ∧ (4 : ℕ) < p ∧ p < (18 : ℕ) ∧ (4 : ℕ) < q ∧ q < (18 : ℕ) ∧ p * q - (p + q) = (119 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "single edit",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

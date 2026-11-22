@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0769_Dummit_Foote_exercise_1_1_22b",
+ "reference": "∀ {G : Type u_1} [inst : Group G] (a b : G), orderOf (a * b) = orderOf (b * a)",
+ "lean": "∀ {G : Type u_1} [inst : Group G] {a b c : G}, a * b = a * c → b = c",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

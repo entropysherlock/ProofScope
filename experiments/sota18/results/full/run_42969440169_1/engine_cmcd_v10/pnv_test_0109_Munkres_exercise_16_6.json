@@ -1,0 +1,45 @@
+{
+ "id": "pnv_test_0109_Munkres_exercise_16_6",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (S : Set (Set (ℝ × ℝ))),   (∀ s ∈ S,       ∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),         rational a ∧           rational b ∧             rational c ∧               rational d ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}) →     TopologicalSpace.IsTopologicalBasis S",
+ "lean": "∀ (U : Set (Set (ℝ × ℝ))),   (∀ u ∈ U, ∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ), a < b ∧ c < d ∧ u = Set.Ioo ↑a ↑b ×ˢ Set.Ioo ↑c ↑d) →     TopologicalSpace.IsTopologicalBasis U",
+ "symbols": [
+  {
+   "symbol": "Membership.mem",
+   "type": "Set (Set (ℝ × ℝ)) → Set (ℝ × ℝ) → Prop"
+  },
+  {
+   "symbol": "TopologicalSpace.IsTopologicalBasis",
+   "type": "Set (Set (ℝ × ℝ)) → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),\n  sorry ∧\n    sorry ∧ sorry ∧ sorry ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}",
+   "to": "∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ), a < b ∧ c < d ∧ s = Set.Ioo ↑a ↑b ×ˢ Set.Ioo ↑c ↑d"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∃ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ),\n  sorry ∧\n    sorry ∧ sorry ∧ sorry ∧ s = {x : ℝ × ℝ | ∃ (x₁ : ℝ) (x₂ : ℝ), x = (x₁, x₂) ∧ a < x₁ ∧ x₁ < b ∧ c < x₂ ∧ x₂ < d}",
+   "to": "∃ (a : ℚ) (b : ℚ) (c : ℚ) (d : ℚ), a < b ∧ c < d ∧ s = Set.Ioo ↑a ↑b ×ˢ Set.Ioo ↑c ↑d",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

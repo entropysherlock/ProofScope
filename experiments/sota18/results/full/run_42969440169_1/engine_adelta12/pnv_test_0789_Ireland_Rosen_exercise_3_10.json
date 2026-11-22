@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_0789_Ireland_Rosen_exercise_3_10",
+ "reference": "∀ {n : ℕ+},   ¬n.Prime →     ((n.val - OfNat.ofNat (nat_lit 1)).factorial ≡ OfNat.ofNat (nat_lit 0) [MOD n.val] ↔ n ≠ OfNat.ofNat (nat_lit 4))",
+ "lean": "∀ (n : ℕ), ¬Nat.Prime n → n.pred.factorial % n = 0 ∨ n = 4",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (n : ℕ), ¬Nat.Prime n → Nat.factorial (Nat.pred n) % n = (0 : ℕ) ∨ n = (4 : ℕ)",
+  "conclusion_ref": "∀ {n : ℕ+}, ¬PNat.Prime n → (Nat.factorial (↑n - (1 : ℕ)) ≡ (0 : ℕ) [MOD ↑n] ↔ n ≠ (4 : ℕ+))",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

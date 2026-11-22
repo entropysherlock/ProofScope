@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_0585_Rudin_exercise_4_11a",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] {Y : Type u_2} [inst_1 : MetricSpace Y] (f : X → Y),   UniformContinuous f → ∀ (x : ℕ → X), CauchySeq x → CauchySeq fun (n : ℕ) => f (x n)",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : MetricSpace X] [inst_1 : MetricSpace Y] {f : X → Y},   UniformContinuous f → ∀ {x : ℕ → X}, CauchySeq x → CauchySeq (f ∘ x)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0585_Rudin_exercise_4_11a/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0585_Rudin_exercise_4_11a/extract/Drift_input.lean:4:69: error: unknown universe level `u_2`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0585_Rudin_exercise_4_11a/extract/Drift_input.lean:4:212: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_0585_Rudin_exercise_4_11a/extract/Drift_input.lean:4:227: error: unknown universe level `u_2`\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

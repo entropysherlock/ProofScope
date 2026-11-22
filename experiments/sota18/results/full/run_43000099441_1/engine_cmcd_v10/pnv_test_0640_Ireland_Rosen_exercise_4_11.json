@@ -1,0 +1,61 @@
+{
+ "id": "pnv_test_0640_Ireland_Rosen_exercise_4_11",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {p : ℕ},   Nat.Prime p →     ∀ (k s : ℕ),       s = ∑ n : Fin (p - OfNat.ofNat (nat_lit 1)), (n.val + OfNat.ofNat (nat_lit 1)) ^ k →         (¬p - OfNat.ofNat (nat_lit 1) ∣ k → s ≡ OfNat.ofNat (nat_lit 0) [MOD p]) ∧           (p - OfNat.ofNat (nat_lit 1) ∣ k → s.cast ≡ -OfNat.ofNat (nat_lit 1) [ZMOD p.cast])",
+ "lean": "∀ {p : ℕ} [Fact (Nat.Prime p)] {k : ℕ}, k % (p - 1) = 0 → ∑ i ∈ Finset.range (p - 1), Nat.fib (i + 1) ^ k ≡ 0 [MOD p]",
+ "symbols": [
+  {
+   "symbol": "Nat.Prime",
+   "type": "ℕ → Prop"
+  },
+  {
+   "symbol": "HPow.hPow",
+   "type": "ℕ → ℕ → ℕ"
+  },
+  {
+   "symbol": "Nat.ModEq",
+   "type": "ℕ → ℕ → ℕ → Prop"
+  }
+ ],
+ "edits": [
+  {
+   "from": "Nat.Prime p",
+   "to": "Fact (Nat.Prime p)"
+  },
+  {
+   "from": "∀ (s : ℕ),\n  s = ∑ n : Fin (p - (1 : ℕ)), (↑n + (1 : ℕ)) ^ k →\n    (¬p - (1 : ℕ) ∣ k → s ≡ (0 : ℕ) [MOD p]) ∧ (p - (1 : ℕ) ∣ k → ↑s ≡ (-1 : ℤ) [ZMOD ↑p])",
+   "to": "k % (p - (1 : ℕ)) = (0 : ℕ) → ∑ i ∈ Finset.range (p - (1 : ℕ)), Nat.fib (i + (1 : ℕ)) ^ k ≡ (0 : ℕ) [MOD p]"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "Nat.Prime p",
+   "to": "Fact (Nat.Prime p)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  },
+  {
+   "edit": 2,
+   "from": "∀ (s : ℕ),\n  s = ∑ n : Fin (p - (1 : ℕ)), (↑n + (1 : ℕ)) ^ k →\n    (¬p - (1 : ℕ) ∣ k → s ≡ (0 : ℕ) [MOD p]) ∧ (p - (1 : ℕ) ∣ k → ↑s ≡ (-1 : ℤ) [ZMOD ↑p])",
+   "to": "k % (p - (1 : ℕ)) = (0 : ℕ) → ∑ i ∈ Finset.range (p - (1 : ℕ)), Nat.fib (i + (1 : ℕ)) ^ k ≡ (0 : ℕ) [MOD p]",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "localized_at": null,
+ "reason": "edits do not all point in one direction; per-edit relations are reported but not composed (theorem `cancellation`)",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

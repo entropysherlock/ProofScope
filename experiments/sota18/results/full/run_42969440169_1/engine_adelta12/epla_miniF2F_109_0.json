@@ -1,0 +1,142 @@
+{
+ "id": "epla_miniF2F_109_0",
+ "reference": "∀ (a b c d : ℝ), 0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < d → a ^ 2 / b + b ^ 2 / c + c ^ 2 / d + d ^ 2 / a ≥ a + b + c + d",
+ "lean": "∀ (a b c d : ℝ), 0 < a → 0 < b → 0 < c → 0 < d → a ^ 2 / b + b ^ 2 / c + c ^ 2 / d + d ^ 2 / a ≥ a + b + c + d",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < c"
+   },
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < d"
+   }
+  ],
+  "added_prefix": [
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ]
+  ],
+  "conclusion_lean": "a ^ (2 : ℕ) / b + b ^ (2 : ℕ) / c + c ^ (2 : ℕ) / d + d ^ (2 : ℕ) / a ≥ a + b + c + d",
+  "conclusion_ref": "a ^ (2 : ℕ) / b + b ^ (2 : ℕ) / c + c ^ (2 : ℕ) / d + d ^ (2 : ℕ) / a ≥ a + b + c + d",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c ∧ (0 : ℝ) < d"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    4,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "c",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "d",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_109_0.link_L",
+   "statement": "(∀ (a b c d : ℝ), 0 < a → 0 < b → 0 < c → 0 < d → a ^ 2 / b + b ^ 2 / c + c ^ 2 / d + d ^ 2 / a ≥ a + b + c + d) ↔ (∀ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ), ((0 : ℝ) < a) → ((0 : ℝ) < b) → ((0 : ℝ) < c) → ((0 : ℝ) < d) → a ^ (2 : ℕ) / b + b ^ (2 : ℕ) / c + c ^ (2 : ℕ) / d + d ^ (2 : ℕ) / a ≥ a + b + c + d)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_109_0.link_R",
+   "statement": "(∀ (a b c d : ℝ), 0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < d → a ^ 2 / b + b ^ 2 / c + c ^ 2 / d + d ^ 2 / a ≥ a + b + c + d) ↔ (∀ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ), ((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c ∧ (0 : ℝ) < d) → a ^ (2 : ℕ) / b + b ^ (2 : ℕ) / c + c ^ (2 : ℕ) / d + d ^ (2 : ℕ) / a ≥ a + b + c + d)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_109_0.a_implies_d",
+   "statement": "∀ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ), (((0 : ℝ) < a) ∧ ((0 : ℝ) < b) ∧ ((0 : ℝ) < c) ∧ ((0 : ℝ) < d)) → ((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c ∧ (0 : ℝ) < d)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_109_0.d_implies_a",
+   "statement": "∀ (a : ℝ) (b : ℝ) (c : ℝ) (d : ℝ), (((0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c ∧ (0 : ℝ) < d)) → ((0 : ℝ) < a) ∧ ((0 : ℝ) < b) ∧ ((0 : ℝ) < c) ∧ ((0 : ℝ) < d)",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "(0 : ℝ) < a",
+  "(0 : ℝ) < b",
+  "(0 : ℝ) < c",
+  "(0 : ℝ) < d"
+ ],
+ "dropped": [
+  "(0 : ℝ) < a ∧ (0 : ℝ) < b ∧ (0 : ℝ) < c ∧ (0 : ℝ) < d"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

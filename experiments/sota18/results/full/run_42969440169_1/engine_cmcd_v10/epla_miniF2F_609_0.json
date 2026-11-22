@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_609_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (x y z : ℝ), x ≠ 0 → 2 * x = 5 * y → 7 * y = 10 * z → z / x = 7 / 25",
+ "lean": "∀ (x y z : ℚ), x ≠ 0 → 2 * x = 5 * y → 7 * y = 10 * z → z / x = 7 / 25",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (x y z : ℝ), x ≠ (0 : ℝ) → (2 : ℝ) * x = (5 : ℝ) * y → (7 : ℝ) * y = (10 : ℝ) * z → z / x = (7 / 25 : ℝ)",
+   "to": "∀ (x y z : ℚ), x ≠ (0 : ℚ) → (2 : ℚ) * x = (5 : ℚ) * y → (7 : ℚ) * y = (10 : ℚ) * z → z / x = (7 / 25 : ℚ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

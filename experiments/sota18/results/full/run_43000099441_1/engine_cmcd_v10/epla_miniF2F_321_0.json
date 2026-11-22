@@ -1,0 +1,17 @@
+{
+ "id": "epla_miniF2F_321_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (f : ℤ → ℤ), (∀ (n : ℤ), 1000 ≤ n → f n = n - 3) → (∀ n < 1000, f n = f (f (n + 5))) → f 84 = 997",
+ "lean": "∀ (f : ℤ → ℤ), (∀ n < 1000, f n = f (f (n + 5))) → f 84 = 997",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_321_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #2\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

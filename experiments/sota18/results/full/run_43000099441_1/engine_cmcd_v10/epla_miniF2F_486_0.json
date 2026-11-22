@@ -1,0 +1,55 @@
+{
+ "id": "epla_miniF2F_486_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (S : Finset ℕ), (∀ (n : ℕ), n ∈ S ↔ 1000 ≤ n ∧ n ≤ 9999 ∧ (∀ d ∈ Nat.digits 10 n, Even d) ∧ 5 ∣ n) → S.card = 100",
+ "lean": "{n ∈ Finset.range 10000 | (1000 ≤ n ∧ n ≤ 9999) ∧ (∀ d ∈ Nat.digits 10 n, d % 2 = 0) ∧ n % 5 = 0}.card = 100",
+ "symbols": [
+  {
+   "symbol": "Membership.mem",
+   "type": "List ℕ → ℕ → Prop"
+  },
+  {
+   "symbol": "Nat.digits",
+   "type": "ℕ → ℕ → List ℕ"
+  },
+  {
+   "symbol": "Finset.card",
+   "type": "Finset ℕ → ℕ"
+  }
+ ],
+ "edits": [
+  {
+   "from": "∀ (S : Finset ℕ),\n  (∀ (n : ℕ), n ∈ S ↔ (1000 : ℕ) ≤ n ∧ n ≤ (9999 : ℕ) ∧ (∀ d ∈ Nat.digits (10 : ℕ) n, Even d) ∧ (5 : ℕ) ∣ n) →\n    Finset.card S = (100 : ℕ)",
+   "to": "Finset.card\n    ({n ∈ Finset.range (10000 : ℕ) |\n      ((1000 : ℕ) ≤ n ∧ n ≤ (9999 : ℕ)) ∧\n        (∀ d ∈ Nat.digits (10 : ℕ) n, d % (2 : ℕ) = (0 : ℕ)) ∧ n % (5 : ℕ) = (0 : ℕ)}) =\n  (100 : ℕ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "certify_status": "OK",
+ "steps": [
+  {
+   "edit": 1,
+   "from": "∀ (S : Finset ℕ),\n  (∀ (n : ℕ), n ∈ S ↔ (1000 : ℕ) ≤ n ∧ n ≤ (9999 : ℕ) ∧ (∀ d ∈ Nat.digits (10 : ℕ) n, Even d) ∧ (5 : ℕ) ∣ n) →\n    Finset.card S = (100 : ℕ)",
+   "to": "Finset.card\n    ({n ∈ Finset.range (10000 : ℕ) |\n      ((1000 : ℕ) ≤ n ∧ n ≤ (9999 : ℕ)) ∧\n        (∀ d ∈ Nat.digits (10 : ℕ) n, d % (2 : ℕ) = (0 : ℕ)) ∧ n % (5 : ℕ) = (0 : ℕ)}) =\n  (100 : ℕ)",
+   "relation": "INCONCLUSIVE",
+   "certificates": {}
+  }
+ ],
+ "global_relation": "INCONCLUSIVE",
+ "global_certificates": {},
+ "verdict": "INCONCLUSIVE",
+ "reason": "abstraction not linked to the elaborated statements",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {
+  "Finset ℕ → ℕ": [
+   "fun (b0 : Finset ℕ) => (100 : ℕ)",
+   "fun (b0 : Finset ℕ) => ((100 : ℕ)) + 1",
+   "fun (b0 : Finset ℕ) => ((100 : ℕ)) - 1"
+  ]
+ },
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

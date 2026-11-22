@@ -1,0 +1,138 @@
+{
+ "id": "epla_miniF2F_237_0",
+ "reference": "∀ (a b : ℕ), 0 < a ∧ 0 < b → a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "lean": "∀ (a b : ℕ), a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "a % (10 : ℕ) = (2 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "b % (10 : ℕ) = (4 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "Nat.gcd a b = (6 : ℕ)"
+   }
+  ],
+  "added_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "conclusion_lean": "(108 : ℕ) ≤ Nat.lcm a b",
+  "conclusion_ref": "(108 : ℕ) ≤ Nat.lcm a b",
+  "conclusion_same": true,
+  "dropped": [
+   {
+    "dependent": false,
+    "prop": "(0 : ℕ) < a ∧ (0 : ℕ) < b"
+   },
+   {
+    "dependent": false,
+    "prop": "a % (10 : ℕ) = (2 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "b % (10 : ℕ) = (4 : ℕ)"
+   },
+   {
+    "dependent": false,
+    "prop": "Nat.gcd a b = (6 : ℕ)"
+   }
+  ],
+  "dropped_prefix": [
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    0
+   ]
+  ],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "a",
+    "type": "ℕ"
+   },
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "b",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "certify_status": "OK",
+ "certificates": {
+  "link_R": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_237_0.link_R",
+   "statement": "(∀ (a b : ℕ), 0 < a ∧ 0 < b → a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b) ↔ (∀ (a : ℕ) (b : ℕ), ((0 : ℕ) < a ∧ (0 : ℕ) < b) → (a % (10 : ℕ) = (2 : ℕ)) → (b % (10 : ℕ) = (4 : ℕ)) → (Nat.gcd a b = (6 : ℕ)) → (108 : ℕ) ≤ Nat.lcm a b)",
+   "axioms": []
+  },
+  "d_implies_a": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_237_0.d_implies_a",
+   "statement": "∀ (a : ℕ) (b : ℕ), (((0 : ℕ) < a ∧ (0 : ℕ) < b) ∧ (a % (10 : ℕ) = (2 : ℕ)) ∧ (b % (10 : ℕ) = (4 : ℕ)) ∧ (Nat.gcd a b = (6 : ℕ))) → (a % (10 : ℕ) = (2 : ℕ)) ∧ (b % (10 : ℕ) = (4 : ℕ)) ∧ (Nat.gcd a b = (6 : ℕ))",
+   "axioms": [
+    "propext"
+   ]
+  },
+  "a_implies_d": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_237_0.a_implies_d",
+   "statement": "∀ (a : ℕ) (b : ℕ), ((a % (10 : ℕ) = (2 : ℕ)) ∧ (b % (10 : ℕ) = (4 : ℕ)) ∧ (Nat.gcd a b = (6 : ℕ))) → ((0 : ℕ) < a ∧ (0 : ℕ) < b) ∧ (a % (10 : ℕ) = (2 : ℕ)) ∧ (b % (10 : ℕ) = (4 : ℕ)) ∧ (Nat.gcd a b = (6 : ℕ))",
+   "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "link_L": {
+   "declaration": "ProofScopeCert.AD_epla_miniF2F_237_0.link_L",
+   "statement": "(∀ (a b : ℕ), a % 10 = 2 → b % 10 = 4 → a.gcd b = 6 → 108 ≤ a.lcm b) ↔ (∀ (a : ℕ) (b : ℕ), (a % (10 : ℕ) = (2 : ℕ)) → (b % (10 : ℕ) = (4 : ℕ)) → (Nat.gcd a b = (6 : ℕ)) → (108 : ℕ) ≤ Nat.lcm a b)",
+   "axioms": []
+  }
+ },
+ "mode": "mixed",
+ "added": [
+  "a % (10 : ℕ) = (2 : ℕ)",
+  "b % (10 : ℕ) = (4 : ℕ)",
+  "Nat.gcd a b = (6 : ℕ)"
+ ],
+ "dropped": [
+  "(0 : ℕ) < a ∧ (0 : ℕ) < b",
+  "a % (10 : ℕ) = (2 : ℕ)",
+  "b % (10 : ℕ) = (4 : ℕ)",
+  "Nat.gcd a b = (6 : ℕ)"
+ ],
+ "witnesses": {},
+ "verdict": "ASSUMPTION_EQUIVALENT",
+ "theorem": "mixed_entails",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

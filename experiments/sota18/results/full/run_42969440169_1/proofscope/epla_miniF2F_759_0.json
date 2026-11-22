@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:759:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.4
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.4,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 38.7,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℝ → ℝ → ℝ"
+    },
+    {
+     "symbol": "Real.sqrt",
+     "type": "ℝ → ℝ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (x : NNReal), √(60 * ↑x) * √(12 * ↑x) * √(63 * ↑x) = 36 * ↑x * √(35 * ↑x)",
+ "lean": "∀ x ≥ 0, √(60 * x) * √(12 * x) * √(63 * x) = 36 * x * √(35 * x)",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (x : NNRea'",
+  "cand": "unsupported: cannot tokenize at '∀ x ≥ 0, √(6'"
+ },
+ "seconds": 51.4,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8595608
+}

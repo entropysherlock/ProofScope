@@ -1,0 +1,32 @@
+{
+ "id": "synth_c02_renamed_binders",
+ "reference": "∀ (n : ℕ), 2 ≤ n → n < 2 ^ n",
+ "lean": "∀ (m : ℕ), 2 ≤ m → m < 2 ^ m",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "n < (2 : ℕ) ^ n",
+  "conclusion_ref": "n < (2 : ℕ) ^ n",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [
+   "(2 : ℕ) ≤ n"
+  ],
+  "model": [
+   {
+    "in_scope": true,
+    "inst": false,
+    "name": "n",
+    "type": "ℕ"
+   }
+  ]
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

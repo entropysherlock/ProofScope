@@ -1,0 +1,58 @@
+{
+ "case_id": "pnv:test:0463:Ireland-Rosen|exercise_4_4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.9
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.4
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 3.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 27.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {p t : ℕ}, Nat.Prime p → p = 4 * t + 1 → ∀ (a : ZMod p), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+ "lean": "∀ {p : ℕ} [hp : Fact (Nat.Prime p)], p % 4 = 1 → ∀ (a : ℤ), IsPrimitiveRoot a p ↔ IsPrimitiveRoot (-a) p",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {p t : ℕ},'",
+  "cand": "unsupported: cannot tokenize at '∀ {p : ℕ} [h'"
+ },
+ "seconds": 38.2,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8670820
+}

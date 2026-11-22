@@ -1,0 +1,57 @@
+{
+ "case_id": "epla:ProofNet:264:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 5.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_264_0/extract/Assumptions_input.lean:4:39: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_adelta12/work/epla_ProofNet_264_0/extract/Assumptions_input.lean:4:145: error: unknown universe level `u_1`\n"
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 11.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_264_0/extract/Drift_input.lean:4:31: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_ProofNet_264_0/extract/Drift_input.lean:4:137: error: unknown universe level `u_1`\n"
+  }
+ },
+ "levels": {
+  "ref": [
+   "u_1"
+  ],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ {X : Type u_1} [inst : MetricSpace X] [CompactSpace X] {f : X → X}, Isometry f → Function.Bijective f",
+ "lean": "∀ {X : Type u_1} [inst : MetricSpace X] [CompactSpace X] (f : X → X),   (∀ (x y : X), Dist.dist (f x) (f y) = Dist.dist x y) → Function.Bijective f",
+ "universe_params": true,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ {X : Type '",
+  "cand": "unsupported: cannot tokenize at '∀ {X : Type '"
+ },
+ "seconds": 25.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7618048
+}

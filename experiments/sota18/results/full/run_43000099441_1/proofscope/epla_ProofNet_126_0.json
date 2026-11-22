@@ -1,0 +1,33 @@
+{
+ "case_id": "epla:ProofNet:126:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 4.0
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {},
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "ref",
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_126_0/check.lean:25:115: error: invalid {...} notation, structure type expected",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_126_0/check.lean:25:75: error: invalid {...} notation, expected type is not known",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_126_0/check.lean:27:255: error: invalid {...} notation, structure type expected",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_126_0/check.lean:27:139: error: invalid {...} notation, expected type is not known",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_126_0/check.lean:29:106: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_126_0/check.lean:31:152: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 7616556
+}

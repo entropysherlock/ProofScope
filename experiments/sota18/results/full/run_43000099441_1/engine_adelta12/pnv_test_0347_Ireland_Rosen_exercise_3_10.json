@@ -1,0 +1,33 @@
+{
+ "id": "pnv_test_0347_Ireland_Rosen_exercise_3_10",
+ "reference": "∀ {n : ℕ+},   ¬n.Prime →     ((n.val - OfNat.ofNat (nat_lit 1)).factorial ≡ OfNat.ofNat (nat_lit 0) [MOD n.val] ↔ n ≠ OfNat.ofNat (nat_lit 4))",
+ "lean": "∀ [Fact (Nat.Prime 2)] (n : ℕ), ¬Nat.Prime n → n - 1 ≡ 0 [MOD n]",
+ "extraction": {
+  "added": [
+   {
+    "dependent": false,
+    "prop": "Fact (Nat.Prime (2 : ℕ))"
+   }
+  ],
+  "added_prefix": [
+   [
+    0,
+    0
+   ]
+  ],
+  "conclusion_lean": "∀ (n : ℕ), ¬Nat.Prime n → n - (1 : ℕ) ≡ (0 : ℕ) [MOD n]",
+  "conclusion_ref": "∀ {n : ℕ+}, ¬PNat.Prime n → (Nat.factorial (↑n - (1 : ℕ)) ≡ (0 : ℕ) [MOD ↑n] ↔ n ≠ (4 : ℕ+))",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "INCONCLUSIVE",
+ "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

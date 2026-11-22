@@ -1,0 +1,62 @@
+{
+ "case_id": "epla:miniF2F:537:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 3.7
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.0,
+   "verdict": "CONCLUSION_ONLY_CHANGE",
+   "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 28.0,
+   "verdict": "INCONCLUSIVE",
+   "reason": "single edit",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "Nat.Prime",
+     "type": "ℕ → Prop"
+    },
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (p q : ℕ), Nat.Prime p ∧ Nat.Prime q → 4 ≤ p ∧ p ≤ 18 → 4 ≤ q ∧ q ≤ 18 → p * q - (p + q) ≠ 194",
+ "lean": "∃ (p : ℕ) (q : ℕ), Nat.Prime p ∧ Nat.Prime q ∧ p ≠ q ∧ 4 < p ∧ p < 18 ∧ 4 < q ∧ q < 18 ∧ p * q - (p + q) = 119",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (p q : ℕ),'",
+  "cand": "unsupported: cannot tokenize at '∃ (p : ℕ) (q'"
+ },
+ "seconds": 39.7,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7794644
+}

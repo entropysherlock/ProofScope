@@ -1,0 +1,53 @@
+{
+ "case_id": "epla:miniF2F:284:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.6
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.2
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 4.5,
+   "verdict": "INCONCLUSIVE",
+   "reason": "the conclusion also changed: assumption and conclusion deltas are not composed here (use CMCD on the conclusion)",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 8.9,
+   "verdict": "INCONCLUSIVE",
+   "reason": "extraction failed",
+   "certificates": [],
+   "certify_status": null,
+   "localized_at": null,
+   "symbols": null,
+   "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/epla_miniF2F_284_0/extract/Drift_input.lean:4:0: error: unexpected bound variable #1\n"
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (a b c : ℝ) (f : ℝ → ℝ),   (∀ (x : ℝ), f x = x ^ 3 + a * x ^ 2 + b * x + c) →     f ⁻¹' {0} = {Real.cos (2 * Real.pi / 7), Real.cos (4 * Real.pi / 7), Real.cos (6 * Real.pi / 7)} →       a * b * c = 1 / 32",
+ "lean": "∀ (a b c : ℝ), a = -3 / 49 ∧ b = -1 / 28 ∧ c = 1 / 32 → a * b * c = 1 / 32",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (a b c : ℝ'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b c : ℝ'"
+ },
+ "seconds": 22.3,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 8651104
+}

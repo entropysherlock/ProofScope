@@ -1,0 +1,63 @@
+{
+ "case_id": "epla:miniF2F:581:0",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 4.3
+  },
+  "roundtrip": {
+   "rc": 0,
+   "s": 4.0
+  },
+  "adelta12": {
+   "rc": 0,
+   "s": 40.9,
+   "verdict": "ASSUMPTION_EQUIVALENT",
+   "reason": "",
+   "certificates": [
+    "a_implies_d",
+    "d_implies_a",
+    "link_L",
+    "link_R"
+   ],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": null,
+   "detail": ""
+  },
+  "cmcd_v10": {
+   "rc": 0,
+   "s": 30.5,
+   "verdict": "SCHEMA_EQUIVALENT",
+   "reason": "",
+   "certificates": [],
+   "certify_status": "OK",
+   "localized_at": null,
+   "symbols": [
+    {
+     "symbol": "HMul.hMul",
+     "type": "ℕ → ℕ → ℕ"
+    }
+   ],
+   "detail": ""
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": []
+ },
+ "print_setting": {
+  "ref": 0,
+  "cand": 0
+ },
+ "reference": "∀ (m n : ℕ), 1 < m → 1 < n → m * n = 2005 → m + n = 406",
+ "lean": "∀ (a b : ℕ), a > 1 ∧ b > 1 ∧ a * b = 2005 → a + b = 406",
+ "universe_params": false,
+ "grammar_entry": {
+  "ref": "unsupported: cannot tokenize at '∀ (m n : ℕ),'",
+  "cand": "unsupported: cannot tokenize at '∀ (a b : ℕ),'"
+ },
+ "seconds": 79.8,
+ "outcome": "ENGINES_RAN",
+ "children_maxrss_kb_so_far": 7640804
+}

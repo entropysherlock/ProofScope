@@ -1,0 +1,36 @@
+{
+ "id": "epla_miniF2F_348_0",
+ "reference": "∀ (x y : ℝ) (n : NNReal), x < 0 ∧ y < 0 → |y| = 6 → √((x - 8) ^ 2 + (y - 3) ^ 2) = 15 → √(x ^ 2 + y ^ 2) = √↑n → n = 52",
+ "lean": "∀ (x y : ℝ) (n : ℕ), x < 0 ∧ y < 0 → |y| = 6 → |x - 8| + |y - 3| = 15 → x ^ 2 + y ^ 2 = ↑n → n = 52",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "∀ (n : ℕ),\n  x < (0 : ℝ) ∧ y < (0 : ℝ) →\n    |y| = (6 : ℝ) → |x - (8 : ℝ)| + |y - (3 : ℝ)| = (15 : ℝ) → x ^ (2 : ℕ) + y ^ (2 : ℕ) = ↑n → n = (52 : ℕ)",
+  "conclusion_ref": "∀ (n : NNReal),\n  x < (0 : ℝ) ∧ y < (0 : ℝ) →\n    |y| = (6 : ℝ) →\n      √((x - (8 : ℝ)) ^ (2 : ℕ) + (y - (3 : ℝ)) ^ (2 : ℕ)) = (15 : ℝ) →\n        √(x ^ (2 : ℕ) + y ^ (2 : ℕ)) = √↑n → n = (52 : NNReal)",
+  "conclusion_same": false,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": [
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "x",
+    "type": "ℝ"
+   },
+   {
+    "in_scope": false,
+    "inst": false,
+    "name": "y",
+    "type": "ℝ"
+   }
+  ]
+ },
+ "verdict": "CONCLUSION_ONLY_CHANGE",
+ "reason": "assumptions agree, conclusions differ: not an assumption-level question (use CMCD on the conclusion)",
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

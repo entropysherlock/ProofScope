@@ -1,0 +1,19 @@
+{
+ "case_id": "pnv:test:0037:Ireland-Rosen|exercise_4_11",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 3.3
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "cand",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0037_Ireland_Rosen_exercise_4_11/print.lean:22:84: error: unexpected token 'in'; expected ','",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0037_Ireland_Rosen_exercise_4_11/print.lean:44:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0037_Ireland_Rosen_exercise_4_11/print.lean:50:0: error: PS_NO_DECL",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_0037_Ireland_Rosen_exercise_4_11/print.lean:56:0: error: PS_NO_DECL"
+ ],
+ "children_maxrss_kb_so_far": 7794340
+}

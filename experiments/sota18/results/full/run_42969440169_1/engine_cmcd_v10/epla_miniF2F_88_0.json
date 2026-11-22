@@ -1,0 +1,24 @@
+{
+ "id": "epla_miniF2F_88_0",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ (a b c d k m : ℕ),   0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < d →     Odd a ∧ Odd b ∧ Odd c ∧ Odd d → a < b ∧ b < c ∧ c < d → a * d = b * c → a + d = 2 ^ k → b + c = 2 ^ m → a = 1",
+ "lean": "∀ (a b c d : ℤ),   Odd a →     Odd b →       Odd c →         Odd d →           0 < a ∧ a < b ∧ b < c ∧ c < d →             a * d = b * c → (∃ (k : ℕ), a + d = 2 ^ k) → (∃ (m : ℕ), b + c = 2 ^ m) → a = 1",
+ "symbols": [],
+ "edits": [
+  {
+   "from": "∀ (a b c d k m : ℕ),\n  (0 : ℕ) < a ∧ (0 : ℕ) < b ∧ (0 : ℕ) < c ∧ (0 : ℕ) < d →\n    Odd a ∧ Odd b ∧ Odd c ∧ Odd d →\n      a < b ∧ b < c ∧ c < d → a * d = b * c → a + d = (2 : ℕ) ^ k → b + c = (2 : ℕ) ^ m → a = (1 : ℕ)",
+   "to": "∀ (a b c d : ℤ),\n  Odd a →\n    Odd b →\n      Odd c →\n        Odd d →\n          (0 : ℤ) < a ∧ a < b ∧ b < c ∧ c < d →\n            a * d = b * c → (∃ (k : ℕ), a + d = (2 : ℤ) ^ k) → (∃ (m : ℕ), b + c = (2 : ℤ) ^ m) → a = (1 : ℤ)"
+  }
+ ],
+ "symbols_truncated": false,
+ "verdict": "NO_SHARED_SYMBOLS",
+ "reason": "no shared opaque symbol: two true statements entail each other trivially, so no fidelity certificate is issued",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

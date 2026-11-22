@@ -1,0 +1,16 @@
+{
+ "case_id": "epla:ProofNet:27:0",
+ "stages": {
+  "print": {
+   "rc": 1,
+   "s": 1.6
+  }
+ },
+ "outcome": "NON_ELABORATING",
+ "reason": "declaration does not elaborate on Lean 4.34.1 / Mathlib v4.34.1",
+ "side": "ref",
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/epla_ProofNet_27_0/print.lean:1:0: error: object file '/home/runner/work/_temp/ml/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/LinearAlgebra/Basic.olean' of module Mathlib.LinearAlgebra.Basic does not exist"
+ ],
+ "children_maxrss_kb_so_far": 7619128
+}

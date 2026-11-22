@@ -1,0 +1,23 @@
+{
+ "id": "pnv_test_1278_Herstein_exercise_4_2_6",
+ "reference": "∀ {R : Type u_1} [inst : Ring R] (a x : R), a ^ 2 = 0 → a * (a * x + x * a) = (a * x + x * a) * a",
+ "lean": "∀ {R : Type u_1} [inst : Ring R] {a x : R}, a ^ 2 = 0 → a * (a * x + x * a) = (a * x + x * a) * a",
+ "extraction": {
+  "added": [],
+  "added_prefix": [],
+  "conclusion_lean": "sorry",
+  "conclusion_ref": "sorry",
+  "conclusion_same": true,
+  "dropped": [],
+  "dropped_prefix": [],
+  "hyps": [],
+  "model": []
+ },
+ "verdict": "NO_ASSUMPTION_DELTA",
+ "reason": null,
+ "expected": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}

@@ -1,0 +1,32 @@
+{
+ "case_id": "pnv:test:1416:Munkres|exercise_29_4",
+ "stages": {
+  "print": {
+   "rc": 0,
+   "s": 3.6
+  },
+  "roundtrip": {
+   "rc": 1,
+   "s": 3.3
+  }
+ },
+ "levels": {
+  "ref": [],
+  "cand": [
+   "u_1"
+  ]
+ },
+ "print_setting": {
+  "ref": 0
+ },
+ "outcome": "UNSUPPORTED_INPUT",
+ "reason": "printed statement does not round-trip (adapter limitation)",
+ "side": [
+  "cand"
+ ],
+ "errors": [
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1416_Munkres_exercise_29_4/check.lean:30:137: error: Tactic `rfl` failed: The left-hand side",
+  "/home/runner/work/ProofScope/ProofScope/ev/ps/work/pnv_test_1416_Munkres_exercise_29_4/check.lean:32:191: error: Tactic `rfl` failed: The left-hand side"
+ ],
+ "children_maxrss_kb_so_far": 8592588
+}

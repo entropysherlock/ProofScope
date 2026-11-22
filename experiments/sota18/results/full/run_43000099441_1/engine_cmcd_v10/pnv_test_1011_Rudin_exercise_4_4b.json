@@ -1,0 +1,17 @@
+{
+ "id": "pnv_test_1011_Rudin_exercise_4_4b",
+ "policy": "LINEAR_CORE_SHARED_OCC",
+ "reference": "∀ {α : Type} [inst : MetricSpace α] {β : Type} [inst_1 : MetricSpace β] (f g : α → β) (s : Set α),   Continuous f → Continuous g → Dense s → (∀ x ∈ s, f x = g x) → f = g",
+ "lean": "∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] {f g : X → Y} {D : Set X},   Dense D → (∀ p ∈ D, g p = f p) → (Continuous g ↔ Continuous f)",
+ "verdict": "INCONCLUSIVE",
+ "reason": "extraction failed",
+ "detail": "/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1011_Rudin_exercise_4_4b/extract/Drift_input.lean:4:203: error: unknown universe level `u_1`\n/home/runner/work/ProofScope/ProofScope/ev/ps/engine_cmcd_v10/work/pnv_test_1011_Rudin_exercise_4_4b/extract/Drift_input.lean:4:218: error: unknown universe level `u_2`\n",
+ "engine": "cmcd_v10",
+ "boundary_candidates": {},
+ "expected": null,
+ "expected_localized_at": null,
+ "domain": null,
+ "family": null,
+ "split": null,
+ "must_not_be": null
+}
