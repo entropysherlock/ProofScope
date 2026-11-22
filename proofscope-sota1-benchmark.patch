@@ -1,0 +1,2120 @@
+From 4e5cbb5d730bacc7e4e516ceac870bf165e812a4 Mon Sep 17 00:00:00 2001
+From: "Caleb J. Westfall" <calebwestfall1989@gmail.com>
+Date: Mon, 9 Nov 2026 12:40:42 -0700
+Subject: [PATCH] SOTA-1: executable competitor benchmark infrastructure,
+ joint-drift research theorems, availability and novelty report
+
+- bench/: canonical case format (labels rejected in cases), EPLA/ProofNetVerif ingestion with
+  source labels kept apart, custodian sealing (group-disjoint pilot/primary, salted SHA-256 label
+  commitments), external CPU limit (prlimit) + process-group RSS watchdog, adapters for ProofScope
+  v1.2 (with a with_reducible-rfl meaning-preservation check), SemantEq (native pair format) and
+  BEq+ (unmodified upstream function), pre-registered certified/native outcome mapping, scoring with
+  Clopper-Pearson, group-clustered bootstrap, exact McNemar + Holm.
+- .github/workflows/competitor-benchmark.yml: infrastructure tests, research-theorem axiom check and
+  fresh replay, candidate pools, sharded per-system runs, completeness table; scoring only after the
+  custodian releases gold.
+- research/joint_drift/JointDrift.lean: 7 theorems (6 axiom-free, 1 standard) for joint
+  assumption+conclusion drift, incl. certified logical difference and a non-compositionality result.
+- docs/sota1/: availability matrix, corpus specification (EPLA facts, vendor-home strata),
+  adjudication instructions, novelty analysis (FormalRx-CC is the closest prior art), status
+  classification (engineering result; no comparative result exists), amendments A1-A6, errata.
+
+No benchmark has been run; no labels exist; no superiority is claimed.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D6eL9tvFdmWVfTWBctgXnC
+---
+ .github/workflows/competitor-benchmark.yml | 285 +++++++++++++++++++++
+ bench/__init__.py                          |   6 +
+ bench/adapters/__init__.py                 |   3 +
+ bench/adapters/_decl.py                    |  43 ++++
+ bench/adapters/beqplus.py                  |  27 ++
+ bench/adapters/beqplus_driver.py           |  50 ++++
+ bench/adapters/proofscope.py               |  91 +++++++
+ bench/adapters/semanteq.py                 |  43 ++++
+ bench/canonical.py                         |  90 +++++++
+ bench/fixtures/availability.cases.jsonl    |   3 +
+ bench/ingest.py                            |  83 ++++++
+ bench/limits.py                            | 118 +++++++++
+ bench/outcomes.py                          |  65 +++++
+ bench/runner.py                            | 144 +++++++++++
+ bench/score.py                             | 244 ++++++++++++++++++
+ bench/seal.py                              | 152 +++++++++++
+ docs/sota1/ADJUDICATION.md                 |  63 +++++
+ docs/sota1/README.md                       | 221 ++++++++++++++++
+ research/joint_drift/JointDrift.lean       |  95 +++++++
+ tests/bench/__init__.py                    |   0
+ tests/bench/test_bench.py                  |  98 +++++++
+ 21 files changed, 1924 insertions(+)
+ create mode 100644 .github/workflows/competitor-benchmark.yml
+ create mode 100644 bench/__init__.py
+ create mode 100644 bench/adapters/__init__.py
+ create mode 100644 bench/adapters/_decl.py
+ create mode 100644 bench/adapters/beqplus.py
+ create mode 100644 bench/adapters/beqplus_driver.py
+ create mode 100644 bench/adapters/proofscope.py
+ create mode 100644 bench/adapters/semanteq.py
+ create mode 100644 bench/canonical.py
+ create mode 100644 bench/fixtures/availability.cases.jsonl
+ create mode 100644 bench/ingest.py
+ create mode 100644 bench/limits.py
+ create mode 100644 bench/outcomes.py
+ create mode 100644 bench/runner.py
+ create mode 100644 bench/score.py
+ create mode 100644 bench/seal.py
+ create mode 100644 docs/sota1/ADJUDICATION.md
+ create mode 100644 docs/sota1/README.md
+ create mode 100644 research/joint_drift/JointDrift.lean
+ create mode 100644 tests/bench/__init__.py
+ create mode 100644 tests/bench/test_bench.py
+
+diff --git a/.github/workflows/competitor-benchmark.yml b/.github/workflows/competitor-benchmark.yml
+new file mode 100644
+index 0000000..34664d1
+--- /dev/null
++++ b/.github/workflows/competitor-benchmark.yml
+@@ -0,0 +1,285 @@
++name: ProofScope SOTA-1 Competitor Benchmark
++
++# Executable form of docs/competitor_benchmark_protocol.md (amendments in docs/sota1/).
++# phase=availability : native install + calibration pair + 2-pair smoke for every eligible system
++#                      (no labels involved); measures each tool's startup CPU for amendment A1.
++# phase=pilot|primary: runs every system on a SEALED, blinded cases file committed by the custodian.
++#                      Scoring needs the gold file, which the custodian releases only after the runs
++#                      are locked; until then the score job is skipped.
++# Every record (timeouts, OOM, non-elaborating inputs, adapter failures) is kept. No secrets are used.
++on:
++  workflow_dispatch:
++    inputs:
++      phase:
++        description: availability | pilot | primary
++        required: true
++        default: availability
++      tier:
++        description: CPU seconds per pair (20 primary, 180 sensitivity)
++        required: true
++        default: "20"
++      cases:
++        description: blinded cases file (pilot/primary only)
++        required: false
++        default: bench/fixtures/availability.cases.jsonl
++      startup_allowance:
++        description: 'JSON {"proofscope": s, "semanteq": s, "beqplus": s} frozen from the availability run (amendment A1)'
++        required: false
++        default: '{"proofscope": 0, "semanteq": 0, "beqplus": 0}'
++      gold:
++        description: released gold file (empty until the custodian releases it)
++        required: false
++        default: ""
++
++permissions:
++  contents: read
++
++env:
++  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
++  SEMANTEQ_REPO: https://github.com/hlxr89/SemantEq.git
++  SEMANTEQ_REV: f92767000e14d11744580946980cf874324f5d19
++  LEANINTERACT_REPO: https://github.com/augustepoiroux/LeanInteract.git
++  LEANINTERACT_REV: 768e18ebcb5c7ec34d308768a785389eeac37798
++  ASSESS_REPO: https://github.com/XiaoyangLiu-sjtu/ASSESS.git
++  ASSESS_REV: bc7933547d8a6d1aaee41ccf56d68bc1f0fc575d
++
++jobs:
++  infrastructure-tests:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 30
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
++        uses: ./.github/actions/setup-lean
++      - name: Benchmark infrastructure unit tests
++        run: python -m unittest tests.bench.test_bench -v
++      - name: Research theorems (JointDrift; 6 axiom-free + 1 standard-axiom, fresh kernel replay)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/jd" evidence
++          lean -o "$RUNNER_TEMP/jd/JointDrift.olean" research/joint_drift/JointDrift.lean | tee evidence/jointdrift-axioms.log
++          test "$(grep -c 'does not depend on any axioms' evidence/jointdrift-axioms.log)" = 6
++          test "$(grep -c 'depends on axioms: \[propext, Quot.sound\]' evidence/jointdrift-axioms.log)" = 1
++          ! grep -q sorryAx evidence/jointdrift-axioms.log
++          (cd "$RUNNER_TEMP/jd" && LEAN_PATH="$RUNNER_TEMP/jd" leanchecker --fresh JointDrift)
++      - name: Candidate pool from EPLA (pinned ASSESS commit; source labels kept apart from cases)
++        shell: bash
++        run: |
++          set -euo pipefail
++          git init -q "$RUNNER_TEMP/assess" && cd "$RUNNER_TEMP/assess"
++          git remote add origin "$ASSESS_REPO" && git fetch -q --depth 1 origin "$ASSESS_REV" && git checkout -q FETCH_HEAD
++          test "$(git rev-parse HEAD)" = "$ASSESS_REV"
++          cd "$GITHUB_WORKSPACE"
++          python -m bench.ingest epla --assess-dir "$RUNNER_TEMP/assess" --out evidence/pool | tee evidence/pool-epla.log
++      - name: Candidate pool from ProofNetVerif (Hugging Face; recorded as INFRASTRUCTURE if unreachable)
++        shell: bash
++        run: |
++          set -uo pipefail
++          pip install -q datasets==3.6.0
++          python -m bench.ingest proofnetverif --split test --out evidence/pool 2>&1 | tee evidence/pool-pnv.log \
++            || echo "INFRASTRUCTURE: ProofNetVerif download failed" | tee -a evidence/pool-pnv.log
++      - name: Upload evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota1-infrastructure
++          path: evidence/
++
++  proofscope:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 300
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [0, 1, 2, 3]
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: Freeze check (ProofScope v1.2 frozen engine)
++        shell: bash
++        run: |
++          set -euo pipefail
++          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c
++      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
++        uses: ./.github/actions/setup-lean
++      - name: Mathlib at the pinned revision (binary cache)
++        shell: bash
++        run: |
++          set -euo pipefail
++          mkdir -p "$RUNNER_TEMP/ml" && cd "$RUNNER_TEMP/ml"
++          echo "leanprover/lean4:v4.34.1" > lean-toolchain
++          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
++            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
++          for i in 1 2 3; do lake update && break || sleep 30; done
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
++      - name: Run (shard ${{ matrix.shard }}/4)
++        shell: bash
++        run: |
++          set -euo pipefail
++          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['proofscope'])" '${{ inputs.startup_allowance }}')
++          python -m bench.runner --system proofscope --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
++            --startup-allowance "$A" --mem-mb 12000 --repeat 1 --shard ${{ matrix.shard }}/4 --out runs | tee runs-proofscope-${{ matrix.shard }}.log
++      - name: Upload runs
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota1-runs-proofscope-${{ matrix.shard }}
++          path: |
++            runs/
++            !runs/work/**/ps_out/build/**
++            runs-proofscope-*.log
++          if-no-files-found: warn
++
++  semanteq:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 300
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [0, 1, 2, 3]
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - name: SemantEq at the pinned commit, native toolchain and Mathlib (its own lockfile)
++        shell: bash
++        run: |
++          set -euo pipefail
++          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
++          sh /tmp/elan-init.sh -y --default-toolchain none
++          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
++          export PATH="$HOME/.elan/bin:$PATH"
++          git init -q "$RUNNER_TEMP/se" && cd "$RUNNER_TEMP/se"
++          git remote add origin "$SEMANTEQ_REPO" && git fetch -q --depth 1 origin "$SEMANTEQ_REV" && git checkout -q FETCH_HEAD
++          test "$(git rev-parse HEAD)" = "$SEMANTEQ_REV"
++          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
++          lake build semanteq 2>&1 | tail -5
++      - name: Run (shard ${{ matrix.shard }}/4)
++        shell: bash
++        run: |
++          set -euo pipefail
++          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['semanteq'])" '${{ inputs.startup_allowance }}')
++          python -m bench.runner --system semanteq --tool-dir "$RUNNER_TEMP/se" --cases '${{ inputs.cases }}' \
++            --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 --shard ${{ matrix.shard }}/4 \
++            --out runs | tee runs-semanteq-${{ matrix.shard }}.log
++      - name: Upload runs
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota1-runs-semanteq-${{ matrix.shard }}
++          path: |
++            runs/
++            runs-semanteq-*.log
++          if-no-files-found: warn
++
++  beqplus:
++    runs-on: ubuntu-24.04
++    timeout-minutes: 300
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [0, 1, 2, 3]
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.11"
++      - name: LeanInteract at the pinned commit (BEq+ source) and its REPL project (Lean v4.8.0 + Mathlib, as upstream's driver)
++        shell: bash
++        run: |
++          set -euo pipefail
++          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
++          sh /tmp/elan-init.sh -y --default-toolchain none
++          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
++          export PATH="$HOME/.elan/bin:$PATH"
++          git init -q "$RUNNER_TEMP/li" && cd "$RUNNER_TEMP/li"
++          git remote add origin "$LEANINTERACT_REPO" && git fetch -q --depth 1 origin "$LEANINTERACT_REV" && git checkout -q FETCH_HEAD
++          test "$(git rev-parse HEAD)" = "$LEANINTERACT_REV"
++          pip install -q . rich tqdm scikit-learn datasets
++          # warm the REPL project once (counted as setup, reported separately)
++          python -c "from lean_interact import LeanREPLConfig, TempRequireProject; LeanREPLConfig(project=TempRequireProject(lean_version='v4.8.0', require='mathlib'))"
++      - name: Run (shard ${{ matrix.shard }}/4)
++        shell: bash
++        run: |
++          set -euo pipefail
++          A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['beqplus'])" '${{ inputs.startup_allowance }}')
++          python -m bench.runner --system beqplus --tool-dir "$RUNNER_TEMP/li" --beq-lean-version v4.8.0 \
++            --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 \
++            --shard ${{ matrix.shard }}/4 --out runs | tee runs-beqplus-${{ matrix.shard }}.log
++      - name: Upload runs
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota1-runs-beqplus-${{ matrix.shard }}
++          path: |
++            runs/
++            runs-beqplus-*.log
++          if-no-files-found: warn
++
++  collect:
++    needs: [proofscope, semanteq, beqplus]
++    if: always()
++    runs-on: ubuntu-24.04
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@v5
++        with:
++          python-version: "3.12"
++      - uses: actions/download-artifact@v4
++        with:
++          pattern: sota1-runs-*
++          path: shards
++          merge-multiple: true
++      - name: Completeness check (one record per case and system) and outcome table
++        shell: bash
++        run: |
++          set -euo pipefail
++          python - <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
++          import json, pathlib, collections
++          from bench.canonical import read_jsonl
++          cases = [c["case_id"] for c in read_jsonl(pathlib.Path("${{ inputs.cases }}"))]
++          root = pathlib.Path("shards")
++          print(f"## SOTA-1 phase `${{ inputs.phase }}`, tier ${{ inputs.tier }} CPU-s, {len(cases)} cases")
++          for system in ("proofscope", "semanteq", "beqplus"):
++              recs = {}
++              for p in root.glob(f"**/{system}/t${{ inputs.tier }}/*.r0.json"):
++                  r = json.loads(p.read_text()); recs[r["case_id"]] = r
++              missing = sorted(set(cases) - set(recs))
++              st = collections.Counter(r["status"] for r in recs.values())
++              nat = collections.Counter(str(r.get("native_verdict")) for r in recs.values())
++              print(f"- **{system}**: records {len(recs)}/{len(cases)}, missing {len(missing)}; status {dict(st)}; native {dict(nat)}")
++          print("Outcome counts only; no accuracy is computed without released gold labels.")
++          PY
++      - name: Score (only when the custodian has released gold)
++        if: inputs.gold != ''
++        run: |
++          mkdir -p scored
++          python -m bench.score --runs shards/runs --gold '${{ inputs.gold }}' --tier ${{ inputs.tier }} \
++            --out scored/metrics.json --markdown scored/report.md | tee -a "$GITHUB_STEP_SUMMARY"
++      - name: Upload collected evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: sota1-collected
++          path: |
++            shards/
++            scored/
++          if-no-files-found: warn
+diff --git a/bench/__init__.py b/bench/__init__.py
+new file mode 100644
+index 0000000..b40a19b
+--- /dev/null
++++ b/bench/__init__.py
+@@ -0,0 +1,6 @@
++"""ProofScope SOTA-1 competitor benchmark infrastructure (protocol: docs/competitor_benchmark_protocol.md).
++
++Nothing in this package decides mathematical truth. Gold labels come only from the sealed adjudication
++(`seal.py`); tool outputs are preserved verbatim and mapped to the shared outcome vocabulary by
++pre-registered, per-tool rules (`outcomes.py`).
++"""
+diff --git a/bench/adapters/__init__.py b/bench/adapters/__init__.py
+new file mode 100644
+index 0000000..4245882
+--- /dev/null
++++ b/bench/adapters/__init__.py
+@@ -0,0 +1,3 @@
++"""Per-tool adapters. Each exposes `prepare(case, workdir) -> dict` (inputs written, command to run) and
++`parse(case, run, workdir) -> dict` (native verdict preserved, outcomes per track). Adapters may only
++add imports/wrap declarations; they never edit a declaration's binders, types or body."""
+diff --git a/bench/adapters/_decl.py b/bench/adapters/_decl.py
+new file mode 100644
+index 0000000..119a5af
+--- /dev/null
++++ b/bench/adapters/_decl.py
+@@ -0,0 +1,43 @@
++"""Declaration plumbing shared by adapters (pure text; no semantic edits)."""
++from __future__ import annotations
++
++import re
++
++_HEAD = re.compile(r"^(\s*(?:@\[[^\]]*\]\s*)?)(theorem|lemma)\s+([^\s(:{\[]+)", re.M)
++
++
++def split_header(header: str) -> tuple[list[str], list[str]]:
++    """(import lines, other lines) of a source header."""
++    imps, rest = [], []
++    for line in header.splitlines():
++        (imps if line.strip().startswith("import ") else rest).append(line)
++    return imps, rest
++
++
++def with_sorry(decl: str) -> str:
++    """The declaration closed with `sorry`, proof text dropped. A declaration that already ends in
++    `sorry` has its proof replaced at the last `:=`; one without a proof gets `:= sorry` appended
++    (a `:=` inside the statement, e.g. a `let`, is therefore never cut)."""
++    d = decl.rstrip()
++    if d.endswith("sorry"):
++        i = d.rfind(":=")
++        return d[:i].rstrip() + " := sorry"
++    if d.endswith(":="):
++        return d + " sorry"
++    return d + " := sorry"
++
++
++def rename(decl: str, new: str) -> str:
++    m = _HEAD.search(decl)
++    if not m:
++        raise ValueError("no theorem/lemma head")
++    return decl[:m.start()] + f"{m.group(1)}theorem {new}" + decl[m.end():]
++
++
++def merged_imports(*headers: str) -> list[str]:
++    out = []
++    for h in headers:
++        for line in split_header(h)[0]:
++            if line.strip() not in out:
++                out.append(line.strip())
++    return out
+diff --git a/bench/adapters/beqplus.py b/bench/adapters/beqplus.py
+new file mode 100644
+index 0000000..57a405f
+--- /dev/null
++++ b/bench/adapters/beqplus.py
+@@ -0,0 +1,27 @@
++"""BEq+ adapter (LeanInteract pinned 768e18ebcb5c7ec34d308768a785389eeac37798)."""
++from __future__ import annotations
++
++import json
++import sys
++from pathlib import Path
++
++from .. import outcomes
++
++DRIVER = Path(__file__).with_name("beqplus_driver.py")
++
++
++def prepare(case: dict, workdir: Path, leaninteract_dir: Path, lean_version: str, per_proof_s: int) -> dict:
++    workdir.mkdir(parents=True, exist_ok=True)
++    (workdir / "pair.json").write_text(json.dumps(case, ensure_ascii=False))
++    return {"cmd": [sys.executable, str(DRIVER), "--leaninteract", str(leaninteract_dir), "--lean-version", lean_version,
++                    "--timeout", str(per_proof_s), str(workdir / "pair.json"), str(workdir / "out.json")]}
++
++
++def parse(case: dict, out_path: Path) -> dict:
++    if not out_path.exists():
++        return {"native_verdict": None}
++    r = json.loads(out_path.read_text())
++    out = {"native_verdict": r.get("beq_plus"), "startup_s": r.get("startup_s")}
++    for t in ("A", "B"):
++        out[f"track_{t}"] = outcomes.beqplus(r.get("beq_plus"), t)
++    return out
+diff --git a/bench/adapters/beqplus_driver.py b/bench/adapters/beqplus_driver.py
+new file mode 100644
+index 0000000..a788bd6
+--- /dev/null
++++ b/bench/adapters/beqplus_driver.py
+@@ -0,0 +1,50 @@
++"""BEq+ driver: runs the upstream `beq_plus` function (LeanInteract, pinned commit) on ONE pair.
++
++    python beqplus_driver.py --leaninteract DIR --lean-version v4.8.0 --timeout 20 pair.json out.json
++
++The algorithm is imported unmodified from the pinned `examples/beq_plus.py`. The REPL project is the one
++upstream's own ProofNetVerif driver uses (`TempRequireProject(lean_version=..., require="mathlib")`).
++The two sides' headers are merged (imports and `open`s, de-duplicated) into BEq+'s single `src_header`
++argument; this is disclosed as the only adapter transformation.
++"""
++import argparse
++import importlib.util
++import json
++import sys
++import time
++
++
++def merge_headers(h1: str, h2: str) -> str:
++    seen, imps, rest = set(), [], []
++    for line in (h1 + "\n" + h2).splitlines():
++        s = line.strip()
++        if not s or s in seen:
++            continue
++        seen.add(s)
++        (imps if s.startswith("import ") else rest).append(s)
++    return "\n".join(imps + rest) + "\n"
++
++
++def main():
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--leaninteract", required=True)
++    ap.add_argument("--lean-version", default="v4.8.0")
++    ap.add_argument("--timeout", type=int, default=20)
++    ap.add_argument("pair")
++    ap.add_argument("out")
++    a = ap.parse_args()
++    pair = json.load(open(a.pair))
++    spec = importlib.util.spec_from_file_location("beq_plus_mod", f"{a.leaninteract}/examples/beq_plus.py")
++    m = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(m)
++    from lean_interact import AutoLeanServer, LeanREPLConfig, TempRequireProject
++    t0 = time.time()
++    server = AutoLeanServer(config=LeanREPLConfig(project=TempRequireProject(lean_version=a.lean_version, require="mathlib")))
++    t_start = time.time() - t0
++    res = m.beq_plus(pair["ref_decl"], pair["cand_decl"], merge_headers(pair["ref_header"], pair["cand_header"]),
++                     server, timeout_per_proof=a.timeout)
++    json.dump({"beq_plus": bool(res), "startup_s": round(t_start, 3), "total_s": round(time.time() - t0, 3)}, open(a.out, "w"))
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/bench/adapters/proofscope.py b/bench/adapters/proofscope.py
+new file mode 100644
+index 0000000..f95fd2d
+--- /dev/null
++++ b/bench/adapters/proofscope.py
+@@ -0,0 +1,91 @@
++"""ProofScope v1.2 adapter (frozen engine: `proofscope.v12` / `proofscope.adelta12`).
++
++ProofScope takes two closed propositions, not two declarations. Step 1 (`closed`) elaborates each
++declaration in its own header and prints its type with `pp.fullNames`, outside the section that holds the
++header's `open`s, so the printed text needs no `open`. Step 2 re-elaborates the printed text under the
++imports only and checks `printed = type_of% decl` by `with_reducible rfl` (a meaning-preservation
++certificate for the adapter). A side that fails either step is NON_ELABORATING or UNSUPPORTED_INPUT, and
++counted as such. Step 3 runs the frozen engine on the two printed propositions.
++"""
++from __future__ import annotations
++
++import json
++import os
++import sys
++from pathlib import Path
++
++from .. import outcomes
++from ._decl import merged_imports, rename, split_header, with_sorry
++
++PRINT = r'''
++open Lean Elab Command in
++#eval show CommandElabM Unit from do
++  let some ci := (← getEnv).find? `{name} | throwError "PS_NO_DECL"
++  let fmt ← liftTermElabM <| withOptions (fun o =>
++      (((o.setBool `pp.fullNames true).setBool `pp.funBinderTypes true).setBool `pp.proofs true).setBool `pp.deepTerms true)
++    <| Meta.ppExpr ci.type
++  logInfo m!"PS_CLOSED {(toString fmt).replace "\n" " "}"
++'''
++
++
++def side_file(header: str, decl: str, name: str, imports: list[str]) -> str:
++    imps, rest = split_header(header)
++    if any(l.strip().startswith(("namespace", "end ")) for l in rest):
++        raise ValueError("header opens a namespace")
++    body = "\n".join(rest)
++    return "\n".join(["import Lean"] + imports) + f"\n\nsection\n{body}\n\n{rename(with_sorry(decl), name)}\n\nend\n" + PRINT.replace("{name}", name)
++
++
++def check_file(header: str, decl: str, name: str, imports: list[str], printed: str) -> str:
++    imps, rest = split_header(header)
++    body = "\n".join(rest)
++    return ("\n".join(imports) + f"\n\nsection\n{body}\n\n{rename(with_sorry(decl), name)}\n\nend\n\n"
++            f"example : ({printed}) = type_of% @{name} := by with_reducible rfl\n")
++
++
++def prepare(case: dict, workdir: Path, lean_cmd: list[str]) -> dict:
++    workdir.mkdir(parents=True, exist_ok=True)
++    imports = merged_imports(case["ref_header"], case["cand_header"])
++    steps = []
++    for side, h, d in (("ref", case["ref_header"], case["ref_decl"]), ("cand", case["cand_header"], case["cand_decl"])):
++        try:
++            (workdir / f"{side}_print.lean").write_text(side_file(h, d, f"ps_{side}_decl", imports))
++        except ValueError as e:
++            return {"unsupported": str(e)}
++        steps.append(lean_cmd + [str(workdir / f"{side}_print.lean")])
++    return {"imports": imports, "print_cmds": steps}
++
++
++def extract_printed(output: str) -> str | None:
++    for line in output.splitlines():
++        i = line.find("PS_CLOSED ")
++        if i >= 0:
++            return line[i + len("PS_CLOSED "):].strip()
++    return None
++
++
++def engine_cmd(case_id: str, ref: str, cand: str, workdir: Path) -> list[str]:
++    spec = workdir / f"{case_id}.json"
++    spec.write_text(json.dumps({"id": case_id, "reference": ref, "lean": cand}, ensure_ascii=False))
++    return [sys.executable, "-m", "proofscope.v12", "run", str(spec), "--out", str(workdir / "ps_out"), "--jobs", "1"]
++
++
++def parse_engine(case_id: str, workdir: Path) -> dict:
++    p = workdir / "ps_out" / "rows" / f"{case_id}.json"
++    if not p.exists():
++        return {"native_verdict": None}
++    row = json.loads(p.read_text())
++    v = row.get("verdict", "INCONCLUSIVE")
++    out = {"native_verdict": v, "reason": row.get("reason"), "theorem": row.get("theorem"),
++           "certificates": sorted((row.get("certificates") or {}).keys())}
++    for t in ("A", "B"):
++        o = outcomes.proofscope(v, t)
++        if row.get("reason") == "extraction failed":
++            o = {"certified": "NON_ELABORATING", "native": "NON_ELABORATING"}
++        out[f"track_{t}"] = o
++    return out
++
++
++def imports_env(imports: list[str]) -> dict:
++    mods = [l.split(None, 1)[1].strip() for l in imports if l.startswith("import ")]
++    return dict(os.environ, PROOFSCOPE_IMPORTS=",".join(mods))
+diff --git a/bench/adapters/semanteq.py b/bench/adapters/semanteq.py
+new file mode 100644
+index 0000000..4f2bc69
+--- /dev/null
++++ b/bench/adapters/semanteq.py
+@@ -0,0 +1,43 @@
++"""SemantEq adapter (pinned f92767000e14d11744580946980cf874324f5d19, native toolchain v4.30.0-rc1).
++
++Input is exactly SemantEq's documented pair format: each side is the full file text (the source header and
++the declaration closed with `sorry`). One pair per process so the external CPU limit binds; SemantEq's own
++`--timeout` is set to the same budget in wall seconds (its documented limit; compilation is not
++interrupted by it, which is why the external limit is authoritative)."""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++from .. import outcomes
++from ._decl import with_sorry
++
++
++def side(header: str, decl: str) -> str:
++    return f"{header.rstrip()}\n\n{with_sorry(decl)}\n"
++
++
++def prepare(case: dict, workdir: Path, semanteq_dir: Path, budget_s: int) -> dict:
++    workdir.mkdir(parents=True, exist_ok=True)
++    inp, out = workdir / "pair.jsonl", workdir / "result.jsonl"
++    inp.write_text(json.dumps({"id": case["case_id"], "reference": side(case["ref_header"], case["ref_decl"]),
++                               "candidate": side(case["cand_header"], case["cand_decl"])}, ensure_ascii=False) + "\n")
++    return {"cmd": ["lake", "exe", "semanteq", "--raw", "--timeout", str(budget_s), str(inp), str(out)],
++            "cwd": str(semanteq_dir), "result": str(out)}
++
++
++def parse(case: dict, result_path: Path) -> dict:
++    recs = []
++    if result_path.exists():
++        for line in result_path.read_text().splitlines():
++            if line.strip():
++                r = json.loads(line)
++                if "_meta" not in r:
++                    recs.append(r)
++    if not recs:
++        return {"native_verdict": None}
++    v = recs[0].get("verdict")
++    out = {"native_verdict": v, "elapsedMs": recs[0].get("elapsedMs"), "directions": recs[0].get("directions")}
++    for t in ("A", "B"):
++        out[f"track_{t}"] = outcomes.semanteq(v, t)
++    return out
+diff --git a/bench/canonical.py b/bench/canonical.py
+new file mode 100644
+index 0000000..965f02c
+--- /dev/null
++++ b/bench/canonical.py
+@@ -0,0 +1,90 @@
++"""Canonical benchmark case format, normalization and near-duplicate grouping.
++
++A case is one (reference, candidate) pair of complete Lean *declarations* with their headers, exactly as
++the source published them. Adapters may add imports or wrap namespaces; they may never edit the
++declarations (protocol: "Matching inputs and resources").
++
++    {"case_id": "c-...", "group": "g-...", "source": "epla-minif2f", "source_ref": "...",
++     "ref_header": "...", "ref_decl": "theorem ... := by sorry",
++     "cand_header": "...", "cand_decl": "theorem ... := by sorry",
++     "toolchain_hint": "...", "provenance": {...}}
++
++Labels never live in a case record; they are kept in a separate (sealed) file keyed by case_id.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import re
++from pathlib import Path
++
++REQUIRED = ("case_id", "group", "source", "ref_header", "ref_decl", "cand_header", "cand_decl")
++FORBIDDEN_IN_CASE = ("label", "gold", "correct", "expected", "likeness", "equivalent", "adjudicated")
++
++_COMMENT = re.compile(r"--[^\n]*|/-.*?-/", re.S)
++_DECL_HEAD = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(theorem|lemma|example)\s+([^\s(:{\[]*)", re.M)
++
++
++def validate(case: dict) -> list[str]:
++    errs = [f"missing {k}" for k in REQUIRED if case.get(k) is None]
++    errs += [f"empty {k}" for k in ("case_id", "ref_decl", "cand_decl") if case.get(k) == ""]
++    errs += [f"label-like field {k!r} in a case record" for k in case if any(f in k.lower() for f in FORBIDDEN_IN_CASE)]
++    return errs
++
++
++def statement_body(decl: str) -> str:
++    """The declaration without its name and proof: binders and type only, comments removed,
++    whitespace collapsed. Used only for duplicate detection, never as tool input."""
++    d = _COMMENT.sub(" ", decl)
++    d = _DECL_HEAD.sub(r"\1 _", d, count=1)
++    for sep in (":= by", ":="):
++        i = d.rfind(sep)
++        if i > 0:
++            d = d[:i]
++            break
++    return re.sub(r"\s+", " ", d).strip()
++
++
++def tokens(s: str) -> set[str]:
++    return set(re.findall(r"[A-Za-z_][\w.']*|\d+|[^\s\w]", s))
++
++
++def norm_hash(decl: str) -> str:
++    return hashlib.sha256(statement_body(decl).encode()).hexdigest()[:16]
++
++
++def jaccard(a: set, b: set) -> float:
++    return len(a & b) / len(a | b) if a | b else 1.0
++
++
++def group_near_duplicates(items: list[tuple[str, str]], threshold: float = 0.9) -> dict[str, str]:
++    """Union-find over items (key, text): identical normalized text, or token Jaccard >= threshold,
++    puts two items in one group. Quadratic, fine for a few thousand items."""
++    parent = {k: k for k, _ in items}
++
++    def find(x):
++        while parent[x] != x:
++            parent[x] = parent[parent[x]]
++            x = parent[x]
++        return x
++
++    toks = {k: tokens(statement_body(t)) for k, t in items}
++    keys = [k for k, _ in items]
++    for i, a in enumerate(keys):
++        for b in keys[i + 1:]:
++            if jaccard(toks[a], toks[b]) >= threshold:
++                parent[find(a)] = find(b)
++    return {k: find(k) for k in keys}
++
++
++def read_jsonl(p: Path) -> list[dict]:
++    return [json.loads(line) for line in Path(p).read_text().splitlines() if line.strip()]
++
++
++def write_jsonl(p: Path, rows: list[dict]) -> None:
++    Path(p).parent.mkdir(parents=True, exist_ok=True)
++    Path(p).write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows))
++
++
++def sha256_file(p: Path) -> str:
++    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+diff --git a/bench/fixtures/availability.cases.jsonl b/bench/fixtures/availability.cases.jsonl
+new file mode 100644
+index 0000000..b04f227
+--- /dev/null
++++ b/bench/fixtures/availability.cases.jsonl
+@@ -0,0 +1,3 @@
++{"case_id": "avail-calibration-identical", "group": "avail", "source": "availability-fixture", "ref_header": "import Mathlib\n", "ref_decl": "theorem cal_ref (x : ℝ) : x + 0 = x := by sorry", "cand_header": "import Mathlib\n", "cand_decl": "theorem cal_cand (x : ℝ) : x + 0 = x := by sorry"}
++{"case_id": "avail-equivalent-rename", "group": "avail", "source": "availability-fixture", "ref_header": "import Mathlib\n", "ref_decl": "theorem eq_ref (a b : ℕ) : a + b = b + a := by sorry", "cand_header": "import Mathlib\n", "cand_decl": "theorem eq_cand (x y : ℕ) : x + y = y + x := by sorry"}
++{"case_id": "avail-nonequivalent-hypothesis", "group": "avail", "source": "availability-fixture", "ref_header": "import Mathlib\n", "ref_decl": "theorem ne_ref (x : ℝ) : Real.sqrt (x ^ 2) = x := by sorry", "cand_header": "import Mathlib\n", "cand_decl": "theorem ne_cand (x : ℝ) (hx : 0 ≤ x) : Real.sqrt (x ^ 2) = x := by sorry"}
+diff --git a/bench/ingest.py b/bench/ingest.py
+new file mode 100644
+index 0000000..8ac6679
+--- /dev/null
++++ b/bench/ingest.py
+@@ -0,0 +1,83 @@
++"""Build the candidate pool (cases + source labels, kept in separate files) from public sources.
++
++    python -m bench.ingest epla --assess-dir DIR --out pool/        # ASSESS repo at a pinned commit
++    python -m bench.ingest proofnetverif --split test --out pool/   # Hugging Face PAug/ProofNetVerif (runner only)
++
++Source labels are what the source published. They are NOT gold: gold comes only from the blinded
++adjudication. They are written to `source_labels.jsonl`, never into `cases.jsonl`.
++Every source is a vendor-home benchmark for at least one competitor (EPLA: ASSESS/TransTED;
++ProofNetVerif: BEq+, and SemantEq re-adjudicated its test split); results on these slices are reported
++per source and never pooled with the new independent holdout.
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++from pathlib import Path
++
++from .canonical import norm_hash, validate, write_jsonl
++
++
++def _cid(*parts: str) -> str:
++    return "c-" + hashlib.sha256("\x1f".join(parts).encode()).hexdigest()[:12]
++
++
++def epla(assess_dir: Path) -> tuple[list[dict], list[dict]]:
++    import subprocess
++    commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=assess_dir, capture_output=True, text=True).stdout.strip()
++    cases, labels = [], []
++    for split, fname in (("epla-minif2f", "EPLA-miniF2F.json"), ("epla-proofnet", "EPLA-ProofNet.json")):
++        data = json.loads((assess_dir / "benchmark" / fname).read_text())
++        for e in data:
++            for j, s in enumerate(e["sub_questions"]):
++                c = {"case_id": _cid(split, str(e["id"]), str(j)), "group": f"{split}:{e['name']}", "source": split,
++                     "source_ref": f"{fname}#id={e['id']}/sub={j}", "ref_header": e["header"], "ref_decl": e["FL (Label)"],
++                     "cand_header": s["header"], "cand_decl": s["FL (Prediction)"],
++                     "informal": e.get("NL"), "generator": s.get("tag"),
++                     "provenance": {"repo": "https://github.com/XiaoyangLiu-sjtu/ASSESS", "commit": commit,
++                                    "license": "Apache-2.0", "file": f"benchmark/{fname}"}}
++                assert not validate(c), validate(c)
++                cases.append(c)
++                labels.append({"case_id": c["case_id"], "source_label_equivalent": s.get("likeness after transformation"),
++                               "source_label_field": "likeness after transformation", "source": split})
++    return cases, labels
++
++
++def proofnetverif(split: str) -> tuple[list[dict], list[dict]]:
++    from datasets import load_dataset
++    ds = load_dataset("PAug/ProofNetVerif", split=split)
++    cases, labels = [], []
++    for i, ex in enumerate(ds):
++        ref, cand = ex["lean4_formalization"], ex["lean4_prediction"]
++        name = ex["id"]
++        c = {"case_id": _cid("pnv", split, str(i)), "group": f"pnv:{name}", "source": f"proofnetverif-{split}",
++             "source_ref": f"pnv:{split}:{i:04d}:{name}", "ref_header": ex["lean4_src_header"], "ref_decl": ref,
++             "cand_header": ex["lean4_src_header"], "cand_decl": cand, "informal": ex.get("nl_statement"),
++             "provenance": {"dataset": "PAug/ProofNetVerif", "split": split, "row": i}}
++        if validate(c):
++            continue
++        cases.append(c)
++        labels.append({"case_id": c["case_id"], "source_label_equivalent": bool(ex["correct"]),
++                       "source_label_field": "correct", "source": c["source"]})
++    return cases, labels
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m bench.ingest")
++    ap.add_argument("source", choices=["epla", "proofnetverif"])
++    ap.add_argument("--assess-dir", type=Path)
++    ap.add_argument("--split", default="test")
++    ap.add_argument("--out", type=Path, required=True)
++    a = ap.parse_args(argv)
++    cases, labels = epla(a.assess_dir) if a.source == "epla" else proofnetverif(a.split)
++    tag = a.source if a.source == "epla" else f"pnv-{a.split}"
++    write_jsonl(a.out / f"{tag}.cases.jsonl", cases)
++    write_jsonl(a.out / f"{tag}.source_labels.jsonl", labels)
++    dup = len(cases) - len({norm_hash(c["cand_decl"]) + norm_hash(c["ref_decl"]) for c in cases})
++    print(json.dumps({"source": tag, "cases": len(cases), "exact_duplicate_pairs": dup}))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/bench/limits.py b/bench/limits.py
+new file mode 100644
+index 0000000..151c6ec
+--- /dev/null
++++ b/bench/limits.py
+@@ -0,0 +1,118 @@
++"""Run one process under a hard CPU-time and address-space limit and account for its resources.
++
++The limit is applied from outside (`prlimit`), so it binds every tool the same way whether or not the
++tool has its own budget flag. A process killed by SIGXCPU/SIGKILL at the limit is a TIMEOUT, never an
++abstention. CPU time and peak RSS come from `wait4` for that child (its own rusage, including its
++descendants that it waited for), not from the parent's cumulative counters.
++"""
++from __future__ import annotations
++
++import os
++import shutil
++import signal
++import subprocess
++import threading
++import time
++from dataclasses import asdict, dataclass
++
++
++@dataclass
++class Run:
++    exit_code: int | None
++    signal: str | None
++    status: str            # OK | TIMEOUT_CPU | TIMEOUT_WALL | OOM_OR_KILLED | ERROR
++    cpu_user_s: float
++    cpu_sys_s: float
++    wall_s: float
++    max_rss_mb: float
++    stdout: str
++    stderr: str
++
++    def as_dict(self) -> dict:
++        d = asdict(self)
++        d["cpu_s"] = round(self.cpu_user_s + self.cpu_sys_s, 3)
++        return d
++
++
++def run_limited(cmd: list[str], cpu_s: float, mem_mb: int, wall_s: float, cwd: str | None = None,
++                env: dict | None = None) -> Run:
++    if shutil.which("prlimit") is None:
++        raise RuntimeError("prlimit not found: the CPU limit cannot be enforced (INFRASTRUCTURE)")
++    soft = max(1, int(round(cpu_s)))
++    # CPU: hard kernel limit. Memory: a resident-set watchdog over the whole process group (an
++    # address-space rlimit is unusable for Lean, which reserves large virtual ranges for its threads).
++    full = ["prlimit", f"--cpu={soft}:{soft + 1}", "--"] + cmd
++    t0 = time.monotonic()
++    p = subprocess.Popen(full, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++                         start_new_session=True)
++    bufs = {"out": [], "err": []}
++
++    def pump(stream, key):
++        for chunk in iter(lambda: stream.read(65536), b""):
++            bufs[key].append(chunk)
++
++    ts = [threading.Thread(target=pump, args=(p.stdout, "out"), daemon=True),
++          threading.Thread(target=pump, args=(p.stderr, "err"), daemon=True)]
++    for t in ts:
++        t.start()
++    wall_hit, mem_hit, status_word, ru, peak_group_mb = False, False, 0, None, 0.0
++    while True:
++        pid, status_word, ru = os.wait4(p.pid, os.WNOHANG)
++        if pid == p.pid:
++            break
++        g = _group_rss_mb(p.pid)
++        peak_group_mb = max(peak_group_mb, g)
++        if g > mem_mb:
++            mem_hit = True
++            os.killpg(p.pid, signal.SIGKILL)
++            pid, status_word, ru = os.wait4(p.pid, 0)
++            break
++        if time.monotonic() - t0 > wall_s:
++            wall_hit = True
++            os.killpg(p.pid, signal.SIGKILL)
++            pid, status_word, ru = os.wait4(p.pid, 0)
++            break
++        time.sleep(0.05)
++    for t in ts:
++        t.join(timeout=5)
++    p.returncode = os.waitstatus_to_exitcode(status_word)
++    wall = time.monotonic() - t0
++    rc = p.returncode
++    sig = signal.Signals(-rc).name if rc is not None and rc < 0 else None
++    cpu = ru.ru_utime + ru.ru_stime
++    if mem_hit:
++        status = "OOM"
++    elif wall_hit:
++        status = "TIMEOUT_WALL"
++    elif sig == "SIGXCPU" or (sig == "SIGKILL" and cpu >= soft - 0.5):
++        status = "TIMEOUT_CPU"
++    elif sig in ("SIGKILL", "SIGSEGV", "SIGABRT"):
++        status = "OOM_OR_KILLED"
++    elif rc == 0:
++        status = "OK"
++    else:
++        status = "ERROR"
++    dec = lambda b: b"".join(b).decode("utf-8", "replace")
++    if status == "ERROR" and any(m in dec(bufs["err"]) for m in ("MemoryError", "out of memory", "bad_alloc", "Cannot allocate")):
++        status = "OOM"
++    return Run(rc, sig, status, round(ru.ru_utime, 3), round(ru.ru_stime, 3), round(wall, 3),
++               round(max(ru.ru_maxrss / 1024, peak_group_mb), 1), dec(bufs["out"]), dec(bufs["err"]))
++
++
++def _group_rss_mb(pgid: int) -> float:
++    """Sum of VmRSS over all processes in the session/process group `pgid` (Linux /proc)."""
++    total = 0
++    for d in os.listdir("/proc"):
++        if not d.isdigit():
++            continue
++        try:
++            if os.getpgid(int(d)) != pgid:
++                continue
++            with open(f"/proc/{d}/status") as f:
++                for line in f:
++                    if line.startswith("VmRSS:"):
++                        total += int(line.split()[1])
++                        break
++        except (OSError, ProcessLookupError):
++            continue
++    return total / 1024
+diff --git a/bench/outcomes.py b/bench/outcomes.py
+new file mode 100644
+index 0000000..ee7fb43
+--- /dev/null
++++ b/bench/outcomes.py
+@@ -0,0 +1,65 @@
++"""Pre-registered mapping from each tool's native verdict to the shared outcome vocabulary.
++
++Two readings are reported side by side, never merged:
++
++* `certified` (3-way): EQUIV / NONEQUIV only when the tool's output is backed by a machine-checked
++  artefact for that claim; everything else is ABSTAIN. A failed proof search is never NONEQUIV.
++* `native` (binary): the tool's own published accept/reject reading (what its paper scores), with
++  abstentions folded into NONEQUIV exactly as that tool's authors do. Reported for comparability with
++  published numbers only.
++
++Infrastructure outcomes (TIMEOUT_*, OOM*, ERROR, NON_ELABORATING, UNSUPPORTED_INPUT, INCOMPATIBLE) are kept
++as such in both readings and are never converted into abstentions or verdicts.
++
++Track A = whole-statement logical equivalence; Track B = faithful statement equivalence. A tool's EQUIV
++is the same claim in both tracks (gold differs); a tool's NONEQUIV is admissible in Track B when it
++certifies a semantic difference that need not make the closed propositions inequivalent (ProofScope's
++schema-level separations); such outputs are ABSTAIN in Track A.
++"""
++from __future__ import annotations
++
++INFRA = {"TIMEOUT_CPU", "TIMEOUT_WALL", "OOM", "OOM_OR_KILLED", "ERROR", "NON_ELABORATING", "UNSUPPORTED_INPUT",
++         "INCOMPATIBLE"}
++
++# ProofScope v1.2 (adelta12; proofscope/v12.py)
++PS_EQUIV = {"ASSUMPTION_EQUIVALENT", "NO_ASSUMPTION_DELTA", "IDENTICAL", "SCHEMA_EQUIVALENT", "EQUIVALENT_BY_LAWS"}
++PS_SCHEMA_DIFF = {"LEAN_WEAKER_BY_ASSUMPTION", "LEAN_STRONGER_BY_ASSUMPTION", "ASSUMPTION_INCOMPARABLE",
++                  "REFERENCE_NEEDS_ASSUMPTION", "LEAN_CLAIM_FALSE"}
++# SemantEq (README at the pinned commit)
++SE_EQUIV = {"ExactMatch", "DefEq", "EquivalentRestricted"}
++SE_ONE_DIR = {"LikelyTooStrong", "LikelyTooWeak"}
++SE_INFRA = {"Timeout": "TIMEOUT_WALL", "ContextMergeError": "INCOMPATIBLE", "NotAProposition": "UNSUPPORTED_INPUT",
++            "MalformedInput": "UNSUPPORTED_INPUT", "InternalError": "ERROR"}
++
++
++def proofscope(verdict: str, track: str) -> dict:
++    if verdict in PS_EQUIV:
++        c = "EQUIV"
++    elif verdict in PS_SCHEMA_DIFF:
++        c = "NONEQUIV" if track == "B" else "ABSTAIN"
++    elif verdict == "BOTH_CLAIMS_FALSE":
++        # both closed statements are refuted, so they are logically equivalent (False ↔ False); fidelity open
++        c = "EQUIV" if track == "A" else "ABSTAIN"
++    elif verdict.startswith("INCONCLUSIVE") and "extraction" in verdict.lower():
++        c = "NON_ELABORATING"
++    else:
++        c = "ABSTAIN"
++    native = "EQUIV" if c == "EQUIV" else "NONEQUIV"
++    return {"certified": c, "native": native}
++
++
++def semanteq(verdict: str, track: str) -> dict:
++    if verdict in SE_INFRA:
++        return {"certified": SE_INFRA[verdict], "native": SE_INFRA[verdict]}
++    if verdict.endswith("CompileError") or verdict.endswith("NoStatement"):
++        return {"certified": "NON_ELABORATING", "native": "NON_ELABORATING"}
++    if verdict in SE_EQUIV:
++        return {"certified": "EQUIV", "native": "EQUIV"}
++    # one proved direction or nothing: no certificate of a difference
++    return {"certified": "ABSTAIN", "native": "NONEQUIV"}
++
++
++def beqplus(result: bool | None, track: str) -> dict:
++    if result is None:
++        return {"certified": "ERROR", "native": "ERROR"}
++    return {"certified": "EQUIV" if result else "ABSTAIN", "native": "EQUIV" if result else "NONEQUIV"}
+diff --git a/bench/runner.py b/bench/runner.py
+new file mode 100644
+index 0000000..94a9e3d
+--- /dev/null
++++ b/bench/runner.py
+@@ -0,0 +1,144 @@
++"""Shared benchmark runner: every eligible system, every case, one budget tier, full evidence.
++
++    python -m bench.runner --system proofscope --cases sealed/primary.cases.jsonl --tier 20 \
++        --startup-allowance 0 --mem-mb 12000 --out runs/ [--shard i/n] [--tool-dir DIR] [--repeat 1]
++
++Per pair, the external CPU limit is `tier + startup_allowance` seconds. The startup allowance is the
++tool's median CPU on the frozen calibration pair (identical statements) measured in the pilot and
++written into the run manifest BEFORE the primary run (protocol amendment A1, docs/sota1/). Adapter work
++(format conversion, ProofScope's meaning-preservation check) is timed and reported separately and is not
++charged to the tool. Every case gets exactly one record per system and repeat, whatever happened.
++"""
++from __future__ import annotations
++
++import argparse
++import json
++import platform
++import shutil
++import time
++from pathlib import Path
++
++from .canonical import read_jsonl, sha256_file
++from .limits import run_limited
++
++ADAPTER_CPU_S, ADAPTER_WALL_S = 300, 600
++
++
++def _shard(rows, spec):
++    if not spec:
++        return rows
++    i, n = (int(x) for x in spec.split("/"))
++    return [r for k, r in enumerate(rows) if k % n == i]
++
++
++def run_proofscope(case, work: Path, budget: float, mem_mb: int, lean: str) -> dict:
++    from .adapters import proofscope as A
++    prep = A.prepare(case, work, [lean])
++    rec = {"adapter": {}}
++    if "unsupported" in prep:
++        rec["status"] = "UNSUPPORTED_INPUT"
++        rec["adapter"]["error"] = prep["unsupported"]
++        return rec
++    env = A.imports_env(prep["imports"])
++    printed = {}
++    for side, cmd in zip(("ref", "cand"), prep["print_cmds"]):
++        r = run_limited(cmd, ADAPTER_CPU_S, mem_mb, ADAPTER_WALL_S, cwd=str(work), env=env)
++        rec["adapter"][f"print_{side}"] = {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")}
++        p = A.extract_printed(r.stdout + r.stderr)
++        if r.status != "OK" or p is None:
++            rec["status"] = "NON_ELABORATING" if r.status in ("OK", "ERROR") else "ADAPTER_" + r.status
++            rec["adapter"][f"print_{side}_log"] = (r.stdout + r.stderr)[-3000:]
++            return rec
++        printed[side] = p
++        h, d = (case["ref_header"], case["ref_decl"]) if side == "ref" else (case["cand_header"], case["cand_decl"])
++        f = work / f"{side}_check.lean"
++        f.write_text(A.check_file(h, d, f"ps_{side}_decl", prep["imports"], p))
++        c = run_limited([lean, str(f)], ADAPTER_CPU_S, mem_mb, ADAPTER_WALL_S, cwd=str(work), env=env)
++        rec["adapter"][f"check_{side}"] = {k: v for k, v in c.as_dict().items() if k not in ("stdout", "stderr")}
++        if c.status != "OK" or ": error" in (c.stdout + c.stderr):
++            rec["status"] = "UNSUPPORTED_INPUT"
++            rec["adapter"]["error"] = f"printed {side} statement does not round-trip: " + (c.stdout + c.stderr)[-1500:]
++            return rec
++    rec["printed"] = printed
++    r = run_limited(A.engine_cmd(case["case_id"], printed["ref"], printed["cand"], work), budget, mem_mb,
++                    3 * budget + 120, cwd=None, env=env)
++    rec["run"] = {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")}
++    rec["log_tail"] = (r.stdout + r.stderr)[-3000:]
++    rec["status"] = r.status
++    rec.update(A.parse_engine(case["case_id"], work))
++    return rec
++
++
++def run_semanteq(case, work: Path, budget: float, tier: int, mem_mb: int, tool_dir: Path) -> dict:
++    from .adapters import semanteq as A
++    prep = A.prepare(case, work, tool_dir, tier)
++    r = run_limited(prep["cmd"], budget, mem_mb, 3 * budget + 120, cwd=prep["cwd"])
++    rec = {"run": {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")},
++           "log_tail": (r.stdout + r.stderr)[-3000:], "status": r.status}
++    rec.update(A.parse(case, Path(prep["result"])))
++    return rec
++
++
++def run_beqplus(case, work: Path, budget: float, tier: int, mem_mb: int, tool_dir: Path, lean_version: str) -> dict:
++    from .adapters import beqplus as A
++    prep = A.prepare(case, work, tool_dir, lean_version, tier)
++    r = run_limited(prep["cmd"], budget, mem_mb, 3 * budget + 300)
++    rec = {"run": {k: v for k, v in r.as_dict().items() if k not in ("stdout", "stderr")},
++           "log_tail": (r.stdout + r.stderr)[-3000:], "status": r.status}
++    rec.update(A.parse(case, work / "out.json"))
++    return rec
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m bench.runner")
++    ap.add_argument("--system", required=True, choices=["proofscope", "semanteq", "beqplus"])
++    ap.add_argument("--cases", type=Path, required=True)
++    ap.add_argument("--tier", type=int, required=True, choices=[20, 180])
++    ap.add_argument("--startup-allowance", type=float, default=0.0)
++    ap.add_argument("--mem-mb", type=int, default=12000)
++    ap.add_argument("--repeat", type=int, default=1)
++    ap.add_argument("--shard")
++    ap.add_argument("--tool-dir", type=Path)
++    ap.add_argument("--lean", default="lean")
++    ap.add_argument("--beq-lean-version", default="v4.8.0")
++    ap.add_argument("--cache-state", default="unknown", choices=["cold", "warm", "unknown"])
++    ap.add_argument("--out", type=Path, required=True)
++    a = ap.parse_args(argv)
++    cases = _shard(read_jsonl(a.cases), a.shard)
++    budget = a.tier + a.startup_allowance
++    base = a.out / a.system / f"t{a.tier}"
++    base.mkdir(parents=True, exist_ok=True)
++    manifest = {"system": a.system, "tier_cpu_s": a.tier, "startup_allowance_cpu_s": a.startup_allowance,
++                "limit_cpu_s": budget, "mem_mb": a.mem_mb, "repeat": a.repeat, "shard": a.shard,
++                "cases_file_sha256": sha256_file(a.cases), "cases": len(cases), "cache_state": a.cache_state,
++                "host": platform.node(), "cpu": platform.processor() or platform.machine(),
++                "python": platform.python_version(), "prlimit": shutil.which("prlimit"),
++                "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
++    (base / f"manifest{'-' + a.shard.replace('/', 'of') if a.shard else ''}.json").write_text(json.dumps(manifest, indent=1))
++    for case in cases:
++        for rep in range(a.repeat):
++            work = a.out / "work" / a.system / f"t{a.tier}" / case["case_id"] / f"r{rep}"
++            t0 = time.time()
++            try:
++                if a.system == "proofscope":
++                    rec = run_proofscope(case, work, budget, a.mem_mb, a.lean)
++                elif a.system == "semanteq":
++                    rec = run_semanteq(case, work, budget, a.tier, a.mem_mb, a.tool_dir)
++                else:
++                    rec = run_beqplus(case, work, budget, a.tier, a.mem_mb, a.tool_dir, a.beq_lean_version)
++            except Exception as e:  # recorded, never dropped
++                rec = {"status": "RUNNER_ERROR", "error": repr(e)}
++            rec.update(case_id=case["case_id"], system=a.system, tier=a.tier, repeat=rep, group=case.get("group"),
++                       source=case.get("source"), wall_total_s=round(time.time() - t0, 3))
++            if rec.get("status") == "OK" and rec.get("native_verdict") is None:
++                rec["status"] = "ERROR_NO_OUTPUT"
++            for t in ("A", "B"):
++                if f"track_{t}" not in rec:
++                    rec[f"track_{t}"] = {"certified": rec["status"], "native": rec["status"]}
++            (base / f"{case['case_id']}.r{rep}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1))
++            print(case["case_id"], a.system, rec["status"], rec.get("native_verdict"), flush=True)
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/bench/score.py b/bench/score.py
+new file mode 100644
+index 0000000..28fc539
+--- /dev/null
++++ b/bench/score.py
+@@ -0,0 +1,244 @@
++"""Scoring and uncertainty for the SOTA-1 benchmark (pre-registered; docs/competitor_benchmark_protocol.md).
++
++    python -m bench.score --runs runs/ --gold gold.jsonl --tier 20 --out metrics.json [--markdown report.md]
++
++gold.jsonl (released only after all runs are locked):
++    {"case_id": ..., "gold_A": "equivalent"|"non_equivalent"|"disputed"|"unassessable",
++     "gold_B": ..., "group": ..., "source": ...}
++
++Per system, track (A logical / B faithful) and reading (certified / native):
++    TP  EQUIV on gold equivalent            FP  EQUIV on gold non-equivalent
++    TN  NONEQUIV on gold non-equivalent     FN  NONEQUIV on gold equivalent
++    ABSTAIN, and every infrastructure outcome, kept as its own count.
++Recall and error rates use ALL eligible gold cases of that class as denominator (abstentions included).
++Intervals: exact Clopper-Pearson for proportions; group-clustered percentile bootstrap (2000 resamples,
++fixed seed) for precision/recall; exact two-sided McNemar on paired per-case correctness, Holm-adjusted.
++Disputed/unassessable cases are excluded from the primary denominator and scored both ways in a
++sensitivity table. Zero observed errors are reported with their exact upper bound, never as "zero risk".
++"""
++from __future__ import annotations
++
++import argparse
++import json
++import random
++from collections import defaultdict
++from pathlib import Path
++
++from .canonical import read_jsonl
++from .outcomes import INFRA
++
++GOLD_OK = ("equivalent", "non_equivalent")
++
++
++def _binom_cdf(k: int, n: int, p: float) -> float:
++    if p <= 0:
++        return 1.0
++    if p >= 1:
++        return 0.0 if k < n else 1.0
++    s, term = 0.0, (1 - p) ** n
++    for i in range(0, k + 1):
++        if i > 0:
++            term *= (n - i + 1) / i * p / (1 - p)
++        s += term
++    return min(1.0, s)
++
++
++def clopper_pearson(k: int, n: int, alpha: float = 0.05) -> tuple[float, float] | None:
++    if n == 0:
++        return None
++
++    def solve(f, lo=0.0, hi=1.0):
++        for _ in range(100):
++            mid = (lo + hi) / 2
++            if f(mid):
++                hi = mid
++            else:
++                lo = mid
++        return (lo + hi) / 2
++    lower = 0.0 if k == 0 else solve(lambda p: 1 - _binom_cdf(k - 1, n, p) >= alpha / 2)
++    upper = 1.0 if k == n else solve(lambda p: _binom_cdf(k, n, p) <= alpha / 2)
++    return (round(lower, 4), round(upper, 4))
++
++
++def mcnemar_exact(b: int, c: int) -> float:
++    """Two-sided exact McNemar p-value from the discordant counts b, c."""
++    n = b + c
++    if n == 0:
++        return 1.0
++    k = min(b, c)
++    return min(1.0, 2 * _binom_cdf(k, n, 0.5))
++
++
++def holm(pvals: dict[str, float]) -> dict[str, float]:
++    items = sorted(pvals.items(), key=lambda kv: kv[1])
++    m, out, running = len(items), {}, 0.0
++    for i, (k, p) in enumerate(items):
++        running = max(running, min(1.0, (m - i) * p))
++        out[k] = round(running, 6)
++    return out
++
++
++def classify(pred: str, gold: str) -> str:
++    if pred in INFRA or pred.startswith(("ADAPTER_", "RUNNER_", "ERROR")):
++        return "INFRA:" + pred
++    if pred not in ("EQUIV", "NONEQUIV"):
++        return "ABSTAIN"
++    return {("EQUIV", "equivalent"): "TP", ("EQUIV", "non_equivalent"): "FP",
++            ("NONEQUIV", "non_equivalent"): "TN", ("NONEQUIV", "equivalent"): "FN"}[(pred, gold)]
++
++
++def metrics(cells: list[str], golds: list[str]) -> dict:
++    c = defaultdict(int)
++    for x in cells:
++        c[x] += 1
++    tp, fp, tn, fn = c["TP"], c["FP"], c["TN"], c["FN"]
++    n_eq, n_ne, n = golds.count("equivalent"), golds.count("non_equivalent"), len(cells)
++    dec = tp + fp + tn + fn
++    infra = sum(v for k, v in c.items() if k.startswith("INFRA:"))
++    r = {"eligible": n, "gold_equivalent": n_eq, "gold_non_equivalent": n_ne, "TP": tp, "FP": fp, "TN": tn, "FN": fn,
++         "ABSTAIN": c["ABSTAIN"], "INFRA": infra, "infra_breakdown": {k[6:]: v for k, v in c.items() if k.startswith("INFRA:")},
++         "precision_equiv": round(tp / (tp + fp), 4) if tp + fp else None, "precision_equiv_ci": clopper_pearson(tp, tp + fp),
++         "recall_equiv": round(tp / n_eq, 4) if n_eq else None, "recall_equiv_ci": clopper_pearson(tp, n_eq),
++         "false_equivalence_rate": round(fp / n_ne, 4) if n_ne else None, "false_equivalence_ci": clopper_pearson(fp, n_ne),
++         "false_difference_rate": round(fn / n_eq, 4) if n_eq else None, "false_difference_ci": clopper_pearson(fn, n_eq),
++         "precision_nonequiv": round(tn / (tn + fn), 4) if tn + fn else None, "precision_nonequiv_ci": clopper_pearson(tn, tn + fn),
++         "recall_nonequiv": round(tn / n_ne, 4) if n_ne else None, "recall_nonequiv_ci": clopper_pearson(tn, n_ne),
++         "decisive_coverage": round(dec / n, 4) if n else None,
++         "selective_accuracy": round((tp + tn) / dec, 4) if dec else None}
++    return r
++
++
++def cluster_bootstrap(rows: list[tuple[str, str, str]], stat, reps: int = 2000, seed: int = 20261109):
++    """rows: (group, cell, gold). Percentile 95% interval of `stat(cells, golds)` resampling groups."""
++    by = defaultdict(list)
++    for g, cell, gold in rows:
++        by[g].append((cell, gold))
++    groups = sorted(by)
++    if not groups:
++        return None
++    rng, vals = random.Random(seed), []
++    for _ in range(reps):
++        cells, golds = [], []
++        for g in (rng.choice(groups) for _ in groups):
++            for cell, gold in by[g]:
++                cells.append(cell)
++                golds.append(gold)
++        v = stat(cells, golds)
++        if v is not None:
++            vals.append(v)
++    if not vals:
++        return None
++    vals.sort()
++    return (round(vals[int(0.025 * len(vals))], 4), round(vals[min(len(vals) - 1, int(0.975 * len(vals)))], 4))
++
++
++def load_runs(runs: Path, tier: int) -> dict[str, dict[str, list[dict]]]:
++    out = defaultdict(lambda: defaultdict(list))
++    for p in sorted(runs.glob(f"*/t{tier}/*.json")):
++        if p.name.startswith("manifest"):
++            continue
++        r = json.loads(p.read_text())
++        out[r["system"]][r["case_id"]].append(r)
++    return out
++
++
++def score(runs: Path, gold_path: Path, tier: int) -> dict:
++    gold = {g["case_id"]: g for g in read_jsonl(gold_path)}
++    sysruns = load_runs(runs, tier)
++    res = {"tier_cpu_s": tier, "cases_with_gold": len(gold), "systems": {}, "paired": {}, "missing_records": {}}
++    correct = defaultdict(dict)
++    for system, by_case in sysruns.items():
++        res["missing_records"][system] = sorted(set(gold) - set(by_case))
++        res["systems"][system] = {}
++        for track in ("A", "B"):
++            for reading in ("certified", "native"):
++                rows, cells, golds, sens = [], [], [], {"disputed_as_equivalent": [], "disputed_as_non_equivalent": []}
++                for cid, g in gold.items():
++                    recs = by_case.get(cid)
++                    pred = recs[0][f"track_{track}"][reading] if recs else "MISSING"
++                    gl = g[f"gold_{track}"]
++                    if gl in GOLD_OK:
++                        cell = classify(pred, gl)
++                        rows.append((g.get("group", cid), cell, gl))
++                        cells.append(cell)
++                        golds.append(gl)
++                        if reading == "certified":
++                            correct[(track, system)][cid] = cell in ("TP", "TN")
++                    else:
++                        sens["disputed_as_equivalent"].append(classify(pred, "equivalent"))
++                        sens["disputed_as_non_equivalent"].append(classify(pred, "non_equivalent"))
++                m = metrics(cells, golds)
++                m["precision_equiv_cluster_ci"] = cluster_bootstrap(
++                    rows, lambda c, g: (c.count("TP") / (c.count("TP") + c.count("FP"))) if c.count("TP") + c.count("FP") else None)
++                m["recall_equiv_cluster_ci"] = cluster_bootstrap(
++                    rows, lambda c, g: (c.count("TP") / g.count("equivalent")) if g.count("equivalent") else None)
++                m["disputed_sensitivity"] = {k: {x: v.count(x) for x in set(v)} for k, v in sens.items()}
++                m["by_source"] = {}
++                for src in sorted({gold[c].get("source") for c in gold}):
++                    ids = [cid for cid in gold if gold[cid].get("source") == src and gold[cid][f"gold_{track}"] in GOLD_OK]
++                    m["by_source"][src] = metrics([classify((by_case.get(cid) or [{f"track_{track}": {reading: "MISSING"}}])[0][f"track_{track}"][reading],
++                                                            gold[cid][f"gold_{track}"]) for cid in ids],
++                                                  [gold[cid][f"gold_{track}"] for cid in ids])
++                cpu = [r["run"]["cpu_s"] for recs in by_case.values() for r in recs if r.get("run")]
++                m["cpu_s_quantiles"] = _quantiles(cpu)
++                res["systems"][system][f"{track}/{reading}"] = m
++    for track in ("A", "B"):
++        systems = sorted(s for (t, s) in correct if t == track)
++        pv = {}
++        for i, s1 in enumerate(systems):
++            for s2 in systems[i + 1:]:
++                ids = set(correct[(track, s1)]) & set(correct[(track, s2)])
++                b = sum(correct[(track, s1)][k] and not correct[(track, s2)][k] for k in ids)
++                c = sum(correct[(track, s2)][k] and not correct[(track, s1)][k] for k in ids)
++                key = f"{s1}_vs_{s2}"
++                res["paired"][f"{track}:{key}"] = {"paired_cases": len(ids), f"{s1}_only_correct": b, f"{s2}_only_correct": c,
++                                                   "mcnemar_exact_p": round(mcnemar_exact(b, c), 6)}
++                pv[f"{track}:{key}"] = mcnemar_exact(b, c)
++        for k, v in holm(pv).items():
++            res["paired"][k]["holm_p"] = v
++    return res
++
++
++def _quantiles(xs):
++    if not xs:
++        return None
++    xs = sorted(xs)
++    q = lambda f: xs[min(len(xs) - 1, int(f * len(xs)))]
++    return {"p50": q(0.5), "p90": q(0.9), "p99": q(0.99), "max": xs[-1], "n": len(xs)}
++
++
++def markdown(res: dict) -> str:
++    L = [f"# Scores at {res['tier_cpu_s']} CPU-s per pair", ""]
++    for system, d in res["systems"].items():
++        for key, m in d.items():
++            L.append(f"## {system} — track {key}")
++            L.append("| eligible | TP | FP | TN | FN | abstain | infra | prec(eq) [CP 95%] | recall(eq) [CP 95%] | false-eq rate [CP 95%] | coverage |")
++            L.append("|---|---|---|---|---|---|---|---|---|---|---|")
++            L.append(f"| {m['eligible']} | {m['TP']} | {m['FP']} | {m['TN']} | {m['FN']} | {m['ABSTAIN']} | {m['INFRA']} | "
++                     f"{m['precision_equiv']} {m['precision_equiv_ci']} | {m['recall_equiv']} {m['recall_equiv_ci']} | "
++                     f"{m['false_equivalence_rate']} {m['false_equivalence_ci']} | {m['decisive_coverage']} |")
++            L.append("")
++    L.append("## Paired comparisons (certified reading; exact McNemar, Holm)")
++    for k, v in res["paired"].items():
++        L.append(f"- {k}: {v}")
++    return "\n".join(L) + "\n"
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m bench.score")
++    ap.add_argument("--runs", type=Path, required=True)
++    ap.add_argument("--gold", type=Path, required=True)
++    ap.add_argument("--tier", type=int, required=True)
++    ap.add_argument("--out", type=Path, required=True)
++    ap.add_argument("--markdown", type=Path)
++    a = ap.parse_args(argv)
++    res = score(a.runs, a.gold, a.tier)
++    a.out.write_text(json.dumps(res, indent=1))
++    if a.markdown:
++        a.markdown.write_text(markdown(res))
++    print(markdown(res))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/bench/seal.py b/bench/seal.py
+new file mode 100644
+index 0000000..644543f
+--- /dev/null
++++ b/bench/seal.py
+@@ -0,0 +1,152 @@
++"""Sealing: blinded case files, label commitments and a group-disjoint pilot/primary split.
++
++Run by the independent custodian, not by a tool developer:
++
++    python -m bench.seal build --pool pool/ --sources epla,pnv-test --primary 480 --pilot 48 \
++        --seed <custodian-chosen> --out sealed/
++
++Writes
++    sealed/pilot.cases.jsonl, sealed/primary.cases.jsonl   blinded (opaque ids, shuffled, no labels)
++    sealed/manifest.json                                   counts, strata, file SHA-256s, label commitment
++    sealed/custodian/labels.jsonl + salt.txt                NEVER committed; held by the custodian
++
++Commitment: SHA-256(salt || canonical JSON of the label file). Publishing the commitment before any
++prediction run and the salt + labels after the runs are locked lets anyone verify that labels were not
++changed after seeing predictions. Selection is by whole group (all siblings of a source theorem go to the
++same split) so near-duplicates cannot straddle pilot and primary. Stratification uses source labels only
++to balance the sample; gold labels are the adjudicators' votes, recorded later against the same ids.
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import random
++import secrets
++from collections import defaultdict
++from pathlib import Path
++
++from .canonical import group_near_duplicates, read_jsonl, sha256_file, write_jsonl
++
++
++def commitment(labels: list[dict], salt: str) -> str:
++    payload = json.dumps(sorted(labels, key=lambda r: r["case_id"]), sort_keys=True, ensure_ascii=False)
++    return hashlib.sha256((salt + payload).encode()).hexdigest()
++
++
++def verify(labels: list[dict], salt: str, published: str) -> bool:
++    return commitment(labels, salt) == published
++
++
++def build(pool: Path, sources: list[str], n_primary: int, n_pilot: int, seed: int, out: Path) -> dict:
++    cases, src_labels = [], {}
++    for s in sources:
++        cases += read_jsonl(pool / f"{s}.cases.jsonl")
++        for r in read_jsonl(pool / f"{s}.source_labels.jsonl"):
++            src_labels[r["case_id"]] = r["source_label_equivalent"]
++    # near-duplicate grouping on top of the source's own theorem grouping
++    near = group_near_duplicates([(c["case_id"], c["cand_decl"]) for c in cases])
++    by_ref = group_near_duplicates([(c["case_id"], c["ref_decl"]) for c in cases])
++    # final group: union of source group, candidate near-dup and reference near-dup relations
++    parent = {}
++
++    def find(x):
++        parent.setdefault(x, x)
++        while parent[x] != x:
++            parent[x] = parent[parent[x]]
++            x = parent[x]
++        return x
++
++    def union(a, b):
++        parent[find(a)] = find(b)
++
++    for c in cases:
++        k = c["case_id"]
++        union(k, "G:" + c["group"])
++        union(k, "N:" + near[k])
++        union(k, "R:" + by_ref[k])
++    groups = defaultdict(list)
++    for c in cases:
++        groups[find(c["case_id"])].append(c)
++    rng = random.Random(seed)
++    order = sorted(groups)
++    rng.shuffle(order)
++    # pilot: first groups until n_pilot cases; primary: balanced by source label, whole groups only
++    pilot, primary, used = [], [], set()
++    for g in order:
++        if len(pilot) >= n_pilot:
++            break
++        pilot += groups[g]
++        used.add(g)
++    want = {True: n_primary // 2, False: n_primary - n_primary // 2}
++    have = {True: 0, False: 0}
++    for g in order:
++        if g in used:
++            continue
++        members = groups[g]
++        pos = sum(bool(src_labels.get(c["case_id"])) for c in members)
++        neg = len(members) - pos
++        if have[True] + pos <= want[True] and have[False] + neg <= want[False]:
++            primary += members
++            have[True] += pos
++            have[False] += neg
++            used.add(g)
++        if have == want:
++            break
++    salt = secrets.token_hex(32)
++    out.mkdir(parents=True, exist_ok=True)
++    manifest = {"seed": seed, "sources": sources, "groups_total": len(groups), "notes": []}
++    for name, part in (("pilot", pilot), ("primary", primary)):
++        rng.shuffle(part)
++        blinded, labels = [], []
++        for i, c in enumerate(part):
++            bid = f"{name}-{i:04d}-" + hashlib.sha256((str(seed) + c["case_id"]).encode()).hexdigest()[:6]
++            b = {k: v for k, v in c.items() if k not in ("generator",)}
++            b["case_id"], b["origin_case_id_hash"] = bid, hashlib.sha256(c["case_id"].encode()).hexdigest()[:16]
++            b["group"] = "grp-" + hashlib.sha256(find(c["case_id"]).encode()).hexdigest()[:10]
++            blinded.append(b)
++            labels.append({"case_id": bid, "origin_case_id": c["case_id"], "source": c["source"],
++                           "source_label_equivalent": src_labels.get(c["case_id"])})
++        write_jsonl(out / f"{name}.cases.jsonl", blinded)
++        write_jsonl(out / "custodian" / f"{name}.labels.jsonl", labels)
++        manifest[name] = {"cases": len(part), "groups": len({b['group'] for b in blinded}),
++                          "by_source": {s: sum(c["source"] == s for c in part) for s in sources_of(part)},
++                          "cases_sha256": sha256_file(out / f"{name}.cases.jsonl"),
++                          "label_commitment": commitment(labels, salt)}
++    if have != want:
++        manifest["notes"].append(f"primary balance not reached with whole groups: positives {have[True]}/{want[True]}, "
++                                 f"negatives {have[False]}/{want[False]}; the shortfall is reported, not padded")
++    (out / "custodian" / "salt.txt").write_text(salt + "\n")
++    (out / "manifest.json").write_text(json.dumps(manifest, indent=1))
++    return manifest
++
++
++def sources_of(part):
++    return sorted({c["source"] for c in part})
++
++
++def main(argv=None) -> int:
++    ap = argparse.ArgumentParser(prog="python -m bench.seal")
++    sub = ap.add_subparsers(dest="cmd", required=True)
++    b = sub.add_parser("build")
++    b.add_argument("--pool", type=Path, required=True)
++    b.add_argument("--sources", required=True)
++    b.add_argument("--primary", type=int, default=480)
++    b.add_argument("--pilot", type=int, default=48)
++    b.add_argument("--seed", type=int, required=True)
++    b.add_argument("--out", type=Path, required=True)
++    v = sub.add_parser("verify")
++    v.add_argument("--labels", type=Path, required=True)
++    v.add_argument("--salt", required=True)
++    v.add_argument("--commitment", required=True)
++    a = ap.parse_args(argv)
++    if a.cmd == "build":
++        print(json.dumps(build(a.pool, a.sources.split(","), a.primary, a.pilot, a.seed, a.out), indent=1))
++        return 0
++    ok = verify(read_jsonl(a.labels), a.salt.strip(), a.commitment)
++    print("COMMITMENT_OK" if ok else "COMMITMENT_MISMATCH")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/docs/sota1/ADJUDICATION.md b/docs/sota1/ADJUDICATION.md
+new file mode 100644
+index 0000000..c25570c
+--- /dev/null
++++ b/docs/sota1/ADJUDICATION.md
+@@ -0,0 +1,63 @@
++# SOTA-1 independent adjudication: instructions and records
++
++## Roles
++
++| Role | Who | Responsibilities |
++|---|---|---|
++| Custodian | Neither a ProofScope developer nor a developer of a tested tool | Runs `python -m bench.seal build`. Publishes `manifest.json` (the case-file SHA-256s and label commitments) before any prediction run. Keeps `custodian/` (salt and labels) offline until the runs are locked. |
++| Reviewers R1, R2 | Mathematicians fluent in Lean/Mathlib, not developers of any tested tool | Each reviewer independently receives only `primary.cases.jsonl`: no tool names, no predictions, no source labels. |
++| Arbiter R3 | Same restrictions as the reviewers | Resolves disagreements between R1 and R2. |
++
++## Record per case and reviewer (`votes_R1.jsonl`, `votes_R2.jsonl`)
++
++    {"case_id": "...", "reviewer": "R1",
++     "track_A": "equivalent|non_equivalent|disputed|unassessable",
++     "track_B": "equivalent|non_equivalent|disputed|unassessable",
++     "direction": "ref_implies_cand|cand_implies_ref|incomparable|both_false_on_domain|none|unknown",
++     "rationale": "required, at least one sentence",
++     "lean_evidence": "optional: a checker-replayed lemma or counterexample, as Lean source",
++     "minutes": 7}
++
++**Track A** asks whether the two closed statements are logically equivalent in their common context.
++
++**Track B** asks whether the candidate is a faithful formalization of the reference. That means it
++preserves:
++- the domain;
++- the role of each hypothesis;
++- the meaning of the conclusion;
++- the choice of definitions;
++- the strength of the statement.
++
++Approved reformulations are allowed. Two unrelated true theorems are not faithful to each other, even
++though they are logically equivalent.
++
++**Hard cases.** Attach Lean evidence that the checker can replay. No sorry, no custom axioms and no
++`native_decide`.
++
++## Resolution
++
++1. If R1 and R2 agree, that is the gold label.
++2. If they disagree, R3 decides with a written reason. If R3 cannot decide, the case is DISPUTED.
++3. DISPUTED cases are excluded from the primary denominator and scored both ways in a sensitivity table.
++4. Report Cohen's κ between R1 and R2 for each track.
++
++## Release
++
++After all runs are locked, the custodian publishes:
++- the salt;
++- `custodian/*.labels.jsonl`;
++- the votes;
++- `gold.jsonl`.
++
++Anyone can then check the commitment:
++
++    python -m bench.seal verify --labels custodian/primary.labels.jsonl --salt "$(cat salt.txt)" --commitment <published>
++
++The scoring run then uses `gold.jsonl` (workflow input `gold`).
++
++## If no independent reviewers are available
++
++Any labels produced by project members, by an AI, or by both are recorded as `PROVISIONAL_NON_INDEPENDENT`:
++- Results scored against them must be titled "provisional".
++- AI-generated labels are marked `AI_PRELIMINARY`.
++- A second AI does not make a label independent.
+diff --git a/docs/sota1/README.md b/docs/sota1/README.md
+new file mode 100644
+index 0000000..da401a3
+--- /dev/null
++++ b/docs/sota1/README.md
+@@ -0,0 +1,221 @@
++# SOTA-1: the competitor benchmark, the research candidate, and where things stand
++
++ProofScope by Caleb J. Westfall. Prepared with Claude (Anthropic), 2026-11-09.
++
++**Status: infrastructure built and tested locally; no comparative result exists.** No benchmark has run,
++no gold labels exist, and no claim of superiority is made. This document is the executable companion of
++`docs/competitor_benchmark_protocol.md`; amendments proposed here (A1–A6) must be accepted and frozen
++before the blind corpus is sealed.
++
++## 1. Competitor availability matrix
++
++Evidence levels follow the protocol's gate: SOURCE_ONLY < INSTALLABLE < SMOKE_PASSED < BENCHMARK_PASSED.
++
++| System | Pinned source | License | Native environment | Native evaluation entry point (verified in source) | Level reached | Evidence |
++|---|---|---|---|---|---|---|
++| ProofScope v1.2 | this repo, V12_FREEZE.txt (hashes re-verified on this branch) | repo license | Lean 4.34.1 + Mathlib `d13f23b` | `python -m proofscope.v12 run` | BENCHMARK_PASSED on its own 80-case split only (developer-authored, not independent) | v1.2 Mathlib run (85 rows, 0 must-not-be violations) |
++| SemantEq | `hlxr89/SemantEq@f92767000e14` | Apache-2.0 | Lean v4.30.0-rc1 + its own Mathlib pin (~9 GB RAM per process with `import Mathlib`) | `lake exe semanteq --raw [--timeout N] pairs.jsonl out.jsonl` | SMOKE_PASSED (one identical pair; run 42682197696) | competitor-smoke.yml |
++| BEq+ | `augustepoiroux/LeanInteract@768e18ebcb5c` `examples/beq_plus.py` | MIT | LeanInteract REPL, `TempRequireProject(lean_version="v4.8.0", require="mathlib")` as in upstream's own ProofNetVerif driver | `beq_plus(f1, f2, src_header, server, timeout_per_proof)` | INSTALLABLE (import + callable only; **no pair evaluated yet**) | competitor-smoke.yml |
++| ASSESS / TransTED (new) | `XiaoyangLiu-sjtu/ASSESS@bc7933547d8a` | Apache-2.0 | Lean REPL; paths hard-coded in `main.py`, `transted.py`, `src/verifier.py` | `python main.py --benchmark ... --ted_similarity`, `transted.py` | SOURCE_ONLY. Its TransTED output is a **similarity score**, not a certified verdict: a separate, non-certified track if added | this document |
++| ACE / SAE (arXiv 2610.25018) | not located | unknown | unknown | unknown | UNAVAILABLE (`NOT_PUBLICLY_RUNNABLE_VERIFIED`) | searches on 2026-11-09 found no release |
++| FormalRx-CC (ICML 2026) | no code link on the conference page | unknown | LLM-generated witnesses | n/a | UNAVAILABLE; closest prior art (see §7) | icml.cc/virtual/2026/82532 |
++| MachineChecked (track C) | `cgarryZA/MachineChecked@47276b53` | Apache-2.0 | Lean v4.32.0 (toy), TeX Live, Poppler | `machinechecked check --json` | SMOKE_PASSED (native toy-paper audit, run 42682197696) | competitor-smoke.yml |
++| PaperFormalizer (track C) | `Jiyuan-Tan/PaperFormalizer@5e1f269b` | MIT-derived responsible-use license | Node 22; external model calls; human checkpoints | its agentic pipeline | INSTALLABLE (typecheck only) | competitor-smoke.yml |
++
++The smoke run proved that the four tools install and start. It did not show that any of them evaluates
++a mathematical pair correctly, and the four checks are not equivalent in depth.
++
++## 2. The runner (built; unit-tested; not yet run on GitHub)
++
++Code is in `bench/` and the workflow is `.github/workflows/competitor-benchmark.yml`.
++
++| Part | What it does |
++|---|---|
++| `canonical.py` | Defines the case format. A case is two complete Lean declarations with their headers, exactly as published. Label-like fields are rejected in case records. Also provides normalization and near-duplicate grouping. |
++| `ingest.py` | Builds the candidate pool from EPLA (pinned ASSESS commit) and ProofNetVerif (Hugging Face, on the runner). Source labels go to a separate file and are never treated as gold. |
++| `seal.py` | Builds the custodian's split: the pilot and primary are group-disjoint, case ids are opaque, and the labels are covered by a salted SHA-256 commitment that can be verified later (`seal verify`). |
++| `limits.py` | Applies a hard external CPU limit (`prlimit`) to every tool alike, plus a resident-memory watchdog over the whole process group. Per-child CPU and peak RSS come from `wait4`. A process killed at the limit is a TIMEOUT, never an abstention. |
++| `adapters/` | Adapters for ProofScope, SemantEq and BEq+; details below. |
++| `outcomes.py` | Maps each tool's verdicts to the shared outcomes, with a pre-registered certified (3-way) reading and native (binary) reading. Infrastructure outcomes are kept as they are. |
++| `score.py` | Computes the protocol's metrics per track and per reading, with exact Clopper–Pearson intervals, a group-clustered bootstrap, exact McNemar tests with Holm correction, a disputed-case sensitivity analysis, and per-source breakdowns. |
++
++**Adapters:**
++- **ProofScope:** ProofScope compares two closed propositions, so the adapter prints each declaration's
++  type outside the header's `open`s. It then proves the printed type equal to the original by
++  `with_reducible rfl`, which is a meaning-preservation certificate for the adapter (A2).
++- **SemantEq:** uses SemantEq's own pair format, one pair per process.
++- **BEq+:** runs the unmodified upstream `beq_plus`, with the two headers merged (A4).
++
++**Tested locally (core Lean 4.34.1, no Mathlib):**
++- 11 unit tests pass.
++- The statistics match reference values: Clopper–Pearson (5/10) = (0.1871, 0.8129), (0/30) upper bound = 0.1157, and McNemar exact (1, 9) = 0.02148.
++- The limiter correctly classifies CPU timeouts, OOM and wall timeouts.
++- The ProofScope adapter ran end to end on 5 core-Lean plumbing pairs: the printed propositions round-tripped and the frozen engine returned verdicts.
++
++None of this is a benchmark result.
++
++## 3. Frozen manifests
++
++Pins are in the workflow `env:` block: Mathlib, SemantEq, LeanInteract and ASSESS commits, plus the
++ProofScope freeze check. Each run writes a `manifest*.json` with:
++- the CPU limit, startup allowance and memory cap;
++- the SHA-256 of the cases file;
++- host, CPU, Python version and the `prlimit` path;
++- the cache state.
++
++**Toolchain mismatch.** The three systems natively use Lean 4.34.1, Lean v4.30.0-rc1 and Lean v4.8.0,
++each with a different Mathlib. Per the protocol, no tool is forced onto another's version. A case that
++does not elaborate in a tool's native environment is NON_ELABORATING for that tool. It is reported, and
++it is not counted as a wrong answer.
++
++## 4. Corpus specification and contamination controls
++
++These are facts measured on the pinned EPLA data.
++
++**EPLA** (ASSESS@bc79335, Apache-2.0):
++- 1,247 (reference, prediction) pairs: 831 miniF2F and 416 ProofNet.
++- Only 430 distinct reference statements.
++- 409 near-duplicate groups at Jaccard 0.9.
++- 77 exact duplicate pairs.
++- Source labels ("likeness after transformation"): 1,096 positive and 151 negative.
++
++**Consequence: EPLA alone cannot supply a balanced 240/240 primary sample by whole groups.** On a test
++seal (seed 7), the 120 negative slots reached only 40/120. The seal reports the shortfall instead of
++padding it.
++
++**ProofNetVerif:**
++- It is the home benchmark of BEq+ (Poiroux et al.).
++- SemantEq ships its own re-adjudicated labels for the 1,303-pair test split, plus its own verdicts
++  (`test/pnv_test_adjudicated_labels.jsonl`).
++- It is therefore **vendor-home for two competitors**. Results on it are reported as a vendor-home
++  stratum and are never pooled with independent slices.
++
++**EPLA** is likewise vendor-home for ASSESS/TransTED.
++
++**Exposure declaration.** While building this infrastructure, the developer:
++- printed EPLA's first record of each split;
++- computed EPLA's aggregate label counts;
++- read SemantEq's ProofNetVerif label format.
++
++No other individual labels were examined. All public slices are, in any case, unsealed by nature.
++
++**Primary blind holdout (A3).** The only slice that can support an independence claim is new pairs:
++- curated by someone who is neither a ProofScope nor a competitor developer;
++- drawn from Lean projects and papers not used by any tool;
++- sealed with `bench.seal` before any run.
++
++Target size and balance follow the protocol (480 cases, 240/240, at least 25% real-paper pairs).
++Grouping uses three relations: the source theorem group, candidate near-duplicates, and reference
++near-duplicates. The pilot (48) and primary splits share no group.
++
++## 5. Independent adjudication
++
++See `docs/sota1/ADJUDICATION.md`: the reviewer packet, the record schema, the dispute rule, and how to
++release labels against the commitment. **Two blinded reviewers and a third arbiter are not available to
++this project today.** Until they are, any run is reported as PROVISIONAL and never as independent.
++
++## 6. Comparative report
++
++No comparative result exists yet. What does exist:
++- **Availability:** all four smoke jobs passed (run 42682197696).
++- **Historical exploratory comparison:** the 208-pair ProofScope/SemantEq comparison
++  (`docs/v0.6_competitor_result.md`). It is not blind, not matched and not evidence of superiority.
++- **ProofScope's own 80-case Mathlib split:**
++  - 61 certified decisive verdicts and 60 exact label matches;
++  - 0 must-not-be violations (the protocol's unsound-verdict flag);
++  - developer-authored, so it is not independent and not comparative.
++
++**Known reasons ProofScope may score poorly on public slices:**
++1. ProofScope certifies **logical** non-equivalence (Track A negative) only when one side is refuted
++   **and** the other proved; v1.2 never proves a side in pair mode. Its Track A negatives are therefore
++   almost all ABSTAIN.
++2. Most autoformalization errors in EPLA/ProofNetVerif are conclusion changes. v1.2 answers
++   CONCLUSION_ONLY_CHANGE (ABSTAIN) for these by design.
++3. Many statements need carriers outside the registry: ℂ, filters, matrices, measure theory.
++4. The adapter's round-trip check will refuse some statements whose printed form does not re-elaborate.
++   These count as UNSUPPORTED_INPUT.
++
++## 7. Novelty analysis (prior work checked 2026-11-09)
++
++| Prior work | What it does | Overlap with ProofScope |
++|---|---|---|
++| BEq (Liu et al., ICLR 2025); BEq+ (Poiroux et al., EMNLP 2025) | Bidirectional proof search for equivalence | Positive (equivalence) direction only; no certified negatives |
++| SemantEq (Li et al., Oct 2026) | Audited bidirectional equivalence finer than logical equivalence; a proof audit for LLM-written proofs | Positive direction only; one-direction results are labelled "Likely", not certified |
++| ASSESS / TransTED (ICLR 2026) | Structural and semantic similarity; the EPLA benchmark | Scores, not certificates |
++| FormalRx (ICML 2026) | A 28-category error taxonomy with localization, from a trained LLM | Diagnosis and localization, but not certified |
++| **FormalRx-CC (Yang & Osorio, ICML 2026)** | Every misalignment diagnosis must carry a **Lean-checkable witness that separates the candidate from the intended formalization**, produced by LLMs and checked adversarially | **Closest prior art.** "Certified countermodels for non-equivalence" is therefore **not new as an idea** |
++| The Faithfulness Gap / BPF (arXiv 2606.16541) | LLM probes; a "drift detection theorem" | Statistical rather than kernel-certified |
++| Faults in Our Formal Benchmarking (arXiv 2606.29493); MechGeo (arXiv 2608.02295) | Counterexample and vacuity checkers that find defects in formal statements | Counterexample search for statement defects is established |
++
++**What may still distinguish ProofScope (not established):**
++- witnesses synthesized **without an LLM**, by structure-agnostic countermodel search, with a typed,
++  assumption-level diagnosis (weaker / stronger / incomparable / needs-assumption / minimality);
++- each verdict class tied to a Lean soundness theorem;
++- linking certificates from the user's statements to the canonical form.
++
++Whether this beats FormalRx-CC or the others on matched tasks is an empirical question, and it has not
++been tested. **No novelty claim is made.**
++
++## 8. Research candidate (Phase 6 material)
++
++The candidate is `research/joint_drift/JointDrift.lean`: 7 theorems, 6 axiom-free and 1 using only
++`propext` and `Quot.sound`. A fresh `leanchecker` replay passes locally.
++
++| Theorem | Statement |
++|---|---|
++| `joint_entails` | `D → A` and `Q → P` on the region `C ∧ D` give `L → R`. The conclusion comparison is needed only where the reference's own assumptions hold. |
++| `joint_refutes_ref`, `joint_refutes_lean` | Concrete refutations. |
++| `certified_logical_difference` (and its symmetric form) | A proof of one side plus a refuting model of the other certifies `¬ (L ↔ R)`. This is a certified Track A negative, the outcome that proof-search-only checkers cannot produce. |
++| `components_do_not_determine_joint` | The same per-part signature (an added restrictive assumption and a pointwise-stronger conclusion) occurs both with `L → R` and with `¬ (L → R)`. Deciding the direction from the parts separately is unsound, so the joint obligations are necessary. |
++| `vacuous_reference_equiv_true` | A vacuous reference is logically equivalent to every true formalization. Track A equivalence never certifies fidelity. |
++
++**Honest assessment.** These are elementary lemmas. Their value lies in specifying a sound decision
++procedure and in a negative result that constrains any design; they are not a significant mathematical
++result.
++
++**Proof obligations for a v1.3 engine** (must be built on a separate development corpus, after the
++baseline):
++1. Implement the joint path: entailment by the portfolio, refutations by the countermodel registry, and
++   certified Track A negatives by "sufficiency proof + refutation". Every verdict must be an instance of
++   one of these theorems.
++2. Freeze v1.3 and evaluate it on a **new** sealed holdout. Never reuse an exposed slice.
++3. Run hostile tests for the `components_do_not_determine_joint` instances, vacuity, and mixed-region
++   errors (conclusion compared outside `C ∧ D`).
++
++## 9. Status classification
++
++**Engineering result.**
++- **Done:** the runner, adapters, scoring and statistics are implemented and tested, and the availability
++  matrix is verified to the levels stated above.
++- **Not done:** a new mathematical result of significance; any defensible state-of-the-art claim, which
++  needs independent gold and a matched run, neither of which exists.
++
++## 10. Protocol amendments proposed (freeze before sealing)
++
++| Amendment | Proposal |
++|---|---|
++| A1 | The per-pair CPU limit is the tier plus the tool's startup allowance. The allowance is the median CPU on the calibration pair over three availability runs, frozen in the run manifest before the primary run. Startup is also reported separately. |
++| A2 | ProofScope adapter: the printed propositions must pass `with_reducible rfl` against the original declaration. Failures count as UNSUPPORTED_INPUT. |
++| A3 | Strata: vendor-home public slices (EPLA for ASSESS; ProofNetVerif for BEq+ and SemantEq) are reported separately. Only the new holdout is "primary blind". |
++| A4 | BEq+ gets the de-duplicated union of the two headers as its single `src_header`. |
++| A5 | ProofScope Track A mapping: schema-level separations count as ABSTAIN (they do not make the closed statements inequivalent). `NO_ASSUMPTION_DELTA` and `BOTH_CLAIMS_FALSE` count as EQUIV in Track A. `NO_ASSUMPTION_DELTA` rests on meta-level extraction (Lean's elaborated-expression comparison), not on a kernel certificate, and is reported as its own sub-count. |
++| A6 | SemantEq `LikelyTooStrong` / `LikelyTooWeak` count as ABSTAIN in the certified reading and NONEQUIV in the native reading. |
++
++## 11. Errata found during this mission
++
++- **v1.2 theorem count.** `docs/v1.2_coverage.md` says CompositionV12 has "14 theorems (12 axiom-free)".
++  The correct count is **13 theorems: 11 axiom-free and 2 standard-axiom**. ChatGPT's CI correction
++  (`0824134`) is right. The frozen engine files on this branch match the delivered v1.2 byte for byte.
++- **The PENDING v1.2 resolution report** in the same document was superseded by the GitHub run, which
++  resolved m05, m09, m10, m12 and m13.
++
++## 12. Blockers
++
++| Blocker | Effect |
++|---|---|
++| No independent reviewers or custodian | Every run is PROVISIONAL |
++| No GitHub write access from this session | Patch handed over |
++| Hugging Face unreachable from the sandbox | ProofNetVerif is ingested on the runner |
++| No Mathlib in the sandbox | No Mathlib-level adapter test here |
++| ACE/SAE and FormalRx-CC code not released | Not benchmarked |
++| Track C needs three independent papers and human time | Not started |
+diff --git a/research/joint_drift/JointDrift.lean b/research/joint_drift/JointDrift.lean
+new file mode 100644
+index 0000000..3774a88
+--- /dev/null
++++ b/research/joint_drift/JointDrift.lean
+@@ -0,0 +1,95 @@
++/-!
++# Joint assumption–conclusion drift (SOTA-1 research candidate; core Lean, no imports)
++
++Setting (telescope normal form). A reference and a formalization share conditions `C`; the reference
++has its own assumptions `D` and conclusion `P`, the formalization its own assumptions `A` and
++conclusion `Q`:
++
++    R = ∀ m, C m → D m → P m        L = ∀ m, C m → A m → Q m
++
++ProofScope v1.2 decides only the cases where one of the two parts is unchanged; for a change in both it
++answers INCONCLUSIVE. This file gives the inference rules a joint decision procedure needs and the
++negative result that rules out deciding from the two parts separately.
++
++* `joint_entails`: `D → A` and `Q → P` on the region `C ∧ D` give `L → R` (the conclusion comparison
++  is needed only where the reference's own assumptions hold).
++* `joint_refutes_ref`, `joint_refutes_lean`: a model of `C ∧ D ∧ ¬P` (resp. `C ∧ A ∧ ¬Q`) refutes `R`
++  (resp. `L`).
++* `certified_logical_difference`: a proof of one side plus a refuting model of the other certifies that
++  the two closed statements are **logically** inequivalent (`¬ (L ↔ R)`), the negative verdict that
++  proof-search-only checkers (BEq+, SemantEq) cannot certify, since a failed search is not evidence.
++* `components_do_not_determine_joint`: two instances with the same per-part signature (an added
++  restrictive assumption and a pointwise-stronger conclusion) where `L → R` holds in one and fails in
++  the other. Any procedure that decides the direction from the parts separately is therefore unsound.
++* `vacuous_reference_equiv_true`: a vacuous reference is logically equivalent to every true
++  formalization, so logical equivalence (Track A) never certifies a faithful translation (Track B).
++-/
++
++namespace ProofScope.JointDrift
++
++universe u
++
++/-- A statement in telescope normal form. -/
++def Stmt {M : Sort u} (C H P : M → Prop) : Prop := ∀ m, C m → H m → P m
++
++section
++variable {M : Sort u} {C D A P Q : M → Prop}
++
++theorem joint_entails (hA : ∀ m, C m → D m → A m) (hQ : ∀ m, C m → D m → Q m → P m) :
++    Stmt C A Q → Stmt C D P :=
++  fun hl m hc hd => hQ m hc hd (hl m hc (hA m hc hd))
++
++theorem joint_refutes_ref {m0 : M} (hc : C m0) (hd : D m0) (hp : ¬ P m0) : ¬ Stmt C D P :=
++  fun h => hp (h m0 hc hd)
++
++theorem joint_refutes_lean {m0 : M} (hc : C m0) (ha : A m0) (hq : ¬ Q m0) : ¬ Stmt C A Q :=
++  fun h => hq (h m0 hc ha)
++
++/-- Proof of the formalization plus a model refuting the reference: certified logical inequivalence. -/
++theorem certified_logical_difference (hL : Stmt C A Q) {m0 : M} (hc : C m0) (hd : D m0) (hp : ¬ P m0) :
++    ¬ (Stmt C A Q ↔ Stmt C D P) :=
++  fun h => joint_refutes_ref hc hd hp (h.mp hL)
++
++/-- Symmetric form: proof of the reference plus a model refuting the formalization. -/
++theorem certified_logical_difference' (hR : Stmt C D P) {m0 : M} (hc : C m0) (ha : A m0) (hq : ¬ Q m0) :
++    ¬ (Stmt C A Q ↔ Stmt C D P) :=
++  fun h => joint_refutes_lean hc ha hq (h.mpr hR)
++
++/-- A vacuous reference is logically equivalent to any true formalization. -/
++theorem vacuous_reference_equiv_true (hv : ∀ m, C m → ¬ D m) (hL : Stmt C A Q) :
++    Stmt C A Q ↔ Stmt C D P :=
++  ⟨fun _ m hc hd => absurd hd (hv m hc), fun _ => hL⟩
++
++end
++
++/-- The per-part signature both instances share: the formalization adds a restrictive assumption
++(`∃ m, C m ∧ D m ∧ ¬ A m`) and strengthens the conclusion pointwise (`∀ m, Q m → P m`). -/
++def Signature {M : Sort u} (C D A P Q : M → Prop) : Prop :=
++  (∃ m, C m ∧ D m ∧ ¬ A m) ∧ (∀ m, Q m → P m)
++
++/-- Deciding the direction from the two parts separately is unsound: the same signature occurs with
++`L → R` true and with `L → R` false. -/
++theorem components_do_not_determine_joint :
++    (∃ C D A P Q : Nat → Prop, Signature C D A P Q ∧ (Stmt C A Q → Stmt C D P)) ∧
++    (∃ C D A P Q : Nat → Prop, Signature C D A P Q ∧ ¬ (Stmt C A Q → Stmt C D P)) := by
++  refine ⟨⟨fun _ => True, fun _ => True, fun n => n ≤ 5, fun _ => True, fun n => n ≤ 3, ?_, ?_⟩,
++          ⟨fun _ => True, fun _ => True, fun n => n ≤ 2, fun n => n ≤ 5, fun n => n ≤ 3, ?_, ?_⟩⟩
++  · exact ⟨⟨6, trivial, trivial, by decide⟩, fun _ _ => trivial⟩
++  · intro _ _ _ _
++    trivial
++  · exact ⟨⟨3, trivial, trivial, by decide⟩, fun n h => by simp only at h ⊢; omega⟩
++  · intro h
++    have hL : Stmt (fun _ => True) (fun n => n ≤ 2) (fun n => n ≤ 3) := fun n _ hn => by simp only at hn ⊢; omega
++    have := h hL 6 trivial trivial
++    simp only at this
++    omega
++
++end ProofScope.JointDrift
++
++#print axioms ProofScope.JointDrift.joint_entails
++#print axioms ProofScope.JointDrift.joint_refutes_ref
++#print axioms ProofScope.JointDrift.joint_refutes_lean
++#print axioms ProofScope.JointDrift.certified_logical_difference
++#print axioms ProofScope.JointDrift.certified_logical_difference'
++#print axioms ProofScope.JointDrift.vacuous_reference_equiv_true
++#print axioms ProofScope.JointDrift.components_do_not_determine_joint
+diff --git a/tests/bench/__init__.py b/tests/bench/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/tests/bench/test_bench.py b/tests/bench/test_bench.py
+new file mode 100644
+index 0000000..27b832b
+--- /dev/null
++++ b/tests/bench/test_bench.py
+@@ -0,0 +1,98 @@
++"""Unit tests for the SOTA-1 benchmark infrastructure. All data here is synthetic test fixture data for
++the code paths; none of it is a benchmark result."""
++import tempfile
++import unittest
++from pathlib import Path
++
++from bench import canonical as C
++from bench import outcomes as O
++from bench import score as S
++from bench import seal as SE
++from bench.adapters import _decl as D
++from bench.limits import run_limited
++
++
++class Canonical(unittest.TestCase):
++    def test_labels_never_in_cases(self):
++        c = {"case_id": "x", "group": "g", "source": "s", "ref_header": "h", "ref_decl": "theorem a : True",
++             "cand_header": "h", "cand_decl": "theorem b : True", "correct": True}
++        self.assertTrue(any("label-like" in e for e in C.validate(c)))
++
++    def test_body_normalizes_name_and_proof(self):
++        self.assertEqual(C.statement_body("theorem foo (n : ℕ) :  n = n := by sorry"),
++                         C.statement_body("theorem bar (n : ℕ) : n = n"))
++
++    def test_with_sorry_keeps_let_in_statement(self):
++        d = "theorem t (p : Prop) : let q := ¬¬p; p = q"
++        self.assertEqual(D.with_sorry(d), d + " := sorry")
++        self.assertEqual(D.with_sorry("theorem t : True := by sorry"), "theorem t : True := sorry")
++
++
++class Outcomes(unittest.TestCase):
++    def test_failed_search_is_never_nonequiv_certified(self):
++        self.assertEqual(O.semanteq("Inconclusive", "A")["certified"], "ABSTAIN")
++        self.assertEqual(O.semanteq("LikelyTooWeak", "B")["certified"], "ABSTAIN")
++        self.assertEqual(O.beqplus(False, "A")["certified"], "ABSTAIN")
++        self.assertEqual(O.beqplus(False, "A")["native"], "NONEQUIV")
++
++    def test_proofscope_schema_difference_only_in_track_b(self):
++        self.assertEqual(O.proofscope("LEAN_WEAKER_BY_ASSUMPTION", "A")["certified"], "ABSTAIN")
++        self.assertEqual(O.proofscope("LEAN_WEAKER_BY_ASSUMPTION", "B")["certified"], "NONEQUIV")
++        self.assertEqual(O.proofscope("BOTH_CLAIMS_FALSE", "A")["certified"], "EQUIV")
++        self.assertEqual(O.proofscope("BOTH_CLAIMS_FALSE", "B")["certified"], "ABSTAIN")
++
++
++class Stats(unittest.TestCase):
++    def test_reference_values(self):
++        self.assertEqual(S.clopper_pearson(5, 10), (0.1871, 0.8129))
++        self.assertEqual(S.clopper_pearson(0, 30)[1], 0.1157)
++        self.assertAlmostEqual(S.mcnemar_exact(1, 9), 0.021484375)
++
++    def test_recall_counts_abstentions(self):
++        m = S.metrics(["TP", "ABSTAIN", "TN", "FN"], ["equivalent", "equivalent", "non_equivalent", "equivalent"])
++        self.assertEqual(m["recall_equiv"], round(1 / 3, 4))
++        self.assertEqual(m["decisive_coverage"], 0.75)
++
++    def test_infra_is_not_abstention(self):
++        self.assertEqual(S.classify("TIMEOUT_CPU", "equivalent"), "INFRA:TIMEOUT_CPU")
++
++
++class Seal(unittest.TestCase):
++    def test_commitment_and_group_disjointness(self):
++        with tempfile.TemporaryDirectory() as t:
++            t = Path(t)
++            cases, labels = [], []
++            for i in range(60):
++                g = f"g{i // 3}"
++                cases.append({"case_id": f"c{i}", "group": g, "source": "fx", "ref_header": "",
++                              "ref_decl": f"theorem r{i // 3} (n : Nat) : n + {i // 3} = n + {i // 3}",
++                              "cand_header": "", "cand_decl": f"theorem p{i} (m : Nat) : m * {i} = {i} * m"})
++                labels.append({"case_id": f"c{i}", "source_label_equivalent": i % 2 == 0, "source": "fx"})
++            C.write_jsonl(t / "fx.cases.jsonl", cases)
++            C.write_jsonl(t / "fx.source_labels.jsonl", labels)
++            m = SE.build(t, ["fx"], 20, 6, 1, t / "out")
++            pilot = C.read_jsonl(t / "out" / "pilot.cases.jsonl")
++            prim = C.read_jsonl(t / "out" / "primary.cases.jsonl")
++            self.assertFalse({c["group"] for c in pilot} & {c["group"] for c in prim})
++            for c in prim:
++                self.assertFalse(C.validate(c))
++            lab = C.read_jsonl(t / "out" / "custodian" / "primary.labels.jsonl")
++            salt = (t / "out" / "custodian" / "salt.txt").read_text().strip()
++            self.assertTrue(SE.verify(lab, salt, m["primary"]["label_commitment"]))
++            lab[0]["source_label_equivalent"] = not lab[0]["source_label_equivalent"]
++            self.assertFalse(SE.verify(lab, salt, m["primary"]["label_commitment"]))
++
++
++class Limits(unittest.TestCase):
++    def test_cpu_limit_is_timeout(self):
++        r = run_limited(["python3", "-c", "while True: pass"], cpu_s=1, mem_mb=512, wall_s=30)
++        self.assertEqual(r.status, "TIMEOUT_CPU")
++
++    def test_memory_watchdog(self):
++        r = run_limited(["python3", "-c", "import time;a=bytearray(600*2**20);a[::4096]=b'x'*len(a[::4096]);time.sleep(3)"],
++                        cpu_s=10, mem_mb=200, wall_s=30)
++        self.assertEqual(r.status, "OOM")
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.43.0
+

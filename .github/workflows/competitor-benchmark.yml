@@ -1,0 +1,384 @@
+name: ProofScope SOTA-1 Competitor Benchmark
+
+# Executable form of docs/competitor_benchmark_protocol.md (amendments in docs/sota1/).
+# phase=availability : native install + calibration pair + 2-pair smoke for every eligible system
+#                      (no labels involved); measures each tool's startup CPU for amendment A1.
+# phase=pilot|primary: runs every system on a SEALED, blinded cases file committed by the custodian.
+#                      Scoring needs the gold file, which the custodian releases only after the runs
+#                      are locked; until then the score job is skipped.
+# Every record (timeouts, OOM, non-elaborating inputs, adapter failures) is kept. No secrets are used.
+on:
+  workflow_call:
+    inputs:
+      phase:
+        type: string
+        required: false
+        default: availability
+      tier:
+        type: string
+        required: false
+        default: "20"
+      cases:
+        type: string
+        required: false
+        default: bench/fixtures/availability.cases.jsonl
+      startup_allowance:
+        type: string
+        required: false
+        default: '{"proofscope": 0, "semanteq": 0, "beqplus": 0}'
+      gold:
+        type: string
+        required: false
+        default: ""
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: availability | pilot | primary
+        required: true
+        default: availability
+      tier:
+        description: CPU seconds per pair (20 primary, 180 sensitivity)
+        required: true
+        default: "20"
+      cases:
+        description: blinded cases file (pilot/primary only)
+        required: false
+        default: bench/fixtures/availability.cases.jsonl
+      startup_allowance:
+        description: 'JSON {"proofscope": s, "semanteq": s, "beqplus": s} frozen from the availability run (amendment A1)'
+        required: false
+        default: '{"proofscope": 0, "semanteq": 0, "beqplus": 0}'
+      gold:
+        description: released gold file (empty until the custodian releases it)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+env:
+  MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+  SEMANTEQ_REPO: https://github.com/hlxr89/SemantEq.git
+  SEMANTEQ_REV: f92767000e14d11744580946980cf874324f5d19
+  LEANINTERACT_REPO: https://github.com/augustepoiroux/LeanInteract.git
+  LEANINTERACT_REV: 768e18ebcb5c7ec34d308768a785389eeac37798
+  ASSESS_REPO: https://github.com/XiaoyangLiu-sjtu/ASSESS.git
+  ASSESS_REV: bc7933547d8a6d1aaee41ccf56d68bc1f0fc575d
+
+jobs:
+  infrastructure-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: competitor-benchmark-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Integrity (frozen ProofScope v1.2, unchanged fixtures and research file, pinned competitor revisions)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c | tee evidence/v12-freeze.txt
+          echo "4b0d36de474ea39d9802e6a21e7240397a903ddc886bc25849a178773bc2f971  bench/fixtures/availability.cases.jsonl" | sha256sum -c | tee evidence/fixtures.txt
+          echo "da34fb9dea0fa8a110ed1a8343bf2f269501954b55221102b85856124821ce29  research/joint_drift/JointDrift.lean" | sha256sum -c | tee -a evidence/fixtures.txt
+          printf 'MATHLIB_REV=%s\nSEMANTEQ_REV=%s\nLEANINTERACT_REV=%s\nASSESS_REV=%s\n' "$MATHLIB_REV" "$SEMANTEQ_REV" "$LEANINTERACT_REV" "$ASSESS_REV" | tee evidence/pins.txt
+      - name: Benchmark infrastructure unit tests (incl. process-tree CPU, orphan, wall, OOM, launch-error classification)
+        run: python -m unittest tests.bench.test_bench -v
+      - name: Research theorems (JointDrift; 6 axiom-free + 1 standard-axiom, fresh kernel replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/jd" evidence
+          lean -o "$RUNNER_TEMP/jd/JointDrift.olean" research/joint_drift/JointDrift.lean | tee evidence/jointdrift-axioms.log
+          test "$(grep -c 'does not depend on any axioms' evidence/jointdrift-axioms.log)" = 6
+          test "$(grep -c 'depends on axioms: \[propext, Quot.sound\]' evidence/jointdrift-axioms.log)" = 1
+          ! grep -q sorryAx evidence/jointdrift-axioms.log
+          (cd "$RUNNER_TEMP/jd" && LEAN_PATH="$RUNNER_TEMP/jd" leanchecker --fresh JointDrift)
+      - name: Candidate pool from EPLA (pinned ASSESS commit; source labels kept apart from cases)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q "$RUNNER_TEMP/assess" && cd "$RUNNER_TEMP/assess"
+          git remote add origin "$ASSESS_REPO" && git fetch -q --depth 1 origin "$ASSESS_REV" && git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$ASSESS_REV"
+          cd "$GITHUB_WORKSPACE"
+          python -m bench.ingest epla --assess-dir "$RUNNER_TEMP/assess" --out evidence/pool | tee evidence/pool-epla.log
+      - name: Candidate pool from ProofNetVerif (Hugging Face; recorded as INFRASTRUCTURE if unreachable)
+        shell: bash
+        run: |
+          set -uo pipefail
+          pip install -q datasets==3.6.0
+          python -m bench.ingest proofnetverif --split test --out evidence/pool 2>&1 | tee evidence/pool-pnv.log \
+            || echo "INFRASTRUCTURE: ProofNetVerif download failed" | tee -a evidence/pool-pnv.log
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota1-infrastructure
+          path: evidence/
+
+  proofscope:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: competitor-benchmark-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Freeze check (ProofScope v1.2 frozen engine)
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -E '^[0-9a-f]{64}  [a-z]+/' proofscope/benchmark/V12_FREEZE.txt | sha256sum -c
+      - name: Install Lean 4.34.1 (pinned SHA-256; fails closed)
+        uses: ./.github/actions/setup-lean
+      - name: Mathlib at the pinned revision (binary cache)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ml" && cd "$RUNNER_TEMP/ml"
+          echo "leanprover/lean4:v4.34.1" > lean-toolchain
+          printf '%s\n' 'name = "pscheck"' 'defaultTargets = []' '' '[[require]]' 'name = "mathlib"' \
+            'git = "https://github.com/leanprover-community/mathlib4"' "rev = \"$MATHLIB_REV\"" > lakefile.toml
+          for i in 1 2 3; do lake update && break || sleep 30; done
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          echo "LEAN_PATH=$(lake env printenv LEAN_PATH)" >> "$GITHUB_ENV"
+      - name: ProofScope native checks (v1.2 unit and end-to-end tests; Mathlib elaboration smoke)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ps-evidence
+          python -m unittest tests.v02.test_v12 -v 2>&1 | tee ps-evidence/test_v12-${{ matrix.shard }}.log
+          printf 'import Mathlib\nexample (x : ℝ) : Real.sqrt (x ^ 2) = |x| := Real.sqrt_sq_eq_abs x\n' > /tmp/ps_smoke.lean
+          lean /tmp/ps_smoke.lean 2>&1 | tee ps-evidence/mathlib-smoke-${{ matrix.shard }}.log
+      - name: Run (shard ${{ matrix.shard }}/4)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
+          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
+          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
+            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['proofscope'])" '${{ inputs.startup_allowance }}'); fi
+          python -m bench.runner --system proofscope --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
+            --startup-allowance "$A" --mem-mb 12000 --repeat 1 --shard ${{ matrix.shard }}/4 --out runs | tee runs-proofscope-${{ matrix.shard }}.log
+      - name: Upload runs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota1-runs-proofscope-${{ matrix.shard }}
+          path: |
+            runs/
+            ps-evidence/
+            !runs/work/**/ps_out/build/**
+            runs-proofscope-*.log
+          if-no-files-found: warn
+
+  semanteq:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: competitor-benchmark-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: SemantEq at the pinned commit, native toolchain and Mathlib (its own lockfile)
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          git init -q "$RUNNER_TEMP/se" && cd "$RUNNER_TEMP/se"
+          git remote add origin "$SEMANTEQ_REPO" && git fetch -q --depth 1 origin "$SEMANTEQ_REV" && git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SEMANTEQ_REV"
+          for i in 1 2 3; do lake exe cache get && break || sleep 60; done
+          lake build semanteq 2>&1 | tail -5
+      - name: SemantEq upstream check (two pairs of its own recall suite, compared with its own manifest)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p se-evidence
+          cd "$RUNNER_TEMP/se"
+          grep -E '"id": "auto:Compfiles:(Imo1963P5|Imo1983P1)"' test/eval/recall/suite.jsonl > /tmp/se_upstream.jsonl
+          test "$(wc -l < /tmp/se_upstream.jsonl)" = 2
+          lake exe semanteq --raw --timeout 0 /tmp/se_upstream.jsonl /tmp/se_upstream_out.jsonl > "$GITHUB_WORKSPACE/se-evidence/upstream-stdout.log" 2>&1
+          cp /tmp/se_upstream_out.jsonl "$GITHUB_WORKSPACE/se-evidence/"
+          python - <<'PY'
+          import json
+          acc = {"ExactMatch", "DefEq", "EquivalentRestricted"}
+          man = {r["id"]: r for r in map(json.loads, open("test/eval/recall/manifest.jsonl"))}
+          out = [r for r in map(json.loads, open("/tmp/se_upstream_out.jsonl")) if "_meta" not in r]
+          assert len(out) == 2, out
+          for r in out:
+              want = man[r["id"]]["default_search_accepts"]
+              got = r["verdict"] in acc
+              print(r["id"], r["verdict"], "accepts" if got else "rejects", "manifest:", want)
+              assert got == want, f"SemantEq does not reproduce its own manifest on {r['id']}"
+          print("SEMANTEQ_UPSTREAM_OK")
+          PY
+      - name: Run (shard ${{ matrix.shard }}/4)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
+          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
+          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
+            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['semanteq'])" '${{ inputs.startup_allowance }}'); fi
+          python -m bench.runner --system semanteq --tool-dir "$RUNNER_TEMP/se" --cases '${{ inputs.cases }}' \
+            --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 --shard ${{ matrix.shard }}/4 \
+            --out runs | tee runs-semanteq-${{ matrix.shard }}.log
+      - name: Upload runs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota1-runs-semanteq-${{ matrix.shard }}
+          path: |
+            runs/
+            runs-semanteq-*.log
+            se-evidence/
+          if-no-files-found: warn
+
+  beqplus:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: competitor-benchmark-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # INFRASTRUCTURE. LeanInteract's `check_lake` runs a bare `lake --version` outside any project, so elan
+      # needs a default toolchain (run 42687906199: "error: no default toolchain configured"). Project
+      # commands are unaffected: LeanInteract calls `lake +v4.8.0 init` and the REPL/project directories
+      # carry their own lean-toolchain files. The default is pinned to the version upstream's driver uses.
+      - name: elan with pinned default toolchain leanprover/lean4:v4.8.0 (BEq+ upstream driver version)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p beq-evidence
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          for i in 1 2 3; do elan toolchain install leanprover/lean4:v4.8.0 && break; [ "$i" = 3 ] && { echo "INFRASTRUCTURE_ERROR: toolchain install failed"; exit 1; }; sleep 20; done
+          elan default leanprover/lean4:v4.8.0
+          { elan --version; elan show; lean --version; lake --version; } 2>&1 | tee beq-evidence/toolchain-${{ matrix.shard }}.txt
+          lean --version | grep -q "version 4.8.0" || { echo "INFRASTRUCTURE_ERROR: lean is not 4.8.0"; exit 1; }
+      - name: LeanInteract at the pinned commit (BEq+ source) and its REPL project (Lean v4.8.0 + Mathlib, as upstream's driver)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q "$RUNNER_TEMP/li" && cd "$RUNNER_TEMP/li"
+          git remote add origin "$LEANINTERACT_REPO" && git fetch -q --depth 1 origin "$LEANINTERACT_REV" && git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$LEANINTERACT_REV"
+          pip install -q . rich tqdm scikit-learn datasets 2>&1 | tee "$GITHUB_WORKSPACE/beq-evidence/pip-${{ matrix.shard }}.log"
+          pip freeze > "$GITHUB_WORKSPACE/beq-evidence/pip-freeze-${{ matrix.shard }}.txt"
+          # warm the REPL project once (setup cost, reported separately from per-pair budgets)
+          python -c "from lean_interact import LeanREPLConfig, TempRequireProject; LeanREPLConfig(project=TempRequireProject(lean_version='v4.8.0', require='mathlib'), verbose=True)" \
+            2>&1 | tail -n 200 | tee "$GITHUB_WORKSPACE/beq-evidence/repl-setup-${{ matrix.shard }}.log"
+      - name: Native BEq+ initialization check (REPL starts, Mathlib imports, one trivial command elaborates)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/li"
+          python - <<'PY' 2>&1 | tee "$GITHUB_WORKSPACE/beq-evidence/init-check-${{ matrix.shard }}.log"
+          import time
+          from lean_interact import AutoLeanServer, Command, LeanREPLConfig, TempRequireProject
+          t = time.time()
+          s = AutoLeanServer(config=LeanREPLConfig(project=TempRequireProject(lean_version="v4.8.0", require="mathlib")))
+          r = s.run(Command(cmd="import Mathlib\ntheorem init_check (x : ℝ) : x + 0 = x := by simp"), timeout=600)
+          print("response:", r)
+          assert r.lean_code_is_valid(allow_sorry=False), "INIT_CHECK_FAILED: Mathlib command did not elaborate"
+          print(f"BEQPLUS_INIT_OK {time.time() - t:.1f}s")
+          PY
+      - name: Run (shard ${{ matrix.shard }}/4)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # availability: the startup allowance is MEASURED (median whole-tree CPU of the calibration pair, 3 runs);
+          # pilot/primary: the frozen value from the availability manifest is passed in (amendments A1, A7)
+          if [ '${{ inputs.phase }}' = availability ]; then A=measure; else
+            A=$(python -c "import json,sys; print(json.loads(sys.argv[1])['beqplus'])" '${{ inputs.startup_allowance }}'); fi
+          python -m bench.runner --system beqplus --tool-dir "$RUNNER_TEMP/li" --beq-lean-version v4.8.0 \
+            --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} --startup-allowance "$A" --mem-mb 14000 --repeat 1 \
+            --shard ${{ matrix.shard }}/4 --out runs | tee runs-beqplus-${{ matrix.shard }}.log
+      - name: Upload runs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota1-runs-beqplus-${{ matrix.shard }}
+          path: |
+            runs/
+            runs-beqplus-*.log
+            beq-evidence/
+          if-no-files-found: warn
+
+  collect:
+    needs: [proofscope, semanteq, beqplus]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: competitor-benchmark-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: sota1-runs-*
+          path: shards
+          merge-multiple: true
+      - name: Availability gates (fail closed; every record is kept and uploaded)
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p scored
+          python -m bench.gate --runs shards --cases '${{ inputs.cases }}' --tier ${{ inputs.tier }} \
+            --out scored/availability.json --markdown scored/availability.md | tee -a "$GITHUB_STEP_SUMMARY"
+          rc=${PIPESTATUS[0]}
+          echo "gate exit code: $rc"
+          exit "$rc"
+      - name: Score (only when the custodian has released gold)
+        if: always() && inputs.gold != ''
+        run: |
+          mkdir -p scored
+          python -m bench.score --runs shards/runs --gold '${{ inputs.gold }}' --tier ${{ inputs.tier }} \
+            --out scored/metrics.json --markdown scored/report.md | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload collected evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sota1-collected
+          path: |
+            shards/
+            scored/
+          if-no-files-found: warn
