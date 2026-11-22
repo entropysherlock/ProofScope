@@ -1,0 +1,1 @@
+{"family": "outside", "formal": {"body": "f (f (f n)) = f n", "guard": "True", "var": "n"}, "id": "mo102", "kind": "multi", "meta": {}, "reference": {"body": "f (f n) = n", "guard": "True", "var": "n"}}

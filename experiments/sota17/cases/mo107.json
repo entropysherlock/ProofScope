@@ -1,0 +1,1 @@
+{"family": "outside", "formal": {"body": "f (n + 4) ≤ f n", "guard": "True", "var": "n"}, "id": "mo107", "kind": "multi", "meta": {}, "reference": {"body": "f (n + 2) ≤ f n", "guard": "True", "var": "n"}}

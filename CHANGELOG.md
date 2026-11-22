@@ -1,5 +1,17 @@
 # Changelog
 
+## SOTA-17 (research branch, unreleased)
+
+- `lean/ProofScope/MultiOcc.lean`: Baker-Pixley for function classes (`baker_pixley`, `majority_elim`), closed forms
+  and joint extension for `Step a b` and `Lower a`, multi-site elimination for pointwise references, the
+  three-site counterexample `pairwise_insufficient`, and `sq_majority_closed` (26 axiom reports).
+- `proofscope/multiocc.py`: certified comparison when the function symbol occurs at several sites
+  (`python3 -m proofscope.multiocc`). Existing modules unchanged; not yet wired into `claimdelta --scopeelim`.
+- `experiments/sota17/` (120 frozen cases, independent labeller, runner, `FREEZE.txt`) and
+  `experiments/sota17/mathlib_pilot/` (pinned Mathlib v4.34.1, frozen selection, pilot).
+- `tests/v02/test_sota17_multiocc.py` (18 tests); workflow **SOTA-17 Reproduce Multi-Occurrence Evaluation**;
+  `docs/sota17_multiocc.md`. Classification: Level 2.
+
 ## 1.2.0 (unreleased)
 
 - Fixed (soundness, new engine): replaced assumptions (added and dropped in one statement) are decided jointly;

@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "((f (3 * n) = f 5 + 2) ∨ (f (2 * n + 1) < f (3 * n) + 2)) ∧ (f (2 * n + 1) < f 5 + 1)", "guard": "n ≤ 6", "var": "n"}, "id": "mo092", "kind": "multi", "meta": {"c": 1, "k": 3}, "reference": {"body": "n ≤ f (3 * n + 1) ∧ f (3 * n + 1) ≤ 2 * n + 1", "guard": "1 ≤ n", "var": "n"}}

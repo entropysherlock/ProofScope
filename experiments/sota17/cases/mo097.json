@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "((f 0 < f (2 * n) + 3) ∨ (f 0 = f (2 * n) + 1)) ∨ (f (2 * n) = f 0 + 2)", "guard": "3 ≤ n", "var": "n"}, "id": "mo097", "kind": "multi", "meta": {"c": 0, "k": 1}, "reference": {"body": "f (n) = 2 * n", "guard": "n % 2 = 1", "var": "n"}}

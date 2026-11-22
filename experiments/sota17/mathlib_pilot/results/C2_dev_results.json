@@ -1,0 +1,267 @@
+{
+ "summary": {
+  "split": "C2_dev",
+  "mathlib_rev": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "declarations": 27,
+  "reached": {
+   "extracted": 27,
+   "binders": 14,
+   "abstracted": 1,
+   "in_fragment": 1,
+   "certified": 1
+  },
+  "failure_reasons": {
+   "failed_at_abstracted: no hypothesis on the function": 5,
+   "failed_at_binders: no function symbol in the binders": 4,
+   "failed_at_binders: several function symbols": 4,
+   "failed_at_abstracted: hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law": 4,
+   "failed_at_binders: typeclass binder": 3,
+   "failed_at_binders: untyped binder": 2,
+   "failed_at_abstracted: name clash with f": 1,
+   "failed_at_abstracted: outside the claim grammar: cannot tokenize at '∃ φ : ℕ → ℕ,'": 1,
+   "failed_at_abstracted: outside the claim grammar: free variables other than the bound ones": 1,
+   "failed_at_abstracted: several hypotheses on the function": 1
+  },
+  "certified": [
+   "StrictMono.add_le_nat"
+  ],
+  "seconds_total": 0.9
+ },
+ "rows": [
+  {
+   "name": "ceil_nat",
+   "file": "Mathlib/Algebra/Order/Floor/Defs.lean",
+   "line": 129,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "linearGrowthInf_natCast_nonneg",
+   "file": "Mathlib/Analysis/Asymptotics/LinearGrowth.lean",
+   "line": 198,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "μ_bddAbove",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 312,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "μ_bddAbove'",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 331,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "μ_limsup_le_one",
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 355,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "summable_norm_mul_geometric_of_norm_lt_one",
+   "file": "Mathlib/Analysis/SpecificLimits/Normed.lean",
+   "line": 519,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "of_eq_tot",
+   "file": "Mathlib/Computability/Partrec.lean",
+   "line": 174,
+   "stage": "failed_at_abstracted",
+   "reason": "name clash with f"
+  },
+  {
+   "name": "nat_iff",
+   "file": "Mathlib/Computability/Primrec/Basic.lean",
+   "line": 196,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "comp₁",
+   "file": "Mathlib/Computability/Primrec/List.lean",
+   "line": 660,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "not",
+   "file": "Mathlib/Computability/RE.lean",
+   "line": 201,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "ite",
+   "file": "Mathlib/Computability/RE.lean",
+   "line": 207,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "id",
+   "file": "Mathlib/Data/Nat/DvdSequence.lean",
+   "line": 90,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "grahamConjecture_of_squarefree",
+   "file": "Mathlib/NumberTheory/MaricaSchoenheim.lean",
+   "line": 38,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "strictMono_subseq_of_id_le",
+   "file": "Mathlib/Order/Filter/AtTopBot/Finite.lean",
+   "line": 83,
+   "stage": "failed_at_abstracted",
+   "reason": "outside the claim grammar: cannot tokenize at '∃ φ : ℕ → ℕ,'"
+  },
+  {
+   "name": "_root_.StrictMono.tendsto_atTop",
+   "file": "Mathlib/Order/Filter/AtTopBot/Tendsto.lean",
+   "line": 84,
+   "stage": "failed_at_abstracted",
+   "reason": "outside the claim grammar: free variables other than the bound ones"
+  },
+  {
+   "name": "Function.Injective.nat_tendsto_atTop",
+   "file": "Mathlib/Order/Filter/Cofinite.lean",
+   "line": 269,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "StrictMono.add_le_nat",
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 268,
+   "abstraction": {
+    "reference": {
+     "var": "k",
+     "body": "f k < f (k + 1)"
+    },
+    "formal": {
+     "vars": [
+      "m",
+      "n"
+     ],
+     "guard": "True",
+     "body": "m + f n ≤ f (m + n)"
+    }
+   },
+   "class": {
+    "class": "lower",
+    "a": 1,
+    "b": null
+   },
+   "fwd": "ENTAILS",
+   "seconds": 0.92,
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "stage": "certified",
+   "synthetic_weakened_hypothesis": {
+    "reference": {
+     "var": "k",
+     "body": "f k ≤ f (k + 1)"
+    },
+    "fwd": "SEPARATED",
+    "witness": [
+     [
+      [
+       2,
+       0
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "name": "le_lmarginalPartialTraj_succ",
+   "file": "Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean",
+   "line": 267,
+   "stage": "failed_at_abstracted",
+   "reason": "several hypotheses on the function"
+  },
+  {
+   "name": "le_mkStrictMonoAux",
+   "file": "Mathlib/Probability/Process/LocalProperty.lean",
+   "line": 269,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "IsHausdorff.StrictMono.funext",
+   "file": "Mathlib/RingTheory/AdicCompletion/Basic.lean",
+   "line": 108,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "degBound_succ",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 605,
+   "stage": "failed_at_binders",
+   "reason": "untyped binder"
+  },
+  {
+   "name": "numBound_mono",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 648,
+   "stage": "failed_at_binders",
+   "reason": "no function symbol in the binders"
+  },
+  {
+   "name": "degBound_pos",
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 660,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  },
+  {
+   "name": "tsum_eq_iSup_nat'",
+   "file": "Mathlib/Topology/Algebra/InfiniteSum/ENNReal.lean",
+   "line": 128,
+   "stage": "failed_at_abstracted",
+   "reason": "hypothesis on the function is neither a single ∀ over ℕ nor a dictionary law"
+  },
+  {
+   "name": "isClosed_range_of_not_tendsto",
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 201,
+   "stage": "failed_at_binders",
+   "reason": "typeclass binder"
+  },
+  {
+   "name": "CauchySeq.subseq_subseq_mem",
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 228,
+   "stage": "failed_at_binders",
+   "reason": "several function symbols"
+  },
+  {
+   "name": "totallyBounded_interUnionBalls",
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 786,
+   "stage": "failed_at_abstracted",
+   "reason": "no hypothesis on the function"
+  }
+ ]
+}

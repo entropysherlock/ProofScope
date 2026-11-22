@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "((f (n + 3) ≤ f n + 3) ∨ (f (n + 3) + f n ≤ 2 * f (n + 3) + 2)) ∧ (f n % 2 = f (n + 3) % 2)", "guard": "1 ≤ n", "var": "n"}, "id": "mo073", "kind": "multi", "meta": {"c": 0, "k": 1}, "reference": {"body": "f (n) % 2 = n % 2 ∧ f (n) ≤ n + 3", "guard": "1 ≤ n", "var": "n"}}

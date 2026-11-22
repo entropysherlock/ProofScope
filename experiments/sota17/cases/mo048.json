@@ -1,0 +1,1 @@
+{"family": "lower", "formal": {"body": "(f 5 < f 0 + 3) ∨ (1 * n ≤ f 0 + f (n + 2))", "guard": "True", "var": "n"}, "id": "mo048", "kind": "multi", "meta": {"a": 0, "b": null}, "reference": {"body": "f n + 0 ≤ f (n + 1)", "guard": "True", "var": "n"}}

@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "(f (n + 2) < f n + 6) ∧ (f 0 + f (n + 2) ≤ 2 * f n + 0)", "guard": "n % 2 = 0", "var": "n"}, "id": "mo039", "kind": "multi", "meta": {"a": 2, "b": 3}, "reference": {"body": "f n + 2 ≤ f (n + 1) ∧ f (n + 1) ≤ f n + 3", "guard": "True", "var": "n"}}

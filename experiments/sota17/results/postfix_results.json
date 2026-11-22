@@ -1,0 +1,6941 @@
+{
+ "rows": [
+  {
+   "id": "mo000",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        4
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        3
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1782,
+   "seconds": 1.51,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo001",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1223,
+   "seconds": 1.54,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo002",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        3,
+        2
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1705,
+   "seconds": 1.53,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo003",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 1
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1233,
+   "seconds": 1.85,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo004",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        3,
+        3
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        4,
+        4
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        5,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1676,
+   "seconds": 1.41,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo005",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 3
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1052,
+   "seconds": 1.4,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo006",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 2
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        0,
+        0,
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        2,
+        2,
+        2
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        1,
+        1,
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2012,
+   "seconds": 1.56,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo007",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 1
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        3,
+        1,
+        2,
+        3
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        4,
+        2,
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        5,
+        3,
+        4,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2095,
+   "seconds": 1.74,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo008",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 1
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 894,
+   "seconds": 1.51,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo009",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 2
+     },
+     "sites": 4,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1488,
+   "seconds": 4.44,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo010",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 1
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1165,
+   "seconds": 2.01,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo011",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        6,
+        0
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        5,
+        1
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        4,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1769,
+   "seconds": 1.47,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo012",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 3
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        0,
+        0,
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        0,
+        0,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        1,
+        1,
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2038,
+   "seconds": 3.43,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo013",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 4
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1020,
+   "seconds": 1.62,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo014",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 962,
+   "seconds": 1.63,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo015",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 3,
+      "b": 5
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        8,
+        13,
+        13
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        12,
+        15,
+        18
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        18,
+        21,
+        27
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1952,
+   "seconds": 1.8,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo016",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        5,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        5,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1727,
+   "seconds": 1.47,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo017",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 3,
+      "b": 6
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1038,
+   "seconds": 1.56,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo018",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 966,
+   "seconds": 2.05,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo019",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        2,
+        2
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1731,
+   "seconds": 1.41,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo020",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        1,
+        2
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        5,
+        6
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1710,
+   "seconds": 1.68,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo021",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 3,
+      "b": 3
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 906,
+   "seconds": 1.41,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo022",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 3,
+      "b": 4
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        3,
+        3,
+        6
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        4,
+        4,
+        7
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        9,
+        15,
+        12
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1923,
+   "seconds": 1.84,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo023",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 3
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        5
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        6
+       ],
+       [
+        1,
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        7
+       ],
+       [
+        1,
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1893,
+   "seconds": 1.64,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo024",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        4,
+        10
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        3,
+        11
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        12,
+        12
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1750,
+   "seconds": 1.57,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo025",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 4
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        9,
+        12,
+        5,
+        6
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        7,
+        9,
+        5,
+        5
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        10,
+        13,
+        5,
+        7
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2143,
+   "seconds": 2.1,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo026",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 3,
+      "b": 3
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        6,
+        0,
+        3
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        1,
+        7,
+        1,
+        4
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        8,
+        2,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2080,
+   "seconds": 1.82,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo027",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 3,
+      "b": 5
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        28,
+        12,
+        15,
+        15
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        29,
+        13,
+        16,
+        16
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        30,
+        13,
+        16,
+        16
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2128,
+   "seconds": 1.81,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo028",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        2
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1735,
+   "seconds": 1.28,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo029",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1119,
+   "seconds": 1.82,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo030",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 3
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1145,
+   "seconds": 2.05,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo031",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 915,
+   "seconds": 1.44,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo032",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 1,
+      "b": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        9,
+        4,
+        6
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        12,
+        5,
+        7
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        11,
+        6,
+        8
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1924,
+   "seconds": 1.59,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo033",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 967,
+   "seconds": 1.2,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo034",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1187,
+   "seconds": 1.86,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo035",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 4,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1306,
+   "seconds": 1.46,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo036",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 0
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1147,
+   "seconds": 2.4,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo037",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 2
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        10,
+        6,
+        2
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        11,
+        13,
+        15
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        14,
+        12,
+        10
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1993,
+   "seconds": 1.93,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo038",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 0,
+      "b": 3
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1959,
+   "seconds": 1.6,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo039",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "step",
+      "a": 2,
+      "b": 3
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        5,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        10,
+        5,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        9,
+        4,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1881,
+   "seconds": 1.76,
+   "family": "step",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo040",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        0,
+        4,
+        5
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        3,
+        6
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1752,
+   "seconds": 1.8,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo041",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1090,
+   "seconds": 1.86,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo042",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 2,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        1,
+        6
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        5
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        8
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1642,
+   "seconds": 1.71,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo043",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 2,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        9,
+        4
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        13,
+        8
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        14,
+        8
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1602,
+   "seconds": 1.64,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo044",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1437,
+   "seconds": 2.15,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo045",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        8,
+        5
+       ]
+      ],
+      [
+       [
+        6
+       ],
+       [
+        9,
+        6
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        10,
+        7
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1573,
+   "seconds": 1.8,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo046",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        1,
+        6
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        0,
+        7
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        0,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1659,
+   "seconds": 1.93,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo047",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        3,
+        0,
+        3
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        4,
+        1,
+        2
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        4,
+        0,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1816,
+   "seconds": 1.76,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo048",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        5
+       ],
+       [
+        3,
+        0,
+        4
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        4,
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        3,
+        0,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1747,
+   "seconds": 1.54,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo049",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 960,
+   "seconds": 1.58,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo050",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        2,
+        0,
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        1,
+        0,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        2,
+        0,
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1938,
+   "seconds": 1.64,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo051",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 893,
+   "seconds": 1.49,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo052",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 981,
+   "seconds": 1.32,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo053",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        1,
+        1,
+        2
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1822,
+   "seconds": 1.41,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo054",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        4,
+        7,
+        12
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        12,
+        16,
+        13
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        3,
+        14,
+        11
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1851,
+   "seconds": 1.94,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo055",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        0,
+        1,
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        1,
+        2,
+        1
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        1,
+        3,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1990,
+   "seconds": 1.51,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo056",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 2,
+      "b": null
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1113,
+   "seconds": 1.35,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo057",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        6,
+        4
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        7,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1658,
+   "seconds": 1.68,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo058",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 1466,
+   "seconds": 1.68,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo059",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        4,
+        0,
+        4,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        5,
+        1,
+        5,
+        1
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        5,
+        0,
+        4,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2034,
+   "seconds": 1.64,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo060",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        1,
+        2
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1593,
+   "seconds": 1.28,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo061",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        0,
+        1,
+        2,
+        0
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        2,
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        0,
+        1,
+        0,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1992,
+   "seconds": 3.54,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo062",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        1,
+        1,
+        4,
+        4
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0,
+        3,
+        5
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        3,
+        2,
+        3,
+        3
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1987,
+   "seconds": 1.56,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo063",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        0,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1656,
+   "seconds": 1.53,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo064",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        6,
+        3
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        7,
+        4
+       ]
+      ],
+      [
+       [
+        5
+       ],
+       [
+        8,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1560,
+   "seconds": 1.44,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo065",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 0,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        6
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        6
+       ],
+       [
+        2,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1580,
+   "seconds": 1.41,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo066",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 2,
+      "b": null
+     },
+     "sites": 4,
+     "witnesses": [
+      [
+       [
+        6
+       ],
+       [
+        10,
+        17,
+        15,
+        38
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        11,
+        9,
+        7,
+        13
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        11,
+        4,
+        2,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 2019,
+   "seconds": 1.76,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo067",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        2,
+        3
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        4,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1632,
+   "seconds": 1.33,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo068",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 1,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        2,
+        3
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        3,
+        5
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 1592,
+   "seconds": 1.48,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo069",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "lower",
+      "a": 2,
+      "b": null
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 896,
+   "seconds": 1.72,
+   "family": "lower",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo070",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        2,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8716,
+   "seconds": 2.03,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo071",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        3,
+        0,
+        4
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        7,
+        5
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        4,
+        6,
+        4
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12639,
+   "seconds": 2.81,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo072",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        1,
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        1,
+        1
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        3,
+        0,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 11480,
+   "seconds": 2.41,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo073",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        0,
+        3
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        1,
+        2
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12761,
+   "seconds": 2.66,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo074",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        4,
+        4,
+        0
+       ]
+      ],
+      [
+       [
+        8
+       ],
+       [
+        6,
+        8,
+        2
+       ]
+      ],
+      [
+       [
+        10
+       ],
+       [
+        8,
+        10,
+        4
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 6817,
+   "seconds": 2.22,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo075",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 7406,
+   "seconds": 1.65,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo076",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        3,
+        2
+       ]
+      ],
+      [
+       [
+        6
+       ],
+       [
+        2,
+        4
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        1,
+        3
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8595,
+   "seconds": 2.55,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo077",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      [
+       [
+        5
+       ],
+       [
+        4,
+        1
+       ]
+      ],
+      [
+       [
+        5
+       ],
+       [
+        4,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8567,
+   "seconds": 2.2,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo078",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        9
+       ],
+       [
+        3,
+        6,
+        7
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        1,
+        1,
+        5
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        0,
+        1,
+        4
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 14239,
+   "seconds": 2.69,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo079",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 3,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 7666,
+   "seconds": 1.93,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo080",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "ENTAILS",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 2
+     },
+     "sites": 2,
+     "witnesses": []
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "fwd"
+   ],
+   "axioms": {
+    "fwd": [
+     "propext",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {},
+   "certificate_bytes": 7564,
+   "seconds": 1.75,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo081",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        6,
+        6
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        6,
+        6
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        6,
+        6
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 11265,
+   "seconds": 2.4,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo082",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 1
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        1,
+        3
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 7011,
+   "seconds": 2.56,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo083",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        6
+       ],
+       [
+        7,
+        3,
+        8
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        0,
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        0,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 11802,
+   "seconds": 2.3,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo084",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        6,
+        3,
+        3
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        8,
+        3,
+        4
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        4,
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8767,
+   "seconds": 2.61,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo085",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 1
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 13948,
+   "seconds": 2.74,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo086",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        4
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        1,
+        5
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        6
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 13952,
+   "seconds": 2.69,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo087",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8381,
+   "seconds": 1.92,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo088",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        6,
+        6
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        6,
+        6
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        6,
+        6
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8026,
+   "seconds": 1.78,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo089",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        1,
+        2,
+        4
+       ]
+      ],
+      [
+       [
+        12
+       ],
+       [
+        1,
+        0,
+        6
+       ]
+      ],
+      [
+       [
+        6
+       ],
+       [
+        0,
+        1,
+        3
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8820,
+   "seconds": 3.1,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo090",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        7
+       ],
+       [
+        5,
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        3,
+        1,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8785,
+   "seconds": 2.5,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo091",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        2,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        3,
+        1
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        3,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8147,
+   "seconds": 2.19,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo092",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        0,
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        1,
+        4,
+        3
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        5,
+        4
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12821,
+   "seconds": 2.82,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo093",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        3,
+        0,
+        6
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        4,
+        1,
+        7
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        3,
+        0,
+        2
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12571,
+   "seconds": 2.67,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo094",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        2,
+        2
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        1,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12099,
+   "seconds": 3.01,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo095",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        0
+       ],
+       [
+        2,
+        0
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        3,
+        1
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 12209,
+   "seconds": 2.29,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo096",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 3,
+      "c": 1
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        1
+       ],
+       [
+        0,
+        1
+       ]
+      ],
+      [
+       [
+        2
+       ],
+       [
+        1,
+        3
+       ]
+      ],
+      [
+       [
+        3
+       ],
+       [
+        0,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8688,
+   "seconds": 2.6,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo097",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 0
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        9,
+        1
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        9,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 11351,
+   "seconds": 2.52,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo098",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 2,
+      "c": 0
+     },
+     "sites": 3,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        5,
+        2,
+        1
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        4,
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        4
+       ],
+       [
+        5,
+        0,
+        1
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8575,
+   "seconds": 2.23,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo099",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "SEPARATED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {
+    "fwd": {
+     "class": {
+      "class": "pointwise",
+      "k": 1,
+      "c": 2
+     },
+     "sites": 2,
+     "witnesses": [
+      [
+       [
+        4
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      [
+       [
+        1
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      [
+       [
+        0
+       ],
+       [
+        2,
+        0
+       ]
+      ]
+     ]
+    }
+   },
+   "certify_status": "OK",
+   "certificates": [
+    "nfwd"
+   ],
+   "axioms": {
+    "nfwd": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "rejected": {
+    "fwd": "no tactic alternative closed the goal"
+   },
+   "certificate_bytes": 8124,
+   "seconds": 1.91,
+   "family": "pointwise",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo100",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo101",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo102",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "reason": "unsupported: nested application of the symbol",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo103",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.44,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo104",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "reason": "unsupported: opaque operator '*'",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo105",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.48,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo106",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo107",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo108",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo109",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.33,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo110",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.37,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo111",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.49,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo112",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo113",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo114",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo115",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo116",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo117",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "reason": "unsupported: nested application of the symbol",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  },
+  {
+   "id": "mo118",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: single site that is not k * n + c with k ≥ 1",
+    "bwd": "unsupported: single site that is not k * n + c with k ≥ 1"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNKNOWN",
+    "bwd": "UNKNOWN"
+   }
+  },
+  {
+   "id": "mo119",
+   "kind": "multi",
+   "verdict": "INCONCLUSIVE",
+   "directions": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   },
+   "notes": {
+    "fwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim",
+    "bwd": "unsupported: hypothesis side is not a step, lower-step or pointwise claim"
+   },
+   "info": {},
+   "certify_status": "SKIPPED",
+   "certificates": [],
+   "axioms": {},
+   "rejected": {},
+   "certificate_bytes": 0,
+   "seconds": 0.0,
+   "family": "outside",
+   "baseline": {
+    "fwd": "UNSUPPORTED",
+    "bwd": "UNSUPPORTED"
+   }
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "(f 0 % 2 = f 5 % 2) ∧ (f 5 = f 0 + 1)", "guard": "1 ≤ n", "var": "n"}, "id": "mo096", "kind": "multi", "meta": {"c": 1, "k": 3}, "reference": {"body": "f (3 * n + 1) = 2 * n", "guard": "2 ≤ n", "var": "n"}}

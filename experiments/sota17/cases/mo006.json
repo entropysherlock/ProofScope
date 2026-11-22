@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "(f 5 ≠ f 0) ∨ (f (n + 2) = f (3 * n) + 3)", "guard": "n % 2 = 0", "var": "n"}, "id": "mo006", "kind": "multi", "meta": {"a": 0, "b": 2}, "reference": {"body": "f n ≤ f (n + 1) ∧ f (n + 1) ≤ f n + 2", "guard": "True", "var": "n"}}

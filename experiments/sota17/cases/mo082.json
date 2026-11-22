@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "(f (n + 2) + f n ≤ 2 * f (n + 2) + 0) ∧ (2 * n ≤ f n + f (n + 2))", "guard": "n ≤ 6", "var": "n"}, "id": "mo082", "kind": "multi", "meta": {"c": 1, "k": 2}, "reference": {"body": "f (2 * n + 1) % 2 = 0", "guard": "n % 2 = 1", "var": "n"}}

@@ -1,0 +1,1 @@
+{"family": "lower", "formal": {"body": "2 * n ≤ f (2 * n + 1) + f 5", "guard": "n ≤ 6", "var": "n"}, "id": "mo051", "kind": "multi", "meta": {"a": 1, "b": null}, "reference": {"body": "f n < f (n + 1)", "guard": "True", "var": "n"}}

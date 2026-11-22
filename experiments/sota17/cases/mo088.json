@@ -1,0 +1,1 @@
+{"family": "pointwise", "formal": {"body": "f 5 ≠ f 0", "guard": "n ≤ 6", "var": "n"}, "id": "mo088", "kind": "multi", "meta": {"c": 0, "k": 1}, "reference": {"body": "f (n) = n + 1", "guard": "1 ≤ n", "var": "n"}}

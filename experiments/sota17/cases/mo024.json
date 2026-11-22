@@ -1,0 +1,1 @@
+{"family": "step", "formal": {"body": "((f (n + 1) % 2 = f 5 % 2) ∧ (f 5 ≠ f (n + 1))) ∧ (f 5 ≤ f (n + 1) + 5)", "guard": "True", "var": "n"}, "id": "mo024", "kind": "multi", "meta": {"a": 2, "b": 2}, "reference": {"body": "f n + 2 ≤ f (n + 1) ∧ f (n + 1) ≤ f n + 2", "guard": "True", "var": "n"}}

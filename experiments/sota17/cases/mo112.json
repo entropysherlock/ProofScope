@@ -1,0 +1,1 @@
+{"family": "outside", "formal": {"body": "f (9 * n) = f n + 2", "guard": "True", "var": "n"}, "id": "mo112", "kind": "multi", "meta": {}, "reference": {"body": "f (3 * n) = f n + 1", "guard": "True", "var": "n"}}

@@ -1,0 +1,1627 @@
+{
+ "C1": [
+  {
+   "file": "Mathlib/Algebra/Algebra/Spectrum/Basic.lean",
+   "line": 267,
+   "name": "setOfPred_isUnit_inter_mul_comm",
+   "signature": "(a b : A) : {r | IsUnit r} ∩ σ (a * b) = {r | IsUnit r} ∩ σ (b * a)"
+  },
+  {
+   "file": "Mathlib/Algebra/Category/Grp/EpiMono.lean",
+   "line": 122,
+   "name": "one_smul",
+   "signature": "(x : X') : (1 : B) • x = x"
+  },
+  {
+   "file": "Mathlib/Algebra/Category/HopfAlgCat/Basic.lean",
+   "line": 122,
+   "name": "forget₂_bialgebra_map",
+   "signature": "(X Y : HopfAlgCat R) (f : X ⟶ Y) : (forget₂ (HopfAlgCat R) (BialgCat R)).map f = BialgCat.ofHom f.toBialgHom"
+  },
+  {
+   "file": "Mathlib/Algebra/CharP/Lemmas.lean",
+   "line": 176,
+   "name": "add_pow_char",
+   "signature": ": (x + y) ^ p = x ^ p + y ^ p"
+  },
+  {
+   "file": "Mathlib/Algebra/Group/Action/Defs.lean",
+   "line": 535,
+   "name": "smul_inv",
+   "signature": "(g : G) (a : H) : (g • a)⁻¹ = g⁻¹ • a⁻¹"
+  },
+  {
+   "file": "Mathlib/Algebra/Group/AddChar.lean",
+   "line": 282,
+   "name": "coe_sum",
+   "signature": "(s : Finset ι) (ψ : ι → AddChar A M) : ∑ i ∈ s, ψ i = ∏ i ∈ s, ⇑(ψ i)"
+  },
+  {
+   "file": "Mathlib/Algebra/Group/End.lean",
+   "line": 692,
+   "name": "inv_apply",
+   "signature": "(e : MulAut M) (m : M) : e⁻¹ m = e.symm m"
+  },
+  {
+   "file": "Mathlib/Algebra/Group/Equiv/Defs.lean",
+   "line": 299,
+   "name": "toEquiv_symm",
+   "signature": "(f : M ≃* N) : (f.symm : N ≃ M) = (f : M ≃ N).symm"
+  },
+  {
+   "file": "Mathlib/Algebra/Group/Semiconj/Units.lean",
+   "line": 54,
+   "name": "units_inv_right_iff",
+   "signature": "{a : M} {x y : Mˣ} : SemiconjBy a ↑x⁻¹ ↑y⁻¹ ↔ SemiconjBy a x y"
+  },
+  {
+   "file": "Mathlib/Algebra/Group/Subgroup/Even.lean",
+   "line": 36,
+   "name": "mem_square",
+   "signature": "{a : S} : a ∈ square S ↔ IsSquare a"
+  },
+  {
+   "file": "Mathlib/Algebra/Homology/HomotopyCategory/HomComplex.lean",
+   "line": 253,
+   "name": "comp_assoc",
+   "signature": "{n₁ n₂ n₃ n₁₂ n₂₃ n₁₂₃ : ℤ} (z₁ : Cochain F G n₁) (z₂ : Cochain G K n₂) (z₃ : Cochain K L n₃) (h₁₂ : n₁ + n₂ = n₁₂) (h₂₃ : n₂ + n₃ = n₂₃) (h₁₂₃ : n₁ + n₂ + n₃ = n₁₂₃) : (z₁.comp z₂ h₁₂).comp z₃ (show n₁₂ + n₃ = n₁₂₃ by rw [← h₁₂, h₁₂₃]) = z₁.comp (z₂.comp z₃ h₂₃) (by rw [← h₂₃, ← h₁₂₃, add_assoc])"
+  },
+  {
+   "file": "Mathlib/Algebra/Homology/ShortComplex/Preadditive.lean",
+   "line": 329,
+   "name": "homologyMap'_sub",
+   "signature": ": homologyMap' (φ - φ') h₁ h₂ = homologyMap' φ h₁ h₂ - homologyMap' φ' h₁ h₂"
+  },
+  {
+   "file": "Mathlib/Algebra/Lie/Derivation/Basic.lean",
+   "line": 107,
+   "name": "apply_lie_eq_add",
+   "signature": "(D : LieDerivation R L L) (a b : L) : D ⁅a, b⁆ = ⁅a, D b⁆ + ⁅D a, b⁆"
+  },
+  {
+   "file": "Mathlib/Algebra/Lie/IdealOperations.lean",
+   "line": 172,
+   "name": "mono_lie_right",
+   "signature": "(h : N ≤ N') : ⁅I, N⁆ ≤ ⁅I, N'⁆"
+  },
+  {
+   "file": "Mathlib/Algebra/Module/Submodule/Map.lean",
+   "line": 125,
+   "name": "map_inf",
+   "signature": "(f : M →ₛₗ[σ₁₂] M₂) {p q : Submodule R M} (hf : Injective f) : (p ⊓ q).map f = p.map f ⊓ q.map f"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/BigOperators/GroupWithZero/Finset.lean",
+   "line": 161,
+   "name": "prod_lt_prod₀",
+   "signature": "(hf : ∀ i ∈ s, 0 < f i) (hfg : ∀ i ∈ s, f i ≤ g i) (hlt : ∃ i ∈ s, f i < g i) : ∏ i ∈ s, f i < ∏ i ∈ s, g i"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/Floor/Ring.lean",
+   "line": 368,
+   "name": "fract_sub_one",
+   "signature": "(a : R) : fract (a - 1) = fract a"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/Group/Pointwise/Interval.lean",
+   "line": 758,
+   "name": "preimage_mul_const_Iic_of_neg",
+   "signature": "(a : α) {c : α} (h : c < 0) : (fun x => x * c) ⁻¹' Iic a = Ici (a / c)"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/Group/PosPart.lean",
+   "line": 287,
+   "name": "oneLePart_def",
+   "signature": "(f : ∀ i, α i) : f⁺ᵐ = fun i ↦ (f i)⁺ᵐ"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/GroupWithZero/Basic.lean",
+   "line": 999,
+   "name": "zpow_le_one_of_nonpos₀",
+   "signature": "(ha : 1 ≤ a) (hn : n ≤ 0) : a ^ n ≤ 1"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/Sub/Unbundled/Basic.lean",
+   "line": 94,
+   "name": "le_tsub_iff_left",
+   "signature": "(ha : AddLECancellable a) (h : a ≤ c) : b ≤ c - a ↔ a + b ≤ c"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/ToIntervalMod.lean",
+   "line": 334,
+   "name": "toIcoDiv_sub'",
+   "signature": "(a b : α) : toIcoDiv hp (a - p) b = toIcoDiv hp a b + 1"
+  },
+  {
+   "file": "Mathlib/Algebra/Polynomial/Bivariate.lean",
+   "line": 95,
+   "name": "evalEval_surjective",
+   "signature": "(x y : R) : Function.Surjective <| evalEval x y"
+  },
+  {
+   "file": "Mathlib/Algebra/Polynomial/Degree/TrailingDegree.lean",
+   "line": 210,
+   "name": "trailingDegree_C_mul_X_pow",
+   "signature": "(n : ℕ) (ha : a ≠ 0) : trailingDegree (C a * X ^ n) = n"
+  },
+  {
+   "file": "Mathlib/Algebra/Polynomial/Roots.lean",
+   "line": 894,
+   "name": "Monic.irreducible_iff_degree_lt",
+   "signature": "(p_monic : Monic p) (p_1 : p ≠ 1) : Irreducible p ↔ ∀ q, degree q ≤ ↑(p.natDegree / 2) → q ∣ p → IsUnit q"
+  },
+  {
+   "file": "Mathlib/Algebra/Tropical/Basic.lean",
+   "line": 418,
+   "name": "untrop_one",
+   "signature": "[Zero R] : untrop (1 : MinTropical R) = 0"
+  },
+  {
+   "file": "Mathlib/AlgebraicGeometry/AffineScheme.lean",
+   "line": 267,
+   "name": "isAffineOpen_top",
+   "signature": "(X : Scheme) [IsAffine X] : IsAffineOpen (⊤ : X.Opens)"
+  },
+  {
+   "file": "Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Basic.lean",
+   "line": 292,
+   "name": "map_nonsingular",
+   "signature": "(hf : Function.Injective f) (x y : R) : (W.map f).Nonsingular (f x) (f y) ↔ W.Nonsingular x y"
+  },
+  {
+   "file": "Mathlib/AlgebraicGeometry/IdealSheaf/Basic.lean",
+   "line": 341,
+   "name": "mem_support_iff_of_mem",
+   "signature": "{I : IdealSheafData X} {x : X} {U : X.affineOpens} (h : x ∈ U.1) : x ∈ I.support ↔ x ∈ X.zeroLocus (U := U.1) (I.ideal U)"
+  },
+  {
+   "file": "Mathlib/AlgebraicGeometry/IdealSheaf/Basic.lean",
+   "line": 497,
+   "name": "equivOfIsAffine_apply",
+   "signature": "[IsAffine X] (I : IdealSheafData X) : equivOfIsAffine I = I.ideal ⟨⊤, isAffineOpen_top X⟩"
+  },
+  {
+   "file": "Mathlib/AlgebraicGeometry/Morphisms/QuasiSeparated.lean",
+   "line": 250,
+   "name": "QuasiCompact.of_comp",
+   "signature": "(f : X ⟶ Y) (g : Y ⟶ Z) [QuasiCompact (f ≫ g)] [QuasiSeparated g] : QuasiCompact f"
+  },
+  {
+   "file": "Mathlib/AlgebraicGeometry/OpenImmersion.lean",
+   "line": 341,
+   "name": "_root_.AlgebraicGeometry.IsOpenImmersion.of_isLocalization",
+   "signature": "{R S} [CommRing R] [CommRing S] [Algebra R S] (f : R) [IsLocalization.Away f S] : IsOpenImmersion (Spec.map (CommRingCat.ofHom (algebraMap R S)))"
+  },
+  {
+   "file": "Mathlib/AlgebraicTopology/ModelCategory/RightHomotopy.lean",
+   "line": 183,
+   "name": "homotopy_extension",
+   "signature": "{A B X : C} {P : PathObject B} {f₀ f₁ : A ⟶ B} [IsFibrant B] [P.IsGood] (h : P.RightHomotopy f₀ f₁) (i : A ⟶ X) [Cofibration i] (l₀ : X ⟶ B) (hl₀ : i ≫ l₀ = f₀ := by cat_disch) : ∃ (l₁ : X ⟶ B) (h' : P.RightHomotopy l₀ l₁), i ≫ h'.h = h.h"
+  },
+  {
+   "file": "Mathlib/AlgebraicTopology/SimplicialSet/CompStruct.lean",
+   "line": 222,
+   "name": "ext",
+   "signature": "{h h' : CompStruct e₀₁ e₁₂ e₀₂} (eq : h.simplex = h'.simplex) : h = h'"
+  },
+  {
+   "file": "Mathlib/Analysis/Analytic/Constructions.lean",
+   "line": 80,
+   "name": "HasFPowerSeriesWithinOnBall.add",
+   "signature": "(hf : HasFPowerSeriesWithinOnBall f pf s x r) (hg : HasFPowerSeriesWithinOnBall g pg s x r) : HasFPowerSeriesWithinOnBall (f + g) (pf + pg) s x r"
+  },
+  {
+   "file": "Mathlib/Analysis/Asymptotics/Arith.lean",
+   "line": 422,
+   "name": "IsLittleO.sum_congr",
+   "signature": "(hAB : ∀ i ∈ s, A i =o[l] B i) : (fun H => ∑ i ∈ s, A i H) =o[l] fun H => ∑ i ∈ s, ‖B i H‖"
+  },
+  {
+   "file": "Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/RealImaginaryPart.lean",
+   "line": 48,
+   "name": "quasispectrum_imaginaryPart",
+   "signature": "(a : A) (ha : IsStarNormal a := by cfc_tac) : quasispectrum ℂ (ℑ a : A) = (fun x ↦ (im x : ℂ)) '' (quasispectrum ℂ a)"
+  },
+  {
+   "file": "Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Unital.lean",
+   "line": 554,
+   "name": "cfc_smul_id",
+   "signature": "{S : Type*} [SMul S R] [ContinuousConstSMul S R] [SMulZeroClass S A] [IsScalarTower S R A] [IsScalarTower S R (R → R)] (s : S) (a : A) (ha : p a := by cfc_tac) : cfc (s • · : R → R) a = s • a"
+  },
+  {
+   "file": "Mathlib/Analysis/Calculus/ContDiff/Basic.lean",
+   "line": 107,
+   "name": "contDiffOn_const",
+   "signature": "{c : F} {s : Set E} : ContDiffOn 𝕜 n (fun _ : E => c) s"
+  },
+  {
+   "file": "Mathlib/Analysis/Calculus/ContDiff/Comp.lean",
+   "line": 362,
+   "name": "ContDiffOn.snd",
+   "signature": "{f : E → F × G} {s : Set E} (hf : ContDiffOn 𝕜 n f s) : ContDiffOn 𝕜 n (fun x => (f x).2) s"
+  },
+  {
+   "file": "Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+   "line": 801,
+   "name": "norm_compAlongOrderedFinpartition_le",
+   "signature": "(f : F [×c.length]→L[𝕜] G) (p : ∀ i, E [×c.partSize i]→L[𝕜] F) : ‖c.compAlongOrderedFinpartition f p‖ ≤ ‖f‖ * ∏ i, ‖p i‖"
+  },
+  {
+   "file": "Mathlib/Analysis/Complex/Trigonometric.lean",
+   "line": 649,
+   "name": "tan_inv_eq_cot",
+   "signature": ": (tan x)⁻¹ = cot x"
+  },
+  {
+   "file": "Mathlib/Analysis/Convex/Combination.lean",
+   "line": 606,
+   "name": "convexHull_pi",
+   "signature": "(s : Set ι) (t : Π i, Set (E i)) : convexHull 𝕜 (s.pi t) = s.pi (fun i ↦ convexHull 𝕜 (t i))"
+  },
+  {
+   "file": "Mathlib/Analysis/Convex/Continuous.lean",
+   "line": 186,
+   "name": "ConvexOn.locallyLipschitzOn",
+   "signature": "(hC : IsOpen C) (hf : ConvexOn ℝ C f) : LocallyLipschitzOn C f"
+  },
+  {
+   "file": "Mathlib/Analysis/Convex/Exposed.lean",
+   "line": 152,
+   "name": "inter_left",
+   "signature": "(hC : IsExposed 𝕜 A C) (hCB : C ⊆ B) : IsExposed 𝕜 (A ∩ B) C"
+  },
+  {
+   "file": "Mathlib/Analysis/Convex/Function.lean",
+   "line": 1005,
+   "name": "convexOn_iff_div",
+   "signature": "{f : E → β} : ConvexOn 𝕜 s f ↔ Convex 𝕜 s ∧ ∀ ⦃x⦄, x ∈ s → ∀ ⦃y⦄, y ∈ s → ∀ ⦃a b : 𝕜⦄, 0 ≤ a → 0 ≤ b → 0 < a + b → f ((a / (a + b)) • x + (b / (a + b)) • y) ≤ (a / (a + b)) • f x + (b / (a + b)) • f y"
+  },
+  {
+   "file": "Mathlib/Analysis/Convex/Topology.lean",
+   "line": 209,
+   "name": "IsOpen.convexHull",
+   "signature": "[ZeroLEOneClass 𝕜] {s : Set E} (hs : IsOpen s) : IsOpen (convexHull 𝕜 s)"
+  },
+  {
+   "file": "Mathlib/Analysis/Distribution/SchwartzSpace/Fourier.lean",
+   "line": 290,
+   "name": "norm_fourier_Lp_top_leq_toLp_one",
+   "signature": "(f : 𝓢(V, F)) : ‖(𝓕 f).toLp ⊤‖ ≤ ‖f.toLp 1‖"
+  },
+  {
+   "file": "Mathlib/Analysis/Distribution/TestFunction.lean",
+   "line": 417,
+   "name": "injective_toBoundedContinuousFunctionCLM",
+   "signature": "[Algebra ℝ 𝕜] [IsScalarTower ℝ 𝕜 F] : Function.Injective (toBoundedContinuousFunctionCLM 𝕜 : 𝓓^{n}(Ω, F) →L[𝕜] E →ᵇ F)"
+  },
+  {
+   "file": "Mathlib/Analysis/InnerProductSpace/GramSchmidtOrtho.lean",
+   "line": 115,
+   "name": "gramSchmidt_inv_triangular",
+   "signature": "(v : ι → E) {i j : ι} (hij : i < j) : ⟪gramSchmidt 𝕜 v j, v i⟫ = 0"
+  },
+  {
+   "file": "Mathlib/Analysis/InnerProductSpace/SingularValues.lean",
+   "line": 173,
+   "name": "card_support_singularValues",
+   "signature": ": T.singularValues.support.card = finrank 𝕜 T.range"
+  },
+  {
+   "file": "Mathlib/Analysis/InnerProductSpace/Symmetric.lean",
+   "line": 157,
+   "name": "IsSymmetric.coe_re_inner_apply_self",
+   "signature": "{T : E →ₗ[𝕜] E} (hT : T.IsSymmetric) (x : E) : re ⟪T x, x⟫ = ⟪T x, x⟫"
+  },
+  {
+   "file": "Mathlib/Analysis/Matrix/Normed.lean",
+   "line": 91,
+   "name": "nnnorm_def",
+   "signature": "(A : Matrix m n α) : ‖A‖₊ = ‖fun i j => A i j‖₊"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Group/Bounded.lean",
+   "line": 82,
+   "name": "Bornology.IsBounded.exists_pos_norm_le'",
+   "signature": "(hs : IsBounded s) : ∃ R > 0, ∀ x ∈ s, ‖x‖ ≤ R"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Group/Pointwise.lean",
+   "line": 172,
+   "name": "singleton_mul_sphere",
+   "signature": ": {x} * sphere y δ = sphere (x * y) δ"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Group/SemiNormedGrp.lean",
+   "line": 133,
+   "name": "coe_comp",
+   "signature": "{M N K : SemiNormedGrp} (f : M ⟶ N) (g : N ⟶ K) : (f ≫ g : M → K) = g ∘ f"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Module/Multilinear/Basic.lean",
+   "line": 533,
+   "name": "isLeast_opNNNorm",
+   "signature": "(f : ContinuousMultilinearMap 𝕜 E G) : IsLeast {C : ℝ≥0 | ∀ m, ‖f m‖₊ ≤ C * ∏ i, ‖m i‖₊} ‖f‖₊"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Order/Lattice.lean",
+   "line": 157,
+   "name": "norm_inf_sub_inf_le_norm",
+   "signature": "(x y z : α) : ‖x ⊓ z - y ⊓ z‖ ≤ ‖x - y‖"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Order/Lattice.lean",
+   "line": 160,
+   "name": "lipschitzWith_sup_right",
+   "signature": "(z : α) : LipschitzWith 1 fun x => x ⊔ z"
+  },
+  {
+   "file": "Mathlib/Analysis/Real/Cardinality.lean",
+   "line": 99,
+   "name": "cantorFunction_le",
+   "signature": "(h1 : 0 ≤ c) (h2 : c < 1) (h3 : ∀ n, f n → g n) : cantorFunction c f ≤ cantorFunction c g"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecialFunctions/Complex/CircleAddChar.lean",
+   "line": 86,
+   "name": "stdAddChar_coe",
+   "signature": "(j : ℤ) : stdAddChar (j : ZMod N) = exp (2 * π * I * j / N)"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecialFunctions/Pow/NNReal.lean",
+   "line": 277,
+   "name": "le_rpow_inv_iff",
+   "signature": "{x y : ℝ≥0} {z : ℝ} (hz : 0 < z) : x ≤ y ^ z⁻¹ ↔ x ^ z ≤ y"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Angle.lean",
+   "line": 875,
+   "name": "abs_toReal_add_abs_toReal_eq_pi_of_two_nsmul_add_eq_zero_of_sign_eq",
+   "signature": "{θ ψ : Angle} (h : (2 : ℕ) • (θ + ψ) = 0) (hs : θ.sign = ψ.sign) (h0 : θ.sign ≠ 0) : |θ.toReal| + |ψ.toReal| = π"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Basic.lean",
+   "line": 424,
+   "name": "sin_nonneg_of_nonneg_of_le_pi",
+   "signature": "{x : ℝ} (h0x : 0 ≤ x) (hxp : x ≤ π) : 0 ≤ sin x"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecialFunctions/Trigonometric/Basic.lean",
+   "line": 1241,
+   "name": "exp_int_mul_two_pi_mul_I",
+   "signature": "(n : ℤ) : exp (n * (2 * π * I)) = 1"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Bicategory/Span/Basic.lean",
+   "line": 163,
+   "name": "id_apex",
+   "signature": "(X : SpanBicat C Wₗ Wᵣ) : (𝟙 X :).apex = X.of"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Comma/Over/Basic.lean",
+   "line": 383,
+   "name": "iteratedSliceForward_forget",
+   "signature": ": iteratedSliceForward f ⋙ forget f.left = forget f ⋙ forget X"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Comma/Over/Basic.lean",
+   "line": 761,
+   "name": "mk_surjective",
+   "signature": "{S : T} (X : Under S) : ∃ (Y : T) (f : S ⟶ Y), Under.mk f = X"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/ComposableArrows/Four.lean",
+   "line": 62,
+   "name": "fourδ₄Toδ₃_app_zero",
+   "signature": ": (fourδ₄Toδ₃ f₁ f₂ f₃ f₄ f₃₄ h₃₄).app 0 = 𝟙 _"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/EffectiveEpi/Preserves.lean",
+   "line": 39,
+   "name": "effectiveEpiFamilyStructOfEquivalence_aux",
+   "signature": "{W : D} (ε : (a : α) → e.functor.obj (X a) ⟶ W) (h : ∀ {Z : D} (a₁ a₂ : α) (g₁ : Z ⟶ e.functor.obj (X a₁)) (g₂ : Z ⟶ e.functor.obj (X a₂)), g₁ ≫ e.functor.map (π a₁) = g₂ ≫ e.functor.map (π a₂) → g₁ ≫ ε a₁ = g₂ ≫ ε a₂) {Z : C} (a₁ a₂ : α) (g₁ : Z ⟶ X a₁) (g₂ : Z ⟶ X a₂) (hg : g₁ ≫ π a₁ = g₂ ≫ π a₂) : g₁ ≫ (fun a ↦ e.unit.app (X a) ≫ e.inverse.map (ε a)) a₁ = g₂ ≫ (fun a ↦ e.unit.app (X a) ≫ e.inverse.map (ε a)) a₂"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Limits/Preserves/Opposites.lean",
+   "line": 817,
+   "name": "reflectsLimits_rightOp",
+   "signature": "(F : Cᵒᵖ ⥤ D) [ReflectsColimits F] : ReflectsLimits F.rightOp"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Limits/Sifted.lean",
+   "line": 230,
+   "name": "isSiftedOrEmpty_of_colim_preservesBinaryProducts",
+   "signature": "[PreservesLimitsOfShape (Discrete WalkingPair) (colim : (C ⥤ Type u) ⥤ Type u)] : IsSiftedOrEmpty C"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Limits/Types/ColimitType.lean",
+   "line": 217,
+   "name": "fac",
+   "signature": "(c' : CoconeTypes.{w₂} F) (j : J) : (hc.desc c').comp (c.ι j) = c'.ι j"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Monoidal/Cartesian/Basic.lean",
+   "line": 872,
+   "name": "δ_of_cartesianMonoidalCategory",
+   "signature": "(X Y : C) : δ F X Y = CartesianMonoidalCategory.prodComparison F X Y"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Monoidal/Closed/Basic.lean",
+   "line": 246,
+   "name": "id_tensor_pre_app_comp_ev",
+   "signature": "(f : B ⟶ A) (X : C) : B ◁ (pre f).app X ≫ (ihom.ev B).app X = f ▷ (A ⟶[C] X) ≫ (ihom.ev A).app X"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Monoidal/Discrete.lean",
+   "line": 55,
+   "name": "Discrete.monoidalFunctor_obj",
+   "signature": "(F : M →* N) (m : M) : (Discrete.monoidalFunctor F).obj (Discrete.mk m) = Discrete.mk (F m)"
+  },
+  {
+   "file": "Mathlib/CategoryTheory/Preadditive/Injective/Basic.lean",
+   "line": 102,
+   "name": "iso_iff",
+   "signature": "{P Q : C} (i : P ≅ Q) : Injective P ↔ Injective Q"
+  },
+  {
+   "file": "Mathlib/Combinatorics/Additive/VerySmallDoubling.lean",
+   "line": 531,
+   "name": "expansion_smul_finset",
+   "signature": "(K : ℝ) (S A : Finset G) (a : G) : expansion K S (a • A) = expansion K S A"
+  },
+  {
+   "file": "Mathlib/Combinatorics/Hypergraph/Basic.lean",
+   "line": 253,
+   "name": "IsTrivial.not_mem_edgeSet",
+   "signature": "(h : H.IsTrivial) : e ∉ E(H)"
+  },
+  {
+   "file": "Mathlib/Combinatorics/Matroid/Map.lean",
+   "line": 449,
+   "name": "map_emptyOn",
+   "signature": "(f : α → β) : (emptyOn α).map f (by simp) = emptyOn β"
+  },
+  {
+   "file": "Mathlib/Combinatorics/Matroid/Map.lean",
+   "line": 523,
+   "name": "mapEmbedding_ground_eq",
+   "signature": "(M : Matroid α) (f : α ↪ β) : (M.mapEmbedding f).E = f '' M.E"
+  },
+  {
+   "file": "Mathlib/Combinatorics/SimpleGraph/Clique.lean",
+   "line": 913,
+   "name": "isIndepSet_iff_isAntichain_adj",
+   "signature": ": G.IsIndepSet s ↔ IsAntichain G.Adj s"
+  },
+  {
+   "file": "Mathlib/Combinatorics/SimpleGraph/Finite.lean",
+   "line": 176,
+   "name": "coe_neighborFinset",
+   "signature": ": (G.neighborFinset v : Set V) = G.neighborSet v"
+  },
+  {
+   "file": "Mathlib/Combinatorics/SimpleGraph/Paths.lean",
+   "line": 608,
+   "name": "IsPath.dropUntil",
+   "signature": "{u v w : V} {p : G.Walk v w} (hc : p.IsPath) (h : u ∈ p.support) : (p.dropUntil u h).IsPath"
+  },
+  {
+   "file": "Mathlib/Computability/DFA.lean",
+   "line": 385,
+   "name": "IsRegular_compl",
+   "signature": "{T : Type u} {L : Language T} : Lᶜ.IsRegular ↔ L.IsRegular"
+  },
+  {
+   "file": "Mathlib/Computability/Partrec.lean",
+   "line": 682,
+   "name": "option_some_iff",
+   "signature": "{f : α →. σ} : (Partrec fun a => (f a).map Option.some) ↔ Partrec f"
+  },
+  {
+   "file": "Mathlib/Computability/Primrec/List.lean",
+   "line": 487,
+   "name": "exists_mem_list",
+   "signature": "(hf : PrimrecRel R) : PrimrecRel fun (L : List α) b ↦ ∃ a ∈ L, R a b"
+  },
+  {
+   "file": "Mathlib/Data/DFinsupp/Defs.lean",
+   "line": 553,
+   "name": "zipWith_single_single",
+   "signature": "(f : ∀ i, β₁ i → β₂ i → β i) (hf : ∀ i, f i 0 0 = 0) {i} (b₁ : β₁ i) (b₂ : β₂ i) : zipWith f hf (single i b₁) (single i b₂) = single i (f i b₁ b₂)"
+  },
+  {
+   "file": "Mathlib/Data/Fin/SuccPred.lean",
+   "line": 596,
+   "name": "succAbove_ne_zero",
+   "signature": "[NeZero n] {a : Fin (n + 1)} {b : Fin n} (ha : a ≠ 0) (hb : b ≠ 0) : a.succAbove b ≠ 0"
+  },
+  {
+   "file": "Mathlib/Data/Finset/Interval.lean",
+   "line": 70,
+   "name": "Iio_eq_ssubsets",
+   "signature": ": Iio s = s.ssubsets"
+  },
+  {
+   "file": "Mathlib/Data/Finset/Lattice/Fold.lean",
+   "line": 548,
+   "name": "sup'_insert",
+   "signature": "[DecidableEq β] {b : β} : (insert b s).sup' (insert_nonempty _ _) f = f b ⊔ s.sup' H f"
+  },
+  {
+   "file": "Mathlib/Data/Finsupp/Defs.lean",
+   "line": 194,
+   "name": "hasFiniteSupport",
+   "signature": "(f : α →₀ M) : HasFiniteSupport f"
+  },
+  {
+   "file": "Mathlib/Data/Finsupp/ToDFinsupp.lean",
+   "line": 124,
+   "name": "Finsupp.toDFinsupp_toFinsupp",
+   "signature": "(f : ι →₀ M) : f.toDFinsupp.toFinsupp = f"
+  },
+  {
+   "file": "Mathlib/Data/List/Basic.lean",
+   "line": 70,
+   "name": "mem_pair",
+   "signature": "{a b c : α} : a ∈ [b, c] ↔ a = b ∨ a = c"
+  },
+  {
+   "file": "Mathlib/Data/List/MinMax.lean",
+   "line": 166,
+   "name": "mem_argmax_iff",
+   "signature": ": m ∈ argmax f l ↔ m ∈ l ∧ (∀ a ∈ l, f a ≤ f m) ∧ ∀ a ∈ l, f m ≤ f a → l.idxOf m ≤ l.idxOf a"
+  },
+  {
+   "file": "Mathlib/Data/List/Perm/Basic.lean",
+   "line": 203,
+   "name": "Perm.foldr_op_eq",
+   "signature": "{l₁ l₂ : List α} {a : α} (h : l₁ ~ l₂) : l₁.foldr op a = l₂.foldr op a"
+  },
+  {
+   "file": "Mathlib/Data/Multiset/Interval.lean",
+   "line": 71,
+   "name": "card_Ioo",
+   "signature": ": #(Finset.Ioo s t) = ∏ i ∈ s.toFinset ∪ t.toFinset, (t.count i + 1 - s.count i) - 2"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Cast/WithTop.lean",
+   "line": 24,
+   "name": "Nat.cast_withBot",
+   "signature": "(n : ℕ) : Nat.cast n = WithBot.some n"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Digits/Div.lean",
+   "line": 63,
+   "name": "eleven_dvd_of_palindrome",
+   "signature": "(p : (digits 10 n).Palindrome) (h : Even (digits 10 n).length) : 11 ∣ n"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Factorization/PrimePow.lean",
+   "line": 28,
+   "name": "isPrimePow_of_minFac_pow_factorization_eq",
+   "signature": "{n : ℕ} (h : n.minFac ^ n.factorization n.minFac = n) (hn : n ≠ 1) : IsPrimePow n"
+  },
+  {
+   "file": "Mathlib/Data/Nat/ModEq.lean",
+   "line": 129,
+   "name": "mod_modEq",
+   "signature": "(a n) : a % n ≡ a [MOD n]"
+  },
+  {
+   "file": "Mathlib/Data/Ordmap/Ordnode.lean",
+   "line": 179,
+   "name": "size_toOrdNode",
+   "signature": "(b : BinaryTree α) : b.toOrdNode.size = b.numNodes"
+  },
+  {
+   "file": "Mathlib/Data/Rat/Cast/CharZero.lean",
+   "line": 37,
+   "name": "cast_inj",
+   "signature": ": (p : α) = q ↔ p = q"
+  },
+  {
+   "file": "Mathlib/Data/Seq/Basic.lean",
+   "line": 363,
+   "name": "map_id",
+   "signature": ": ∀ s : Seq α, map id s = s | ⟨s, al⟩ => by apply Subtype.ext; dsimp [map] rw [Option.map_id, Stream'.map_id] @[simp] theorem map_tail (f : α → β) : ∀ s, map f (tail s) = tail (map f s) | ⟨s, al⟩ => by apply Subtype.ext; dsimp [tail, map] theorem map_comp (f : α → β) (g : β → γ) : ∀ s : Seq α, map (g ∘ f) s = map g (map f s) | ⟨s, al⟩ => by apply Subtype.ext; dsimp [map] apply congr_arg fun f : _ → Option γ => Stream'.map f s ext ⟨⟩ <;> rfl @[simp] theorem terminatedAt_map_iff {f : α → β} {s : Seq α} {n : ℕ} : (map f s).TerminatedAt n ↔ s.TerminatedAt n"
+  },
+  {
+   "file": "Mathlib/Data/Seq/Basic.lean",
+   "line": 722,
+   "name": "get?_set_of_ne",
+   "signature": "(s : Seq α) {m n : ℕ} (h : n ≠ m) : (s.set m x).get? n = s.get? n"
+  },
+  {
+   "file": "Mathlib/Data/Sym/Sym2.lean",
+   "line": 457,
+   "name": "pmap_eq_map",
+   "signature": "{P : α → Prop} (f : α → β) (z : Sym2 α) (h : ∀ a ∈ z, P a) : z.pmap (fun a _ => f a) h = z.map f"
+  },
+  {
+   "file": "Mathlib/Dynamics/OmegaLimit.lean",
+   "line": 182,
+   "name": "omegaLimit_eq_iInter",
+   "signature": ": ω f ϕ s = ⋂ u : ↥f.sets, closure (image2 ϕ u s)"
+  },
+  {
+   "file": "Mathlib/FieldTheory/Fixed.lean",
+   "line": 196,
+   "name": "eval₂",
+   "signature": ": Polynomial.eval₂ (Subring.subtype <| (FixedPoints.subfield G F).toSubring) x (minpoly G F x) = 0"
+  },
+  {
+   "file": "Mathlib/FieldTheory/IntermediateField/Basic.lean",
+   "line": 733,
+   "name": "restrictScalars_injective",
+   "signature": ": Function.Injective (restrictScalars K : IntermediateField L' L → IntermediateField K L)"
+  },
+  {
+   "file": "Mathlib/FieldTheory/PurelyInseparable/Exponent.lean",
+   "line": 173,
+   "name": "elemExponent_def'",
+   "signature": "(p : ℕ) [ExpChar K p] (a : L) : a ^ p ^ elemExponent K a ∈ (algebraMap K L).range"
+  },
+  {
+   "file": "Mathlib/FieldTheory/Relrank.lean",
+   "line": 157,
+   "name": "lift_rank_comap",
+   "signature": "(f : L →+* E) : lift.{v} (Module.rank (A.comap f) L) = lift.{w} (relrank A f.fieldRange)"
+  },
+  {
+   "file": "Mathlib/FieldTheory/SplittingField/Construction.lean",
+   "line": 92,
+   "name": "X_sub_C_mul_removeFactor",
+   "signature": "(f : K[X]) (hf : f.natDegree ≠ 0) : (X - C (AdjoinRoot.root f.factor)) * f.removeFactor = map (AdjoinRoot.of f.factor) f"
+  },
+  {
+   "file": "Mathlib/Geometry/Manifold/Algebra/Monoid.lean",
+   "line": 391,
+   "name": "contMDiffAt_finsetProd",
+   "signature": "(h : ∀ i ∈ t, CMDiffAt n (f i) x) : CMDiffAt n (fun x ↦ ∏ i ∈ t, f i x) x"
+  },
+  {
+   "file": "Mathlib/Geometry/Manifold/ContMDiffMFDeriv.lean",
+   "line": 313,
+   "name": "ContMDiff.continuous_tangentMap",
+   "signature": "(hf : CMDiff n f) (hmn : 1 ≤ n) : Continuous (tangentMap% f)"
+  },
+  {
+   "file": "Mathlib/Geometry/Manifold/Sheaf/LocallyRingedSpace.lean",
+   "line": 118,
+   "name": "smoothSheafCommRing.nonunits_stalk",
+   "signature": "(x : M) : nonunits ((smoothSheafCommRing IM 𝓘(𝕜) M 𝕜).presheaf.stalk x) = RingHom.ker (smoothSheafCommRing.eval IM 𝓘(𝕜) M 𝕜 x)"
+  },
+  {
+   "file": "Mathlib/GroupTheory/OrderOfElement.lean",
+   "line": 548,
+   "name": "exists_orderOf_eq_prime_pow_iff",
+   "signature": ": (∃ k : ℕ, orderOf x = p ^ k) ↔ ∃ m : ℕ, x ^ (p : ℕ) ^ m = 1"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/AffineSpace/AffineSubspace/Basic.lean",
+   "line": 590,
+   "name": "map_span",
+   "signature": "(s : Set P₁) : (affineSpan k s).map f = affineSpan k (f '' s)"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/AffineSpace/Centroid.lean",
+   "line": 204,
+   "name": "centroid_eq_of_inj_on_of_image_eq",
+   "signature": "{p : ι → P} (hi : ∀ i ∈ s, ∀ j ∈ s, p i = p j → i = j) {p₂ : ι₂ → P} (hi₂ : ∀ i ∈ s₂, ∀ j ∈ s₂, p₂ i = p₂ j → i = j) (he : p '' ↑s = p₂ '' ↑s₂) : s.centroid k p = s₂.centroid k p₂"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/Basis/Basic.lean",
+   "line": 327,
+   "name": "card_fintype",
+   "signature": "[Semiring R] [AddCommMonoid M] [Module R M] [Fintype ι] (b : Basis ι R M) [Fintype R] [Fintype M] : card M = card R ^ card ι"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/BilinearForm/Isometry.lean",
+   "line": 63,
+   "name": "toLinearMap_injective",
+   "signature": ": Function.Injective (Isometry.toLinearMap : (B₁ →bᵢ B₂) → M₁ →ₗ[R] M₂)"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/Matrix/Cartan/Basic.lean",
+   "line": 280,
+   "name": "G₂_off_diag_nonpos",
+   "signature": "(i j : Fin 2) (h : i ≠ j) : G₂ i j ≤ 0"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/Matrix/InvariantBasisNumber.lean",
+   "line": 91,
+   "name": "Matrix.square_of_invertible",
+   "signature": "(M : Matrix n m R) (N : Matrix m n R) (h : M * N = 1) (h' : N * M = 1) : Fintype.card n = Fintype.card m"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/Multilinear/Basic.lean",
+   "line": 1264,
+   "name": "mkPiRing_apply_one_eq_self",
+   "signature": "[Fintype ι] (f : MultilinearMap R (fun _ : ι => R) M₂) : MultilinearMap.mkPiRing R ι (f fun _ => 1) = f"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/RootSystem/CartanMatrix.lean",
+   "line": 304,
+   "name": "exists_mem_span_pairingIn_ne_zero_and_pairwise_ne",
+   "signature": "{K : Type*} [Field K] [CharZero K] [Module K M] [Module K N] {P : RootPairing ι K M N} [P.IsRootSystem] [P.IsCrystallographic] (b : P.Base) : ∃ d ∈ span K (range fun (i : b.support) j ↦ (P.pairingIn ℤ j i : K)), (∀ i, d i ≠ 0) ∧ Pairwise ((· ≠ ·) on d)"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/RootSystem/Finite/CanonicalBilinear.lean",
+   "line": 376,
+   "name": "posRootForm_posForm_apply_apply",
+   "signature": "(x y : P.rootSpan S) : (P.posRootForm S).posForm x y = ∑ i, P.coroot'In S i x * P.coroot'In S i y"
+  },
+  {
+   "file": "Mathlib/LinearAlgebra/SymplecticGroup.lean",
+   "line": 192,
+   "name": "coe_inv",
+   "signature": "(A : symplecticGroup l R) : (↑A⁻¹ : Matrix _ _ _) = (-J l R) * (↑A)ᵀ * J l R"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Constructions/Projective.lean",
+   "line": 145,
+   "name": "measure_univ_unique",
+   "signature": "(hμ : IsProjectiveLimit μ P) (hν : IsProjectiveLimit ν P) : μ univ = ν univ"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Function/ConditionalExpectation/CondexpL1.lean",
+   "line": 454,
+   "name": "condExpL1_undef",
+   "signature": "(hf : ¬Integrable f μ) : condExpL1 hm μ f = 0"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Function/LpSpace/DomAct/Basic.lean",
+   "line": 40,
+   "name": "smul_Lp_val",
+   "signature": "(c : Mᵈᵐᵃ) (f : Lp E p μ) : (c • f).1 = c • f.1"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Function/SimpleFuncDense.lean",
+   "line": 199,
+   "name": "HasCompactSupport.exists_simpleFunc_approx_of_prod",
+   "signature": "[PseudoMetricSpace α] {f : X × Y → α} (hf : Continuous f) (h'f : HasCompactSupport f) {ε : ℝ} (hε : 0 < ε) : ∃ (g : SimpleFunc (X × Y) α), ∀ x, dist (f x) (g x) < ε"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Integral/Asymptotics.lean",
+   "line": 54,
+   "name": "IsBigO.integrable",
+   "signature": "(hfm : AEStronglyMeasurable f μ) (hf : f =O[⊤] g) (hg : Integrable g μ) : Integrable f μ"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Integral/SetToL1/DominatedConvergence.lean",
+   "line": 69,
+   "name": "enorm_setToFun_le",
+   "signature": "(hT : DominatedFinMeasAdditive μ T C) (hC : 0 ≤ C) : ‖setToFun μ T hT f‖ₑ ≤ NNReal.mk C hC * ∫⁻ x, ‖f x‖ₑ ∂μ"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Measure/Content.lean",
+   "line": 292,
+   "name": "is_mul_left_invariant_outerMeasure",
+   "signature": "[Group G] [SeparatelyContinuousMul G] (h : ∀ (g : G) {K : Compacts G}, μ (K.map _ <| continuous_const_mul g) = μ K) (g : G) (A : Set G) : μ.outerMeasure ((g * ·) ⁻¹' A) = μ.outerMeasure A"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Measure/FiniteMeasure.lean",
+   "line": 150,
+   "name": "toMeasure_mk",
+   "signature": "(μ : Measure Ω) (h : IsFiniteMeasure μ) : FiniteMeasure.toMeasure (⟨μ, h⟩ : FiniteMeasure Ω) = μ"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Measure/HasOuterApproxClosed.lean",
+   "line": 61,
+   "name": "tendsto_lintegral_nn_filter_of_le_const",
+   "signature": "{ι : Type*} {L : Filter ι} [L.IsCountablyGenerated] (μ : Measure Ω) [IsFiniteMeasure μ] {fs : ι → Ω →ᵇ ℝ≥0} {c : ℝ≥0} (fs_le_const : ∀ᶠ i in L, ∀ᵐ ω : Ω ∂μ, fs i ω ≤ c) {f : Ω → ℝ≥0} (fs_lim : ∀ᵐ ω : Ω ∂μ, Tendsto (fun i ↦ fs i ω) L (𝓝 (f ω))) : Tendsto (fun i ↦ ∫⁻ ω, fs i ω ∂μ) L (𝓝 (∫⁻ ω, f ω ∂μ))"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Measure/Lebesgue/EqHaar.lean",
+   "line": 810,
+   "name": "tendsto_addHaar_inter_smul_one_of_density_one",
+   "signature": "(s : Set E) (x : E) (h : Tendsto (fun r => μ (s ∩ closedBall x r) / μ (closedBall x r)) (𝓝[>] 0) (𝓝 1)) (t : Set E) (ht : MeasurableSet t) (h't : μ t ≠ 0) (h''t : μ t ≠ ∞) : Tendsto (fun r : ℝ => μ (s ∩ ({x} + r • t)) / μ ({x} + r • t)) (𝓝[>] 0) (𝓝 1)"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/Measure/Real.lean",
+   "line": 470,
+   "name": "nonempty_inter_of_measureReal_lt_add'",
+   "signature": "(hs : MeasurableSet s) (h's : s ⊆ u) (h't : t ⊆ u) (h : μ.real u < μ.real s + μ.real t) (hu : μ u ≠ ∞ := by finiteness) : (s ∩ t).Nonempty"
+  },
+  {
+   "file": "Mathlib/MeasureTheory/OuterMeasure/AE.lean",
+   "line": 292,
+   "name": "ae_eq_set_biInter",
+   "signature": "{s : Set β} (hs : s.Countable) {t t' : β → Set α} (h : ∀ b ∈ s, t b =ᵐ[μ] t' b) : ⋂ b ∈ s, t b =ᵐ[μ] ⋂ b ∈ s, t' b"
+  },
+  {
+   "file": "Mathlib/NumberTheory/ArithmeticFunction/LFunction.lean",
+   "line": 143,
+   "name": "ofPowerSeries_apply_zero",
+   "signature": "(q : ℕ) (f : PowerSeries R) : ofPowerSeries q f 0 = 0"
+  },
+  {
+   "file": "Mathlib/NumberTheory/Fermat.lean",
+   "line": 53,
+   "name": "odd_fermatNumber",
+   "signature": "(n : ℕ) : Odd (fermatNumber n)"
+  },
+  {
+   "file": "Mathlib/NumberTheory/Height/Basic.lean",
+   "line": 434,
+   "name": "mulHeight_eq_one_of_subsingleton",
+   "signature": "{ι : Type*} [Subsingleton ι] (x : ι → K) : mulHeight x = 1"
+  },
+  {
+   "file": "Mathlib/NumberTheory/Height/Basic.lean",
+   "line": 903,
+   "name": "mulHeight₁_add_le",
+   "signature": "(x y : K) : mulHeight₁ (x + y) ≤ 2 ^ totalWeight K * mulHeight₁ x * mulHeight₁ y"
+  },
+  {
+   "file": "Mathlib/NumberTheory/LSeries/HurwitzZetaOdd.lean",
+   "line": 70,
+   "name": "jacobiTheta₂''_add_left",
+   "signature": "(z τ : ℂ) : jacobiTheta₂'' (z + 1) τ = jacobiTheta₂'' z τ"
+  },
+  {
+   "file": "Mathlib/NumberTheory/ModularForms/EisensteinSeries/Defs.lean",
+   "line": 63,
+   "name": "gammaSet_one_mem_iff",
+   "signature": "(v : Fin 2 → ℤ) : v ∈ gammaSet 1 r 0 ↔ (v 0).gcd (v 1) = r"
+  },
+  {
+   "file": "Mathlib/NumberTheory/ModularForms/QExpansion.lean",
+   "line": 371,
+   "name": "zero_at_infty_comp_ofComplex",
+   "signature": "{f : ℍ → ℂ} (hf : IsZeroAtImInfty f) : ZeroAtFilter I∞ (f ∘ ofComplex)"
+  },
+  {
+   "file": "Mathlib/NumberTheory/NumberField/FiniteAdeleRing.lean",
+   "line": 50,
+   "name": "hasFiniteMulSupport_norm",
+   "signature": "(x : 𝔸ᶠ[R, K]ˣ) : (fun v ↦ ‖x.1 v‖).HasFiniteMulSupport"
+  },
+  {
+   "file": "Mathlib/Order/Defs/PartialOrder.lean",
+   "line": 200,
+   "name": "lt_of_le_of_ne",
+   "signature": ": a ≤ b → a ≠ b → a < b"
+  },
+  {
+   "file": "Mathlib/Order/Filter/Basic.lean",
+   "line": 869,
+   "name": "eventually_imp_distrib_right",
+   "signature": "{f : Filter α} {p : α → Prop} {q : Prop} : (∀ᶠ x in f, p x → q) ↔ (∃ᶠ x in f, p x) → q"
+  },
+  {
+   "file": "Mathlib/Order/Filter/NAry.lean",
+   "line": 154,
+   "name": "map₂_map_right",
+   "signature": "(m : α → γ → δ) (n : β → γ) : map₂ m f (g.map n) = map₂ (fun a b => m a (n b)) f g"
+  },
+  {
+   "file": "Mathlib/Order/Filter/Pi.lean",
+   "line": 54,
+   "name": "pi_mono",
+   "signature": "(h : ∀ i, f₁ i ≤ f₂ i) : pi f₁ ≤ pi f₂"
+  },
+  {
+   "file": "Mathlib/Order/Interval/Set/Basic.lean",
+   "line": 371,
+   "name": "mem_Ico_of_Ioo",
+   "signature": "(h : x ∈ Ioo a b) : x ∈ Ico a b"
+  },
+  {
+   "file": "Mathlib/Order/Interval/Set/LinearOrder.lean",
+   "line": 419,
+   "name": "Icc_subset_Icc_union_Icc",
+   "signature": ": Icc a c ⊆ Icc a b ∪ Icc b c"
+  },
+  {
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 522,
+   "name": "Nat.rel_of_forall_rel_succ_of_lt",
+   "signature": "(r : β → β → Prop) [IsTrans β r] {f : ℕ → β} (h : ∀ n, r (f n) (f (n + 1))) ⦃a b : ℕ⦄ (hab : a < b) : r (f a) (f b)"
+  },
+  {
+   "file": "Mathlib/Order/RelIso/Basic.lean",
+   "line": 743,
+   "name": "bijective",
+   "signature": "(e : r ≃r s) : Bijective e"
+  },
+  {
+   "file": "Mathlib/Order/RelSeries.lean",
+   "line": 476,
+   "name": "fromListIsChain_cons",
+   "signature": "(l : List α) (l_ne_nil : l ≠ []) (hl : l.IsChain (· ~[r] ·)) (x : α) (hx : x ~[r] l.head l_ne_nil) : fromListIsChain (x :: l) (by simp) (hl.cons_of_ne_nil l_ne_nil hx) = (fromListIsChain l l_ne_nil hl).cons x (by simpa)"
+  },
+  {
+   "file": "Mathlib/Order/Sublattice.lean",
+   "line": 381,
+   "name": "pi_top",
+   "signature": "(s : Set κ) : (pi s fun _ ↦ ⊤ : Sublattice (∀ i, π i)) = ⊤"
+  },
+  {
+   "file": "Mathlib/Order/SuccPred/Basic.lean",
+   "line": 485,
+   "name": "Icc_succ_right",
+   "signature": "(h : a ≤ succ b) : Icc a (succ b) = insert (succ b) (Icc a b)"
+  },
+  {
+   "file": "Mathlib/Order/WellFounded.lean",
+   "line": 255,
+   "name": "StrictAnti.range_inj_of_wellFoundedGT",
+   "signature": "[WellFoundedGT β] {f g : β → γ} (hf : StrictAnti f) (hg : StrictAnti g) : Set.range f = Set.range g ↔ f = g"
+  },
+  {
+   "file": "Mathlib/Probability/BorelCantelli.lean",
+   "line": 69,
+   "name": "measure_limsup_eq_one",
+   "signature": "{s : ℕ → Set Ω} (hsm : ∀ n, MeasurableSet (s n)) (hs : iIndepSet s μ) (hs' : (∑' n, μ (s n)) = ∞) : μ (limsup s atTop) = 1"
+  },
+  {
+   "file": "Mathlib/Probability/Distributions/Gaussian/Real.lean",
+   "line": 259,
+   "name": "gaussianReal_absolutelyContinuous'",
+   "signature": "(μ : ℝ) {v : ℝ≥0} (hv : v ≠ 0) : volume ≪ gaussianReal μ v"
+  },
+  {
+   "file": "Mathlib/Probability/Independence/CharacteristicFunction.lean",
+   "line": 167,
+   "name": "iIndepFun.charFunDual_map_fun_finsetSum_eq_prod",
+   "signature": "[NormedSpace ℝ E] (mX : ∀ i ∈ s, AEMeasurable (X i) P) (hX : iIndepFun (s.restrict X) P) : charFunDual (P.map (fun ω ↦ ∑ i ∈ s, X i ω)) = ∏ i ∈ s, charFunDual (P.map (X i))"
+  },
+  {
+   "file": "Mathlib/RepresentationTheory/Homological/GroupCohomology/LowDegree.lean",
+   "line": 480,
+   "name": "coboundariesToCocycles₂_apply",
+   "signature": "(x : coboundaries₂ A) : coboundariesToCocycles₂ A x = x.1"
+  },
+  {
+   "file": "Mathlib/RepresentationTheory/Rep/Basic.lean",
+   "line": 808,
+   "name": "homEquiv_def",
+   "signature": "(A B C : Rep k G) : (ihom.adjunction A).homEquiv B C = Rep.tensorHomEquiv A B C"
+  },
+  {
+   "file": "Mathlib/RingTheory/Adjoin/Field.lean",
+   "line": 46,
+   "name": "AlgEquiv.adjoinSingletonEquivAdjoinRootMinpoly_symm_toAlgHom",
+   "signature": "{R : Type*} [CommRing R] [Algebra F R] (x : R) : (adjoinSingletonEquivAdjoinRootMinpoly F x).symm = AdjoinRoot.Minpoly.toAdjoin F x"
+  },
+  {
+   "file": "Mathlib/RingTheory/HahnSeries/Multiplication.lean",
+   "line": 90,
+   "name": "orderTop_one",
+   "signature": "[Zero R] [One R] [NeZero (1 : R)] : orderTop (1 : R⟦Γ⟧) = 0"
+  },
+  {
+   "file": "Mathlib/RingTheory/Ideal/Basic.lean",
+   "line": 97,
+   "name": "add_pow_add_pred_mem_of_pow_mem_of_commute",
+   "signature": "{m n : ℕ} (ha : a ^ m ∈ I) (hb : b ^ n ∈ I) (hab : Commute a b) : (a + b) ^ (m + n - 1) ∈ I"
+  },
+  {
+   "file": "Mathlib/RingTheory/Ideal/Cotangent.lean",
+   "line": 129,
+   "name": "mk_mem_cotangentIdeal",
+   "signature": "{I : Ideal R} {x : R} : Quotient.mk (I ^ 2) x ∈ I.cotangentIdeal ↔ x ∈ I"
+  },
+  {
+   "file": "Mathlib/RingTheory/Invariant/Basic.lean",
+   "line": 166,
+   "name": "orbit_eq_primesOver",
+   "signature": "[Finite G] [SMulCommClass G A B] (P : Ideal A) (Q : Ideal B) [hP : Q.LiesOver P] [hQ : Q.IsPrime] : MulAction.orbit G Q = P.primesOver B"
+  },
+  {
+   "file": "Mathlib/RingTheory/LaurentSeries.lean",
+   "line": 288,
+   "name": "coe_algebraMap",
+   "signature": "[CommSemiring R] : ⇑(algebraMap R⟦X⟧ R⸨X⸩) = HahnSeries.ofPowerSeries ℤ R"
+  },
+  {
+   "file": "Mathlib/RingTheory/MvPolynomial/MonomialOrder.lean",
+   "line": 672,
+   "name": "coeff_prod_sum_degree",
+   "signature": "{ι : Type*} (P : ι → MvPolynomial σ R) (s : Finset ι) : (∏ i ∈ s, P i).coeff (∑ i ∈ s, m.degree (P i)) = ∏ i ∈ s, m.leadingCoeff (P i)"
+  },
+  {
+   "file": "Mathlib/RingTheory/MvPowerSeries/Basic.lean",
+   "line": 410,
+   "name": "X_pow_eq",
+   "signature": "(s : σ) (n : ℕ) : (X s : MvPowerSeries σ R) ^ n = monomial (single s n) 1"
+  },
+  {
+   "file": "Mathlib/RingTheory/MvPowerSeries/Basic.lean",
+   "line": 734,
+   "name": "coeff_eq_zero_of_constantCoeff_nilpotent",
+   "signature": "{f : MvPowerSeries σ R} {m : ℕ} (hf : constantCoeff f ^ m = 0) {d : σ →₀ ℕ} {n : ℕ} (hn : m + degree d ≤ n) : coeff d (f ^ n) = 0"
+  },
+  {
+   "file": "Mathlib/RingTheory/Perfection.lean",
+   "line": 287,
+   "name": "frobenius_pthRoot",
+   "signature": ": (frobenius _ p).comp (pthRoot R p) = RingHom.id _"
+  },
+  {
+   "file": "Mathlib/RingTheory/Smooth/Fiber.lean",
+   "line": 246,
+   "name": "Etale.of_formallyUnramified_of_flat",
+   "signature": "{R S : Type*} [CommRing R] [CommRing S] [Algebra R S] [Algebra.FinitePresentation R S] [Module.Flat R S] [FormallyUnramified R S] : Etale R S"
+  },
+  {
+   "file": "Mathlib/RingTheory/TensorProduct/Maps.lean",
+   "line": 518,
+   "name": "mapRingHom_tmul",
+   "signature": "(s : S) (t : T) : mapRingHom fR fS fT HS HT (s ⊗ₜ t) = fS s ⊗ₜ fT t"
+  },
+  {
+   "file": "Mathlib/RingTheory/TensorProduct/Maps.lean",
+   "line": 575,
+   "name": "map_restrictScalars_comp_includeRight",
+   "signature": "(f : A →ₐ[S] C) (g : B →ₐ[R] D) : ((map f g).restrictScalars R).comp includeRight = includeRight.comp g"
+  },
+  {
+   "file": "Mathlib/RingTheory/TensorProduct/Maps.lean",
+   "line": 814,
+   "name": "productMap_left_apply",
+   "signature": "(a : A) : productMap f g (a ⊗ₜ 1) = f a"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/ContinuousAffineEquiv.lean",
+   "line": 231,
+   "name": "preimage_symm",
+   "signature": "(f : P₁ ≃ᴬ[k] P₂) (s : Set P₁) : f.symm ⁻¹' s = f '' s"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/ContinuousAffineMap.lean",
+   "line": 198,
+   "name": "coe_contLinear_eq_linear",
+   "signature": "(f : P →ᴬ[R] Q) : (f.contLinear : V →ₗ[R] W) = (f : P →ᵃ[R] Q).linear"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/Group/ContinuousInv.lean",
+   "line": 271,
+   "name": "Topology.IsInducing.continuousInv",
+   "signature": "{G H : Type*} [Inv G] [Inv H] [TopologicalSpace G] [TopologicalSpace H] [ContinuousInv H] {f : G → H} (hf : IsInducing f) (hf_inv : ∀ x, f x⁻¹ = (f x)⁻¹) : ContinuousInv G"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/Group/Matrix.lean",
+   "line": 176,
+   "name": "continuous_mapGL",
+   "signature": "[ContinuousSMul R S] : Continuous (mapGL S : SL n R → _)"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/Module/Equiv.lean",
+   "line": 563,
+   "name": "coe_symm_comp_coe",
+   "signature": "(e : M₁ ≃SL[σ₁₂] M₂) : (e.symm : M₂ →SL[σ₂₁] M₁).comp (e : M₁ →SL[σ₁₂] M₂) = ContinuousLinearMap.id R₁ M₁"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/Module/Multilinear/Basic.lean",
+   "line": 505,
+   "name": "sub_prod_sub",
+   "signature": "[AddCommGroup M₃] [Module R M₃] [TopologicalSpace M₃] [IsTopologicalAddGroup M₃] (f₁ f₂ : ContinuousMultilinearMap R M₁ M₂) (g₁ g₂ : ContinuousMultilinearMap R M₁ M₃) : (f₁ - f₂).prod (g₁ - g₂) = f₁.prod g₁ - f₂.prod g₂"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/Monoid.lean",
+   "line": 498,
+   "name": "tendsto_mul_nhds_zero_of_disjoint_cocompact",
+   "signature": "{l : Filter (M × M)} (hl : Disjoint l (cocompact (M × M))) (h'l : l ≤ (𝓝 0).coprod (𝓝 0)) : Tendsto (fun x : M × M ↦ x.1 * x.2) l (𝓝 0)"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/Nonarchimedean/AdicTopology.lean",
+   "line": 62,
+   "name": "adic_basis",
+   "signature": "(I : Ideal R) : SubmodulesRingBasis fun n : ℕ => (I ^ n • ⊤ : Ideal R)"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/StarSubalgebra.lean",
+   "line": 71,
+   "name": "topologicalClosure_toSubalgebra_comm",
+   "signature": "(s : StarSubalgebra R A) : s.topologicalClosure.toSubalgebra = s.toSubalgebra.topologicalClosure"
+  },
+  {
+   "file": "Mathlib/Topology/Compactification/OnePoint/ProjectiveLine.lean",
+   "line": 140,
+   "name": "smul_infty_eq_ite",
+   "signature": "(g : GL (Fin 2) K) : g • (∞ : OnePoint K) = if g 1 0 = 0 then ∞ else g 0 0 / g 1 0"
+  },
+  {
+   "file": "Mathlib/Topology/ContinuousMap/Algebra.lean",
+   "line": 814,
+   "name": "coe_smul'",
+   "signature": "(f : C(α, R)) (g : C(α, M)) : ⇑(f • g) = ⇑f • ⇑g"
+  },
+  {
+   "file": "Mathlib/Topology/Inseparable.lean",
+   "line": 501,
+   "name": "Inseparable.prod",
+   "signature": "{x₁ x₂ : X} {y₁ y₂ : Y} (hx : x₁ ~ᵢ x₂) (hy : y₁ ~ᵢ y₂) : (x₁, y₁) ~ᵢ (x₂, y₂)"
+  },
+  {
+   "file": "Mathlib/Topology/Inseparable.lean",
+   "line": 791,
+   "name": "continuousOn_lift₂",
+   "signature": "{f : X → Y → Z} {hf : ∀ a b c d, (a ~ᵢ c) → (b ~ᵢ d) → f a b = f c d} {s : Set (SeparationQuotient X × SeparationQuotient Y)} : ContinuousOn (uncurry <| lift₂ f hf) s ↔ ContinuousOn (uncurry f) (Prod.map mk mk ⁻¹' s)"
+  },
+  {
+   "file": "Mathlib/Topology/Instances/NNReal/Lemmas.lean",
+   "line": 250,
+   "name": "iSup_pow_of_ne_zero",
+   "signature": "(hn : n ≠ 0) (f : ι → ℝ≥0∞) : (⨆ i, f i) ^ n = ⨆ i, f i ^ n"
+  },
+  {
+   "file": "Mathlib/Topology/Instances/Nat.lean",
+   "line": 28,
+   "name": "dist_eq",
+   "signature": "(x y : ℕ) : dist x y = |(x : ℝ) - y|"
+  },
+  {
+   "file": "Mathlib/Topology/Maps/Basic.lean",
+   "line": 841,
+   "name": "isClosed_iff_preimage_isClosed",
+   "signature": "(hf : IsClosedEmbedding f) {s : Set Y} (hs : s ⊆ range f) : IsClosed s ↔ IsClosed (f ⁻¹' s)"
+  },
+  {
+   "file": "Mathlib/Topology/MetricSpace/Pseudo/Constructions.lean",
+   "line": 146,
+   "name": "NNReal.closedBall_zero_eq_Icc'",
+   "signature": "(c : ℝ≥0) : Metric.closedBall (0 : ℝ≥0) c.toReal = Set.Icc 0 c"
+  },
+  {
+   "file": "Mathlib/Topology/OpenPartialHomeomorph/Composition.lean",
+   "line": 78,
+   "name": "trans_source'",
+   "signature": ": (e.trans e').source = e.source ∩ e ⁻¹' (e.target ∩ e'.source)"
+  },
+  {
+   "file": "Mathlib/Topology/OpenPartialHomeomorph/Defs.lean",
+   "line": 225,
+   "name": "replacePartialEquiv_eq_self",
+   "signature": "(e' : PartialEquiv X Y) (h : e.toPartialEquiv = e') : e.replacePartialEquiv e' h = e"
+  },
+  {
+   "file": "Mathlib/Topology/Order/LowerUpperTopology.lean",
+   "line": 148,
+   "name": "ofUpper_toUpper",
+   "signature": "(a : α) : ofUpper (toUpper a) = a"
+  },
+  {
+   "file": "Mathlib/Topology/Order/OrderClosed.lean",
+   "line": 294,
+   "name": "PredOrder.nhdsLT",
+   "signature": "[PredOrder α] : 𝓝[<] a = ⊥"
+  },
+  {
+   "file": "Mathlib/Topology/Spectral/Hom.lean",
+   "line": 176,
+   "name": "coe_comp_continuousMap'",
+   "signature": "(f : SpectralMap β γ) (g : SpectralMap α β) : (f.comp g : ContinuousMap α γ) = (f : ContinuousMap β γ).comp g"
+  },
+  {
+   "file": "Mathlib/Topology/UniformSpace/UniformConvergenceTopology.lean",
+   "line": 639,
+   "name": "hasBasis_uniformity_of_basis_aux₂",
+   "signature": "(h : DirectedOn (· ⊆ ·) 𝔖) {p : ι → Prop} {s : ι → Set (β × β)} (hb : HasBasis (𝓤 β) p s) : DirectedOn ((fun s : Set α => (UniformFun.uniformSpace s β).comap (s.domRestrict : (α →ᵤ β) → s →ᵤ β)) ⁻¹'o GE.ge) 𝔖"
+  }
+ ],
+ "C2_dev": [
+  {
+   "file": "Mathlib/Algebra/Order/Floor/Defs.lean",
+   "line": 129,
+   "name": "ceil_nat",
+   "signature": ": (Nat.ceil : ℕ → ℕ) = id"
+  },
+  {
+   "file": "Mathlib/Analysis/Asymptotics/LinearGrowth.lean",
+   "line": 198,
+   "name": "linearGrowthInf_natCast_nonneg",
+   "signature": "(v : ℕ → ℕ) : 0 ≤ linearGrowthInf fun n ↦ (v n : EReal)"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 312,
+   "name": "μ_bddAbove",
+   "signature": "(hμ1 : μ 1 ≤ 1) {s : ℕ → ℕ} (hs : ∀ n : ℕ, s n ≤ n) (x : R) (ψ : ℕ → ℕ) : BddAbove (Set.range fun n : ℕ => μ (x ^ s (ψ n)) ^ (1 / (ψ n : ℝ)))"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 331,
+   "name": "μ_bddAbove'",
+   "signature": "(hμ1 : μ 1 ≤ 1) {s : ℕ → ℕ} (hs : ∀ n : ℕ, s n ≤ n) (x : R) (ψ : ℕ → ℕ) : BddAbove ((fun n : ℕ => μ (x ^ s (ψ n)) ^ (1 / (ψ n : ℝ))) '' Set.univ)"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 355,
+   "name": "μ_limsup_le_one",
+   "signature": "{s : ℕ → ℕ} (hs_le : ∀ n : ℕ, s n ≤ n) {x : R} {ψ : ℕ → ℕ} (hψ_lim : Tendsto ((fun n : ℕ => ↑(s n) / (n : ℝ)) ∘ ψ) atTop (𝓝 0)) : limsup (fun n : ℕ => μ x ^ ((s (ψ n) : ℝ) * (1 / (ψ n : ℝ)))) atTop ≤ 1"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecificLimits/Normed.lean",
+   "line": 519,
+   "name": "summable_norm_mul_geometric_of_norm_lt_one",
+   "signature": "{k : ℕ} {r : R} (hr : ‖r‖ < 1) {u : ℕ → ℕ} (hu : (fun n ↦ (u n : ℝ)) =O[atTop] (fun n ↦ (↑(n ^ k) : ℝ))) : Summable fun n : ℕ ↦ ‖u n * r ^ n‖"
+  },
+  {
+   "file": "Mathlib/Computability/Partrec.lean",
+   "line": 174,
+   "name": "of_eq_tot",
+   "signature": "{f : ℕ →. ℕ} {g : ℕ → ℕ} (hf : Nat.Partrec f) (H : ∀ n, g n ∈ f n) : Nat.Partrec g"
+  },
+  {
+   "file": "Mathlib/Computability/Primrec/Basic.lean",
+   "line": 196,
+   "name": "nat_iff",
+   "signature": "{f : ℕ → ℕ} : Primrec f ↔ Nat.Primrec f"
+  },
+  {
+   "file": "Mathlib/Computability/Primrec/List.lean",
+   "line": 660,
+   "name": "comp₁",
+   "signature": "(f : ℕ → ℕ) (hf : @Primrec' 1 fun v => f v.head) {n g} (hg : @Primrec' n g) : Primrec' fun v => f (g v)"
+  },
+  {
+   "file": "Mathlib/Computability/RE.lean",
+   "line": 201,
+   "name": "not",
+   "signature": "{p : α → Prop} : (hp : ComputablePred p) → ComputablePred fun a => ¬p a | ⟨_, hp⟩ => Computable.computablePred <| Primrec.not.to_comp.comp hp |>.of_eq <| by simp /-- The computable functions are closed under if-then-else definitions with computable predicates. -/ theorem ite {f₁ f₂ : ℕ → ℕ} (hf₁ : Computable f₁) (hf₂ : Computable f₂) {c : ℕ → Prop} [DecidablePred c] (hc : ComputablePred c) : Computable fun k ↦ if c k then f₁ k else f₂ k"
+  },
+  {
+   "file": "Mathlib/Computability/RE.lean",
+   "line": 207,
+   "name": "ite",
+   "signature": "{f₁ f₂ : ℕ → ℕ} (hf₁ : Computable f₁) (hf₂ : Computable f₂) {c : ℕ → Prop} [DecidablePred c] (hc : ComputablePred c) : Computable fun k ↦ if c k then f₁ k else f₂ k"
+  },
+  {
+   "file": "Mathlib/Data/Nat/DvdSequence.lean",
+   "line": 90,
+   "name": "id",
+   "signature": ": IsStrongDvdSequence (id : ℕ → ℕ)"
+  },
+  {
+   "file": "Mathlib/NumberTheory/MaricaSchoenheim.lean",
+   "line": 38,
+   "name": "grahamConjecture_of_squarefree",
+   "signature": "{n : ℕ} (f : ℕ → ℕ) (hf' : ∀ k < n, Squarefree (f k)) : GrahamConjecture n f"
+  },
+  {
+   "file": "Mathlib/Order/Filter/AtTopBot/Finite.lean",
+   "line": 83,
+   "name": "strictMono_subseq_of_id_le",
+   "signature": "{u : ℕ → ℕ} (hu : ∀ n, n ≤ u n) : ∃ φ : ℕ → ℕ, StrictMono φ ∧ StrictMono (u ∘ φ)"
+  },
+  {
+   "file": "Mathlib/Order/Filter/AtTopBot/Tendsto.lean",
+   "line": 84,
+   "name": "_root_.StrictMono.tendsto_atTop",
+   "signature": "{φ : ℕ → ℕ} (h : StrictMono φ) : Tendsto φ atTop atTop"
+  },
+  {
+   "file": "Mathlib/Order/Filter/Cofinite.lean",
+   "line": 269,
+   "name": "Function.Injective.nat_tendsto_atTop",
+   "signature": "{f : ℕ → ℕ} (hf : Injective f) : Tendsto f atTop atTop"
+  },
+  {
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 268,
+   "name": "StrictMono.add_le_nat",
+   "signature": "{f : ℕ → ℕ} (hf : StrictMono f) (m n : ℕ) : m + f n ≤ f (m + n)"
+  },
+  {
+   "file": "Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean",
+   "line": 267,
+   "name": "le_lmarginalPartialTraj_succ",
+   "signature": "{f : ℕ → (Π n, X n) → ℝ≥0∞} {a : ℕ → ℕ} (hcte : ∀ n, DependsOn (f n) (Iic (a n))) (mf : ∀ n, Measurable (f n)) {bound : ℝ≥0∞} (fin_bound : bound ≠ ∞) (le_bound : ∀ n x, f n x ≤ bound) {k : ℕ} (anti : ∀ x, Antitone (fun n ↦ lmarginalPartialTraj κ (k + 1) (a n) (f n) x)) {l : (Π n, X n) → ℝ≥0∞} (htendsto : ∀ x, Tendsto (fun n ↦ lmarginalPartialTraj κ (k + 1) (a n) (f n) x) atTop (𝓝 (l x))) (ε : ℝ≥0∞) (y : Π i : Iic k, X i) (hpos : ∀ x n, ε ≤ lmarginalPartialTraj κ k (a n) (f n) (updateFinset x (Iic k) y)) : ∃ z, ∀ x n, ε ≤ lmarginalPartialTraj κ (k + 1) (a n) (f n) (update (updateFinset x (Iic k) y) (k + 1) z)"
+  },
+  {
+   "file": "Mathlib/Probability/Process/LocalProperty.lean",
+   "line": 269,
+   "name": "le_mkStrictMonoAux",
+   "signature": "(x : ℕ → ℕ) : ∀ n, x n ≤ mkStrictMonoAux x n | 0 => by simp [mkStrictMonoAux] | n + 1 => by grind [mkStrictMonoAux] private lemma isPreLocalizingSequence_of_isLocalizingSequence_aux {τ : ℕ → Ω → WithTop ι} {σ : ℕ → ℕ → Ω → WithTop ι} (hτ : IsLocalizingSequence 𝓕 τ P) (hσ : ∀ n, IsLocalizingSequence 𝓕 (σ n) P) : ∃ (nk : ℕ → ℕ) (T : ℕ → ι), StrictMono nk ∧ Tendsto T atTop atTop ∧ ∀ n, P {ω | σ n (nk n) ω < min (τ n ω) (T n)} ≤ (1 / 2) ^ n"
+  },
+  {
+   "file": "Mathlib/RingTheory/AdicCompletion/Basic.lean",
+   "line": 108,
+   "name": "IsHausdorff.StrictMono.funext",
+   "signature": "{M : Type*} [IsHausdorff I N] {f g : M → N} {a : ℕ → ℕ} (ha : StrictMono a) (h : ∀ n m, Submodule.Quotient.mk (p := (I ^ a n • ⊤ : Submodule R N)) (f m) = Submodule.Quotient.mk (g m)) : f = g"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 605,
+   "name": "degBound_succ",
+   "signature": "(k : ℕ) (D : ℕ → ℕ) (n) : degBound k D (n + 1) = numBound k D (n + 1) ^ numBound k D (n + 1) * degBound k D n"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 648,
+   "name": "numBound_mono",
+   "signature": "(hk : k₁ ≤ k₂) : ∀ n, (∀ i < n, D₁ i ≤ D₂ i) → numBound k₁ D₁ n ≤ numBound k₂ D₂ n | 0, hD => by simpa using hk | n + 1, hD => by rw [numBound_succ, numBound_succ] gcongr · exact numBound_mono hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact hD _ n.lt_succ_self end lemma degBound_pos (k : ℕ) (D : ℕ → ℕ) : ∀ n, 0 < degBound k D n | 0 => by simp | n + 1 => by simp [degBound_succ, Nat.pow_self_pos, degBound_pos] end MvPolynomialC open MvPolynomialC in /-- The `C : R → R[X₁, ..., Xₘ]` case of **Chevalley's theorem** with complexity bound. -/ lemma chevalley_mvPolynomialC {M : Submodule ℤ R} (hM : 1 ∈ M) (k : ℕ) (d : Multiset (Fin n)) (S : ConstructibleSetData (MvPolynomial (Fin n) R)) (hSn : ∀ C ∈ S, C.n ≤ k) (hS : ∀ C ∈ S, ∀ j, C.g j ∈ coeffsIn _ M ⊓ (degreesLE _ _ d).restrictScalars _) : ∃ T : ConstructibleSetData R, comap MvPolynomial.C '' S.toSet = T.toSet ∧ ∀ C ∈ T, C.n ≤ numBound k (fun i ↦ 1 + (d.map Fin.val).count i) n ∧ ∀ i, C.g i ∈ M ^ (degBound k (fun i ↦ 1 + (d.map Fin.val).count i) n)"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 660,
+   "name": "degBound_pos",
+   "signature": "(k : ℕ) (D : ℕ → ℕ) : ∀ n, 0 < degBound k D n | 0 => by simp | n + 1 => by simp [degBound_succ, Nat.pow_self_pos, degBound_pos] end MvPolynomialC open MvPolynomialC in /-- The `C : R → R[X₁, ..., Xₘ]` case of **Chevalley's theorem** with complexity bound. -/ lemma chevalley_mvPolynomialC {M : Submodule ℤ R} (hM : 1 ∈ M) (k : ℕ) (d : Multiset (Fin n)) (S : ConstructibleSetData (MvPolynomial (Fin n) R)) (hSn : ∀ C ∈ S, C.n ≤ k) (hS : ∀ C ∈ S, ∀ j, C.g j ∈ coeffsIn _ M ⊓ (degreesLE _ _ d).restrictScalars _) : ∃ T : ConstructibleSetData R, comap MvPolynomial.C '' S.toSet = T.toSet ∧ ∀ C ∈ T, C.n ≤ numBound k (fun i ↦ 1 + (d.map Fin.val).count i) n ∧ ∀ i, C.g i ∈ M ^ (degBound k (fun i ↦ 1 + (d.map Fin.val).count i) n)"
+  },
+  {
+   "file": "Mathlib/Topology/Algebra/InfiniteSum/ENNReal.lean",
+   "line": 128,
+   "name": "tsum_eq_iSup_nat'",
+   "signature": "{f : ℕ → ℝ≥0∞} {N : ℕ → ℕ} (hN : Tendsto N atTop atTop) : ∑' i : ℕ, f i = ⨆ i : ℕ, ∑ a ∈ Finset.range (N i), f a"
+  },
+  {
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 201,
+   "name": "isClosed_range_of_not_tendsto",
+   "signature": "{x : ℕ → X} [SequentialSpace X] [T1Space X] (hx : ∀ (l : X) (φ : ℕ → ℕ), StrictMono φ → ¬Tendsto (x ∘ φ) atTop (𝓝 l)) : IsClosed (range x)"
+  },
+  {
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 228,
+   "name": "CauchySeq.subseq_subseq_mem",
+   "signature": "{V : ℕ → SetRel α α} (hV : ∀ n, V n ∈ 𝓤 α) {u : ℕ → α} (hu : CauchySeq u) {f g : ℕ → ℕ} (hf : Tendsto f atTop atTop) (hg : Tendsto g atTop atTop) : ∃ φ : ℕ → ℕ, StrictMono φ ∧ ∀ n, ((u ∘ f ∘ φ) n, (u ∘ g ∘ φ) n) ∈ V n"
+  },
+  {
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 786,
+   "name": "totallyBounded_interUnionBalls",
+   "signature": "{p : ℕ → Prop} {U : ℕ → SetRel α α} (H : (uniformity α).HasBasis p U) (xs : ℕ → α) (u : ℕ → ℕ) : TotallyBounded (interUnionBalls xs u U)"
+  }
+ ],
+ "C2_heldout": [
+  {
+   "file": "Mathlib/Algebra/Order/Floor/Defs.lean",
+   "line": 125,
+   "name": "floor_nat",
+   "signature": ": (Nat.floor : ℕ → ℕ) = id"
+  },
+  {
+   "file": "Mathlib/Algebra/Order/Group/Nat.lean",
+   "line": 49,
+   "name": "pow_left_strictMono",
+   "signature": "(hn : n ≠ 0) : StrictMono (· ^ n : ℕ → ℕ)"
+  },
+  {
+   "file": "Mathlib/Algebra/Polynomial/EraseLead.lean",
+   "line": 354,
+   "name": "mono_map_natDegree_eq",
+   "signature": "{S F : Type*} [Semiring S] [FunLike F R[X] S[X]] [AddMonoidHomClass F R[X] S[X]] {φ : F} {p : R[X]} (k : ℕ) (fu : ℕ → ℕ) (fu0 : ∀ {n}, n ≤ k → fu n = 0) (fc : ∀ {n m}, k ≤ n → n < m → fu n < fu m) (φ_k : ∀ {f : R[X]}, f.natDegree < k → φ f = 0) (φ_mon_nat : ∀ n c, c ≠ 0 → (φ (monomial n c)).natDegree = fu n) : (φ p).natDegree = fu p.natDegree"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/RingSeminorm.lean",
+   "line": 205,
+   "name": "isBoundedUnder",
+   "signature": "(hp : p 1 ≤ 1) {s : ℕ → ℕ} (hs_le : ∀ n : ℕ, s n ≤ n) {x : R} (ψ : ℕ → ℕ) : IsBoundedUnder LE.le atTop fun n : ℕ => p (x ^ s (ψ n)) ^ (1 / (ψ n : ℝ))"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 303,
+   "name": "μ_bddBelow",
+   "signature": "(s : ℕ → ℕ) {x : R} (ψ : ℕ → ℕ) : BddBelow {a : ℝ | ∀ᶠ n : ℝ in map (fun n : ℕ => μ x ^ (↑(s (ψ n)) * (1 / (ψ n : ℝ)))) atTop, n ≤ a}"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 338,
+   "name": "μ_nonempty",
+   "signature": "{s : ℕ → ℕ} (hs_le : ∀ n : ℕ, s n ≤ n) {x : R} (ψ : ℕ → ℕ) : {a : ℝ | ∀ᶠ n : ℝ in map (fun n : ℕ => μ x ^ (↑(s (ψ n)) * (1 / (ψ n : ℝ)))) atTop, n ≤ a}.Nonempty"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 383,
+   "name": "limsup_mu_le",
+   "signature": "(hμ1 : μ 1 ≤ 1) {s : ℕ → ℕ} (hs_le : ∀ n : ℕ, s n ≤ n) {x : R} {a : ℝ} (a_in : a ∈ Set.Icc (0 : ℝ) 1) {ψ : ℕ → ℕ} (hψ_mono : StrictMono ψ) (hψ_lim : Tendsto ((fun n : ℕ => (s n : ℝ) / ↑n) ∘ ψ) atTop (𝓝 a)) : limsup (fun n : ℕ => μ (x ^ s (ψ n)) ^ (1 / (ψ n : ℝ))) atTop ≤ smoothingFun μ x ^ a"
+  },
+  {
+   "file": "Mathlib/Analysis/Normed/Unbundled/SmoothingSeminorm.lean",
+   "line": 421,
+   "name": "tendsto_smoothingFun_comp",
+   "signature": "(hμ1 : μ 1 ≤ 1) (x : R) {ψ : ℕ → ℕ} (hψ_mono : StrictMono ψ) : Tendsto (fun n : ℕ => μ (x ^ ψ n) ^ (1 / ψ n : ℝ)) atTop (𝓝 (smoothingFun μ x))"
+  },
+  {
+   "file": "Mathlib/Analysis/PSeries.lean",
+   "line": 187,
+   "name": "summable_schlomilch_iff",
+   "signature": "{C : ℕ} {u : ℕ → ℕ} {f : ℕ → ℝ≥0} (hf : ∀ ⦃m n⦄, 0 < m → m ≤ n → f n ≤ f m) (h_pos : ∀ n, 0 < u n) (hu_strict : StrictMono u) (hC_nonzero : C ≠ 0) (h_succ_diff : SuccDiffBounded C u) : (Summable fun k : ℕ => (u (k + 1) - (u k : ℝ≥0)) * f (u k)) ↔ Summable f"
+  },
+  {
+   "file": "Mathlib/Analysis/PSeries.lean",
+   "line": 220,
+   "name": "summable_schlomilch_iff_of_nonneg",
+   "signature": "{C : ℕ} {u : ℕ → ℕ} {f : ℕ → ℝ} (h_nonneg : ∀ n, 0 ≤ f n) (hf : ∀ ⦃m n⦄, 0 < m → m ≤ n → f n ≤ f m) (h_pos : ∀ n, 0 < u n) (hu_strict : StrictMono u) (hC_nonzero : C ≠ 0) (h_succ_diff : SuccDiffBounded C u) : (Summable fun k : ℕ => (u (k + 1) - (u k : ℝ)) * f (u k)) ↔ Summable f"
+  },
+  {
+   "file": "Mathlib/Analysis/SpecificLimits/Basic.lean",
+   "line": 580,
+   "name": "summable_one_div_pow_of_le",
+   "signature": "{m : ℝ} {f : ℕ → ℕ} (hm : 1 < m) (fi : ∀ i, i ≤ f i) : Summable fun i ↦ 1 / m ^ f i"
+  },
+  {
+   "file": "Mathlib/Computability/Ackermann.lean",
+   "line": 267,
+   "name": "exists_lt_ack_of_nat_primrec",
+   "signature": "{f : ℕ → ℕ} (hf : Nat.Primrec f) : ∃ m, ∀ n, f n < ack m n"
+  },
+  {
+   "file": "Mathlib/Computability/Partrec.lean",
+   "line": 179,
+   "name": "of_primrec",
+   "signature": "{f : ℕ → ℕ} (hf : Nat.Primrec f) : Nat.Partrec f"
+  },
+  {
+   "file": "Mathlib/Computability/Primrec/Basic.lean",
+   "line": 72,
+   "name": "of_eq",
+   "signature": "{f g : ℕ → ℕ} (hf : Nat.Primrec f) (H : ∀ n, f n = g n) : Nat.Primrec g"
+  },
+  {
+   "file": "Mathlib/Computability/Primrec/List.lean",
+   "line": 766,
+   "name": "prim_iff₁",
+   "signature": "{f : ℕ → ℕ} : (@Primrec' 1 fun v => f v.head) ↔ Primrec f"
+  },
+  {
+   "file": "Mathlib/Computability/RecursiveIn.lean",
+   "line": 113,
+   "name": "of_eq_tot",
+   "signature": "{g : ℕ → ℕ} {O} (hf : Nat.RecursiveIn O f) (H : ∀ n, g n ∈ f n) : Nat.RecursiveIn O g"
+  },
+  {
+   "file": "Mathlib/Computability/RecursiveIn.lean",
+   "line": 158,
+   "name": "Nat.Primrec.recursiveIn",
+   "signature": "{O} {f : ℕ → ℕ} (hf : Nat.Primrec f) : Nat.RecursiveIn O (fun n => f n)"
+  },
+  {
+   "file": "Mathlib/Data/Nat/DvdSequence.lean",
+   "line": 86,
+   "name": "isDvdSequence",
+   "signature": "{f : ℕ → ℕ} (hf : IsStrongDvdSequence f) : IsDvdSequence f"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 293,
+   "name": "nth_le_of_strictMonoOn_of_mapsTo",
+   "signature": "{p : ℕ → Prop} (f : ℕ → ℕ) (hmaps : Set.MapsTo f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card } (Set.ofPred p)) (hmono : StrictMonoOn f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card }) {n : ℕ} : nth p n ≤ f n"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 310,
+   "name": "le_nth_of_monotoneOn_of_surjOn",
+   "signature": "{p : ℕ → Prop} (f : ℕ → ℕ) (hsurj : Set.SurjOn f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card } (Set.ofPred p)) (hmono : MonotoneOn f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card }) {n : ℕ} (hn : ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card) : f n ≤ nth p n"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 334,
+   "name": "eq_nth_of_strictMonoOn_of_mapsTo_of_surjOn",
+   "signature": "{p : ℕ → Prop} (f : ℕ → ℕ) (hsurj : Set.SurjOn f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card } (Set.ofPred p)) (hmaps : Set.MapsTo f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card } (Set.ofPred p)) (hmono : StrictMonoOn f { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card }) : Set.EqOn f (nth p) { n : ℕ | ∀ hf : Set.Finite (Set.ofPred p), n < hf.toFinset.card }"
+  },
+  {
+   "file": "Mathlib/Data/Nat/Nth.lean",
+   "line": 345,
+   "name": "nth_comp_of_strictMono",
+   "signature": "{n : ℕ} {f : ℕ → ℕ} (hf : StrictMono f) (h0 : ∀ k, p k → k ∈ Set.range f) (h : ∀ hfi : (Set.ofPred p).Finite, n < hfi.toFinset.card) : f (nth (fun i ↦ p (f i)) n) = nth p n"
+  },
+  {
+   "file": "Mathlib/Order/Filter/AtTopBot/Basic.lean",
+   "line": 391,
+   "name": "HasAntitoneBasis.comp_strictMono",
+   "signature": "{l : Filter α} {s : ℕ → Set α} (hs : l.HasAntitoneBasis s) {φ : ℕ → ℕ} (hφ : StrictMono φ) : l.HasAntitoneBasis (s ∘ φ)"
+  },
+  {
+   "file": "Mathlib/Order/Interval/Finset/Nat.lean",
+   "line": 279,
+   "name": "Nat.cauchy_induction",
+   "signature": "(h : ∀ n, P (n + 1) → P n) (seed : ℕ) (hs : P seed) (f : ℕ → ℕ) (hf : ∀ x, seed ≤ x → P x → x < f x ∧ P (f x)) (n : ℕ) : P n"
+  },
+  {
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 707,
+   "name": "Nat.stabilises_of_monotone",
+   "signature": "{f : ℕ → ℕ} {b n : ℕ} (hfmono : Monotone f) (hfb : ∀ m, f m ≤ b) (hfstab : ∀ m, f m = f (m + 1) → f (m + 1) = f (m + 2)) (hbn : b ≤ n) : f n = f b"
+  },
+  {
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 728,
+   "name": "Nat.stabilises_of_antitone",
+   "signature": "{f : ℕ → ℕ} (hfmono : Antitone f) (hfstab : ∀ m, f m = f (m + 1) → f (m + 1) = f (m + 2)) : ∃ n ≤ f 0, ∀ m, n ≤ m → f m = f n"
+  },
+  {
+   "file": "Mathlib/Order/Monotone/Basic.lean",
+   "line": 745,
+   "name": "converges_of_monotone_of_bounded",
+   "signature": "{f : ℕ → ℕ} (mono_f : Monotone f) {c : ℕ} (hc : ∀ n, f n ≤ c) : ∃ b N, ∀ n ≥ N, f n = b"
+  },
+  {
+   "file": "Mathlib/Probability/Process/LocalProperty.lean",
+   "line": 266,
+   "name": "mkStrictMonoAux_strictMono",
+   "signature": "(x : ℕ → ℕ) : StrictMono (mkStrictMonoAux x)"
+  },
+  {
+   "file": "Mathlib/Probability/Process/LocalProperty.lean",
+   "line": 273,
+   "name": "isPreLocalizingSequence_of_isLocalizingSequence_aux",
+   "signature": "{τ : ℕ → Ω → WithTop ι} {σ : ℕ → ℕ → Ω → WithTop ι} (hτ : IsLocalizingSequence 𝓕 τ P) (hσ : ∀ n, IsLocalizingSequence 𝓕 (σ n) P) : ∃ (nk : ℕ → ℕ) (T : ℕ → ι), StrictMono nk ∧ Tendsto T atTop atTop ∧ ∀ n, P {ω | σ n (nk n) ω < min (τ n ω) (T n)} ≤ (1 / 2) ^ n"
+  },
+  {
+   "file": "Mathlib/RingTheory/AdicCompletion/Basic.lean",
+   "line": 131,
+   "name": "IsHausdorff.StrictMono.funext'",
+   "signature": "{R S : Type*} [CommRing S] (I : Ideal S) [IsHausdorff I S] {f g : R → S} {a : ℕ → ℕ} (ha : StrictMono a) (h : ∀ n r, Ideal.Quotient.mk (I ^ a n) (f r) = Ideal.Quotient.mk (I ^ a n) (g r)) : f = g"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 601,
+   "name": "degBound_zero",
+   "signature": "(k : ℕ) (D : ℕ → ℕ) : degBound k D 0 = 1"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 602,
+   "name": "numBound_zero",
+   "signature": "(k : ℕ) (D : ℕ → ℕ) : numBound k D 0 = k"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 610,
+   "name": "numBound_succ",
+   "signature": "(k : ℕ) (D : ℕ → ℕ) (n) : numBound k D (n + 1) = numBound k D n * degBound k D n * D n"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 616,
+   "name": "degBound_casesOn_succ",
+   "signature": "(k₀ k : ℕ) (D : ℕ → ℕ) : ∀ n, degBound k₀ (fun t ↦ Nat.casesOn t k D) (n + 1) = (k₀ * k) ^ (k₀ * k) * degBound (k₀ * k) ((k₀ * k) ^ (k₀ * k) • D) n | 0 => by simp | n + 1 => by rw [degBound_succ, numBound_casesOn_succ, degBound_casesOn_succ, numBound_succ, degBound_succ, numBound_succ] ring lemma numBound_casesOn_succ (k₀ k : ℕ) (D : ℕ → ℕ) : ∀ n, numBound k₀ (Nat.casesOn · k D) (n + 1) = numBound (k₀ * k) ((k₀ * k) ^ (k₀ * k) • D) n | 0 => by simp | n + 1 => by rw [numBound_succ (n := n + 1), numBound_casesOn_succ k₀ k D n, numBound_succ, degBound_casesOn_succ] dsimp ring end variable {k₁ k₂ : ℕ} (hk : k₁ ≤ k₂) {D₁ D₂ : ℕ → ℕ} mutual lemma degBound_le_degBound (hk : k₁ ≤ k₂) : ∀ (n) (_ : ∀ i < n, D₁ i ≤ D₂ i), degBound k₁ D₁ n ≤ degBound k₂ D₂ n | 0, hD => by simp | n + 1, hD => by rw [degBound_succ, degBound_succ] refine Nat.mul_le_mul (Nat.pow_self_mono (numBound_mono hk _ hD)) (degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self)) lemma numBound_mono (hk : k₁ ≤ k₂) : ∀ n, (∀ i < n, D₁ i ≤ D₂ i) → numBound k₁ D₁ n ≤ numBound k₂ D₂ n | 0, hD => by simpa using hk | n + 1, hD => by rw [numBound_succ, numBound_succ] gcongr · exact numBound_mono hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact hD _ n.lt_succ_self end lemma degBound_pos (k : ℕ) (D : ℕ → ℕ) : ∀ n, 0 < degBound k D n | 0 => by simp | n + 1 => by simp [degBound_succ, Nat.pow_self_pos, degBound_pos] end MvPolynomialC open MvPolynomialC in /-- The `C : R → R[X₁, ..., Xₘ]` case of **Chevalley's theorem** with complexity bound. -/ lemma chevalley_mvPolynomialC {M : Submodule ℤ R} (hM : 1 ∈ M) (k : ℕ) (d : Multiset (Fin n)) (S : ConstructibleSetData (MvPolynomial (Fin n) R)) (hSn : ∀ C ∈ S, C.n ≤ k) (hS : ∀ C ∈ S, ∀ j, C.g j ∈ coeffsIn _ M ⊓ (degreesLE _ _ d).restrictScalars _) : ∃ T : ConstructibleSetData R, comap MvPolynomial.C '' S.toSet = T.toSet ∧ ∀ C ∈ T, C.n ≤ numBound k (fun i ↦ 1 + (d.map Fin.val).count i) n ∧ ∀ i, C.g i ∈ M ^ (degBound k (fun i ↦ 1 + (d.map Fin.val).count i) n)"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 625,
+   "name": "numBound_casesOn_succ",
+   "signature": "(k₀ k : ℕ) (D : ℕ → ℕ) : ∀ n, numBound k₀ (Nat.casesOn · k D) (n + 1) = numBound (k₀ * k) ((k₀ * k) ^ (k₀ * k) • D) n | 0 => by simp | n + 1 => by rw [numBound_succ (n := n + 1), numBound_casesOn_succ k₀ k D n, numBound_succ, degBound_casesOn_succ] dsimp ring end variable {k₁ k₂ : ℕ} (hk : k₁ ≤ k₂) {D₁ D₂ : ℕ → ℕ} mutual lemma degBound_le_degBound (hk : k₁ ≤ k₂) : ∀ (n) (_ : ∀ i < n, D₁ i ≤ D₂ i), degBound k₁ D₁ n ≤ degBound k₂ D₂ n | 0, hD => by simp | n + 1, hD => by rw [degBound_succ, degBound_succ] refine Nat.mul_le_mul (Nat.pow_self_mono (numBound_mono hk _ hD)) (degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self)) lemma numBound_mono (hk : k₁ ≤ k₂) : ∀ n, (∀ i < n, D₁ i ≤ D₂ i) → numBound k₁ D₁ n ≤ numBound k₂ D₂ n | 0, hD => by simpa using hk | n + 1, hD => by rw [numBound_succ, numBound_succ] gcongr · exact numBound_mono hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact hD _ n.lt_succ_self end lemma degBound_pos (k : ℕ) (D : ℕ → ℕ) : ∀ n, 0 < degBound k D n | 0 => by simp | n + 1 => by simp [degBound_succ, Nat.pow_self_pos, degBound_pos] end MvPolynomialC open MvPolynomialC in /-- The `C : R → R[X₁, ..., Xₘ]` case of **Chevalley's theorem** with complexity bound. -/ lemma chevalley_mvPolynomialC {M : Submodule ℤ R} (hM : 1 ∈ M) (k : ℕ) (d : Multiset (Fin n)) (S : ConstructibleSetData (MvPolynomial (Fin n) R)) (hSn : ∀ C ∈ S, C.n ≤ k) (hS : ∀ C ∈ S, ∀ j, C.g j ∈ coeffsIn _ M ⊓ (degreesLE _ _ d).restrictScalars _) : ∃ T : ConstructibleSetData R, comap MvPolynomial.C '' S.toSet = T.toSet ∧ ∀ C ∈ T, C.n ≤ numBound k (fun i ↦ 1 + (d.map Fin.val).count i) n ∧ ∀ i, C.g i ∈ M ^ (degBound k (fun i ↦ 1 + (d.map Fin.val).count i) n)"
+  },
+  {
+   "file": "Mathlib/RingTheory/Spectrum/Prime/ChevalleyComplexity.lean",
+   "line": 640,
+   "name": "degBound_le_degBound",
+   "signature": "(hk : k₁ ≤ k₂) : ∀ (n) (_ : ∀ i < n, D₁ i ≤ D₂ i), degBound k₁ D₁ n ≤ degBound k₂ D₂ n | 0, hD => by simp | n + 1, hD => by rw [degBound_succ, degBound_succ] refine Nat.mul_le_mul (Nat.pow_self_mono (numBound_mono hk _ hD)) (degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self)) lemma numBound_mono (hk : k₁ ≤ k₂) : ∀ n, (∀ i < n, D₁ i ≤ D₂ i) → numBound k₁ D₁ n ≤ numBound k₂ D₂ n | 0, hD => by simpa using hk | n + 1, hD => by rw [numBound_succ, numBound_succ] gcongr · exact numBound_mono hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact degBound_le_degBound hk _ fun i hi ↦ hD _ (hi.trans n.lt_succ_self) · exact hD _ n.lt_succ_self end lemma degBound_pos (k : ℕ) (D : ℕ → ℕ) : ∀ n, 0 < degBound k D n | 0 => by simp | n + 1 => by simp [degBound_succ, Nat.pow_self_pos, degBound_pos] end MvPolynomialC open MvPolynomialC in /-- The `C : R → R[X₁, ..., Xₘ]` case of **Chevalley's theorem** with complexity bound. -/ lemma chevalley_mvPolynomialC {M : Submodule ℤ R} (hM : 1 ∈ M) (k : ℕ) (d : Multiset (Fin n)) (S : ConstructibleSetData (MvPolynomial (Fin n) R)) (hSn : ∀ C ∈ S, C.n ≤ k) (hS : ∀ C ∈ S, ∀ j, C.g j ∈ coeffsIn _ M ⊓ (degreesLE _ _ d).restrictScalars _) : ∃ T : ConstructibleSetData R, comap MvPolynomial.C '' S.toSet = T.toSet ∧ ∀ C ∈ T, C.n ≤ numBound k (fun i ↦ 1 + (d.map Fin.val).count i) n ∧ ∀ i, C.g i ∈ M ^ (degBound k (fun i ↦ 1 + (d.map Fin.val).count i) n)"
+  },
+  {
+   "file": "Mathlib/Topology/MetricSpace/GromovHausdorff.lean",
+   "line": 735,
+   "name": "totallyBounded",
+   "signature": "{t : Set GHSpace} {C : ℝ} {u : ℕ → ℝ} {K : ℕ → ℕ} (ulim : Tendsto u atTop (𝓝 0)) (hdiam : ∀ p ∈ t, diam (univ : Set (GHSpace.Rep p)) ≤ C) (hcov : ∀ p ∈ t, ∀ n : ℕ, ∃ s : Set (GHSpace.Rep p), (#s) ≤ K n ∧ univ ⊆ ⋃ x ∈ s, ball x (u n)) : TotallyBounded t"
+  },
+  {
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 177,
+   "name": "isClosed_iUnion_closure_singleton_of_not_tendsto",
+   "signature": "{x : ℕ → X} [SequentialSpace X] (hx : ∀ (l : X) (φ : ℕ → ℕ), StrictMono φ → ¬Tendsto (x ∘ φ) atTop (𝓝 l)) : IsClosed (⋃ i, closure {x i})"
+  },
+  {
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 277,
+   "name": "SeqCompactSpace.tendsto_subseq",
+   "signature": "[SeqCompactSpace X] (x : ℕ → X) : ∃ (a : X) (φ : ℕ → ℕ), StrictMono φ ∧ Tendsto (x ∘ φ) atTop (𝓝 a)"
+  },
+  {
+   "file": "Mathlib/Topology/Sequences.lean",
+   "line": 307,
+   "name": "CompactSpace.tendsto_subseq",
+   "signature": "[CompactSpace X] (x : ℕ → X) : ∃ (a : _) (φ : ℕ → ℕ), StrictMono φ ∧ Tendsto (x ∘ φ) atTop (𝓝 a)"
+  },
+  {
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 222,
+   "name": "Function.Bijective.cauchySeq_comp_iff",
+   "signature": "{f : ℕ → ℕ} (hf : Bijective f) (u : ℕ → α) : CauchySeq (u ∘ f) ↔ CauchySeq u"
+  },
+  {
+   "file": "Mathlib/Topology/UniformSpace/Cauchy.lean",
+   "line": 801,
+   "name": "isCompact_closure_interUnionBalls",
+   "signature": "{p : ℕ → Prop} {U : ℕ → SetRel α α} (H : (uniformity α).HasBasis p U) [CompleteSpace α] (xs : ℕ → α) (u : ℕ → ℕ) : IsCompact (closure (interUnionBalls xs u U))"
+  }
+ ],
+ "C2_population": 69,
+ "mathlib_rev": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+ "population": 189240,
+ "population_sha256": "3cd36c9e6472041df711376065494178abc319c9bcc07a45382609895e51bcfb",
+ "seed": 20261117
+}

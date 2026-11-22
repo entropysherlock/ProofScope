@@ -1,0 +1,11 @@
+bd5d2b79c4d04cdca496611ee19e83357a612feee856dbd09f367438820ac58d  proofscope/multiocc.py
+4d2b71e8a5c3421d70d3b739bb836c0d30c2de39392e899ffb7f42e27ad8d05d  proofscope/scopeelim.py
+5315d3912b9e7890e10669704fffcbf526718c87c0ee93ee55745c0e57e8bcbe  proofscope/scope_expr.py
+b866d12cf62a62d40d8576af0f0e42d4ce50e6e63e5ea78ab27552be2690a2a7  proofscope/scope_smt.py
+68dcd988f638a9c58045117383e67486a73fa177e6a98809245ec684e6926c2f  proofscope/certify.py
+71f5ac7ca3804bec6c642093c27bca74cd9c042df5d21ff3ffb57a9a74fcdc76  lean/ProofScope/MultiOcc.lean
+2c56becae7aed1e072f0a26ec288c77b13d3f872b3a1537183638db34c8f2baf  experiments/sota17/gen_cases.py
+08bb8292c81e63052d24f8b795cc57698fced369e032f18b06a71f3f2f8365c7  experiments/sota17/labels.py
+fdd8386457d16d963969712012ffb9327b69b856964de7bfb27184595872cbab  experiments/sota17/run_eval.py
+cases: 0a24fec5bf40d782159bef0059bb42a6f1ea3c2daeb85f968e2095fee9daa480 (cat of cases/*.json in name order, 120 files)
+frozen before the first run of the engine or the labeller on these cases; base 198e17c; 2026-11-11T03:48:07Z

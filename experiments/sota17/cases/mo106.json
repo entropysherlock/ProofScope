@@ -1,0 +1,1 @@
+{"family": "outside", "formal": {"body": "f (4 * n) = f n", "guard": "True", "var": "n"}, "id": "mo106", "kind": "multi", "meta": {}, "reference": {"body": "f (2 * n) = f n", "guard": "True", "var": "n"}}
