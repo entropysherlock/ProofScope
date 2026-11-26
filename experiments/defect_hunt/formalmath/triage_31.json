@@ -1,0 +1,157 @@
+{
+ "aime_all_1995_2": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "`%` here is taken in ℝ, where Mathlib's field Euclidean-domain structure gives a % b = a − a·b/b = 0 for b ≠ 0. So the left side is 0. The informal answer is correct; the intended operation is the fractional part / integer remainder. (Check: product of roots is 1995² = 3980025.)"
+ },
+ "aime_all_2007_II_4": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "Production is modelled as separate per-product rates, so h1 forces a = 3 and h2 forces a = 2: the hypotheses contradict each other (VACUOUS). The problem shares worker-hours between widgets and whoosits in one equation."
+ },
+ "olymid-ref-base_10079": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "'∀ n, cond → P n ↔ answer' parses as '(cond → P n) ↔ answer'. At n = 0 the left side is vacuously true and the answer is false."
+ },
+ "olymid-ref-base_10792": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "The ∃ / ∀ binder extends to the end, swallowing the ↔: the statement reads 'cond ∧ ∃ x, (P x ↔ answer)'. At 0 the leading 'n > 0' (or 'k > 0') conjunct is false, so the whole statement is false."
+ },
+ "olymid-ref-base_2420": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "'∀ n, cond → P n ↔ answer' parses as '(cond → P n) ↔ answer'. At n = 0 the left side is vacuously true and the answer is false."
+ },
+ "olymid-ref-base_2929": {
+  "category": "Domain edge case not excluded (n = 0)",
+  "witness_check": true,
+  "reason": "Nothing excludes n = 0: the double sum is empty (0), the right side is 0, but n + 1 = 1 is not prime. The informal problem says 'integers n' and has the same gap; the intended domain is n ≥ 1."
+ },
+ "olymid-ref-base_3256": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "(3n² + 5)/8 is natural-number division: at n = 2 it truncates 17/8 to 2, which equals φ(1) + φ(2). The informal answer is correct."
+ },
+ "olymid-ref-base_3668": {
+  "category": "Undeclared identifier became a variable (autoImplicit)",
+  "witness_check": true,
+  "reason": "The file opens Real but not Complex, so `I` is not the imaginary unit: autoImplicit made it a universally quantified real variable (the recorded goal shows a bare `I`). With I = 0 the statement fails. The mathematical answer is correct. (Check: with the true I the value is 1 + e^(−2 ln 2009) = 4036082/4036081.)"
+ },
+ "olymid-ref-base_506": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "'The number of these divisors' means the divisors other than n, but Lean counts n.divisors.card (n included). n = 1 then satisfies the hypothesis (0 + 1 = 1) but is not 2m². Under the informal reading n = 1 fails it."
+ },
+ "olymid-ref-base_5988": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "The ∃ / ∀ binder extends to the end, swallowing the ↔: the statement reads 'cond ∧ ∃ x, (P x ↔ answer)'. At 0 the leading 'n > 0' (or 'k > 0') conjunct is false, so the whole statement is false."
+ },
+ "olymid-ref-base_6296": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "Irrationality is encoded as ¬ ∃ x : ℚ, x = ∏' k, …, with the product itself computed in ℚ. '∃ x, x = t' is true for every t, so the statement is false regardless of the product. Needs the product in ℝ and ∃ q : ℚ, (q : ℝ) = …."
+ },
+ "olymid-ref-base_7209": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "a = b = c = 1 is allowed, and Lean's logb 1 1 = 0/0 = 0, so the hypothesis holds and the sum of cubes is 0. The problem implicitly needs bases ≠ 1. (These two rows are duplicates of the same problem.)"
+ },
+ "olymid-ref-base_9798": {
+  "category": "Source problem or stated answer is wrong",
+  "witness_check": true,
+  "reason": "The stated answer n ∈ {1, 3, 6} is wrong: the reference solution shows a suitable N exists for every n (N = (n+1)!² + 1). For n = 2, N = 13 already works: 14 and 15 are not prime powers. The Lean statement also has the → / ↔ scope error, which gives the n = 0 certificate."
+ },
+ "olymid-ref-base_9813": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "'∀ n, cond → P n ↔ answer' parses as '(cond → P n) ↔ answer'. At n = 0 the left side is vacuously true and the answer is false."
+ },
+ "olymid-ref-base_9952": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "p(x) is defined as the least prime y with ¬ x ∣ y; the problem says the least prime NOT DIVIDING x (¬ y ∣ x). For x = 1 the Lean set is empty (1 divides everything), so sInf gives p 1 = 0, contradicting hp1 : p 1 = 2. The hypotheses are inconsistent (VACUOUS)."
+ },
+ "omni_theorem_1467": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "`%` here is taken in ℝ, where Mathlib's field Euclidean-domain structure gives a % b = a − a·b/b = 0 for b ≠ 0. So the left side is 0. The informal answer is correct; the intended operation is the fractional part / integer remainder. With k = 1, n = 101 the true fractional part gives exactly 1/2."
+ },
+ "omni_theorem_1576": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "The ∃ / ∀ binder extends to the end, swallowing the ↔: the statement reads 'cond ∧ ∃ x, (P x ↔ answer)'. At 0 the leading 'n > 0' (or 'k > 0') conjunct is false, so the whole statement is false."
+ },
+ "omni_theorem_3647": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "The ∃ / ∀ binder extends to the end, swallowing the ↔: the statement reads 'cond ∧ ∃ x, (P x ↔ answer)'. At 0 the leading 'n > 0' (or 'k > 0') conjunct is false, so the whole statement is false."
+ },
+ "omni_theorem_372": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "v − e + f is computed in ℕ, where 9 − 16 truncates to 0, giving 9 ≠ 2. Over ℤ both parts hold."
+ },
+ "omni_theorem_4152": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "'Largest k such that the property holds' is encoded as 'the property holds ↔ k = 1'. The property is downward closed, so k = 0 holds trivially (the empty index set) while 0 ≠ 1. Needs IsGreatest."
+ },
+ "omni_theorem_4220": {
+  "category": "Binder / precedence scope error",
+  "witness_check": true,
+  "reason": "The ∃ / ∀ binder extends to the end, swallowing the ↔: the statement reads 'cond ∧ ∃ x, (P x ↔ answer)'. At 0 the leading 'n > 0' (or 'k > 0') conjunct is false, so the whole statement is false."
+ },
+ "omni_theorem_4254": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "n is not bound inside the set; it became a theorem-level variable. At n = 0 both sums are empty, every C qualifies, and the set has no least element. (The C binder is also unused.)"
+ },
+ "omni_theorem_745": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "`%` here is taken in ℝ, where Mathlib's field Euclidean-domain structure gives a % b = a − a·b/b = 0 for b ≠ 0. So the left side is 0. The informal answer is correct; the intended operation is the fractional part / integer remainder. (Check: the integer residues sum to 1816, so 1816/6561 is right.)"
+ },
+ "omni_theorem_919": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "a = b = c = 1 is allowed, and Lean's logb 1 1 = 0/0 = 0, so the hypothesis holds and the sum of cubes is 0. The problem implicitly needs bases ≠ 1. (These two rows are duplicates of the same problem.)"
+ },
+ "quantitative_reasoning_zh_blue_379": {
+  "category": "Domain edge case not excluded (n = 0)",
+  "witness_check": true,
+  "reason": "At n = 0, Fin 0 → ℤ is the empty family: all conditions hold vacuously (0 = 0 · y²), so the right side is true while the left side (n > 0 ∧ …) is false."
+ },
+ "quantitative_reasoning_zh_blue_52": {
+  "category": "Undeclared identifier became a variable (autoImplicit)",
+  "witness_check": true,
+  "reason": "The file opens Real but not Complex, so `I` is not the imaginary unit: autoImplicit made it a universally quantified real variable (the recorded goal shows a bare `I`). With I = 0 the statement fails. The mathematical answer is correct."
+ },
+ "theorem_proving_zh_blue_1183": {
+  "category": "Source problem or stated answer is wrong",
+  "witness_check": true,
+  "reason": "The problem asks for a strict inequality, but at n = 1 both sides equal 3. The reference solution's AM-GM argument proves only ≥ (equality when n = 1). Separately, the Lean exponent 2 / n is natural-number division, so for n ≥ 3 the right side is 0."
+ },
+ "theorem_proving_zh_blue_1269": {
+  "category": "Typo in the statement",
+  "witness_check": true,
+  "reason": "Part (2)'s first term is written 1/(1 + 1/(a+b)) in both the informal and Lean statements; the reference solution bounds 1/(1 + a + b). At a = b = c = 1 the typed version gives 4/3 > 1; the intended one gives 1."
+ },
+ "theorem_proving_zh_blue_679": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "The problem asks for which n a 5-way equal-sum partition exists (answer: n = 5k or 5k − 1, k ≥ 2), but the Lean statement has no answer at all: it asserts every n works. False at n = 0, and also at n = 1 (sets summing to 1, 0, 0, 0, 0)."
+ },
+ "theorem_proving_zh_blue_81": {
+  "category": "Incorrect formalization (meaning changed)",
+  "witness_check": true,
+  "reason": "The problem asks for which n a 5-way equal-sum partition exists (answer: n = 5k or 5k − 1, k ≥ 2), but the Lean statement has no answer at all: it asserts every n works. False at n = 0, and also at n = 1 (sets summing to 1, 0, 0, 0, 0)."
+ },
+ "u-math_404": {
+  "category": "Lean-semantics artifact (missing side condition or wrong type)",
+  "witness_check": true,
+  "reason": "x defaults to ℕ, so 49 − 77 truncates to 0 and x = 7 gives 28 ≠ 0. Over ℤ (or ℝ), x = 7 is a common root."
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "dataset": "SphereLab/FormalMATH-All",
+ "revision": "8eea2550f174ce8b95444334da18a7473c2d169c",
+ "certificates": [
+  {
+   "row": "olymid-ref-base_1859",
+   "file": "olymid-ref-base_1859.lean",
+   "theorem": "olymid_ref_base_1859",
+   "certificate": "olymid_ref_base_1859_is_false",
+   "category": "WRONG_STATED_ANSWER",
+   "counterexample": "(a, b, c) = (0, 1, 1)",
+   "autoformalization_sha256": "f1c7ff79f3e4f688d02776a3ecaee92736bdc5d560f34812d513357369ed7a73"
+  },
+  {
+   "row": "olymid-ref-base_918",
+   "file": "olymid-ref-base_918.lean",
+   "theorem": "olymid_ref_base_918",
+   "certificate": "olymid_ref_base_918_is_false",
+   "category": "WRONG_STATED_ANSWER",
+   "counterexample": "x = 0",
+   "autoformalization_sha256": "425d4293dcfc1ce8435dbf26b0f829c58cdc8a3409ff829a6dd385a4c07b6adf"
+  },
+  {
+   "row": "olymid-ref-base_10553",
+   "file": "olymid-ref-base_10553.lean",
+   "theorem": "olymid_ref_base_10553",
+   "certificate": "olymid_ref_base_10553_is_false",
+   "category": "WRONG_STATED_ANSWER",
+   "counterexample": "(a, b, c) = (1, -1, 1)",
+   "autoformalization_sha256": "8cee78e16187f8257086901d728c63455bb27a9923e7a79384561ba398f16cd0"
+  },
+  {
+   "row": "theorem_proving_zh_blue_988",
+   "file": "theorem_proving_zh_blue_988.lean",
+   "theorem": "algebra_33567",
+   "certificate": "algebra_33567_is_false",
+   "category": "INCORRECT_STATEMENT",
+   "counterexample": "(x, y, z) = (0, -1, -1)",
+   "autoformalization_sha256": "1f6bbfab4c928316a00078d87cba0629f3899a6c61737c857ad8ca44722092a5"
+  },
+  {
+   "row": "theorem_proving_zh_blue_1350",
+   "file": "theorem_proving_zh_blue_1350.lean",
+   "theorem": "inequalities_8712",
+   "certificate": "inequalities_8712_is_false",
+   "category": "INCORRECT_FORMALIZATION",
+   "counterexample": "(x, y, z) = (0, 1, 1)",
+   "autoformalization_sha256": "5091056b8b365e2df2f4896cad9fc6cc14a4bd234743441be5538e614eadabf2"
+  },
+  {
+   "row": "olymid-ref-base_2124",
+   "file": "olymid-ref-base_2124.lean",
+   "theorem": "olymid_ref_base_2124",
+   "certificate": "olymid_ref_base_2124_is_false",
+   "category": "INCORRECT_FORMALIZATION",
+   "counterexample": "x = 0",
+   "autoformalization_sha256": "a7205ae9154e2da14504c2fee00ab68de35bb25712edf19237ae3f835496943e"
+  },
+  {
+   "row": "omni_theorem_3461",
+   "file": "omni_theorem_3461.lean",
+   "theorem": "omni_theorem_3461",
+   "certificate": "omni_theorem_3461_is_false",
+   "category": "INCORRECT_FORMALIZATION",
+   "counterexample": "x = 0",
+   "autoformalization_sha256": "3210d6130259ba2cd1b93814ecd86b255e8172b00e2c35b421e0461ce5941e0d"
+  },
+  {
+   "row": "theorem_proving_zh_blue_1245",
+   "file": "theorem_proving_zh_blue_1245.lean",
+   "theorem": "algebra_68645",
+   "certificate": "algebra_68645_is_false",
+   "category": "MISSING_DOMAIN_ASSUMPTION",
+   "counterexample": "(a, b, c) = (0, 0, 1)",
+   "autoformalization_sha256": "3d825cb260e2b148f583c6994aa8ccaa4af0f10a4773cb42878db9533adbe2da"
+  }
+ ]
+}

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d17">
+<meta name="description" content="Draft report: 111 certified defects in the FormalMATH benchmark, 39 of them not in the ICML 2026 audit's released results.">
+<title>Certified defects in FormalMATH — ProofScope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070d17;--panel:#111d2c;--ink:#eef5f8;--muted:#8da0b4;--stroke:#284056;--aqua:#82ead8;--amber:#ffd48a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.65}
+a{color:var(--aqua)}.wrap{width:min(960px,calc(100% - 44px));margin:auto}
+header{border-bottom:1px solid #ffffff14;padding:16px 0}header .wrap{display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:"Space Grotesk",sans-serif;font-weight:700;color:var(--ink);text-decoration:none}
+main{padding:40px 0 90px}h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.15;letter-spacing:-.03em}
+h1{font-size:clamp(30px,5vw,46px)}h2{font-size:26px;margin-top:48px}
+blockquote{margin:22px 0;padding:14px 20px;border:1px solid #7a6330;background:#2a2314;border-radius:12px;color:var(--amber)}blockquote p{margin:0}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}th,td{border:1px solid var(--stroke);padding:9px 12px;text-align:left;vertical-align:top}th{background:var(--panel)}
+code{font-family:"JetBrains Mono",monospace;font-size:.88em;background:#14243a;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+li{margin:5px 0}@media(max-width:700px){table{font-size:13px}th,td{padding:7px}}
+</style></head><body>
+<header><div class="wrap"><a class="brand" href="./">◇ ProofScope.</a><a href="https://github.com/entropysherlock/ProofScope" rel="noopener noreferrer">GitHub ↗</a></div></header>
+<main><div class="wrap">
+<h1 class="rt">Certified defects in FormalMATH: a report for the maintainers</h1>
+<blockquote>
+<p><strong>DRAFT. Not yet sent to the FormalMATH maintainers.</strong> It has not been posted anywhere except this page. Author: Caleb J. Westfall (ProofScope). Prepared with Claude (Anthropic) as the engineering assistant.</p>
+</blockquote>
+<h2>Summary</h2>
+<p>We ran an automated defect search over all 5,560 statements in <code>SphereLab/FormalMATH-All</code> (revision <code>8eea2550</code>). It found <strong>111 statements that Lean proves false or vacuous exactly as written</strong>. Each finding was re-proved in a clean module with standard axioms only and replayed by <code>leanchecker</code>. A prover can never solve these items.</p>
+<p>For <strong>39</strong> of the 111, the ICML 2026 audit of FormalMATH (Ammanamanchi, Bhat and Biderman) has no entry in its released per-item results. We hand-checked all 39. This report covers those 39.</p>
+<ul>
+<li><strong>7</strong> show an error in the source problem or its stated answer, not only in the Lean encoding.</li>
+<li><strong>11</strong> change the meaning of the problem in the formalization.</li>
+<li><strong>2 systematic Lean patterns</strong> that probably affect many more items than we found.</li>
+</ul>
+<h2>Method and controls</h2>
+<ol>
+<li>Each statement is loaded unchanged into a Lean REPL with Mathlib (Lean 4.34.1, Mathlib <code>d13f23b</code>).</li>
+<li>The search tries to prove the negation of the statement as written, then tries to prove the hypotheses contradictory.</li>
+<li>Every candidate is certified in a clean module. <code>#print axioms</code> must show only <code>propext</code>, <code>Classical.choice</code> and <code>Quot.sound</code>, and <code>leanchecker</code> must replay it.</li>
+<li>Planted-defect controls run alongside: two planted false statements and one planted vacuous statement were certified, and a true statement was not flagged. All controls passed.</li>
+<li>The 8 hand-checked findings from the first pass were also verified on FormalMATH's own environment (Lean 4.11.0, Mathlib <code>8edf04f</code>).</li>
+</ol>
+<p>Result: 111 certified, 5,325 searched with nothing found, 74 did not compile on our Mathlib version, 4 searches were cut short, 46 skipped. <strong>Finding nothing is not evidence that a statement is correct.</strong> The same hunt found 0 defects in PutnamBench (672 statements).</p>
+<h2>A. Errors in the source problem or its stated answer (7)</h2>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>What is wrong</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>olymid-ref-base_1859</code></td>
+<td>The stated answer is "no solution", but (a, b, c) = (0, 1, 1) satisfies all three equations.</td>
+<td>The dataset's reference solution lists solutions. Standalone certificate and reviewer demo included.</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_918</code></td>
+<td>The stated answer gives only x = −1/1992. x = 0 is also a solution.</td>
+<td>The reference solution says "Obviously, x = 0 is a solution".</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_10553</code></td>
+<td>The answer fixes an order. (1, −1, 1) solves the system but is not in the stated families.</td>
+<td>The reference solution ends "and all permutations".</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_9798</code></td>
+<td>The stated answer {1, 3, 6} is wrong.</td>
+<td>The reference solution proves a suitable N exists for every n, with N = (n+1)!² + 1. For n = 2, N = 13 works (14 and 15 are not prime powers).</td>
+</tr>
+<tr>
+<td><code>theorem_proving_zh_blue_1183</code></td>
+<td>The problem asks for a strict "&gt;" inequality. At n = 1 both sides equal 3.</td>
+<td>The reference proof (AM-GM) only establishes "≥".</td>
+</tr>
+<tr>
+<td><code>theorem_proving_zh_blue_988</code></td>
+<td>Typo: (1 − y) where the identity has (1 − y²).</td>
+<td>The reference solution proves the (1 − y²) form. The statement fails at (0, −1, −1).</td>
+</tr>
+<tr>
+<td><code>theorem_proving_zh_blue_1269</code></td>
+<td>Part (2), first term, is written 1/(1 + 1/(a+b)) instead of 1/(1 + a + b).</td>
+<td>At a = b = c = 1 the typed version gives 4/3 &gt; 1. The reference solution bounds 1/(1 + a + b).</td>
+</tr>
+</tbody>
+</table>
+<p>In 1183, the Lean exponent <code>2 / n</code> is also natural-number division. That is a second, independent defect.</p>
+<h2>B. The formalization changes the problem (11)</h2>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>What is wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>theorem_proving_zh_blue_1350</code></td>
+<td>The problem asks for the equality cases. The Lean statement asserts "iff x = y = z", which fails at (0, 1, 1).</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_2124</code></td>
+<td>The Lean statement adds x = 0 as an equality case. There 1 ≠ 0. The reference solution says x = 1 only.</td>
+</tr>
+<tr>
+<td><code>omni_theorem_3461</code></td>
+<td>"Not equivalent" is encoded as ∀ x, ¬(…). The two expressions agree at x = 0.</td>
+</tr>
+<tr>
+<td><code>aime_all_2007_II_4</code></td>
+<td>Production is modelled as separate per-product rates, so h1 forces a = 3 and h2 forces a = 2: the hypotheses contradict each other (VACUOUS). The problem shares worker-hours between widgets and whoosits in one equation.</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_506</code></td>
+<td>'The number of these divisors' means the divisors other than n, but Lean counts n.divisors.card (n included). n = 1 then satisfies the hypothesis (0 + 1 = 1) but is not 2m². Under the informal reading n = 1 fails it.</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_6296</code></td>
+<td>Irrationality is encoded as ¬ ∃ x : ℚ, x = ∏' k, …, with the product itself computed in ℚ. '∃ x, x = t' is true for every t, so the statement is false regardless of the product. Needs the product in ℝ and ∃ q : ℚ, (q : ℝ) = ….</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_9952</code></td>
+<td>p(x) is defined as the least prime y with ¬ x ∣ y; the problem says the least prime NOT DIVIDING x (¬ y ∣ x). For x = 1 the Lean set is empty (1 divides everything), so sInf gives p 1 = 0, contradicting hp1 : p 1 = 2. The hypotheses are inconsistent (VACUOUS).</td>
+</tr>
+<tr>
+<td><code>omni_theorem_4152</code></td>
+<td>'Largest k such that the property holds' is encoded as 'the property holds ↔ k = 1'. The property is downward closed, so k = 0 holds trivially (the empty index set) while 0 ≠ 1. Needs IsGreatest.</td>
+</tr>
+<tr>
+<td><code>omni_theorem_4254</code></td>
+<td>n is not bound inside the set; it became a theorem-level variable. At n = 0 both sums are empty, every C qualifies, and the set has no least element. (The C binder is also unused.)</td>
+</tr>
+<tr>
+<td><code>theorem_proving_zh_blue_679</code></td>
+<td>The problem asks for which n a 5-way equal-sum partition exists (answer: n = 5k or 5k − 1, k ≥ 2), but the Lean statement has no answer at all: it asserts every n works. False at n = 0, and also at n = 1 (sets summing to 1, 0, 0, 0, 0).</td>
+</tr>
+<tr>
+<td><code>theorem_proving_zh_blue_81</code></td>
+<td>The problem asks for which n a 5-way equal-sum partition exists (answer: n = 5k or 5k − 1, k ≥ 2), but the Lean statement has no answer at all: it asserts every n works. False at n = 0, and also at n = 1 (sets summing to 1, 0, 0, 0, 0).</td>
+</tr>
+</tbody>
+</table>
+<h2>C. Missing assumptions and domain edge cases (3)</h2>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>What is wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>theorem_proving_zh_blue_1245</code></td>
+<td>The informal statement is about a triangle's sides. The Lean statement has no triangle or positivity conditions. (0, 0, 1) violates the inequality.</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_2929</code></td>
+<td>Nothing excludes n = 0: the double sum is empty (0), the right side is 0, but n + 1 = 1 is not prime. The informal problem says 'integers n' and has the same gap; the intended domain is n ≥ 1.</td>
+</tr>
+<tr>
+<td><code>quantitative_reasoning_zh_blue_379</code></td>
+<td>At n = 0, Fin 0 → ℤ is the empty family: all conditions hold vacuously (0 = 0 · y²), so the right side is true while the left side (n &gt; 0 ∧ …) is false.</td>
+</tr>
+</tbody>
+</table>
+<h2>D. Systematic Lean patterns (18 findings, many more items likely)</h2>
+<p>These are the most useful part for a benchmark maintainer, because each can be searched for across all 5,560 statements.</p>
+<p><strong>D1. Precedence and binder scope (8).</strong> <code>∀ n, 0 &lt; n → P n ↔ answer</code> parses as <code>(0 &lt; n → P n) ↔ answer</code>. At n = 0 the left side is vacuously true. A trailing <code>n &gt; 0 ∧ ∃ x, … ↔ answer</code> binds the <code>↔</code> inside the <code>∃</code>, so the statement is false at n = 0. A bracketing check would find these.</p>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>olymid-ref-base_10079</code></td>
+<td>implication scope</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_10792</code></td>
+<td>binder swallows the ↔</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_2420</code></td>
+<td>implication scope</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_5988</code></td>
+<td>binder swallows the ↔</td>
+</tr>
+<tr>
+<td><code>olymid-ref-base_9813</code></td>
+<td>implication scope</td>
+</tr>
+<tr>
+<td><code>omni_theorem_1576</code></td>
+<td>binder swallows the ↔</td>
+</tr>
+<tr>
+<td><code>omni_theorem_3647</code></td>
+<td>binder swallows the ↔</td>
+</tr>
+<tr>
+<td><code>omni_theorem_4220</code></td>
+<td>binder swallows the ↔</td>
+</tr>
+</tbody>
+</table>
+<p><strong>D2. <code>%</code> on ℝ is always 0 (3).</strong> In Mathlib, a field's remainder satisfies <code>a % b = a − a·b/b = 0</code> for <code>b ≠ 0</code>. Statements that use <code>%</code> for a real fractional part or residue therefore have a left side of 0: <code>aime_all_1995_2</code>, <code>omni_theorem_1467</code>, <code>omni_theorem_745</code>.</p>
+<p><strong>D3. <code>I</code> without <code>open Complex</code> (2).</strong> autoImplicit turns <code>I</code> into a universally quantified real variable, so a complex-number statement silently becomes a statement about every real <code>I</code>: <code>olymid-ref-base_3668</code>, <code>quantitative_reasoning_zh_blue_52</code>. The mathematical answers are correct.</p>
+<p><strong>D4. Other Lean-semantics artifacts (5).</strong> Natural-number subtraction or division where the problem needs ℤ or ℝ (<code>omni_theorem_372</code>, <code>u-math_404</code>, <code>olymid-ref-base_3256</code>), and <code>logb 1 1 = 0</code> with a missing base ≠ 1 condition (<code>olymid-ref-base_7209</code> and <code>omni_theorem_919</code>, which are the same problem).</p>
+<h2>E. Overlap with the ICML 2026 audit</h2>
+<p>Each of the 111 findings was matched by problem id against the audit's released per-item file (<code>results/formalmath@all/results.jsonl</code>, branch <code>v4.28_icml_review</code> of <code>Shashi456/atp-checkers</code>).</p>
+<table>
+<thead>
+<tr>
+<th>ICML 2026 status</th>
+<th style="text-align: right;">Our certified findings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certified by the audit</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr>
+<td>Flagged "maybe" by the audit</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr>
+<td>No entry in the audit's results</td>
+<td style="text-align: right;"><strong>39</strong></td>
+</tr>
+</tbody>
+</table>
+<p>This is evidence about one audit's released results only. It does not show that nobody else has reported these items. We have not hand-reviewed the 72 overlapping findings.</p>
+<h2>F. What we are claiming, and what we are not</h2>
+<ul>
+<li><strong>Claimed:</strong> the 111 statements are false or vacuous as written, certified by Lean. The 39 listed here are not in one prior audit's released results. The 7 errors in section A are supported by the dataset's own reference solutions or by direct arithmetic.</li>
+<li><strong>Not claimed:</strong> that the explanations in sections B to D are the only reading. They rest on how Lean elaborated each statement (elaborated goals are in <code>findings.jsonl</code>). Lean certifies <em>that</em> the statements are false, not <em>why</em>. We recommend a maintainer confirm D1 to D3 on a few items before bulk-fixing.</li>
+<li><strong>Not claimed:</strong> that FormalMATH has only these defects. 74 statements did not compile on our Mathlib version.</li>
+</ul>
+<h2>Reproduce</h2>
+<p>Everything is in the repository under <a href="https://github.com/entropysherlock/ProofScope/tree/main/experiments/defect_hunt/formalmath"><code>experiments/defect_hunt/formalmath/</code></a>:</p>
+<ul>
+<li><a href="https://github.com/entropysherlock/ProofScope/blob/main/experiments/defect_hunt/formalmath/findings.jsonl"><code>findings.jsonl</code></a>: all 111 findings with Lean certificates.</li>
+<li><a href="https://github.com/entropysherlock/ProofScope/blob/main/experiments/defect_hunt/formalmath/TRIAGE.md"><code>TRIAGE.md</code></a> and <a href="https://github.com/entropysherlock/ProofScope/blob/main/experiments/defect_hunt/formalmath/TRIAGE_31.md"><code>TRIAGE_31.md</code></a>: the hand checks.</li>
+<li><code>triage.py</code>, <code>triage_31.py</code>: exact-arithmetic witness checks.</li>
+<li><a href="https://github.com/entropysherlock/ProofScope/tree/main/experiments/defect_hunt/formalmath/demo_1859"><code>demo_1859/</code></a>: a reviewer demo with a pinned Lean 4.11.0 project and <code>reproduce.sh</code>.</li>
+<li><a href="https://github.com/entropysherlock/ProofScope/blob/main/proofscope/defect_hunt.py"><code>proofscope/defect_hunt.py</code></a>: the search engine.</li>
+</ul>
+<h2>Suggested fixes</h2>
+<p>For the 7 source errors, correct the stated answer or statement against the reference solution. For D1 to D3, add a linter pass that flags <code>→ … ↔</code> without parentheses, <code>%</code> on ℝ, and <code>I</code> in files that do not open <code>Complex</code>.</p>
+</div></main></body></html>
