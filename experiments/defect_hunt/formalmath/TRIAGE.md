@@ -68,5 +68,6 @@ The witnesses were checked against the informal statement (`refined_statement`),
 
 ## Not yet done
 
-- Hand review of the other 103 findings.
+- Hand review of the other 31 findings outside the ICML audit: **done**, see [`TRIAGE_31.md`](TRIAGE_31.md).
+- Hand review of the 72 findings that overlap the ICML audit.
 - Reporting upstream. Nothing has been posted to FormalMATH or contacted its maintainers.
