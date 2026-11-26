@@ -1,0 +1,4 @@
+{"id": "ctrl_false_real", "source": "control", "lean_code": "import Mathlib\nset_option autoImplicit false\n\ntheorem ctrl_false_real (x : ℝ) (hx : 0 < x) : x ^ 2 > x := sorry", "informal": "planted FALSE (x = 1/2)", "expect": "FALSE"}
+{"id": "ctrl_false_int", "source": "control", "lean_code": "import Mathlib\nset_option autoImplicit false\n\ntheorem ctrl_false_int (n : ℤ) (h : n ≠ 0) : n * n > n := sorry", "informal": "planted FALSE (n = 1)", "expect": "FALSE"}
+{"id": "ctrl_vacuous", "source": "control", "lean_code": "import Mathlib\nset_option autoImplicit false\n\ntheorem ctrl_vacuous (n : ℕ) (h1 : n > 5) (h2 : n < 3) : n = 100 := sorry", "informal": "planted VACUOUS", "expect": "VACUOUS"}
+{"id": "ctrl_true", "source": "control", "lean_code": "import Mathlib\nset_option autoImplicit false\n\ntheorem ctrl_true (a b : ℝ) : a ^ 2 + b ^ 2 ≥ 2 * a * b := sorry", "informal": "planted TRUE (must not be flagged)", "expect": null}
